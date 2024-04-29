@@ -13,16 +13,18 @@
       <slot name="activator"></slot>
     </div>
     <SOverlay v-slot="{ attrs }" :value="model">
-      <div
-        ref="contentElement"
-        class="s_tooltip__content"
-        :class="classListContent"
-        :style="styleListContent"
-        v-bind="attrs"
-        @mouseleave="mouseLeave"
-      >
-        <slot></slot>
-      </div>
+      <OnClickOutside @trigger="onClickOutside">
+        <div
+          ref="contentElement"
+          class="s_tooltip__content"
+          :class="classListContent"
+          :style="styleListContent"
+          v-bind="attrs"
+          @mouseleave="mouseLeave"
+        >
+          <slot></slot>
+        </div>
+      </OnClickOutside>
     </SOverlay>
   </div>
 </template>
@@ -30,28 +32,25 @@
 import SOverlay from '@sui/app/components/sOverlay.vue'
 import { propsTooltip } from '@sui/app/props'
 import { useColorService, useMeasurableStylesService, useMenuService } from '@sui/app/services'
+import { OnClickOutside } from '@vueuse/components'
+import { watch } from 'vue'
+import { nextTick } from 'vue'
 import { computed } from 'vue'
 
 const props = defineProps(propsTooltip())
-
-const emit = defineEmits<{
-  (event: 'update:modelValue', value: boolean | null | undefined): void
-  (event: 'close'): void
-}>()
-
 const { measurableStyles } = useMeasurableStylesService(props)
+const model = defineModel<boolean>()
 
 const {
   activatorAttrs,
   contentElement,
   activatorOn,
+  updateLocation,
   activatorElement,
   computedActivatorElement,
-  model,
-  onClickOutside,
   contentClasses,
   contentStyles,
-} = useMenuService(props, emit, { noContentMinWidth: true, offset: 8, alignMiddle: true })
+} = useMenuService(props, model, { noContentMinWidth: true, offset: 8, alignMiddle: true })
 
 const { classListColor, styleListColor } = useColorService(props)
 
@@ -80,9 +79,9 @@ const styleListContent = computed(() => {
   }
 })
 
-onClickOutside(() => {
+const onClickOutside = () => {
   model.value = false
-})
+}
 
 const mouseEnter = (_: MouseEvent) => {
   model.value = true
@@ -95,6 +94,14 @@ const mouseLeave = (event: MouseEvent) => {
     model.value = false
   }
 }
+
+watch(model, async (value) => {
+  if (value) {
+    await nextTick()
+
+    updateLocation()
+  }
+})
 </script>
 
 <style lang="scss" scoped>
