@@ -1,5 +1,6 @@
 import { STransition } from '@sui/app/constants/transition'
 import { type PropType } from 'vue'
+import { propsPosition } from './positionProps'
 
 export const propsOverlay = () => {
   return {
@@ -27,5 +28,6 @@ export const propsOverlay = () => {
       type: String,
       default: STransition.appear,
     },
+    ...propsPosition(),
   }
 }

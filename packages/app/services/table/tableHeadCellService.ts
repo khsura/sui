@@ -1,5 +1,5 @@
-import { type PropsTableHeadCell } from '@/types'
-import { useTableCellCommonService } from '@/services/core'
+import { type PropsTableHeadCell } from '@sui/app/types'
+import { useTableCellCommonService } from '@sui/app/services/core'
 import { computed } from 'vue'
 
 export const useTableHeadCellService = (props: PropsTableHeadCell) => {

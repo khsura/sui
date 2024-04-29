@@ -1,0 +1,107 @@
+import { type PropsMenu } from '@sui/app/definitions/props'
+import { PropsContent, type EmitActivator } from '@sui/app/definitions'
+import { useMenuService } from '@sui/app/services'
+
+const defaultPropsContent: PropsContent = {
+  contentClass: {},
+  contentStyle: {},
+}
+
+const defaultProps: PropsMenu = {
+  disabled: false,
+  readonly: false,
+  activator: 'string',
+  closeOnClick: false,
+  closeOnScroll: false,
+  modelValue: true,
+  location: null,
+  offsetX: 1,
+  offsetY: 2,
+  position: 'absolute',
+  closeOnContentClick: false,
+  screenPadding: null,
+  ...defaultPropsContent,
+}
+
+/* Mocks */
+const dummyContentElement = document.createElement('div')
+
+dummyContentElement.style.height = '10'
+dummyContentElement.style.width = '20'
+
+const mockGetActivatorLocationResult = new DOMRect(10, 20, 30, 40)
+
+const mockContentElement = {
+  value: { offsetWidth: 19, offsetHeight: 21 },
+}
+
+vi.mock('@sui/app/services/core/activatorService', () => {
+  const useActivatorService = vi.fn((_props, _emit, _modelKey, callback) => {
+    callback().then()
+
+    return {
+      getActivatorLocation: vi.fn().mockReturnValue(mockGetActivatorLocationResult),
+      contentElement: mockContentElement,
+    }
+  })
+
+  return {
+    useActivatorService,
+  }
+})
+
+vi.mock('@sui/app/lib/browser', () => {
+  const getViewportLocation = vi.fn(() => ({
+    left: 1,
+    top: 1,
+    width: 40,
+    height: 40,
+    right: 41,
+    bottom: 41,
+  }))
+
+  return {
+    getViewportLocation,
+  }
+})
+
+vi.mock('@sui/app/services/positionService', () => {
+  const usePositionService = vi.fn(() => ({
+    classListPosition: vi.fn().mockReturnValue({ s_position__fixed: true }),
+  }))
+
+  return {
+    usePositionService,
+  }
+})
+
+vi.mock('@sui/app/services/core/contentService', () => {
+  const useContentService = vi.fn(() => ({
+    styles: {
+      value: { border: 'double' },
+    },
+    classes: {
+      value: { myClass: true },
+    },
+  }))
+
+  return {
+    useContentService,
+  }
+})
+
+const defaultEmit: EmitActivator<'modelValue'> = () => {}
+
+describe('useMenuService', () => {
+  test('content styles should contain styles from content service', () => {
+    const { contentStyles } = useMenuService<'modelValue'>(defaultProps, defaultEmit)
+
+    expect(contentStyles.value.border).toBe('double')
+  })
+
+  test('content classes should contain classes from content service', () => {
+    const { contentClasses } = useMenuService<'modelValue'>(defaultProps, defaultEmit)
+
+    expect(contentClasses.value.myClass).toBe(true)
+  })
+})

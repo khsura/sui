@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { propsGroup } from './core'
+import { propsContent, propsGroup } from './core'
 
 export const propsSlideGroup = () => {
   return {
@@ -20,5 +20,6 @@ export const propsSlideGroup = () => {
       default: null,
     },
     ...propsGroup(),
+    ...propsContent(),
   }
 }

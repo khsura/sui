@@ -9,7 +9,6 @@ import { useColumnService } from '@sui/app/services'
 import { computed } from 'vue'
 
 const props = defineProps(propsColumn())
-
 const { classListColumn } = useColumnService(props)
 
 const classList = computed(() => {

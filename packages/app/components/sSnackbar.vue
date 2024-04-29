@@ -28,6 +28,7 @@ import { propsActivator, propsBorder } from '@sui/app/props'
 import { useActivatorService, useLayoutService } from '@sui/app/services'
 import { computed } from 'vue'
 import { type PropType } from 'vue'
+import { watch } from 'vue'
 
 const props = defineProps({
   multiLine: {
@@ -48,26 +49,8 @@ const props = defineProps({
 
 const emit = defineEmits<(event: 'update:modelValue', value: boolean | undefined | null) => void>()
 let timer: number | undefined
-
-const { model, activatorAttrs, activatorElement, activatorOn, contentElement } = useActivatorService(
-  props,
-  emit,
-  'modelValue',
-  (v) => {
-    if (v) {
-      const window = getWindow()
-
-      if (props.timeout && window) {
-        window.clearTimeout(timer)
-        timer =
-          window.setTimeout(() => {
-            model.value = false
-          }, props.timeout) ?? null
-      }
-    }
-  },
-)
-
+const model = defineModel<boolean>()
+const { activatorAttrs, activatorElement, activatorOn, contentElement } = useActivatorService(props, model)
 const { app } = useLayoutService({ app: true })
 
 const wrapperClasses = computed(() => {
@@ -88,6 +71,20 @@ const contentClasses = computed(() => {
     's_snackbar__content--multiLine': props.multiLine,
   }
 })
+
+watch(model, (v) => {
+  if (v) {
+    const window = getWindow()
+
+    if (props.timeout && window) {
+      window.clearTimeout(timer)
+      timer =
+        window.setTimeout(() => {
+          model.value = false
+        }, props.timeout) ?? null
+    }
+  }
+})
 </script>
 
 <style lang="scss">
@@ -102,7 +99,7 @@ const contentClasses = computed(() => {
     flex-wrap: nowrap;
     align-items: center;
     min-width: 344px;
-    max-width: 672px;
+    max-width: min(672px, calc(100% - 16px));
     min-height: 48px;
     margin: calc($s_spacer * 2) auto;
     color: s_getAppColor('snackbar', true);

@@ -23,27 +23,12 @@ export default toolbar
 
 export const Toolbar = createStoryObj<typeof SToolbar>({
   render: (args) => {
-    return {
-      components: {
-        SToolbar,
-        SToolbarTitle,
-        SButton,
-        SIcon,
-      },
-      setup() {
-        return {
-          args,
-        }
-      },
-      template: /* html */ `
-        <SToolbar v-bind="args">
-          <SButton icon><SIcon icon="mdi-menu"></SIcon></SButton>
-          <SToolbarTitle>Hello</SToolbarTitle>
-          <SButton icon><SIcon icon="mdi-heart"></SIcon></SButton>
-          <SButton icon><SIcon icon="mdi-dots-vertical"></SIcon></SButton>
-        </SToolbar>
-      `,
-    }
+    return (<SToolbar {...args}>
+      <SButton variant="icon"><SIcon icon="mdi-menu"></SIcon></SButton>
+      <SToolbarTitle>Hello</SToolbarTitle>
+      <SButton variant="icon"><SIcon icon="mdi-heart"></SIcon></SButton>
+      <SButton variant="icon"><SIcon icon="mdi-dots-vertical"></SIcon></SButton>
+    </SToolbar>)
   },
   args: {
     elevation: null,

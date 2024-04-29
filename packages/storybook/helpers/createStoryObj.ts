@@ -1,5 +1,5 @@
-import type { StorybookObj } from '@sui/storybook/definitions'
+import { type StoryObj } from '@storybook/vue3'
 
-export const createStoryObj = <T>(storyObj: StorybookObj<T>) => {
+export const createStoryObj = <T>(storyObj: StoryObj<T>) => {
   return storyObj
 }

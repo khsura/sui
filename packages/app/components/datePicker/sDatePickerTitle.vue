@@ -6,7 +6,7 @@
         class="s_datePickerTitle__year"
         :disabled="disabled"
         :readonly="readonly || selectedType === DatePickerSelectType.year"
-        text
+        variant="text"
         tile
         size="mini"
         @click="updateSelectedType(DatePickerSelectType.year)"
@@ -20,7 +20,7 @@
         class="s_datePickerTitle__text"
         :disabled="disabled"
         :readonly="readonly || isLastSelectType"
-        text
+        variant="text"
         tile
         size="extra"
         @click="updateSelectedType(DatePickerSelectType.date)"

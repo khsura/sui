@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`STextarea > renders correctly 1`] = `
+<section
+  class="s_textarea"
+>
+  <!--v-if-->
+  <textarea
+    class="s_textarea__input s_textarea--resize__none"
+    cols="20"
+    id="textarea"
+    rows="2"
+  />
+  <div
+    class="s_formInputError"
+  />
+</section>
+`;

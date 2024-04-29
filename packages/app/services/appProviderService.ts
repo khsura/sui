@@ -1,10 +1,1 @@
-import { ProviderName } from '@sui/app/constants'
-import { createAppStore } from '@sui/app/helpers/createAppStore'
-import { useProviderService } from './core'
-
-export const useAppProviderService = () => {
-  const { inject } = useProviderService()
-  const config = inject(ProviderName.sui, createAppStore())
-
-  return { config }
-}
+export { useAppProviderRepository as useAppProviderService } from '@sui/app/repositories'

@@ -1,24 +1,9 @@
 import { datePickerModelFormats } from '@sui/app/configs'
 import { type PropsCalendar } from '@sui/app/definitions'
-import { getCalendarDate } from '@sui/app/repositories'
-import { type CalendarEmitEvents } from '@sui/app/types'
 import dayjs from '@sui/app/vendors/dayjs'
-import { computed } from 'vue'
-import { useModelService } from '../core'
+import { type ModelRef, computed } from 'vue'
 
-export const useCalendarService = (props: PropsCalendar, emit: CalendarEmitEvents) => {
-  const focus = useModelService(props, emit, 'modelValue', {
-    formatter(v) {
-      return dayjs(v).isValid() ? v : dayjs().format(datePickerModelFormats.date)
-    },
-    onChange: (value) => {
-      const start = getCalendarDate(dayjs(value || undefined).startOf('month'))
-      const end = getCalendarDate(dayjs(value || undefined).endOf('month'))
-
-      emit('change', { start, end })
-    },
-  })
-
+export const useCalendarService = (props: PropsCalendar, focus: ModelRef<string | null | undefined>) => {
   const next = (value = 1) => {
     focus.value = dayjs(focus.value).add(value, props.type).format(datePickerModelFormats.date)
   }
@@ -32,7 +17,6 @@ export const useCalendarService = (props: PropsCalendar, emit: CalendarEmitEvent
   })
 
   return {
-    focus,
     next,
     prev,
     title,

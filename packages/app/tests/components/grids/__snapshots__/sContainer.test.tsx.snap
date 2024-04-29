@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SContainer > renders correctly 1`] = `
+"<div class="s_container">
+  <div class="s_container__content">Hello World</div>
+</div>"
+`;

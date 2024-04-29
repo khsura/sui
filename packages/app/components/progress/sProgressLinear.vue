@@ -13,8 +13,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { getBackgroundColorAttributes } from '@sui/app/repositories/colorRepository'
-import { useAppProviderService } from '@sui/app/services'
+import { useColorRepository } from '@sui/app/repositories'
 import { computed } from 'vue'
 import { type PropType } from 'vue'
 import { getNumericCssAttribute } from '@sui/app/lib'
@@ -51,14 +50,14 @@ const props = defineProps({
   },
 })
 
-const { config } = useAppProviderService()
+const { getBackgroundColorAttributes } = useColorRepository()
 
 const backgroundColorAttrs = computed(() => {
-  return getBackgroundColorAttributes(config, props.backgroundColor ?? props.color)
+  return getBackgroundColorAttributes(props.backgroundColor ?? props.color)
 })
 
 const barColorAttrs = computed(() => {
-  return getBackgroundColorAttributes(config, props.color)
+  return getBackgroundColorAttributes(props.color)
 })
 
 const progressClasses = computed(() => {

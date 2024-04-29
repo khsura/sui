@@ -4,7 +4,7 @@
       v-for="year in years"
       :key="year.value"
       block
-      text
+      variant="text"
       tile
       size="large"
       :disabled="year.isDisabled"

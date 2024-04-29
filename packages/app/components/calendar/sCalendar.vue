@@ -14,19 +14,28 @@
 <script setup lang="ts">
 import { propsCalendar } from '@sui/app/props'
 import { useCalendarService } from '@sui/app/services'
-import { type CalendarDate, type CalendarEvent } from '@sui/app/types'
+import { type CalendarEmitEvents } from '@sui/app/types'
 import SCalendarMonthly from './sCalendarMonthly.vue'
+import dayjs from '@sui/app/vendors/dayjs'
+import { getCalendarDate } from '@sui/app/repositories'
+import { datePickerModelFormats } from '@sui/app/configs'
 
 const props = defineProps(propsCalendar())
+const emit = defineEmits<CalendarEmitEvents>()
 
-const emit = defineEmits<{
-  (event: 'update:modelValue', value: string): void
-  (event: 'change', value: { start: CalendarDate; end: CalendarDate }): void
-  (event: 'click:event', value: { date: CalendarDate; event: CalendarEvent }): void
-  (event: 'click:date', value: { date: CalendarDate; events: CalendarEvent[] }): void
-}>()
+const focus = defineModel<string>({
+  get: (value) => {
+    return dayjs(value).isValid() ? value : dayjs().format(datePickerModelFormats.date)
+  },
+  set: (value) => {
+    const start = getCalendarDate(dayjs(value || undefined).startOf('month'))
+    const end = getCalendarDate(dayjs(value || undefined).endOf('month'))
 
-const { focus, next, prev, title } = useCalendarService(props, emit)
+    emit('change', { start, end })
+  },
+})
+
+const { next, prev, title } = useCalendarService(props, focus)
 
 defineExpose({
   next,

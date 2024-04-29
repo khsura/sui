@@ -13,7 +13,7 @@
       <div class="s_calendarMonthly__date">
         <SButton
           text
-          fab
+          variant="fab"
           size="small"
           elevation="0"
           :disabled="!date.isThisMonth"

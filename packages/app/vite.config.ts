@@ -6,9 +6,10 @@ import mediaMinmax from 'postcss-media-minmax'
 import { defineConfig } from 'vite'
 import { externalizeDeps } from 'vite-plugin-externalize-deps'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 export default defineConfig({
-  plugins: [externalizeDeps(), tsconfigPaths(), vue()],
+  plugins: [externalizeDeps(), tsconfigPaths(), vue(), vueJsx()],
   build: {
     target: ['safari11', 'ios11'],
     lib: {
@@ -41,6 +42,14 @@ export default defineConfig({
           @import '@sui/app/styles/helpers';
         `,
       },
+    },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./tests/setup.ts'],
+    coverage: {
+      provider: 'v8',
     },
   },
 })

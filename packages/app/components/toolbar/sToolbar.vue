@@ -54,7 +54,7 @@ const classes = computed(() => {
     ...classListPosition.value,
     s_toolbar: true,
     's_toolbar--floating': props.floating,
-    [`s_toolbar--density-${props.density}`]: true && props.density,
+    [`s_toolbar--density-${props.density}`]: props.density,
   }
 })
 

@@ -1,10 +1,9 @@
 import { type PropsCalendar } from '@sui/app/definitions'
 import { getCalendarDate } from '@sui/app/repositories/calendarRepository'
-import { getBackgroundColorAttributes } from '@sui/app/repositories/colorRepository'
+import { useColorRepository } from '@sui/app/repositories/colorRepository'
 import { type CalendarDate, type CalendarEvent } from '@sui/app/types'
 import dayjs from '@sui/app/vendors/dayjs'
 import { computed } from 'vue'
-import { useAppProviderService } from '../appProviderService'
 
 type CalendarEventExtended = CalendarEvent & {
   isStartDate: boolean
@@ -20,7 +19,7 @@ type CalendarEventExtended = CalendarEvent & {
 export const useCalendarMonthlyService = (props: PropsCalendar) => {
   const today = dayjs()
   const eventPadding = 4
-  const { config } = useAppProviderService()
+  const { getBackgroundColorAttributes } = useColorRepository()
 
   const date = computed(() => {
     return dayjs(props.modelValue || undefined)
@@ -80,7 +79,7 @@ export const useCalendarMonthlyService = (props: PropsCalendar) => {
             const displayWidth = `calc(${displaySize * 100}% - ${padding}px)`
             const hasColorAttributes = isStartDate || isWeekStart
             const color = props.eventColor ? props.eventColor(event) : event.color
-            const colorAttributes = getBackgroundColorAttributes(config, color)
+            const colorAttributes = getBackgroundColorAttributes(color)
 
             const outputEvent: CalendarEventExtended = {
               ...event,

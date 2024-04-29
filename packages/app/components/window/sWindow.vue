@@ -6,13 +6,27 @@
     <div class="s_window__controls">
       <template v-if="canMoveBack">
         <slot v-if="$slots.prev" name="prev" :icon="prevIcon" :click="goPrev" :disabled="disabled"></slot>
-        <SButton v-else icon class="s_window__left" aria-label="previous" :disabled="disabled" @click="goPrev">
+        <SButton
+          v-else
+          variant="icon"
+          class="s_window__left"
+          aria-label="previous"
+          :disabled="disabled"
+          @click="goPrev"
+        >
           <SIcon :icon="prevIcon" size="large"></SIcon>
         </SButton>
       </template>
       <template v-if="canMoveForward">
         <slot v-if="$slots.next" name="next" :icon="nextIcon" :click="goNext"></slot>
-        <SButton v-else icon class="s_window__right" aria-label="previous" :disabled="disabled" @click="goNext">
+        <SButton
+          v-else
+          variant="icon"
+          class="s_window__right"
+          aria-label="previous"
+          :disabled="disabled"
+          @click="goNext"
+        >
           <SIcon :icon="nextIcon" size="large"></SIcon>
         </SButton>
       </template>
@@ -39,14 +53,13 @@ const props = defineProps({
 })
 
 const emit = defineEmits<(event: 'update:modelValue', value: GroupItemValue | null) => void>()
-
 const { classListColor, styleListColor } = useColorService(props)
 const { provideProps } = useProviderService()
 const { tagName } = useTagService(props)
 
 provideProps(ProviderPropsName.window, props)
 // TODO (Sura) Improve
-// eslint-disable-next-line vue/no-setup-props-destructure
+
 useTouchService(
   props.touch === true
     ? {

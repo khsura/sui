@@ -14,27 +14,27 @@ export const propsList = () => {
       default: null,
     },
     outlined: {
-      type: Boolean as PropType<boolean>,
+      type: Boolean as PropType<boolean | null | undefined>,
       default: false,
     },
     dense: {
-      type: Boolean as PropType<boolean>,
+      type: Boolean as PropType<boolean | null | undefined>,
       default: false,
     },
     link: {
-      type: Boolean as PropType<boolean>,
+      type: Boolean as PropType<boolean | null | undefined>,
       default: false,
     },
     inset: {
-      type: Boolean as PropType<boolean>,
+      type: Boolean as PropType<boolean | null | undefined>,
       default: false,
     },
     text: {
-      type: Boolean as PropType<boolean>,
+      type: Boolean as PropType<boolean | null | undefined>,
       default: false,
     },
     ...propsMeasurableStyles(),
     ...propsColor(),
     ...propsTag<'ul' | 'ol' | 'div'>({ tag: 'ul' }),
-  }
+  } as const
 }

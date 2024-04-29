@@ -1,4 +1,4 @@
-import { type TableItem, type EmitModelValue, type FormInputModelValue } from './core'
+import { type EmitModelValue, type FormInputModelValue } from './core'
 
 export type EmitActivator<ModelName extends string = 'modelValue'> = EmitModelValue<
   boolean | undefined | null,

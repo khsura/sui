@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { propsTextarea } from '@sui/app/props'
-import { getIsPresetColor } from '@sui/app/repositories/colorRepository'
+import { useColorRepository } from '@sui/app/repositories/colorRepository'
 import { useDisabledService, useFormInputService } from '@sui/app/services'
 import kFormInputError from './common/sFormInputError.vue'
 import { getCleanSetObject, getNumericCssAttribute } from '@sui/app/lib'
@@ -49,8 +49,10 @@ const emit = defineEmits<EmitFormTextInput<string | number | null>>()
 const textareaElement = ref<HTMLTextAreaElement | null>(null)
 const { updateFormInput, errors } = useFormInputService<string | number | null>(props, emit)
 const { classListDisabled } = useDisabledService(props)
-const isPresetInputBackground = computed(() => getIsPresetColor(props.inputBackground))
-const isPresetPlaceholderBackground = computed(() => getIsPresetColor(props.placeholderBackground ?? null))
+// TODO - Sura: make able to use all preset colors
+const { getIsPredefinedPresetColor } = useColorRepository()
+const isPresetInputBackground = computed(() => getIsPredefinedPresetColor(props.inputBackground))
+const isPresetPlaceholderBackground = computed(() => getIsPredefinedPresetColor(props.placeholderBackground ?? null))
 const textareaHeight = ref<string | null>(null)
 
 const model = computed({

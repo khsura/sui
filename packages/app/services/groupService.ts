@@ -1,45 +1,48 @@
 import { ProviderName, ProviderPropsName } from '@sui/app/constants/provider'
-import { type PropsGroup } from '@sui/app/definitions'
+import { type PropsGroup } from '@sui/app/definitions/props'
+import { useProviderService } from './core/providerService'
+import { useGroupCoreService } from './core/groupCoreService'
+import { type Ref, computed, ref, type ModelRef } from 'vue'
 import { type GroupItemValue } from '@sui/app/types'
-import { computed, ref, watch } from 'vue'
-import { type WritableComputedRef, type Ref, type ComputedRef } from 'vue'
-import { useProviderService, useGroupCoreService, useModelService } from './core'
+import { watch } from 'vue'
 
-export const useGroupService = (
-  props: PropsGroup,
-  emit: (event: 'update:modelValue', data: GroupItemValue[] | null) => void,
-) => {
+export const useGroupService = (props: PropsGroup, model: ModelRef<GroupItemValue[] | null>) => {
   const { provide, provideProps } = useProviderService()
   const { items, register, unregister, getItemIndex } = useGroupCoreService()
   const clickValue: Ref<GroupItemValue | null> = ref(null)
+
+  provideProps(ProviderPropsName.groupProps, props)
 
   const firstIndexItem = computed<GroupItemValue | null>(() => {
     return items.value[0]?.value ?? null
   })
 
-  const selectedItems: WritableComputedRef<GroupItemValue[] | null> = useModelService(props, emit, 'modelValue', {
-    formatter: (value) => {
-      const toBeUpdatedItems = [...(value ?? [])]
-      const firstItem = firstIndexItem.value
+  const formatItems = (value?: GroupItemValue[] | null | undefined) => {
+    const toBeUpdatedItems = [...(value ?? [])]
+    const firstItem = firstIndexItem.value
 
-      if (toBeUpdatedItems.length === 0 && props.mandatory && firstItem) {
-        return [firstItem]
-      }
+    if (toBeUpdatedItems.length === 0 && props.mandatory && firstItem) {
+      return [firstItem]
+    }
 
-      if (!props.multiple && toBeUpdatedItems.length > 1) {
-        return [clickValue.value ?? toBeUpdatedItems[0] ?? firstItem]
-      }
+    if (!props.multiple && toBeUpdatedItems.length > 1) {
+      return [clickValue.value ?? toBeUpdatedItems[0] ?? firstItem]
+    }
 
-      return toBeUpdatedItems
+    return toBeUpdatedItems
+  }
+
+  const selectedItems = computed({
+    get: () => {
+      return formatItems(model.value)
+    },
+    set: (value: GroupItemValue[] | null) => {
+      model.value = formatItems(value)
     },
   })
 
-  const computedSelectedItems: ComputedRef<GroupItemValue[]> = computed(() => {
-    return selectedItems.value ?? []
-  })
-
   const isSelectedItem = (value: GroupItemValue | null) => {
-    return value !== null && computedSelectedItems.value.includes(value)
+    return value !== null && selectedItems.value.includes(value)
   }
 
   const updateItems = (params: { clickValue: GroupItemValue | null; selectedItems: Iterable<GroupItemValue> }) => {
@@ -55,7 +58,7 @@ export const useGroupService = (
     }
 
     if (props.multiple) {
-      const tempSelectedItems = new Set([...computedSelectedItems.value])
+      const tempSelectedItems = new Set([...selectedItems.value])
 
       tempSelectedItems.add(clickValue)
       updateItems({ selectedItems: tempSelectedItems, clickValue })
@@ -72,7 +75,7 @@ export const useGroupService = (
     }
 
     if (props.multiple) {
-      const tempSelectedItems = new Set([...computedSelectedItems.value])
+      const tempSelectedItems = new Set([...selectedItems.value])
 
       if (tempSelectedItems.has(clickValue) && (!props.mandatory || tempSelectedItems.size > 1)) {
         tempSelectedItems.delete(clickValue)
@@ -84,7 +87,7 @@ export const useGroupService = (
   }
 
   const init = () => {
-    selectedItems.value = [...computedSelectedItems.value]
+    selectedItems.value = [...selectedItems.value]
   }
 
   watch([() => props.mandatory, () => props.multiple], init)
@@ -112,8 +115,6 @@ export const useGroupService = (
       return items.value
     }),
   })
-
-  provideProps(ProviderPropsName.groupProps, props)
 
   return {
     selectedItems,

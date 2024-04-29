@@ -25,7 +25,7 @@
         <SButton
           v-for="(item, id) in items"
           :key="id"
-          icon
+          variant="icon"
           size="small"
           :class="{
             s_carousel__controls__item: true,
@@ -45,7 +45,6 @@ import SIcon from '@sui/app/components/sIcon.vue'
 import { SWindow } from '@sui/app/components/window'
 import { getNumericCssAttribute } from '@sui/app/lib'
 import { propsCarousel } from '@sui/app/props'
-import { useModelService } from '@sui/app/services'
 import { type GroupItemValue } from '@sui/app/types'
 import { ref, computed, watch, onMounted } from 'vue'
 
@@ -57,12 +56,8 @@ const styleList = computed(() => {
   }
 })
 
-const props = defineProps({
-  ...propsCarousel(),
-})
-
-const emit = defineEmits<(event: 'update:modelValue', value: GroupItemValue | null) => void>()
-const model = useModelService(props, emit, 'modelValue')
+const props = defineProps(propsCarousel())
+const model = defineModel<GroupItemValue | null>()
 const windowRef = ref<typeof SWindow | null>()
 let slideTimeout = -1
 

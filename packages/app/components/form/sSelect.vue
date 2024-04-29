@@ -24,7 +24,8 @@
     <SFormInputError :errors="errors" :hidden="hideDetails"></SFormInputError>
 
     <SOverlay v-slot="{ attrs }" :value="model">
-      <div ref="contentElement" class="s_select__list" :style="contentStyles" :class="contentClasses" v-bind="attrs">
+      <OnClickOutside @trigger="onClickOutside">
+        <div ref="contentElement" class="s_select__list" :style="contentStyles" :class="contentClasses" v-bind="attrs">
         <SList link :dense="dense" :color="color" :text="text">
           <SListItem
             v-for="(item, id) in objectItems"
@@ -39,6 +40,7 @@
           </SListItem>
         </SList>
       </div>
+      </OnClickOutside>
     </SOverlay>
   </div>
 </template>
@@ -51,6 +53,8 @@ import { propsSelect } from '@sui/app/props'
 import { useBorderService, useDisabledService, useFormInputService, useMenuService } from '@sui/app/services'
 import { type SelectItem } from '@sui/app/types'
 import { ref, computed, watch } from 'vue'
+import { OnClickOutside } from '@vueuse/components'
+import { nextTick } from 'vue'
 
 const props = defineProps(propsSelect())
 
@@ -68,30 +72,23 @@ const selectElement = ref<HTMLElement | null>(null)
 const { classListBorder } = useBorderService(props)
 const { errors, updateFormInput } = useFormInputService<string | number>(props, emit)
 const { classListDisabled } = useDisabledService(props)
-
+const model = defineModel<boolean>('menu')
 const {
   activatorElement,
-  onClickOutside,
-  model,
   activatorOn,
   contentElement,
+  updateLocation,
   activatorAttrs,
   contentClasses,
   contentStyles,
-} = useMenuService<'menu'>(props, emit, {
-  modelKey: 'menu',
-  onChange: (value) => {
-    if (value) {
-      setTimeout(() => {
-        const selectedElement = contentElement.value?.querySelector<HTMLElement>('.s_select__listItem--selected')
+} = useMenuService(props, model)
 
-        if (contentElement.value) {
-          contentElement.value.scrollTop = selectedElement?.offsetTop ?? 0
-        }
-      })
-    }
-  },
-})
+const onClickOutside = () => {
+  if (model.value) {
+    updateFormInput()
+    model.value = false
+  }
+}
 
 const objectItems = computed<SelectItem[]>(() => {
   return props.items.map((item) => {
@@ -145,13 +142,6 @@ const activatorClasses = computed(() => {
   }
 })
 
-onClickOutside(async () => {
-  if (model.value) {
-    await updateFormInput()
-    model.value = false
-  }
-})
-
 const getItemValue = (item: SelectItem) => {
   return typeof item === 'string' ? item : item.value
 }
@@ -180,6 +170,18 @@ const selectItem = async (value: SelectItem | null) => {
 
 watch([() => props.grow, () => props.disabled, () => props.label], () => {
   model.value = false
+})
+
+watch(model, async () => {
+  if (model.value) {
+    await nextTick()
+    updateLocation()
+    const selectedElement = contentElement.value?.querySelector<HTMLElement>('.s_select__listItem--selected')
+
+    if (contentElement.value) {
+      contentElement.value.scrollTop = selectedElement?.offsetTop ?? 0
+    }
+  }
 })
 
 const displayText = computed(() => {

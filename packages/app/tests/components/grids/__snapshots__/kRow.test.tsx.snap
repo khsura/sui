@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SRow > renders correctly 1`] = `
+"<section class="s_row">
+  <div class="s_row__content"></div>
+</section>"
+`;
+
+exports[`SRow > renders correctly 1`] = `
+"<section class="s_row">
+  <div class="s_row__content"></div>
+</section>"
+`;

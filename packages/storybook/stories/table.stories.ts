@@ -25,7 +25,7 @@ export const Table = createStoryObj<typeof STable>({
         const expanded = ref<TableItem[]>([items.value[0]])
         const selected = ref<TableItem[]>([])
 
-        const itemClass = (_item) => {
+        const itemClass = (_item: typeof args.items[number]) => {
           return _item.value4 > 500 ? 's_backgroundColor__warning' : ''
         }
 
@@ -65,7 +65,7 @@ export const Table = createStoryObj<typeof STable>({
           <template #[\`item.value3\`]="{ item, value, expand, isExpanded }">
             <div>
               <span>{{ value }}</span>
-              <SButton icon size="mini" @click="expand" style="float:right;">
+              <SButton variant="icon" size="mini" @click="expand" style="float:right;">
                 <SIcon icon="mdi-menu-down" :rotated="isExpanded"></SIcon>
               </SButton>
             </div>
@@ -99,14 +99,17 @@ export const Table = createStoryObj<typeof STable>({
     outlined: true,
     underlined: true,
     multiSort: false,
-    stickyLeftColumns: 0,
+    stickyLeftColumnsOffset: 0,
+    stickyLeftColumnsSize: 0,
+    stickyLeftColumnsStart: 0,
     stickyHeader: false,
     singleExpand: false,
     itemHeader: 'value6',
     itemFooter: 'footerMessage',
     groupBy: 'value6',
-    noColumnBorder: false,
-    isExpandedContentShadowed: false,
+    hideTopBottomBorders: false,
+    hideVerticalBorders: false,
+    shadowExpandedContent: false,
     'onClick:row': action('click row'),
   },
 })

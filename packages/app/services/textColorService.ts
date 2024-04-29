@@ -1,16 +1,18 @@
 import { type PropsTextColor } from '@sui/app/definitions'
-import { getIsPresetColor } from '@sui/app/repositories/colorRepository'
+import { useColorRepository } from '@sui/app/repositories/colorRepository'
 import { computed } from 'vue'
 
 export const useTextColorService = (props: PropsTextColor) => {
-  const isPresetColor = computed(() => getIsPresetColor(props.color ?? null))
+  const { getIsPresetColor, getIsPredefinedPresetColor } = useColorRepository()
+  const isPredefinedPresetColor = computed(() => getIsPredefinedPresetColor(props.color))
+  const isPresetColor = computed(() => getIsPresetColor(props.color))
 
   const styleListTextColor = computed(() => {
-    return isPresetColor.value || !props.color ? {} : { color: props.color, fill: props.color }
+    return isPredefinedPresetColor.value || !props.color ? {} : { color: props.color, fill: props.color }
   })
 
   const classListTextColor = computed(() => {
-    if (isPresetColor.value) {
+    if (isPredefinedPresetColor.value) {
       return {
         [`s_textColor__${props.color}`]: true,
       }

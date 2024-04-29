@@ -4,7 +4,7 @@
     <SButton
       v-if="switchType"
       tile
-      icon
+      variant="icon"
       :aria-label="prevAriaLabel"
       :size="dense ? 'default' : 'extra'"
       :disabled="canGoPrev"
@@ -18,7 +18,7 @@
       v-if="switchType"
       class="s_datePickerSwitch__middleButton"
       tile
-      text
+      variant="text"
       :size="dense ? 'default' : 'extra'"
       @click="() => updateSelectedType(switchType)"
     >
@@ -29,7 +29,7 @@
     <SButton
       v-if="switchType"
       tile
-      icon
+      variant="icon"
       :aria-label="nextAriaLabel"
       :size="dense ? 'default' : 'extra'"
       :disabled="canGoNext"

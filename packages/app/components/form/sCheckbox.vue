@@ -10,8 +10,8 @@
 <script setup lang="ts">
 import FormInputError from '@sui/app/components/form/common/sFormInputError.vue'
 import { propsCheckbox } from '@sui/app/props'
-import { getIsPresetColor } from '@sui/app/repositories/colorRepository'
-import { useFormInputService, useModelService } from '@sui/app/services'
+import { useColorRepository } from '@sui/app/repositories/colorRepository'
+import { useFormInputService } from '@sui/app/services'
 import { computed } from 'vue'
 
 const props = defineProps(propsCheckbox())
@@ -24,14 +24,18 @@ const emit = defineEmits<{
   (event: 'update:dirty', value: boolean): void
 }>()
 
+// TODO: Sura - make able to use all preset colors
+const { getIsPredefinedPresetColor } = useColorRepository()
 const { updateFormInput, errors } = useFormInputService<boolean>(props, emit)
 
-const model = useModelService<boolean, 'modelValue', typeof props, typeof emit>(props, emit, 'modelValue', {
-  formatter: (v) => {
+const model = defineModel<boolean>('modelValue', {
+  get: (v) => {
     return v ?? false
   },
-  onChange: async (value) => {
-    await updateFormInput(value ?? false, true)
+  set: (v) => {
+    void updateFormInput(v, true)
+
+    return v
   },
 })
 
@@ -40,7 +44,7 @@ const checkboxClasses = computed(() => {
     's_checkbox--bordered': props.bordered,
     's_checkbox--block': props.block,
     's_checkbox--size__large': props.size === 'large',
-    [`s_checkbox--color__${props.color}`]: getIsPresetColor(props.color),
+    [`s_checkbox--color__${props.color}`]: getIsPredefinedPresetColor(props.color),
   }
 })
 </script>

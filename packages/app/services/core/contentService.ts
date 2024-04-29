@@ -1,4 +1,4 @@
-import { type PropsContent } from '@sui/app/definitions'
+import { type PropsContent } from '@sui/app/types'
 import { computed } from 'vue'
 
 export const useContentService = (props: PropsContent) => {
@@ -22,8 +22,16 @@ export const useContentService = (props: PropsContent) => {
     }
   })
 
+  const attrs = computed(() => {
+    return {
+      style: styles.value,
+      class: classes.value,
+    }
+  })
+
   return {
     classes,
     styles,
+    attrs,
   }
 }

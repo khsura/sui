@@ -1,8 +1,7 @@
 import { AppTheme } from '@sui/app/constants/app'
-import { cssColors } from '@sui/app/constants/color'
 import { type PropsColor } from '@sui/app/definitions'
 import { isDarkColor } from '@sui/app/lib/color'
-import { getBackgroundColorAttributes, getIsPresetColor } from '@sui/app/repositories/colorRepository'
+import { useColorRepository } from '@sui/app/repositories/colorRepository'
 import { computed, isRef } from 'vue'
 import { type Ref } from 'vue'
 import { useAppProviderService } from './appProviderService'
@@ -12,6 +11,7 @@ export const useColorService = (
   options: { isText?: boolean | Ref<boolean> } = { isText: false },
 ) => {
   const { config } = useAppProviderService()
+  const { getIsPresetColor, getBackgroundColorAttributes } = useColorRepository()
 
   const isText = computed(() => {
     if (options.isText === undefined) {
@@ -26,7 +26,7 @@ export const useColorService = (
   })
 
   const isPresetColor = computed(() => {
-    return getIsPresetColor(props.color ?? null)
+    return getIsPresetColor(props.color)
   })
 
   const hasPresetTextColor = computed(() => {
@@ -47,7 +47,7 @@ export const useColorService = (
     }
 
     const presetColor: string | undefined = config.themes[config.theme].presetColors[props.color]
-    const backgroundColor = presetColor ?? cssColors[props.color] ?? props.color
+    const backgroundColor = presetColor ?? props.color
     const noNeedToSetTextColor = isPresetColor.value && props.colorThreshold === undefined
     const isDark = noNeedToSetTextColor ? null : isDarkColor(backgroundColor, props.colorThreshold)
 
@@ -67,7 +67,7 @@ export const useColorService = (
       return { class: {}, style: {} }
     }
 
-    return getBackgroundColorAttributes(config, props.color ?? null)
+    return getBackgroundColorAttributes(props.color)
   })
 
   const styleListColor = computed(() => {
@@ -93,8 +93,21 @@ export const useColorService = (
     }
   })
 
+  const colorVariable = computed(() => {
+    if (!props.color) {
+      return null
+    }
+
+    if (getIsPresetColor(props.color)) {
+      return `var(--s-color-${props.color})`
+    }
+
+    return props.color
+  })
+
   return {
     styleListColor,
     classListColor,
+    colorVariable,
   }
 }

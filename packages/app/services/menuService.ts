@@ -1,36 +1,27 @@
-import { type PropsMenu, type PropsSelectMenu } from '@sui/app/definitions'
-import { getViewportLocation } from '@sui/app/lib/browser'
+import { type PropsMenu } from '@sui/app/definitions'
 import { getNumericCssAttribute } from '@sui/app/lib'
-import { type EmitActivator, type MenuContentStyle } from '@sui/app/types'
-import { ref, nextTick, computed } from 'vue'
+import { getViewportLocation } from '@sui/app/lib/browser'
+import { type MenuContentStyle } from '@sui/app/types'
+import { computed, ref, type ModelRef } from 'vue'
 import { useActivatorService, useContentService, useLocationService } from './core'
 
-export const useMenuService = <T extends 'modelValue' | 'menu' = 'modelValue'>(
-  props: T extends 'menu' ? PropsSelectMenu : PropsMenu,
-  emit: EmitActivator<T>,
+export const useMenuService = (
+  props: PropsMenu,
+  model: ModelRef<boolean | null | undefined>,
   options?: {
-    modelKey?: T
     noContentMinWidth?: boolean
     offset?: number
     alignMiddle?: boolean
     onChange?: (v: boolean | undefined | null) => void
   },
 ) => {
-  const modelKey = (options?.modelKey ?? 'modelValue') as T
   const { isRight, isLeft, isBottom, isTop } = useLocationService(props)
   const offset = options?.offset ?? 0
   const content = useContentService(props)
   const top = ref(0)
   const left = ref(0)
   const minWidth = ref<number | null>(null)
-
-  const activatorService = useActivatorService<T>(props, emit, modelKey, async (value) => {
-    options?.onChange?.(value)
-    await nextTick()
-    updateLocation()
-    await nextTick()
-    updateLocation()
-  })
+  const activatorService = useActivatorService(props, model)
 
   const getContentLocation = () => {
     const element = activatorService.contentElement.value
@@ -110,6 +101,7 @@ export const useMenuService = <T extends 'modelValue' | 'menu' = 'modelValue'>(
   }
 
   return {
+    updateLocation,
     ...activatorService,
     contentClasses: content.classes,
     contentStyles,

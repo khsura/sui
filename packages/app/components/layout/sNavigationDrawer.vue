@@ -28,7 +28,6 @@ import {
   useElevationService,
   useLayoutService,
   useLocationService,
-  useModelService,
   usePositionService,
   useProviderService,
   useResizeService,
@@ -44,19 +43,14 @@ const { isBottom, isRight, computedLocation } = useLocationService(props)
 const emit = defineEmits<{
   (event: 'transitionend', value: Event): void
   (event: 'update:miniVariant', value: boolean): void
-  (event: 'update:modelValue', value: boolean | null): void
 }>()
 
 const navigationDrawer: Ref<HTMLElement | null> = ref(null)
 const isMouseover = ref(false)
 
-const model = useModelService(props, emit, 'modelValue', {
-  formatter: (value) => {
-    if (props.permanent) {
-      return true
-    }
-
-    return value
+const model = defineModel<boolean>({
+  get: (value) => {
+    return props.permanent ? true : value
   },
 })
 
@@ -296,6 +290,7 @@ const transitionName = computed(() => {
   if (computedLocation.value === 'top') {
     return transitions.left
   }
+
   return transitions[computedLocation.value ?? 'left']
 })
 

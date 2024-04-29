@@ -1,7 +1,7 @@
 import { type PropType } from 'vue'
 import { propsBorder, propsGroup, propsToggleButtonGroupVariant } from './core'
 
-const { underlined, ...borderProps } = propsBorder()
+const { underlined: _, ...borderProps } = propsBorder()
 
 export const propsToggleButtonGroup = () => {
   return {

@@ -8,11 +8,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { cssColors } from '@sui/app/constants/color'
-import { propsFormInput } from '@sui/app/props'
-import { getIsPresetColor } from '@sui/app/repositories/colorRepository'
-import { useDisabledService, useModelService } from '@sui/app/services'
+import { propsColor, propsFormInput } from '@sui/app/props'
+import { useColorService, useDisabledService } from '@sui/app/services'
 import { computed } from 'vue'
+import { CssColor } from '@sui/app/constants'
 
 const props = defineProps({
   label: {
@@ -20,16 +19,12 @@ const props = defineProps({
     default: null,
   },
   ...propsFormInput<boolean>({ modelValue: { required: true } }),
-  color: {
-    type: String,
-    default: 'primary',
-  },
+  ...propsColor(),
 })
 
-const emit = defineEmits<(event: 'update:modelValue', value: boolean) => void>()
-
-const modelValue = useModelService(props, emit)
+const modelValue = defineModel<boolean>()
 const { classListDisabled, classListTextDisabled } = useDisabledService(props)
+const { colorVariable } = useColorService(props)
 
 const switchClasses = computed(() => {
   return {
@@ -39,18 +34,10 @@ const switchClasses = computed(() => {
 
 const backgroundColor = computed(() => {
   if (modelValue.value) {
-    if (getIsPresetColor(props.color)) {
-      return `var(--s-color-${props.color})`
-    } else if (cssColors[props.color]) {
-      return cssColors[props.color]
-    } else if (Object.values(cssColors).includes(props.color)) {
-      return props.color
-    }
-
-    return 'var(--s-color-primary)'
+    return colorVariable.value ?? 'var(--s-color-primary)'
   }
 
-  return cssColors.chinesesilver
+  return CssColor.chinesesilver
 })
 
 const switchButtonClasses = computed(() => {

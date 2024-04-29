@@ -2,7 +2,7 @@ import { type SelectItem } from '@sui/app/types'
 import { type PropType } from 'vue'
 import { propsBorder, propsColor, propsContent } from './core'
 import { propsFormInput } from './formInputProps'
-import { propsSelectMenu } from './menuProps'
+import { propsMenu } from './menuProps'
 
 export const propsSelect = () => {
   return {
@@ -31,7 +31,7 @@ export const propsSelect = () => {
       default: false,
     },
     ...propsBorder(),
-    ...propsSelectMenu(),
+    ...propsMenu(),
     ...propsFormInput<string | number>(),
     ...propsContent(),
     ...propsColor(),

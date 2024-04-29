@@ -10,7 +10,7 @@
       </div>
       <div v-for="(date, i) in dates" :key="i" class="s_datePickerDate__day">
         <SButton
-          text
+          variant="text"
           rounded
           :outlined="date.isCurrent && !date.isSelected"
           :class="{

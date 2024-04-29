@@ -4,26 +4,13 @@ import { getNumericCssAttribute } from '@sui/app/lib'
 import { getDatePickerFormat } from '@sui/app/repositories'
 import { type DatePickerSelectTypeType } from '@sui/app/types'
 import dayjs from '@sui/app/vendors/dayjs'
-import { computed, ref } from 'vue'
-import { useModelService } from '../core'
+import { type ModelRef, computed, ref } from 'vue'
 
-export const useDatePickerService = (
-  props: PropsDatePicker,
-  emit: ((event: 'update:modelValue', value: string) => void) & ((event: 'change') => void),
-) => {
+export const useDatePickerService = (props: PropsDatePicker, model: ModelRef<string | null | undefined>) => {
   const selectedType = ref<DatePickerSelectTypeType>(props.type)
 
-  const selectedDateFormatted = useModelService(props, emit, 'modelValue', {
-    formatter: (value) => {
-      return dayjs(value).format(getDatePickerFormat(props.type))
-    },
-    onChange: () => {
-      emit('change')
-    },
-  })
-
   const selectedDate = computed(() => {
-    return dayjs(selectedDateFormatted.value)
+    return dayjs(model.value)
   })
 
   const selectedDateTemporary = ref(selectedDate.value.format(getDatePickerFormat(props.type)))
@@ -38,7 +25,6 @@ export const useDatePickerService = (
 
   return {
     selectedType,
-    selectedDateFormatted,
     selectedDate,
     selectedDateTemporary,
     datePickerItemHeight,

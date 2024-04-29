@@ -1,4 +1,5 @@
-import { colorThreshold, cssColors } from '@sui/app/constants'
+import { getCssColor } from '@sui/app/helpers/colorHelpers'
+import { colorThreshold } from '@sui/app/constants'
 
 export const hexToRgb = (hex: string) => {
   if (!/^#(([0-9a-fA-F]{3,4})|([0-9a-fA-F]{6})|([0-9a-fA-F]{8}))$/.test(hex)) {
@@ -28,7 +29,7 @@ export const hexToRgb = (hex: string) => {
 
 export const convertToRgb = (rgb: string | [number, number, number] | { r: number; g: number; b: number }) => {
   if (typeof rgb === 'string') {
-    const cssColor = cssColors[rgb.toLowerCase()]
+    const cssColor = getCssColor(rgb)
 
     if (cssColor !== undefined) {
       return hexToRgb(cssColor)
@@ -49,9 +50,13 @@ export const convertToRgb = (rgb: string | [number, number, number] | { r: numbe
 }
 
 export const isDarkColor = (
-  rgb: string | [number, number, number] | { r: number; g: number; b: number },
+  rgb: string | [number, number, number] | { r: number; g: number; b: number } | null | undefined,
   threshold = colorThreshold,
 ) => {
+  if (!rgb) {
+    return null
+  }
+
   const color = convertToRgb(rgb)
 
   if (color) {

@@ -10,32 +10,15 @@
 </template>
 <script setup lang="ts">
 import SIcon from '@sui/app/components/sIcon.vue'
-import { propsBorder, propsColor, propsDisabled, propsSizePreset } from '@sui/app/props'
+import { propsChip } from '@sui/app/props'
 import { useBorderService, useColorService, useDisabledService, useSizeService } from '@sui/app/services'
 import { computed } from 'vue'
 
-const props = defineProps({
-  ...propsColor(),
-  ...propsDisabled(),
-  ...propsBorder(),
-  ...propsSizePreset(),
-  label: {
-    type: Boolean,
-    default: false,
-  },
-  closable: {
-    type: Boolean,
-    default: false,
-  },
-  link: {
-    type: Boolean,
-    default: false,
-  },
-})
+const props = defineProps(propsChip())
 
 const emit = defineEmits<{
   (event: 'close'): void
-  (event: 'click', value: Event): void
+  (event: 'click', _: Event): void
 }>()
 
 const { classListBorder } = useBorderService(props, { block: 'chip' })

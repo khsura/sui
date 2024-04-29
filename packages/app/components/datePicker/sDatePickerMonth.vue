@@ -10,7 +10,7 @@
       }"
     >
       <SButton
-        text
+        variant="text"
         class="s_datePickerMonth__button"
         block
         :disabled="month.isDisabled"

@@ -2,7 +2,7 @@
   "extends": "@sui/shared/tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@/*": ["./*"]
+      "@sui/app/*": ["./*"]
     }
   },
   "include": [

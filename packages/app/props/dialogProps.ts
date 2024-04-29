@@ -1,6 +1,4 @@
-import { propsMeasurableStyles } from '@sui/app/props/core/measurableStyles'
-
-import { propsActivator, propsLocation } from './core'
+import { propsActivator, propsElevation, propsLocation, propsMeasurableStyles } from './core'
 
 export const propsDialog = () => {
   return {
@@ -16,8 +14,17 @@ export const propsDialog = () => {
       type: Boolean,
       default: false,
     },
+    borderless: {
+      type: Boolean,
+      default: false,
+    },
+    scrollableBackground: {
+      type: Boolean,
+      default: false,
+    },
     ...propsLocation(),
     ...propsMeasurableStyles(),
     ...propsActivator(),
+    ...propsElevation(),
   }
 }

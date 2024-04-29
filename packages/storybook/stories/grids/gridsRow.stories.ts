@@ -1,7 +1,7 @@
 import { SRow, SCard, SColumn } from '@sui/app/components'
 import { gridAlignProperties, gridJustifyProperties } from '@sui/app/configs'
-import { createStoryObj } from '@sui/storybook/helpers'
-import type { Meta } from '@storybook/vue3'
+import { type Meta } from '@storybook/vue3'
+import { type StoryObj } from '@storybook/vue3'
 
 const grids: Meta<typeof SRow> = {
   title: 'UI Components/Grids/Row',
@@ -16,9 +16,23 @@ const grids: Meta<typeof SRow> = {
     },
     noGutters: {
       type: { name: 'string', required: false },
-      description: 'Removes default margins around elements',
+      description: 'Removes paddings around the row and kColumns',
       control: {
         type: 'boolean',
+      },
+    },
+    noOuterGutters: {
+      type: { name: 'string', required: false },
+      description: 'Removes default margins around the row',
+      control: {
+        type: 'boolean',
+      },
+    },
+    gap: {
+      type: { name: 'string', required: false },
+      description: 'Sets the gap between columns',
+      control: {
+        type: 'number',
       },
     },
   },
@@ -26,17 +40,60 @@ const grids: Meta<typeof SRow> = {
 
 export default grids
 
-export const Row = createStoryObj<typeof SRow>({
+export const RowWithColumn: StoryObj<typeof SRow> = {
   render: (args) => {
     return {
       template: /* html */ `        
-      <SRow style="border: 1px solid black; height: 120px" v-bind="args">        
+      <SRow style="border: 1px solid black;" v-bind="args">        
+        <SColumn v-for="(style, i) in cards" :key="i" cols="auto">
+          <SCard
+            min-width="100"
+            outlined
+            :style="style"
+            class="k_textAlign__center"
+          >
+            {{ i }}
+          </SCard>
+        </SColumn>
+      </SRow>
+      `,
+      components: { SRow, SCard, SColumn },
+      setup() {
+        const cardCount = 4 + Math.floor(Math.random() * 10)
+
+        const cards = Array(cardCount)
+          .fill(0)
+          .map(() => {
+            return {
+              minHeight: `${40 + Math.random() * 30}px`,
+            }
+          })
+
+        return {
+          args,
+          cards,
+        }
+      },
+    }
+  },
+  args: {
+    noGutters: false,
+    noOuterGutters: false,
+    dense: false,
+  },
+}
+
+export const RowWithoutColumn: StoryObj<typeof SRow> = {
+  render: (args) => {
+    return {
+      template: /* html */ `        
+      <SRow style="border: 1px solid black;" v-bind="args">        
         <SCard
-          v-for="i in 4" :key="i"
-          max-width="100px"
+          width="100px"
+          v-for="(style, i) in cards" :key="i"
           outlined
-          :style="variableHeight()"
-          class="s_ma__1 k_textAlign__center"
+          :style="style"
+          class="k_textAlign__center"
         >
           {{ i }}
         </SCard>
@@ -44,16 +101,26 @@ export const Row = createStoryObj<typeof SRow>({
       `,
       components: { SRow, SCard, SColumn },
       setup() {
-        const variableHeight = () => ({ 'min-height': `${40 + Math.random() * 30}px` })
+        const cardCount = 4 + Math.floor(Math.random() * 10)
+
+        const cards = Array(cardCount)
+          .fill(0)
+          .map(() => {
+            return {
+              minHeight: `${40 + Math.random() * 30}px`,
+            }
+          })
 
         return {
           args,
-          variableHeight,
+          cards,
         }
       },
     }
   },
   args: {
     noGutters: false,
+    noOuterGutters: false,
+    dense: false,
   },
-})
+}

@@ -5,30 +5,15 @@
 </template>
 <script setup lang="ts">
 import { ProviderPropsName } from '@sui/app/constants'
-import { propsGroup } from '@sui/app/props'
+import { propsExpansionPanels } from '@sui/app/props'
 import { useGroupService, useProviderService } from '@sui/app/services'
-import { type GroupItemValue, type SizePropertyType, type MaterialDesignIcon } from '@sui/app/types'
-import { type PropType } from 'vue'
 
-const props = defineProps({
-  ...propsGroup<number>(),
-  // eslint-disable-next-line vue/no-unused-properties
-  expandIcon: {
-    type: String as PropType<MaterialDesignIcon>,
-    default: 'mdi-chevron-down',
-  },
-  // eslint-disable-next-line vue/no-unused-properties
-  expandIconSize: {
-    type: String as PropType<SizePropertyType>,
-    default: null,
-  },
-})
-
+const props = defineProps(propsExpansionPanels())
+const model = defineModel<number[]>({ default: [], required: false })
 const { provideProps } = useProviderService()
-const emit = defineEmits<(event: 'update:modelValue', value: GroupItemValue[] | null) => void>()
 
 provideProps(ProviderPropsName.expansionPanelsProps, props)
-useGroupService(props, emit)
+useGroupService(props, model)
 </script>
 
 <style lang="scss">

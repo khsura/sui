@@ -2,6 +2,7 @@
 import { breakpoints } from '@sui/app/constants'
 import { ref, computed, onMounted } from 'vue'
 import { useAppProviderService } from './appProviderService'
+import { useMediaQuery } from '@vueuse/core'
 
 export const useDisplayService = () => {
   const { config } = useAppProviderService()
@@ -127,6 +128,10 @@ export const useDisplayService = () => {
     return getValue(config.display.height)
   })
 
+  const isHoverUnsupported = useMediaQuery('(hover: none)')
+  const isCoarsePointer = useMediaQuery('(pointer: coarse)')
+  const isTouchDevice = computed(() => getValue(isHoverUnsupported.value) || getValue(isCoarsePointer.value))
+
   onMounted(() => {
     isLoaded.value = true
   })
@@ -152,5 +157,6 @@ export const useDisplayService = () => {
     mobile,
     width,
     height,
+    isTouchDevice,
   }
 }

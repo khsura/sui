@@ -1,47 +1,13 @@
-import { type PropsActivator, type PropsSelectMenuActivator } from '@sui/app/definitions'
-import { getDocument, getWindow } from '@sui/app/lib/browser'
+import { type PropsActivator } from '@sui/app/definitions'
+import { getDocument } from '@sui/app/lib/browser'
 import { getCleanSetObject } from '@sui/app/lib/getCleanSetObject'
-import { type EmitActivator } from '@sui/app/types'
-import { ref, computed } from 'vue'
-import { type Ref, type ComputedRef, type WritableComputedRef } from 'vue'
-import { useClickOutsideService } from './clickOutsideService'
-import { useModelService } from './modelService'
+import { ref, computed, type ModelRef } from 'vue'
+import { type Ref, type ComputedRef } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 
-export const useActivatorService = <T extends 'modelValue' | 'menu'>(
-  props: T extends 'menu' ? PropsSelectMenuActivator : PropsActivator,
-  emit: EmitActivator<T>,
-  name: T,
-  onModelChange?: (v: boolean | undefined | null) => void,
-) => {
+export const useActivatorService = (props: PropsActivator, model: ModelRef<boolean | null | undefined>) => {
   const contentElement: Ref<HTMLElement | null> = ref(null)
   const activatorElement: Ref<HTMLElement | null> = ref(null)
-  const { onClick } = useClickOutsideService()
-  const listeners: Array<{ register: () => void; unregister: () => void }> = []
-
-  const model: WritableComputedRef<boolean | null | undefined> = useModelService<boolean | null | undefined, T>(
-    props,
-    emit,
-    name,
-    {
-      onChange: (newValue) => {
-        const value = newValue
-
-        onModelChange?.(value)
-
-        getWindow()?.setTimeout(() => {
-          if (value) {
-            listeners.forEach((listener) => {
-              listener.register()
-            })
-          } else {
-            listeners.forEach((listener) => {
-              listener.unregister()
-            })
-          }
-        })
-      },
-    },
-  )
 
   const activatorOn = {
     click: () => {
@@ -72,24 +38,11 @@ export const useActivatorService = <T extends 'modelValue' | 'menu'>(
     return props.activator.$el as HTMLElement
   })
 
-  const onClickOutside = (eventListener: (event: Event) => void) => {
-    listeners.push(
-      onClick([contentElement, computedActivatorElement], ({ isOutside }, event) => {
-        if (isOutside) {
-          eventListener(event)
-        }
-      }),
-    )
-  }
-
-  const onClickContent = (eventListener: (event: Event) => void) => {
-    listeners.push(
-      onClick([contentElement, computedActivatorElement], ({ isOutside }, event) => {
-        if (!isOutside && contentElement.value?.contains(event.target as HTMLElement)) {
-          eventListener(event)
-        }
-      }),
-    )
+  const onClickOutsideOfContent = (eventListener: (event: Event) => void) => {
+    onClickOutside(contentElement.value, (event) => {
+      console.log(event)
+      eventListener(event)
+    })
   }
 
   const getActivatorLocation = () => {
@@ -105,12 +58,10 @@ export const useActivatorService = <T extends 'modelValue' | 'menu'>(
   return {
     activatorElement,
     computedActivatorElement,
-    getActivatorLocation,
     contentElement,
-    model,
     activatorOn,
     activatorAttrs,
-    onClickOutside,
-    onClickContent,
+    getActivatorLocation,
+    onClickOutsideOfContent,
   }
 }

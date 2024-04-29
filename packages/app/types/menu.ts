@@ -5,3 +5,7 @@ export interface MenuContentStyle extends CSSProperties {
   left: string
   minWidth?: string
 }
+
+export interface EmitMenu {
+  (event: 'close'): void
+}

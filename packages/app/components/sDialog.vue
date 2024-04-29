@@ -4,37 +4,26 @@
       <slot name="activator" :on="activatorOn" :attrs="activatorAttrs"></slot>
     </div>
     <SOverlay v-slot="{ attrs }" scrim :value="model" :transition="transitionName">
-      <div
-        v-bind="attrs"
-        ref="contentElement"
-        :class="{ ...contentClasses, ...classListElevation }"
-        :style="contentStyles"
-      >
-        <slot></slot>
-      </div>
+      <OnClickOutside @trigger="onClickOutside">
+        <div v-bind="attrs" :class="contentClasses" :style="contentStyles">
+          <slot></slot>
+        </div>
+      </OnClickOutside>
     </SOverlay>
   </section>
 </template>
 <script setup lang="ts">
 import SOverlay from '@sui/app/components/sOverlay.vue'
 import { propsDialog, propsElevation } from '@sui/app/props'
-import { useDialogService, useElevationService } from '@sui/app/services'
+import { useDialogService } from '@sui/app/services'
+import { OnClickOutside } from '@vueuse/components'
 
 const props = defineProps({ ...propsDialog(), ...propsElevation() })
-const emit = defineEmits<(event: 'update:modelValue', value: boolean | null | undefined) => void>()
+const model = defineModel<boolean>()
 
-const {
-  activatorOn,
-  activatorAttrs,
-  activatorElement,
-  contentClasses,
-  contentStyles,
-  contentElement,
-  model,
-  transitionName,
-} = useDialogService(props, emit)
+const { activatorOn, activatorAttrs, activatorElement, contentClasses, contentStyles, transitionName, onClickOutside } =
+  useDialogService(props, model)
 
-const { classListElevation } = useElevationService(props)
 </script>
 
 <style lang="scss">

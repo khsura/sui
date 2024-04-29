@@ -7,7 +7,6 @@ export {
   useClickOutsideService as useClickOutside,
   useDisplayService as useDisplay,
   useLocaleService as useLocale,
-  useModelService as useModel,
   useScrollService as useScroll,
   useThemeService as useTheme,
 } from '@sui/app/services'

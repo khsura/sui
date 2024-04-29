@@ -2,34 +2,11 @@
   <span aria-hidden="true" :class="classList" :style="styleList"></span>
 </template>
 <script setup lang="ts">
-import { propsSizeUnion, propsTextColor, propsComponentTheme } from '@sui/app/props'
-import { useSizeService, useTextColorService, useComponentThemeService } from '@sui/app/services'
-import { type MaterialDesignIcon, type MaterialDesignIconExtra } from '@sui/app/types'
+import { propsIcon } from '@sui/app/props'
+import { useComponentThemeService, useSizeService, useTextColorService } from '@sui/app/services'
 import { computed } from 'vue'
-import { type PropType } from 'vue'
 
-const props = defineProps({
-  icon: {
-    type: String as PropType<MaterialDesignIcon>,
-    required: true,
-  },
-  extra: {
-    type: Array as PropType<Array<MaterialDesignIconExtra | string> | null>,
-    default: () => [],
-  },
-  rotated: {
-    type: Boolean as PropType<boolean | null | undefined>,
-    default: false,
-  },
-  spin: {
-    type: Boolean,
-    default: false,
-  },
-  ...propsSizeUnion(),
-  ...propsTextColor(),
-  ...propsComponentTheme(),
-})
-
+const props = defineProps(propsIcon())
 const { classListTextColor, styleListTextColor, isPresetColor } = useTextColorService(props)
 const { themeClasses } = useComponentThemeService(props)
 const { classListSize, styleListSize } = useSizeService(props, { block: 'icon' })

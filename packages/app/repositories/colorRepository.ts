@@ -1,41 +1,72 @@
-import { presetColors } from '@sui/app/configs/color'
-import { type AppState, type ExposedAppColorType, type PresetColorType } from '@sui/app/types'
+import { z } from 'zod'
+import { PresetColor } from '@sui/app/constants'
+import { getCleanSetObject } from '@sui/app/lib'
+import { useAppProviderRepository } from './appProviderRepository'
 
-export const getBackgroundColorAttributes = (config: AppState, color: string | null) => {
-  const isPresetColor = getIsPresetColor(color)
+export const useColorRepository = () => {
+  const { config } = useAppProviderRepository()
 
-  const isCustomPresetColor = !isPresetColor && !!color && !!config.themes[config.theme].presetColors[color]
-
-  const getStyle = ():
-    | { backgroundColor: string; color: string }
-    | { backgroundColor: string }
-    | Record<string, never> => {
-    if (isPresetColor || !color) {
-      return {}
+  const getPresetColor = (color: string | undefined | null) => {
+    if (!color) {
+      return undefined
     }
 
-    if (isCustomPresetColor) {
+    return config.themes[config.theme].presetColors[color] ? color : undefined
+  }
+
+  const getPresetColorValue = (color: string | undefined | null) => {
+    if (!color) {
+      return undefined
+    }
+
+    const presetColorValue = config.themes[config.theme].presetColors[color]
+
+    return presetColorValue ? presetColorValue : color
+  }
+
+  const getIsPredefinedPresetColor = (color: string | undefined | null) => {
+    return z.nativeEnum(PresetColor).safeParse(color).success
+  }
+
+  const getIsPresetColor = (color: string | undefined | null) => {
+    return getPresetColor(color) !== undefined
+  }
+
+  const getBackgroundColorAttributes = (color: string | undefined | null) => {
+    const isPredefinedPresetColor = getIsPredefinedPresetColor(color)
+
+    const getStyle = () => {
+      if (!color || isPredefinedPresetColor) {
+        return getCleanSetObject({})
+      }
+
+      if (getIsPresetColor(color)) {
+        return {
+          backgroundColor: `var(--s-color-${color})`,
+          color: `var(--s-color-${color}--text)`,
+        }
+      }
+
       return {
-        backgroundColor: `var(--s-color-${color})`,
-        color: `var(--s-color-${color}--text)`,
+        backgroundColor: color,
       }
     }
 
     return {
-      backgroundColor: color,
+      class: isPredefinedPresetColor
+        ? {
+            [`s_backgroundColor__${color}`]: true,
+          }
+        : {},
+      style: getStyle(),
     }
   }
 
   return {
-    class: isPresetColor
-      ? {
-          [`s_backgroundColor__${color}`]: true,
-        }
-      : {},
-    style: getStyle(),
+    getPresetColor,
+    getIsPresetColor,
+    getPresetColorValue,
+    getIsPredefinedPresetColor,
+    getBackgroundColorAttributes,
   }
-}
-
-export const getIsPresetColor = (color: string | undefined | null) => {
-  return color !== null && color !== undefined && presetColors.includes(color as PresetColorType | ExposedAppColorType)
 }

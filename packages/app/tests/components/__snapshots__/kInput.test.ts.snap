@@ -1,0 +1,40 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SInput > renders correctly 1`] = `
+<section
+  class="s_input"
+>
+  <!--v-if-->
+  <div
+    class="s_input__container"
+  >
+    <section
+      class="s_row s_row--noGutters s_input__main"
+    >
+      <div
+        class="s_row__content s_row__content--noGutters s_align__center"
+      >
+        
+        <div
+          class="s_input__field"
+        >
+          <input
+            class="s_input__input"
+            id="password"
+            inputmode="text"
+            type="text"
+          />
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <!--v-if-->
+        </div>
+        <!--v-if-->
+        
+      </div>
+    </section>
+    <!--v-if-->
+  </div>
+  <div
+    class="s_formInputError"
+  />
+</section>
+`;

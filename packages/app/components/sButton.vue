@@ -1,5 +1,5 @@
 <template>
-  <Component
+  <component
     :is="tagName"
     :disabled="disabled || loading"
     :class="classList"
@@ -11,38 +11,41 @@
   >
     <SProgressCircular v-if="loading" indeterminate :size="progressSize"></SProgressCircular>
     <slot v-else></slot>
-  </Component>
+  </component>
 </template>
 
 <script setup lang="ts">
 import { ProviderPropsName, SizeProperty } from '@sui/app/constants'
 import { propsButton } from '@sui/app/props'
 import {
-  useLinkService,
   useBorderService,
   useColorService,
   useDisabledService,
   useElevationService,
+  useLinkService,
   useMeasurableStylesService,
-  useProviderService,
   useSingleGroupItemService,
   useSizeService,
   useTextColorService,
 } from '@sui/app/services'
 import { computed } from 'vue'
 import { SProgressCircular } from './progress'
+import { getCleanSetObject, isDarkColor } from '@sui/app/lib'
+import { useColorRepository, useProviderRepository } from '@sui/app/repositories'
 
 const props = defineProps(propsButton())
 const emit = defineEmits<(event: 'click', value: Event) => void>()
 const { measurableStyles } = useMeasurableStylesService(props)
 const { classListElevation } = useElevationService(props)
 const { classListDisabled } = useDisabledService(props)
+const { getPresetColorValue } = useColorRepository()
 const isIcon = computed(() => props.variant === 'icon')
 const isFab = computed(() => props.variant === 'fab')
 const isText = computed(() => props.variant === 'text')
 
 const { classListColor, styleListColor } = useColorService(props, {
   isText: computed(() => {
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     return props.outlined || props.underlined || isIcon.value
   }),
 })
@@ -51,7 +54,7 @@ const { classListTextColor, styleListTextColor } = useTextColorService(props)
 const { classListSize, styleListSize, isPresetSize } = useSizeService(props, { block: 'button' })
 const { classListBorder } = useBorderService(props, { block: 'button' })
 const { tag: tagName, isLink } = useLinkService(props)
-const { injectParentProps } = useProviderService()
+const { injectParentProps } = useProviderRepository()
 const bottomNavigationProps = injectParentProps(ProviderPropsName.bottomNavigation, null)
 
 const { toggleGroupItem, isSelected } =
@@ -64,8 +67,13 @@ const { toggleGroupItem, isSelected } =
 
 const toolbarProps = injectParentProps(ProviderPropsName.toolbar, null)
 
+// TODO: Sura - use more common approach
+const isDarkToolbar = computed(() => {
+  return isDarkColor(getPresetColorValue(toolbarProps.value?.color), toolbarProps.value?.colorThreshold)
+})
+
 const classList = computed((): Record<string, boolean | null | undefined> => {
-  return {
+  return getCleanSetObject({
     s_button: true,
     ...classListElevation.value,
     ...classListSize.value,
@@ -83,7 +91,8 @@ const classList = computed((): Record<string, boolean | null | undefined> => {
     's_bottomNavigationButton--shift': !!bottomNavigationProps.value?.shift,
     s_toolbarButton: toolbarProps.value !== null,
     [bottomNavigationProps.value?.activeClass ?? '']: isSelected.value && bottomNavigationProps.value?.activeClass,
-  }
+    ...(isDarkToolbar.value ? { s_dark: true } : {}),
+  })
 })
 
 const styleList = computed(() => {
@@ -124,7 +133,6 @@ const click = (event: Event) => {
 .s_button {
   @include s_typography('button');
   @include s_button();
-  @include s_dark();
   background-color: s_getAppColor('background');
 
   &--block {
@@ -219,6 +227,7 @@ const click = (event: Event) => {
 
   &--readonly {
     user-select: none;
+
     // except for touch devices
     @media (hover: hover) {
       &:hover::before {
@@ -248,7 +257,6 @@ $s_bottomNavigationShiftButtonActiveTop: calc(100% - 22px) !default;
   font-size: $s_bottomNavigationButtonFontSize;
   text-transform: none;
   background-color: transparent;
-  background-color: s_getAppColor('card');
   border-radius: 0;
   box-shadow: none;
 

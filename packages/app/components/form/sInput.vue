@@ -69,7 +69,7 @@
 import { SColumn, SRow } from '@sui/app/components/grids'
 import { getNumericValue, getCleanSetObject } from '@sui/app/lib'
 import { propsInput } from '@sui/app/props'
-import { getIsPresetColor } from '@sui/app/repositories/colorRepository'
+import { useColorRepository } from '@sui/app/repositories/colorRepository'
 import { useDisabledService, useFormInputService, useSizeService } from '@sui/app/services'
 import kFormInputError from './common/sFormInputError.vue'
 import { type EmitFormTextInput } from '@sui/app/types'
@@ -83,8 +83,10 @@ const slots = useSlots()
 const inputElement = ref<HTMLElement | null>()
 const { updateFormInput, errors } = useFormInputService<string | number | null>(props, emit)
 const { classListDisabled } = useDisabledService(props)
-const isPresetInputBackground = computed(() => getIsPresetColor(props.inputBackground))
-const isPresetPlaceholderBackground = computed(() => getIsPresetColor(props.placeholderBackground ?? null))
+// TODO: Sura - make able to use all preset colors
+const { getIsPredefinedPresetColor } = useColorRepository()
+const isPresetInputBackground = computed(() => getIsPredefinedPresetColor(props.inputBackground))
+const isPresetPlaceholderBackground = computed(() => getIsPredefinedPresetColor(props.placeholderBackground ?? null))
 const { classListSize } = useSizeService(props, { block: 'input__input' })
 const isFocused = ref(false)
 
@@ -315,6 +317,7 @@ $inputPadding: calc($s_spacer * 2);
 
   &__field {
     @include s_borderRadius();
+    overflow: hidden;
     position: relative;
     display: flex;
     flex: 1 0 auto;

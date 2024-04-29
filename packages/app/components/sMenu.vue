@@ -4,15 +4,18 @@
       <slot name="activator" :on="activatorOn" :attrs="activatorAttrs"></slot>
     </div>
     <SOverlay v-slot="{ attrs }" :value="model">
-      <div
-        v-bind="attrs"
-        ref="contentElement"
-        class="s_menu__content"
-        :class="contentClasses"
-        :style="computedContentStyles"
-      >
-        <slot></slot>
-      </div>
+      <OnClickOutside @trigger="onClickOutside">
+        <div
+          v-bind="attrs"
+          ref="contentElement"
+          class="s_menu__content"
+          :class="contentClasses"
+          :style="computedContentStyles"
+          @click="onClickContent"
+        >
+          <slot></slot>
+        </div>
+      </OnClickOutside>
     </SOverlay>
   </div>
 </template>
@@ -22,30 +25,21 @@ import { getWindow } from '@sui/app/lib/browser'
 import { propsMeasurableStyles, propsMenu } from '@sui/app/props'
 import { useMeasurableStylesService, useMenuService } from '@sui/app/services'
 import { computed, watch } from 'vue'
+import { OnClickOutside } from '@vueuse/components'
+import { type EmitMenu } from '@sui/app/types'
+import { nextTick } from 'vue'
 
 const props = defineProps({
   ...propsMeasurableStyles(),
   ...propsMenu(),
 })
 
-const emit = defineEmits<{
-  (event: 'update:modelValue', value: boolean | null | undefined): void
-  (event: 'close'): void
-}>()
-
+const emit = defineEmits<EmitMenu>()
+const model = defineModel<boolean>()
 const { measurableStyles } = useMeasurableStylesService(props)
 
-const {
-  activatorElement,
-  activatorOn,
-  activatorAttrs,
-  contentElement,
-  onClickOutside,
-  onClickContent,
-  model,
-  contentClasses,
-  contentStyles,
-} = useMenuService(props, emit)
+const { activatorElement, activatorOn, activatorAttrs, contentElement, contentClasses, contentStyles, updateLocation } =
+  useMenuService(props, model)
 
 const computedContentStyles = computed(() => {
   return {
@@ -54,13 +48,13 @@ const computedContentStyles = computed(() => {
   }
 })
 
-onClickContent(() => {
+const onClickContent = () => {
   model.value = props.closeOnContentClick ? false : model.value
-})
+}
 
-onClickOutside(() => {
+const onClickOutside = () => {
   model.value = false
-})
+}
 
 const onScroll = () => {
   model.value = false
@@ -69,9 +63,18 @@ const onScroll = () => {
 
 watch(
   () => model.value,
-  () => {
-    if (model.value === true && props.closeOnScroll) {
-      getWindow()?.addEventListener('scroll', onScroll)
+  async () => {
+    if (model.value === true) {
+      if (props.closeOnScroll) {
+        getWindow()?.addEventListener('scroll', onScroll)
+      }
+
+      await nextTick()
+      updateLocation()
+    }
+
+    if (model.value === false) {
+      emit('close')
     }
   },
 )

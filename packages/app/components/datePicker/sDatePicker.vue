@@ -55,6 +55,8 @@ import SDatePickerMonth from './sDatePickerMonth.vue'
 import SDatePickerSwitch from './sDatePickerSwitch.vue'
 import SDatePickerTitle from './sDatePickerTitle.vue'
 import SDatePickerYear from './sDatePickerYear.vue'
+import dayjs from '@sui/app/vendors/dayjs'
+import { getDatePickerFormat } from '@sui/app/repositories'
 
 const props = defineProps(propsDatePicker())
 
@@ -65,13 +67,17 @@ const emit = defineEmits<{
 
 const { measurableStyles } = useMeasurableStylesService(props)
 
-const {
-  selectedType,
-  selectedDateFormatted,
-  selectedDateTemporary,
-  datePickerItemHeight,
-  datePickerItemHeightCssAttribute,
-} = useDatePickerService(props, emit)
+const selectedDateFormatted = defineModel<string>({
+  get: (value) => {
+    return dayjs(value).format(getDatePickerFormat(props.type))
+  },
+  set: () => {
+    emit('change')
+  },
+})
+
+const { selectedType, selectedDateTemporary, datePickerItemHeight, datePickerItemHeightCssAttribute } =
+  useDatePickerService(props, selectedDateFormatted)
 
 const datePickerComponent = computed(() => {
   if (selectedType.value === 'year') {
