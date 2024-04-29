@@ -1,0 +1,88 @@
+<template>
+  <Component :is="tag" class="s_card" :class="classes" :style="styles" :href="href" :to="to">
+    <slot></slot>
+  </Component>
+</template>
+<script setup lang="ts">
+import { propsBorder, propsColor, propsElevation, propsLink, propsMeasurableStyles, propsTag } from '@sui/app/props'
+import {
+  useLinkService,
+  useBorderService,
+  useColorService,
+  useElevationService,
+  useMeasurableStylesService,
+} from '@sui/app/services'
+import { computed } from 'vue'
+
+const props = defineProps({
+  ...propsTag<'div' | 'section'>({ tag: 'div' }),
+  ...propsMeasurableStyles(),
+  ...propsElevation(),
+  ...propsColor(),
+  ...propsLink(),
+  ...propsBorder(),
+})
+
+const { classListElevation } = useElevationService(props)
+const { measurableStyles } = useMeasurableStylesService(props)
+const { classListColor, styleListColor } = useColorService(props)
+const { classListBorder } = useBorderService(props)
+const { tag, isLink } = useLinkService(props)
+
+const classes = computed(() => {
+  return {
+    s_linkElement: isLink.value,
+    ...classListElevation.value,
+    ...classListColor.value,
+    ...classListBorder.value,
+  }
+})
+
+const styles = computed(() => {
+  return {
+    ...measurableStyles.value,
+    ...styleListColor.value,
+  }
+})
+</script>
+
+<style lang="scss">
+@import '@sui/app/styles/components/cards';
+
+.s_card {
+  @include s_elevation(0);
+  @include s_dark();
+  position: relative;
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  white-space: normal;
+  background-color: s_getAppColor('card');
+  border-radius: $s_borderRadius;
+  outline: none;
+  transition-property: box-shadow, opacity;
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  .s_card__subtitle + .s_card__text {
+    padding-top: $s_cardAdjucentSibling--textPadding__top;
+  }
+
+  .s_card__title {
+    + .s_card__subtitle {
+      padding-top: $s_cardAdjucentSibling--textPadding__top;
+      margin-top: $s_cardTitleAdjacentSibling--subtitleMargin__top;
+
+      /* stylelint-disable-next-line selector-max-compound-selectors */
+      + .s_card__text {
+        padding-top: $s_cardAdjucentSibling--textPadding__top;
+      }
+    }
+
+    /* stylelint-disable-next-line no-descending-specificity */
+    + .s_card__text {
+      padding-top: $s_cardAdjucentSibling--textPadding__top;
+    }
+  }
+}
+</style>

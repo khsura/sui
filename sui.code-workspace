@@ -1,0 +1,49 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "root"
+    },
+    {
+      "path": "./packages/app",
+      "name": "app"
+    },
+    {
+      "path": "./packages/shared",
+      "name": "shared"
+    },
+    {
+      "path": "./packages/storybook",
+      "name": "storybook"
+    },
+  ],
+  "settings": {
+    "eslint.useFlatConfig": true,
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+      "vue",
+      "html"
+    ],
+    "eslint.workingDirectories": [{"mode": "auto"}],
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit"
+    },
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true,
+      "**/node_modules": true
+    },
+		"workbench.editor.limit.enabled": true,
+		"workbench.editor.limit.value": 7,
+  },
+  "extensions": {
+    "recommendations": ["Vue.volar", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "stylelint.vscode-stylelint"]
+  }
+}

@@ -1,0 +1,26 @@
+import type { PropsToggleButtonGroup } from '@sui/app'
+import { argTypesBorder, argTypesColor } from './core'
+import type { ArgTypes } from '@storybook/types'
+
+const { underlined, ...borderArgTypes } = argTypesBorder
+
+export const argTypesToggleButtonGroup: Partial<ArgTypes<PropsToggleButtonGroup>> = {
+  ...borderArgTypes,
+  selectedColor: argTypesColor.color,
+  shrink: {
+    type: 'boolean',
+  },
+  multiple: {
+    type: 'boolean',
+  },
+  variant: {
+    type: {
+      name: 'string',
+      required: false,
+    },
+    control: {
+      type: 'select',
+    },
+    options: [null, 'underlined', 'inset'],
+  },
+}

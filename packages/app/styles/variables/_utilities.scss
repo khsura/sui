@@ -1,0 +1,359 @@
+$s_utilities: () !default;
+
+$s_textShadowColor: rgb(0 0 0 / 80%);
+
+$s_utilities: map-deep-merge(
+  (
+    'overflow': (
+      'name': 'overflow',
+      'modifiers': (overflow),
+      'properties': (auto, hidden, visible),
+    ),
+    'overflowX': (
+      'name': 'overflowX',
+      'modifiers': (overflow-x),
+      'properties': (auto, hidden),
+    ),
+    'overflowY': (
+      'name': 'overflowY',
+      'modifiers': (overflow-y),
+      'properties': (auto, hidden),
+    ),
+    'display': (
+      'name': 'display',
+      'print': true,
+      'modifiers': (display),
+      'properties': (
+        'none': none,
+        'inline': inline,
+        'inlineBlock': inline-block,
+        'block': block,
+        'flex': flex,
+        'inlineFlex': inline-flex,
+        /** no use
+        'table': table,
+        'tableRow': table-row,
+        'tableCell': table-cell,
+        */
+      ),
+      'responsive': true,
+    ),
+    'position': (
+      'name': 'position',
+      'modifiers': (position),
+      'properties': (
+        'unset': unset,
+        'static': static,
+        'relative': relative,
+        'absolute': absolute,
+        'fixed': fixed,
+        'sticky': sticky,
+      ),
+      'unimportants': (position),
+    ),
+    /* 'flexFill': (*/
+    /*   'name': 'flex',*/
+    /*   'modifiers': (flex),*/
+    /*   'properties': ('fill': 1 1 auto),*/
+    /*   'responsive': true,*/
+    /* ),*/
+    /* 'flexDirection': (*/
+    /*   'name': 'flexDirection',*/
+    /*   'modifiers': (flex-direction),*/
+    /*   'properties': ('row': row, 'column': column, 'rowReverse': row-reverse, 'columnReverse': column-reverse),*/
+    /*   'responsive': true,*/
+    /* ),*/
+    /* 'flexGrow': (*/
+    /*   'name': 'flexGrow',*/
+    /*   'modifiers': (flex-grow),*/
+    /*   'properties': (0, 1),*/
+    /*   'responsive': true,*/
+    /* ),*/
+    /* 'flexShrink': (*/
+    /*   'name': 'flexShrink',*/
+    /*   'modifiers': (flex-shrink),*/
+    /*   'properties': (0, 1),*/
+    /*   'responsive': true,*/
+    /* ),*/
+    /* 'flexWrap': (*/
+    /*   'name': 'flex',*/
+    /*   'modifiers': (flex-wrap),*/
+    /*   'properties': ('wrap': wrap, 'nowrap': nowrap, 'wrapReverse': wrap-reverse),*/
+    /*   'responsive': true,*/
+    /* ),*/
+    'justify': (
+      'name': 'justify',
+      'modifiers': (justify-content),
+      'properties': (
+        'start': flex-start,
+        'end': flex-end,
+        'center': center,
+        'spaceBetween': space-between,
+        'spaceAround': space-around,
+      ),
+      'responsive': true,
+    ),
+    'align': (
+      'name': 'align',
+      'modifiers': (align-items),
+      'properties': (
+        'start': flex-start,
+        'end': flex-end,
+        'center': center,
+        'baseline': baseline,
+        'stretch': stretch,
+      ),
+      'responsive': true,
+    ),
+    'alignContent': (
+      'name': 'alignContent',
+      'modifiers': (align-content),
+      'properties': (
+        'start': flex-start,
+        'end': flex-end,
+        'center': center,
+        'spaceBetween': space-between,
+        'spaceAround': space-around,
+        'stretch': stretch,
+      ),
+      'responsive': true,
+    ),
+    'alignSelf': (
+      'name': 'alignSelf',
+      'modifiers': (align-self),
+      'properties': (
+        'auto': auto,
+        'start': flex-start,
+        'end': flex-end,
+        'center': center,
+        'baseline': baseline,
+        'stretch': stretch,
+      ),
+      'responsive': true,
+    ),
+    'order': (
+      'name': 'order',
+      'modifiers': (order),
+      'properties': (
+        'first': -1,
+        '0': 0,
+        '1': 1,
+        '2': 2,
+        '3': 3,
+        '4': 4,
+        '5': 5,
+        '6': 6,
+        '7': 7,
+        '8': 8,
+        '9': 9,
+        '10': 10,
+        '11': 11,
+        '12': 12,
+        'last': 13,
+      ),
+      'responsive': true,
+    ),
+    'margin': (
+      'name': 'ma',
+      'modifiers': (margin),
+      'properties': $s_marginSpacers,
+      'responsive': true,
+    ),
+    'marginX': (
+      'name': 'mx',
+      'modifiers': (margin-right, margin-left),
+      'properties': $s_marginSpacers,
+      'responsive': true,
+    ),
+    'marginY': (
+      'name': 'my',
+      'modifiers': (margin-top, margin-bottom),
+      'properties': $s_marginSpacers,
+      'responsive': true,
+    ),
+    'marginTop': (
+      'name': 'mt',
+      'modifiers': (margin-top),
+      'properties': $s_marginSpacers,
+      'responsive': true,
+    ),
+    'marginRight': (
+      'name': 'mr',
+      'modifiers': (margin-right),
+      'properties': $s_marginSpacers,
+      'responsive': true,
+    ),
+    'marginBottom': (
+      'name': 'mb',
+      'modifiers': (margin-bottom),
+      'properties': $s_marginSpacers,
+      'responsive': true,
+    ),
+    'marginLeft': (
+      'name': 'ml',
+      'modifiers': (margin-left),
+      'properties': $s_marginSpacers,
+      'responsive': true,
+    ),
+    /* 'marginStart': (*/
+    /*   'name': 'ms',*/
+    /*   'modifiers': (margin-left),*/
+    /*   'properties': $s_marginSpacers,*/
+    /*   'responsive': true,*/
+    /* ),*/
+    /* 'marginEnd': (*/
+    /*   'name': 'me',*/
+    /*   'modifiers': (margin-right),*/
+    /*   'properties': $s_marginSpacers,*/
+    /*   'responsive': true,*/
+    /* ),*/
+    'padding': (
+      'name': 'pa',
+      'modifiers': (padding),
+      'properties': $s_spacers,
+      'responsive': true,
+    ),
+    'paddingX': (
+      'name': 'px',
+      'modifiers': (padding-right, padding-left),
+      'properties': $s_spacers,
+      'responsive': true,
+    ),
+    'paddingY': (
+      'name': 'py',
+      'modifiers': (padding-top, padding-bottom),
+      'properties': $s_spacers,
+      'responsive': true,
+    ),
+    'paddingTop': (
+      'name': 'pt',
+      'modifiers': (padding-top),
+      'properties': $s_spacers,
+      'responsive': true,
+    ),
+    'paddingRight': (
+      'name': 'pr',
+      'modifiers': (padding-right),
+      'properties': $s_spacers,
+      'responsive': true,
+    ),
+    'paddingBottom': (
+      'name': 'pb',
+      'modifiers': (padding-bottom),
+      'properties': $s_spacers,
+      'responsive': true,
+    ),
+    'paddingLeft': (
+      'name': 'pl',
+      'modifiers': (padding-left),
+      'properties': $s_spacers,
+      'responsive': true,
+    ),
+    /* 'paddingStart': (*/
+    /*   'name': 'ps',*/
+    /*   'modifiers': (padding-left),*/
+    /*   'properties': $s_spacers,*/
+    /*   'responsive': true,*/
+    /* ),*/
+    /* 'paddingEnd': (*/
+    /*   'name': 'pe',*/
+    /*   'modifiers': (padding-right),*/
+    /*   'properties': $s_spacers,*/
+    /*   'responsive': true,*/
+    /* ),*/
+    /* 'rounded': (*/
+    /*   'name': 'rounded',*/
+    /*   'modifiers': (border-radius),*/
+    /*   'properties': $s_rounded,*/
+    /* ),*/
+    /* 'roundedTop': (*/
+    /*   'name': 'roundedTop',*/
+    /*   'modifiers': (border-top-left-radius, border-top-right-radius),*/
+    /*   'properties': $s_rounded,*/
+    /* ),*/
+    /* 'roundedRight': (*/
+    /*   'name': 'roundedRight',*/
+    /*   'modifiers': (border-top-right-radius, border-bottom-right-radius),*/
+    /*   'properties': $s_rounded,*/
+    /* ),*/
+    /* 'roundedBottom': (*/
+    /*   'name': 'roundedBottom',*/
+    /*   'modifiers': (border-bottom-left-radius, border-bottom-right-radius),*/
+    /*   'properties': $s_rounded,*/
+    /* ),*/
+    /* 'roundedLeft': (*/
+    /*   'name': 'roundedLeft',*/
+    /*   'modifiers': (border-top-left-radius, border-bottom-left-radius),*/
+    /*   'properties': $s_rounded,*/
+    /* ),*/
+    /* 'roundedTopLeft': (*/
+    /*   'name': 'roundedTopLeft',*/
+    /*   'modifiers': (border-top-left-radius),*/
+    /*   'properties': $s_rounded,*/
+    /* ),*/
+    /* 'roundedTopRight': (*/
+    /*   'name': 'roundedTopRight',*/
+    /*   'modifiers': (border-top-right-radius),*/
+    /*   'properties': $s_rounded,*/
+    /* ),*/
+    /* 'roundedBottomRight': (*/
+    /*   'name': 'roundedBottomRight',*/
+    /*   'modifiers': (border-bottom-right-radius),*/
+    /*   'properties': $s_rounded,*/
+    /* ),*/
+    /* 'roundedBottomLeft': (*/
+    /*   'name': 'roundedBottomLeft',*/
+    /*   'modifiers': (border-bottom-left-radius),*/
+    /*   'properties': $s_rounded,*/
+    /* ),*/
+    'textAlign': (
+      'name': 'textAlign',
+      'modifiers': (text-align),
+      'properties': (left, right, center, justify, start, end),
+      'responsive': true,
+    ),
+    'textDecoration': (
+      'name': 'textDecoration',
+      'modifiers': (text-decoration),
+      'properties': ('lineThrough': line-through, 'none': none, 'overline': overline, 'underline': underline),
+    ),
+    'whiteSpace': (
+      'name': 'text',
+      'modifiers': (white-space),
+      'properties': (
+        'wrap': normal,
+        'noWrap': nowrap,
+        'pre': pre,
+        'preLine': pre-line,
+        'preWrap': pre-wrap,
+      )
+    ),
+    'overflowWrap': (
+      'name': 'text',
+      'modifiers': (overflow-wrap, word-break),
+      'properties': (breakword: break-word),
+    ),
+    'textTransform': (
+      'name': 'text',
+      'modifiers': (text-transform),
+      'properties': (capitalize, lowercase, uppercase),
+    ),
+    'fontWeight': (
+      'name': 'fontWeight',
+      'modifiers': (font-weight),
+      'properties': (bold:700)
+    ),
+    'textShadow': (
+      'name': 'textShadow',
+      'modifiers': (text-shadow),
+      'properties': (
+        0: unset,
+        1: (1px 1px 0 $s_textShadowColor, -1px -1px 0 $s_textShadowColor),
+        2: (2px 2px 8px $s_textShadowColor, -2px -2px 8px $s_textShadowColor),
+        3: (4px 4px 16px $s_textShadowColor, -4px -4px 16px $s_textShadowColor),
+      ),
+      'unimportants': (text-shadow)
+    )
+  ),
+  $s_utilities,
+);

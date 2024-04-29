@@ -1,0 +1,35 @@
+@function s_isDark($color, $threshold: 55) {
+  @if (lightness($color) > $threshold) {
+    @return false;
+  } @else {
+    @return true;
+  }
+}
+
+@function s_getPresetColor($color, $isText: false) {
+  @if ($isText) {
+    @return var(--s-color-#{$color}--text);
+  }
+
+  @return var(--s-color-#{$color});
+}
+
+@function s_getAppColor($color, $isText: false) {
+  @if ($isText) {
+    @return var(--s-app-color-#{$color}--text);
+  }
+
+  @return var(--s-app-color-#{$color});
+}
+
+@function s_getThemeColor($color, $themeName) {
+  @return var(--s-app-color-#{$color}--#{$themeName});
+}
+
+@function s_getTextColor($color, $threshold: 55) {
+  @if (s_isDark($color, $threshold)) {
+    @return s_getThemeColor('text', 'dark'); // Darker background, return light color
+  }
+
+  @return s_getThemeColor('text', 'light'); // Lighter background, return dark color
+}

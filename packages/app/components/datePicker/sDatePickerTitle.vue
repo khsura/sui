@@ -1,0 +1,85 @@
+<template>
+  <div class="s_datePickerTitle" :class="classes" :style="styles">
+    <div>
+      <SButton
+        block
+        class="s_datePickerTitle__year"
+        :disabled="disabled"
+        :readonly="readonly || selectedType === DatePickerSelectType.year"
+        text
+        tile
+        size="mini"
+        @click="updateSelectedType(DatePickerSelectType.year)"
+      >
+        {{ subtitle }}
+      </SButton>
+    </div>
+    <div>
+      <SButton
+        block
+        class="s_datePickerTitle__text"
+        :disabled="disabled"
+        :readonly="readonly || isLastSelectType"
+        text
+        tile
+        size="extra"
+        @click="updateSelectedType(DatePickerSelectType.date)"
+      >
+        {{ title }}
+      </SButton>
+    </div>
+  </div>
+</template>
+<script setup lang="ts">
+import SButton from '@sui/app/components/sButton.vue'
+import { DatePickerSelectType } from '@sui/app/constants'
+import { propsColor, propsDatePickerItemTitle, propsDisabled } from '@sui/app/props'
+import { useColorService, useDatePickerItemTitleService } from '@sui/app/services'
+import { computed } from 'vue'
+
+const props = defineProps({
+  ...propsDatePickerItemTitle(),
+  ...propsDisabled(),
+  ...propsColor(),
+})
+
+const emit = defineEmits<{
+  (event: 'update:date', value: string): void
+  (event: 'update:selected-type', value: string): void
+  (event: 'update:selected', value: string): void
+}>()
+
+const { subtitle, title, updateSelectedType, isLastSelectType } = useDatePickerItemTitleService(props, emit)
+const { classListColor, styleListColor } = useColorService(props)
+
+const classes = computed(() => {
+  return {
+    ...classListColor.value,
+  }
+})
+
+const styles = computed(() => {
+  return {
+    ...styleListColor.value,
+  }
+})
+</script>
+
+<style lang="scss">
+.s_datePickerTitle {
+  padding-top: 8px;
+
+  &__year,
+  &__text {
+    justify-content: start;
+    padding-right: 16px !important;
+    padding-left: 16px !important;
+    color: unset;
+  }
+
+  &__text {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+}
+</style>

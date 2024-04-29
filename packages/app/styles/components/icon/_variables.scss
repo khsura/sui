@@ -1,0 +1,13 @@
+$s_icon__fontSize: 24px !default;
+
+$s_icon--fontSizes: () !default;
+$s_icon--fontSizes: map-deep-merge(
+  (
+    'mini': 14px,
+    'small': 18px,
+    'default': 24px,
+    'large': 32px,
+    'extra': 40px,
+  ),
+  $s_icon--fontSizes
+);

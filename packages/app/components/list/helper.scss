@@ -1,0 +1,50 @@
+$s_listItemLink--focus__opacity: 0.04 !default;
+$s_listItemLink--hover__opacity: 0.08 !default;
+$s_listItem__content--padding: calc($s_spacer * 2) !default;
+$s_listItem__minHeight: calc(12 * $s_spacer);
+$s_listItem__minHeight--dense: calc(10 * $s_spacer);
+
+@mixin s_createListItemMediaContent() {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-width: calc($s_spacer * 6);
+  min-height: $s_listItem__minHeight;
+  padding: $s_listItem__content--padding 0;
+
+  &--align {
+    &__center {
+      align-self: center;
+    }
+  }
+
+  &--dense {
+    min-height: $s_listItem__minHeight--dense;
+    margin-left: calc($s_spacer * 2);
+  }
+}
+
+@mixin s_createListItemLink() {
+  cursor: pointer;
+  user-select: none;
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    background-color: currentcolor;
+    opacity: 0;
+    transition: $s_primaryTransition;
+    content: '';
+    pointer-events: none;
+  }
+
+  @media(hover: hover) {
+    &:hover::before {
+      opacity: $s_listItemLink--hover__opacity;
+    }
+  }
+
+  &:focus::before {
+    opacity: $s_listItemLink--focus__opacity;
+  }
+}

@@ -1,0 +1,11 @@
+@mixin s_breakpointUp($name, $breakpoints: $s_gridBreakpoints) {
+  $min: s_breakpointMin($name: $name, $breakpoints: $breakpoints);
+
+  @if ($min) {
+    @media (width >= $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}

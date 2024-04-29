@@ -1,0 +1,17 @@
+{
+  "extends": "@sui/shared/tsconfig.base.json",
+  "include": [
+    "**/*.js",
+    "**/*.mjs",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.vue",
+    ".storybook/**/*.js",
+    ".storybook/**/*.jsx",
+    ".storybook/**/*.mjs",
+    ".storybook/**/*.cjs",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx",
+    ".storybook/**/*.vue",
+  ],
+}

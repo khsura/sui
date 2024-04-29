@@ -1,0 +1,8 @@
+export { default as SApp } from './sApp.vue'
+export { default as SAppBar } from './sAppBar.vue'
+export { default as SAppBarTitle } from './sAppBarTitle.vue'
+export { default as SBottomNavigation } from './sBottomNavigation.vue'
+export { default as SFooter } from './sFooter.vue'
+export { default as SLayout } from './sLayout.vue'
+export { default as SMain } from './sMain.vue'
+export { default as SNavigationDrawer } from './sNavigationDrawer.vue'

@@ -1,0 +1,52 @@
+$s_button__borderRadius: $s_borderRadius !default;
+$s_button__backgroundColor: #{$s_color__black}10;
+$s_button__letterSpacing: 0.0893em !default;
+$s_button__transitionDuration: 0.28s !default;
+$s_button__transitionTimingFunction: map.get($s_transitions, 'fast-out-slow-in') !default;
+$s_button--active__opacity: 0.18 !default;
+$s_button--focus__opacity: 0.04 !default;
+$s_button--hover__opacity: 0.08 !default;
+$s_button--sizes: () !default;
+$s_button--sizes: map-deep-merge(
+  (
+    'mini': 20,
+    'small': 28,
+    'default': 36,
+    'large': 44,
+    'extra': 52,
+  ),
+  $s_button--sizes
+);
+
+$s_button--fontSizes: () !default;
+$s_button--fontSizes: map-deep-merge(
+  (
+    'mini': 0.625rem,
+    'small': 0.75rem,
+    'default': 0.875rem,
+    'large': 0.875rem,
+    'extra': 1rem,
+  ),
+  $s_button--fontSizes
+);
+
+$s_button__icon--fontSizes: () !default;
+$s_button__icon--fontSizes: map-deep-merge(
+  (
+    'mini': 18,
+    'small': 20,
+    'default': 24,
+    'large': 28,
+    'extra': 32
+  ),
+  $s_button__icon--fontSizes
+);
+
+$s_button__transition: opacity 0.2s map.get($s_transitions, 'ease-in-out') !default;
+
+$s_button--round__borderRadius: 50% !default;
+$s_button--rounded__borderRadius: 28px !default;
+$s_button--tile__borderRadius: 0 !default;
+
+$s_button--icon__fontSize: 18px !default;
+$s_button--icon__padding: 12px !default;

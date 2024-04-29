@@ -1,0 +1,14 @@
+import { Meta, Story, Controls, Canvas } from '@storybook/blocks';
+
+import * as GridsSpacer from './gridsSpacer.stories'
+
+<Meta of={GridsSpacer} />
+
+
+# Spacer
+
+SSpacer is a basic yet versatile spacing component used to distribute remaining width in-between a parents child components. When placing a single SSpacer before or after the child components, the components will push to the right and left of its container. When more than one SSpacer’s are used between multiple components, the remaining width is evenly distributed between each spacer.
+
+<Canvas of={GridsSpacer.Spacer}/>
+
+<Controls of={GridsSpacer.Spacer} />

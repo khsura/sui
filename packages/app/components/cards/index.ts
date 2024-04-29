@@ -1,0 +1,5 @@
+export { default as SCard } from './sCard.vue'
+export { default as SCardActions } from './sCardActions.vue'
+export { default as SCardSubtitle } from './sCardSubtitle.vue'
+export { default as SCardText } from './sCardText.vue'
+export { default as SCardTitle } from './sCardTitle.vue'

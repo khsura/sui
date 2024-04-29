@@ -1,0 +1,5 @@
+export { default as sDisplayDemo } from './sDisplayDemo.vue'
+export { default as sOverflowDemo } from './sOverflowDemo.vue'
+export { default as sPositionDemo } from './sPositionDemo.vue'
+export { default as sSpacingDemo } from './sSpacingDemo.vue'
+export { default as sTypographyDemo } from './sTypographyDemo.vue'

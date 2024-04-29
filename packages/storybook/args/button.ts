@@ -1,0 +1,33 @@
+import { faker } from '@sui/shared'
+import { action } from '@storybook/addon-actions'
+import type { SButton } from '@sui/app/components'
+import { argsBorder, argsColor, argsDisabled, argsSlot } from './core'
+import type { ComponentPropsAndSlots } from '@storybook/vue3'
+
+export const argsButton = (
+  params?: Partial<ComponentPropsAndSlots<typeof SButton>>,
+): Partial<ComponentPropsAndSlots<typeof SButton>> => {
+  return {
+    ...argsBorder,
+    ...argsColor,
+    ...argsDisabled,
+    ...argsSlot(faker.word.verb()),
+    block: false,
+    color: 'primary',
+    elevation: '',
+    height: '',
+    href: null as string | null,
+    loading: false,
+    maxHeight: '',
+    maxWidth: '',
+    minHeight: '',
+    minWidth: '',
+    onClick: action('clicked'),
+    size: null,
+    to: null,
+    type: 'button',
+    variant: null,
+    width: '',
+    ...params,
+  }
+}

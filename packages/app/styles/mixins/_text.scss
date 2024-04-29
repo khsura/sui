@@ -1,0 +1,41 @@
+@mixin s_textTruncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin s_typography($style) {
+  $textStyles: map.get($s_headings, $style);
+  font-family: map.get($textStyles, 'font-family');
+  font-size: map.get($textStyles, 'size');
+
+  /* stylelint-disable-next-line font-weight-notation */
+  font-weight: map.get($textStyles, 'weight');
+  line-height: map.get($textStyles, 'line-height');
+  color: map.get($textStyles, 'color') or inherit;
+  text-transform: map.get($textStyles, 'text-transform') or none;
+  letter-spacing: map.get($textStyles, 'letter-spacing');
+}
+
+@mixin s_lineClamp($i) {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: initial;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $i;
+}
+
+@mixin s_lineClamps($child: null) {
+  @for $i from 1 through 6 {
+    &--lineClamp__#{$i} {
+      @if ($child) {
+        .#{$child} {
+          @include s_lineClamp($i);
+        }
+      } @else {
+        @include s_lineClamp($i);
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "extends": "@sui/shared/tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "**/*.js",
+    "**/*.mjs",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.vue"
+  ],
+}

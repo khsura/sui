@@ -1,0 +1,11 @@
+@mixin s_disabled($isText: false) {
+  color: s_getAppColor('text');
+  pointer-events: none;
+  opacity: 0.5;
+
+  @if ($isText) {
+    background-color: unset;
+  } @else {
+    background-color: s_getAppColor('disabled');
+  }
+}

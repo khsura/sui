@@ -1,0 +1,34 @@
+/* stylelint-disable custom-property-pattern */
+$s_color__black: #000000;
+$s_color__white: #ffffff;
+$s_color__blue: #134ff3;
+$s_color__green: #4caf50;
+$s_color__grey: #717171;
+$s_color__orange: #ffb238;
+$s_color__pink: #cb0085;
+$s_color__red: #d80000;
+$s_color__yellow: #ffd633;
+$s_color__light: #f7f7f7;
+$s_color__lightGrey: #d1d1d1;
+$s_color__darkCharcoal: #333333;
+
+$s_colors: () !default;
+$s_colors: map-deep-merge(
+  (
+    'blue': $s_color__blue,
+    'green': $s_color__green,
+    'grey': $s_color__grey,
+    'orange': $s_color__orange,
+    'pink': $s_color__pink,
+    'red': $s_color__red,
+    'yellow': $s_color__yellow,
+    'black': $s_color__black,
+    'white': $s_color__white,
+    'lightGrey': $s_color__lightGrey,
+  ),
+  $s_colors
+);
+
+$s_presetColorNames: ('primary', 'secondary', 'success', 'info', 'warning', 'important', 'error');
+$s_appExposedColorNames: ('background', 'card');
+$s_themeNames: ('dark', 'light');

@@ -1,0 +1,14 @@
+/*
+ * Spacers
+ */
+$s_spacer: 4px !default;
+$s_spacersSteps: 10 !default;
+$s_spacers: () !default;
+
+@if (type-of($s_spacers) == list) {
+  @for $i from 0 through $s_spacersSteps {
+    $s_spacers: map.merge($s_spacers, ($i: $s_spacer * $i));
+  }
+}
+
+$s_marginSpacers: map.merge($s_spacers, (auto: auto));

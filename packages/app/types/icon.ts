@@ -1,0 +1,11 @@
+export type SIconType =
+  | 'SIconChevronDown'
+  | 'SIconLoading'
+  | 'SIconCameraOutline'
+  | 'SIconFileMultipleOutline'
+  | 'SIconFileOutline'
+  | 'SIconVectorDifferenceBa'
+  | 'SIconClose'
+  | 'SIconCloseCircle'
+  | 'SIconImageArea'
+  | 'SIconMovieOutline'

@@ -1,0 +1,3 @@
+$s_layoutTransitionDuration: 0.2s !default;
+$s_layoutTransitionProperty: background-color, left, right, transform, visibility, bottom, !default;
+$s_layoutTransitionTimingFunction: map-get($s_transitions, 'fast-out-slow-in') !default;

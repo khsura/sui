@@ -1,0 +1,25 @@
+import { type CalendarDate } from '@sui/app/types'
+import dayjs from '@sui/app/vendors/dayjs'
+import { type ConfigType } from 'dayjs'
+
+export const getCalendarDate = (value: ConfigType): CalendarDate => {
+  const date = dayjs(value)
+  const today = dayjs()
+  const { years: year, months: month, date: day, hours: hour, minutes: minute } = date.toObject()
+
+  return {
+    date: date.format('YYYY-MM-DD'),
+    time: date.format('HH:mm'),
+    year,
+    month,
+    day,
+    hour,
+    minute,
+    weekday: date.day(),
+    // hasDay
+    // hasTime
+    past: date.isBefore(today, 'date'),
+    present: date.isSame(today, 'date'),
+    future: date.isAfter(today, 'date'),
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@sui/storybook",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "yarn g:vue-tsc && g:tsc-alias && yarn storybook build",
+    "lint:script": "yarn g:lint:script",
+    "prebuild": "rimraf ./storybook-static && g:rimraf ./@types",
+    "storybook": "storybook dev --port 6006"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^8.0.9",
+    "@storybook/addon-docs": "^8.0.9",
+    "@storybook/addon-essentials": "^8.0.9",
+    "@storybook/addon-interactions": "^8.0.9",
+    "@storybook/addon-links": "^8.0.9",
+    "@storybook/manager-api": "^8.0.9",
+    "@storybook/testing-library": "^0.2.2",
+    "@storybook/theming": "^8.0.9",
+    "@storybook/vue3": "^8.0.9",
+    "@storybook/vue3-vite": "^8.0.9",
+    "storybook": "^8.0.9",
+    "storybook-dark-mode": "^4.0.1"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "extends": "@sui/shared/tsconfig.base.json",
+  "include": [
+    "**/*.js",
+    "**/*.ts",
+    "**/*.mjs",
+    "**/*.tsx",
+    "**/*.vue"
+  ],
+  "exclude": ["packages", "node_modules", "dist"]
+}

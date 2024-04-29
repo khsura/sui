@@ -1,0 +1,18 @@
+// used with colorService
+@mixin s_dark($fillBackground: true, $isChild: false) {
+  @each $themeName in $s_themeNames {
+    @if ($isChild) {
+      .s_#{$themeName} {
+        color: s_getThemeColor('text', $themeName) !important;
+        background-color: if($fillBackground, s_getThemeColor('card', $themeName), inherit);
+        fill: s_getThemeColor('text', $themeName) !important;
+      }
+    } @else {
+      &.s_#{$themeName} {
+        color: s_getThemeColor('text', $themeName) !important;
+        background-color: if($fillBackground, s_getThemeColor('card', $themeName), inherit);
+        fill: s_getThemeColor('text', $themeName) !important;
+      }
+    }
+  }
+}

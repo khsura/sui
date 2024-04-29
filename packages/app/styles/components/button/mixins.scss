@@ -1,0 +1,57 @@
+@import './variables';
+
+@mixin s_button() {
+  @include s_elevation(0);
+
+  $s_button--fontSize: map-get($s_button--fontSizes, 'default');
+  $s_button--size: map-get($s_button--sizes, 'default');
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  min-width: #{round($s_button--size * 1.7778)}px;
+  height: #{$s_button--size}px;
+  padding: 0 #{calc($s_button--size / 2.25)}px;
+  font-size: $s_button--fontSize;
+  line-height: 1;
+  color: s_getAppColor('text');
+  text-decoration: none;
+  text-indent: $s_button__letterSpacing;
+  white-space: nowrap;
+  vertical-align: middle;
+  appearance: button;
+  border: none;
+  border-radius: $s_button__borderRadius;
+  outline: 0;
+  transition-timing-function: $s_button__transitionTimingFunction;
+  transition-duration: $s_button__transitionDuration;
+  transition-property: box-shadow, transform, opacity;
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    color: inherit;
+    pointer-events: none;
+    content: '';
+    background-color: currentcolor;
+    border-radius: inherit;
+    opacity: 0;
+    transition: $s_button__transition;
+  }
+
+  &:focus::before {
+    opacity: $s_button--focus__opacity;
+  }
+
+  // except for touch devices
+  @media (hover: hover) {
+    &:hover::before {
+      opacity: $s_button--hover__opacity;
+    }
+
+    &:focus:hover::before {
+      opacity: $s_button--hover__opacity;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+@mixin s_menuContent {
+  position: absolute;
+  display: inline-block;
+  width: min-content;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  contain: content;
+}

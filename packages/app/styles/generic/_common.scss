@@ -1,0 +1,84 @@
+@include s_createUtilities();
+@include s_dark(false, true);
+
+@each $name,
+$attrs in $s_headings {
+  .s_text--#{$name} {
+    @include s_typography($name);
+  }
+}
+
+@for $z from 0 through 24 {
+  .s_elevation__#{$z} {
+    @include s_elevation($z);
+  }
+}
+
+.s_tile {
+  @include s_tile(true);
+}
+
+.s_outlined {
+  @include s_outlined();
+}
+
+.s_underlined {
+  @include s_underlined();
+}
+
+.s_rounded {
+  @include s_borderRadius();
+}
+
+.s_list--asterisk {
+  padding-left: 1em;
+  // list-style-position: inside;
+  list-style-type: '※';
+
+  >li {
+    padding-left: 0.5em;
+    list-style-type: '※';
+  }
+}
+
+.s_column {
+  @include s_makeColumn();
+}
+
+.s_disabled {
+  @include s_disabled();
+}
+
+.s_readonly {
+  pointer-events: none;
+
+  &:hover,
+  &:focus {
+    opacity: 1 !important;
+  }
+}
+
+.s_text--disabled {
+  @include s_disabled(true);
+}
+
+.s_linkElement {
+  color: inherit;
+  text-decoration: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.s_text--truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.s_height--fill {
+  height: 100%;
+}
+
+.s_width--fill {
+  width: 100%;
+}
