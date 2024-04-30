@@ -1,12 +1,14 @@
 import { SSelect } from '@sui/app/components'
 import { mount } from '@vue/test-utils'
-import portalVue from 'portal-vue'
 
 describe('SSelect', () => {
   const component = mount(SSelect, {
     props: { label: '', id: 'id', modelValue: '' },
     global: {
-      plugins: [portalVue],
+      stubs: {
+        Portal: true,
+        PortalTarget: true,
+      },
     },
   })
 

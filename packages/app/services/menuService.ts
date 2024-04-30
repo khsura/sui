@@ -1,13 +1,14 @@
 import { type PropsMenu } from '@sui/app/definitions'
-import { getNumericCssAttribute } from '@sui/app/lib'
-import { getViewportLocation } from '@sui/app/lib/browser'
+import { getCleanSetObject, getNumericCssAttribute } from '@sui/app/lib'
+import { getViewportLocation, getWindow } from '@sui/app/lib/browser'
 import { type MenuContentStyle } from '@sui/app/types'
-import { computed, ref, type ModelRef } from 'vue'
+import { type Ref, computed, ref } from 'vue'
 import { useActivatorService, useContentService, useLocationService } from './core'
+import { usePositionService } from './positionService'
 
 export const useMenuService = (
   props: PropsMenu,
-  model: ModelRef<boolean | null | undefined>,
+  model: Ref<boolean | null | undefined>,
   options?: {
     noContentMinWidth?: boolean
     offset?: number
@@ -22,6 +23,7 @@ export const useMenuService = (
   const left = ref(0)
   const minWidth = ref<number | null>(null)
   const activatorService = useActivatorService(props, model)
+  const { classListPosition } = usePositionService(props)
 
   const getContentLocation = () => {
     const element = activatorService.contentElement.value
@@ -43,7 +45,7 @@ export const useMenuService = (
     const left =
       offset +
       (props.offsetX ?? 0) +
-      viewportLocation.left +
+      (props.position === 'fixed' ? 0 : viewportLocation.left) +
       activatorLocation.left +
       (isRight.value ? activatorLocation.width : 0) +
       (isLeft.value ? -width : 0) +
@@ -52,7 +54,7 @@ export const useMenuService = (
     const top =
       offset +
       (props.offsetY ?? 0) +
-      viewportLocation.top +
+      (props.position === 'fixed' ? 0 : viewportLocation.top) +
       activatorLocation.top +
       (isBottom.value ? activatorLocation.height : 0) +
       (isTop.value ? -height : 0)
@@ -92,18 +94,36 @@ export const useMenuService = (
       return
     }
 
-    const overflowBottom = Math.max(contentLocation.bottom - viewportLocation.bottom, 0)
-    const overflowRight = Math.max(contentLocation.right - viewportLocation.right, 0)
+    const activatorLocationRight = activatorService.getActivatorLocation()?.right ?? 0
 
-    top.value = Math.max(viewportLocation.top, contentLocation.top - overflowBottom)
+    const overflowRight =
+      activatorLocationRight < viewportLocation.right ? Math.max(contentLocation.right - viewportLocation.right, 0) : 0
+
+    top.value = contentLocation.top
     left.value = Math.max(viewportLocation.left, contentLocation.left - overflowRight)
     minWidth.value = options?.noContentMinWidth ? null : width
+
+    if (props.screenPadding) {
+      // Adding margin so menu will have some space between border of the window screen
+      const contentPadding = 16 * 2
+
+      if (left.value + width + contentPadding + props.screenPadding > (getWindow()?.screen.width ?? 0)) {
+        left.value -= props.screenPadding
+      }
+    }
   }
+
+  const contentClasses = computed<Record<string, boolean>>(() => {
+    return getCleanSetObject({
+      ...content.classes.value,
+      ...classListPosition.value,
+    })
+  })
 
   return {
     updateLocation,
     ...activatorService,
-    contentClasses: content.classes,
+    contentClasses,
     contentStyles,
   }
 }

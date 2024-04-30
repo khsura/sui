@@ -39,7 +39,7 @@ interface ThemeConfigOptions {
 
 export interface AppState<T extends string = 'sui'> extends Required<AppStateOptions> {
   readonly name: T
-  display: DisplayPreset & { height: number; width: number }
+  display: DisplayPreset
   themes: {
     [AppTheme.light]: ThemeConfig
     [AppTheme.dark]: ThemeConfig

@@ -170,12 +170,12 @@
 import { type EmitTable, type PropsTable, type TableItem } from '@sui/app/types'
 import { getCleanSetObject } from '@sui/app/lib'
 import { useBorderService, useTableService } from '@sui/app/services'
-import STableBodyCell from './sTableBodyCell.vue'
-import STableHeadCell from './sTableHeadCell.vue'
 import { useDebounceFn } from '@vueuse/core'
 import { computed } from 'vue'
 import { watch } from 'vue'
 import { onMounted } from 'vue'
+import STableHeadCell from './sTableHeadCell.vue'
+import STableBodyCell from './sTableBodyCell.vue'
 
 // eslint-disable-next-line vue/no-unused-properties
 const props = withDefaults(defineProps<PropsTable<T>>(), {

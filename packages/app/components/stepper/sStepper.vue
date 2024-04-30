@@ -15,9 +15,7 @@ import { computed, ref } from 'vue'
 import SStepperStep from './sStepperStep.vue'
 
 const props = defineProps(propsStepper())
-
 const emit = defineEmits<(event: 'update:modelValue', value: number) => void>()
-
 const { provideProps, provide } = useProviderService()
 
 const classList = computed(() => {

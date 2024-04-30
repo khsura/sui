@@ -71,11 +71,11 @@ import { getNumericValue, getCleanSetObject } from '@sui/app/lib'
 import { propsInput } from '@sui/app/props'
 import { useColorRepository } from '@sui/app/repositories/colorRepository'
 import { useDisabledService, useFormInputService, useSizeService } from '@sui/app/services'
-import kFormInputError from './common/sFormInputError.vue'
 import { type EmitFormTextInput } from '@sui/app/types'
 import { computed } from 'vue'
 import { useSlots } from 'vue'
 import { ref } from 'vue'
+import kFormInputError from './common/sFormInputError.vue'
 
 const props = defineProps(propsInput())
 const emit = defineEmits<EmitFormTextInput<string | number | null>>()

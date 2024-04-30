@@ -1,6 +1,6 @@
-import { PropsTableHeadCell } from '@sui/app/definitions'
+import { type PropsTableHeadCell } from '@sui/app/definitions'
 import { useTableHeadCellService } from '@sui/app/services'
-import { Mutable } from '@vueuse/core'
+import { type Mutable } from '@vueuse/core'
 
 describe('tableHeadCellService', () => {
   const defaultProps: PropsTableHeadCell = {

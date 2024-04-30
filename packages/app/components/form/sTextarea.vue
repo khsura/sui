@@ -35,7 +35,6 @@
 import { propsTextarea } from '@sui/app/props'
 import { useColorRepository } from '@sui/app/repositories/colorRepository'
 import { useDisabledService, useFormInputService } from '@sui/app/services'
-import kFormInputError from './common/sFormInputError.vue'
 import { getCleanSetObject, getNumericCssAttribute } from '@sui/app/lib'
 import { type EmitFormTextInput } from '@sui/app/types'
 import { ref } from 'vue'
@@ -43,6 +42,7 @@ import { computed } from 'vue'
 import { nextTick } from 'vue'
 import { onMounted } from 'vue'
 import { watch } from 'vue'
+import kFormInputError from './common/sFormInputError.vue'
 
 const props = defineProps(propsTextarea())
 const emit = defineEmits<EmitFormTextInput<string | number | null>>()

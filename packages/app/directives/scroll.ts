@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { type ScrollDirectiveBinding, type ScrollDirectiveBindingValueObject } from '@sui/app/types'
 import { type Directive } from 'vue'
 
@@ -8,7 +7,7 @@ const mounted = (
 ) => {
   const { self = false } = binding.modifiers ?? {}
   const value = binding.value
-  const options = (typeof value === 'object' && value.options) || { passive: true }
+  const options = (typeof value === 'object' ? value.options : undefined) ?? { passive: true }
   const handler = typeof value === 'function' || 'handleEvent' in value ? value : value.handler
   const target = self ? el : binding.arg ? document.querySelector(binding.arg) : window
 

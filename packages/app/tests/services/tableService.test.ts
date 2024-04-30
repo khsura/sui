@@ -1,8 +1,8 @@
 import { type TableRowClass, type PropsTable } from '@sui/app/types'
 import { useTableService } from '@sui/app/services'
-import { headers, items } from '../mocks/sTable'
 import { ref } from 'vue'
 import { type Mutable } from '@vueuse/core'
+import { headers, items } from '../mocks/sTable'
 
 const expanded = ref([items[3]])
 const selected = ref([items[2]])

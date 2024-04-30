@@ -8,6 +8,7 @@ import typescriptEslint from '@typescript-eslint/eslint-plugin'
 import globals from 'globals'
 import htmlParser from '@html-eslint/parser'
 import htmlEslintPlugin from '@html-eslint/eslint-plugin'
+import eslintPluginImport from 'eslint-plugin-import'
 
 const jsRules = {
   'no-undef': 'off',
@@ -36,6 +37,7 @@ const jsRules = {
       next: ['singleline-const', 'singleline-let', 'singleline-var'],
     },
   ],
+  'import/order': ['error'],
 }
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
@@ -55,10 +57,13 @@ export default [
   },
   {
     files: ['**/*.js', '**/*.mjs'],
+    plugins: {
+      import: eslintPluginImport,
+    },
     rules: jsRules,
   },
   {
-    files: ['**/*.ts', '**/*.vue'],
+    files: ['**/*.ts', '**/*.tsx', '**/*.vue'],
     languageOptions: {
       parser: vueParser,
       parserOptions: {
@@ -71,6 +76,7 @@ export default [
     },
     plugins: {
       '@typescript-eslint': typescriptEslint,
+      import: eslintPluginImport,
     },
     rules: {
       ...jsRules,
@@ -112,7 +118,7 @@ export default [
     },
   },
   {
-    files: ['**/*.stories.ts'],
+    files: ['**/*.stories.ts', '**/*.stories.tsx'],
     rules: {
       'import/no-anonymous-default-export': 'off',
       '@vue/one-component-per-file': 'off',

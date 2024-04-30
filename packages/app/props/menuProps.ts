@@ -2,6 +2,7 @@ import { type LocationRaw } from '@sui/app/types'
 
 import { type PropType } from 'vue'
 import { propsActivator, propsContent, propsLocation } from './core'
+import { propsPosition } from './positionProps'
 
 export const propsMenu = (defaults?: { location: LocationRaw }) => {
   return {
@@ -21,7 +22,11 @@ export const propsMenu = (defaults?: { location: LocationRaw }) => {
       type: Number as PropType<number | undefined | null>,
       default: null,
     },
-
+    screenPadding: {
+      type: Number as PropType<number | undefined | null>,
+      default: null,
+    },
+    ...propsPosition(),
     ...propsLocation(defaults),
     ...propsContent(),
     ...propsActivator(),

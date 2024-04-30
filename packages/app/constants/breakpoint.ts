@@ -17,5 +17,4 @@ export const thresholds: Display['thresholds'] = {
   lg: 1920,
 } as const
 
-// eslint-disable-next-line sort-exports/sort-exports
 export const mobileBreakpoint: Display['mobileBreakpoint'] = thresholds.xs

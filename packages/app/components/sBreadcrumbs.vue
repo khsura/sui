@@ -70,7 +70,7 @@ const getTagOfItem = (id: number, item: BreadcrumbsItem) => {
 }
 
 const getDisabledOfItem = (id: number, item: BreadcrumbsItem) => {
-  return item.disabled || (id + 1 === size.value && item.disabled === undefined)
+  return item.disabled ?? (id + 1 === size.value && item.disabled === undefined)
 }
 
 const getListItemLinkClasses = (id: number, item: BreadcrumbsItem) => {

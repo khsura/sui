@@ -20,6 +20,7 @@ export const useProviderRepository = () => {
     defaultValue: null,
   ): ComputedRef<ProviderProps[P] | null>
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function injectParentProps<P extends ProviderPropsName>(name: P, defaultValue?: any): any {
     if (defaultValue === null) {
       return Inject(

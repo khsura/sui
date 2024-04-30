@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "yarn g:vite build"
+    "build": "yarn g:vite build",
+    "lint": "yarn g:eslint"
   },
   "dependencies": {
     "@vueuse/components": "^10.9.0",

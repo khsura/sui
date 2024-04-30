@@ -19,12 +19,7 @@
 <script setup lang="ts">
 import { ProviderPropsName } from '@sui/app/constants/provider'
 import { propsDisabled, propsSingleGroupItem } from '@sui/app/props'
-import {
-  useBorderService,
-  useDisabledService,
-  useProviderService,
-  useSingleGroupItemService,
-} from '@sui/app/services'
+import { useBorderService, useDisabledService, useProviderService, useSingleGroupItemService } from '@sui/app/services'
 import { computed, nextTick } from 'vue'
 
 const props = defineProps({
@@ -49,7 +44,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits<(event: 'update:checked', value: boolean) => void>()
-
 const { injectParentProps } = useProviderService()
 const groupProps = injectParentProps(ProviderPropsName.radioGroupProps)
 const { toggleGroupItem, isSelected } = useSingleGroupItemService(props)
@@ -57,8 +51,8 @@ const { toggleGroupItem, isSelected } = useSingleGroupItemService(props)
 const { classListDisabled } = useDisabledService(
   computed(() => {
     return {
-      disabled: props.disabled || groupProps.value.disabled,
-      readonly: props.readonly || groupProps.value.readonly,
+      disabled: props.disabled ?? groupProps.value.disabled,
+      readonly: props.readonly ?? groupProps.value.readonly,
     }
   }),
 )

@@ -2,8 +2,8 @@ import { SToggleButton, SToggleButtonGroup, SButton } from '@sui/app/components'
 import { propsToggleButtonGroup } from '@sui/app/props'
 import { mount } from '@vue/test-utils'
 import { defineComponent, ref } from 'vue'
-import { useMockProps } from '../_helpers'
 import { type PropsToggleButtonGroup } from '@sui/app/definitions'
+import { useMockProps } from '../_helpers'
 
 const argsToggleButtonGroup = useMockProps<PropsToggleButtonGroup>({
   bordered: false,

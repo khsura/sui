@@ -1,11 +1,14 @@
 <template>
   <div class="s_app" :style="styles">
     <slot></slot>
+    <PortalTarget :name="defaultOverlayClass" multiple></PortalTarget>
   </div>
 </template>
 <script setup lang="ts">
+import { defaultOverlayClass } from '@sui/app/constants'
 import { propsApp } from '@sui/app/props'
 import { useAppService } from '@sui/app/services'
+import { PortalTarget } from 'portal-vue'
 
 const props = defineProps(propsApp())
 const { styles } = useAppService(props)
@@ -13,8 +16,6 @@ const { styles } = useAppService(props)
 
 <style lang="scss">
 .s_app {
-  min-height: 100vh;
-  min-height: 100dvh;
   display: flex;
   flex-flow: column;
   flex-wrap: 1 1 auto;

@@ -1,8 +1,9 @@
-import { scroll, resize } from '@sui/app/directives'
+import { resize, scroll } from '@sui/app/directives'
 import { createAppStore } from '@sui/app/helpers/createAppStore'
 import { listenDisplayChange } from '@sui/app/helpers/display'
 import { i18n } from '@sui/app/plugins/i18n'
 import { type AppStateOptions } from '@sui/app/types'
+import portalVue from 'portal-vue'
 import { type Plugin } from 'vue'
 
 export const createSUI = <T extends string = 'sui'>(options?: AppStateOptions, name?: T) => {
@@ -20,9 +21,10 @@ export const createSUI = <T extends string = 'sui'>(options?: AppStateOptions, n
       app.config.globalProperties[`$${appName}`] = store
       app.provide(appName, store)
       app.use(i18n)
+      app.use(portalVue)
       app.directive('scroll', scroll)
       app.directive('resize', resize)
-      listenDisplayChange(store)
+      listenDisplayChange()
     },
   }
 

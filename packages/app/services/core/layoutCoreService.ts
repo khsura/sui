@@ -5,7 +5,7 @@ import { computed } from 'vue'
 export const useLayoutCoreService = (props: PropsLayout | PropsLayoutProvider) => {
   const isApp = computed(
     () =>
-      props.app ||
+      props.app === true ||
       (props as PropsLayoutProvider).name === ProviderName.app ||
       (props as PropsLayout).for === ProviderName.app,
   )

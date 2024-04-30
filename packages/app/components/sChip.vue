@@ -1,15 +1,16 @@
 <template>
-  <span :class="classList" @click.stop="click">
+  <span :class="classList" :style="styles" @click.stop="click">
     <span class="s_chip__content">
       <slot></slot>
       <slot v-if="closable" name="close" :on="{ close }">
-        <SIcon class="s_chip__icon s_chip__icon--close" icon="mdi-close" @click.stop="close"></SIcon>
+        <SIcon class="s_chip__closeIcon" icon="mdi-close" @click.stop="close"></SIcon>
       </slot>
     </span>
   </span>
 </template>
 <script setup lang="ts">
 import SIcon from '@sui/app/components/sIcon.vue'
+import { getCleanSetObject } from '@sui/app/lib'
 import { propsChip } from '@sui/app/props'
 import { useBorderService, useColorService, useDisabledService, useSizeService } from '@sui/app/services'
 import { computed } from 'vue'
@@ -23,7 +24,7 @@ const emit = defineEmits<{
 
 const { classListBorder } = useBorderService(props, { block: 'chip' })
 
-const { classListColor } = useColorService(props, {
+const { classListColor, styleListColor } = useColorService(props, {
   isText: computed(() => !!props.outlined || !!props.underlined),
 })
 
@@ -51,12 +52,24 @@ const click = (event: Event) => {
     emit('click', event)
   }
 }
+
+const styles = computed(() => {
+  return getCleanSetObject({
+    ...styleListColor.value,
+  })
+})
+
+defineSlots<{
+  default: () => void
+  close: (props: { on: { close: () => void } }) => void
+}>()
 </script>
 <style lang="scss">
 @import '@sui/app/styles/components/button';
 
 .s_chip {
   @include s_dark();
+
   $size: map.get($s_button--sizes, 'default');
   $fontSize: map.get($s_button--fontSizes, 'default');
   position: relative;
@@ -79,18 +92,19 @@ const click = (event: Event) => {
   transition-duration: $s_button__transitionDuration;
   transition-property: box-shadow, opacity;
 
-  &__icon {
-    &--close {
-      margin-left: calc($s_spacer * 1.5);
-      cursor: pointer;
-      border-radius: 100%;
-      fill: currentcolor;
+  .s_icon.s_chip__closeIcon,
+  &__closeIcon {
+    margin-right: $s_spacer;
+    margin-left: $s_spacer;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 100%;
+    fill: currentcolor;
 
-      &:hover,
-      &:focus,
-      &:active {
-        opacity: 0.72;
-      }
+    &:hover,
+    &:focus,
+    &:active {
+      opacity: 0.72;
     }
   }
 
@@ -111,9 +125,11 @@ const click = (event: Event) => {
       height: #{$size}px;
       border-radius: #{calc($size / 2)}px;
 
-      .s_chip__icon {
+      .s_icon.s_chip__closeIcon,
+      .s_chip__closeIcon {
         width: #{calc($size / 2.25)}px;
         height: #{calc($size / 2.25)}px;
+        font-size: #{calc($size / 2.25)}px;
       }
     }
   }

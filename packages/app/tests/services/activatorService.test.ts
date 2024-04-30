@@ -1,18 +1,14 @@
-import { type EmitActivator } from '@sui/app/definitions'
 import { type PropsActivator } from '@sui/app/index'
 import { useActivatorService } from '@sui/app/services'
 import { JSDOM } from 'jsdom'
+import { ref } from 'vue'
 
 const defaultPropsActivator: PropsActivator = {
-  modelValue: false,
   disabled: false,
   readonly: false,
   activator: 'string',
   closeOnClick: false,
 }
-
-const defaultEmitActivator: EmitActivator<'modelValue'> = () => {}
-const defaultOnChange = () => {}
 
 describe('useActivatorService', () => {
   describe('computedActivatorElement', () => {
@@ -22,12 +18,8 @@ describe('useActivatorService', () => {
         activator: null,
       }
 
-      const { computedActivatorElement, activatorElement } = useActivatorService<'modelValue'>(
-        props,
-        defaultEmitActivator,
-        'modelValue',
-        defaultOnChange,
-      )
+      const model = ref(false)
+      const { computedActivatorElement, activatorElement } = useActivatorService(props, model)
 
       expect(activatorElement.value).toBeNull()
       expect(computedActivatorElement.value).toBeNull()
@@ -39,14 +31,8 @@ describe('useActivatorService', () => {
       }
 
       const dom = new JSDOM('<!DOCTYPE html><p id="dd"><span id="cc">Hi</span>Hello world</p>')
-
-      const { computedActivatorElement, activatorElement } = useActivatorService<'modelValue'>(
-        props,
-        defaultEmitActivator,
-        'modelValue',
-        defaultOnChange,
-      )
-
+      const model = ref(false)
+      const { computedActivatorElement, activatorElement } = useActivatorService(props, model)
       const sampleNode = dom.window.document.getElementById('dd')
 
       activatorElement.value = sampleNode
@@ -64,13 +50,8 @@ describe('useActivatorService', () => {
 
       documentSpy.mockImplementation(() => dom.window.document)
 
-      const { computedActivatorElement } = useActivatorService<'modelValue'>(
-        props,
-        defaultEmitActivator,
-        'modelValue',
-        defaultOnChange,
-      )
-
+      const model = ref(false)
+      const { computedActivatorElement } = useActivatorService(props, model)
       const sampleNode = dom.window.document.getElementById('ab')
 
       expect(computedActivatorElement.value?.textContent).toBe(sampleNode?.textContent)
@@ -86,13 +67,8 @@ describe('useActivatorService', () => {
         activator: null,
       }
 
-      const { computedActivatorElement, getActivatorLocation } = useActivatorService<'modelValue'>(
-        props,
-        defaultEmitActivator,
-        'modelValue',
-        defaultOnChange,
-      )
-
+      const model = ref(false)
+      const { computedActivatorElement, getActivatorLocation } = useActivatorService(props, model)
       const result = getActivatorLocation()
 
       expect(computedActivatorElement.value).toBeNull()
@@ -105,13 +81,8 @@ describe('useActivatorService', () => {
         activator: null,
       }
 
-      const { getActivatorLocation, activatorElement } = useActivatorService<'modelValue'>(
-        props,
-        defaultEmitActivator,
-        'modelValue',
-        defaultOnChange,
-      )
-
+      const model = ref(false)
+      const { getActivatorLocation, activatorElement } = useActivatorService(props, model)
       const dom = new JSDOM('<!DOCTYPE html><body><div id="dd"><span id="cc">Hi</span>Hello world</div></body>')
       const sampleNode = dom.window.document.getElementById('dd')
 
@@ -133,12 +104,8 @@ describe('useActivatorService', () => {
         activator: null,
       }
 
-      const { activatorOn } = useActivatorService<'modelValue'>(
-        props,
-        defaultEmitActivator,
-        'modelValue',
-        defaultOnChange,
-      )
+      const model = ref(false)
+      const { activatorOn } = useActivatorService(props, model)
 
       expect('click' in activatorOn).toBe(true)
     })
@@ -149,12 +116,8 @@ describe('useActivatorService', () => {
         closeOnClick: null,
       }
 
-      const { activatorOn, model } = useActivatorService<'modelValue'>(
-        props,
-        defaultEmitActivator,
-        'modelValue',
-        defaultOnChange,
-      )
+      const model = ref(false)
+      const { activatorOn } = useActivatorService(props, model)
 
       expect(model.value).toBe(false)
       activatorOn.click()
@@ -167,12 +130,8 @@ describe('useActivatorService', () => {
         closeOnClick: true,
       }
 
-      const { activatorOn, model } = useActivatorService<'modelValue'>(
-        props,
-        defaultEmitActivator,
-        'modelValue',
-        defaultOnChange,
-      )
+      const model = ref(false)
+      const { activatorOn } = useActivatorService(props, model)
 
       expect(model.value).toBe(false)
       activatorOn.click()
@@ -190,12 +149,8 @@ describe('useActivatorService', () => {
         readonly: true,
       }
 
-      const { activatorAttrs } = useActivatorService<'modelValue'>(
-        props,
-        defaultEmitActivator,
-        'modelValue',
-        defaultOnChange,
-      )
+      const model = ref(false)
+      const { activatorAttrs } = useActivatorService(props, model)
 
       expect('disabled' in activatorAttrs.value).toBe(true)
       expect('readonly' in activatorAttrs.value).toBe(true)

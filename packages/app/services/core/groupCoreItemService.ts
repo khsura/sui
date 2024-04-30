@@ -6,9 +6,9 @@ import {
   type Provider,
   type SingleGroupProvider,
 } from '@sui/app/definitions'
+import { useProviderRepository } from '@sui/app/repositories'
 import { type GroupItemValue } from '@sui/app/types'
 import { computed, getCurrentInstance, onMounted, onUnmounted, ref } from 'vue'
-import { useProviderService } from './providerService'
 
 export const useGroupCoreItemService = <T extends boolean>(
   props: T extends true ? PropsGroupItem : PropsSingleGroupItem,
@@ -16,7 +16,7 @@ export const useGroupCoreItemService = <T extends boolean>(
   injectParams?: Parameters<Provider[ProviderName.group]['registerItem']>[1],
 ) => {
   const id = ref<number | null>(null)
-  const { inject } = useProviderService()
+  const { inject } = useProviderRepository()
   const instance = getCurrentInstance()
   const group = inject(canSelectMultipleItem ? ProviderName.group : ProviderName.singleGroup)
   const identifier = canSelectMultipleItem ? 'index' : 'value'
@@ -57,6 +57,7 @@ export const useGroupCoreItemService = <T extends boolean>(
   })
 
   const toggleGroupItem = (value?: GroupItemValue) => {
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     group?.toggleItem?.(value === undefined ? item.value.value : value)
   }
 

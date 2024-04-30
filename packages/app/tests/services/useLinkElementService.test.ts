@@ -1,4 +1,4 @@
-import { PropsTag, type PropsLink } from '@sui/app/definitions'
+import { type PropsTag, type PropsLink } from '@sui/app/definitions'
 import { useLinkService } from '@sui/app/services'
 
 describe('useLinkService', () => {
@@ -34,7 +34,7 @@ describe('useLinkService', () => {
     const props = {
       to: null,
       href: keibaWebURL,
-      tag: null
+      tag: null,
     }
 
     const service = useLinkService(props)

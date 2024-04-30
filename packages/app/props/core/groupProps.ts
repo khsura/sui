@@ -2,7 +2,7 @@ import { type GroupItemValue } from '@sui/app/types'
 
 import { type PropType } from 'vue'
 
-export const propsGroup = <T extends GroupItemValue = any>() => {
+export const propsGroup = <T extends GroupItemValue = GroupItemValue>() => {
   return {
     multiple: {
       type: Boolean as PropType<boolean>,

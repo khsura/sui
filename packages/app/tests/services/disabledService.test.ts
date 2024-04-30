@@ -1,5 +1,6 @@
 import { type PropsDisabled } from '@sui/app/definitions/props'
 import { useDisabledService } from '@sui/app/services'
+import { type ComputedRef, computed } from 'vue'
 
 describe('useDisabledService', () => {
   describe('classListDisabled', () => {
@@ -25,7 +26,7 @@ describe('useDisabledService', () => {
         }
       })
 
-      const props: ComputedRef<Partial<PropsDisabled>> = disabled
+      const props: ComputedRef<PropsDisabled> = disabled
       const { classListDisabled } = useDisabledService(props)
 
       expect(classListDisabled.value).toEqual({
@@ -39,6 +40,7 @@ describe('useDisabledService', () => {
     test('classListTextDisabled should apply disabled class based on prop (value)', () => {
       const props = {
         disabled: true,
+        readonly: false,
       }
 
       const { classListTextDisabled } = useDisabledService(props)
@@ -53,10 +55,11 @@ describe('useDisabledService', () => {
       const disabled = computed(() => {
         return {
           disabled: true,
+          readonly: false,
         }
       })
 
-      const props: ComputedRef<Partial<PropsDisabled>> = disabled
+      const props: ComputedRef<PropsDisabled> = disabled
       const { classListTextDisabled } = useDisabledService(props)
 
       expect(classListTextDisabled.value).toEqual({
@@ -68,6 +71,7 @@ describe('useDisabledService', () => {
     test('classListDisabled should apply disabled class based on prop (value)', () => {
       const props = {
         disabled: false,
+        readonly: false,
       }
 
       const { classListDisabled } = useDisabledService(props)
@@ -82,10 +86,11 @@ describe('useDisabledService', () => {
       const disabled = computed(() => {
         return {
           disabled: false,
+          readonly: false,
         }
       })
 
-      const props: ComputedRef<Partial<PropsDisabled>> = disabled
+      const props: ComputedRef<PropsDisabled> = disabled
       const { classListDisabled } = useDisabledService(props)
 
       expect(classListDisabled.value).toEqual({
@@ -97,8 +102,9 @@ describe('useDisabledService', () => {
 
   describe('classListTextDisabled', () => {
     test('classListTextDisabled should apply disabled class based on prop (value)', () => {
-      const props = {
+      const props: PropsDisabled = {
         disabled: false,
+        readonly: false,
       }
 
       const { classListTextDisabled } = useDisabledService(props)
@@ -113,10 +119,11 @@ describe('useDisabledService', () => {
       const disabled = computed(() => {
         return {
           disabled: false,
+          readonly: false,
         }
       })
 
-      const props: ComputedRef<Partial<PropsDisabled>> = disabled
+      const props: ComputedRef<PropsDisabled> = disabled
       const { classListTextDisabled } = useDisabledService(props)
 
       expect(classListTextDisabled.value).toEqual({

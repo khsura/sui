@@ -1,11 +1,9 @@
 import { type PropsActivator } from '@sui/app/definitions'
 import { getDocument } from '@sui/app/lib/browser'
 import { getCleanSetObject } from '@sui/app/lib/getCleanSetObject'
-import { ref, computed, type ModelRef } from 'vue'
-import { type Ref, type ComputedRef } from 'vue'
-import { onClickOutside } from '@vueuse/core'
+import { ref, computed, type Ref, type ComputedRef } from 'vue'
 
-export const useActivatorService = (props: PropsActivator, model: ModelRef<boolean | null | undefined>) => {
+export const useActivatorService = (props: PropsActivator, model: Ref<boolean | null | undefined>) => {
   const contentElement: Ref<HTMLElement | null> = ref(null)
   const activatorElement: Ref<HTMLElement | null> = ref(null)
 
@@ -38,13 +36,6 @@ export const useActivatorService = (props: PropsActivator, model: ModelRef<boole
     return props.activator.$el as HTMLElement
   })
 
-  const onClickOutsideOfContent = (eventListener: (event: Event) => void) => {
-    onClickOutside(contentElement.value, (event) => {
-      console.log(event)
-      eventListener(event)
-    })
-  }
-
   const getActivatorLocation = () => {
     const element = computedActivatorElement.value
 
@@ -62,6 +53,5 @@ export const useActivatorService = (props: PropsActivator, model: ModelRef<boole
     activatorOn,
     activatorAttrs,
     getActivatorLocation,
-    onClickOutsideOfContent,
   }
 }

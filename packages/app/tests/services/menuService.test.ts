@@ -1,6 +1,7 @@
 import { type PropsMenu } from '@sui/app/definitions/props'
-import { PropsContent, type EmitActivator } from '@sui/app/definitions'
 import { useMenuService } from '@sui/app/services'
+import { type PropsContent } from '@sui/app/types'
+import { ref } from 'vue'
 
 const defaultPropsContent: PropsContent = {
   contentClass: {},
@@ -36,9 +37,7 @@ const mockContentElement = {
 }
 
 vi.mock('@sui/app/services/core/activatorService', () => {
-  const useActivatorService = vi.fn((_props, _emit, _modelKey, callback) => {
-    callback().then()
-
+  const useActivatorService = vi.fn(() => {
     return {
       getActivatorLocation: vi.fn().mockReturnValue(mockGetActivatorLocationResult),
       contentElement: mockContentElement,
@@ -90,17 +89,17 @@ vi.mock('@sui/app/services/core/contentService', () => {
   }
 })
 
-const defaultEmit: EmitActivator<'modelValue'> = () => {}
+const model = ref(false)
 
 describe('useMenuService', () => {
   test('content styles should contain styles from content service', () => {
-    const { contentStyles } = useMenuService<'modelValue'>(defaultProps, defaultEmit)
+    const { contentStyles } = useMenuService(defaultProps, model)
 
     expect(contentStyles.value.border).toBe('double')
   })
 
   test('content classes should contain classes from content service', () => {
-    const { contentClasses } = useMenuService<'modelValue'>(defaultProps, defaultEmit)
+    const { contentClasses } = useMenuService(defaultProps, model)
 
     expect(contentClasses.value.myClass).toBe(true)
   })

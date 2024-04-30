@@ -1,5 +1,5 @@
 import { getDocument, getWindow } from '@sui/app/lib'
-import { type AppState } from '@sui/app/types'
+import { store } from '@sui/app/store'
 
 const getClientWidth = () => {
   const document = getDocument()
@@ -23,40 +23,44 @@ const getClientHeight = () => {
   return Math.max(document.documentElement?.clientHeight ?? 0, window.innerHeight ?? 0)
 }
 
-const updateDisplay = (config: AppState) => {
+const updateDisplay = () => {
   const height = getClientHeight()
   const width = getClientWidth()
 
-  config.display.height = height
-  config.display.width = width
+  store.height = height
+  store.width = width
 }
 
 let resizeTimeout = 0
 
-const onResize = (config: AppState) => {
+const onResize = () => {
   clearTimeout(resizeTimeout)
   const window = getWindow()
 
   if (window) {
     resizeTimeout = window.setTimeout(() => {
-      updateDisplay(config)
+      updateDisplay()
     }, 100)
   }
 }
 
-export const listenDisplayChange = (config: AppState) => {
+export const listenDisplayChange = () => {
+  if (store.isReady) {
+    return
+  }
+
   const window = getWindow()
 
   if (window === null) {
     return
   }
 
-  updateDisplay(config)
+  updateDisplay()
 
   window.addEventListener(
     'resize',
     () => {
-      onResize(config)
+      onResize()
     },
     { passive: true },
   )

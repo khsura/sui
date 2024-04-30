@@ -18,7 +18,7 @@ const slots = useSlots()
 const { tagName } = useTagService(props)
 
 const hasText = computed(() => {
-  return !!(slots.default || slots.text || props.text)
+  return !!(slots.default ?? slots.text ?? props.text)
 })
 </script>
 <style lang="scss">

@@ -1,10 +1,10 @@
 import { ProviderName, ProviderPropsName } from '@sui/app/constants/provider'
 import { type PropsGroup } from '@sui/app/definitions/props'
-import { useProviderService } from './core/providerService'
-import { useGroupCoreService } from './core/groupCoreService'
 import { type Ref, computed, ref, type ModelRef } from 'vue'
 import { type GroupItemValue } from '@sui/app/types'
 import { watch } from 'vue'
+import { useGroupCoreService } from './core/groupCoreService'
+import { useProviderService } from './core/providerService'
 
 export const useGroupService = (props: PropsGroup, model: ModelRef<GroupItemValue[] | null>) => {
   const { provide, provideProps } = useProviderService()

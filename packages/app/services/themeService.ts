@@ -1,7 +1,7 @@
 import { type AppThemeType } from '@sui/app/types'
 import { computed } from 'vue'
-import { useAppProviderService } from './appProviderService'
 import { getBrowserTheme } from '@sui/app/helpers'
+import { useAppProviderService } from './appProviderService'
 
 export const useThemeService = () => {
   const { config } = useAppProviderService()

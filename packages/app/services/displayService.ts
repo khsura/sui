@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { breakpoints } from '@sui/app/constants'
 import { ref, computed, onMounted } from 'vue'
-import { useAppProviderService } from './appProviderService'
 import { useMediaQuery } from '@vueuse/core'
+import { store } from '@sui/app/store'
+import { useAppProviderService } from './appProviderService'
 
 export const useDisplayService = () => {
   const { config } = useAppProviderService()
@@ -13,28 +14,27 @@ export const useDisplayService = () => {
   }
 
   const xs = computed(() => {
-    return getValue(config.display.width < config.display.thresholds.xs)
+    return getValue(store.width < config.display.thresholds.xs)
   })
 
   const sm = computed(() => {
-    return getValue(config.display.width < config.display.thresholds.sm && !xs.value)
+    return getValue(store.width < config.display.thresholds.sm && !xs.value)
   })
 
   const md = computed(() => {
     return getValue(
-      config.display.width < config.display.thresholds.md - config.display.scrollBarWidth && !(sm.value || xs.value),
+      store.width < config.display.thresholds.md - config.display.scrollBarWidth && !(sm.value || xs.value),
     )
   })
 
   const lg = computed(() => {
     return getValue(
-      config.display.width < config.display.thresholds.lg - config.display.scrollBarWidth &&
-        !(md.value || sm.value || xs.value),
+      store.width < config.display.thresholds.lg - config.display.scrollBarWidth && !(md.value || sm.value || xs.value),
     )
   })
 
   const xl = computed(() => {
-    return getValue(config.display.width >= config.display.thresholds.lg - config.display.scrollBarWidth)
+    return getValue(store.width >= config.display.thresholds.lg - config.display.scrollBarWidth)
   })
 
   const xsOnly = computed(() => {
@@ -111,7 +111,7 @@ export const useDisplayService = () => {
     }
 
     if (typeof config.display.mobileBreakpoint === 'number') {
-      return config.display.width < parseInt(config.display.mobileBreakpoint.toString(), 10)
+      return store.width < parseInt(config.display.mobileBreakpoint.toString(), 10)
     }
 
     const current = breakpoints[name.value]
@@ -121,11 +121,11 @@ export const useDisplayService = () => {
   })
 
   const width = computed(() => {
-    return getValue(config.display.width)
+    return getValue(store.width)
   })
 
   const height = computed(() => {
-    return getValue(config.display.height)
+    return getValue(store.height)
   })
 
   const isHoverUnsupported = useMediaQuery('(hover: none)')

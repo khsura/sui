@@ -50,13 +50,13 @@ import { SCard } from '@sui/app/components/cards'
 import { propsDatePicker } from '@sui/app/props'
 import { useDatePickerService, useMeasurableStylesService } from '@sui/app/services'
 import { computed } from 'vue'
+import dayjs from '@sui/app/vendors/dayjs'
+import { getDatePickerFormat } from '@sui/app/repositories'
 import SDatePickerDate from './sDatePickerDate.vue'
 import SDatePickerMonth from './sDatePickerMonth.vue'
 import SDatePickerSwitch from './sDatePickerSwitch.vue'
 import SDatePickerTitle from './sDatePickerTitle.vue'
 import SDatePickerYear from './sDatePickerYear.vue'
-import dayjs from '@sui/app/vendors/dayjs'
-import { getDatePickerFormat } from '@sui/app/repositories'
 
 const props = defineProps(propsDatePicker())
 

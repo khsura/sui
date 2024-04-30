@@ -1,8 +1,8 @@
 <template>
-  <Teleport v-if="isReady" :to="teleportTo" :disabled="disabled">
-    <div v-if="scrim" class="s_overlay" :style="{ zIndex }">
+  <Portal :to="defaultOverlayClass" :disabled="disabled">
+    <div v-if="position === 'fixed' || scrim" class="s_overlay" :style="{ zIndex }">
       <Transition name="s_transition--appear">
-        <div v-if="value" class="s_overlay__scrim"></div>
+        <div v-if="scrim && value" class="s_overlay__scrim"></div>
       </Transition>
       <Transition :name="transition">
         <slot v-if="value" :attrs="{ class: 's_overlay__content' }" :value="value"></slot>
@@ -11,27 +11,18 @@
     <Transition v-else :name="transition">
       <slot v-if="value" :attrs="{ class: 's_overlay__content' }" :value="value"></slot>
     </Transition>
-  </Teleport>
+  </Portal>
 </template>
 
 <script setup lang="ts">
 import { propsOverlay } from '@sui/app/props'
-import { useOverlayService } from '@sui/app/services'
+import { Portal } from 'portal-vue'
+import { defaultOverlayClass } from '@sui/app/constants'
 
-const props = defineProps(propsOverlay())
-const { isReady } = useOverlayService(props)
+defineProps(propsOverlay())
 </script>
 
 <style lang="scss">
-.s_overlayContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: contents;
-  pointer-events: none;
-  contain: layout;
-}
-
 .s_overlay {
   position: fixed;
   inset: 0;
@@ -51,7 +42,7 @@ const { isReady } = useOverlayService(props)
 
   &__content {
     position: absolute;
-    z-index: 5;
+    z-index: 1000;
     pointer-events: auto;
     outline: none;
     contain: layout;

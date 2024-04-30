@@ -4,6 +4,7 @@ import { propsWindow } from './windowProps'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { mandatory, ...customPropsWindow } = propsWindow()
+
 export const propsCarousel = () => {
   return {
     cycle: Boolean,
@@ -31,7 +32,7 @@ export const propsCarousel = () => {
       type: [Boolean, String] as PropType<boolean | 'left' | 'right'>,
       default: false,
     },
-    // eslint-disable-next-line vue/valid-define-props
+
     ...customPropsWindow,
   }
 }

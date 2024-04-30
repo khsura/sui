@@ -1,12 +1,12 @@
 import { ProviderPropsName } from '@sui/app/constants'
 import { type PropsSlideGroup } from '@sui/app/definitions'
+import { computed, ref, watch, type ModelRef } from 'vue'
+import { wait } from '@sui/app/lib'
+import { type GroupItemValue } from '@sui/app/types'
 import { useDisplayService } from './displayService'
 import { useScrollService } from './scrollService'
 import { useGroupService } from './groupService'
 import { useContentService, useProviderService } from './core'
-import { computed, ref, watch, type ModelRef } from 'vue'
-import { wait } from '@sui/app/lib'
-import { type GroupItemValue } from '@sui/app/types'
 
 export const useSlideGroupService = (props: PropsSlideGroup, model: ModelRef<GroupItemValue[]>) => {
   const { isTouchDevice, width } = useDisplayService()

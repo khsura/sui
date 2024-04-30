@@ -47,7 +47,6 @@ const props = defineProps({
   ...propsBorder(),
 })
 
-const emit = defineEmits<(event: 'update:modelValue', value: boolean | undefined | null) => void>()
 let timer: number | undefined
 const model = defineModel<boolean>()
 const { activatorAttrs, activatorElement, activatorOn, contentElement } = useActivatorService(props, model)

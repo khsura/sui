@@ -13,7 +13,8 @@
     "g:vue-tsc": "cd $INIT_CWD && vue-tsc",
     "g:rimraf": "cd $INIT_CWD && rimraf",
     "g:tsc-alias": "cd $INIT_CWD && tsc-alias",
-    "g:vite-node": "cd $INIT_CWD && vite-node"
+    "g:vite-node": "cd $INIT_CWD && vite-node",
+    "g:eslint": "cd $INIT_CWD && eslint"
   },
   "workspaces": [
     "packages/*"
@@ -26,6 +27,7 @@
     "@sui/app": "workspace:^",
     "@sui/shared": "workspace:^",
     "@sui/storybook": "workspace:^",
+    "@types/jsdom": "^21.1.6",
     "@types/lodash": "^4",
     "@types/node": "^20.12.7",
     "@types/postcss-flexbugs-fixes": "^5.0.3",
@@ -38,6 +40,7 @@
     "autoprefixer": "^10.4.19",
     "eslint": "^9.1.1",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-vue": "^9.25.0",
     "jsdom": "^24.0.0",

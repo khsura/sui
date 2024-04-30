@@ -23,7 +23,6 @@ const model = defineModel<boolean>()
 
 const { activatorOn, activatorAttrs, activatorElement, contentClasses, contentStyles, transitionName, onClickOutside } =
   useDialogService(props, model)
-
 </script>
 
 <style lang="scss">

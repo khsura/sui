@@ -29,9 +29,9 @@ import {
   useTextColorService,
 } from '@sui/app/services'
 import { computed } from 'vue'
-import { SProgressCircular } from './progress'
 import { getCleanSetObject, isDarkColor } from '@sui/app/lib'
 import { useColorRepository, useProviderRepository } from '@sui/app/repositories'
+import { SProgressCircular } from './progress'
 
 const props = defineProps(propsButton())
 const emit = defineEmits<(event: 'click', value: Event) => void>()

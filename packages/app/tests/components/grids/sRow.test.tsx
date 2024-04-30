@@ -1,5 +1,5 @@
 import { SRow, SColumn } from '@sui/app/components'
-import { PropsRow } from '@sui/app/types'
+import { type PropsRow } from '@sui/app/types'
 import { mount } from '@vue/test-utils'
 
 describe('SRow', () => {

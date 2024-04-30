@@ -8,7 +8,7 @@ export const propsList = () => {
       default: false,
     },
     // TODO (Sura) add validator
-    // eslint-disable-next-line vue/no-unused-properties
+
     lines: {
       type: Number as PropType<number | null>,
       default: null,

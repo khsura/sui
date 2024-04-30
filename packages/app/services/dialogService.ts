@@ -1,10 +1,10 @@
 import { type PropsDialog } from '@sui/app/definitions'
 import { useActivatorService } from '@sui/app/services/core/activatorService'
-import { useLocationService } from './core/locationService'
-import { useMeasurableStylesService } from './measurableStylesService'
 import { useElevationService } from '@sui/app/services'
 import { type ModelRef, computed } from 'vue'
 import { STransition } from '../constants'
+import { useMeasurableStylesService } from './measurableStylesService'
+import { useLocationService } from './core/locationService'
 
 export const useDialogService = (props: PropsDialog, isDialogOpen: ModelRef<boolean | null | undefined>) => {
   const { isBottom } = useLocationService(props)

@@ -9,7 +9,7 @@ export const propsCalendar = () => {
       type: String as PropType<'month' | 'week'>,
       default: 'month',
     },
-    // eslint-disable-next-line vue/no-unused-properties
+
     modelValue: {
       type: String as PropType<string>,
       default: dayjs().format(datePickerModelFormats.date),

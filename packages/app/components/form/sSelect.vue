@@ -21,25 +21,25 @@
       </div>
     </div>
 
-    <SFormInputError :errors="errors" :hidden="hideDetails"></SFormInputError>
+    <SFormInputError v-if="!hideDetails" :errors="errors"></SFormInputError>
 
     <SOverlay v-slot="{ attrs }" :value="model">
       <OnClickOutside @trigger="onClickOutside">
         <div ref="contentElement" class="s_select__list" :style="contentStyles" :class="contentClasses" v-bind="attrs">
-        <SList link :dense="dense" :color="color" :text="text">
-          <SListItem
-            v-for="(item, id) in objectItems"
-            :key="id"
-            :disabled="getIsDisabled(item)"
-            :class="{ 's_select__listItem--selected': getIsSelected(item) }"
-            @click="selectItem(item)"
-          >
-            <SListItemContent>
-              <SListItemSubtitle>{{ getItemText(item) }}</SListItemSubtitle>
-            </SListItemContent>
-          </SListItem>
-        </SList>
-      </div>
+          <SList link :dense="dense" :color="color" :text="text">
+            <SListItem
+              v-for="(item, id) in objectItems"
+              :key="id"
+              :disabled="getIsDisabled(item)"
+              :class="{ 's_select__listItem--selected': getIsSelected(item) }"
+              @click="selectItem(item)"
+            >
+              <SListItemContent>
+                <SListItemSubtitle>{{ getItemText(item) }}</SListItemSubtitle>
+              </SListItemContent>
+            </SListItem>
+          </SList>
+        </div>
       </OnClickOutside>
     </SOverlay>
   </div>
@@ -73,19 +73,12 @@ const { classListBorder } = useBorderService(props)
 const { errors, updateFormInput } = useFormInputService<string | number>(props, emit)
 const { classListDisabled } = useDisabledService(props)
 const model = defineModel<boolean>('menu')
-const {
-  activatorElement,
-  activatorOn,
-  contentElement,
-  updateLocation,
-  activatorAttrs,
-  contentClasses,
-  contentStyles,
-} = useMenuService(props, model)
+
+const { activatorElement, activatorOn, contentElement, updateLocation, activatorAttrs, contentClasses, contentStyles } =
+  useMenuService(props, model)
 
 const onClickOutside = () => {
   if (model.value) {
-    updateFormInput()
     model.value = false
   }
 }
@@ -176,6 +169,7 @@ watch(model, async () => {
   if (model.value) {
     await nextTick()
     updateLocation()
+    void updateFormInput()
     const selectedElement = contentElement.value?.querySelector<HTMLElement>('.s_select__listItem--selected')
 
     if (contentElement.value) {

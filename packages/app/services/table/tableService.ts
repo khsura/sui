@@ -7,19 +7,18 @@ import {
   type TableItemCellType,
 } from '@sui/app/types'
 import { computed, ref } from 'vue'
-import { type sTableHeadCell } from '@sui/app/components/table'
+import { type STableHeadCell } from '@sui/app/components/table'
 import { getCleanSetObject, getNumericCssAttribute } from '@sui/app/lib'
 import { uniqueId } from '@sui/app/vendors/lodash'
 import { getTableRowClass } from '@sui/app/helpers'
 import { z } from 'zod'
-import { useAppProviderService } from '../appProviderService'
+import { store } from '@sui/app/store'
 
 export const useTableService = <T extends TableItem = TableItem>(props: PropsTable<T>, emit: EmitTable<T>) => {
-  const { config } = useAppProviderService()
   const isMounted = ref(false)
   const sortOrders = ref<Record<string, KTableSortOrder | undefined>>({})
   const tableWrapperElement = ref<HTMLElement | null>(null)
-  const headerElements = ref<Array<InstanceType<typeof sTableHeadCell>>>([])
+  const headerElements = ref<Array<InstanceType<typeof STableHeadCell>>>([])
   const tableId = ref(uniqueId())
   const isStickActive = ref(false)
 
@@ -351,7 +350,7 @@ export const useTableService = <T extends TableItem = TableItem>(props: PropsTab
 
     const cell = getCellInfo(header)
 
-    if (!cell?.isSticked || !config.display.width || !tableId.value) {
+    if (!cell?.isSticked || !store.width || !tableId.value) {
       return undefined
     }
 
