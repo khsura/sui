@@ -1,13 +1,10 @@
-import { STransition } from '@sui/app/constants/transition'
-import { type PropType } from 'vue'
+
+import { PropType } from 'vue'
 import { propsPosition } from './positionProps'
+import { STransition } from '@sui/app/constants'
 
 export const propsOverlay = () => {
   return {
-    teleportTo: {
-      type: String,
-      default: '.s_overlayContainer',
-    },
     zIndex: {
       type: Number,
       default: 1000,

@@ -42,6 +42,15 @@ export const isBrowser = () => {
   return typeof window !== 'undefined'
 }
 
+export interface ViewportLocation {
+  left: number
+  top: number
+  width: number
+  height: number
+  right: number
+  bottom: number
+}
+
 export const getViewportLocation = () => {
   const document = getDocument()
   const window = getWindow()
@@ -62,5 +71,5 @@ export const getViewportLocation = () => {
     height,
     right: left + width,
     bottom: top + height,
-  }
+  } satisfies ViewportLocation
 }

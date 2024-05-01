@@ -1,9 +1,9 @@
 import './previewPlugins'
 import { getBrowserTheme } from '@sui/app/helpers'
 import { themes } from '@storybook/theming'
+import { type Preview } from '@storybook/vue3'
 import { themeComponents } from './components'
 import { withTheme } from './decorators/withTheme'
-import type { Preview } from '@storybook/vue3'
 
 const preview: Preview = {
   parameters: {

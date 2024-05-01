@@ -1,8 +1,6 @@
 import { createSUI } from '@sui/app'
 import { setup } from '@storybook/vue3'
 
-let isAppLoaded = false
-
 const suiPlugin = createSUI({
   themes: {
     light: {
@@ -14,8 +12,5 @@ const suiPlugin = createSUI({
 })
 
 setup((app) => {
-  if (!isAppLoaded) {
-    app.use(suiPlugin)
-    isAppLoaded = true
-  }
+  app.use(suiPlugin)
 })

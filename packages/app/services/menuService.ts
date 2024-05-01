@@ -1,6 +1,6 @@
 import { type PropsMenu } from '@sui/app/definitions'
 import { getCleanSetObject, getNumericCssAttribute } from '@sui/app/lib'
-import { getViewportLocation, getWindow } from '@sui/app/lib/browser'
+import { getDocument, getViewportLocation, getWindow } from '@sui/app/lib/browser'
 import { type MenuContentStyle } from '@sui/app/types'
 import { type Ref, computed, ref } from 'vue'
 import { useActivatorService, useContentService, useLocationService } from './core'
@@ -69,6 +69,41 @@ export const useMenuService = (
     }
   }
 
+  const updateLocation = (viewportLocation = getViewportLocation()) => {
+    const activator = activatorService.getActivatorLocation()
+    const contentLocation = getContentLocation()
+
+    if (!activator || !viewportLocation || !contentLocation) {
+      return
+    }
+
+    const { width: activatorWidth } = activator
+
+    const overflowRight = Math.max(contentLocation.right - viewportLocation.right, 0)
+    const isOverflowBottom = contentLocation.top + contentLocation.height >= (getDocument()?.body.offsetHeight ?? 0)
+    const overflowBottom =  isOverflowBottom ? Math.max(contentLocation.bottom - viewportLocation.bottom, 0) : 0
+
+    top.value = Math.min(contentLocation.top, contentLocation.top - overflowBottom)
+    left.value = Math.max(viewportLocation.left, contentLocation.left - overflowRight)
+    minWidth.value = options?.noContentMinWidth ? null : activatorWidth
+
+    if (props.screenPadding) {
+      // Adding margin so menu will have some space between border of the window screen
+      const contentPadding = 16 * 2
+
+      if (left.value + activatorWidth + contentPadding + props.screenPadding > (getWindow()?.screen.width ?? 0)) {
+        left.value -= props.screenPadding
+      }
+    }
+  }
+
+  const contentClasses = computed<Record<string, boolean>>(() => {
+    return getCleanSetObject({
+      ...content.classes.value,
+      ...classListPosition.value,
+    })
+  })
+
   const contentStyles = computed<MenuContentStyle>(() => {
     const minWidthToSet = options?.noContentMinWidth ? undefined : getNumericCssAttribute(minWidth.value)
 
@@ -85,45 +120,10 @@ export const useMenuService = (
     return styles
   })
 
-  const updateLocation = () => {
-    const { width } = activatorService.getActivatorLocation() ?? {}
-    const viewportLocation = getViewportLocation()
-    const contentLocation = getContentLocation()
-
-    if (!width || !viewportLocation || !contentLocation) {
-      return
-    }
-
-    const activatorLocationRight = activatorService.getActivatorLocation()?.right ?? 0
-
-    const overflowRight =
-      activatorLocationRight < viewportLocation.right ? Math.max(contentLocation.right - viewportLocation.right, 0) : 0
-
-    top.value = contentLocation.top
-    left.value = Math.max(viewportLocation.left, contentLocation.left - overflowRight)
-    minWidth.value = options?.noContentMinWidth ? null : width
-
-    if (props.screenPadding) {
-      // Adding margin so menu will have some space between border of the window screen
-      const contentPadding = 16 * 2
-
-      if (left.value + width + contentPadding + props.screenPadding > (getWindow()?.screen.width ?? 0)) {
-        left.value -= props.screenPadding
-      }
-    }
-  }
-
-  const contentClasses = computed<Record<string, boolean>>(() => {
-    return getCleanSetObject({
-      ...content.classes.value,
-      ...classListPosition.value,
-    })
-  })
-
   return {
-    updateLocation,
     ...activatorService,
     contentClasses,
     contentStyles,
+    updateLocation,
   }
 }
