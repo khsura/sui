@@ -78,10 +78,9 @@ export const useMenuService = (
     }
 
     const { width: activatorWidth } = activator
-
     const overflowRight = Math.max(contentLocation.right - viewportLocation.right, 0)
     const isOverflowBottom = contentLocation.top + contentLocation.height >= (getDocument()?.body.offsetHeight ?? 0)
-    const overflowBottom =  isOverflowBottom ? Math.max(contentLocation.bottom - viewportLocation.bottom, 0) : 0
+    const overflowBottom = isOverflowBottom ? Math.max(contentLocation.bottom - viewportLocation.bottom, 0) : 0
 
     top.value = Math.min(contentLocation.top, contentLocation.top - overflowBottom)
     left.value = Math.max(viewportLocation.left, contentLocation.left - overflowRight)
