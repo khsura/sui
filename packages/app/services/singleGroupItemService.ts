@@ -1,7 +1,6 @@
 import { type ProviderName } from '@sui/app/constants/provider'
-import { type PropsSingleGroupItem } from '@sui/app/definitions'
+import { type Provider, type PropsSingleGroupItem } from '@sui/app/definitions'
 import { useGroupCoreItemService } from '@sui/app/services/core/groupCoreItemService'
-import { type Provider } from '@sui/app/types'
 
 export const useSingleGroupItemService = (
   props: PropsSingleGroupItem,

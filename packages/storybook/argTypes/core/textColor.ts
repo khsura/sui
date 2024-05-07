@@ -12,7 +12,7 @@ export const argTypesTextColor = <T extends ArgTypes<PropsColor>>(params: Partia
           defaultValue: { summary: 'null' },
           type: {
             summary: 'PresetColorType | ExposedAppColorType | string',
-            detail: colorString.replaceAll(/export /gs, ''),
+            detail: colorString.replace(/export /gs, ''),
           },
         },
       },

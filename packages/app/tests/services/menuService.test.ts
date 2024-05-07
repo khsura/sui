@@ -14,7 +14,6 @@ const defaultProps: PropsMenu = {
   activator: 'string',
   closeOnClick: false,
   closeOnScroll: false,
-  modelValue: true,
   location: null,
   offsetX: 1,
   offsetY: 2,

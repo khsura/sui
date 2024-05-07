@@ -1,0 +1,22 @@
+{
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/dist"],
+      "cache": true
+    },
+    "eslint": {
+      "cache": true
+    },
+    "stylelint": {
+      "cache": true
+    },
+    "test": {
+      "outputs": ["{projectRoot}/coverage"],
+      "cache": true
+    }
+  },
+  "affected": {
+    "defaultBase": "main"
+  }
+}

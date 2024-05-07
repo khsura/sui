@@ -118,7 +118,7 @@ export default [
     },
   },
   {
-    files: ['**/*.stories.ts', '**/*.stories.tsx'],
+    // files: ['**/*.stories.ts', '**/*.stories.tsx'],
     rules: {
       'import/no-anonymous-default-export': 'off',
       '@vue/one-component-per-file': 'off',

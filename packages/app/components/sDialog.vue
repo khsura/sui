@@ -112,18 +112,18 @@ $kDialogMargin: $s_spacer * 6;
         max-width: 100%;
         max-height: 100%;
 
-        /* stylelint-disable-next-line selector-max-compound-selectors */
+        /* stylelint-disable selector-max-compound-selectors */
         > .s_card__title,
         > .s_card__actions {
           flex: 0 0 auto;
         }
 
-        /* stylelint-disable-next-line selector-max-compound-selectors */
         > .s_card__text {
           flex: 1 1 auto;
           overflow-y: auto;
           backface-visibility: hidden;
         }
+        /* stylelint-enable selector-max-compound-selectors */
       }
     }
 

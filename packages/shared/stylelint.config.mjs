@@ -1,7 +1,7 @@
 const variablePattern =
   /^(s_)?(([a-z]+[A-Z]?([a-z]+)?)+)(__(([a-z]+[A-Z]?([a-z]+)?)+))?(--(([a-z]+[A-Z]?([a-z]+)?)+))?(__(([a-z]+[A-Z]?([a-z]+)?)+))?$/
 
-/** @type import('stylelint').Config */
+/** @type {import('stylelint').Config} */
 export default {
   defaultSeverity: 'warning',
   extends: [
@@ -92,8 +92,15 @@ export default {
     'scss/at-mixin-argumentless-call-parentheses': 'always',
     'scss/at-mixin-pattern': variablePattern,
     'custom-property-pattern':
-      /^s-((color-(primary|secondary|success|info|warning|important|error)(--text)?)|(s-app-color-(border|title)))$/,
+      /^s-((color-(primary|secondary|success|info|warning|important|error)(--text)?)|(app-color-(border|title)))$/,
     'media-query-no-invalid': null,
   },
-  ignoreFiles: ['dist/**/*', 'coverage/**/*', '@types/**/*'],
+  ignoreFiles: [
+    'dist/**/*',
+    'coverage/**/*',
+    '@types/**/*',
+    'node_modules/**/*',
+    'public/**/*',
+    'storybook-static/**/*',
+  ],
 }

@@ -3,13 +3,39 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "yarn g:vite build",
-    "lint": "yarn g:eslint"
+    "prebuild": "yarn g:rimraf dist && yarn g:rimraf @types",
+    "build:type": "yarn g:vue-tsc -p tsconfig.build.json && yarn g:tsc-alias -p tsconfig.build.json",
+    "build": "yarn prebuild && yarn build:type && yarn g:vite build && cp -R styles dist/styles",
+    "eslint": "yarn g:eslint",
+    "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
+    "release": "echo 'release'"
+  },
+  "files": [
+    "dist",
+    "@types"
+  ],
+  "main": "./dist/s-ui.umd.cjs",
+  "module": "./dist/s-ui.js",
+  "types": "./@types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/s-ui.js",
+        "types": "./@types/index.d.ts"
+      },
+      "require": {
+        "default": "./dist/s-ui.umd.cjs",
+        "types": "./@types/index.d.ts"
+      }
+    },
+    "./style.css": "./dist/style.css",
+    "./helpers.scss": "./dist/styles/_helpers.scss"
   },
   "dependencies": {
     "@vueuse/components": "^10.9.0",
     "@vueuse/core": "^10.9.0",
     "dayjs": "^1.11.11",
+    "lodash": "^4.17.21",
     "portal-vue": "^3.0.0",
     "vue": "^3.4.25",
     "vue-i18n": "^9.13.1",

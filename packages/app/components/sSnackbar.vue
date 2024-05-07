@@ -1,6 +1,6 @@
 <template>
   <div class="s_snackbar">
-    <div ref="activatorElement">
+    <div v-if="$slots.activator" ref="activatorElement">
       <slot name="activator" :on="activatorOn" :attrs="activatorAttrs"></slot>
     </div>
     <SOverlay v-slot="{ attrs }" :value="model" :transition="STransition.fade">
@@ -23,12 +23,11 @@
 import SOverlay from '@sui/app/components/sOverlay.vue'
 import { STransition } from '@sui/app/constants'
 import { getWindow } from '@sui/app/lib/browser'
-import { getNumericCssAttribute } from '@sui/app/lib'
+import { getCleanSetObject, getNumericCssAttribute } from '@sui/app/lib'
 import { propsActivator, propsBorder } from '@sui/app/props'
-import { useActivatorService, useLayoutService } from '@sui/app/services'
-import { computed } from 'vue'
-import { type PropType } from 'vue'
-import { watch } from 'vue'
+import { useActivatorService, useLayoutService, useScrollableService } from '@sui/app/services'
+import { getIsAbsolutePosition, getIsFixedPosition } from '@sui/app/repositories/positionRepository'
+import { type PropType, watch, computed } from 'vue'
 
 const props = defineProps({
   multiLine: {
@@ -47,9 +46,10 @@ const props = defineProps({
   ...propsBorder(),
 })
 
-let timer: number | undefined
 const model = defineModel<boolean>()
+let timer: NodeJS.Timeout | number | undefined
 const { activatorAttrs, activatorElement, activatorOn, contentElement } = useActivatorService(props, model)
+const { currentScroll } = useScrollableService()
 const { app } = useLayoutService({ app: true })
 
 const wrapperClasses = computed(() => {
@@ -58,11 +58,26 @@ const wrapperClasses = computed(() => {
   }
 })
 
-const wrapperStyles = computed(() => {
-  return {
-    top: props.location === 'top' ? getNumericCssAttribute(app.value.top) : undefined,
-    bottom: props.location !== 'top' ? getNumericCssAttribute(app.value.bottom) : undefined,
+const offsetTop = computed(() => {
+  const isFixedAppBar = getIsFixedPosition({ position: app.value.appBarPosition, app: true })
+  const isAbsoluteAppBar = getIsAbsolutePosition({ position: app.value.appBarPosition, app: true })
+
+  if (isFixedAppBar) {
+    return app.value.appBarHeight + Math.max(app.value.offsetTop - currentScroll.value, 0)
   }
+
+  if (isAbsoluteAppBar) {
+    return Math.max(app.value.appBarHeight + app.value.offsetTop - currentScroll.value, 0)
+  }
+
+  return Math.max(app.value.appBarHeight - currentScroll.value, 0)
+})
+
+const wrapperStyles = computed(() => {
+  return getCleanSetObject({
+    top: props.location === 'top' ? getNumericCssAttribute(offsetTop.value) : undefined,
+    bottom: props.location !== 'top' ? getNumericCssAttribute(app.value.bottomNavigationHeight) : undefined,
+  })
 })
 
 const contentClasses = computed(() => {
@@ -71,14 +86,14 @@ const contentClasses = computed(() => {
   }
 })
 
-watch(model, (v) => {
-  if (v) {
+watch(model, () => {
+  if (model.value) {
     const window = getWindow()
 
     if (props.timeout && window) {
-      window.clearTimeout(timer)
+      clearTimeout(timer)
       timer =
-        window.setTimeout(() => {
+        setTimeout(() => {
           model.value = false
         }, props.timeout) ?? null
     }
@@ -98,11 +113,11 @@ watch(model, (v) => {
     flex-wrap: nowrap;
     align-items: center;
     min-width: 344px;
-    max-width: min(672px, calc(100% - 16px));
+    max-width: 672px;
     min-height: 48px;
     margin: calc($s_spacer * 2) auto;
-    color: s_getAppColor('snackbar', true);
-    background-color: s_getAppColor('snackbar');
+    color: s_getappcolor('snackbar', true);
+    background-color: s_getappcolor('snackbar');
     transform: translateX(-50%);
 
     &--top {

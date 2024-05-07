@@ -14,10 +14,11 @@ export const argsSelect: Omit<PropsSelect, 'modelValue' | 'error' | 'dirty' | 'a
   id: 'select',
   label: 'Countries',
   location: null,
-  menu: null,
   name: 'select',
+  screenPadding: null,
   offsetX: 0,
   offsetY: 0,
+  position: null,
   rules: [formInputModelValueRules.select({ target: 'Country' })],
   items: [
     { text: 'Bangladesh', value: '01' },

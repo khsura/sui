@@ -1,7 +1,7 @@
 import { toolbarDensities } from '@sui/app/configs/toolbar'
 import { defaultToolbarContentHeight, defaultToolbarExtensionHeight } from '@sui/app/constants/toolbar'
-import { type ToolbarDensityType } from '@sui/app/types'
 import { type PropType } from 'vue'
+import { type ToolbarDensityType } from '@sui/app/types'
 import { propsBorder } from './core/borderProps'
 import { propsColor } from './core/colorProps'
 import { propsContent } from './core/contentProps'
@@ -17,8 +17,8 @@ export const propsToolbar = (defaults?: { elevation?: number; tag?: 'div' | 'sec
       validator: (v: string | null | undefined) => toolbarDensities.includes(v),
     },
     extended: {
-      type: Boolean as PropType<boolean | undefined>,
-      default: false,
+      type: Boolean as PropType<boolean | undefined | null>,
+      default: null,
     },
     extensionHeight: {
       type: [Number, String] as PropType<number | string | undefined>,

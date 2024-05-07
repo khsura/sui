@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "yarn g:vue-tsc && g:tsc-alias && yarn storybook build",
-    "lint:script": "yarn g:lint:script",
-    "prebuild": "rimraf ./storybook-static && g:rimraf ./@types",
-    "storybook": "storybook dev --port 6006"
+    "prebuild": "yarn g:rimraf ./storybook-static && yarn g:rimraf ./@types",
+    "build": "yarn prebuild && yarn g:tsc && yarn storybook build",
+    "eslint": "yarn g:eslint",
+    "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
+    "storybook": "storybook dev --port 6006",
+    "start": "http-server ./storybook-static -p 6006"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^8.0.9",
@@ -19,6 +21,7 @@
     "@storybook/theming": "^8.0.9",
     "@storybook/vue3": "^8.0.9",
     "@storybook/vue3-vite": "^8.0.9",
+    "http-server": "^14.1.1",
     "storybook": "^8.0.9",
     "storybook-dark-mode": "^4.0.1"
   }

@@ -15,7 +15,6 @@ import { computed } from 'vue'
 const props = defineProps(propsRadioGroup())
 
 const emit = defineEmits<{
-  (event: 'update:modelValue', value: GroupItemValue | null): void
   (event: 'change', value: GroupItemValue | null): void
   (event: 'update:menu', value: boolean | null | undefined): void
   (event: 'update:error', value: boolean): void
@@ -23,12 +22,17 @@ const emit = defineEmits<{
   (event: 'update:dirty', value: boolean): void
 }>()
 
+const model = defineModel<GroupItemValue>({
+  set: (v) => {
+    void updateFormInput(v)
+
+    return v
+  },
+})
+
 const { errors, updateFormInput } = useFormInputService<GroupItemValue>(props, emit)
 
-useSingleGroupService(props, async (event, value) => {
-  emit(event, value)
-  await updateFormInput()
-})
+useSingleGroupService(props, model)
 
 const { provideProps } = useProviderService()
 

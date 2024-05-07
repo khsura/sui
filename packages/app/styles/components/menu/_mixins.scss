@@ -4,8 +4,7 @@
   width: min-content;
   max-width: 90vw;
   max-height: 90vh;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden auto;
   text-overflow: ellipsis;
   white-space: nowrap;
   contain: content;

@@ -1,14 +1,11 @@
 import { ProviderName, ProviderPropsName } from '@sui/app/constants/provider'
 import { type PropsSingleGroup } from '@sui/app/definitions'
 import { type GroupItemValue } from '@sui/app/types'
-import { computed, ref, watch } from 'vue'
+import { type Ref, computed, ref, watch } from 'vue'
 import { useGroupCoreService } from './core/groupCoreService'
 import { useProviderService } from './core/providerService'
 
-export const useSingleGroupService = (
-  props: PropsSingleGroup,
-  emit: (event: 'update:modelValue', data: GroupItemValue | null) => void,
-) => {
+export const useSingleGroupService = (props: PropsSingleGroup, model: Ref<GroupItemValue | null | undefined>) => {
   const { provide, provideProps } = useProviderService()
   const { items, register, unregister, getItemIndex } = useGroupCoreService()
   const selected = ref<{ value: GroupItemValue | null; id: number }>({ value: null, id: -1 })
@@ -29,7 +26,7 @@ export const useSingleGroupService = (
       id,
     }
     if (!doNotEmitEvent) {
-      emit('update:modelValue', selected.value?.value ?? null)
+      model.value = selected.value?.value ?? null
     }
   }
 

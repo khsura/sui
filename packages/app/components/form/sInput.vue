@@ -81,6 +81,7 @@ const props = defineProps(propsInput())
 const emit = defineEmits<EmitFormTextInput<string | number | null>>()
 const slots = useSlots()
 const inputElement = ref<HTMLElement | null>()
+const model = defineModel<string | number | null>()
 const { updateFormInput, errors } = useFormInputService<string | number | null>(props, emit)
 const { classListDisabled } = useDisabledService(props)
 // TODO: Sura - make able to use all preset colors
@@ -201,6 +202,7 @@ const fixInput = async (event: Event) => {
 
   if (Number.isNaN(value) || inputElement.value === '') {
     inputElement.value = ''
+    model.value = null
     await updateFormInput(null)
   } else if (
     (maxNumber.value !== null && value !== null && value > maxNumber.value) ||
@@ -214,9 +216,11 @@ const fixInput = async (event: Event) => {
     )
 
     inputElement.value = normalizedValue?.toString() ?? ''
+    model.value = normalizedValue
     await updateFormInput(normalizedValue)
     previousValue = normalizedValue
   } else {
+    model.value = value
     await updateFormInput(value)
     previousValue = value
   }
@@ -228,6 +232,7 @@ const onInput = async (event: Event) => {
   if (props.type === 'number') {
     await fixInput(event)
   } else {
+    model.value = value
     await updateFormInput(value)
   }
 
@@ -278,6 +283,7 @@ const onPaste = async (event: ClipboardEvent) => {
         : clipboardText,
     )
 
+    model.value = convertedNumber
     await updateFormInput(convertedNumber)
   }
 
@@ -317,12 +323,12 @@ $inputPadding: calc($s_spacer * 2);
 
   &__field {
     @include s_borderRadius();
-    overflow: hidden;
     position: relative;
     display: flex;
     flex: 1 0 auto;
     align-items: center;
     max-width: 100%;
+    overflow: hidden;
     font-family: $s_inputFontFamily;
     line-height: 1.1;
     border: thin s_getAppColor('border') solid;

@@ -15,7 +15,6 @@ export const argTypesLink: ArgTypes<PropsLink> = {
     },
   },
   to: {
-    control: { type: null },
     description: "vue route's location",
     table: {
       type: {

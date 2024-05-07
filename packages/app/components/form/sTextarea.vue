@@ -41,12 +41,23 @@ import { ref } from 'vue'
 import { computed } from 'vue'
 import { nextTick } from 'vue'
 import { onMounted } from 'vue'
-import { watch } from 'vue'
 import kFormInputError from './common/sFormInputError.vue'
 
 const props = defineProps(propsTextarea())
 const emit = defineEmits<EmitFormTextInput<string | number | null>>()
 const textareaElement = ref<HTMLTextAreaElement | null>(null)
+
+const model = defineModel<string>({
+  get: (v) => v ?? '',
+  set: (v) => {
+    void onEvent()
+    void updateFormInput(model.value)
+
+    return v
+  },
+  default: '',
+})
+
 const { updateFormInput, errors } = useFormInputService<string | number | null>(props, emit)
 const { classListDisabled } = useDisabledService(props)
 // TODO - Sura: make able to use all preset colors
@@ -54,15 +65,6 @@ const { getIsPredefinedPresetColor } = useColorRepository()
 const isPresetInputBackground = computed(() => getIsPredefinedPresetColor(props.inputBackground))
 const isPresetPlaceholderBackground = computed(() => getIsPredefinedPresetColor(props.placeholderBackground ?? null))
 const textareaHeight = ref<string | null>(null)
-
-const model = computed({
-  get() {
-    return props.modelValue ?? ''
-  },
-  set(value) {
-    void updateFormInput(value)
-  },
-})
 
 const classList = computed(() => {
   return {
@@ -113,10 +115,6 @@ const onEvent = async (name?: 'input' | 'blur', event?: Event) => {
 }
 
 onMounted(async () => {
-  await onEvent()
-})
-
-watch(model, async () => {
   await onEvent()
 })
 

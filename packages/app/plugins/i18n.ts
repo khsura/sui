@@ -8,6 +8,6 @@ export const i18n = createI18n({
   fallbackLocale: 'en',
   messages: i18nMessages,
   modifiers: {
-    formatNumber: (v) => formatNumber<string>(v as string),
+    formatNumber: (v) => formatNumber(v.toString()),
   },
 })

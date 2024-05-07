@@ -18,3 +18,15 @@ export interface ScrollDirectiveBindingValueObject {
   options?: AddEventListenerOptions
   target?: Element | Window | undefined
 }
+
+export interface ThresholdMetParams {
+  currentScroll: number
+  currentThreshold: number
+  isActive: boolean
+  isScrollingUp: boolean
+  previousScroll: number
+  savedScroll: number
+  target: HTMLElement | Document | null
+  canScroll: boolean
+  computedScrollThreshold: number
+}

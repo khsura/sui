@@ -1,3 +1,5 @@
-export const formatNumber = (number: number) => {
-  return Intl.NumberFormat().format(number)
+import { z } from 'zod'
+
+export const formatNumber = (number: number | string) => {
+  return Intl.NumberFormat().format(z.coerce.number().parse(number))
 }

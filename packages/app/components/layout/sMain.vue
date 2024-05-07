@@ -1,11 +1,12 @@
 <template>
-  <Component :is="elementTag" class="s_main" :style="styles">
+  <component :is="elementTag" class="s_main" :style="styles">
     <slot></slot>
-  </Component>
+  </component>
 </template>
 <script setup lang="ts">
 import { getNumericCssAttribute } from '@sui/app/lib'
 import { propsLayout, propsTag } from '@sui/app/props'
+import { getIsFixedOrAbsolutePosition } from '@sui/app/repositories/positionRepository'
 import { useLayoutService } from '@sui/app/services'
 import { computed } from 'vue'
 
@@ -28,15 +29,16 @@ const elementTag = computed(() => {
 
 const styles = computed(() => {
   const widthToSubtract = app.value.left + app.value.right
+  const isFixedOrAbsoluteAppBar = getIsFixedOrAbsolutePosition({ position: app.value.appBarPosition, app: isApp.value })
+  const marginTop = isFixedOrAbsoluteAppBar ? app.value.appBarHeight + app.value.offsetTop : 0
+  const marginBottom = isApp.value ? app.value.bottomNavigationHeight : app.value.footerHeight
 
   return {
-    marginTop: getNumericCssAttribute(isApp.value ? app.value.bar : 0),
+    marginTop: getNumericCssAttribute(marginTop),
     marginLeft: getNumericCssAttribute(app.value.left),
     marginRight: getNumericCssAttribute(app.value.right),
     width: `calc(100% - ${getNumericCssAttribute(widthToSubtract)})`,
-    minHeight: `calc(${isApp.value ? '100dvh' : '100%'} - ${getNumericCssAttribute(
-      app.value.bar + app.value.footer + app.value.bottom,
-    )})`,
+    minHeight: `calc(${isApp.value ? '100vh' : '100%'} - ${getNumericCssAttribute(marginTop + marginBottom)})`,
   }
 })
 </script>

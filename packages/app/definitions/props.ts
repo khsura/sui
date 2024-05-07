@@ -4,6 +4,7 @@ import { type FormInputModelValue } from '../types/core'
 
 export type PropsActivator = ExtractPropTypes<ReturnType<typeof props.propsActivator>>
 export type PropsApp = ExtractPropTypes<ReturnType<typeof props.propsApp>>
+export type PropsAppBar = ExtractPropTypes<ReturnType<typeof props.propsAppBar>>
 export type PropsBadge = ExtractPropTypes<ReturnType<typeof props.propsBadge>>
 export type PropsBorder = ExtractPropTypes<ReturnType<typeof props.propsBorder>>
 export type PropsBottomNavigation = ExtractPropTypes<ReturnType<typeof props.propsBottomNavigation>>

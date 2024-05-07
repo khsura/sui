@@ -1,6 +1,5 @@
-import { getNumericValue } from '@sui/app/lib/getNumericValue'
-
 import { type PropType } from 'vue'
+import { getNumericValue } from '@sui/app/lib/getNumericValue'
 
 export const propsElevation = (defaults?: { elevation?: number }) => {
   return {
@@ -8,9 +7,9 @@ export const propsElevation = (defaults?: { elevation?: number }) => {
       type: [String, Number] as PropType<string | number | undefined | null>,
       default: defaults?.elevation ?? null,
       validator(v: string | number) {
-        const number = getNumericValue(v, false)
+        const number = getNumericValue(v, { min: 0, max: 24 })
 
-        return !(number === null || !Number.isInteger(number) || number < 0 || number > 24)
+        return number !== null
       },
     },
   } as const

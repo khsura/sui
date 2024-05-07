@@ -1,4 +1,4 @@
-import { type PropsTableBodyCell } from '@sui/app/definitions'
+import { type PropsTableBodyCell } from '@sui/app/types'
 import { useTableCellCommonService } from '@sui/app/services'
 import { type Mutable } from '@vueuse/core'
 

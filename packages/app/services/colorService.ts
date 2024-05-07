@@ -1,17 +1,17 @@
 import { AppTheme } from '@sui/app/constants/app'
-import { type PropsColor } from '@sui/app/definitions'
+import { type PropsColor } from '@sui/app/definitions/props'
 import { isDarkColor } from '@sui/app/lib/color'
 import { useColorRepository } from '@sui/app/repositories/colorRepository'
-import { computed, isRef } from 'vue'
-import { type Ref } from 'vue'
-import { useAppProviderService } from './appProviderService'
+import { type Ref, computed, isRef } from 'vue'
+import { getCssColor } from '@sui/app/helpers/colorHelpers'
+import { useAppProviderRepository } from '@sui/app/repositories'
 
 export const useColorService = (
   props: PropsColor,
-  options: { isText?: boolean | Ref<boolean> } = { isText: false },
+  options: { isText?: boolean | Ref<boolean | null | undefined> } = { isText: false },
 ) => {
-  const { config } = useAppProviderService()
-  const { getIsPresetColor, getBackgroundColorAttributes } = useColorRepository()
+  const { config } = useAppProviderRepository()
+  const { getBackgroundColorAttributes, getIsPresetColor } = useColorRepository()
 
   const isText = computed(() => {
     if (options.isText === undefined) {
@@ -47,7 +47,7 @@ export const useColorService = (
     }
 
     const presetColor: string | undefined = config.themes[config.theme].presetColors[props.color]
-    const backgroundColor = presetColor ?? props.color
+    const backgroundColor = presetColor ?? getCssColor(props.color) ?? props.color
     const noNeedToSetTextColor = isPresetColor.value && props.colorThreshold === undefined
     const isDark = noNeedToSetTextColor ? null : isDarkColor(backgroundColor, props.colorThreshold)
 
@@ -67,7 +67,7 @@ export const useColorService = (
       return { class: {}, style: {} }
     }
 
-    return getBackgroundColorAttributes(props.color)
+    return getBackgroundColorAttributes(props.color ?? null)
   })
 
   const styleListColor = computed(() => {

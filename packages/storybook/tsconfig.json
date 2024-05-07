@@ -1,5 +1,11 @@
 {
   "extends": "@sui/shared/tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@sui/app/*": ["../app/*"],
+      "@sui/storybook/*": ["./*"],
+    }
+  },
   "include": [
     "**/*.js",
     "**/*.mjs",

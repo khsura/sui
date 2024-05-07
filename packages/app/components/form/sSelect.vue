@@ -11,19 +11,19 @@
         :class="activatorClasses"
         v-on="activatorOn"
       >
-        <slot name="activator" :item="selectedItem" :value="model">
+        <slot name="activator" :item="selectedItem" :value="menuModel">
           {{ displayText }}
         </slot>
         <span class="s_select__spacer"></span>
-        <slot name="dropdownIcon" :color="color" :value="model">
-          <SIcon icon="mdi-chevron-down" :rotated="model"></SIcon>
+        <slot name="dropdownIcon" :color="color" :value="menuModel">
+          <SIcon icon="mdi-chevron-down" :rotated="menuModel"></SIcon>
         </slot>
       </div>
     </div>
 
     <SFormInputError v-if="!hideDetails" :errors="errors"></SFormInputError>
 
-    <SOverlay v-slot="{ attrs }" :value="model">
+    <SOverlay v-slot="{ attrs }" :value="menuModel">
       <OnClickOutside @trigger="onClickOutside">
         <div ref="contentElement" class="s_select__list" :style="contentStyles" :class="contentClasses" v-bind="attrs">
           <SList link :dense="dense" :color="color" :text="text">
@@ -51,35 +51,26 @@ import SIcon from '@sui/app/components/sIcon.vue'
 import SOverlay from '@sui/app/components/sOverlay.vue'
 import { propsSelect } from '@sui/app/props'
 import { useBorderService, useDisabledService, useFormInputService, useMenuService } from '@sui/app/services'
-import { type SelectItem } from '@sui/app/types'
+import { type SelectItem, type EmitFormInput } from '@sui/app/types'
 import { ref, computed, watch } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
 import { nextTick } from 'vue'
 
 const props = defineProps(propsSelect())
-
-const emit = defineEmits<{
-  (event: 'update:modelValue', value: null | string | number): void
-  (event: 'change', value: null | string | number): void
-  (event: 'update:menu', value: boolean | null | undefined): void
-  (event: 'update:error', value: boolean): void
-  (event: 'update:errors', value: string[]): void
-  (event: 'update:dirty', value: boolean): void
-  (event: 'close'): void
-}>()
-
+const emit = defineEmits<EmitFormInput<string | number>>()
 const selectElement = ref<HTMLElement | null>(null)
 const { classListBorder } = useBorderService(props)
+const model = defineModel<string | number | null>()
 const { errors, updateFormInput } = useFormInputService<string | number>(props, emit)
+const menuModel = defineModel<boolean>('menu')
 const { classListDisabled } = useDisabledService(props)
-const model = defineModel<boolean>('menu')
 
 const { activatorElement, activatorOn, contentElement, updateLocation, activatorAttrs, contentClasses, contentStyles } =
-  useMenuService(props, model)
+  useMenuService(props, menuModel)
 
 const onClickOutside = () => {
-  if (model.value) {
-    model.value = false
+  if (menuModel.value) {
+    menuModel.value = false
   }
 }
 
@@ -111,12 +102,12 @@ const selectedItem = computed<SelectItem | null>({
   },
   set(item) {
     if (item === null) {
-      emit('update:modelValue', null)
+      model.value = null
 
       return
     }
 
-    emit('update:modelValue', item.value)
+    model.value = item.value
   },
 })
 
@@ -157,16 +148,16 @@ const getIsSelected = (item: SelectItem) => {
 
 const selectItem = async (value: SelectItem | null) => {
   selectedItem.value = value
-  model.value = false
+  menuModel.value = false
   await updateFormInput()
 }
 
 watch([() => props.grow, () => props.disabled, () => props.label], () => {
-  model.value = false
+  menuModel.value = false
 })
 
-watch(model, async () => {
-  if (model.value) {
+watch(menuModel, async () => {
+  if (menuModel.value) {
     await nextTick()
     updateLocation()
     void updateFormInput()
