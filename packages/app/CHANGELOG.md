@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/sura0111/sui/compare/app-v1.0.1...app-v1.0.2) (2024-05-24)
+
+
+### Bug Fixes
+
+* sCardText.vue ([2497574](https://github.com/sura0111/sui/commit/249757411eebf7829bc33452fa6f9f61008e4411))
+
 ## [1.0.1](https://github.com/sura0111/sui/compare/app-v1.0.0...app-v1.0.1) (2024-05-24)
 
 
