@@ -17,7 +17,6 @@ import { computed } from 'vue'
 const props = defineProps(propsCheckbox())
 
 const emit = defineEmits<{
-  (event: 'update:modelValue', value: boolean): void
   (event: 'change', value: boolean): void
   (event: 'update:error', value: boolean): void
   (event: 'update:errors', value: string[]): void
@@ -26,18 +25,19 @@ const emit = defineEmits<{
 
 // TODO: Sura - make able to use all preset colors
 const { getIsPredefinedPresetColor } = useColorRepository()
-const { updateFormInput, errors } = useFormInputService<boolean>(props, emit)
 
 const model = defineModel<boolean>('modelValue', {
   get: (v) => {
     return v ?? false
   },
   set: (v) => {
-    void updateFormInput(v, true)
+    void updateFormInput(v)
 
     return v
   },
 })
+
+const { updateFormInput, errors } = useFormInputService<boolean>(props, emit)
 
 const checkboxClasses = computed(() => {
   return {

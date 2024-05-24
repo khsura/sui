@@ -59,7 +59,9 @@ export const Layout = createStoryObj<StoryComponent>({
     density: 'default',
     hasAppBar: true,
   },
-  render: (args) => {
+  // TODO: Sura - fix any type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  render: (args: any) => {
     return defineComponent({
       components: {
         SAppBar,

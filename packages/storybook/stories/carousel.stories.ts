@@ -2,7 +2,7 @@ import { faker } from '@sui/shared'
 import { SCarousel, SCarouselItem, SRow } from '@sui/app/components'
 import { createStoryObj } from '@sui/storybook/helpers'
 import { ref } from 'vue'
-import type { GroupItemValue } from '@sui/app/types'
+import type { GroupItemValue } from '@sui/app/types/index'
 import type { Meta } from '@storybook/vue3'
 
 const carousel: Meta<typeof SCarousel> = {
@@ -26,9 +26,8 @@ const carousel: Meta<typeof SCarousel> = {
 
 export default carousel
 
-export const Carousel = createStoryObj({
+export const Carousel = createStoryObj<typeof SCarousel>({
   args: {
-    items: faker.helpers.uniqueArray(faker.image.urlLoremFlickr, 4) as GroupItemValue[],
     nextIcon: undefined,
     prevIcon: undefined,
     hideArrows: false,
@@ -50,15 +49,17 @@ export const Carousel = createStoryObj({
       components: { SCarousel, SCarouselItem, SRow },
       setup() {
         const title = ref(faker.word.words({ count: { min: 1, max: 10 } }).replace(/\s/g, ''))
+        const items = faker.helpers.uniqueArray(faker.image.urlLoremFlickr, 4) as GroupItemValue[]
 
         return {
           args,
           title,
+          items,
         }
       },
       template: `
         <SCarousel v-bind="args">
-          <SCarouselItem v-for="(item, id) in args.items" :key="id" :value="id" :src="item">
+          <SCarouselItem v-for="(item, id) in items" :key="id" :value="id" :src="item">
             <SRow fill-height align="center" class="s_pl__10 k_text--h4 k_fontWeight__bold k_textShadow__2" style="color: white; text-transform: uppercase">
               {{ title }}
             </SRow>

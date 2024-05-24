@@ -25,27 +25,17 @@ const { styles } = useAppService(props)
   background-color: s_getAppColor('background');
   fill: s_getAppColor('text');
 
+  ::-ms-clear,
+  ::-ms-reveal {
+    display: none;
+  }
+
   a {
     color: s_getAppColor('text');
 
     &:hover {
       text-decoration: none;
     }
-  }
-
-  .s_textColor__error {
-    a {
-      color: s_getPresetColor('error');
-
-      &:hover {
-        color: s_getAppColor('textErrorHover');
-      }
-    }
-  }
-
-  ::-ms-clear,
-  ::-ms-reveal {
-    display: none;
   }
 
   @each $colorName in $s_presetColorNames {
@@ -77,6 +67,16 @@ const { styles } = useAppService(props)
     .s_textColor__#{$colorName}:not(.s_disabled) {
       color: $colorValue;
       fill: $colorValue;
+    }
+  }
+
+  .s_textColor__error:not(.s_disabled) {
+    a {
+      color: s_getPresetColor('error');
+
+      &:hover {
+        color: s_getAppColor('textErrorHover');
+      }
     }
   }
 }

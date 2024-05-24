@@ -9,12 +9,12 @@
       "name": "app"
     },
     {
-      "path": "./packages/shared",
-      "name": "shared"
-    },
-    {
       "path": "./packages/storybook",
       "name": "storybook"
+    },
+    {
+      "path": "./packages/shared",
+      "name": "shared"
     },
   ],
   "settings": {
@@ -32,6 +32,14 @@
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit"
     },
+    "stylelint.stylelintPath": "./node_modules/stylelint",
+    "stylelint.validate": [
+      "css",
+      "less",
+      "postcss",
+      "scss",
+      "vue"
+    ],
     "files.exclude": {
       "**/.git": true,
       "**/.svn": true,
@@ -39,11 +47,16 @@
       "**/CVS": true,
       "**/.DS_Store": true,
       "**/Thumbs.db": true,
-      "**/node_modules": true
+      "**/node_modules": true,
+      ".nx": true,
+      ".husky": true,
+      "**/@types": true,
+      "**/dist": true
     },
 		"workbench.editor.limit.enabled": true,
 		"workbench.editor.limit.value": 7,
-    "typescript.preferences.importModuleSpecifier": "non-relative"
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "typescript.tsdk": "root/node_modules/typescript/lib"
   },
   "extensions": {
     "recommendations": ["Vue.volar", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "stylelint.vscode-stylelint"]

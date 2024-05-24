@@ -92,7 +92,10 @@ export default [
       '@typescript-eslint/no-floating-promises': ['error'],
       '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: false }],
       '@typescript-eslint/no-non-null-assertion': ['error'],
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', destructuredArrayIgnorePattern: '^_' },
+      ],
       '@typescript-eslint/prefer-nullish-coalescing': ['error', { ignoreConditionalTests: true }],
       '@typescript-eslint/prefer-ts-expect-error': ['error'],
       '@typescript-eslint/return-await': ['error', 'always'],
@@ -118,7 +121,7 @@ export default [
     },
   },
   {
-    files: ['**/*.stories.ts', '**/*.stories.tsx'],
+    // files: ['**/*.stories.ts', '**/*.stories.tsx'],
     rules: {
       'import/no-anonymous-default-export': 'off',
       '@vue/one-component-per-file': 'off',

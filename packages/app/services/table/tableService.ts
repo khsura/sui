@@ -59,7 +59,7 @@ export const useTableService = <T extends TableItem = TableItem>(props: PropsTab
 
     const left = headerElements.value
       .slice(0, stickyLeftColumnsStart.value + (props.stickyLeftColumnsOffset ?? 0))
-      .reduce((pre, cur) => {
+      .reduce((pre: number, cur: InstanceType<typeof STableHeadCell>) => {
         return pre + cur.$el?.getBoundingClientRect().width
       }, 0)
 
@@ -354,9 +354,11 @@ export const useTableService = <T extends TableItem = TableItem>(props: PropsTab
       return undefined
     }
 
-    return headerElements.value.slice(stickyLeftColumnsStart.value, cell.index).reduce((pre, cur) => {
-      return pre + cur.$el?.getBoundingClientRect().width
-    }, 0)
+    return headerElements.value
+      .slice(stickyLeftColumnsStart.value, cell.index)
+      .reduce((pre: number, cur: InstanceType<typeof STableHeadCell>) => {
+        return pre + cur.$el?.getBoundingClientRect().width
+      }, 0)
   }
 
   const getTableCellStyle = (header: TableHeader) => {

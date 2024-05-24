@@ -7,10 +7,11 @@
 import { ProviderName } from '@sui/app/constants'
 import { propsForm } from '@sui/app/props'
 import { useProviderService } from '@sui/app/services'
-import { type FormProviderRegisterInputAttribute } from '@sui/app/types'
+import { type FormProviderRegisterInputAttribute } from '@sui/app/types/index'
 import { computed } from 'vue'
 
 defineProps(propsForm())
+defineEmits(['submit'])
 const model = defineModel<boolean>()
 const errors = defineModel<string[]>('errors', { default: [] })
 const error = defineModel<boolean>('error')

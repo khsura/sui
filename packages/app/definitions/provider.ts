@@ -5,9 +5,9 @@ import type * as props from './props'
 
 export interface GroupProvider {
   registerItem: (name: GroupItemValue, attrs: { element?: Ref<HTMLElement | null> }) => number
-  unregisterItem: (name: GroupItemValue | null) => void
-  toggleItem: (name: GroupItemValue | null) => void
-  isSelectedItem: (name: GroupItemValue | null) => boolean
+  unregisterItem: (name: GroupItemValue | undefined) => void
+  toggleItem: (name: GroupItemValue | undefined) => void
+  isSelectedItem: (name: GroupItemValue | undefined) => boolean
   items: ComputedRef<Array<{ value: GroupItemValue; readonly element: HTMLElement | null }>>
 }
 
@@ -50,5 +50,5 @@ export interface ProviderProps {
 }
 
 export interface SingleGroupProvider extends GroupProvider {
-  selectedItem: ComputedRef<{ value: GroupItemValue | null; id: number }>
+  selectedItem: ComputedRef<{ value?: GroupItemValue | undefined; id: number }>
 }

@@ -12,7 +12,7 @@ const form: Meta<typeof SForm> = {
 
 export default form
 
-export const Form = createStoryObj<typeof SForm | { onSubmit: (event: Event) => void }>({
+export const Form = createStoryObj<typeof SForm>({
   render: (args) => {
     return defineComponent({
       components: {
@@ -31,9 +31,7 @@ export const Form = createStoryObj<typeof SForm | { onSubmit: (event: Event) => 
         const submit = async (event: Event) => {
           form.value?.validate()
           await nextTick()
-          if ('onSubmit' in args) {
-            args.onSubmit?.(event)
-          }
+          args.onSubmit?.(event)
         }
 
         const reset = () => {

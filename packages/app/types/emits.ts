@@ -8,10 +8,9 @@ export type EmitActivator<ModelName extends string = 'modelValue'> = EmitModelVa
 export type EmitDialog = EmitActivator
 
 export interface EmitFormInput<T extends FormInputModelValue> {
-  (event: 'update:modelValue', value: T): void
+  (event: 'change', value: T): void
   (event: 'update:error', value: boolean): void
   (event: 'update:errors', value: string[]): void
-  (event: 'change', value: T): void
   (event: 'update:dirty', value: boolean): void
 }
 

@@ -1,4 +1,3 @@
-import 'dayjs/locale/ja.js'
 import localeData from 'dayjs/plugin/localeData.js'
 import localizedFormat from 'dayjs/plugin/localizedFormat.js'
 import objectSupport from 'dayjs/plugin/objectSupport.js'

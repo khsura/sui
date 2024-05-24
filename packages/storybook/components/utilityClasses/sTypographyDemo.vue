@@ -87,15 +87,7 @@
 
 <script setup lang="ts">
 import { faker } from '@sui/shared'
-import {
-  SCard,
-  SCardTitle,
-  SCardText,
-  SList,
-  SListItem,
-  SListItemContent,
-  SListItemTitle,
-} from '@sui/app/components'
+import { SCard, SCardTitle, SCardText, SList, SListItem, SListItemContent, SListItemTitle } from '@sui/app/components'
 import { ref } from 'vue'
 import type { PropType } from 'vue'
 
@@ -130,6 +122,7 @@ const sampleText = 'Sample Text'
 const sampleLongText = faker.lorem.words({ max: 30, min: 25 })
 const whiteSpaceDocLink = 'https://developer.mozilla.org/en-US/docs/Web/CSS/white-space'
 const sampleInput = ref('CHAnge mE')
+
 const words = Array(5)
   .fill('')
   .map(() => faker.word.noun())

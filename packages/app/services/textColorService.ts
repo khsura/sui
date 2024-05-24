@@ -1,8 +1,10 @@
 import { type PropsTextColor } from '@sui/app/definitions'
 import { useColorRepository } from '@sui/app/repositories/colorRepository'
-import { computed } from 'vue'
+import { toReactive } from '@vueuse/core'
+import { type Ref, computed } from 'vue'
 
-export const useTextColorService = (props: PropsTextColor) => {
+export const useTextColorService = (data: PropsTextColor | Ref<Partial<PropsTextColor>>) => {
+  const props = toReactive(data)
   const { getIsPresetColor, getIsPredefinedPresetColor } = useColorRepository()
   const isPredefinedPresetColor = computed(() => getIsPredefinedPresetColor(props.color))
   const isPresetColor = computed(() => getIsPresetColor(props.color))

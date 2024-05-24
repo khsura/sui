@@ -57,7 +57,7 @@ const styleList = computed(() => {
 })
 
 const props = defineProps(propsCarousel())
-const model = defineModel<GroupItemValue | null>()
+const model = defineModel<GroupItemValue>()
 const windowRef = ref<typeof SWindow | null>()
 let slideTimeout = -1
 

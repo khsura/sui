@@ -1,7 +1,7 @@
 // import { STransition } from '@sui/app/constants/transition'
 import type { PropsBadge } from '@sui/app/definitions'
-import { argTypesColor, argTypesIcon, argTypesTransition } from './core'
 import type { ArgTypes } from '@storybook/types'
+import { argTypesColor, argTypesIcon, argTypesTransition } from './core'
 
 export const argTypesBadge: Partial<ArgTypes<PropsBadge>> = {
   value: {

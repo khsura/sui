@@ -68,6 +68,7 @@ watch(
       if (props.closeOnScroll) {
         getWindow()?.addEventListener('scroll', onScroll)
       }
+
       await nextTick()
       updateLocation()
     }

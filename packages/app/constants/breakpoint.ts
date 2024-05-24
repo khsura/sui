@@ -1,20 +1,34 @@
-import { type Display } from '@sui/app/types'
+import { type DisplayOptions } from '@sui/app/types'
+import breakpoints from '@sui/app/styles/modules/breakpoints.module.scss'
+import { z } from 'zod'
 
-export const breakpoints = {
-  xs: 0,
-  sm: 1,
-  md: 2,
-  lg: 3,
-  xl: 4,
-}
+export const scrollBarWidth: DisplayOptions['scrollBarWidth'] = 16 as const
 
-export const scrollBarWidth: Display['scrollBarWidth'] = 16 as const
+const parsedThresholds = z
+  .object({
+    breakpointXs: z.preprocess((v) => (typeof v === 'string' ? Number(v.replace('px', '')) : undefined), z.number()),
+    breakpointSm: z.preprocess((v) => (typeof v === 'string' ? Number(v.replace('px', '')) : undefined), z.number()),
+    breakpointMd: z.preprocess((v) => (typeof v === 'string' ? Number(v.replace('px', '')) : undefined), z.number()),
+    breakpointLg: z.preprocess((v) => (typeof v === 'string' ? Number(v.replace('px', '')) : undefined), z.number()),
+    breakpointXl: z.preprocess((v) => (typeof v === 'string' ? Number(v.replace('px', '')) : undefined), z.number()),
+    breakpointXxl: z.preprocess((v) => (typeof v === 'string' ? Number(v.replace('px', '')) : undefined), z.number()),
+  })
+  .safeParse(breakpoints)
 
-export const thresholds: Display['thresholds'] = {
-  xs: 600,
-  sm: 960,
-  md: 1280,
-  lg: 1920,
-} as const
-
-export const mobileBreakpoint: Display['mobileBreakpoint'] = thresholds.xs
+export const thresholds: DisplayOptions['thresholds'] = parsedThresholds.success
+  ? {
+      xs: parsedThresholds.data.breakpointXs,
+      sm: parsedThresholds.data.breakpointSm,
+      md: parsedThresholds.data.breakpointMd,
+      lg: parsedThresholds.data.breakpointLg,
+      xl: parsedThresholds.data.breakpointXl,
+      xxl: parsedThresholds.data.breakpointXxl,
+    }
+  : {
+      xs: 640,
+      sm: 768,
+      md: 1024,
+      lg: 1280,
+      xl: 1536,
+      xxl: 1980,
+    }

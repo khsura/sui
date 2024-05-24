@@ -140,6 +140,15 @@ select {
   text-transform: none;
 }
 
+/* Specify font inheritance of form elements */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+}
+
 button,
 [type='button'],
 [type='reset'],
@@ -248,8 +257,7 @@ input[type='number'] {
 }
 
 p {
-  margin-block-start: 0.5em;
-  margin-block-end: 0.5em;
+  margin-block: 0.5em 0.5em;
 }
 
 ul,
@@ -295,15 +303,6 @@ input {
 
 optgroup {
   font-weight: 500;
-}
-
-/* Specify font inheritance of form elements */
-button,
-input,
-optgroup,
-select,
-textarea {
-  font-family: inherit;
 }
 
 /* Style select like a standard input */

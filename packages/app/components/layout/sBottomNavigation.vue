@@ -1,15 +1,16 @@
 <template>
-  <Component :is="tagName" :class="classes" :style="styles">
+  <component :is="tagName" :class="classes" :style="styles">
     <div class="s_bottomNavigation__content" :class="contentClasses">
       <slot></slot>
     </div>
-  </Component>
+  </component>
 </template>
 
 <script setup lang="ts">
 import { ProviderPropsName } from '@sui/app/constants'
+import { type GroupItemValue } from '@sui/app/types'
 import { isBrowser } from '@sui/app/lib/browser'
-import { getNumericValue } from '@sui/app/lib'
+import { getCleanSetObject, getNumericValue } from '@sui/app/lib'
 import { propsBottomNavigation } from '@sui/app/props'
 import {
   useBorderService,
@@ -21,14 +22,14 @@ import {
   useSingleGroupService,
   useTagService,
 } from '@sui/app/services'
-import { type GroupItemValue } from '@sui/app/types'
-import { computed, watch, onBeforeUnmount, onMounted } from 'vue'
+import { computed, onBeforeUnmount, onMounted } from 'vue'
+import { watch } from 'vue'
 
 const props = defineProps({
   ...propsBottomNavigation(),
 })
 
-const emit = defineEmits<(event: 'update:modelValue', value: GroupItemValue | null) => void>()
+const model = defineModel<GroupItemValue>()
 
 const canScroll = computed((): boolean => {
   return isBrowser() && (props.hideOnScroll || !props.inputValue)
@@ -40,7 +41,7 @@ const { isActive } = useScrollableService(
     if (props.hideOnScroll) {
       const isActiveNewValue = !isScrollingUp || currentScroll > computedScrollThreshold
 
-      emit('update:modelValue', isActiveNewValue)
+      model.value = isActiveNewValue
 
       return {
         isActive: isActiveNewValue,
@@ -62,26 +63,26 @@ const { classListPosition, isAbsolutePosition, isFixedPosition } = usePositionSe
 const { measurableStyles } = useMeasurableStylesService(props)
 const { classListBorder } = useBorderService(props)
 const { provideProps } = useProviderService()
-const { left, right, width, app } = useLayoutService(props)
+const { left, right, width, app, isApp } = useLayoutService(props)
 const { tagName } = useTagService(props)
 
-useSingleGroupService(props, emit)
+useSingleGroupService(props, model)
 
 provideProps(ProviderPropsName.bottomNavigation, props)
 
 const classes = computed((): object => {
-  return {
+  return getCleanSetObject({
     ...classListPosition.value,
     ...classListBorder.value,
     s_bottomNavigation: true,
-    's_bottomNavigation--absolute': isFixedPosition.value,
-    's_bottomNavigation--fixed': isAbsolutePosition.value,
+    's_bottomNavigation--absolute': !isApp.value && isAbsolutePosition.value,
+    's_bottomNavigation--fixed': isApp.value || isFixedPosition.value,
     's_bottomNavigation--horizontal': props.horizontal,
     's_bottomNavigation--shift': props.shift,
     's_bottomNavigation--dense': props.dense,
     's_bottomNavigation--bordered': props.bordered,
     's_bottomNavigation--grow': props.grow,
-  }
+  })
 })
 
 const contentClasses = computed(() => {
@@ -101,7 +102,7 @@ const styles = computed((): object => {
 })
 
 const updateAppHeight = () => {
-  app.value.bottom = getNumericValue(props.height, true, 0)
+  app.value.bottomNavigationHeight = getNumericValue(props.height, { defaultValue: 0 })
 }
 
 watch(
@@ -116,7 +117,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  app.value.bottom = 0
+  app.value.bottomNavigationHeight = 0
 })
 </script>
 

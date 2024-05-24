@@ -9,12 +9,12 @@ import { useProviderService } from './core/providerService'
 export const useGroupService = (props: PropsGroup, model: ModelRef<GroupItemValue[] | null>) => {
   const { provide, provideProps } = useProviderService()
   const { items, register, unregister, getItemIndex } = useGroupCoreService()
-  const clickValue: Ref<GroupItemValue | null> = ref(null)
+  const clickValue: Ref<GroupItemValue | undefined> = ref()
 
   provideProps(ProviderPropsName.groupProps, props)
 
-  const firstIndexItem = computed<GroupItemValue | null>(() => {
-    return items.value[0]?.value ?? null
+  const firstIndexItem = computed<GroupItemValue | undefined>(() => {
+    return items.value[0]?.value ?? undefined
   })
 
   const formatItems = (value?: GroupItemValue[] | null | undefined) => {
@@ -41,8 +41,8 @@ export const useGroupService = (props: PropsGroup, model: ModelRef<GroupItemValu
     },
   })
 
-  const isSelectedItem = (value: GroupItemValue | null) => {
-    return value !== null && selectedItems.value.includes(value)
+  const isSelectedItem = (value: GroupItemValue | undefined) => {
+    return value !== undefined && selectedItems.value.includes(value)
   }
 
   const updateItems = (params: { clickValue: GroupItemValue | null; selectedItems: Iterable<GroupItemValue> }) => {
@@ -50,10 +50,10 @@ export const useGroupService = (props: PropsGroup, model: ModelRef<GroupItemValu
     clickValue.value = params.clickValue ?? firstIndexItem.value
   }
 
-  const addSelectedItem = (value: GroupItemValue | null) => {
+  const addSelectedItem = (value: GroupItemValue | undefined) => {
     const clickValue = value ?? firstIndexItem.value
 
-    if (clickValue === null) {
+    if (clickValue === undefined) {
       return
     }
 
@@ -67,10 +67,10 @@ export const useGroupService = (props: PropsGroup, model: ModelRef<GroupItemValu
     }
   }
 
-  const removeSelectedItem = (value: GroupItemValue | null) => {
+  const removeSelectedItem = (value: GroupItemValue | undefined) => {
     const clickValue = value ?? firstIndexItem.value
 
-    if (clickValue === null) {
+    if (clickValue === undefined) {
       return
     }
 
@@ -103,7 +103,7 @@ export const useGroupService = (props: PropsGroup, model: ModelRef<GroupItemValu
     unregisterItem: (name) => {
       unregister(name)
     },
-    toggleItem: (value: GroupItemValue | null) => {
+    toggleItem: (value) => {
       if (isSelectedItem(value)) {
         removeSelectedItem(value)
       } else {

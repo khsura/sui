@@ -1,22 +1,24 @@
 <template>
-  <main class="s_footer" :style="styles" :class="classes">
+  <component :is="tagName" ref="footerElement" class="s_footer" :style="styles" :class="classes">
     <slot></slot>
-  </main>
+  </component>
 </template>
 <script setup lang="ts">
-import { getNumericCssAttribute } from '@sui/app/lib'
-import { propsColor, propsLayout, propsMeasurableStyles, propsPosition, propsElevation } from '@sui/app/props'
+import { getCleanSetObject, getNumericCssAttribute, getNumericValue, getWindow } from '@sui/app/lib'
+import { propsColor, propsLayout, propsMeasurableStyles, propsPosition, propsElevation, propsTag } from '@sui/app/props'
 import {
   useColorService,
   useElevationService,
   useLayoutService,
   useMeasurableStylesService,
   usePositionService,
+  useTagService,
 } from '@sui/app/services'
-import { computed, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch, type PropType } from 'vue'
 
 const props = defineProps({
   ...propsLayout({ app: false }),
+  ...propsTag<'div' | 'footer'>({ tag: 'footer' }),
   ...propsColor(),
   ...propsMeasurableStyles(),
   ...propsElevation(),
@@ -31,52 +33,81 @@ const props = defineProps({
   },
 })
 
-const { left, right, width, app } = useLayoutService(props)
+const { tagName } = useTagService(props)
+const { left, right, width, app, isApp } = useLayoutService(props)
 const { measurableStyles } = useMeasurableStylesService(props)
 const { classListColor, styleListColor } = useColorService(props)
 const { classListElevation } = useElevationService(props)
-const { classListPosition, isAbsolutePosition, isFixedPosition } = usePositionService(props, { ignoreApp: true })
 
-watch(
-  () => props.height,
-  (value) => {
-    const footerHeight = Number(value)
+const { isAbsolutePosition, isFixedPosition, isFixedOrAbsolutePosition } = usePositionService(props, {
+  ignoreApp: true,
+})
 
-    app.value.footer = Number.isNaN(footerHeight) ? 0 : footerHeight
-  },
-  {
-    immediate: true,
-  },
-)
+const footerElement = ref<HTMLElement | null>(null)
+
+const updateFooterHeight = (height?: number | undefined | null | string) => {
+  const shouldUseElementHeight = height === undefined || height === null
+
+  const footerHeight = shouldUseElementHeight
+    ? footerElement.value?.offsetHeight ?? 0
+    : getNumericValue(height, { defaultValue: 0, isPositive: true }) + app.value.bottomNavigationHeight
+
+  if (footerHeight !== app.value.footerHeight) {
+    app.value.footerHeight = footerHeight
+  }
+}
+
+const getPaddingBottom = () => {
+  if (isApp.value && app.value.bottomNavigationHeight) {
+    return getNumericCssAttribute(app.value.bottomNavigationHeight + (props.padless ? 0 : 16))
+  }
+
+  return undefined
+}
 
 const classes = computed(() => {
   return {
-    ...classListPosition.value,
     ...classListColor.value,
     ...classListElevation.value,
-    's_footer--absolute': isAbsolutePosition.value,
-    's_footer--fixed': isFixedPosition.value,
+    's_footer--absolute': isApp.value && isAbsolutePosition.value,
+    's_footer--fixed': isApp.value && isFixedPosition.value,
     's_footer--inset': props.inset,
     's_footer--padless': props.padless,
   }
 })
 
 const styles = computed(() => {
-  return {
+  return getCleanSetObject({
     ...styleListColor.value,
     ...measurableStyles.value,
     left: left.value,
     right: right.value,
+    bottom: isFixedOrAbsolutePosition ? '0px' : undefined,
     width: width.value,
-    paddingBottom: getNumericCssAttribute(app.value.bottom + 16),
-  }
+    paddingBottom: getPaddingBottom(),
+  })
+})
+
+watch(() => props.height, updateFooterHeight)
+let timeout: number | undefined
+
+onMounted(() => {
+  updateFooterHeight(props.height)
+  timeout = getWindow()?.setTimeout(() => {
+    updateFooterHeight(props.height)
+  }, 1000)
+})
+
+onBeforeUnmount(() => {
+  updateFooterHeight(0)
+  getWindow()?.clearTimeout(timeout)
 })
 </script>
 <style lang="scss">
 @import '@sui/app/styles/components/layout';
 
 $s_footerBorderRadius: 0 !default;
-$s_footerPadding: 6px 16px !default;
+$s_footerPadding: 6px 16px 16px !default;
 $s_footerPadlessPadding: 0 !default;
 $s_footerShapedBorderRadius: map-get($s_rounded, 'xl') $s_footerBorderRadius !default;
 
@@ -103,9 +134,15 @@ $s_footerShapedBorderRadius: map-get($s_rounded, 'xl') $s_footerBorderRadius !de
   }
 
   &--absolute {
+    position: absolute;
+
     &:not(.s_footer--inset) {
       width: 100%;
     }
+  }
+
+  &--fixed {
+    position: fixed;
   }
 
   &--padless {

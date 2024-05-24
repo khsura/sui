@@ -35,10 +35,12 @@ export const ToggleButtonGroup = createStoryObj<typeof SToggleButtonGroup>({
         const toggleButtons = ref([1, 5])
         const arrayLength = faker.helpers.rangeToNumber({ min: 5, max: 12 })
         const lastGridSize = arrayLength % 3 || 3
+
         const buttons = Array(arrayLength)
           .fill('')
-          .map((v, i) => {
+          .map((_v, i) => {
             const isLastGrid = arrayLength - i <= lastGridSize
+
             return {
               text: faker.word.noun(),
               cols: isLastGrid ? 12 / lastGridSize : 4,

@@ -23,17 +23,24 @@ export default toolbar
 
 export const Toolbar = createStoryObj<typeof SToolbar>({
   render: (args) => {
-    return (<SToolbar {...args}>
-      <SButton variant="icon"><SIcon icon="mdi-menu"></SIcon></SButton>
-      <SToolbarTitle>Hello</SToolbarTitle>
-      <SButton variant="icon"><SIcon icon="mdi-heart"></SIcon></SButton>
-      <SButton variant="icon"><SIcon icon="mdi-dots-vertical"></SIcon></SButton>
-    </SToolbar>)
+    return (
+      <SToolbar {...args}>
+        <SButton variant="icon">
+          <SIcon icon="mdi-menu"></SIcon>
+        </SButton>
+        <SToolbarTitle>Hello</SToolbarTitle>
+        <SButton variant="icon">
+          <SIcon icon="mdi-heart"></SIcon>
+        </SButton>
+        <SButton variant="icon">
+          <SIcon icon="mdi-dots-vertical"></SIcon>
+        </SButton>
+      </SToolbar>
+    )
   },
   args: {
     elevation: null,
     ...argsColor,
-    color: 'info',
     density: null,
   },
 })

@@ -1,6 +1,7 @@
 {
   "extends": "@sui/shared/tsconfig.base.json",
   "compilerOptions": {
+    "declarationDir": "@types",
     "paths": {
       "@sui/app/*": ["./*"]
     }
@@ -12,4 +13,5 @@
     "**/*.tsx",
     "**/*.vue"
   ],
+  "exclude": ["dist", "node_modules", "public", "@types"]
 }

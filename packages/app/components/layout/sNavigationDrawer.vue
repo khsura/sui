@@ -1,6 +1,6 @@
 <template>
   <SOverlay :disabled="!isOverlay" :scrim="isOverlay" :value="model" :transition="transitionName">
-    <Component
+    <component
       :is="elementTag"
       ref="navigationDrawer"
       :class="classes"
@@ -14,12 +14,13 @@
       <slot name="prepend" class="s_navigationDrawer__prepend"></slot>
       <div class="s_navigationDrawer__content"><slot :on="on"></slot></div>
       <slot name="append" class="s_navigationDrawer__append"></slot>
-    </Component>
+    </component>
   </SOverlay>
 </template>
 <script setup lang="ts">
 import SOverlay from '@sui/app/components/sOverlay.vue'
 import { ProviderPropsName } from '@sui/app/constants'
+import { type TouchWrapper } from '@sui/app/types'
 import { getNumericCssAttribute } from '@sui/app/lib'
 import { propsNavigationDrawer } from '@sui/app/props'
 import {
@@ -31,11 +32,10 @@ import {
   usePositionService,
   useProviderService,
   useResizeService,
+  useScrollableService,
   useTouchService,
 } from '@sui/app/services'
-import { type TouchWrapper } from '@sui/app/types'
-import { ref, computed, watch, getCurrentInstance, onBeforeMount, onBeforeUnmount } from 'vue'
-import { type Ref } from 'vue'
+import { type Ref, computed, ref, getCurrentInstance, watch, onBeforeMount, onBeforeUnmount } from 'vue'
 
 const props = defineProps(propsNavigationDrawer({ app: false }))
 const { isBottom, isRight, computedLocation } = useLocationService(props)
@@ -104,6 +104,7 @@ const { mdAndUp } = useDisplayService()
 const { app, isApp } = useLayoutService(props)
 const { classListElevation } = useElevationService(props)
 const { isAbsolutePosition, isFixedPosition, classListPosition } = usePositionService(props)
+const { currentScroll } = useScrollableService()
 
 const { touchstart, touchend, touchmove } = useTouchService({
   left: swipeLeft,
@@ -196,19 +197,21 @@ const computedSubtractHeight = computed((): number | null => {
     return 0
   }
 
-  return appHorizontalShiftWidth.value ? 0 : app.value.bar + app.value.footer
+  return appHorizontalShiftWidth.value ? 0 : app.value.appBarHeight + app.value.footerHeight
 })
 
 const computedTop = computed(() => {
+  const top = Math.max(app.value.offsetTop - currentScroll.value, 0)
+
   if (!hasApp.value) {
-    return 0
+    return top
   }
 
   if (appHorizontalShiftWidth.value) {
-    return 0
+    return top
   }
 
-  return app.value.bar
+  return app.value.appBarHeight + top
 })
 
 const computedWidth = computed(() => {
@@ -284,7 +287,7 @@ const transitions = {
   bottom: 's_transition__navigationDrawer--bottom',
   left: 's_transition__navigationDrawer--left',
   right: 's_transition__navigationDrawer--right',
-}
+} as const
 
 const transitionName = computed(() => {
   if (computedLocation.value === 'top') {
@@ -425,8 +428,10 @@ onBeforeUnmount(() => {
   app.value.right = 0
 })
 </script>
+
 <style lang="scss">
 @import '@sui/app/styles/components/layout';
+
 $s_navigationDrawerMobileTemporaryElevation: 16 !default;
 
 @keyframes s-animation-navigation-drawer-left {
@@ -494,8 +499,7 @@ $s_navigationDrawerOverlayTransitionAnimations: (
 
   .s_navigationDrawer__content {
     height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden auto;
   }
 
   .s_navigationDrawer__image {

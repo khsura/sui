@@ -5,27 +5,21 @@ import flexbugsFixes from 'postcss-flexbugs-fixes'
 import mediaMinmax from 'postcss-media-minmax'
 import { defineConfig } from 'vite'
 import { externalizeDeps } from 'vite-plugin-externalize-deps'
-import tsconfigPaths from 'vite-tsconfig-paths'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
 export default defineConfig({
-  plugins: [externalizeDeps(), tsconfigPaths(), vue(), vueJsx()],
+  plugins: [externalizeDeps(), vue(), vueJsx()],
+  resolve: {
+    alias: {
+      '@sui/app': __dirname,
+    },
+  },
   build: {
     target: ['safari11', 'ios11'],
     lib: {
       entry: path.resolve(__dirname, './index.ts'),
       name: 'sUi',
       fileName: 's-ui',
-    },
-    rollupOptions: {
-      external: ['vue', 'dayjs', 'vue-i18n'],
-      output: {
-        globals: {
-          vue: 'Vue',
-          dayjs: 'dayjs',
-          'vue-i18n': 'vueI18n',
-        },
-      },
     },
   },
   css: {

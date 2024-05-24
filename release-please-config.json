@@ -1,0 +1,17 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "exclude-paths": ["packages"]
+    },
+    "packages/app": {
+      "release-type": "node"
+    },
+    "packages/storybook": {
+      "release-type": "node"
+    },
+    "packages/shared": {
+      "release-type": "node"
+    }
+  }
+}

@@ -14,7 +14,8 @@ export const useExpandableItemCoreService = (isExpanded: Ref<boolean | null>) =>
       return 0
     }
 
-    const height = z.number().parse(instance?.proxy?.$el?.scrollHeight ?? 0)
+    const parsedScrollHeight = z.number().safeParse(instance?.proxy?.$el?.scrollHeight ?? 0)
+    const height = parsedScrollHeight.success ? parsedScrollHeight.data : 0
     const paddingY = 4 * 4 * 2
     const justInCase = 100
 

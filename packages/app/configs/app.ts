@@ -1,11 +1,10 @@
-import { AppTheme, mobileBreakpoint, thresholds, scrollBarWidth } from '@sui/app/constants'
+import { AppTheme, thresholds, scrollBarWidth } from '@sui/app/constants'
 
 export const defaultAppConfig = {
   theme: AppTheme.light,
   display: {
     height: 0,
     width: 0,
-    mobileBreakpoint,
     thresholds,
     scrollBarWidth,
   },

@@ -1,7 +1,6 @@
-
-import { PropType } from 'vue'
-import { propsPosition } from './positionProps'
+import { type PropType } from 'vue'
 import { STransition } from '@sui/app/constants'
+import { propsPosition } from './positionProps'
 
 export const propsOverlay = () => {
   return {

@@ -1,4 +1,3 @@
-/* stylelint-disable scss/at-function-named-arguments */
 @mixin s_elevation($z, $important: false) {
   /* stylelint-disable-next-line max-line-length */
   box-shadow: map.get($s_shadowKeyUmbra, $z), map.get($s_shadowKeyPenumbra, $z), map.get($s_shadowKeyAmbient, $z) if($important, !important, null);

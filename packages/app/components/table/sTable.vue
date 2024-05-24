@@ -347,16 +347,16 @@ defineExpose({
       }
     }
 
+    /* stylelint-disable selector-max-compound-selectors */
     .s_table__head + .s_table__body {
-      /* stylelint-disable-next-line selector-max-compound-selectors */
       .s_table__row:first-child {
-        /* stylelint-disable-next-line selector-max-compound-selectors */
         .s_tableBodyCell,
         .s_tableHeadCell {
           border-top: 0;
         }
       }
     }
+    /* stylelint-enable selector-max-compound-selectors */
   }
 
   &__expanded {

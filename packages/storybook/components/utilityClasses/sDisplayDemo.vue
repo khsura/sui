@@ -88,7 +88,7 @@ const sampleItemWidth = '260px'
 const flexAdjustments = [
   { type: 'justify', options: justifyConfig },
   { type: 'align', options: alignConfig },
-]
+] as const
 
 const flexConfigValues = ref<{ justify: string; align: string }>({ justify: 'start', align: 'start' })
 const flexOrders = computed(() => ['first', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 'last'])
@@ -107,7 +107,6 @@ const itemCounter = computed(() => {
 
 const selectedOrder = computed(() => flexOrders.value.slice(0, itemCounter.value.length + 1).concat('last'))
 // TODO (Georgii) fix
-// eslint-disable-next-line vue/no-setup-props-destructure
 const orderStates: Ref<string[]> = ref([...new Array(props.itemNumber).fill('0')])
 
 const getOrderStates = computed(() => {

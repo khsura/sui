@@ -77,12 +77,8 @@ export const useFormInputService = <T extends FormInputModelValue = FormInputMod
     form.unregisterItem?.(props.id)
   })
 
-  const updateFormInput = async (value?: T, skipUpdateModelValue = false) => {
+  const updateFormInput = async (value?: T) => {
     if (value !== undefined) {
-      if (!skipUpdateModelValue) {
-        emit('update:modelValue', value)
-      }
-
       emit('change', value)
     }
 

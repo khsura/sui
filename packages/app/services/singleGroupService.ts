@@ -1,27 +1,24 @@
 import { ProviderName, ProviderPropsName } from '@sui/app/constants/provider'
 import { type PropsSingleGroup } from '@sui/app/definitions'
 import { type GroupItemValue } from '@sui/app/types'
-import { computed, ref, watch } from 'vue'
+import { type Ref, computed, ref, watch } from 'vue'
 import { useGroupCoreService } from './core/groupCoreService'
 import { useProviderService } from './core/providerService'
 
-export const useSingleGroupService = (
-  props: PropsSingleGroup,
-  emit: (event: 'update:modelValue', data: GroupItemValue | null) => void,
-) => {
+export const useSingleGroupService = (props: PropsSingleGroup, model: Ref<GroupItemValue | null | undefined>) => {
   const { provide, provideProps } = useProviderService()
   const { items, register, unregister, getItemIndex } = useGroupCoreService()
-  const selected = ref<{ value: GroupItemValue | null; id: number }>({ value: null, id: -1 })
+  const selected = ref<{ value: GroupItemValue | undefined; id: number }>({ value: undefined, id: -1 })
 
   const updateSelected = (
-    params: { value: GroupItemValue | null; id: number } | null,
+    params: { value: GroupItemValue | undefined; id: number } | null,
     {
       doNotEmitEvent = false,
     }: {
       doNotEmitEvent?: boolean
     } = { doNotEmitEvent: false },
   ) => {
-    const value = params?.value ?? null
+    const value = params?.value ?? undefined
     const id = params?.id ?? -1
 
     selected.value = {
@@ -29,7 +26,7 @@ export const useSingleGroupService = (
       id,
     }
     if (!doNotEmitEvent) {
-      emit('update:modelValue', selected.value?.value ?? null)
+      model.value = selected.value?.value ?? null
     }
   }
 
@@ -45,7 +42,7 @@ export const useSingleGroupService = (
   }
 
   const selectByValue = (
-    value: GroupItemValue | null,
+    value: GroupItemValue | undefined,
     options?: {
       doNotEmitEvent?: boolean
     },
@@ -91,7 +88,7 @@ export const useSingleGroupService = (
     unregisterItem: (name) => {
       unregister(name)
     },
-    toggleItem: (name: GroupItemValue | null) => {
+    toggleItem: (name: GroupItemValue | undefined) => {
       if (props.mandatory) {
         selectByValue(name)
 
@@ -100,7 +97,7 @@ export const useSingleGroupService = (
 
       const isSelected = selected.value?.value === name
 
-      selectByValue(isSelected ? null : name)
+      selectByValue(isSelected ? undefined : name)
     },
     isSelectedItem: (name) => {
       return selected.value?.value === name

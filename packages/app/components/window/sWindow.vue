@@ -52,7 +52,7 @@ const props = defineProps({
   ...propsWindow(),
 })
 
-const emit = defineEmits<(event: 'update:modelValue', value: GroupItemValue | null) => void>()
+const model = defineModel<GroupItemValue>()
 const { classListColor, styleListColor } = useColorService(props)
 const { provideProps } = useProviderService()
 const { tagName } = useTagService(props)
@@ -86,7 +86,7 @@ const {
   selected,
   init,
   select: selectItem,
-} = useSingleGroupService(props, emit)
+} = useSingleGroupService(props, model)
 
 const goPrev = () => {
   prev()

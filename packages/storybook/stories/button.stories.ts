@@ -4,8 +4,8 @@ import { argsButton } from '@sui/storybook/args'
 import { argTypesButton, argTypesIcon } from '@sui/storybook/argTypes'
 import { createStoryObj } from '@sui/storybook/helpers'
 import { defineComponent } from 'vue'
-import type { MaterialDesignIcon } from '@sui/app/types'
-import type { Meta } from '@storybook/vue3'
+import type { MaterialDesignIcon } from '@sui/app/types/index'
+import type { ComponentPropsAndSlots, Meta } from '@storybook/vue3'
 
 const button: Meta<typeof SButton> = {
   title: 'UI Components/Button',
@@ -34,7 +34,7 @@ export const ButtonIcon = createStoryObj<typeof SButton | { icon: MaterialDesign
     icon: argTypesIcon.icon,
   },
   args: { ...argsButton({ variant: 'icon' }), icon: 'mdi-heart-outline' },
-  render: (args) => {
+  render: (args: ComponentPropsAndSlots<typeof SButton> & { icon: MaterialDesignIcon }) => {
     return defineComponent({
       components: { SButton, SIcon },
       setup() {

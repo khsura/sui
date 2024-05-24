@@ -16,12 +16,7 @@ const chip: Meta<typeof SChip> = {
 
 export default chip
 
-interface SlotsChip {
-  default: string
-  close: () => string
-}
-
-export const Chip = createStoryObj<typeof SChip | SlotsChip>({
+export const Chip = createStoryObj<typeof SChip>({
   args: {
     closable: false,
     color: null,

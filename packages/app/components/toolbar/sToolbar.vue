@@ -1,5 +1,5 @@
 <template>
-  <Component :is="tagName" :class="classes" :style="styles">
+  <component :is="tagName" :class="classes" :style="styles">
     <div v-if="$slots.prepend" class="s_toolbar__prepend">
       <slot name="prepend"></slot>
     </div>
@@ -12,7 +12,7 @@
     <div v-if="$slots.append" class="s_toolbar__append">
       <slot name="append"></slot>
     </div>
-  </Component>
+  </component>
 </template>
 <script setup lang="ts">
 import { ProviderPropsName } from '@sui/app/constants'
@@ -42,7 +42,7 @@ const { provideProps } = useProviderService()
 
 provideProps(ProviderPropsName.toolbar, props)
 
-const { contentHeight, extensionHeight, isExtended } = useToolbarService(props)
+const { contentHeight, computedExtensionHeight, isExtended } = useToolbarService(props)
 const { styles: contentServiceStyles, classes: contentClasses } = useContentService(props)
 const { tagName } = useTagService(props)
 
@@ -73,7 +73,7 @@ const contentStyles = computed(() => {
 
 const extensionStyles = computed(() => {
   return {
-    height: getNumericCssAttribute(extensionHeight.value),
+    height: getNumericCssAttribute(computedExtensionHeight.value),
   }
 })
 </script>
@@ -123,13 +123,11 @@ const extensionStyles = computed(() => {
   }
 
   &__prepend {
-    margin-inline-start: 10px;
-    margin-inline-end: auto;
+    margin-inline: 10px auto;
   }
 
   &__append {
-    margin-inline-start: auto;
-    margin-inline-end: 10px;
+    margin-inline: auto 10px;
   }
 }
 </style>

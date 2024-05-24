@@ -1,21 +1,10 @@
 import { type PropsScrollable } from '@sui/app/definitions'
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { type WatchSource, type Ref } from 'vue'
-
-interface ThresholdMetParams {
-  currentScroll: number
-  currentThreshold: number
-  isActive: boolean
-  isScrollingUp: boolean
-  previousScroll: number
-  savedScroll: number
-  target: HTMLElement | Document | null
-  canScroll: boolean
-  computedScrollThreshold: number
-}
+import { getWindow } from '@sui/app/lib'
+import { type ThresholdMetParams } from '@sui/app/types'
+import { type Ref, computed, nextTick, onBeforeUnmount, onMounted, ref, watch, type WatchSource } from 'vue'
 
 export const useScrollableService = (
-  props: PropsScrollable,
+  props?: Partial<PropsScrollable>,
   thresholdMet: (
     params: ThresholdMetParams,
   ) => Partial<Pick<ThresholdMetParams, 'isActive' | 'savedScroll'>> = () => ({}),
@@ -34,7 +23,7 @@ export const useScrollableService = (
   })
 
   const computedScrollThreshold = computed((): number => {
-    return props.scrollThreshold ? Number(props.scrollThreshold) : 300
+    return props?.scrollThreshold !== null ? Number(props?.scrollThreshold) : 300
   })
 
   const onScroll = () => {
@@ -46,7 +35,7 @@ export const useScrollableService = (
     if (target.value instanceof HTMLElement) {
       currentScroll.value = target.value?.scrollTop
     } else {
-      currentScroll.value = window.pageYOffset
+      currentScroll.value = getWindow()?.scrollY ?? 0
     }
 
     isScrollingUp.value = currentScroll.value < previousScroll.value
@@ -81,23 +70,23 @@ export const useScrollableService = (
     watch(watchers, onScroll)
   }
 
-  onMounted(() => {
-    target.value = props.scrollTarget ? document.querySelector<HTMLElement>(props.scrollTarget) : document
+  const getScrollTarget = () => {
+    const target = props?.scrollTarget ? document.querySelector<HTMLElement>(props.scrollTarget) : document
 
-    if (!target.value) {
-      console.warn(`Unable to locate element with identifier ${props.scrollTarget}`, this)
+    if (!target) {
+      console.warn(`Unable to locate element with identifier ${props?.scrollTarget}`, this)
     }
 
+    return target
+  }
+
+  onMounted(() => {
+    target.value = getScrollTarget()
     target.value?.addEventListener('scroll', onScroll)
   })
 
   onBeforeUnmount(() => {
-    target.value = props.scrollTarget ? document.querySelector<HTMLElement>(props.scrollTarget) : document
-
-    if (!target.value) {
-      console.warn(`Unable to locate element with identifier ${props.scrollTarget}`, this)
-    }
-
+    target.value = getScrollTarget()
     target.value?.removeEventListener('scroll', onScroll)
   })
 

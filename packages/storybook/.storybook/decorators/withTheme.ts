@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { SApp, SMain, SContainer } from '@sui/app/components'
 import { AppTheme } from '@sui/app/constants'
 import { addons } from '@storybook/manager-api'
