@@ -92,5 +92,5 @@
     "vue-router": "^4.3.2",
     "vue-tsc": "^2.0.19"
   },
-  "packageManager": "yarn@4.1.1"
+  "packageManager": "yarn@4.2.2"
 }

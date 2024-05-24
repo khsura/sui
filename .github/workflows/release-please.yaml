@@ -28,23 +28,30 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
       - name : Use Node.js
         uses: actions/setup-node@v4
+        if: ${{ steps.release.outputs.release_created }}
         with:
           node-version: '20'
 
       - name: Enable Corepack
+        if: ${{ steps.release.outputs.release_created }}
         run: corepack enable
 
       - name: Set yarn version
+        if: ${{ steps.release.outputs.release_created }}
         run: yarn set version self
 
       - name: Set token npm github token
+        if: ${{ steps.release.outputs.release_created }}
         run: yarn config set 'npmRegistries["//npm.pkg.github.com"].npmAuthToken' ${{ secrets.NPM_GITHUB_TOKEN }}
 
       - name: Install dependencies
+        if: ${{ steps.release.outputs.release_created }}
         run: yarn install
 
       - name: Run publish
+        if: ${{ steps.release.outputs.release_created }}
         run: yarn release
 
       - name: Unset token npm github token
+        if: ${{ steps.release.outputs.release_created }}
         run: yarn config unset 'npmRegistries["//npm.pkg.github.com"].npmAuthToken'
