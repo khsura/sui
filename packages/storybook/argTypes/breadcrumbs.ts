@@ -1,9 +1,9 @@
 import breadcrumbsItem from '@sui/app/types/breadcrumbs?raw'
 import { extractInterfaceString } from '@sui/storybook/helpers'
 import type { SBreadcrumbs } from '@sui/app/components'
-import { argTypesTextColor } from './core'
 import type { ArgTypes } from '@storybook/types'
 import type { ComponentPropsAndSlots } from '@storybook/vue3'
+import { argTypesTextColor } from './core'
 
 export const argTypesBreadcrumbs: Partial<ArgTypes<ComponentPropsAndSlots<typeof SBreadcrumbs>>> = {
   items: {

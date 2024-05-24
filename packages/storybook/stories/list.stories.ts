@@ -1,4 +1,3 @@
-/* eslint-disable vue/one-component-per-file */
 import {
   SButton,
   SIcon,
@@ -17,13 +16,6 @@ import { argTypesMeasurableStyles } from '@sui/storybook/argTypes'
 import { createStoryObj } from '@sui/storybook/helpers'
 import type { Meta } from '@storybook/vue3'
 
-type ListStory =
-  | typeof SList
-  | {
-      disabled: boolean
-      underlined: boolean
-    }
-
 const list: Meta<typeof SList> = {
   title: 'UI Components/List',
   argTypes: {
@@ -38,7 +30,7 @@ const list: Meta<typeof SList> = {
 
 export default list
 
-export const List = createStoryObj<ListStory>({
+export const List = createStoryObj<typeof SList>({
   render: (args) => {
     return {
       components: {
@@ -119,7 +111,7 @@ export const List = createStoryObj<ListStory>({
   },
 })
 
-export const ListColors = createStoryObj<ListStory>({
+export const ListColors = createStoryObj<typeof SList>({
   render: (args) => {
     return {
       components: {
@@ -146,7 +138,7 @@ export const ListColors = createStoryObj<ListStory>({
             Hello
           </SListItemContent>
         </SListItem>
-        <SListItem :disabled="args.disabled">
+        <SListItem disabled>
           <SListItemIcon>
             <SIcon icon="mdi-pencil"></SIcon>
           </SListItemIcon>
@@ -186,15 +178,13 @@ export const ListColors = createStoryObj<ListStory>({
     lines: null,
     dense: false,
     link: false,
-    disabled: false,
     text: false,
     outlined: false,
-    underlined: false,
     ...argsColor,
   },
 })
 
-export const ListRandom = createStoryObj<ListStory>({
+export const ListRandom = createStoryObj<typeof SList>({
   render: (args) => {
     return {
       components: {
@@ -221,7 +211,7 @@ export const ListRandom = createStoryObj<ListStory>({
               Hello
             </SListItemContent>
           </SListItem>
-          <SListItem :disabled="args.disabled">
+          <SListItem disabled>
             <SListItemIcon>
               <SIcon icon="mdi-pencil"></SIcon>
             </SListItemIcon>
@@ -262,6 +252,5 @@ export const ListRandom = createStoryObj<ListStory>({
     outlined: false,
     dense: false,
     link: false,
-    disabled: false,
   },
 })

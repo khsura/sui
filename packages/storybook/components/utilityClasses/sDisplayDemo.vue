@@ -107,7 +107,6 @@ const itemCounter = computed(() => {
 
 const selectedOrder = computed(() => flexOrders.value.slice(0, itemCounter.value.length + 1).concat('last'))
 // TODO (Georgii) fix
-// eslint-disable-next-line vue/no-setup-props-destructure
 const orderStates: Ref<string[]> = ref([...new Array(props.itemNumber).fill('0')])
 
 const getOrderStates = computed(() => {

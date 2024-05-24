@@ -1,8 +1,8 @@
 import { faker } from '@sui/shared'
 import { action } from '@storybook/addon-actions'
 import type { SButton } from '@sui/app/components'
-import { argsBorder, argsColor, argsDisabled, argsSlot } from './core'
 import type { ComponentPropsAndSlots } from '@storybook/vue3'
+import { argsBorder, argsColor, argsDisabled, argsSlot } from './core'
 
 export const argsButton = (
   params?: Partial<ComponentPropsAndSlots<typeof SButton>>,

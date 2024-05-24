@@ -1,6 +1,6 @@
 import type { PropsColor } from '@sui/app'
-import { argTypesComponentTheme } from './componentTheme'
 import type { ArgTypes } from '@storybook/types'
+import { argTypesComponentTheme } from './componentTheme'
 
 export const argTypesColor: ArgTypes<PropsColor> = {
   color: {
