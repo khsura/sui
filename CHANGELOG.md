@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/sura0111/sui/compare/root-v1.0.0...root-v1.0.1) (2024-05-24)
+
+
+### Bug Fixes
+
+* bug ([8ce5b1d](https://github.com/sura0111/sui/commit/8ce5b1d9efffe685aa09d668cadc3a87107bc73d))
+* release please yaml ([3c8778e](https://github.com/sura0111/sui/commit/3c8778e3bf951c9b7876252ea9d0018892a39339))
+
 ## 1.0.0 (2024-05-24)
 
 

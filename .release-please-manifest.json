@@ -1,5 +1,5 @@
 {
-  ".": "1.0.0",
+  ".": "1.0.1",
   "packages/app": "1.0.2",
   "packages/storybook": "1.0.0",
   "packages/shared": "1.0.0"
