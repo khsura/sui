@@ -1,7 +1,7 @@
 import { type ProviderName, type ProviderPropsName, type defaultLayoutSizes } from '@sui/app/constants'
 import { type AppState, type GroupItemValue, type FormProviderRegisterInputAttribute } from '@sui/app/types'
 import { type ComputedRef, type Ref } from 'vue'
-import type * as props from './props'
+import type * as props from './propsExtracted'
 
 export interface GroupProvider {
   registerItem: (name: GroupItemValue, attrs: { element?: Ref<HTMLElement | null> }) => number

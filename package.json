@@ -25,7 +25,8 @@
     "test": "vitest --run",
     "postinstall": "husky",
     "prepack": "pinst --disable",
-    "postpack": "pinst --enable"
+    "postpack": "pinst --enable",
+    "storybook": "yarn workspace @sui/storybook run dev"
   },
   "workspaces": [
     "packages/*"

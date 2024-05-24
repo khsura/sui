@@ -1,5 +1,5 @@
 import { ProviderName, ProviderPropsName } from '@sui/app/constants/provider'
-import { type PropsGroup } from '@sui/app/definitions/props'
+import { type PropsGroup } from '@sui/app/definitions'
 import { type Ref, computed, ref, type ModelRef } from 'vue'
 import { type GroupItemValue } from '@sui/app/types'
 import { watch } from 'vue'

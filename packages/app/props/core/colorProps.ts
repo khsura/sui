@@ -3,11 +3,11 @@ import { type ExposedAppColorType, type PresetColorType } from '@sui/app/types'
 import { type PropType } from 'vue'
 
 export const propsColor = <T extends PresetColorType | ExposedAppColorType | string = string>(defaults?: {
-  color?: T | undefined | null
+  color?: T | undefined
 }) => {
   return {
     color: {
-      type: String as unknown as PropType<T | undefined | null>,
+      type: String as unknown as PropType<T | undefined>,
       default: defaults?.color ?? undefined,
     },
     colorThreshold: {

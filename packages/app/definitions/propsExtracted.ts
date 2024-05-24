@@ -5,16 +5,13 @@ import { type FormInputModelValue } from '../types/core'
 export type PropsActivator = ExtractPropTypes<ReturnType<typeof props.propsActivator>>
 export type PropsApp = ExtractPropTypes<ReturnType<typeof props.propsApp>>
 export type PropsAppBar = ExtractPropTypes<ReturnType<typeof props.propsAppBar>>
-export type PropsBadge = ExtractPropTypes<ReturnType<typeof props.propsBadge>>
 export type PropsBorder = ExtractPropTypes<ReturnType<typeof props.propsBorder>>
 export type PropsBottomNavigation = ExtractPropTypes<ReturnType<typeof props.propsBottomNavigation>>
 export type PropsBreadcrumbs = ExtractPropTypes<ReturnType<typeof props.propsBreadcrumbs>>
 export type PropsButton = ExtractPropTypes<ReturnType<typeof props.propsButton>>
 export type PropsCalendar = ExtractPropTypes<ReturnType<typeof props.propsCalendar>>
 export type PropsChip = ExtractPropTypes<ReturnType<typeof props.propsChip>>
-export type PropsColor = ExtractPropTypes<ReturnType<typeof props.propsColor>>
 export type PropsColumn = ExtractPropTypes<ReturnType<typeof props.propsColumn>>
-export type PropsComponentTheme = ExtractPropTypes<ReturnType<typeof props.propsComponentTheme>>
 export type PropsDatePicker = ExtractPropTypes<ReturnType<typeof props.propsDatePicker>>
 export type PropsDatePickerItem = ExtractPropTypes<ReturnType<typeof props.propsDatePickerItem>>
 export type PropsDatePickerItemSwitch = ExtractPropTypes<ReturnType<typeof props.propsDatePickerItemSwitch>>

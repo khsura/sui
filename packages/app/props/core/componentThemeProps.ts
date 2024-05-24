@@ -4,7 +4,7 @@ import { type PropType } from 'vue'
 export const propsComponentTheme = () => {
   return {
     theme: {
-      type: String as PropType<AppThemeType | null | undefined>,
+      type: String as PropType<AppThemeType | undefined>,
       default: undefined,
     },
   }

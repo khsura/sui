@@ -114,7 +114,7 @@ defineProps({
   },
   textTransform: {
     type: Array as PropType<string[]>,
-    default: () => ['s_text_capitalize'],
+    default: () => ['s_text__capitalize'],
   },
 })
 

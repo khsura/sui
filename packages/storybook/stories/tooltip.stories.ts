@@ -108,7 +108,7 @@ export const Template = createStoryObj<typeof STooltip>({
   },
   args: {
     ...argsColor,
-    color: null,
+    color: undefined,
     opacity: 1,
     offsetX: 0,
     offsetY: 0,
