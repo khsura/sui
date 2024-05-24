@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/sura0111/sui/compare/app-v1.0.0...app-v1.0.1) (2024-05-24)
+
+
+### Bug Fixes
+
+* bug ([942fc20](https://github.com/sura0111/sui/commit/942fc20835b83ef9cdde43ca769a1089430be91a))
+
 ## 1.0.0 (2024-05-24)
 
 
