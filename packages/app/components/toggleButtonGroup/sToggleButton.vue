@@ -3,7 +3,7 @@
     <SButton
       class="s_toggleButton__button"
       :block="!groupProps.shrink"
-      :color="isSelected ? groupProps.selectedColor || null : null"
+      :color="isSelected ? groupProps.selectedColor || undefined : undefined"
       :underlined="groupProps.variant === 'underlined' && isSelected"
       tile
       :disabled="disabled"

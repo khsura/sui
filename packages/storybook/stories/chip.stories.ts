@@ -19,7 +19,7 @@ export default chip
 export const Chip = createStoryObj<typeof SChip>({
   args: {
     closable: false,
-    color: null,
+    color: undefined,
     disabled: false,
     label: false,
     link: false,

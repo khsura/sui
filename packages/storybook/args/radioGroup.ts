@@ -1,4 +1,4 @@
-import type { PropsRadioGroup } from '@sui/app/definitions/props'
+import type { PropsRadioGroup } from '@sui/app/definitions'
 import { argsBorder, argsDisabled } from './core'
 
 export const argsRadioGroup: Omit<PropsRadioGroup, 'modelValue' | 'rules' | 'error' | 'dirty'> = {

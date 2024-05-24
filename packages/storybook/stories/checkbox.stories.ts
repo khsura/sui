@@ -32,7 +32,7 @@ export const OptionalCheckbox = createStoryObj<typeof SCheckbox>({
     size: 'default',
     block: false,
     bordered: false,
-    color: null,
+    color: undefined,
     hideDetails: false,
   },
   parameters: {
@@ -78,7 +78,7 @@ export const RequiredCheckbox = createStoryObj<typeof SCheckbox>({
     size: 'default',
     block: false,
     bordered: false,
-    color: null,
+    color: undefined,
     hideDetails: false,
   },
   render: (args) =>
