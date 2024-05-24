@@ -23,10 +23,10 @@ export const useGroupCoreItemService = <T extends boolean>(
 
   const value = computed(() => {
     if (canSelectMultipleItem) {
-      return (props as PropsGroupItem).index ?? instance?.vnode.key ?? null
+      return (props as PropsGroupItem).index ?? instance?.vnode.key ?? undefined
     }
 
-    return (props as PropsSingleGroupItem).value ?? instance?.vnode.key ?? null
+    return (props as PropsSingleGroupItem).value ?? instance?.vnode.key ?? undefined
   })
 
   const item = computed(() => {
@@ -37,7 +37,7 @@ export const useGroupCoreItemService = <T extends boolean>(
   })
 
   onMounted(() => {
-    if (value.value === null) {
+    if (value.value === undefined) {
       throw new Error(`${identifier} or key property is required`)
     }
 

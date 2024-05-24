@@ -1,4 +1,4 @@
-import type { MaterialDesignIcon } from '@sui/app'
+import type { MaterialDesignIcon } from '@sui/app/index'
 import type { ArgTypes } from '@storybook/types'
 
 export const argTypesIcon: ArgTypes<{ icon: MaterialDesignIcon }> = {

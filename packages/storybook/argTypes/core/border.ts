@@ -1,4 +1,4 @@
-import type { PropsBorder } from '@sui/app'
+import type { PropsBorder } from '@sui/app/index'
 import type { ArgTypes } from '@storybook/types'
 
 export const argTypesBorder: ArgTypes<PropsBorder> = {

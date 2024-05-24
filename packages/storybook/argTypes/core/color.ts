@@ -1,4 +1,4 @@
-import type { PropsColor } from '@sui/app'
+import type { PropsColor } from '@sui/app/index'
 import type { ArgTypes } from '@storybook/types'
 import { argTypesComponentTheme } from './componentTheme'
 

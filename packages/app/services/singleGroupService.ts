@@ -8,17 +8,17 @@ import { useProviderService } from './core/providerService'
 export const useSingleGroupService = (props: PropsSingleGroup, model: Ref<GroupItemValue | null | undefined>) => {
   const { provide, provideProps } = useProviderService()
   const { items, register, unregister, getItemIndex } = useGroupCoreService()
-  const selected = ref<{ value: GroupItemValue | null; id: number }>({ value: null, id: -1 })
+  const selected = ref<{ value: GroupItemValue | undefined; id: number }>({ value: undefined, id: -1 })
 
   const updateSelected = (
-    params: { value: GroupItemValue | null; id: number } | null,
+    params: { value: GroupItemValue | undefined; id: number } | null,
     {
       doNotEmitEvent = false,
     }: {
       doNotEmitEvent?: boolean
     } = { doNotEmitEvent: false },
   ) => {
-    const value = params?.value ?? null
+    const value = params?.value ?? undefined
     const id = params?.id ?? -1
 
     selected.value = {
@@ -42,7 +42,7 @@ export const useSingleGroupService = (props: PropsSingleGroup, model: Ref<GroupI
   }
 
   const selectByValue = (
-    value: GroupItemValue | null,
+    value: GroupItemValue | undefined,
     options?: {
       doNotEmitEvent?: boolean
     },
@@ -88,7 +88,7 @@ export const useSingleGroupService = (props: PropsSingleGroup, model: Ref<GroupI
     unregisterItem: (name) => {
       unregister(name)
     },
-    toggleItem: (name: GroupItemValue | null) => {
+    toggleItem: (name: GroupItemValue | undefined) => {
       if (props.mandatory) {
         selectByValue(name)
 
@@ -97,7 +97,7 @@ export const useSingleGroupService = (props: PropsSingleGroup, model: Ref<GroupI
 
       const isSelected = selected.value?.value === name
 
-      selectByValue(isSelected ? null : name)
+      selectByValue(isSelected ? undefined : name)
     },
     isSelectedItem: (name) => {
       return selected.value?.value === name

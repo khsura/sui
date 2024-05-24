@@ -1,4 +1,4 @@
-import type { PropsVariant } from '@sui/app'
+import type { PropsVariant } from '@sui/app/index'
 import type { ArgTypes } from '@storybook/types'
 
 export const argTypesVariant = (): ArgTypes<PropsVariant> => {

@@ -1,6 +1,6 @@
 import colorString from '@sui/app/types/core/color?raw'
 import _ from 'lodash'
-import type { PropsColor } from '@sui/app'
+import type { PropsColor } from '@sui/app/index'
 import type { ArgTypes } from '@storybook/types'
 
 export const argTypesTextColor = <T extends ArgTypes<PropsColor>>(params: Partial<T>): T => {

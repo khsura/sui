@@ -7,7 +7,7 @@
     "build": "yarn prebuild && yarn g:tsc && yarn storybook build",
     "eslint": "yarn g:eslint",
     "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
-    "storybook": "storybook dev --port 6006",
+    "dev": "storybook dev --port 6006",
     "start": "http-server ./storybook-static -p 6006"
   },
   "devDependencies": {
