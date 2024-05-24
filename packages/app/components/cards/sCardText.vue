@@ -4,13 +4,11 @@
   </Component>
 </template>
 <script setup lang="ts">
-import { propsTag } from '@sui/app/props'
+import { type PropsTag } from '@sui/app/definitions'
 import { useTagService } from '@sui/app/services'
 
-const props = defineProps({
-  ...propsTag(),
-})
-
+// eslint-disable-next-line vue/no-unused-properties
+const props = defineProps<PropsTag>()
 const { tagName } = useTagService(props)
 </script>
 <style lang="scss">
