@@ -17,6 +17,6 @@ const { tagName } = useTagService(props)
 .s_card__actions {
   display: flex;
   align-items: center;
-  padding: calc($s_spacer * 2) calc($s_spacer * 2) calc($s_spacer * 4) calc($s_spacer * 2);
+  padding: calc($s_spacer * 2) calc($s_spacer * 2) calc($s_spacer * 4);
 }
 </style>
