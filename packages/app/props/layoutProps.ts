@@ -5,7 +5,7 @@ export const propsLayout = (defaults?: Parameters<typeof propsCoreLayout>[0]) =>
   return {
     ...propsCoreLayout(defaults),
     for: {
-      type: String as PropType<string | null | undefined>,
+      type: String as PropType<string | undefined>,
       default: null,
     },
   }
