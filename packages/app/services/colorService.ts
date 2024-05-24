@@ -5,11 +5,13 @@ import { useColorRepository } from '@sui/app/repositories/colorRepository'
 import { type Ref, computed, isRef } from 'vue'
 import { getCssColor } from '@sui/app/helpers/colorHelpers'
 import { useAppProviderRepository } from '@sui/app/repositories'
+import { toReactive } from '@vueuse/core'
 
 export const useColorService = (
-  props: PropsColor,
+  data: PropsColor | Ref<Partial<PropsColor>>,
   options: { isText?: boolean | Ref<boolean | null | undefined> } = { isText: false },
 ) => {
+  const props = toReactive(data)
   const { config } = useAppProviderRepository()
   const { getBackgroundColorAttributes, getIsPresetColor } = useColorRepository()
 

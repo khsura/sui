@@ -9,8 +9,8 @@ export const propsSingleGroup = () => {
       default: false,
     },
     modelValue: {
-      type: [Number, Boolean, Symbol, String] as PropType<GroupItemValue | null>,
-      default: null,
+      type: [Number, Boolean, Symbol, String] as PropType<GroupItemValue | undefined>,
+      default: undefined,
     },
     continuous: {
       type: Boolean as PropType<boolean>,

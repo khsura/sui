@@ -49,7 +49,9 @@
       "**/Thumbs.db": true,
       "**/node_modules": true,
       ".nx": true,
-      ".husky": true
+      ".husky": true,
+      "**/@types": true,
+      "**/dist": true
     },
 		"workbench.editor.limit.enabled": true,
 		"workbench.editor.limit.value": 7,

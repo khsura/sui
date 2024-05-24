@@ -1,33 +1,22 @@
+$s_breakpointXs: 640px !default;
+$s_breakpointSm: 768px !default;
+$s_breakpointMd: 1024px !default;
+$s_breakpointLg: 1280px !default;
+$s_breakpointXl: 1536px !default;
+$s_breakpointXxl: 1980px !default;
+
 $s_gridBreakpoints: () !default;
 $s_gridBreakpoints: map-deep-merge(
   (
-    'xs': 0,
-    'sm': 600px,
-    'md': 960px,
-    'lg': 1280px - 16px,
-    'xl': 1920px - 16px
+    'none': 0,
+    'xs': $s_breakpointXs,
+    'sm': $s_breakpointSm,
+    'md': $s_breakpointMd,
+    'lg': $s_breakpointLg,
+    'xl': $s_breakpointXl,
+    'xxl': $s_breakpointXxl
   ),
   $s_gridBreakpoints
-);
-
-$s_breakpoints: () !default;
-$s_breakpoints: map-deep-merge(
-  (
-    'printOnly': 'only print',
-    'screenOnly': 'only screen',
-    'xsOnly': 'only screen and (max-width: #{map.get($s_gridBreakpoints, 'sm') - 0.02})',
-    'smOnly': 'only screen and (min-width: #{map.get($s_gridBreakpoints, 'sm')}) and (max-width: #{map.get($s_gridBreakpoints, 'md') - 0.02})',
-    'smAndDown': 'only screen and (max-width: #{map.get($s_gridBreakpoints, 'md') - 0.02})',
-    'smAndUp': 'only screen and (min-width: #{map.get($s_gridBreakpoints, 'sm')})',
-    'mdOnly': 'only screen and (min-width: #{map.get($s_gridBreakpoints, 'md')}) and (max-width: #{map.get($s_gridBreakpoints, 'lg') - 0.02})',
-    'mdAndDown': 'only screen and (max-width: #{map.get($s_gridBreakpoints, 'lg') - 0.02})',
-    'mdAndUp': 'only screen and (min-width: #{map.get($s_gridBreakpoints, 'md')})',
-    'lgOnly': 'only screen and (min-width: #{map.get($s_gridBreakpoints, 'lg')}) and (max-width: #{map.get($s_gridBreakpoints, 'xl') - 0.02})',
-    'lgAndDown': 'only screen and (max-width: #{map.get($s_gridBreakpoints, 'xl') - 0.02})',
-    'lgAndUp': 'only screen and (min-width: #{map.get($s_gridBreakpoints, 'lg')})',
-    'xlOnly': 'only screen and (min-width: #{map.get($s_gridBreakpoints, 'xl')})'
-  ),
-  $s_breakpoints
 );
 
 $s_gridGutter: $s_spacer * 4 !default;

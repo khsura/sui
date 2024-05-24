@@ -1,140 +1,40 @@
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-import { breakpoints } from '@sui/app/constants'
-import { ref, computed, onMounted } from 'vue'
-import { useMediaQuery } from '@vueuse/core'
+import { useBreakpoints, useMediaQuery } from '@vueuse/core'
+import { type DisplayBreakpointThresholds } from '@sui/app/types'
+import { computed } from 'vue'
 import { store } from '@sui/app/store'
 import { useAppProviderService } from './appProviderService'
 
-export const useDisplayService = () => {
+export const useDisplayService = (thresholds?: DisplayBreakpointThresholds) => {
   const { config } = useAppProviderService()
-  const isLoaded = ref(false)
-
-  const getValue = <T>(value: T) => {
-    return isLoaded.value ? value : null
-  }
-
-  const xs = computed(() => {
-    return getValue(store.width < config.display.thresholds.xs)
-  })
-
-  const sm = computed(() => {
-    return getValue(store.width < config.display.thresholds.sm && !xs.value)
-  })
-
-  const md = computed(() => {
-    return getValue(
-      store.width < config.display.thresholds.md - config.display.scrollBarWidth && !(sm.value || xs.value),
-    )
-  })
-
-  const lg = computed(() => {
-    return getValue(
-      store.width < config.display.thresholds.lg - config.display.scrollBarWidth && !(md.value || sm.value || xs.value),
-    )
-  })
-
-  const xl = computed(() => {
-    return getValue(store.width >= config.display.thresholds.lg - config.display.scrollBarWidth)
-  })
-
-  const xsOnly = computed(() => {
-    return xs.value
-  })
-
-  const smOnly = computed(() => {
-    return sm.value
-  })
-
-  const smAndDown = computed(() => {
-    return getValue((xs.value || sm.value) && !(md.value || lg.value || xl.value))
-  })
-
-  const smAndUp = computed(() => {
-    return getValue(!xs.value && (sm.value || md.value || lg.value || xl.value))
-  })
-
-  const mdOnly = computed(() => {
-    return md.value
-  })
-
-  const mdAndDown = computed(() => {
-    return getValue((xs.value || sm.value || md.value) && !(lg.value || xl.value))
-  })
-
-  const mdAndUp = computed(() => {
-    return getValue(!(xs.value || sm.value) && (md.value || lg.value || xl.value))
-  })
-
-  const lgOnly = computed(() => {
-    return lg.value
-  })
-
-  const lgAndDown = computed(() => {
-    return getValue((xs.value || sm.value || md.value || lg.value) && !xl.value)
-  })
-
-  const lgAndUp = computed(() => {
-    return getValue(!(xs.value || sm.value || md.value) && (lg.value || xl.value))
-  })
-
-  const xlOnly = computed(() => {
-    return xl.value
-  })
-
-  const name = computed(() => {
-    if (!isLoaded.value) {
-      return null
-    }
-
-    if (xs.value) {
-      return 'xs'
-    }
-
-    if (sm.value) {
-      return 'sm'
-    }
-
-    if (lg.value) {
-      return 'lg'
-    }
-
-    if (xl.value) {
-      return 'xl'
-    }
-
-    return null
-  })
-
-  const mobile = computed(() => {
-    if (!name.value) {
-      return null
-    }
-
-    if (typeof config.display.mobileBreakpoint === 'number') {
-      return store.width < parseInt(config.display.mobileBreakpoint.toString(), 10)
-    }
-
-    const current = breakpoints[name.value]
-    const max = breakpoints[config.display.mobileBreakpoint]
-
-    return current <= max
-  })
+  const breakpoints = useBreakpoints(thresholds ?? config.display.thresholds)
+  const lgAndDown = breakpoints.smallerOrEqual('lg')
+  const lgAndUp = breakpoints.greaterOrEqual('lg')
+  const mdAndDown = breakpoints.smallerOrEqual('md')
+  const mdAndUp = breakpoints.greaterOrEqual('md')
+  const mobile = breakpoints.smallerOrEqual('sm')
+  const active = breakpoints.active()
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  const name = computed(() => active.value || 'xs')
+  const smAndDown = breakpoints.smallerOrEqual('sm')
+  const smAndUp = breakpoints.greaterOrEqual('sm')
+  const xs = breakpoints.smaller('sm')
+  const sm = breakpoints.between('sm', 'md')
+  const md = breakpoints.between('md', 'lg')
+  const lg = breakpoints.between('lg', 'xl')
+  const xl = breakpoints.between('xl', 'xxl')
+  const xxl = breakpoints.greaterOrEqual('xxl')
 
   const width = computed(() => {
-    return getValue(store.width)
+    return store.width
   })
 
   const height = computed(() => {
-    return getValue(store.height)
+    return store.height
   })
 
   const isHoverUnsupported = useMediaQuery('(hover: none)')
   const isCoarsePointer = useMediaQuery('(pointer: coarse)')
-  const isTouchDevice = computed(() => getValue(isHoverUnsupported.value) || getValue(isCoarsePointer.value))
-
-  onMounted(() => {
-    isLoaded.value = true
-  })
+  const isTouchDevice = computed(() => isHoverUnsupported.value || isCoarsePointer.value)
 
   return {
     xs,
@@ -142,19 +42,16 @@ export const useDisplayService = () => {
     md,
     lg,
     xl,
-    xsOnly,
-    smOnly,
-    smAndDown,
-    smAndUp,
-    mdOnly,
-    mdAndDown,
-    mdAndUp,
-    lgOnly,
+    xxl,
     lgAndDown,
     lgAndUp,
-    xlOnly,
-    name,
+    mdAndDown,
+    mdAndUp,
     mobile,
+    active,
+    name,
+    smAndDown,
+    smAndUp,
     width,
     height,
     isTouchDevice,

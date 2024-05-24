@@ -7,7 +7,6 @@ import { withTheme } from './decorators/withTheme'
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -32,7 +31,9 @@ const preview: Preview = {
       light: { ...themes.light },
     },
   },
+
   decorators: [withTheme()],
+  tags: ['autodocs'],
 }
 
 export default preview

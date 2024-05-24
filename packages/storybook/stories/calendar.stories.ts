@@ -6,6 +6,7 @@ import { defineComponent, ref } from 'vue'
 import type { CalendarComponent } from '@sui/app/definitions'
 import type { CalendarDate, CalendarEvent } from '@sui/app/types'
 import type { Meta } from '@storybook/vue3'
+import dayjs from '@sui/app/vendors/dayjs'
 
 const calendar: Meta<typeof SCalendar> = {
   title: 'UI Components/Calendar',
@@ -44,7 +45,7 @@ export const Calendar = createStoryObj<typeof SCalendar>({
     defineComponent({
       components: { SCalendar, SToolbar, SButton, SToolbarTitle, SIcon },
       setup() {
-        const value = ref('')
+        const focus = ref('')
         const calendar = ref<CalendarComponent | null>(null)
         const events = ref<CalendarEvent[]>([])
         const colors = ref(['blue', 'indigo', 'purple', 'crimson', 'green', 'orange', 'grey'])
@@ -54,7 +55,7 @@ export const Calendar = createStoryObj<typeof SCalendar>({
           return Math.floor((offset - range + 1) * Math.random()) + range
         }
 
-        const getEvents = ({ start, end }: { start: CalendarDate; end: CalendarDate }) => {
+        const getEvents = ({ start, end }: { start: Pick<CalendarDate, 'date'>; end: Pick<CalendarDate, 'date'> }) => {
           const events: CalendarEvent[] = []
           const min = new Date(`${start.date}T00:00:00`)
           const max = new Date(`${end.date}T23:59:59`)
@@ -80,14 +81,29 @@ export const Calendar = createStoryObj<typeof SCalendar>({
           return events
         }
 
-        const updateEvents = ({ start, end }: { start: CalendarDate; end: CalendarDate }) => {
+        const updateEvents = ({
+          start,
+          end,
+        }: {
+          start: Pick<CalendarDate, 'date'>
+          end: Pick<CalendarDate, 'date'>
+        }) => {
           events.value = getEvents({ start, end })
         }
+
+        updateEvents({
+          start: {
+            date: dayjs().startOf('month').format('YYYY-MM-DD'),
+          },
+          end: {
+            date: dayjs().endOf('month').format('YYYY-MM-DD'),
+          },
+        })
 
         return {
           args,
           events,
-          value,
+          focus,
           updateEvents,
           calendar,
           arrowLeft: 'mdi-chevron-left',
@@ -108,10 +124,11 @@ export const Calendar = createStoryObj<typeof SCalendar>({
           <SCalendar
             ref="calendar"
             v-bind="args"
-            v-model="value"
+            v-model:focus="focus"
             :events="events"
             @change="updateEvents"
           ></SCalendar>
+          <pre style="max-height: 400px; overflow-y: auto;"><code>{{ events }}</code></pre>
         </div>
       `,
     }),

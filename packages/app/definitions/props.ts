@@ -26,7 +26,7 @@ export type PropsExpansionPanels = ExtractPropTypes<ReturnType<typeof props.prop
 export type PropsFormInput<T extends FormInputModelValue> = Omit<
   ExtractPropTypes<ReturnType<typeof props.propsFormInput>>,
   'modelValue'
-> & { modelValue: T | null | undefined }
+> & { modelValue?: T | undefined }
 export type PropsGroup = ExtractPropTypes<ReturnType<typeof props.propsGroup>>
 export type PropsGroupItem = ExtractPropTypes<ReturnType<typeof props.propsGroupItem>>
 export type PropsIcon = ExtractPropTypes<ReturnType<typeof props.propsIcon>>

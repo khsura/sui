@@ -10,7 +10,7 @@ export const propsCalendar = () => {
       default: 'month',
     },
 
-    modelValue: {
+    focus: {
       type: String as PropType<string>,
       default: dayjs().format(datePickerModelFormats.date),
     },

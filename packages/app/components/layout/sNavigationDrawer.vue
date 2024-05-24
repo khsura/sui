@@ -494,7 +494,7 @@ $s_navigationDrawerOverlayTransitionAnimations: (
   overflow: hidden;
   pointer-events: auto;
   user-select: none;
-  background-color: s_getappcolor('card');
+  background-color: s_getAppColor('card');
   -webkit-overflow-scrolling: touch;
 
   .s_navigationDrawer__content {

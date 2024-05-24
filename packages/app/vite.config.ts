@@ -33,7 +33,7 @@ export default defineConfig({
           @use 'sass:meta';
           @use 'sass:list';
           @use 'sass:string';
-          @import './styles/helpers';
+          @import '@sui/app/styles/helpers';
         `,
       },
     },

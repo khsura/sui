@@ -1,13 +1,14 @@
 <template>
-  <Component :is="tagName" v-if="hasText" class="s_toolbarTitle">
+  <Component :is="tagName" v-if="hasText" class="s_toolbarTitle" :class="classListColor" :style="styleListColor">
     <slot v-if="$slots.default"></slot>
     <slot v-else-if="$slots.text" name="text"></slot>
     <div v-else-if="text">{{ text }}</div>
   </Component>
 </template>
 <script setup lang="ts">
+import { ProviderPropsName } from '@sui/app/constants'
 import { propsToolbarTitle } from '@sui/app/props'
-import { useTagService } from '@sui/app/services'
+import { useColorService, useProviderService, useTagService } from '@sui/app/services'
 import { computed, useSlots } from 'vue'
 
 const props = defineProps({
@@ -16,6 +17,9 @@ const props = defineProps({
 
 const slots = useSlots()
 const { tagName } = useTagService(props)
+const { injectParentProps } = useProviderService()
+const toolbarProps = injectParentProps(ProviderPropsName.toolbar)
+const { classListColor, styleListColor } = useColorService(toolbarProps)
 
 const hasText = computed(() => {
   return !!(slots.default ?? slots.text ?? props.text)

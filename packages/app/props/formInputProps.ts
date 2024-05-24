@@ -11,7 +11,7 @@ export const propsFormInput = <T extends FormInputModelValue = FormInputModelVal
       default: null,
     },
     modelValue: {
-      type: [String, Number, Array, Boolean] as unknown as PropType<T | null | undefined>,
+      type: [String, Number, Array, Boolean] as unknown as PropType<T | undefined>,
       default: null,
       required: defaults?.modelValue?.required ?? false,
     },

@@ -22,7 +22,7 @@ export const useCalendarMonthlyService = (props: PropsCalendar) => {
   const { getBackgroundColorAttributes } = useColorRepository()
 
   const date = computed(() => {
-    return dayjs(props.modelValue || undefined)
+    return dayjs(props.focus || undefined)
   })
 
   const startDateOfMonth = computed(() => {
