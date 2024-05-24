@@ -7,11 +7,30 @@
 <script setup lang="ts">
 import { defaultOverlayClass } from '@sui/app/constants'
 import { propsApp } from '@sui/app/props'
-import { useAppService } from '@sui/app/services'
+import { useAppService, useThemeService } from '@sui/app/services'
+import { type AppThemeType } from '@sui/app/types'
 import { PortalTarget } from 'portal-vue'
+import { watch } from 'vue'
 
 const props = defineProps(propsApp())
 const { styles } = useAppService(props)
+const { setTheme, theme } = useThemeService()
+
+const themeModel = defineModel<AppThemeType>('theme', {
+  set: (value) => {
+    if (value !== theme.value) {
+      setTheme(value)
+    }
+
+    return theme.value
+  },
+})
+
+watch(theme, () => {
+  if (theme.value !== themeModel.value) {
+    themeModel.value = theme.value
+  }
+})
 </script>
 
 <style lang="scss">

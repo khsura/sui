@@ -51,7 +51,9 @@
       ".nx": true,
       ".husky": true,
       "**/@types": true,
-      "**/dist": true
+      "**/dist": true,
+      "**/storybook-static": true,
+      "**/lint-staged*": true,
     },
 		"workbench.editor.limit.enabled": true,
 		"workbench.editor.limit.value": 7,

@@ -10,11 +10,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import { propsBadge } from '@sui/app/props'
 import { computed } from 'vue'
+import { type PropsBadge } from '@sui/app/definitions'
 import SBadgeContent from './sBadgeContent.vue'
 
-const props = defineProps(propsBadge())
+const props = defineProps<PropsBadge>()
 
 const classes = computed(() => ({
   's_badge--inline': props.inline,

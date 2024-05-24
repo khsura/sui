@@ -2,10 +2,10 @@ import './previewPlugins'
 import { getBrowserTheme } from '@sui/app/helpers'
 import { themes } from '@storybook/theming'
 import { type Preview } from '@storybook/vue3'
-import { themeComponents } from './components'
-import { withTheme } from './decorators/withTheme'
+import { appDecorator } from './decorators'
 
 const preview: Preview = {
+  decorators: [appDecorator()],
   parameters: {
     controls: {
       matchers: {
@@ -19,20 +19,12 @@ const preview: Preview = {
         order: ['Features', 'Styles & Animations', 'UI Directives', 'UI Components', 'Components'],
       },
     },
-    // @storybook/theming config
-    docs: {
-      theme: themes.light,
-      components: themeComponents,
-    },
-    // storybook-dark-mode config
     darkMode: {
       current: getBrowserTheme(),
       dark: { ...themes.dark },
-      light: { ...themes.light },
+      light: { ...themes.normal },
     },
   },
-
-  decorators: [withTheme()],
   tags: ['autodocs'],
 }
 

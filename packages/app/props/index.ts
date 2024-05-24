@@ -1,6 +1,5 @@
 export * from '@sui/app/props/appProps'
 export * from '@sui/app/props/appBarProps'
-export * from '@sui/app/props/badgeProps'
 export * from '@sui/app/props/bottomNavigationProps'
 export * from '@sui/app/props/breadcrumbsProps'
 export * from '@sui/app/props/buttonProps'

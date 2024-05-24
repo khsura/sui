@@ -43,7 +43,7 @@ const jsRules = {
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
   {
-    ignores: ['node_modules', 'dist', 'build', 'coverage', 'public'],
+    ignores: ['node_modules', 'dist', 'build', 'coverage', 'public', 'storybook-static', '@types'],
   },
   eslint.configs.recommended,
   ...tslint.configs.recommended,

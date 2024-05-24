@@ -60,8 +60,8 @@ export const Typography = createStoryObj<TypographyType>({
       's_textAlign__start',
       's_textAlign__end',
     ],
-    whiteSpacing: ['s_text__wrap', 'k_text__noWrap', 'k_text__pre', 'k_text__preLine', 'k_text__preWrap'],
-    textShadowing: ['s_textShadow__0', 'k_textShadow__1', 'k_textShadow__2', 'k_textShadow__3'],
-    textTransform: ['s_text__capitalize', 'k_text__lowercase', 'k_text__uppercase'],
+    whiteSpacing: ['s_text__wrap', 's_text__noWrap', 's_text__pre', 's_text__preLine', 's_text__preWrap'],
+    textShadowing: ['s_textShadow__0', 's_textShadow__1', 's_textShadow__2', 's_textShadow__3'],
+    textTransform: ['s_text__capitalize', 's_text__lowercase', 's_text__uppercase'],
   },
 })

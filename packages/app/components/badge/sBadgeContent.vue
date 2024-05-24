@@ -18,12 +18,13 @@
 </template>
 <script setup lang="ts">
 import SIcon from '@sui/app/components/sIcon.vue'
+import { type PropsBadge } from '@sui/app/definitions'
 import { getNumericCssAttribute } from '@sui/app/lib'
-import { propsBadge } from '@sui/app/props'
 import { useColorService } from '@sui/app/services'
 import { ref, computed, watch, nextTick } from 'vue'
 
-const props = defineProps(propsBadge())
+// eslint-disable-next-line vue/no-unused-properties
+const props = defineProps<PropsBadge>()
 const contentChanged = ref(false)
 const { classListColor, styleListColor } = useColorService(props)
 

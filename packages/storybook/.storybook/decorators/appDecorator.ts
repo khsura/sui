@@ -1,0 +1,21 @@
+import { SApp, SMain, SContainer } from '@sui/app/components'
+import { defineComponent } from 'vue'
+import type { Decorator } from '@storybook/vue3'
+import type { Component } from 'vue'
+
+export const appDecorator = (): Decorator => {
+  return (story: Component) => {
+    return defineComponent({
+      components: { story, SApp, SMain, SContainer },
+      template: `
+        <SApp>
+          <SMain>
+            <SContainer fluid padless>
+              <story></story>
+            </SContainer>
+          </SMain>
+        </SApp>
+      `.trim(),
+    })
+  }
+}
