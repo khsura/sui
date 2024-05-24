@@ -1,6 +1,6 @@
 {
   "name": "@sui/app",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "scripts": {
     "prebuild": "yarn g:rimraf dist && yarn g:rimraf @types",

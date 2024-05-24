@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/sura0111/sui/compare/app-v1.0.2...app-v1.0.3) (2024-05-24)
+
+
+### Bug Fixes
+
+* sCardTitle ([7a7e01e](https://github.com/sura0111/sui/commit/7a7e01e4656d8e56120a454737f52ca3aa77d732))
+
 ## [1.0.2](https://github.com/sura0111/sui/compare/app-v1.0.1...app-v1.0.2) (2024-05-24)
 
 
