@@ -1,6 +1,6 @@
 {
   "name": "@sui/storybook",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "prebuild": "yarn g:rimraf ./storybook-static && yarn g:rimraf ./@types",
