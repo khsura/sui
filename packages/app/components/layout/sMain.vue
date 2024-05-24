@@ -4,19 +4,14 @@
   </component>
 </template>
 <script setup lang="ts">
+import { type PropsMain } from '@sui/app/definitions'
 import { getNumericCssAttribute } from '@sui/app/lib'
-import { propsLayout, propsTag } from '@sui/app/props'
 import { getIsFixedOrAbsolutePosition } from '@sui/app/repositories/positionRepository'
 import { useLayoutService } from '@sui/app/services'
 import { computed } from 'vue'
 
-const props = defineProps({
-  ...propsLayout(),
-  ...propsTag({
-    tag: null,
-  }),
-})
-
+// eslint-disable-next-line vue/no-unused-properties
+const props = defineProps<PropsMain>()
 const { app, isApp } = useLayoutService(props)
 
 const elementTag = computed(() => {
