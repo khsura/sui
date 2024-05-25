@@ -36,13 +36,13 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
         run: corepack enable
 
+      - name: Set token npm github token
+        if: ${{ steps.release.outputs.release_created }}
+        run: echo NPM_GITHUB_TOKEN=${{ secrets.NPM_GITHUB_TOKEN }} > .env.yarn
+
       - name: Set yarn version
         if: ${{ steps.release.outputs.release_created }}
         run: yarn set version self
-
-      - name: Set token npm github token
-        if: ${{ steps.release.outputs.release_created }}
-        run: export NPM_GITHUB_TOKEN=${{ secrets.NPM_GITHUB_TOKEN }}
 
       - name: Install dependencies
         if: ${{ steps.release.outputs.release_created }}
