@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/khsura/sui/compare/storybook-v1.0.0...storybook-v1.0.1) (2024-05-25)
+
+
+### Bug Fixes
+
+* rename package names ([72ac744](https://github.com/khsura/sui/commit/72ac744315485ca662961cc9bd3c073c78bd6030))
+
 ## 1.0.0 (2024-05-24)
 
 

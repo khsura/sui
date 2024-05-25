@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.2](https://github.com/khsura/sui/compare/root-v1.0.1...root-v1.0.2) (2024-05-25)
+
+
+### Bug Fixes
+
+* bug ([5e4ce0b](https://github.com/khsura/sui/commit/5e4ce0b88b6942b6be428221f9518753c47227d9))
+* bug ([7e3a51e](https://github.com/khsura/sui/commit/7e3a51eeb2c0a4bb96749996b220b2e999b92dec))
+* refactor sCardText, sCardSubtitle ([#12](https://github.com/khsura/sui/issues/12)) ([eb6dfec](https://github.com/khsura/sui/commit/eb6dfeceb34a558c1c97b2653fed03be7862deb2))
+* rename package names ([72ac744](https://github.com/khsura/sui/commit/72ac744315485ca662961cc9bd3c073c78bd6030))
+
 ## [1.0.1](https://github.com/sura0111/sui/compare/root-v1.0.0...root-v1.0.1) (2024-05-24)
 
 
