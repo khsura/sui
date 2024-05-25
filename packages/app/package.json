@@ -8,6 +8,7 @@
     "build": "yarn prebuild && yarn build:type && yarn g:vite build && cp -R styles dist/styles",
     "eslint": "yarn g:eslint",
     "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
+    "test": "yarn g:vitest run",
     "release": "yarn g:publish"
   },
   "files": [

@@ -94,6 +94,19 @@ export default {
     'custom-property-pattern':
       /^s-((color-(primary|secondary|success|info|warning|important|error)(--text)?)|(app-color-(border|title)))$/,
     'media-query-no-invalid': null,
+    'property-no-unknown': [
+      true,
+      {
+        ignoreProperties: [
+          'breakpointXs',
+          'breakpointSm',
+          'breakpointMd',
+          'breakpointLg',
+          'breakpointXl',
+          'breakpointXxl',
+        ],
+      },
+    ],
   },
   ignoreFiles: [
     'dist/**/*',

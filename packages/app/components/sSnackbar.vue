@@ -116,8 +116,8 @@ watch(model, () => {
     max-width: 672px;
     min-height: 48px;
     margin: calc($s_spacer * 2) auto;
-    color: s_getappcolor('snackbar', true);
-    background-color: s_getappcolor('snackbar');
+    color: s_getAppColor('snackbar', true);
+    background-color: s_getAppColor('snackbar');
     transform: translateX(-50%);
 
     &--top {
