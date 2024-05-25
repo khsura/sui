@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/khsura/sui/compare/shared-v1.0.0...shared-v1.0.1) (2024-05-25)
+
+
+### Bug Fixes
+
+* bug ([7e3a51e](https://github.com/khsura/sui/commit/7e3a51eeb2c0a4bb96749996b220b2e999b92dec))
+* rename package names ([72ac744](https://github.com/khsura/sui/commit/72ac744315485ca662961cc9bd3c073c78bd6030))
+
 ## 1.0.0 (2024-05-24)
 
 
