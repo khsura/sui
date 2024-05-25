@@ -11,6 +11,7 @@ import { useTagService } from '@khsura/sui/services'
 const props = defineProps<PropsTag>()
 const { tagName } = useTagService(props)
 </script>
+
 <style lang="scss">
 @import '@khsura/sui/styles/components/cards';
 
