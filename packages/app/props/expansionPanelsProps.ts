@@ -1,4 +1,4 @@
-import { type MaterialDesignIcon, type SizePropertyType } from '@sui/app/types'
+import { type MaterialDesignIcon, type SizePropertyType } from '@khsura/sui/types'
 import { type PropType } from 'vue'
 import { propsGroup } from './core/groupProps'
 

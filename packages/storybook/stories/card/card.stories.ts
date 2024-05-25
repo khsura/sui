@@ -1,14 +1,14 @@
-import { faker } from '@sui/shared'
-import { SButton, SCard, SCardActions, SCardSubtitle, SCardText, SCardTitle, SImage } from '@sui/app/components'
-import { argsCard } from '@sui/storybook/args'
+import { faker } from '@khsura/shared'
+import { SButton, SCard, SCardActions, SCardSubtitle, SCardText, SCardTitle, SImage } from '@khsura/sui/components'
+import { argsCard } from '@khsura/storybook/args'
 import {
   argTypesBorder,
   argTypesColor,
   argTypesElevation,
   argTypesMeasurableStyles,
   argTypesSlot,
-} from '@sui/storybook/argTypes'
-import { createStoryObj, getSlot } from '@sui/storybook/helpers'
+} from '@khsura/storybook/argTypes'
+import { createStoryObj, getSlot } from '@khsura/storybook/helpers'
 import { defineComponent } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

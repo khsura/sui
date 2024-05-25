@@ -12,12 +12,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import { datePickerModelFormats } from '@sui/app/configs'
-import { propsCalendar } from '@sui/app/props'
-import { getCalendarDate } from '@sui/app/repositories'
-import { useCalendarService } from '@sui/app/services'
-import { type CalendarEmitEvents } from '@sui/app/types'
-import dayjs from '@sui/app/vendors/dayjs'
+import { datePickerModelFormats } from '@khsura/sui/configs'
+import { propsCalendar } from '@khsura/sui/props'
+import { getCalendarDate } from '@khsura/sui/repositories'
+import { useCalendarService } from '@khsura/sui/services'
+import { type CalendarEmitEvents } from '@khsura/sui/types'
+import dayjs from '@khsura/sui/vendors/dayjs'
 import SCalendarMonthly from './sCalendarMonthly.vue'
 
 const props = defineProps(propsCalendar())

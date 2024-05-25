@@ -5,9 +5,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { LazyLoad } from '@sui/app/constants'
-import { propsImage, propsMeasurableStyles } from '@sui/app/props'
-import { useMeasurableStylesService } from '@sui/app/services'
+import { LazyLoad } from '@khsura/sui/constants'
+import { propsImage, propsMeasurableStyles } from '@khsura/sui/props'
+import { useMeasurableStylesService } from '@khsura/sui/services'
 import { computed } from 'vue'
 
 const props = defineProps({

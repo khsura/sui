@@ -1,5 +1,5 @@
-import { appPrefix } from '@sui/app/constants'
-import { type ComponentBlockName } from '@sui/app/constants/componentBlockName'
+import { appPrefix } from '@khsura/sui/constants'
+import { type ComponentBlockName } from '@khsura/sui/constants/componentBlockName'
 
 interface ClassNameParameter {
   block?: ComponentBlockName | string | null | undefined

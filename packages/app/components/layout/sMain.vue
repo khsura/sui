@@ -4,10 +4,10 @@
   </component>
 </template>
 <script setup lang="ts">
-import { type PropsMain } from '@sui/app/definitions'
-import { getNumericCssAttribute } from '@sui/app/lib'
-import { getIsFixedOrAbsolutePosition } from '@sui/app/repositories/positionRepository'
-import { useLayoutService } from '@sui/app/services'
+import { type PropsMain } from '@khsura/sui/definitions'
+import { getNumericCssAttribute } from '@khsura/sui/lib'
+import { getIsFixedOrAbsolutePosition } from '@khsura/sui/repositories/positionRepository'
+import { useLayoutService } from '@khsura/sui/services'
 import { computed } from 'vue'
 
 // eslint-disable-next-line vue/no-unused-properties

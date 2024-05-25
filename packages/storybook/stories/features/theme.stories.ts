@@ -1,7 +1,7 @@
-import { SToggleButton, SToggleButtonGroup } from '@sui/app/components'
-import { AppTheme } from '@sui/app/constants'
-import { useThemeService } from '@sui/app/services'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { SToggleButton, SToggleButtonGroup } from '@khsura/sui/components'
+import { AppTheme } from '@khsura/sui/constants'
+import { useThemeService } from '@khsura/sui/services'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { defineComponent } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

@@ -1,6 +1,6 @@
-import { defaultLayoutSizes } from '@sui/app/constants/layout'
-import { type PropsLayout } from '@sui/app/definitions'
-import { getNumericCssAttribute } from '@sui/app/lib'
+import { defaultLayoutSizes } from '@khsura/sui/constants/layout'
+import { type PropsLayout } from '@khsura/sui/definitions'
+import { getNumericCssAttribute } from '@khsura/sui/lib'
 import { computed, inject } from 'vue'
 import { useLayoutCoreService } from './core/layoutCoreService'
 

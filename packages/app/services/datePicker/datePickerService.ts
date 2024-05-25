@@ -1,9 +1,9 @@
-import { datePickerItemHeightDefault, datePickerItemHeightDense } from '@sui/app/constants'
-import { type PropsDatePicker } from '@sui/app/definitions'
-import { getNumericCssAttribute } from '@sui/app/lib'
-import { getDatePickerFormat } from '@sui/app/repositories'
-import { type DatePickerSelectTypeType } from '@sui/app/types'
-import dayjs from '@sui/app/vendors/dayjs'
+import { datePickerItemHeightDefault, datePickerItemHeightDense } from '@khsura/sui/constants'
+import { type PropsDatePicker } from '@khsura/sui/definitions'
+import { getNumericCssAttribute } from '@khsura/sui/lib'
+import { getDatePickerFormat } from '@khsura/sui/repositories'
+import { type DatePickerSelectTypeType } from '@khsura/sui/types'
+import dayjs from '@khsura/sui/vendors/dayjs'
 import { type ModelRef, computed, ref } from 'vue'
 
 export const useDatePickerService = (props: PropsDatePicker, model: ModelRef<string | null | undefined>) => {

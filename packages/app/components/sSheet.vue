@@ -4,14 +4,14 @@
   </Component>
 </template>
 <script setup lang="ts">
-import { propsBorder, propsColor, propsElevation, propsMeasurableStyles, propsTag } from '@sui/app/props'
+import { propsBorder, propsColor, propsElevation, propsMeasurableStyles, propsTag } from '@khsura/sui/props'
 import {
   useBorderService,
   useColorService,
   useElevationService,
   useMeasurableStylesService,
   useTagService,
-} from '@sui/app/services'
+} from '@khsura/sui/services'
 import { computed } from 'vue'
 
 const props = defineProps({

@@ -1,6 +1,6 @@
-import { type STransition } from '@sui/app/constants'
-import { type PropsColor } from '@sui/app/definitions/props/core'
-import { type MaterialDesignIcon } from '@sui/app/types'
+import { type STransition } from '@khsura/sui/constants'
+import { type PropsColor } from '@khsura/sui/definitions/props/core'
+import { type MaterialDesignIcon } from '@khsura/sui/types'
 
 export interface PropsBadge extends PropsColor {
   value?: boolean | undefined

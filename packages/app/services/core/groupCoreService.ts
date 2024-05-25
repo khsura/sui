@@ -1,6 +1,6 @@
-import { type ProviderName } from '@sui/app/constants'
-import { type Provider } from '@sui/app/definitions'
-import { type GroupItemValue } from '@sui/app/types'
+import { type ProviderName } from '@khsura/sui/constants'
+import { type Provider } from '@khsura/sui/definitions'
+import { type GroupItemValue } from '@khsura/sui/types'
 import { ref } from 'vue'
 import { type Ref } from 'vue'
 

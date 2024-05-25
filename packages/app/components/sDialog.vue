@@ -13,9 +13,9 @@
   </section>
 </template>
 <script setup lang="ts">
-import SOverlay from '@sui/app/components/sOverlay.vue'
-import { propsDialog, propsElevation } from '@sui/app/props'
-import { useDialogService } from '@sui/app/services'
+import SOverlay from '@khsura/sui/components/sOverlay.vue'
+import { propsDialog, propsElevation } from '@khsura/sui/props'
+import { useDialogService } from '@khsura/sui/services'
 import { OnClickOutside } from '@vueuse/components'
 
 const props = defineProps({ ...propsDialog(), ...propsElevation() })

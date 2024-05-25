@@ -4,8 +4,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { propsColumn } from '@sui/app/props'
-import { useColumnService } from '@sui/app/services'
+import { propsColumn } from '@khsura/sui/props'
+import { useColumnService } from '@khsura/sui/services'
 import { computed } from 'vue'
 
 const props = defineProps(propsColumn())

@@ -1,6 +1,6 @@
-import { SIcon } from '@sui/app/components'
-import { SizeProperty } from '@sui/app/constants'
-import { type PropsIcon } from '@sui/app/definitions'
+import { SIcon } from '@khsura/sui/components'
+import { SizeProperty } from '@khsura/sui/constants'
+import { type PropsIcon } from '@khsura/sui/definitions'
 import { mount } from '@vue/test-utils'
 
 describe('SIcon', () => {

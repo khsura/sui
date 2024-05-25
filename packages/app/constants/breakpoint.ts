@@ -1,5 +1,5 @@
-import { type DisplayOptions } from '@sui/app/types'
-import breakpoints from '@sui/app/styles/modules/breakpoints.module.scss'
+import { type DisplayOptions } from '@khsura/sui/types'
+import breakpoints from '@khsura/sui/styles/modules/breakpoints.module.scss'
 import { z } from 'zod'
 
 export const scrollBarWidth: DisplayOptions['scrollBarWidth'] = 16 as const

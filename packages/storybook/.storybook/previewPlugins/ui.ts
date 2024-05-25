@@ -1,4 +1,4 @@
-import { createSUI } from '@sui/app/index'
+import { createSUI } from '@khsura/sui/index'
 import { setup } from '@storybook/vue3'
 
 const suiPlugin = createSUI({

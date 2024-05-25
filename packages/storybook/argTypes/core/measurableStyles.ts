@@ -1,4 +1,4 @@
-import type { PropsMeasurableStyles } from '@sui/app/definitions'
+import type { PropsMeasurableStyles } from '@khsura/sui/definitions'
 import type { ArgTypes } from '@storybook/types'
 
 export const argTypesMeasurableStyles: ArgTypes<PropsMeasurableStyles> = {

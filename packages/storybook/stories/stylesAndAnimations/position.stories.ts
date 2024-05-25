@@ -1,4 +1,4 @@
-import { sPositionDemo } from '@sui/storybook/components'
+import { sPositionDemo } from '@khsura/storybook/components'
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 const meta: Meta<typeof sPositionDemo> = {

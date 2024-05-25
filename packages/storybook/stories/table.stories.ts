@@ -1,9 +1,9 @@
-import { faker } from '@sui/shared'
-import { STable, SButton, SIcon, SCheckbox } from '@sui/app/components'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { faker } from '@khsura/shared'
+import { STable, SButton, SIcon, SCheckbox } from '@khsura/sui/components'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { action } from '@storybook/addon-actions'
 import { ref } from 'vue'
-import type { TableHeader, TableItem } from '@sui/app/types'
+import type { TableHeader, TableItem } from '@khsura/sui/types'
 import type { Meta } from '@storybook/vue3'
 
 const table: Meta<typeof STable> = {

@@ -4,8 +4,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ProviderPropsName } from '@sui/app/constants'
-import { useProviderService } from '@sui/app/services'
+import { ProviderPropsName } from '@khsura/sui/constants'
+import { useProviderService } from '@khsura/sui/services'
 import { computed } from 'vue'
 
 const { injectParentProps } = useProviderService()

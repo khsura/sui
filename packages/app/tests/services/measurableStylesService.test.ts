@@ -1,5 +1,5 @@
-import { type PropsMeasurableStyles } from '@sui/app/definitions/props'
-import { useMeasurableStylesService } from '@sui/app/services'
+import { type PropsMeasurableStyles } from '@khsura/sui/definitions/props'
+import { useMeasurableStylesService } from '@khsura/sui/services'
 
 describe('useMeasurableStyleService', () => {
   describe('measurableStyles', () => {

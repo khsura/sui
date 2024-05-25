@@ -25,11 +25,11 @@
 </template>
 
 <script setup lang="ts">
-import { propsSlideGroup } from '@sui/app/props'
-import { useSlideGroupService } from '@sui/app/services'
-import { type GroupItemValue } from '@sui/app/types'
-import SButton from '@sui/app/components/sButton.vue'
-import SIcon from '@sui/app/components/sIcon.vue'
+import { propsSlideGroup } from '@khsura/sui/props'
+import { useSlideGroupService } from '@khsura/sui/services'
+import { type GroupItemValue } from '@khsura/sui/types'
+import SButton from '@khsura/sui/components/sButton.vue'
+import SIcon from '@khsura/sui/components/sIcon.vue'
 import { computed } from 'vue'
 
 const props = defineProps(propsSlideGroup())
@@ -57,7 +57,7 @@ const slideGroupMainClass = computed(() => {
 </script>
 
 <style lang="scss">
-@import '@sui/app/styles/components/button';
+@import '@khsura/sui/styles/components/button';
 
 $slideGroupButtonSize: #{map-deep-get($s_button--sizes, 'default')}px;
 
@@ -94,7 +94,9 @@ $slideGroupButtonSize: #{map-deep-get($s_button--sizes, 'default')}px;
     margin: 0 auto;
     overflow-x: hidden;
     scrollbar-width: none; // hide scrollbar for firefox
-    -ms-overflow-style: none; // hide scrollbar for IE and Edge
+    -ms-overflow-style: none;
+
+    hidescrollbarforfirefox-ms-overflow-style // hide scrollbar for IE and Edge
 
     &::-webkit-scrollbar {
       display: none; // hide scrollbar for Chrome, Safari and Opera
@@ -104,7 +106,7 @@ $slideGroupButtonSize: #{map-deep-get($s_button--sizes, 'default')}px;
       overflow-x: scroll;
 
       // Property is nonstandard. Avoid using it.
-      // https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-overflow-scrolling
+      // https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-overflow-scrolling;
       -webkit-overflow-scrolling: touch;
     }
 

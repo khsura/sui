@@ -1,7 +1,7 @@
-import { SButton, STooltip, SSheet, SRow, SContainer, SIcon } from '@sui/app/components'
-import { presetColors } from '@sui/app/configs/color'
-import { argsColor } from '@sui/storybook/args'
-import { createStoryObj, getMarkdownArrayTypeDescription } from '@sui/storybook/helpers'
+import { SButton, STooltip, SSheet, SRow, SContainer, SIcon } from '@khsura/sui/components'
+import { presetColors } from '@khsura/sui/configs/color'
+import { argsColor } from '@khsura/storybook/args'
+import { createStoryObj, getMarkdownArrayTypeDescription } from '@khsura/storybook/helpers'
 import { ref } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

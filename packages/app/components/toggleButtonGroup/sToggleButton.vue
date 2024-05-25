@@ -14,10 +14,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import SButton from '@sui/app/components/sButton.vue'
-import { ProviderPropsName } from '@sui/app/constants'
-import { propsColumn, propsGroupItem } from '@sui/app/props'
-import { useColumnService, useGroupItemService, useProviderService } from '@sui/app/services'
+import SButton from '@khsura/sui/components/sButton.vue'
+import { ProviderPropsName } from '@khsura/sui/constants'
+import { propsColumn, propsGroupItem } from '@khsura/sui/props'
+import { useColumnService, useGroupItemService, useProviderService } from '@khsura/sui/services'
 import { computed } from 'vue'
 
 const props = defineProps({
@@ -43,7 +43,7 @@ const classes = computed(() => {
 </script>
 
 <style lang="scss">
-@import '@sui/app/styles/components/button';
+@import '@khsura/sui/styles/components/button';
 @import './variables';
 
 .s_toggleButton {

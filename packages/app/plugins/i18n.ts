@@ -1,5 +1,5 @@
-import { i18nMessages } from '@sui/app/constants'
-import { formatNumber } from '@sui/app/lib/formatNumber'
+import { i18nMessages } from '@khsura/sui/constants'
+import { formatNumber } from '@khsura/sui/lib/formatNumber'
 import { createI18n } from 'vue-i18n'
 
 export const i18n = createI18n({

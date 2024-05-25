@@ -1,6 +1,6 @@
-import type { PropsTableBodyCell, TableItem } from '@sui/app/types'
-import { getTableItemClass, getTableItemStyle } from '@sui/app/helpers'
-import { useTableCellCommonService } from '@sui/app/services/core'
+import type { PropsTableBodyCell, TableItem } from '@khsura/sui/types'
+import { getTableItemClass, getTableItemStyle } from '@khsura/sui/helpers'
+import { useTableCellCommonService } from '@khsura/sui/services/core'
 import type { CSSProperties } from 'vue'
 import { computed } from 'vue'
 

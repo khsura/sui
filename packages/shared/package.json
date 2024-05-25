@@ -1,5 +1,5 @@
 {
-  "name": "@sui/shared",
+  "name": "@khsura/shared",
   "version": "1.0.0",
   "scripts": {
     "eslint": "yarn g:eslint"

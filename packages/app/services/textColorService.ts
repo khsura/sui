@@ -1,5 +1,5 @@
-import { type PropsTextColor } from '@sui/app/definitions'
-import { useColorRepository } from '@sui/app/repositories/colorRepository'
+import { type PropsTextColor } from '@khsura/sui/definitions'
+import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
 import { toReactive } from '@vueuse/core'
 import { type Ref, computed } from 'vue'
 

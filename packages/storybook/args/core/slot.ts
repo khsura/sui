@@ -1,4 +1,4 @@
-import { faker } from '@sui/shared'
+import { faker } from '@khsura/shared'
 import type { VNodeChild } from 'vue'
 
 // TODO (Sura) improve type

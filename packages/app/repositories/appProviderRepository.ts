@@ -1,5 +1,5 @@
-import { ProviderName } from '@sui/app/constants'
-import { createAppStore } from '@sui/app/helpers/createAppStore'
+import { ProviderName } from '@khsura/sui/constants'
+import { createAppStore } from '@khsura/sui/helpers/createAppStore'
 import { useProviderRepository } from './core'
 
 export const useAppProviderRepository = () => {

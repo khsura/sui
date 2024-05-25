@@ -4,9 +4,9 @@
   </section>
 </template>
 <script setup lang="ts">
-import { ProviderPropsName } from '@sui/app/constants'
-import { propsExpansionPanels } from '@sui/app/props'
-import { useGroupService, useProviderService } from '@sui/app/services'
+import { ProviderPropsName } from '@khsura/sui/constants'
+import { propsExpansionPanels } from '@khsura/sui/props'
+import { useGroupService, useProviderService } from '@khsura/sui/services'
 
 const props = defineProps(propsExpansionPanels())
 const model = defineModel<number[]>({ default: [], required: false })

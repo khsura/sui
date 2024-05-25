@@ -4,8 +4,15 @@
   </component>
 </template>
 <script setup lang="ts">
-import { getCleanSetObject, getNumericCssAttribute, getNumericValue, getWindow } from '@sui/app/lib'
-import { propsColor, propsLayout, propsMeasurableStyles, propsPosition, propsElevation, propsTag } from '@sui/app/props'
+import { getCleanSetObject, getNumericCssAttribute, getNumericValue, getWindow } from '@khsura/sui/lib'
+import {
+  propsColor,
+  propsLayout,
+  propsMeasurableStyles,
+  propsPosition,
+  propsElevation,
+  propsTag,
+} from '@khsura/sui/props'
 import {
   useColorService,
   useElevationService,
@@ -13,7 +20,7 @@ import {
   useMeasurableStylesService,
   usePositionService,
   useTagService,
-} from '@sui/app/services'
+} from '@khsura/sui/services'
 import { computed, onBeforeUnmount, onMounted, ref, watch, type PropType } from 'vue'
 
 const props = defineProps({
@@ -104,7 +111,7 @@ onBeforeUnmount(() => {
 })
 </script>
 <style lang="scss">
-@import '@sui/app/styles/components/layout';
+@import '@khsura/sui/styles/components/layout';
 
 $s_footerBorderRadius: 0 !default;
 $s_footerPadding: 6px 16px 16px !default;

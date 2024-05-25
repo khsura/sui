@@ -1,4 +1,4 @@
-import { type DatePickerTypeType, type DatePickerSelectTypeType } from '@sui/app/types'
+import { type DatePickerTypeType, type DatePickerSelectTypeType } from '@khsura/sui/types'
 import { type PropType } from 'vue'
 import { propsDatePickerRange } from './core/datePickerRangeProps'
 

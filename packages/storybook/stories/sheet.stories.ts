@@ -1,7 +1,7 @@
-import { SSheet } from '@sui/app/components'
-import { argsColor } from '@sui/storybook/args'
-import { argTypesColor } from '@sui/storybook/argTypes'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { SSheet } from '@khsura/sui/components'
+import { argsColor } from '@khsura/storybook/args'
+import { argTypesColor } from '@khsura/storybook/argTypes'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 import type { Meta } from '@storybook/vue3'
 

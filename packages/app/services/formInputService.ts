@@ -1,6 +1,6 @@
-import { ProviderName } from '@sui/app/constants/provider'
-import { type PropsFormInput } from '@sui/app/definitions'
-import { type EmitFormInput, type FormInputModelValue } from '@sui/app/types'
+import { ProviderName } from '@khsura/sui/constants/provider'
+import { type PropsFormInput } from '@khsura/sui/definitions'
+import { type EmitFormInput, type FormInputModelValue } from '@khsura/sui/types'
 import { ref, computed, nextTick, onUnmounted, watch, onMounted } from 'vue'
 import { useProviderService } from './core/providerService'
 

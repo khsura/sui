@@ -1,4 +1,4 @@
-import { type InputModeTypeText, type InputTypeText } from '@sui/app/types'
+import { type InputModeTypeText, type InputTypeText } from '@khsura/sui/types'
 import { type PropType } from 'vue'
 import { propsFormInput } from './formInputProps'
 import { propsSizePreset } from './sizeProps'

@@ -1,5 +1,5 @@
-import { SChip } from '@sui/app/components'
-import { type PropsChip } from '@sui/app/definitions'
+import { SChip } from '@khsura/sui/components'
+import { type PropsChip } from '@khsura/sui/definitions'
 import { mount } from '@vue/test-utils'
 
 describe('SChip', () => {

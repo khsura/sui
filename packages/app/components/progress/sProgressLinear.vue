@@ -13,10 +13,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useColorRepository } from '@sui/app/repositories'
+import { useColorRepository } from '@khsura/sui/repositories'
 import { computed } from 'vue'
 import { type PropType } from 'vue'
-import { getNumericCssAttribute } from '@sui/app/lib'
+import { getNumericCssAttribute } from '@khsura/sui/lib'
 
 const props = defineProps({
   fixed: {

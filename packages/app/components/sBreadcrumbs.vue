@@ -20,9 +20,9 @@
   </nav>
 </template>
 <script setup lang="ts">
-import { propsTextColor } from '@sui/app/props'
-import { useTextColorService } from '@sui/app/services'
-import { type BreadcrumbsItem } from '@sui/app/types'
+import { propsTextColor } from '@khsura/sui/props'
+import { useTextColorService } from '@khsura/sui/services'
+import { type BreadcrumbsItem } from '@khsura/sui/types'
 import { computed } from 'vue'
 import { type PropType } from 'vue'
 

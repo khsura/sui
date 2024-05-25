@@ -45,13 +45,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import SFormInputError from '@sui/app/components/form/common/sFormInputError.vue'
-import { SList, SListItem, SListItemContent, SListItemSubtitle } from '@sui/app/components/list'
-import SIcon from '@sui/app/components/sIcon.vue'
-import SOverlay from '@sui/app/components/sOverlay.vue'
-import { propsSelect } from '@sui/app/props'
-import { useBorderService, useDisabledService, useFormInputService, useMenuService } from '@sui/app/services'
-import { type SelectItem, type EmitFormInput } from '@sui/app/types'
+import SFormInputError from '@khsura/sui/components/form/common/sFormInputError.vue'
+import { SList, SListItem, SListItemContent, SListItemSubtitle } from '@khsura/sui/components/list'
+import SIcon from '@khsura/sui/components/sIcon.vue'
+import SOverlay from '@khsura/sui/components/sOverlay.vue'
+import { propsSelect } from '@khsura/sui/props'
+import { useBorderService, useDisabledService, useFormInputService, useMenuService } from '@khsura/sui/services'
+import { type SelectItem, type EmitFormInput } from '@khsura/sui/types'
 import { ref, computed, watch } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
 import { nextTick } from 'vue'
@@ -175,8 +175,8 @@ const displayText = computed(() => {
 </script>
 
 <style lang="scss">
-@import '@sui/app/styles/components/button';
-@import '@sui/app/styles/components/menu';
+@import '@khsura/sui/styles/components/button';
+@import '@khsura/sui/styles/components/menu';
 
 .s_select {
   position: relative;

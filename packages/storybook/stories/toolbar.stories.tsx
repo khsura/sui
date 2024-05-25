@@ -1,6 +1,6 @@
-import { SToolbar, SToolbarTitle, SButton, SIcon } from '@sui/app/components'
-import { argsColor } from '@sui/storybook/args'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { SToolbar, SToolbarTitle, SButton, SIcon } from '@khsura/sui/components'
+import { argsColor } from '@khsura/storybook/args'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import type { Meta } from '@storybook/vue3'
 
 const toolbar: Meta<typeof SToolbar> = {

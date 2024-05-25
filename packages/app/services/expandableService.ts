@@ -1,5 +1,5 @@
-import { ProviderName } from '@sui/app/constants/provider'
-import { type PropsGroupItem } from '@sui/app/definitions'
+import { ProviderName } from '@khsura/sui/constants/provider'
+import { type PropsGroupItem } from '@khsura/sui/definitions'
 import { provide } from 'vue'
 import { useGroupItemService } from './groupItemService'
 

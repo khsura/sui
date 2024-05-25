@@ -1,8 +1,8 @@
-import { type propsLayout } from '@sui/app/props/layoutProps'
-import { type propsPosition } from '@sui/app/props/positionProps'
+import { type propsLayout } from '@khsura/sui/props/layoutProps'
+import { type propsPosition } from '@khsura/sui/props/positionProps'
 import { computed, type ExtractPropTypes } from 'vue'
-import { getCleanSetObject } from '@sui/app/lib/getCleanSetObject'
-import { getIsAbsolutePosition, getIsFixedPosition, getIsFixedOrAbsolutePosition } from '@sui/app/repositories'
+import { getCleanSetObject } from '@khsura/sui/lib/getCleanSetObject'
+import { getIsAbsolutePosition, getIsFixedPosition, getIsFixedOrAbsolutePosition } from '@khsura/sui/repositories'
 
 export const usePositionService = (
   props: ExtractPropTypes<ReturnType<typeof propsPosition>> & Partial<ExtractPropTypes<ReturnType<typeof propsLayout>>>,

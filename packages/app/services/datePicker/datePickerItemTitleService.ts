@@ -1,5 +1,5 @@
-import { type PropsDatePickerItemTitle } from '@sui/app/definitions'
-import { type DatePickerItemEmits } from '@sui/app/types'
+import { type PropsDatePickerItemTitle } from '@khsura/sui/definitions'
+import { type DatePickerItemEmits } from '@khsura/sui/types'
 import { computed } from 'vue'
 import { useDatePickerItemCoreService } from './datePickerItemCoreService'
 

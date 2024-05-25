@@ -1,5 +1,5 @@
-import { SRow, SCard, SColumn } from '@sui/app/components'
-import { gridAlignProperties, gridJustifyProperties } from '@sui/app/configs'
+import { SRow, SCard, SColumn } from '@khsura/sui/components'
+import { gridAlignProperties, gridJustifyProperties } from '@khsura/sui/configs'
 import { type Meta } from '@storybook/vue3'
 import { type StoryObj } from '@storybook/vue3'
 

@@ -1,4 +1,4 @@
-import { STextarea } from '@sui/app/components'
+import { STextarea } from '@khsura/sui/components'
 import { mount } from '@vue/test-utils'
 
 describe('STextarea', () => {

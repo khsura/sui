@@ -1,4 +1,4 @@
-import { faker } from '@sui/shared'
+import { faker } from '@khsura/shared'
 import {
   SExpansionPanel,
   SExpansionPanels,
@@ -7,9 +7,9 @@ import {
   SRow,
   SIcon,
   SColumn,
-} from '@sui/app/components'
-import { sizeProperties } from '@sui/app/configs'
-import { createStoryObj } from '@sui/storybook/helpers'
+} from '@khsura/sui/components'
+import { sizeProperties } from '@khsura/sui/configs'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { ref } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

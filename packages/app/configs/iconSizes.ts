@@ -1,4 +1,4 @@
-import { SizeProperty } from '@sui/app/constants/size'
+import { SizeProperty } from '@khsura/sui/constants/size'
 
 export const iconSizes = {
   [SizeProperty.mini]: 14,

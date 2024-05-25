@@ -1,4 +1,4 @@
-import type { PropsLink } from '@sui/app/definitions'
+import type { PropsLink } from '@khsura/sui/definitions'
 import type { ArgTypes } from '@storybook/types'
 
 export const argTypesLink: ArgTypes<PropsLink> = {

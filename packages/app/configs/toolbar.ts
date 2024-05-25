@@ -1,4 +1,4 @@
-import { ToolbarDensity } from '@sui/app/constants/toolbar'
+import { ToolbarDensity } from '@khsura/sui/constants/toolbar'
 
 export const toolbarDensities: Array<string | null | undefined> = [
   null,

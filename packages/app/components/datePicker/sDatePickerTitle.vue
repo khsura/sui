@@ -31,10 +31,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import SButton from '@sui/app/components/sButton.vue'
-import { DatePickerSelectType } from '@sui/app/constants'
-import { propsColor, propsDatePickerItemTitle, propsDisabled } from '@sui/app/props'
-import { useColorService, useDatePickerItemTitleService } from '@sui/app/services'
+import SButton from '@khsura/sui/components/sButton.vue'
+import { DatePickerSelectType } from '@khsura/sui/constants'
+import { propsColor, propsDatePickerItemTitle, propsDisabled } from '@khsura/sui/props'
+import { useColorService, useDatePickerItemTitleService } from '@khsura/sui/services'
 import { computed } from 'vue'
 
 const props = defineProps({

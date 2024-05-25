@@ -1,4 +1,4 @@
-import type { PropsColor } from '@sui/app/index'
+import type { PropsColor } from '@khsura/sui/index'
 import type { ArgTypes } from '@storybook/types'
 import { argTypesComponentTheme } from './componentTheme'
 

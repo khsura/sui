@@ -5,10 +5,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defaultOverlayClass } from '@sui/app/constants'
-import { propsApp } from '@sui/app/props'
-import { useAppService, useThemeService } from '@sui/app/services'
-import { type AppThemeType } from '@sui/app/types'
+import { defaultOverlayClass } from '@khsura/sui/constants'
+import { propsApp } from '@khsura/sui/props'
+import { useAppService, useThemeService } from '@khsura/sui/services'
+import { type AppThemeType } from '@khsura/sui/types'
 import { PortalTarget } from 'portal-vue'
 import { watch } from 'vue'
 

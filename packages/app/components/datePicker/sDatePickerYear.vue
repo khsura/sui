@@ -23,9 +23,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import SButton from '@sui/app/components/sButton.vue'
-import { propsColor, propsDatePickerItem } from '@sui/app/props'
-import { useColorService, useDatePickerItemYearService, useScrollService } from '@sui/app/services'
+import SButton from '@khsura/sui/components/sButton.vue'
+import { propsColor, propsDatePickerItem } from '@khsura/sui/props'
+import { useColorService, useDatePickerItemYearService, useScrollService } from '@khsura/sui/services'
 import { nextTick, onMounted, ref } from 'vue'
 
 const datePickerYear = ref<HTMLElement | null>(null)

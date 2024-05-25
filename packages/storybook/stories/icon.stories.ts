@@ -1,10 +1,10 @@
-import { SIcon } from '@sui/app/components'
-import { sizeProperties } from '@sui/app/configs'
-import { presetColors } from '@sui/app/configs/color'
-import { SizeProperty } from '@sui/app/constants'
-import { argsComponentTheme } from '@sui/storybook/args'
-import { argTypesComponentTheme, argTypesIcon } from '@sui/storybook/argTypes'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { SIcon } from '@khsura/sui/components'
+import { sizeProperties } from '@khsura/sui/configs'
+import { presetColors } from '@khsura/sui/configs/color'
+import { SizeProperty } from '@khsura/sui/constants'
+import { argsComponentTheme } from '@khsura/storybook/args'
+import { argTypesComponentTheme, argTypesIcon } from '@khsura/storybook/argTypes'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import type { Meta } from '@storybook/vue3'
 
 const icon: Meta<typeof SIcon> = {

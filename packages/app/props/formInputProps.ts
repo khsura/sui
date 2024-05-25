@@ -1,4 +1,4 @@
-import { type FormInputModelValueRule, type FormInputModelValue } from '@sui/app/types'
+import { type FormInputModelValueRule, type FormInputModelValue } from '@khsura/sui/types'
 import { type PropType } from 'vue'
 import { propsDisabled } from './core'
 

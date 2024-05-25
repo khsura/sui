@@ -1,4 +1,4 @@
-import { SSelect } from '@sui/app/components'
+import { SSelect } from '@khsura/sui/components'
 import { mount } from '@vue/test-utils'
 
 describe('SSelect', () => {

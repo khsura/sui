@@ -1,7 +1,7 @@
-import { SProgressCircular } from '@sui/app/components'
-import { argsComponentTheme } from '@sui/storybook/args'
-import { argTypesComponentTheme } from '@sui/storybook/argTypes'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { SProgressCircular } from '@khsura/sui/components'
+import { argsComponentTheme } from '@khsura/storybook/args'
+import { argTypesComponentTheme } from '@khsura/storybook/argTypes'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import type { Meta } from '@storybook/vue3'
 
 const progressCircular: Meta<typeof SProgressCircular> = {

@@ -1,4 +1,4 @@
-import { validatorNumericCssAttribute } from '@sui/app/validators'
+import { validatorNumericCssAttribute } from '@khsura/sui/validators'
 
 describe('validatorNumericCssAttribute', () => {
   test('should return true if the value is undefined', () => {

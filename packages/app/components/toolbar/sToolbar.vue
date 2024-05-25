@@ -15,9 +15,9 @@
   </component>
 </template>
 <script setup lang="ts">
-import { ProviderPropsName } from '@sui/app/constants'
-import { getNumericCssAttribute } from '@sui/app/lib'
-import { propsToolbar } from '@sui/app/props'
+import { ProviderPropsName } from '@khsura/sui/constants'
+import { getNumericCssAttribute } from '@khsura/sui/lib'
+import { propsToolbar } from '@khsura/sui/props'
 import {
   useBorderService,
   useColorService,
@@ -27,7 +27,7 @@ import {
   useProviderService,
   useTagService,
   useToolbarService,
-} from '@sui/app/services'
+} from '@khsura/sui/services'
 import { computed } from 'vue'
 
 const props = defineProps({
@@ -79,7 +79,7 @@ const extensionStyles = computed(() => {
 </script>
 
 <style lang="scss">
-@import '@sui/app/styles/components/layout';
+@import '@khsura/sui/styles/components/layout';
 
 .s_toolbar {
   position: relative;

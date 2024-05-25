@@ -17,10 +17,10 @@
   </ul>
 </template>
 <script setup lang="ts">
-import SIcon from '@sui/app/components/sIcon.vue'
-import { ProviderPropsName } from '@sui/app/constants'
-import { getNumericCssAttribute } from '@sui/app/lib'
-import { useExpandableItemCoreService, useProviderService } from '@sui/app/services'
+import SIcon from '@khsura/sui/components/sIcon.vue'
+import { ProviderPropsName } from '@khsura/sui/constants'
+import { getNumericCssAttribute } from '@khsura/sui/lib'
+import { useExpandableItemCoreService, useProviderService } from '@khsura/sui/services'
 import { ref, computed } from 'vue'
 import { type PropType } from 'vue'
 import SList from './sList.vue'

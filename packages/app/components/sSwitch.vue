@@ -8,10 +8,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { propsColor, propsFormInput } from '@sui/app/props'
-import { useColorService, useDisabledService } from '@sui/app/services'
+import { propsColor, propsFormInput } from '@khsura/sui/props'
+import { useColorService, useDisabledService } from '@khsura/sui/services'
 import { computed } from 'vue'
-import { CssColor } from '@sui/app/constants'
+import { CssColor } from '@khsura/sui/constants'
 
 const props = defineProps({
   label: {

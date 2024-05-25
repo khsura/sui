@@ -66,12 +66,12 @@
   </section>
 </template>
 <script setup lang="ts">
-import { SColumn, SRow } from '@sui/app/components/grids'
-import { getNumericValue, getCleanSetObject } from '@sui/app/lib'
-import { propsInput } from '@sui/app/props'
-import { useColorRepository } from '@sui/app/repositories/colorRepository'
-import { useDisabledService, useFormInputService, useSizeService } from '@sui/app/services'
-import { type EmitFormTextInput } from '@sui/app/types'
+import { SColumn, SRow } from '@khsura/sui/components/grids'
+import { getNumericValue, getCleanSetObject } from '@khsura/sui/lib'
+import { propsInput } from '@khsura/sui/props'
+import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
+import { useDisabledService, useFormInputService, useSizeService } from '@khsura/sui/services'
+import { type EmitFormTextInput } from '@khsura/sui/types'
 import { computed } from 'vue'
 import { useSlots } from 'vue'
 import { ref } from 'vue'

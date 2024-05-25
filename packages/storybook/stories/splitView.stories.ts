@@ -1,6 +1,6 @@
-import { faker } from '@sui/shared'
-import { SSplitView, SSplitViewItem } from '@sui/app/components'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { faker } from '@khsura/shared'
+import { SSplitView, SSplitViewItem } from '@khsura/sui/components'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import type { Meta } from '@storybook/vue3'
 
 type SplitStoryType = typeof SSplitView | typeof SSplitViewItem | { views: number }

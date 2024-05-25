@@ -1,5 +1,5 @@
-import { defaultAppConfig } from '@sui/app/configs/app'
-import { type AppState, type AppStateOptions } from '@sui/app/types'
+import { defaultAppConfig } from '@khsura/sui/configs/app'
+import { type AppState, type AppStateOptions } from '@khsura/sui/types'
 import lodash from 'lodash'
 import { reactive } from 'vue'
 

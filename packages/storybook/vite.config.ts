@@ -7,8 +7,8 @@ export default mergeConfig(
   defineConfig({
     resolve: {
       alias: {
-        '@sui/app': path.resolve(__dirname, '../app'),
-        '@sui/storybook': path.resolve(__dirname, './'),
+        '@khsura/sui': path.resolve(__dirname, '../app'),
+        '@khsura/storybook': path.resolve(__dirname, './'),
       },
     },
     esbuild: {

@@ -1,5 +1,5 @@
-import type { PropsTableBodyCell, PropsTableHeadCell, TableItem } from '@sui/app/types'
-import { getNumericCssAttribute } from '@sui/app/lib'
+import type { PropsTableBodyCell, PropsTableHeadCell, TableItem } from '@khsura/sui/types'
+import { getNumericCssAttribute } from '@khsura/sui/lib'
 import type { CSSProperties } from 'vue'
 import { computed } from 'vue'
 

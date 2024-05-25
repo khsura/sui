@@ -1,4 +1,4 @@
-import { faker } from '@sui/shared'
+import { faker } from '@khsura/shared'
 import {
   SAppBar,
   SAppBarTitle,
@@ -17,10 +17,10 @@ import {
   SListItemIcon,
   SListItemContent,
   SDivider,
-} from '@sui/app/components'
-import { ToolbarDensity } from '@sui/app/constants/toolbar'
-import { useDisplayService } from '@sui/app/services/displayService'
-import { createStoryObj } from '@sui/storybook/helpers'
+} from '@khsura/sui/components'
+import { ToolbarDensity } from '@khsura/sui/constants/toolbar'
+import { useDisplayService } from '@khsura/sui/services/displayService'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { computed, defineComponent, ref } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

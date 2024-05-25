@@ -1,4 +1,4 @@
-import { FileMimeType } from '@sui/app/constants'
+import { FileMimeType } from '@khsura/sui/constants'
 import { type PropType } from 'vue'
 import { propsFormInput } from './formInputProps'
 

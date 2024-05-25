@@ -1,4 +1,4 @@
-import { CssColor, cssColorToHex } from '@sui/app/constants'
+import { CssColor, cssColorToHex } from '@khsura/sui/constants'
 import { z } from 'zod'
 
 export const getCssColor = (color: string) => {

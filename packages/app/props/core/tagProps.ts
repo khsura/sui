@@ -1,4 +1,4 @@
-import { type HtmlTagName } from '@sui/app/types'
+import { type HtmlTagName } from '@khsura/sui/types'
 
 import { type PropType } from 'vue'
 

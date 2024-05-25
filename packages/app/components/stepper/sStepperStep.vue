@@ -13,8 +13,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ProviderName, ProviderPropsName } from '@sui/app/constants'
-import { useProviderService } from '@sui/app/services'
+import { ProviderName, ProviderPropsName } from '@khsura/sui/constants'
+import { useProviderService } from '@khsura/sui/services'
 import { inject, watch, onMounted, onUnmounted, computed } from 'vue'
 
 const props = defineProps({

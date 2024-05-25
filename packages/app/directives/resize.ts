@@ -1,5 +1,5 @@
-import { getWindow } from '@sui/app/lib/browser'
-import { type OnResizeObject, type ResizeDirectiveBinding } from '@sui/app/types'
+import { getWindow } from '@khsura/sui/lib/browser'
+import { type OnResizeObject, type ResizeDirectiveBinding } from '@khsura/sui/types'
 import { type Directive } from 'vue'
 
 function mounted(el: HTMLElement & { _onResize?: OnResizeObject }, binding: ResizeDirectiveBinding) {

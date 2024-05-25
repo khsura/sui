@@ -1,9 +1,9 @@
-import { SButton, SForm, SInput } from '@sui/app/components'
-import { formInputModelValueRules } from '@sui/app/repositories'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { SButton, SForm, SInput } from '@khsura/sui/components'
+import { formInputModelValueRules } from '@khsura/sui/repositories'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { action } from '@storybook/addon-actions'
 import { defineComponent, ref, nextTick } from 'vue'
-import type { FormComponent } from '@sui/app/definitions'
+import type { FormComponent } from '@khsura/sui/definitions'
 import type { Meta } from '@storybook/vue3'
 
 const form: Meta<typeof SForm> = {

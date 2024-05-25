@@ -1,5 +1,5 @@
-import { formInputModelValueRules } from '@sui/app/repositories'
-import type { PropsSelect } from '@sui/app/definitions'
+import { formInputModelValueRules } from '@khsura/sui/repositories'
+import type { PropsSelect } from '@khsura/sui/definitions'
 import { argsBorder, argsColor, argsDisabled } from './core'
 
 export const argsSelect: Omit<PropsSelect, 'modelValue' | 'error' | 'dirty' | 'activator'> = {

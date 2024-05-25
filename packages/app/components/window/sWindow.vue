@@ -34,18 +34,18 @@
   </Component>
 </template>
 <script setup lang="ts">
-import SButton from '@sui/app/components/sButton.vue'
-import SIcon from '@sui/app/components/sIcon.vue'
-import { ProviderPropsName } from '@sui/app/constants'
-import { propsWindow } from '@sui/app/props'
+import SButton from '@khsura/sui/components/sButton.vue'
+import SIcon from '@khsura/sui/components/sIcon.vue'
+import { ProviderPropsName } from '@khsura/sui/constants'
+import { propsWindow } from '@khsura/sui/props'
 import {
   useColorService,
   useProviderService,
   useSingleGroupService,
   useTagService,
   useTouchService,
-} from '@sui/app/services'
-import { type GroupItemValue } from '@sui/app/types'
+} from '@khsura/sui/services'
+import { type GroupItemValue } from '@khsura/sui/types'
 import { computed, onMounted } from 'vue'
 
 const props = defineProps({
@@ -126,7 +126,7 @@ defineExpose({
 </script>
 
 <style lang="scss">
-@import '@sui/app/styles/components/window';
+@import '@khsura/sui/styles/components/window';
 
 .s_window {
   overflow: hidden;

@@ -6,8 +6,8 @@
   </section>
 </template>
 <script setup lang="ts">
-import { getNumericCssAttribute } from '@sui/app/lib'
-import { useExpandableItemService } from '@sui/app/services'
+import { getNumericCssAttribute } from '@khsura/sui/lib'
+import { useExpandableItemService } from '@khsura/sui/services'
 import { computed } from 'vue'
 
 const { isExpanded, maxHeight } = useExpandableItemService()

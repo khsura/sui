@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts" setup generic="T extends TableItem = TableItem">
-import { type PropsTableBodyCell, type TableItem } from '@sui/app/types'
-import { getCleanSetObject } from '@sui/app/lib'
-import { useTableBodyCellService } from '@sui/app/services'
+import { type PropsTableBodyCell, type TableItem } from '@khsura/sui/types'
+import { getCleanSetObject } from '@khsura/sui/lib'
+import { useTableBodyCellService } from '@khsura/sui/services'
 import { computed } from 'vue'
 
 // eslint-disable-next-line vue/no-unused-properties

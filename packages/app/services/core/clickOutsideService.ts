@@ -1,4 +1,4 @@
-import { getDocument } from '@sui/app/lib/browser'
+import { getDocument } from '@khsura/sui/lib/browser'
 import { type ComponentPublicInstance, type Ref } from 'vue'
 
 export const useClickOutsideService = () => {

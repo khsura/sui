@@ -4,10 +4,10 @@
   </form>
 </template>
 <script setup lang="ts">
-import { ProviderName } from '@sui/app/constants'
-import { propsForm } from '@sui/app/props'
-import { useProviderService } from '@sui/app/services'
-import { type FormProviderRegisterInputAttribute } from '@sui/app/types/index'
+import { ProviderName } from '@khsura/sui/constants'
+import { propsForm } from '@khsura/sui/props'
+import { useProviderService } from '@khsura/sui/services'
+import { type FormProviderRegisterInputAttribute } from '@khsura/sui/types/index'
 import { computed } from 'vue'
 
 defineProps(propsForm())

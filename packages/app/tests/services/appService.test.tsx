@@ -1,9 +1,9 @@
-import { AppTheme } from '@sui/app/constants'
-import { useAppProviderService, useAppService } from '@sui/app/services'
-import { useTheme } from '@sui/app/index'
+import { AppTheme } from '@khsura/sui/constants'
+import { useAppProviderService, useAppService } from '@khsura/sui/services'
+import { useTheme } from '@khsura/sui/index'
 import { mount } from '@vue/test-utils'
 import { defineComponent } from 'vue'
-import { SApp } from '@sui/app/components'
+import { SApp } from '@khsura/sui/components'
 import portalVue from 'portal-vue'
 
 describe('app', () => {

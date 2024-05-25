@@ -1,5 +1,5 @@
-import { type PropsMeasurableStyles } from '@sui/app/definitions'
-import { getNumericCssAttribute } from '@sui/app/lib'
+import { type PropsMeasurableStyles } from '@khsura/sui/definitions'
+import { getNumericCssAttribute } from '@khsura/sui/lib'
 import { computed } from 'vue'
 
 export const useMeasurableStylesService = (props: PropsMeasurableStyles) => {

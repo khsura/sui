@@ -1,4 +1,4 @@
-import { type AppThemeType } from '@sui/app/types'
+import { type AppThemeType } from '@khsura/sui/types'
 import { type PropType } from 'vue'
 
 export const propsComponentTheme = () => {

@@ -1,5 +1,5 @@
-import { appPrefix } from '@sui/app/constants'
-import { type PropsColumn } from '@sui/app/definitions'
+import { appPrefix } from '@khsura/sui/constants'
+import { type PropsColumn } from '@khsura/sui/definitions'
 import { computed } from 'vue'
 
 export const useColumnService = (props: PropsColumn, options?: { classPrefix?: string }) => {

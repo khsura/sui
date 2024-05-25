@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { useClickOutsideService } from '@sui/app/services'
+import { useClickOutsideService } from '@khsura/sui/services'
 import { ref } from 'vue'
 
 const simpleComponent = {

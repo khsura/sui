@@ -1,4 +1,4 @@
-import { type AppTheme } from '@sui/app/constants'
+import { type AppTheme } from '@khsura/sui/constants'
 import { type DisplayOptions, type DisplayPreset } from './display'
 
 interface AppColors {

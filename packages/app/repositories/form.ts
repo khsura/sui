@@ -1,5 +1,5 @@
-import { i18n } from '@sui/app/plugins/i18n'
-import { type FormInputModelValueRule } from '@sui/app/types'
+import { i18n } from '@khsura/sui/plugins/i18n'
+import { type FormInputModelValueRule } from '@khsura/sui/types'
 
 export const formInputModelValueRules = {
   /** @example `${options.target}を入力してください。` */

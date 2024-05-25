@@ -4,9 +4,9 @@
   </Component>
 </template>
 <script setup lang="ts">
-import { ProviderPropsName } from '@sui/app/constants'
-import { propsDisabled, propsLink, propsTag } from '@sui/app/props'
-import { useLinkService, useDisabledService, useProviderService } from '@sui/app/services'
+import { ProviderPropsName } from '@khsura/sui/constants'
+import { propsDisabled, propsLink, propsTag } from '@khsura/sui/props'
+import { useLinkService, useDisabledService, useProviderService } from '@khsura/sui/services'
 import { computed } from 'vue'
 import { type PropType } from 'vue'
 

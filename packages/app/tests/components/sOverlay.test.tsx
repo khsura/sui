@@ -1,5 +1,5 @@
-import { SOverlay } from '@sui/app/components'
-import { type PropsOverlay } from '@sui/app/definitions'
+import { SOverlay } from '@khsura/sui/components'
+import { type PropsOverlay } from '@khsura/sui/definitions'
 import { mount } from '@vue/test-utils'
 import portalVue, { Portal, PortalTarget } from 'portal-vue'
 

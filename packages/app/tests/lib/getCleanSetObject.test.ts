@@ -1,4 +1,4 @@
-import { getCleanSetObject } from '@sui/app/lib'
+import { getCleanSetObject } from '@khsura/sui/lib'
 
 describe('getCleanSetObject', () => {
   test('only returns non nullable/false/undefined values', () => {

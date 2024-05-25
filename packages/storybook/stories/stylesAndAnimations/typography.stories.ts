@@ -1,5 +1,5 @@
-import { sTypographyDemo } from '@sui/storybook/components'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { sTypographyDemo } from '@khsura/storybook/components'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import type { Meta } from '@storybook/vue3'
 
 interface TypographyType {

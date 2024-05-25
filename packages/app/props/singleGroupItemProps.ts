@@ -1,4 +1,4 @@
-import { type GroupItemValue } from '@sui/app/types'
+import { type GroupItemValue } from '@khsura/sui/types'
 import { type PropType } from 'vue'
 import { propsDisabled } from './core/disabledProps'
 

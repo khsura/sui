@@ -1,4 +1,4 @@
-import { type LazyLoad } from '@sui/app/constants'
+import { type LazyLoad } from '@khsura/sui/constants'
 
 import { type PropType } from 'vue'
 

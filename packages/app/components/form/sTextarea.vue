@@ -32,11 +32,11 @@
 </template>
 
 <script setup lang="ts">
-import { propsTextarea } from '@sui/app/props'
-import { useColorRepository } from '@sui/app/repositories/colorRepository'
-import { useDisabledService, useFormInputService } from '@sui/app/services'
-import { getCleanSetObject, getNumericCssAttribute } from '@sui/app/lib'
-import { type EmitFormTextInput } from '@sui/app/types'
+import { propsTextarea } from '@khsura/sui/props'
+import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
+import { useDisabledService, useFormInputService } from '@khsura/sui/services'
+import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
+import { type EmitFormTextInput } from '@khsura/sui/types'
 import { ref } from 'vue'
 import { computed } from 'vue'
 import { nextTick } from 'vue'

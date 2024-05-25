@@ -167,9 +167,9 @@
   </div>
 </template>
 <script setup lang="ts" generic="T extends TableItem">
-import { type EmitTable, type PropsTable, type TableItem } from '@sui/app/types'
-import { getCleanSetObject } from '@sui/app/lib'
-import { useBorderService, useTableService } from '@sui/app/services'
+import { type EmitTable, type PropsTable, type TableItem } from '@khsura/sui/types'
+import { getCleanSetObject } from '@khsura/sui/lib'
+import { useBorderService, useTableService } from '@khsura/sui/services'
 import { useDebounceFn } from '@vueuse/core'
 import { computed } from 'vue'
 import { watch } from 'vue'

@@ -15,9 +15,9 @@
 </template>
 
 <script setup lang="ts">
-import { propsOverlay } from '@sui/app/props'
+import { propsOverlay } from '@khsura/sui/props'
 import { Portal } from 'portal-vue'
-import { defaultOverlayClass } from '@sui/app/constants'
+import { defaultOverlayClass } from '@khsura/sui/constants'
 
 defineProps(propsOverlay())
 </script>

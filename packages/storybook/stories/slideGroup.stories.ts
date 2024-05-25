@@ -1,7 +1,7 @@
-import { faker } from '@sui/shared'
-import { SSlideGroup, SImage, SCard, SSlideItem } from '@sui/app/components'
-import { useDisplayService } from '@sui/app/services/displayService'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { faker } from '@khsura/shared'
+import { SSlideGroup, SImage, SCard, SSlideItem } from '@khsura/sui/components'
+import { useDisplayService } from '@khsura/sui/services/displayService'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import type { Meta } from '@storybook/vue3'
 
 const banners = [

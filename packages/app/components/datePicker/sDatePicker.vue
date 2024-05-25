@@ -46,12 +46,12 @@
   </SCard>
 </template>
 <script setup lang="ts">
-import { SCard } from '@sui/app/components/cards'
-import { propsDatePicker } from '@sui/app/props'
-import { useDatePickerService, useMeasurableStylesService } from '@sui/app/services'
+import { SCard } from '@khsura/sui/components/cards'
+import { propsDatePicker } from '@khsura/sui/props'
+import { useDatePickerService, useMeasurableStylesService } from '@khsura/sui/services'
 import { computed } from 'vue'
-import dayjs from '@sui/app/vendors/dayjs'
-import { getDatePickerFormat } from '@sui/app/repositories'
+import dayjs from '@khsura/sui/vendors/dayjs'
+import { getDatePickerFormat } from '@khsura/sui/repositories'
 import SDatePickerDate from './sDatePickerDate.vue'
 import SDatePickerMonth from './sDatePickerMonth.vue'
 import SDatePickerSwitch from './sDatePickerSwitch.vue'

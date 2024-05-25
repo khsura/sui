@@ -1,5 +1,5 @@
-import { type ProviderName, type ProviderPropsName } from '@sui/app/constants'
-import { type Provider, type ProviderProps } from '@sui/app/definitions'
+import { type ProviderName, type ProviderPropsName } from '@khsura/sui/constants'
+import { type Provider, type ProviderProps } from '@khsura/sui/definitions'
 import { computed, inject as Inject, provide as Provide } from 'vue'
 import { type ComputedRef, type InjectionKey } from 'vue'
 

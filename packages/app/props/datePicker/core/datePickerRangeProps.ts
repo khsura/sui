@@ -1,6 +1,6 @@
-import { datePickerModelFormats } from '@sui/app/configs/datePicker'
-import { datePickerDefaultYearLimit } from '@sui/app/constants/datePicker'
-import dayjs from '@sui/app/vendors/dayjs'
+import { datePickerModelFormats } from '@khsura/sui/configs/datePicker'
+import { datePickerDefaultYearLimit } from '@khsura/sui/constants/datePicker'
+import dayjs from '@khsura/sui/vendors/dayjs'
 
 import { type PropType } from 'vue'
 

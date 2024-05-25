@@ -20,13 +20,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import SOverlay from '@sui/app/components/sOverlay.vue'
-import { STransition } from '@sui/app/constants'
-import { getWindow } from '@sui/app/lib/browser'
-import { getCleanSetObject, getNumericCssAttribute } from '@sui/app/lib'
-import { propsActivator, propsBorder } from '@sui/app/props'
-import { useActivatorService, useLayoutService, useScrollableService } from '@sui/app/services'
-import { getIsAbsolutePosition, getIsFixedPosition } from '@sui/app/repositories/positionRepository'
+import SOverlay from '@khsura/sui/components/sOverlay.vue'
+import { STransition } from '@khsura/sui/constants'
+import { getWindow } from '@khsura/sui/lib/browser'
+import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
+import { propsActivator, propsBorder } from '@khsura/sui/props'
+import { useActivatorService, useLayoutService, useScrollableService } from '@khsura/sui/services'
+import { getIsAbsolutePosition, getIsFixedPosition } from '@khsura/sui/repositories/positionRepository'
 import { type PropType, watch, computed } from 'vue'
 
 const props = defineProps({

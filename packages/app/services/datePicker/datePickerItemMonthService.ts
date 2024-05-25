@@ -1,6 +1,6 @@
-import { type PropsDatePickerItem } from '@sui/app/definitions'
-import { type DatePickerItemEmits } from '@sui/app/types'
-import dayjs from '@sui/app/vendors/dayjs'
+import { type PropsDatePickerItem } from '@khsura/sui/definitions'
+import { type DatePickerItemEmits } from '@khsura/sui/types'
+import dayjs from '@khsura/sui/vendors/dayjs'
 import { computed } from 'vue'
 import { useDatePickerItemCoreService } from './datePickerItemCoreService'
 

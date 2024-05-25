@@ -1,5 +1,5 @@
-import { SContainer, SCard, SCardText } from '@sui/app/components'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { SContainer, SCard, SCardText } from '@khsura/sui/components'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import type { Meta } from '@storybook/vue3'
 
 const container: Meta<typeof SContainer> = {

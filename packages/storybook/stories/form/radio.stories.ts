@@ -1,8 +1,8 @@
-import { faker } from '@sui/shared'
-import { SForm, SRadioGroup, SRadio, SImage } from '@sui/app/components'
-import { formInputModelValueRules } from '@sui/app/repositories/form'
-import { argsRadioGroup } from '@sui/storybook/args'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { faker } from '@khsura/shared'
+import { SForm, SRadioGroup, SRadio, SImage } from '@khsura/sui/components'
+import { formInputModelValueRules } from '@khsura/sui/repositories/form'
+import { argsRadioGroup } from '@khsura/storybook/args'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { defineComponent, ref } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

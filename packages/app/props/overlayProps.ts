@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { STransition } from '@sui/app/constants'
+import { STransition } from '@khsura/sui/constants'
 import { propsPosition } from './positionProps'
 
 export const propsOverlay = () => {

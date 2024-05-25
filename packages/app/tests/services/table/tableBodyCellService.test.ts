@@ -1,5 +1,5 @@
-import { type PropsTableBodyCell } from '@sui/app/types'
-import { useTableBodyCellService } from '@sui/app/services'
+import { type PropsTableBodyCell } from '@khsura/sui/types'
+import { useTableBodyCellService } from '@khsura/sui/services'
 import { type Mutable } from '@vueuse/core'
 
 describe('tableBodyCellService', () => {

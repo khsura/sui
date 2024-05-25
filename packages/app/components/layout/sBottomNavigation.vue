@@ -7,11 +7,11 @@
 </template>
 
 <script setup lang="ts">
-import { ProviderPropsName } from '@sui/app/constants'
-import { type GroupItemValue } from '@sui/app/types'
-import { isBrowser } from '@sui/app/lib/browser'
-import { getCleanSetObject, getNumericValue } from '@sui/app/lib'
-import { propsBottomNavigation } from '@sui/app/props'
+import { ProviderPropsName } from '@khsura/sui/constants'
+import { type GroupItemValue } from '@khsura/sui/types'
+import { isBrowser } from '@khsura/sui/lib/browser'
+import { getCleanSetObject, getNumericValue } from '@khsura/sui/lib'
+import { propsBottomNavigation } from '@khsura/sui/props'
 import {
   useBorderService,
   useLayoutService,
@@ -21,7 +21,7 @@ import {
   useScrollableService,
   useSingleGroupService,
   useTagService,
-} from '@sui/app/services'
+} from '@khsura/sui/services'
 import { computed, onBeforeUnmount, onMounted } from 'vue'
 import { watch } from 'vue'
 
@@ -122,7 +122,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss">
-@import '@sui/app/styles/components/layout';
+@import '@khsura/sui/styles/components/layout';
 
 .s_bottomNavigation {
   @include s_layoutTransition();

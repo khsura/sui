@@ -4,9 +4,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ProviderPropsName } from '@sui/app/constants'
-import { propsGroupItem } from '@sui/app/props'
-import { useGroupItemService, useProviderService } from '@sui/app/services'
+import { ProviderPropsName } from '@khsura/sui/constants'
+import { propsGroupItem } from '@khsura/sui/props'
+import { useGroupItemService, useProviderService } from '@khsura/sui/services'
 import { ref, computed } from 'vue'
 
 const props = defineProps(propsGroupItem())

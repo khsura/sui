@@ -32,10 +32,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import SButton from '@sui/app/components/sButton.vue'
-import { propsDatePickerItem, propsColor } from '@sui/app/props'
-import { useColorService, useDatePickerItemDateService } from '@sui/app/services'
-import dayjs from '@sui/app/vendors/dayjs'
+import SButton from '@khsura/sui/components/sButton.vue'
+import { propsDatePickerItem, propsColor } from '@khsura/sui/props'
+import { useColorService, useDatePickerItemDateService } from '@khsura/sui/services'
+import dayjs from '@khsura/sui/vendors/dayjs'
 
 const props = defineProps({
   ...propsDatePickerItem(),

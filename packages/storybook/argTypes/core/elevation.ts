@@ -1,4 +1,4 @@
-import type { PropsElevation } from '@sui/app/index'
+import type { PropsElevation } from '@khsura/sui/index'
 import type { ArgTypes } from '@storybook/types'
 
 export const argTypesElevation: ArgTypes<PropsElevation> = {

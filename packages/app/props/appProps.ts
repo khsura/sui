@@ -1,6 +1,6 @@
-import { type AppTheme } from '@sui/app/constants'
+import { type AppTheme } from '@khsura/sui/constants'
 import { type PropType } from 'vue'
-import { getBrowserTheme } from '@sui/app/helpers'
+import { getBrowserTheme } from '@khsura/sui/helpers'
 import { propsLayoutProvider } from './layoutProviderProps'
 
 export const propsApp = () => {

@@ -1,9 +1,9 @@
 {
-  "extends": "@sui/shared/tsconfig.base.json",
+  "extends": "@khsura/shared/tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@sui/app/*": ["../app/*"],
-      "@sui/storybook/*": ["./*"],
+      "@khsura/sui/*": ["../app/*"],
+      "@khsura/storybook/*": ["./*"],
     }
   },
   "include": [

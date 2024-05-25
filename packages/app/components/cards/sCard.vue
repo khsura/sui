@@ -4,14 +4,14 @@
   </Component>
 </template>
 <script setup lang="ts">
-import { propsBorder, propsColor, propsElevation, propsLink, propsMeasurableStyles, propsTag } from '@sui/app/props'
+import { propsBorder, propsColor, propsElevation, propsLink, propsMeasurableStyles, propsTag } from '@khsura/sui/props'
 import {
   useLinkService,
   useBorderService,
   useColorService,
   useElevationService,
   useMeasurableStylesService,
-} from '@sui/app/services'
+} from '@khsura/sui/services'
 import { computed } from 'vue'
 
 const props = defineProps({
@@ -47,7 +47,7 @@ const styles = computed(() => {
 </script>
 
 <style lang="scss">
-@import '@sui/app/styles/components/cards';
+@import '@khsura/sui/styles/components/cards';
 
 .s_card {
   @include s_elevation(0);

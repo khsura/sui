@@ -1,13 +1,13 @@
-import { ProviderName } from '@sui/app/constants'
+import { ProviderName } from '@khsura/sui/constants'
 import {
   type GroupProvider,
   type PropsGroupItem,
   type PropsSingleGroupItem,
   type Provider,
   type SingleGroupProvider,
-} from '@sui/app/definitions'
-import { useProviderRepository } from '@sui/app/repositories'
-import { type GroupItemValue } from '@sui/app/types'
+} from '@khsura/sui/definitions'
+import { useProviderRepository } from '@khsura/sui/repositories'
+import { type GroupItemValue } from '@khsura/sui/types'
 import { computed, getCurrentInstance, onMounted, onUnmounted, ref } from 'vue'
 
 export const useGroupCoreItemService = <T extends boolean>(

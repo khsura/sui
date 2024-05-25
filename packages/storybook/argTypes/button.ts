@@ -9,8 +9,8 @@ import {
   argTypesElevation,
   argTypesBorder,
   argTypesVariant,
-} from '@sui/storybook/argTypes'
-import type { SButton } from '@sui/app/components'
+} from '@khsura/storybook/argTypes'
+import type { SButton } from '@khsura/sui/components'
 import type { ArgTypes } from '@storybook/types'
 import type { ComponentPropsAndSlots } from '@storybook/vue3'
 

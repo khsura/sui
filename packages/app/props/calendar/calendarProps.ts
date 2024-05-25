@@ -1,6 +1,6 @@
-import { datePickerModelFormats } from '@sui/app/configs/datePicker'
-import { type CalendarEvent } from '@sui/app/types'
-import dayjs from '@sui/app/vendors/dayjs'
+import { datePickerModelFormats } from '@khsura/sui/configs/datePicker'
+import { type CalendarEvent } from '@khsura/sui/types'
+import dayjs from '@khsura/sui/vendors/dayjs'
 import { type PropType } from 'vue'
 
 export const propsCalendar = () => {

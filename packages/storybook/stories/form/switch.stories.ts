@@ -1,5 +1,5 @@
-import { SSwitch } from '@sui/app/components'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { SSwitch } from '@khsura/sui/components'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { ref } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

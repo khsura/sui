@@ -1,4 +1,4 @@
-import { validatorNumericCssAttribute } from '@sui/app/validators'
+import { validatorNumericCssAttribute } from '@khsura/sui/validators'
 import { type PropType, type ComponentPublicInstance } from 'vue'
 import { propsLocation } from './core'
 import { propsElevation } from './core/elevationProps'

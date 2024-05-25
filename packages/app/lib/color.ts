@@ -1,5 +1,5 @@
-import { getCssColor } from '@sui/app/helpers/colorHelpers'
-import { colorThreshold } from '@sui/app/constants'
+import { getCssColor } from '@khsura/sui/helpers/colorHelpers'
+import { colorThreshold } from '@khsura/sui/constants'
 
 export const hexToRgb = (hex: string) => {
   if (!/^#(([0-9a-fA-F]{3,4})|([0-9a-fA-F]{6})|([0-9a-fA-F]{8}))$/.test(hex)) {

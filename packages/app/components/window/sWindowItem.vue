@@ -4,9 +4,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ProviderPropsName } from '@sui/app/constants'
-import { propsWindowItem } from '@sui/app/props'
-import { useProviderService, useSingleGroupItemService } from '@sui/app/services'
+import { ProviderPropsName } from '@khsura/sui/constants'
+import { propsWindowItem } from '@khsura/sui/props'
+import { useProviderService, useSingleGroupItemService } from '@khsura/sui/services'
 import { computed } from 'vue'
 
 const translateXMapper: Record<string, string | undefined> = {
@@ -78,7 +78,7 @@ const styles = computed(() => {
 })
 </script>
 <style lang="scss">
-@import '@sui/app/styles/components/window';
+@import '@khsura/sui/styles/components/window';
 
 .s_windowItem {
   position: absolute;

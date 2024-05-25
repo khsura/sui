@@ -1,5 +1,5 @@
-import { type PropsBorder } from '@sui/app/definitions'
-import { useBorderService } from '@sui/app/services'
+import { type PropsBorder } from '@khsura/sui/definitions'
+import { useBorderService } from '@khsura/sui/services'
 import { type Mutable } from '@vueuse/core'
 import { reactive } from 'vue'
 

@@ -29,9 +29,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import SOverlay from '@sui/app/components/sOverlay.vue'
-import { propsTooltip } from '@sui/app/props'
-import { useColorService, useMeasurableStylesService, useMenuService } from '@sui/app/services'
+import SOverlay from '@khsura/sui/components/sOverlay.vue'
+import { propsTooltip } from '@khsura/sui/props'
+import { useColorService, useMeasurableStylesService, useMenuService } from '@khsura/sui/services'
 import { OnClickOutside } from '@vueuse/components'
 import { watch } from 'vue'
 import { nextTick } from 'vue'
@@ -105,7 +105,7 @@ watch(model, async (value) => {
 </script>
 
 <style lang="scss" scoped>
-@import '@sui/app/styles/components/menu';
+@import '@khsura/sui/styles/components/menu';
 
 .s_tooltip {
   &__content {

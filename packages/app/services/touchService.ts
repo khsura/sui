@@ -1,5 +1,5 @@
-import { touchend, touchmove, touchstart } from '@sui/app/repositories/touchRepository'
-import { type TouchHandlers, type TouchStoredHandlers, type TouchWrapper } from '@sui/app/types'
+import { touchend, touchmove, touchstart } from '@khsura/sui/repositories/touchRepository'
+import { type TouchHandlers, type TouchStoredHandlers, type TouchWrapper } from '@khsura/sui/types'
 
 export const useTouchService = (value?: TouchHandlers | undefined): TouchStoredHandlers => {
   const wrapper: TouchWrapper = {

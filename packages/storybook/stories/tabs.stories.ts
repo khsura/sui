@@ -1,5 +1,5 @@
-import { STab, STabs } from '@sui/app/components'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { STab, STabs } from '@khsura/sui/components'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { ref } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

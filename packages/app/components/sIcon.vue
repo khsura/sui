@@ -2,8 +2,8 @@
   <span aria-hidden="true" :class="classList" :style="styleList"></span>
 </template>
 <script setup lang="ts">
-import { propsIcon } from '@sui/app/props'
-import { useComponentThemeService, useSizeService, useTextColorService } from '@sui/app/services'
+import { propsIcon } from '@khsura/sui/props'
+import { useComponentThemeService, useSizeService, useTextColorService } from '@khsura/sui/services'
 import { computed } from 'vue'
 
 const props = defineProps(propsIcon())
@@ -36,7 +36,7 @@ const styleList = computed(() => {
 </script>
 
 <style lang="scss">
-@import '@sui/app/styles/components/icon';
+@import '@khsura/sui/styles/components/icon';
 $defaultSize: map.get($s_icon--fontSizes, 'default');
 
 .s_icon {

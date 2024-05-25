@@ -1,5 +1,5 @@
-import { type PropsTableHeadCell } from '@sui/app/types'
-import { useTableHeadCellService } from '@sui/app/services'
+import { type PropsTableHeadCell } from '@khsura/sui/types'
+import { useTableHeadCellService } from '@khsura/sui/services'
 import { type Mutable } from '@vueuse/core'
 
 describe('tableHeadCellService', () => {

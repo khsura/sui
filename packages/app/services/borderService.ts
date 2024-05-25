@@ -1,5 +1,5 @@
-import { type PropsBorder } from '@sui/app/definitions'
-import { toComputed } from '@sui/app/lib/compositionApi'
+import { type PropsBorder } from '@khsura/sui/definitions'
+import { toComputed } from '@khsura/sui/lib/compositionApi'
 import { computed } from 'vue'
 import { type ComputedRef } from 'vue'
 import { getCleanSetObject } from '../lib'

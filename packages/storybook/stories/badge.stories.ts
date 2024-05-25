@@ -1,8 +1,8 @@
-import { SBadge, SButton, SIcon, SInput } from '@sui/app/components'
-import { argsBadge } from '@sui/storybook/args'
-import { argTypesBadge } from '@sui/storybook/argTypes'
-import { createStoryObj } from '@sui/storybook/helpers'
-import { useBadgeService } from '@sui/storybook/services'
+import { SBadge, SButton, SIcon, SInput } from '@khsura/sui/components'
+import { argsBadge } from '@khsura/storybook/args'
+import { argTypesBadge } from '@khsura/storybook/argTypes'
+import { createStoryObj } from '@khsura/storybook/helpers'
+import { useBadgeService } from '@khsura/storybook/services'
 import type { Meta } from '@storybook/vue3'
 
 const badge: Meta<typeof SBadge> = {

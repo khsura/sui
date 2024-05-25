@@ -1,4 +1,4 @@
-import { type MaterialDesignIcon, type MaterialDesignIconExtra } from '@sui/app/types'
+import { type MaterialDesignIcon, type MaterialDesignIconExtra } from '@khsura/sui/types'
 import { type PropType } from 'vue'
 import { propsSizeUnion } from './sizeProps'
 import { propsTextColor, propsComponentTheme } from './core'

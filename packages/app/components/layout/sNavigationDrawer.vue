@@ -18,11 +18,11 @@
   </SOverlay>
 </template>
 <script setup lang="ts">
-import SOverlay from '@sui/app/components/sOverlay.vue'
-import { ProviderPropsName } from '@sui/app/constants'
-import { type TouchWrapper } from '@sui/app/types'
-import { getNumericCssAttribute } from '@sui/app/lib'
-import { propsNavigationDrawer } from '@sui/app/props'
+import SOverlay from '@khsura/sui/components/sOverlay.vue'
+import { ProviderPropsName } from '@khsura/sui/constants'
+import { type TouchWrapper } from '@khsura/sui/types'
+import { getNumericCssAttribute } from '@khsura/sui/lib'
+import { propsNavigationDrawer } from '@khsura/sui/props'
 import {
   useClickOutsideService,
   useDisplayService,
@@ -34,7 +34,7 @@ import {
   useResizeService,
   useScrollableService,
   useTouchService,
-} from '@sui/app/services'
+} from '@khsura/sui/services'
 import { type Ref, computed, ref, getCurrentInstance, watch, onBeforeMount, onBeforeUnmount } from 'vue'
 
 const props = defineProps(propsNavigationDrawer({ app: false }))
@@ -430,7 +430,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss">
-@import '@sui/app/styles/components/layout';
+@import '@khsura/sui/styles/components/layout';
 
 $s_navigationDrawerMobileTemporaryElevation: 16 !default;
 

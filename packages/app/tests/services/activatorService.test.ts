@@ -1,5 +1,5 @@
-import { type PropsActivator } from '@sui/app/index'
-import { useActivatorService } from '@sui/app/services'
+import { type PropsActivator } from '@khsura/sui/index'
+import { useActivatorService } from '@khsura/sui/services'
 import { JSDOM } from 'jsdom'
 import { ref } from 'vue'
 

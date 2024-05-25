@@ -1,5 +1,5 @@
-import { SDivider, SRow, SColumn } from '@sui/app/components'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { SDivider, SRow, SColumn } from '@khsura/sui/components'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import type { Meta } from '@storybook/vue3'
 
 const divider: Meta<typeof SDivider> = {

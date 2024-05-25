@@ -1,4 +1,4 @@
-import { type TableHeader, type TableItem } from '@sui/app/types'
+import { type TableHeader, type TableItem } from '@khsura/sui/types'
 
 export const headers: TableHeader[] = [
   {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { HttpMethod, HttpStatus } from '@sui/storybook/constants'
+import type { HttpMethod, HttpStatus } from '@khsura/storybook/constants'
 
 export interface MockApiConfig<
   Request = any,

@@ -1,5 +1,5 @@
-import { DatePickerSelectType, DatePickerType } from '@sui/app/constants/datePicker'
-import { type DatePickerSelectTypeType } from '@sui/app/types'
+import { DatePickerSelectType, DatePickerType } from '@khsura/sui/constants/datePicker'
+import { type DatePickerSelectTypeType } from '@khsura/sui/types'
 
 export const datePickerDisplayFormat = {
   [DatePickerSelectType.date]: 'M月D日',

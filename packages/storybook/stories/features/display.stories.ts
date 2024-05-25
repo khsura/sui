@@ -1,5 +1,5 @@
-import { useDisplayService } from '@sui/app/services/displayService'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { useDisplayService } from '@khsura/sui/services/displayService'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { defineComponent, computed } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

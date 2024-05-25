@@ -1,7 +1,7 @@
-import { kTransitions } from '@sui/app/configs'
-import kTransitionString from '@sui/app/constants/transition?raw'
-import { extractInterfaceString } from '@sui/storybook/helpers'
-import type { STransition } from '@sui/app/constants'
+import { kTransitions } from '@khsura/sui/configs'
+import kTransitionString from '@khsura/sui/constants/transition?raw'
+import { extractInterfaceString } from '@khsura/storybook/helpers'
+import type { STransition } from '@khsura/sui/constants'
 import type { ArgTypes } from '@storybook/types'
 
 export const argTypesTransition: ArgTypes<{ transition: STransition }> = {

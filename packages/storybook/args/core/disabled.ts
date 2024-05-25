@@ -1,4 +1,4 @@
-import type { PropsDisabled } from '@sui/app/definitions'
+import type { PropsDisabled } from '@khsura/sui/definitions'
 
 export const argsDisabled: PropsDisabled = {
   disabled: false,

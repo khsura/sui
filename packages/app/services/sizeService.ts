@@ -1,7 +1,7 @@
-import { sizeProperties } from '@sui/app/configs'
-import { type PropsSizePreset, type PropsSizeUnion } from '@sui/app/definitions'
-import { getNumericCssAttribute } from '@sui/app/lib'
-import { type SizePropertyType } from '@sui/app/types'
+import { sizeProperties } from '@khsura/sui/configs'
+import { type PropsSizePreset, type PropsSizeUnion } from '@khsura/sui/definitions'
+import { getNumericCssAttribute } from '@khsura/sui/lib'
+import { type SizePropertyType } from '@khsura/sui/types'
 import { computed } from 'vue'
 
 export const useSizeService = <T extends PropsSizePreset | PropsSizeUnion>(props: T, config: { block: string }) => {

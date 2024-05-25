@@ -1,5 +1,5 @@
-import { sizeProperties } from '@sui/app/configs'
-import type { PropsSizePreset } from '@sui/app/definitions'
+import { sizeProperties } from '@khsura/sui/configs'
+import type { PropsSizePreset } from '@khsura/sui/definitions'
 import type { ArgTypes } from '@storybook/types'
 
 export const argTypesSizePreset: ArgTypes<PropsSizePreset> = {

@@ -1,4 +1,4 @@
-import { SInput } from '@sui/app/components'
+import { SInput } from '@khsura/sui/components'
 import { mount } from '@vue/test-utils'
 
 describe('SInput', () => {

@@ -1,6 +1,6 @@
-import { type PropsMenu } from '@sui/app/definitions/props'
-import { useMenuService } from '@sui/app/services'
-import { type PropsContent } from '@sui/app/types'
+import { type PropsMenu } from '@khsura/sui/definitions/props'
+import { useMenuService } from '@khsura/sui/services'
+import { type PropsContent } from '@khsura/sui/types'
 import { ref } from 'vue'
 
 const defaultPropsContent: PropsContent = {
@@ -35,7 +35,7 @@ const mockContentElement = {
   value: { offsetWidth: 19, offsetHeight: 21 },
 }
 
-vi.mock('@sui/app/services/core/activatorService', () => {
+vi.mock('@khsura/sui/services/core/activatorService', () => {
   const useActivatorService = vi.fn(() => {
     return {
       getActivatorLocation: vi.fn().mockReturnValue(mockGetActivatorLocationResult),
@@ -48,7 +48,7 @@ vi.mock('@sui/app/services/core/activatorService', () => {
   }
 })
 
-vi.mock('@sui/app/lib/browser', () => {
+vi.mock('@khsura/sui/lib/browser', () => {
   const getViewportLocation = vi.fn(() => ({
     left: 1,
     top: 1,
@@ -63,7 +63,7 @@ vi.mock('@sui/app/lib/browser', () => {
   }
 })
 
-vi.mock('@sui/app/services/positionService', () => {
+vi.mock('@khsura/sui/services/positionService', () => {
   const usePositionService = vi.fn(() => ({
     classListPosition: vi.fn().mockReturnValue({ s_position__fixed: true }),
   }))
@@ -73,7 +73,7 @@ vi.mock('@sui/app/services/positionService', () => {
   }
 })
 
-vi.mock('@sui/app/services/core/contentService', () => {
+vi.mock('@khsura/sui/services/core/contentService', () => {
   const useContentService = vi.fn(() => ({
     styles: {
       value: { border: 'double' },

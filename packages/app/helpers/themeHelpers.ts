@@ -1,6 +1,6 @@
-import type { AppThemeType } from '@sui/app/types'
-import { getWindow } from '@sui/app/lib'
-import { AppTheme } from '@sui/app/constants'
+import type { AppThemeType } from '@khsura/sui/types'
+import { getWindow } from '@khsura/sui/lib'
+import { AppTheme } from '@khsura/sui/constants'
 
 export const getBrowserTheme = (): AppThemeType => {
   const window = getWindow()

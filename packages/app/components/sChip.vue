@@ -9,10 +9,10 @@
   </span>
 </template>
 <script setup lang="ts">
-import SIcon from '@sui/app/components/sIcon.vue'
-import { getCleanSetObject } from '@sui/app/lib'
-import { propsChip } from '@sui/app/props'
-import { useBorderService, useColorService, useDisabledService, useSizeService } from '@sui/app/services'
+import SIcon from '@khsura/sui/components/sIcon.vue'
+import { getCleanSetObject } from '@khsura/sui/lib'
+import { propsChip } from '@khsura/sui/props'
+import { useBorderService, useColorService, useDisabledService, useSizeService } from '@khsura/sui/services'
 import { computed } from 'vue'
 
 const props = defineProps(propsChip())
@@ -65,7 +65,7 @@ defineSlots<{
 }>()
 </script>
 <style lang="scss">
-@import '@sui/app/styles/components/button';
+@import '@khsura/sui/styles/components/button';
 
 .s_chip {
   @include s_dark();

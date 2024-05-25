@@ -6,10 +6,10 @@
   </section>
 </template>
 <script setup lang="ts">
-import { ProviderPropsName } from '@sui/app/constants'
-import { type GroupItemValue } from '@sui/app/types'
-import { propsToggleButtonGroup } from '@sui/app/props'
-import { useBorderService, useGroupService, useProviderService } from '@sui/app/services'
+import { ProviderPropsName } from '@khsura/sui/constants'
+import { type GroupItemValue } from '@khsura/sui/types'
+import { propsToggleButtonGroup } from '@khsura/sui/props'
+import { useBorderService, useGroupService, useProviderService } from '@khsura/sui/services'
 import { computed } from 'vue'
 
 const props = defineProps(propsToggleButtonGroup())

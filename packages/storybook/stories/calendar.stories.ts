@@ -1,12 +1,12 @@
-import { faker } from '@sui/shared'
-import { SToolbar, SButton, SIcon, SToolbarTitle, SCalendar } from '@sui/app/components'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { faker } from '@khsura/shared'
+import { SToolbar, SButton, SIcon, SToolbarTitle, SCalendar } from '@khsura/sui/components'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { action } from '@storybook/addon-actions'
 import { defineComponent, ref } from 'vue'
-import type { CalendarComponent } from '@sui/app/definitions'
-import type { CalendarDate, CalendarEvent } from '@sui/app/types'
+import type { CalendarComponent } from '@khsura/sui/definitions'
+import type { CalendarDate, CalendarEvent } from '@khsura/sui/types'
 import type { Meta } from '@storybook/vue3'
-import dayjs from '@sui/app/vendors/dayjs'
+import dayjs from '@khsura/sui/vendors/dayjs'
 
 const calendar: Meta<typeof SCalendar> = {
   title: 'UI Components/Calendar',

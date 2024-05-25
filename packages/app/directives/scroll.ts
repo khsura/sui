@@ -1,4 +1,4 @@
-import { type ScrollDirectiveBinding, type ScrollDirectiveBindingValueObject } from '@sui/app/types'
+import { type ScrollDirectiveBinding, type ScrollDirectiveBindingValueObject } from '@khsura/sui/types'
 import { type Directive } from 'vue'
 
 const mounted = (

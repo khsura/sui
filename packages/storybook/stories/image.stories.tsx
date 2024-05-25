@@ -1,6 +1,6 @@
-import { faker } from '@sui/shared'
-import { SImage, SRow } from '@sui/app/components'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { faker } from '@khsura/shared'
+import { SImage, SRow } from '@khsura/sui/components'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import type { Meta } from '@storybook/vue3'
 
 const image: Meta<typeof SImage> = {

@@ -8,9 +8,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ProviderName, ProviderPropsName } from '@sui/app/constants'
-import { propsStepper } from '@sui/app/props'
-import { useProviderService } from '@sui/app/services'
+import { ProviderName, ProviderPropsName } from '@khsura/sui/constants'
+import { propsStepper } from '@khsura/sui/props'
+import { useProviderService } from '@khsura/sui/services'
 import { computed, ref } from 'vue'
 import SStepperStep from './sStepperStep.vue'
 

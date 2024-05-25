@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [externalizeDeps(), vue(), vueJsx()],
   resolve: {
     alias: {
-      '@sui/app': __dirname,
+      '@khsura/sui': __dirname,
     },
   },
   build: {
@@ -33,7 +33,7 @@ export default defineConfig({
           @use 'sass:meta';
           @use 'sass:list';
           @use 'sass:string';
-          @import '@sui/app/styles/helpers';
+          @import '@khsura/sui/styles/helpers';
         `,
       },
     },

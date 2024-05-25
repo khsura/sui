@@ -17,10 +17,10 @@
   </Transition>
 </template>
 <script setup lang="ts">
-import SIcon from '@sui/app/components/sIcon.vue'
-import { type PropsBadge } from '@sui/app/definitions'
-import { getNumericCssAttribute } from '@sui/app/lib'
-import { useColorService } from '@sui/app/services'
+import SIcon from '@khsura/sui/components/sIcon.vue'
+import { type PropsBadge } from '@khsura/sui/definitions'
+import { getNumericCssAttribute } from '@khsura/sui/lib'
+import { useColorService } from '@khsura/sui/services'
 import { ref, computed, watch, nextTick } from 'vue'
 
 // eslint-disable-next-line vue/no-unused-properties

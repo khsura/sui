@@ -1,5 +1,5 @@
-import { defaultLayoutSizes } from '@sui/app/constants/layout'
-import { type PropsLayoutProvider } from '@sui/app/definitions'
+import { defaultLayoutSizes } from '@khsura/sui/constants/layout'
+import { type PropsLayoutProvider } from '@khsura/sui/definitions'
 import { provide, ref } from 'vue'
 import { useLayoutCoreService } from './core/layoutCoreService'
 

@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import { SToolbar } from '@sui/app/components/toolbar'
-import { propsAppBar } from '@sui/app/props'
-import { useAppBarService } from '@sui/app/services'
+import { SToolbar } from '@khsura/sui/components/toolbar'
+import { propsAppBar } from '@khsura/sui/props'
+import { useAppBarService } from '@khsura/sui/services'
 import { computed, onBeforeUnmount, watch } from 'vue'
 
 const props = defineProps(propsAppBar())
@@ -74,8 +74,8 @@ onBeforeUnmount(() => {
 })
 </script>
 <style lang="scss">
-@import '@sui/app/styles/components/appBar';
-@import '@sui/app/styles/components/layout';
+@import '@khsura/sui/styles/components/appBar';
+@import '@khsura/sui/styles/components/layout';
 
 .s_appBar {
   @include s_borderRadius($s_appBar__borderRadius);

@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import { ProviderPropsName, SizeProperty } from '@sui/app/constants'
-import { propsButton } from '@sui/app/props'
+import { ProviderPropsName, SizeProperty } from '@khsura/sui/constants'
+import { propsButton } from '@khsura/sui/props'
 import {
   useBorderService,
   useColorService,
@@ -27,10 +27,10 @@ import {
   useSingleGroupItemService,
   useSizeService,
   useTextColorService,
-} from '@sui/app/services'
+} from '@khsura/sui/services'
 import { computed } from 'vue'
-import { getCleanSetObject, isDarkColor } from '@sui/app/lib'
-import { useColorRepository, useProviderRepository } from '@sui/app/repositories'
+import { getCleanSetObject, isDarkColor } from '@khsura/sui/lib'
+import { useColorRepository, useProviderRepository } from '@khsura/sui/repositories'
 import { SProgressCircular } from './progress'
 
 const props = defineProps(propsButton())
@@ -128,7 +128,7 @@ const click = (event: Event) => {
 </script>
 
 <style lang="scss">
-@import '@sui/app/styles/components/button';
+@import '@khsura/sui/styles/components/button';
 
 .s_button {
   @include s_typography('button');

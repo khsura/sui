@@ -6,8 +6,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { propsColor, propsTag } from '@sui/app/props'
-import { useColorService, useTagService } from '@sui/app/services'
+import { propsColor, propsTag } from '@khsura/sui/props'
+import { useColorService, useTagService } from '@khsura/sui/services'
 import { computed } from 'vue'
 
 const props = defineProps({

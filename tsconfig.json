@@ -1,5 +1,5 @@
 {
-  "extends": "@sui/shared/tsconfig.base.json",
+  "extends": "@khsura/shared/tsconfig.base.json",
   "include": [
     "**/*.js",
     "**/*.ts",

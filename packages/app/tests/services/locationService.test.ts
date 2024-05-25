@@ -1,5 +1,5 @@
-import { type PropsLocation } from '@sui/app/definitions'
-import { useLocationService } from '@sui/app/services'
+import { type PropsLocation } from '@khsura/sui/definitions'
+import { useLocationService } from '@khsura/sui/services'
 
 describe('useLocationService', () => {
   const props: PropsLocation = {

@@ -1,4 +1,4 @@
-import { faker } from '@sui/shared'
+import { faker } from '@khsura/shared'
 import {
   SButton,
   SCard,
@@ -12,9 +12,9 @@ import {
   SListItem,
   SListItemContent,
   SSpacer,
-} from '@sui/app/components'
-import { argTypesElevation, argTypesLocation } from '@sui/storybook/argTypes'
-import { createStoryObj } from '@sui/storybook/helpers'
+} from '@khsura/sui/components'
+import { argTypesElevation, argTypesLocation } from '@khsura/storybook/argTypes'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { defineComponent, ref } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

@@ -14,8 +14,8 @@
   </SToggleButtonGroup>
 </template>
 <script setup lang="ts">
-import { SToggleButtonGroup } from '@sui/app/components/toggleButtonGroup'
-import { propsTabs } from '@sui/app/props'
+import { SToggleButtonGroup } from '@khsura/sui/components/toggleButtonGroup'
+import { propsTabs } from '@khsura/sui/props'
 import { computed } from 'vue'
 
 const props = defineProps({

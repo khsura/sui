@@ -1,4 +1,4 @@
-import type { PropsDisabled } from '@sui/app/index'
+import type { PropsDisabled } from '@khsura/sui/index'
 import type { ArgTypes } from '@storybook/types'
 
 export const argTypesDisabled: ArgTypes<PropsDisabled> = {

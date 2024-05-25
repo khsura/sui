@@ -4,8 +4,8 @@
   </Component>
 </template>
 <script setup lang="ts">
-import { propsTag } from '@sui/app/props'
-import { useTagService } from '@sui/app/services'
+import { propsTag } from '@khsura/sui/props'
+import { useTagService } from '@khsura/sui/services'
 
 const props = defineProps({
   ...propsTag(),
@@ -14,7 +14,7 @@ const props = defineProps({
 const { tagName } = useTagService(props)
 </script>
 <style lang="scss">
-@import '@sui/app/styles/components/cards';
+@import '@khsura/sui/styles/components/cards';
 
 .s_card__subtitle {
   @include s_typography('subtitle__2');

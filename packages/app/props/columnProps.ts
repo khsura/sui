@@ -1,5 +1,5 @@
-import { gridColumns } from '@sui/app/constants/app'
-import { isOptionalNumeric, orderValidator } from '@sui/app/repositories/columnRepository'
+import { gridColumns } from '@khsura/sui/constants/app'
+import { isOptionalNumeric, orderValidator } from '@khsura/sui/repositories/columnRepository'
 
 import { type PropType } from 'vue'
 

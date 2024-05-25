@@ -1,5 +1,5 @@
-import { type PropsPosition } from '@sui/app/definitions'
-import { usePositionService } from '@sui/app/services/positionService'
+import { type PropsPosition } from '@khsura/sui/definitions'
+import { usePositionService } from '@khsura/sui/services/positionService'
 import { type Mutable } from '@vueuse/core'
 import { reactive } from 'vue'
 

@@ -4,15 +4,15 @@
   </Component>
 </template>
 <script setup lang="ts">
-import { type PropsTag } from '@sui/app/definitions'
-import { useTagService } from '@sui/app/services'
+import { type PropsTag } from '@khsura/sui/definitions'
+import { useTagService } from '@khsura/sui/services'
 
 // eslint-disable-next-line vue/no-unused-properties
 const props = defineProps<PropsTag>()
 const { tagName } = useTagService(props)
 </script>
 <style lang="scss">
-@import '@sui/app/styles/components/cards';
+@import '@khsura/sui/styles/components/cards';
 
 .s_card__text {
   @include s_typography('subtitle__2');

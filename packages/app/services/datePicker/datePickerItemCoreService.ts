@@ -1,8 +1,8 @@
-import { DatePickerSelectType, DatePickerType } from '@sui/app/constants/datePicker'
-import { type PropsDatePickerItem } from '@sui/app/definitions'
-import { getDatePickerFormat } from '@sui/app/repositories/datePicker'
-import { type DatePickerItemEmits, type DatePickerSelectTypeType } from '@sui/app/types'
-import dayjs from '@sui/app/vendors/dayjs'
+import { DatePickerSelectType, DatePickerType } from '@khsura/sui/constants/datePicker'
+import { type PropsDatePickerItem } from '@khsura/sui/definitions'
+import { getDatePickerFormat } from '@khsura/sui/repositories/datePicker'
+import { type DatePickerItemEmits, type DatePickerSelectTypeType } from '@khsura/sui/types'
+import dayjs from '@khsura/sui/vendors/dayjs'
 import { computed, nextTick } from 'vue'
 
 export const useDatePickerItemCoreService = (props: PropsDatePickerItem, emit: DatePickerItemEmits) => {

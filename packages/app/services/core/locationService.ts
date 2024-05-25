@@ -1,5 +1,5 @@
-import { type PropsLocation } from '@sui/app/definitions'
-import { type Location } from '@sui/app/types'
+import { type PropsLocation } from '@khsura/sui/definitions'
+import { type Location } from '@khsura/sui/types'
 import { computed } from 'vue'
 
 export const useLocationService = (props: PropsLocation) => {

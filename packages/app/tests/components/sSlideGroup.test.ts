@@ -1,6 +1,6 @@
-import { SSlideGroup, SSlideItem } from '@sui/app/components'
-import { type PropsSlideGroup } from '@sui/app/definitions'
-import { propsSlideGroup } from '@sui/app/props'
+import { SSlideGroup, SSlideItem } from '@khsura/sui/components'
+import { type PropsSlideGroup } from '@khsura/sui/definitions'
+import { propsSlideGroup } from '@khsura/sui/props'
 import { mount } from '@vue/test-utils'
 import { defineComponent, ref } from 'vue'
 

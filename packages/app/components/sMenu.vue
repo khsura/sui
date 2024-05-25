@@ -20,13 +20,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import SOverlay from '@sui/app/components/sOverlay.vue'
-import { getWindow } from '@sui/app/lib/browser'
-import { propsMeasurableStyles, propsMenu } from '@sui/app/props'
-import { useMeasurableStylesService, useMenuService } from '@sui/app/services'
+import SOverlay from '@khsura/sui/components/sOverlay.vue'
+import { getWindow } from '@khsura/sui/lib/browser'
+import { propsMeasurableStyles, propsMenu } from '@khsura/sui/props'
+import { useMeasurableStylesService, useMenuService } from '@khsura/sui/services'
 import { computed, watch } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
-import { type EmitMenu } from '@sui/app/types'
+import { type EmitMenu } from '@khsura/sui/types'
 import { nextTick } from 'vue'
 
 const props = defineProps({
@@ -81,7 +81,7 @@ watch(
 </script>
 
 <style lang="scss">
-@import '@sui/app/styles/components/menu';
+@import '@khsura/sui/styles/components/menu';
 
 .s_menu {
   position: relative;

@@ -1,4 +1,4 @@
-import { datePickerDisplayFormat } from '@sui/app/configs/datePicker'
+import { datePickerDisplayFormat } from '@khsura/sui/configs/datePicker'
 
 import { type PropType } from 'vue'
 

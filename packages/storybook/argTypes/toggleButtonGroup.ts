@@ -1,4 +1,4 @@
-import type { PropsToggleButtonGroup } from '@sui/app/index'
+import type { PropsToggleButtonGroup } from '@khsura/sui/index'
 import type { ArgTypes } from '@storybook/types'
 import { argTypesBorder, argTypesColor } from './core'
 

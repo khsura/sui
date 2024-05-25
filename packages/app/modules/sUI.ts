@@ -1,8 +1,8 @@
-import { resize, scroll } from '@sui/app/directives'
-import { createAppStore } from '@sui/app/helpers/createAppStore'
-import { listenDisplayChange } from '@sui/app/helpers/display'
-import { i18n } from '@sui/app/plugins/i18n'
-import { type AppStateOptions } from '@sui/app/types'
+import { resize, scroll } from '@khsura/sui/directives'
+import { createAppStore } from '@khsura/sui/helpers/createAppStore'
+import { listenDisplayChange } from '@khsura/sui/helpers/display'
+import { i18n } from '@khsura/sui/plugins/i18n'
+import { type AppStateOptions } from '@khsura/sui/types'
 import portalVue from 'portal-vue'
 import { type Plugin } from 'vue'
 

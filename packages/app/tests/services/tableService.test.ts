@@ -1,5 +1,5 @@
-import { type TableRowClass, type PropsTable } from '@sui/app/types'
-import { useTableService } from '@sui/app/services'
+import { type TableRowClass, type PropsTable } from '@khsura/sui/types'
+import { useTableService } from '@khsura/sui/services'
 import { ref } from 'vue'
 import { type Mutable } from '@vueuse/core'
 import { headers, items } from '../mocks/sTable'

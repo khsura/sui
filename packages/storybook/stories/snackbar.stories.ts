@@ -1,5 +1,5 @@
-import { SSnackbar, SButton } from '@sui/app/components'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { SSnackbar, SButton } from '@khsura/sui/components'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { ref } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

@@ -40,12 +40,12 @@
   </SWindow>
 </template>
 <script setup lang="ts">
-import SButton from '@sui/app/components/sButton.vue'
-import SIcon from '@sui/app/components/sIcon.vue'
-import { SWindow } from '@sui/app/components/window'
-import { getNumericCssAttribute } from '@sui/app/lib'
-import { propsCarousel } from '@sui/app/props'
-import { type GroupItemValue } from '@sui/app/types'
+import SButton from '@khsura/sui/components/sButton.vue'
+import SIcon from '@khsura/sui/components/sIcon.vue'
+import { SWindow } from '@khsura/sui/components/window'
+import { getNumericCssAttribute } from '@khsura/sui/lib'
+import { propsCarousel } from '@khsura/sui/props'
+import { type GroupItemValue } from '@khsura/sui/types'
 import { ref, computed, watch, onMounted } from 'vue'
 
 const styleList = computed(() => {

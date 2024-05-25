@@ -1,4 +1,4 @@
-import type { PropsComponentTheme } from '@sui/app/definitions'
+import type { PropsComponentTheme } from '@khsura/sui/definitions'
 
 export const argsComponentTheme: PropsComponentTheme = {
   theme: undefined,

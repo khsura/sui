@@ -1,4 +1,4 @@
-import { type MaterialDesignIcon } from '@sui/app/types'
+import { type MaterialDesignIcon } from '@khsura/sui/types'
 import { type PropType } from 'vue'
 import { propsDatePickerFormat } from './core/datePickerFormatProps'
 import { propsDatePickerItem } from './datePickerItemProps'

@@ -17,9 +17,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ProviderPropsName } from '@sui/app/constants/provider'
-import { propsDisabled, propsSingleGroupItem } from '@sui/app/props'
-import { useBorderService, useDisabledService, useProviderService, useSingleGroupItemService } from '@sui/app/services'
+import { ProviderPropsName } from '@khsura/sui/constants/provider'
+import { propsDisabled, propsSingleGroupItem } from '@khsura/sui/props'
+import {
+  useBorderService,
+  useDisabledService,
+  useProviderService,
+  useSingleGroupItemService,
+} from '@khsura/sui/services'
 import { computed, nextTick } from 'vue'
 
 const props = defineProps({
@@ -110,7 +115,7 @@ const updateValue = async () => {
 </script>
 
 <style lang="scss">
-@import '@sui/app/styles/components/button';
+@import '@khsura/sui/styles/components/button';
 
 .s_radio {
   &--column {

@@ -51,10 +51,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import SButton from '@sui/app/components/sButton.vue'
-import { propsCalendar } from '@sui/app/props'
-import { useCalendarMonthlyService } from '@sui/app/services'
-import { type CalendarDate, type CalendarEvent } from '@sui/app/types'
+import SButton from '@khsura/sui/components/sButton.vue'
+import { propsCalendar } from '@khsura/sui/props'
+import { useCalendarMonthlyService } from '@khsura/sui/services'
+import { type CalendarDate, type CalendarEvent } from '@khsura/sui/types'
 
 const props = defineProps(propsCalendar())
 

@@ -1,7 +1,7 @@
-import { SBreadcrumbs } from '@sui/app/components'
-import { argsBreadcrumbs } from '@sui/storybook/args'
-import { argTypesBreadcrumbs } from '@sui/storybook/argTypes'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { SBreadcrumbs } from '@khsura/sui/components'
+import { argsBreadcrumbs } from '@khsura/storybook/args'
+import { argTypesBreadcrumbs } from '@khsura/storybook/argTypes'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { defineComponent } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

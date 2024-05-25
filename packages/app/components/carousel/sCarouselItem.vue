@@ -6,9 +6,9 @@
   </SWindowItem>
 </template>
 <script setup lang="ts">
-import SImage from '@sui/app/components/sImage.vue'
-import SWindowItem from '@sui/app/components/window/sWindowItem.vue'
-import { propsImage, propsWindowItem } from '@sui/app/props'
+import SImage from '@khsura/sui/components/sImage.vue'
+import SWindowItem from '@khsura/sui/components/window/sWindowItem.vue'
+import { propsImage, propsWindowItem } from '@khsura/sui/props'
 
 defineProps({
   ...propsImage(),

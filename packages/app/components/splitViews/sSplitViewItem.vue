@@ -5,8 +5,8 @@
   <div ref="resizer" :class="resizerClasses" @mousedown="mouseDownHandler"></div>
 </template>
 <script setup lang="ts">
-import { ProviderPropsName } from '@sui/app/constants'
-import { useProviderService } from '@sui/app/services'
+import { ProviderPropsName } from '@khsura/sui/constants'
+import { useProviderService } from '@khsura/sui/services'
 import { ref, computed } from 'vue'
 
 const resizer = ref<HTMLElement | null>(null)

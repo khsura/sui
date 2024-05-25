@@ -1,4 +1,4 @@
-import { validatorNumericCssAttribute } from '@sui/app/validators'
+import { validatorNumericCssAttribute } from '@khsura/sui/validators'
 
 import { type PropType } from 'vue'
 

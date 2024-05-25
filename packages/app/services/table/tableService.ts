@@ -5,14 +5,14 @@ import {
   KTableSortOrder,
   type TableHeader,
   type TableItemCellType,
-} from '@sui/app/types'
+} from '@khsura/sui/types'
 import { computed, ref } from 'vue'
-import { type STableHeadCell } from '@sui/app/components/table'
-import { getCleanSetObject, getNumericCssAttribute } from '@sui/app/lib'
-import { uniqueId } from '@sui/app/vendors/lodash'
-import { getTableRowClass } from '@sui/app/helpers'
+import { type STableHeadCell } from '@khsura/sui/components/table'
+import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
+import { uniqueId } from '@khsura/sui/vendors/lodash'
+import { getTableRowClass } from '@khsura/sui/helpers'
 import { z } from 'zod'
-import { store } from '@sui/app/store'
+import { store } from '@khsura/sui/store'
 
 export const useTableService = <T extends TableItem = TableItem>(props: PropsTable<T>, emit: EmitTable<T>) => {
   const isMounted = ref(false)

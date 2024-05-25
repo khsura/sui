@@ -1,5 +1,5 @@
-import { SRow, SSpacer, SColumn } from '@sui/app/components'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { SRow, SSpacer, SColumn } from '@khsura/sui/components'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import type { Meta } from '@storybook/vue3'
 
 const spacer: Meta<typeof SSpacer | typeof SColumn> = {

@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { faker } from '@sui/shared'
+import { faker } from '@khsura/shared'
 import { computed } from 'vue'
 
 const props = defineProps({

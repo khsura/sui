@@ -1,5 +1,5 @@
-import { SCard, SCardTitle, SIcon, SRow, SButton, SImage, SDroppable } from '@sui/app/components'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { SCard, SCardTitle, SIcon, SRow, SButton, SImage, SDroppable } from '@khsura/sui/components'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { ref } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

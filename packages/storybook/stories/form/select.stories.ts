@@ -1,7 +1,7 @@
-import { SSelect, SForm } from '@sui/app/components'
-import SIcon from '@sui/app/components/sIcon.vue'
-import { argsSelect } from '@sui/storybook/args'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { SSelect, SForm } from '@khsura/sui/components'
+import SIcon from '@khsura/sui/components/sIcon.vue'
+import { argsSelect } from '@khsura/storybook/args'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { defineComponent, ref } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

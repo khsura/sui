@@ -1,6 +1,6 @@
-import { faker } from '@sui/shared'
+import { faker } from '@khsura/shared'
 import dayjs from 'dayjs'
-import type { SBreadcrumbs } from '@sui/app/components'
+import type { SBreadcrumbs } from '@khsura/sui/components'
 import type { ComponentPropsAndSlots } from '@storybook/vue3'
 
 export const argsBreadcrumbs = (

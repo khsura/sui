@@ -1,5 +1,5 @@
-import { getDocument, getWindow } from '@sui/app/lib'
-import { store } from '@sui/app/store'
+import { getDocument, getWindow } from '@khsura/sui/lib'
+import { store } from '@khsura/sui/store'
 
 const getClientWidth = () => {
   const document = getDocument()

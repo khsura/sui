@@ -1,5 +1,5 @@
 import { type ExtractPropTypes } from 'vue'
-import type * as props from '@sui/app/props'
+import type * as props from '@khsura/sui/props'
 import { type FormInputModelValue } from '../types/core'
 
 export type PropsActivator = ExtractPropTypes<ReturnType<typeof props.propsActivator>>

@@ -1,4 +1,4 @@
-import { sOverflowDemo } from '@sui/storybook/components'
+import { sOverflowDemo } from '@khsura/storybook/components'
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 const meta: Meta<typeof sOverflowDemo> = {

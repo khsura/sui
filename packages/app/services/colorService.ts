@@ -1,10 +1,10 @@
-import { AppTheme } from '@sui/app/constants/app'
-import { type PropsColor } from '@sui/app/definitions/props'
-import { isDarkColor } from '@sui/app/lib/color'
-import { useColorRepository } from '@sui/app/repositories/colorRepository'
+import { AppTheme } from '@khsura/sui/constants/app'
+import { type PropsColor } from '@khsura/sui/definitions/props'
+import { isDarkColor } from '@khsura/sui/lib/color'
+import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
 import { type Ref, computed, isRef } from 'vue'
-import { getCssColor } from '@sui/app/helpers/colorHelpers'
-import { useAppProviderRepository } from '@sui/app/repositories'
+import { getCssColor } from '@khsura/sui/helpers/colorHelpers'
+import { useAppProviderRepository } from '@khsura/sui/repositories'
 import { toReactive } from '@vueuse/core'
 
 export const useColorService = (

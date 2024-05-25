@@ -1,7 +1,7 @@
-import { htmlTagNames } from '@sui/storybook/configs'
-import { getMarkdownArrayTypeDescription } from '@sui/storybook/helpers'
-import type { PropsTag } from '@sui/app/definitions'
-import type { HtmlTagName } from '@sui/app/types'
+import { htmlTagNames } from '@khsura/storybook/configs'
+import { getMarkdownArrayTypeDescription } from '@khsura/storybook/helpers'
+import type { PropsTag } from '@khsura/sui/definitions'
+import type { HtmlTagName } from '@khsura/sui/types'
 import type { ArgTypes } from '@storybook/types'
 
 export const argTypesTag = <T extends HtmlTagName>(defaults?: {

@@ -1,6 +1,6 @@
-import { faker } from '@sui/shared'
-import { useScrollService } from '@sui/app/services/scrollService'
-import { createStoryObj } from '@sui/storybook/helpers'
+import { faker } from '@khsura/shared'
+import { useScrollService } from '@khsura/sui/services/scrollService'
+import { createStoryObj } from '@khsura/storybook/helpers'
 import { defineComponent } from 'vue'
 import type { Meta } from '@storybook/vue3'
 

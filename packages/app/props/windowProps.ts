@@ -1,4 +1,4 @@
-import { type MaterialDesignIcon, type TouchHandlers } from '@sui/app/types'
+import { type MaterialDesignIcon, type TouchHandlers } from '@khsura/sui/types'
 import { type PropType } from 'vue'
 import { propsColor, propsDisabled, propsTag } from './core'
 import { propsSingleGroup } from './singleGroupProps'

@@ -1,4 +1,4 @@
-import { type SCalendar, type SForm, type SInput, type SSelect } from '@sui/app/components'
+import { type SCalendar, type SForm, type SInput, type SSelect } from '@khsura/sui/components'
 
 export type CalendarComponent = InstanceType<typeof SCalendar>
 export type FormComponent = InstanceType<typeof SForm>

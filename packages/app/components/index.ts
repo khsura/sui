@@ -1,4 +1,4 @@
-import '@sui/app/styles/index.scss'
+import '@khsura/sui/styles/index.scss'
 
 export * from './badge'
 export * from './calendar'
