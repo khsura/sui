@@ -1,5 +1,6 @@
 <template>
   <component :is="elementTag" class="s_main" :style="styles">
+    <pre>{{ JSON.stringify({ app, isApp }, undefined, 2) }}</pre>
     <slot></slot>
   </component>
 </template>

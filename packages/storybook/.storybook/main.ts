@@ -4,6 +4,7 @@ import type { UserConfig } from 'vite'
 
 const config: StorybookConfig = {
   stories: ['../**/*.mdx', '../**/*.stories.@(js|jsx|ts|tsx)'],
+
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -28,6 +29,8 @@ const config: StorybookConfig = {
 
     return mergeConfig(previousConfig, additionalConfig)
   },
+
+  docs: {},
 }
 
 export default config

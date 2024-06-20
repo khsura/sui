@@ -10,8 +10,13 @@ export const useLayoutCoreService = (props: PropsLayout | PropsLayoutProvider) =
       (props as PropsLayout).for === ProviderName.app,
   )
 
-  const name = (props as PropsLayoutProvider).name ?? (props as PropsLayout).for ?? ProviderName.app
-  const providerName = computed(() => (isApp.value ? ProviderName.app : `${name}Layout`))
+  const providerName = computed(() => {
+    if (isApp.value) {
+      return ProviderName.app
+    }
+
+    return (props as PropsLayoutProvider).name ?? (props as PropsLayout).for ?? ProviderName.app
+  })
 
   return {
     providerName,

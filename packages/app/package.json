@@ -33,12 +33,12 @@
     "./helpers.scss": "./dist/styles/_helpers.scss"
   },
   "dependencies": {
-    "@vueuse/components": "^10.9.0",
-    "@vueuse/core": "^10.9.0",
+    "@vueuse/components": "^10.11.0",
+    "@vueuse/core": "^10.11.0",
     "dayjs": "^1.11.11",
     "lodash": "^4.17.21",
     "portal-vue": "^3.0.0",
-    "vue": "^3.4.27",
+    "vue": "^3.4.29",
     "vue-i18n": "^9.13.1",
     "zod": "^3.23.8"
   }
