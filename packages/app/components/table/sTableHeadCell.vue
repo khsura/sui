@@ -115,7 +115,7 @@ const sortIcon = computed(() => {
     return '⇅'
   }
 
-  const displayPriority = props.multiSort ? sortPriority.value?.toString() ?? '' : ''
+  const displayPriority = props.multiSort ? (sortPriority.value?.toString() ?? '') : ''
   const order = sortOrders.value[props.header.value.toString()]
 
   if (order === KTableSortOrder.ascending) {

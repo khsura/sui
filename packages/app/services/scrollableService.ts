@@ -57,7 +57,7 @@ export const useScrollableService = (
         })
 
         isActive.value = newValues.isActive ?? isActive.value
-        savedScroll.value = isActive.value ? 0 : newValues.savedScroll ?? savedScroll.value
+        savedScroll.value = isActive.value ? 0 : (newValues.savedScroll ?? savedScroll.value)
       }
     })
   }

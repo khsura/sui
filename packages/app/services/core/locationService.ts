@@ -4,7 +4,7 @@ import { computed } from 'vue'
 
 export const useLocationService = (props: PropsLocation) => {
   const getFirstLocation = <T extends Location>(filter?: T[]): T | null => {
-    const locationString = Array.isArray(props.location) ? props.location.join(' ') : props.location ?? ''
+    const locationString = Array.isArray(props.location) ? props.location.join(' ') : (props.location ?? '')
     const locations = locationString.split(' ')
 
     const filteredLocations: T[] = filter

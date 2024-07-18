@@ -59,7 +59,8 @@
 		"workbench.editor.limit.enabled": true,
 		"workbench.editor.limit.value": 7,
     "typescript.preferences.importModuleSpecifier": "non-relative",
-    "typescript.tsdk": "root/node_modules/typescript/lib"
+    "typescript.tsdk": "root/node_modules/typescript/lib",
+    "i18n-ally.localesPaths": []
   },
   "extensions": {
     "recommendations": ["Vue.volar", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "stylelint.vscode-stylelint"]

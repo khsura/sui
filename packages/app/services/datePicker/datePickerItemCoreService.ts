@@ -69,7 +69,7 @@ export const useDatePickerItemCoreService = (props: PropsDatePickerItem, emit: D
   ) => {
     const year = value.year ?? date.value.year()
     const month = value.month ?? date.value.month() + 1
-    const day = props.type === 'month' ? 1 : value.day ?? date.value.date()
+    const day = props.type === 'month' ? 1 : (value.day ?? date.value.date())
     const isValidDate = dayjs(`${year}-${month + 1}-${day}`, 'YYYY-M-D', true).isValid()
     const dateToSet = dayjs({ year, month, day: isValidDate ? day : 1 }).format(dateFormat.value)
 

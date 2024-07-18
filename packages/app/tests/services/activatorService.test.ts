@@ -1,6 +1,6 @@
 import { type PropsActivator } from '@khsura/sui/index'
 import { useActivatorService } from '@khsura/sui/services'
-import { JSDOM } from 'jsdom'
+import { Browser } from 'happy-dom'
 import { ref } from 'vue'
 
 const defaultPropsActivator: PropsActivator = {
@@ -30,10 +30,13 @@ describe('useActivatorService', () => {
         ...defaultPropsActivator,
       }
 
-      const dom = new JSDOM('<!DOCTYPE html><p id="dd"><span id="cc">Hi</span>Hello world</p>')
+      const browser = new Browser()
+      const page = browser.newPage()
+
+      page.content = '<!DOCTYPE html><p id="dd"><span id="cc">Hi</span>Hello world</p>'
       const model = ref(false)
       const { computedActivatorElement, activatorElement } = useActivatorService(props, model)
-      const sampleNode = dom.window.document.getElementById('dd')
+      const sampleNode = page.mainFrame.window.document.getElementById('dd') as unknown as HTMLElement
 
       activatorElement.value = sampleNode
       expect(computedActivatorElement.value?.textContent).toBe(sampleNode?.firstElementChild?.textContent)
@@ -45,14 +48,17 @@ describe('useActivatorService', () => {
         activator: '#ab',
       }
 
-      const dom = new JSDOM('<!DOCTYPE html><p id="dd"><span id="ab">Hi</span>Hello world</p>')
+      const browser = new Browser()
+      const page = browser.newPage()
+
+      page.content = '<!DOCTYPE html><p id="dd"><span id="ab">Hi</span>Hello world</p>'
       const documentSpy = vi.spyOn(global, 'document', 'get')
 
-      documentSpy.mockImplementation(() => dom.window.document)
+      documentSpy.mockImplementation(() => page.mainFrame.window.document as unknown as Document)
 
       const model = ref(false)
       const { computedActivatorElement } = useActivatorService(props, model)
-      const sampleNode = dom.window.document.getElementById('ab')
+      const sampleNode = page.mainFrame.window.document.getElementById('ab')
 
       expect(computedActivatorElement.value?.textContent).toBe(sampleNode?.textContent)
 
@@ -83,8 +89,11 @@ describe('useActivatorService', () => {
 
       const model = ref(false)
       const { getActivatorLocation, activatorElement } = useActivatorService(props, model)
-      const dom = new JSDOM('<!DOCTYPE html><body><div id="dd"><span id="cc">Hi</span>Hello world</div></body>')
-      const sampleNode = dom.window.document.getElementById('dd')
+      const browser = new Browser()
+      const page = browser.newPage()
+
+      page.content = '<!DOCTYPE html><body><div id="dd"><span id="cc">Hi</span>Hello world</div></body>'
+      const sampleNode = page.mainFrame.window.document.getElementById('dd') as unknown as HTMLElement
 
       activatorElement.value = sampleNode
 

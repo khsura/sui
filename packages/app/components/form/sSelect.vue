@@ -93,7 +93,7 @@ const getSelectedItemFromValue = (): SelectItem | null => {
     return item.value === props.modelValue
   })
 
-  return typeof item === 'string' ? { value: item, text: item } : item ?? null
+  return typeof item === 'string' ? { value: item, text: item } : (item ?? null)
 }
 
 const selectedItem = computed<SelectItem | null>({

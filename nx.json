@@ -1,26 +1,75 @@
 {
   "targetDefaults": {
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "defaultBase": "main",
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/dist"],
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/dist",
+        "{projectRoot}/storybook-static"
+      ],
       "cache": true
     },
     "eslint": {
+      "dependsOn": [
+        "^eslint"
+      ],
       "cache": true
     },
     "stylelint": {
+      "dependsOn": [
+        "^stylelint"
+      ],
       "cache": true
     },
     "test": {
-      "outputs": ["{projectRoot}/coverage"],
+      "dependsOn": [
+        "^test"
+      ],
+      "outputs": [
+        "{projectRoot}/coverage"
+      ],
       "cache": true
     },
     "release": {
-      "dependsOn": ["eslint", "stylelint", "test", "build"],
-      "outputs": ["{projectRoot}/dist"]
+      "dependsOn": [
+        "eslint",
+        "stylelint",
+        "test",
+        "build"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ]
+    },
+    "build:type": {
+      "dependsOn": [
+        "^build:type"
+      ],
+      "outputs": [
+        "{projectRoot}/@types"
+      ],
+      "cache": true
     }
   },
-  "affected": {
-    "defaultBase": "main"
-  }
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/vite/plugin",
+      "options": {
+        "buildTargetName": "vite:build",
+        "testTargetName": "vite:test",
+        "serveTargetName": "serve",
+        "previewTargetName": "preview",
+        "serveStaticTargetName": "serve-static"
+      }
+    }
+  ]
 }

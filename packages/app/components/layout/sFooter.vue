@@ -56,7 +56,7 @@ const updateFooterHeight = (height?: number | undefined | null | string) => {
   const shouldUseElementHeight = height === undefined || height === null
 
   const footerHeight = shouldUseElementHeight
-    ? footerElement.value?.offsetHeight ?? 0
+    ? (footerElement.value?.offsetHeight ?? 0)
     : getNumericValue(height, { defaultValue: 0, isPositive: true }) + app.value.bottomNavigationHeight
 
   if (footerHeight !== app.value.footerHeight) {

@@ -141,7 +141,7 @@ const displayValue = computed(() => {
     return null
   }
 
-  return value !== null && minNumber.value !== null && value <= minNumber.value ? null : value?.toString() ?? null
+  return value !== null && minNumber.value !== null && value <= minNumber.value ? null : (value?.toString() ?? null)
 })
 
 const getNormalizedValue = (value: number | string | null, max?: number | null) => {
