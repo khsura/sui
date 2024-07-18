@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/khsura/sui/compare/root-v1.0.2...root-v1.0.3) (2024-07-18)
+
+
+### Bug Fixes
+
+* layout bug ([fb6c1dc](https://github.com/khsura/sui/commit/fb6c1dc1c6043f188561fd9cf75078fdbaeaaa8a))
+
 ## [1.0.2](https://github.com/khsura/sui/compare/root-v1.0.1...root-v1.0.2) (2024-05-25)
 
 
