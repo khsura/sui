@@ -27,9 +27,11 @@ const styles = computed(() => {
   const isFixedOrAbsoluteAppBar = getIsFixedOrAbsolutePosition({ position: app.value.appBarPosition, app: isApp.value })
   const marginTop = isFixedOrAbsoluteAppBar ? app.value.appBarHeight + app.value.offsetTop : 0
   const marginBottom = isApp.value ? app.value.bottomNavigationHeight : app.value.footerHeight
+  const offsetTop = getNumericCssAttribute(marginTop)
 
   return {
-    marginTop: getNumericCssAttribute(marginTop),
+    marginTop: `-${offsetTop}`,
+    paddingTop: offsetTop,
     marginLeft: getNumericCssAttribute(app.value.left),
     marginRight: getNumericCssAttribute(app.value.right),
     width: `calc(100% - ${getNumericCssAttribute(widthToSubtract)})`,

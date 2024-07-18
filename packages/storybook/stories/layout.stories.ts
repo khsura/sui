@@ -147,7 +147,7 @@ export const Layout = createStoryObj<StoryComponent>({
               <SDivider></SDivider>
             </SList>
           </SNavigationDrawer>
-          <SMain :for="args.name" class="s_px__2" :style="{ paddingTop: args.positionAppBar === 'fixed' ? '64px' : null }">
+          <SMain :for="args.name" class="s_px__2">
             Main Content
           </SMain>
           <SFooter :for="args.name">

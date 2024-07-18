@@ -1,6 +1,10 @@
+import { ProviderName } from '@khsura/sui/constants'
+
 interface Params {
   position: 'absolute' | 'relative' | 'fixed' | null | undefined
   app?: boolean
+  name?: string
+  for?: string
 }
 
 export const getIsAbsolutePosition = (params: Params) => {
@@ -12,8 +16,12 @@ export const getIsFixedPosition = (params: Params, options?: { ignoreApp?: boole
     return false
   }
 
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  return (!options?.ignoreApp && params.app && params.position === undefined) || params.position === 'fixed'
+  return (
+    (!options?.ignoreApp &&
+      (params.app === true || params.name === ProviderName.app || params.for === ProviderName.app) &&
+      !params.position) ||
+    params.position === 'fixed'
+  )
 }
 
 export const getIsFixedOrAbsolutePosition = (params: Params, options?: { ignoreApp?: boolean }) => {

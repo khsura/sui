@@ -4,7 +4,7 @@ import { argsButton } from '@khsura/storybook/args'
 import { argTypesButton, argTypesIcon } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'
 import { defineComponent } from 'vue'
-import type { MaterialDesignIcon } from '@khsura/sui/types/index'
+import type { MaterialDesignIcon } from '@khsura/sui/types'
 import type { ComponentPropsAndSlots, Meta } from '@storybook/vue3'
 
 const button: Meta<typeof SButton> = {

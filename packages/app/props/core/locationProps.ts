@@ -1,4 +1,4 @@
-import { type LocationRaw } from '@khsura/sui/types/location'
+import { type LocationRaw } from '@khsura/sui/types'
 
 import { type PropType } from 'vue'
 

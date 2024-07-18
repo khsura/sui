@@ -7,7 +7,7 @@
 import { ProviderName } from '@khsura/sui/constants'
 import { propsForm } from '@khsura/sui/props'
 import { useProviderService } from '@khsura/sui/services'
-import { type FormProviderRegisterInputAttribute } from '@khsura/sui/types/index'
+import { type FormProviderRegisterInputAttribute } from '@khsura/sui/types'
 import { computed } from 'vue'
 
 defineProps(propsForm())
