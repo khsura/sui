@@ -1,5 +1,5 @@
 import type { PropsLink } from '@khsura/sui/definitions'
-import type { ArgTypes } from '@storybook/types'
+import type { ArgTypes } from '@storybook/vue3'
 
 export const argTypesLink: ArgTypes<PropsLink> = {
   href: {

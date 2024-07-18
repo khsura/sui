@@ -1,5 +1,5 @@
 import type { PropsToggleButtonGroup } from '@khsura/sui/index'
-import type { ArgTypes } from '@storybook/types'
+import type { ArgTypes } from '@storybook/vue3'
 import { argTypesBorder, argTypesColor } from './core'
 
 const { underlined: _, ...borderArgTypes } = argTypesBorder

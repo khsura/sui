@@ -1,6 +1,6 @@
 import type { MockApiConfig } from './mockApi'
 
-declare module '@storybook/types' {
+declare module '@storybook/vue3' {
   export interface Parameters {
     controls?: {
       include?: RegExp | string[]

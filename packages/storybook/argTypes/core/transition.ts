@@ -2,7 +2,7 @@ import { kTransitions } from '@khsura/sui/configs'
 import kTransitionString from '@khsura/sui/constants/transition?raw'
 import { extractInterfaceString } from '@khsura/storybook/helpers'
 import type { STransition } from '@khsura/sui/constants'
-import type { ArgTypes } from '@storybook/types'
+import type { ArgTypes } from '@storybook/vue3'
 
 export const argTypesTransition: ArgTypes<{ transition: STransition }> = {
   transition: {

@@ -1,4 +1,4 @@
-import type { ArgTypes } from '@storybook/types'
+import type { ArgTypes } from '@storybook/vue3'
 
 export const argTypesSlot: ArgTypes<{ default: string }> = {
   default: {

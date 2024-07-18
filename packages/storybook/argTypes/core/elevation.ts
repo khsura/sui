@@ -1,5 +1,5 @@
 import type { PropsElevation } from '@khsura/sui/index'
-import type { ArgTypes } from '@storybook/types'
+import type { ArgTypes } from '@storybook/vue3'
 
 export const argTypesElevation: ArgTypes<PropsElevation> = {
   elevation: {

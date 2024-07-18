@@ -1,6 +1,6 @@
 import { getMarkdownArrayTypeDescription } from '@khsura/storybook/helpers'
 import type { PropsLocation } from '@khsura/sui/index'
-import type { ArgTypes } from '@storybook/types'
+import type { ArgTypes } from '@storybook/vue3'
 
 const options = [null, 'top', 'right', 'bottom', 'left', 'top left', 'top right', 'bottom left', 'bottom right']
 

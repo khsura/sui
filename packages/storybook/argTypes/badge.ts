@@ -1,6 +1,6 @@
 // import { STransition } from '@khsura/sui/constants/transition'
 import type { PropsBadge } from '@khsura/sui/definitions'
-import type { ArgTypes } from '@storybook/types'
+import { type ArgTypes } from '@storybook/vue3'
 import { argTypesColor, argTypesIcon, argTypesTransition } from './core'
 
 export const argTypesBadge: Partial<ArgTypes<PropsBadge>> = {

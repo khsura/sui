@@ -2,7 +2,7 @@ import { htmlTagNames } from '@khsura/storybook/configs'
 import { getMarkdownArrayTypeDescription } from '@khsura/storybook/helpers'
 import type { PropsTag } from '@khsura/sui/definitions'
 import type { HtmlTagName } from '@khsura/sui/types'
-import type { ArgTypes } from '@storybook/types'
+import type { ArgTypes } from '@storybook/vue3'
 
 export const argTypesTag = <T extends HtmlTagName>(defaults?: {
   tag: T | undefined | null

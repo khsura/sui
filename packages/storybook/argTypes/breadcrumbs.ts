@@ -1,7 +1,7 @@
 import breadcrumbsItem from '@khsura/sui/types/breadcrumbs?raw'
 import { extractInterfaceString } from '@khsura/storybook/helpers'
 import type { SBreadcrumbs } from '@khsura/sui/components'
-import type { ArgTypes } from '@storybook/types'
+import type { ArgTypes } from '@storybook/vue3'
 import type { ComponentPropsAndSlots } from '@storybook/vue3'
 import { argTypesTextColor } from './core'
 

@@ -2,7 +2,7 @@ import { type Meta } from '@storybook/vue3'
 
 export type StoryBookConfig = Meta
 
-/** @deprecated use StoryObject from '@storybook/types' instead */
+/** @deprecated use StoryObject from '@storybook/vue3' instead */
 export interface StoryBookParameterType {
   controls?: {
     include?: RegExp | string[]
