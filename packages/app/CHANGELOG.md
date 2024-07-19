@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.5](https://github.com/khsura/sui/compare/sui-v1.0.4...sui-v1.0.5) (2024-07-18)
+
+
+### Bug Fixes
+
+* bug ([11d5593](https://github.com/khsura/sui/commit/11d55939446f8bf5f604a8f8c263172c1e4b06a5))
+* bug ([3be0c23](https://github.com/khsura/sui/commit/3be0c23002acacc4ea6c1c24b6c4b197678db097))
+* layout bug ([fb6c1dc](https://github.com/khsura/sui/commit/fb6c1dc1c6043f188561fd9cf75078fdbaeaaa8a))
+
 ## [1.0.4](https://github.com/khsura/sui/compare/sui-v1.0.3...sui-v1.0.4) (2024-05-25)
 
 
