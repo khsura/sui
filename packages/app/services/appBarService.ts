@@ -102,10 +102,10 @@ export const useAppBarService = (props: PropsAppBar) => {
 
   const classes = computed(() => {
     return {
-      k_appBar: true,
-      'k_appBar--hideShadow': hideShadow.value,
-      'k_appBar--elevateOnScroll': props.elevateOnScroll,
-      'k_appBar--fixed': isFixedAppBar.value,
+      s_appBar: true,
+      's_appBar--hideShadow': hideShadow.value,
+      's_appBar--elevateOnScroll': props.elevateOnScroll,
+      's_appBar--fixed': isFixedAppBar.value,
       k_position__fixed: isFixedAppBar.value && classListPosition.value.s_position__fixed,
       k_position__absolute: !isFixedAppBar.value && classListPosition.value.s_position__absolute,
     }
