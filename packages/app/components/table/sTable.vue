@@ -262,6 +262,14 @@ defineExpose({
   background-color: s_getAppColor('card');
 
   &__wrapper {
+    display: block;
+    width: 100%;
+    overflow: auto;
+
+    // Property is nonstandard. Avoid using it.
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-overflow-scrolling
+    -webkit-overflow-scrolling: touch;
+
     &--outlined {
       &.s_table__wrapper--noTopBottomBorders {
         border-right: 1px solid s_getAppColor('border');
@@ -272,13 +280,6 @@ defineExpose({
         border: 1px solid s_getAppColor('border');
       }
     }
-    display: block;
-    width: 100%;
-    overflow: auto;
-
-    // Property is nonstandard. Avoid using it.
-    // https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-overflow-scrolling
-    -webkit-overflow-scrolling: touch;
   }
 
   &__row {
@@ -340,11 +341,12 @@ defineExpose({
     }
 
     .s_table__head {
-      /* stylelint-disable-next-line no-descending-specificity */
+      /* stylelint-disable no-descending-specificity */
       .s_tableBodyCell,
       .s_tableHeadCell {
         @include s_underlined(null, 1px);
       }
+      /* stylelint-enable no-descending-specificity */
     }
 
     /* stylelint-disable selector-max-compound-selectors */
@@ -371,4 +373,3 @@ defineExpose({
   }
 }
 </style>
-./sTableHeadCell.vue

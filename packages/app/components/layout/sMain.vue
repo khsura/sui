@@ -30,8 +30,7 @@ const styles = computed(() => {
   const offsetTop = getNumericCssAttribute(marginTop)
 
   return {
-    marginTop: `-${offsetTop}`,
-    paddingTop: offsetTop,
+    marginTop: offsetTop,
     marginLeft: getNumericCssAttribute(app.value.left),
     marginRight: getNumericCssAttribute(app.value.right),
     width: `calc(100% - ${getNumericCssAttribute(widthToSubtract)})`,

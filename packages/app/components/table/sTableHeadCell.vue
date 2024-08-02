@@ -134,8 +134,9 @@ const sortIcon = computed(() => {
 @import './mixins';
 
 .s_tableHeadCell {
-  @include tableCell();
   font-size: map-deep-get($s_headings, 'caption', 'size');
+
+  @include tableCell();
 
   &__inner {
     display: flex;
@@ -151,7 +152,7 @@ const sortIcon = computed(() => {
 
   &__sorter {
     margin-left: calc($s_spacer / 2);
-    font-size: map.get($s_headings, 'caption', 'size');
+    font-size: map-deep-get($s_headings, 'caption', 'size');
     color: s_getAppColor('disabled');
 
     &.s_button {
