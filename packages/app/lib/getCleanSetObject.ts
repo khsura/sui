@@ -5,7 +5,7 @@ export const getCleanSetObject = <T extends Record<string, unknown>>(target: T):
   const output: any = { ...target }
 
   Object.entries(target).forEach(([key, value]) => {
-    if (value === undefined || value === false || value === null) {
+    if (value === undefined || value === false || value === null || value === '') {
       // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       delete output[key]
     }

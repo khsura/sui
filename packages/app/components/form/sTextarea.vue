@@ -97,7 +97,7 @@ const onEvent = async (name?: 'input' | 'blur', event?: Event) => {
     if (props.autogrow) {
       textareaHeight.value = 'auto'
       await nextTick()
-      textareaHeight.value = getNumericCssAttribute(textareaElement.value.scrollHeight)
+      textareaHeight.value = getNumericCssAttribute(textareaElement.value.scrollHeight) ?? null
     }
   }
 

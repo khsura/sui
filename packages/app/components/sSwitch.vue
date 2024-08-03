@@ -1,7 +1,13 @@
 <template>
   <div class="s_switch" :class="switchClasses">
     <input :id="id" v-model="modelValue" type="checkbox" class="s_switch__input" />
-    <div class="s_switch__button" :style="switchButtonStyleList" :class="switchButtonClasses" @click="toggle"></div>
+    <div
+      :key="`${modelValue}`"
+      class="s_switch__button"
+      :style="switchButtonStyleList"
+      :class="switchButtonClasses"
+      @click="toggle"
+    ></div>
     <label v-if="label || $slots.label" class="s_switch__label" :for="id" :class="switchLabelClasses">
       <slot name="label">{{ label }}</slot>
     </label>

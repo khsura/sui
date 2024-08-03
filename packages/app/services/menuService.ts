@@ -106,11 +106,11 @@ export const useMenuService = (
   const contentStyles = computed<MenuContentStyle>(() => {
     const minWidthToSet = options?.noContentMinWidth ? undefined : getNumericCssAttribute(minWidth.value)
 
-    const styles: MenuContentStyle = {
+    const styles: MenuContentStyle = getCleanSetObject({
       top: getNumericCssAttribute(top.value),
       left: getNumericCssAttribute(left.value),
       ...content.styles.value,
-    }
+    })
 
     if (minWidthToSet) {
       styles.minWidth = minWidthToSet
