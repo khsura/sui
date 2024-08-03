@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.8](https://github.com/khsura/sui/compare/sui-v1.0.7...sui-v1.0.8) (2024-08-03)
+
+
+### Bug Fixes
+
+* switch issue ([afb7f02](https://github.com/khsura/sui/commit/afb7f024ce0cad244379bdae3a0d413ae8777ae0))
+
 ## [1.0.7](https://github.com/khsura/sui/compare/sui-v1.0.6...sui-v1.0.7) (2024-08-02)
 
 
