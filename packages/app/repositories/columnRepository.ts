@@ -20,7 +20,6 @@ export const isOptionalNumeric = (options?: { min?: number; max?: number; whitel
       return true
     }
 
-    typeof possiblyNumeric === 'number' && isIn({ value: possiblyNumeric, ...options })
     const number = Number(possiblyNumeric)
 
     return !Number.isNaN(number) && isIn({ value: number, ...options })
