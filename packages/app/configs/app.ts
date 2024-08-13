@@ -1,10 +1,9 @@
 import { AppTheme, thresholds, scrollBarWidth } from '@khsura/sui/constants'
+import { type AppState } from '@khsura/sui/types'
 
 export const defaultAppConfig = {
   theme: AppTheme.light,
   display: {
-    height: 0,
-    width: 0,
     thresholds,
     scrollBarWidth,
   },
@@ -61,4 +60,4 @@ export const defaultAppConfig = {
       },
     },
   },
-}
+} satisfies Omit<AppState, 'name'>

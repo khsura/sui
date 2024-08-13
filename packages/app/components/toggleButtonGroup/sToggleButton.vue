@@ -96,7 +96,6 @@ const classes = computed(() => {
 
     &.s_toggleButton--selected:not(.s_disabled) {
       .s_toggleButton__button {
-        z-index: 10;
         border-radius: $s_toggleButton--insetBorderRadius;
         box-shadow: 0 3px 8px 2px #0000001f;
       }

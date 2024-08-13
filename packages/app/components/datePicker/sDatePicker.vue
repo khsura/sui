@@ -71,8 +71,10 @@ const selectedDateFormatted = defineModel<string>({
   get: (value) => {
     return dayjs(value).format(getDatePickerFormat(props.type))
   },
-  set: () => {
+  set: (value) => {
     emit('change')
+
+    return value
   },
 })
 
@@ -91,6 +93,7 @@ const datePickerComponent = computed(() => {
   return SDatePickerDate
 })
 </script>
+
 <style lang="scss">
 .s_datePicker {
   &__item {

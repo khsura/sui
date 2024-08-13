@@ -45,7 +45,6 @@ describe('SOverlay', () => {
 
   it('do not display overlay/scrim flags are not set', async () => {
     await overlayWrapper.setProps({ value: true, disabled: true })
-    console.log(overlayWrapper.html())
     expect(overlayWrapper.find('.s_overlay').exists()).toBe(false)
   })
 })

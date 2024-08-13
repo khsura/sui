@@ -1,5 +1,5 @@
 <template>
-  <Portal :to="defaultOverlayClass" :disabled="disabled">
+  <Teleport v-if="isReady" to="#sAppOverlayContainer" :disabled="disabled">
     <div v-if="position === 'fixed' || scrim" class="s_overlay" :style="{ zIndex }">
       <Transition name="s_transition--appear">
         <div v-if="scrim && value" class="s_overlay__scrim"></div>
@@ -11,15 +11,20 @@
     <Transition v-else :name="transition">
       <slot v-if="value" :attrs="{ class: 's_overlay__content' }" :value="value"></slot>
     </Transition>
-  </Portal>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
 import { propsOverlay } from '@khsura/sui/props'
-import { Portal } from 'portal-vue'
-import { defaultOverlayClass } from '@khsura/sui/constants'
+import { onMounted, ref } from 'vue'
 
 defineProps(propsOverlay())
+
+const isReady = ref(false)
+
+onMounted(() => {
+  isReady.value = true
+})
 </script>
 
 <style lang="scss">

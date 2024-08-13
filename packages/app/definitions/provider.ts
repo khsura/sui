@@ -47,6 +47,7 @@ export interface ProviderProps {
   [ProviderPropsName.window]: props.PropsWindow
   [ProviderPropsName.splitViewProps]: props.PropsSplitView
   [ProviderPropsName.expansionPanelsProps]: props.PropsExpansionPanels
+  [ProviderPropsName.dialog]: props.PropsDialog
 }
 
 export interface SingleGroupProvider extends GroupProvider {

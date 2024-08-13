@@ -46,6 +46,8 @@ export interface AppState<T extends string = 'sui'> extends Required<AppStateOpt
   }
 }
 
+export type AppThemeType = 'light' | 'dark'
+
 export interface AppStateOptions {
   theme?: AppThemeType
   display?: DisplayOptions
@@ -55,5 +57,3 @@ export interface AppStateOptions {
     [AppTheme.dark]?: ThemeConfigOptions
   }
 }
-
-export type AppThemeType = 'light' | 'dark'

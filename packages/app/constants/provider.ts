@@ -27,4 +27,5 @@ export enum ProviderPropsName {
   window = 'windowProps',
   splitViewProps = 'splitViewProps',
   expansionPanelsProps = 'expansionPanelProps',
+  dialog = 'dialog',
 }

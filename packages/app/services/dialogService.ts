@@ -1,10 +1,10 @@
+import { STransition } from '@khsura/sui/constants'
 import { type PropsDialog } from '@khsura/sui/definitions'
-import { useActivatorService } from '@khsura/sui/services/core/activatorService'
-import { useElevationService } from '@khsura/sui/services'
-import { type ModelRef, computed } from 'vue'
-import { STransition } from '../constants'
-import { useMeasurableStylesService } from './measurableStylesService'
-import { useLocationService } from './core/locationService'
+import { useActivatorService, useLocationService } from '@khsura/sui/services/core'
+import { useElevationService } from '@khsura/sui/services/elevationService'
+import { useMeasurableStylesService } from '@khsura/sui/services/measurableStylesService'
+import { type ModelRef, computed, nextTick } from 'vue'
+import { z } from 'zod'
 
 export const useDialogService = (props: PropsDialog, isDialogOpen: ModelRef<boolean | null | undefined>) => {
   const { isBottom } = useLocationService(props)
@@ -39,16 +39,32 @@ export const useDialogService = (props: PropsDialog, isDialogOpen: ModelRef<bool
     return isBottom.value ? 's_transition__dialog--bottom' : STransition.appear
   })
 
-  const enableBackgroundScroll = () => {
+  const enableBackgroundScroll = async () => {
     const activeCount = document.querySelectorAll('.s_dialog__content--active').length
+    const html = document.querySelector<HTMLElement>('html')
 
-    if (activeCount === 1) {
-      document?.querySelector('html')?.classList.remove('s_overflowY--hidden')
+    if (activeCount === 1 && html) {
+      const x = z.coerce.number().parse(html.style.getPropertyValue('--s-body-scroll-x').replace('px', ''))
+      const y = z.coerce.number().parse(html.style.getPropertyValue('--s-body-scroll-y').replace('px', ''))
+
+      html.style.setProperty('--s-body-scroll-x', null)
+      html.style.setProperty('--s-body-scroll-y', null)
+      html.classList.remove('s_overlay__scrollBlocked')
+
+      await nextTick()
+
+      window.scrollTo({ left: -1 * x, top: -1 * y, behavior: 'instant' })
     }
   }
 
   const disableBackgroundScroll = () => {
-    document?.querySelector('html')?.classList.add('s_overflowY--hidden')
+    const html = document.querySelector<HTMLElement>('html')
+
+    if (html) {
+      html.style.setProperty('--s-body-scroll-x', `-${window.scrollX}px`)
+      html.style.setProperty('--s-body-scroll-y', `-${window.scrollY}px`)
+      html.classList.add('s_overlay__scrollBlocked')
+    }
   }
 
   return {

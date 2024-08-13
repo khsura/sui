@@ -2,7 +2,7 @@ import { type DisplayOptions } from '@khsura/sui/types'
 import breakpoints from '@khsura/sui/styles/modules/breakpoints.module.scss'
 import { z } from 'zod'
 
-export const scrollBarWidth: DisplayOptions['scrollBarWidth'] = 16 as const
+export const scrollBarWidth = 16 as const
 
 const parsedThresholds = z
   .object({
@@ -15,20 +15,22 @@ const parsedThresholds = z
   })
   .safeParse(breakpoints)
 
-export const thresholds: DisplayOptions['thresholds'] = parsedThresholds.success
-  ? {
-      xs: parsedThresholds.data.breakpointXs,
-      sm: parsedThresholds.data.breakpointSm,
-      md: parsedThresholds.data.breakpointMd,
-      lg: parsedThresholds.data.breakpointLg,
-      xl: parsedThresholds.data.breakpointXl,
-      xxl: parsedThresholds.data.breakpointXxl,
-    }
-  : {
-      xs: 640,
-      sm: 768,
-      md: 1024,
-      lg: 1280,
-      xl: 1536,
-      xxl: 1980,
-    }
+export const thresholds = (
+  parsedThresholds.success
+    ? {
+        xs: parsedThresholds.data.breakpointXs,
+        sm: parsedThresholds.data.breakpointSm,
+        md: parsedThresholds.data.breakpointMd,
+        lg: parsedThresholds.data.breakpointLg,
+        xl: parsedThresholds.data.breakpointXl,
+        xxl: parsedThresholds.data.breakpointXxl,
+      }
+    : {
+        xs: 640,
+        sm: 768,
+        md: 1024,
+        lg: 1280,
+        xl: 1536,
+        xxl: 1980,
+      }
+) satisfies DisplayOptions['thresholds']

@@ -2,35 +2,17 @@
   <div class="s_app" :style="styles">
     <slot></slot>
     <PortalTarget :name="defaultOverlayClass" multiple></PortalTarget>
+    <div id="sAppOverlayContainer"></div>
   </div>
 </template>
 <script setup lang="ts">
 import { defaultOverlayClass } from '@khsura/sui/constants'
 import { propsApp } from '@khsura/sui/props'
-import { useAppService, useThemeService } from '@khsura/sui/services'
-import { type AppThemeType } from '@khsura/sui/types'
+import { useAppService } from '@khsura/sui/services'
 import { PortalTarget } from 'portal-vue'
-import { watch } from 'vue'
 
 const props = defineProps(propsApp())
 const { styles } = useAppService(props)
-const { setTheme, theme } = useThemeService()
-
-const themeModel = defineModel<AppThemeType>('theme', {
-  set: (value) => {
-    if (value !== theme.value) {
-      setTheme(value)
-    }
-
-    return theme.value
-  },
-})
-
-watch(theme, () => {
-  if (theme.value !== themeModel.value) {
-    themeModel.value = theme.value
-  }
-})
 </script>
 
 <style lang="scss">
@@ -61,7 +43,7 @@ watch(theme, () => {
     $colorValue: s_getPresetColor($colorName);
     $textColorValue: s_getPresetColor($colorName, true);
 
-    .s_backgroundColor__#{$colorName}:not(.s_disabled) {
+    .s_backgroundColor__#{$colorName} {
       color: $textColorValue;
       background-color: $colorValue;
       fill: $textColorValue;

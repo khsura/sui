@@ -82,3 +82,11 @@ $attrs in $s_headings {
 .s_width--fill {
   width: 100%;
 }
+
+.s_overlay__scrollBlocked {
+  position: fixed;
+  top: var(--s-body-scroll-y);
+  left: var(--s-body-scroll-x);
+  width: 100%;
+  height: 100%;
+}

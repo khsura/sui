@@ -4,7 +4,10 @@
       <slot name="activator" :on="activatorOn" :attrs="activatorAttrs"></slot>
     </div>
     <SOverlay v-slot="{ attrs }" scrim :value="model" :transition="transitionName">
-      <OnClickOutside @trigger="onClickOutside">
+      <OnClickOutside
+        :options="{ ignore: ['.s_menu__content', '.s_tooltip__content', 's_select__list', '.s_snackbar__wrapper'] }"
+        @trigger="onClickOutside"
+      >
         <div v-bind="attrs" :class="contentClasses" :style="contentStyles">
           <slot></slot>
         </div>
@@ -14,15 +17,37 @@
 </template>
 <script setup lang="ts">
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
+import { ProviderPropsName } from '@khsura/sui/constants'
 import { propsDialog, propsElevation } from '@khsura/sui/props'
-import { useDialogService } from '@khsura/sui/services'
+import { useDialogService, useProviderService } from '@khsura/sui/services'
 import { OnClickOutside } from '@vueuse/components'
+import { watch } from 'vue'
 
 const props = defineProps({ ...propsDialog(), ...propsElevation() })
 const model = defineModel<boolean>()
+const { provideProps } = useProviderService()
 
-const { activatorOn, activatorAttrs, activatorElement, contentClasses, contentStyles, transitionName, onClickOutside } =
-  useDialogService(props, model)
+provideProps(ProviderPropsName.dialog, props)
+
+const {
+  activatorOn,
+  activatorAttrs,
+  activatorElement,
+  contentClasses,
+  contentStyles,
+  transitionName,
+  onClickOutside,
+  enableBackgroundScroll,
+  disableBackgroundScroll,
+} = useDialogService(props, model)
+
+watch(model, async (value) => {
+  if (value) {
+    disableBackgroundScroll()
+  } else {
+    await enableBackgroundScroll()
+  }
+})
 </script>
 
 <style lang="scss">
@@ -97,6 +122,7 @@ $kDialogMargin: $s_spacer * 6;
       > .s_card,
       > .s_list {
         height: 100%;
+        overflow: auto;
         border-radius: 0;
       }
     }

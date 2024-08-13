@@ -25,8 +25,8 @@ import { getWindow } from '@khsura/sui/lib/browser'
 import { propsMeasurableStyles, propsMenu } from '@khsura/sui/props'
 import { useMeasurableStylesService, useMenuService } from '@khsura/sui/services'
 import { computed, watch } from 'vue'
-import { OnClickOutside } from '@vueuse/components'
 import { type EmitMenu } from '@khsura/sui/types'
+import { OnClickOutside } from '@vueuse/components'
 import { nextTick } from 'vue'
 
 const props = defineProps({

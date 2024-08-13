@@ -13,7 +13,7 @@
       <slot name="activator"></slot>
     </div>
     <SOverlay v-slot="{ attrs }" :value="model">
-      <OnClickOutside @trigger="onClickOutside">
+      <OnClickOutside :options="{ ignore: ['.s_overlay__content'] }" @trigger="onClickOutside">
         <div
           ref="contentElement"
           class="s_tooltip__content"

@@ -17,6 +17,7 @@ body {
 }
 
 html {
+  overflow-y: scroll;
   font-size: $s_fontSize;
 }
 
@@ -257,7 +258,7 @@ input[type='number'] {
 }
 
 p {
-  margin-block: 0.5em 0.5em;
+  margin-block: 0.5em;
 }
 
 ul,

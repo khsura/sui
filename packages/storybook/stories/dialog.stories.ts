@@ -17,6 +17,7 @@ import { argTypesElevation, argTypesLocation } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'
 import { defineComponent, ref } from 'vue'
 import type { Meta } from '@storybook/vue3'
+import SMenu from '@khsura/sui/components/sMenu.vue'
 
 const dialog: Meta<typeof SDialog> = {
   title: 'UI Components/Dialog',
@@ -122,6 +123,7 @@ export const Dialog = createStoryObj<typeof SDialog>({
         const title = ref(faker.commerce.productName())
         const subtitle = ref(faker.commerce.department())
         const text = ref(faker.commerce.productDescription())
+        const paragraphs = ref(faker.lorem.paragraphs({ min: 5, max: 10 }).split('\n'))
 
         return {
           dialog,
@@ -129,9 +131,11 @@ export const Dialog = createStoryObj<typeof SDialog>({
           subtitle,
           text,
           args,
+          paragraphs,
         }
       },
       template: /* html */ `
+          <div v-for="(p, i) in paragraphs" :key="i">{{ p }}</div>
           <SDialog v-bind="args" v-model="dialog" max-width="400">
             <template #activator="{ on, attrs }">
               <SButton v-on="on" v-bind="attrs">
@@ -286,6 +290,37 @@ export const DoubleDialog = createStoryObj<typeof SDialog>({
           </SCard>
         </SDialog>
         </SContainer>
+      `,
+    })
+  },
+})
+
+export const dialogWithMenu = createStoryObj<typeof SDialog>({
+  render: (args) => {
+    return defineComponent({
+      components: { SDialog, SMenu, SButton, SCard, SCardText, SList },
+      setup: () => {
+        const dialogModel = ref(false)
+        const menuModel = ref(false)
+
+        return {
+          args,
+          dialogModel,
+          menuModel,
+        }
+      },
+      template: /* html */ `
+        <SDialog v-bind="args" v-model="dialogModel">
+          <template #activator="dialogActivator"><SButton v-on="dialogActivator.on">Open Dialog</SButton></template>
+          <SCard>
+            <SCardText>
+              <SMenu v-model="menuModel" location="bottom">
+                <template #activator="menuActivator"><SButton v-on="menuActivator.on">Open Menu</SButton></template>
+                <SList>Menu Content</SList>
+              </SMenu>
+            </SCardText>
+          </SCard>
+        </SDialog>
       `,
     })
   },

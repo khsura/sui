@@ -6,12 +6,16 @@ import { useAppProviderRepository } from './appProviderRepository'
 export const useColorRepository = () => {
   const { config } = useAppProviderRepository()
 
+  const getTheme = () => {
+    return config.themes[config.theme]
+  }
+
   const getPresetColor = (color: string | undefined | null) => {
     if (!color) {
       return undefined
     }
 
-    return config.themes[config.theme].presetColors[color] ? color : undefined
+    return getTheme().presetColors[color] ? color : undefined
   }
 
   const getPresetColorValue = (color: string | undefined | null) => {
@@ -19,7 +23,7 @@ export const useColorRepository = () => {
       return undefined
     }
 
-    const presetColorValue = config.themes[config.theme].presetColors[color]
+    const presetColorValue = getTheme().presetColors[color]
 
     return presetColorValue ? presetColorValue : color
   }
