@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/khsura/sui/compare/storybook-v1.0.2...storybook-v1.0.3) (2024-08-13)
+
+
+### Bug Fixes
+
+* dialog etc many bugs ([12b5413](https://github.com/khsura/sui/commit/12b5413a9444683c776b10c4aa0f8a1b69f709f7))
+
 ## [1.0.2](https://github.com/khsura/sui/compare/storybook-v1.0.1...storybook-v1.0.2) (2024-07-18)
 
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.9](https://github.com/khsura/sui/compare/sui-v1.0.8...sui-v1.0.9) (2024-08-13)
+
+
+### Bug Fixes
+
+* dialog etc many bugs ([12b5413](https://github.com/khsura/sui/commit/12b5413a9444683c776b10c4aa0f8a1b69f709f7))
+* eslint issues ([d3a8aac](https://github.com/khsura/sui/commit/d3a8aace524228efe25c74114a7173ab4b933555))
+
 ## [1.0.8](https://github.com/khsura/sui/compare/sui-v1.0.7...sui-v1.0.8) (2024-08-03)
 
 
