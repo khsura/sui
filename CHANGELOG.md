@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.4](https://github.com/khsura/sui/compare/root-v1.0.3...root-v1.0.4) (2024-08-13)
+
+
+### Bug Fixes
+
+* dialog etc many bugs ([12b5413](https://github.com/khsura/sui/commit/12b5413a9444683c776b10c4aa0f8a1b69f709f7))
+* test ([35d105a](https://github.com/khsura/sui/commit/35d105a77088e2d6f8d4d97e8b36265c47e8023e))
+
 ## [1.0.3](https://github.com/khsura/sui/compare/root-v1.0.2...root-v1.0.3) (2024-07-18)
 
 
