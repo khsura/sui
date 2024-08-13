@@ -4,7 +4,6 @@ import { useTheme } from '@khsura/sui/index'
 import { mount } from '@vue/test-utils'
 import { defineComponent } from 'vue'
 import { SApp } from '@khsura/sui/components'
-import portalVue from 'portal-vue'
 
 describe('app', () => {
   const app = mount(
@@ -19,11 +18,6 @@ describe('app', () => {
       },
       template: `<SApp></SApp>`,
     }),
-    {
-      global: {
-        plugins: [portalVue],
-      },
-    },
   )
 
   beforeEach(() => {

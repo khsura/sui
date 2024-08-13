@@ -1,49 +1,70 @@
 import { SOverlay } from '@khsura/sui/components'
+import { overlaysContainerId } from '@khsura/sui/constants'
 import { type PropsOverlay } from '@khsura/sui/definitions'
 import { mount } from '@vue/test-utils'
-import portalVue, { Portal, PortalTarget } from 'portal-vue'
 
 describe('SOverlay', () => {
   const slotId = 'one'
   const slotContent = `<div id="${slotId}">main content</div>`
   const defaultProps: Partial<PropsOverlay> = { value: false, disabled: false, scrim: false, position: null }
 
-  const overlayWrapper = mount(SOverlay, {
-    props: defaultProps,
-    slots: { default: slotContent },
-    global: {
-      plugins: [portalVue],
-      components: {
-        Portal,
-        PortalTarget,
-      },
-    },
+  beforeEach(() => {
+    const el = document.createElement('div')
+
+    el.id = overlaysContainerId
+    document.body.appendChild(el)
   })
 
-  beforeEach(async () => {
-    await overlayWrapper.setProps(defaultProps)
+  afterEach(() => {
+    // clean up
+    document.body.innerHTML = ''
   })
 
   it('do not display slot if value is false and disabled is false', () => {
+    const overlayWrapper = mount(SOverlay, {
+      props: defaultProps,
+      slots: { default: slotContent },
+    })
+
     expect(overlayWrapper.find(`#${slotId}`).exists()).toBe(false)
   })
 
   it('slot will be sent to other places if it is not disabled', async () => {
+    const overlayWrapper = mount(SOverlay, {
+      props: defaultProps,
+      slots: { default: slotContent },
+    })
+
     await overlayWrapper.setProps({ value: true })
     expect(overlayWrapper.find(`#${slotId}`).exists()).toBe(false)
   })
 
   it('display slot when value is true', async () => {
+    const overlayWrapper = mount(SOverlay, {
+      props: defaultProps,
+      slots: { default: slotContent },
+    })
+
     await overlayWrapper.setProps({ value: true, disabled: true })
     expect(overlayWrapper.find(`#${slotId}`).exists()).toBe(true)
   })
 
   it('display overlay/scrim if scrim is true', async () => {
+    const overlayWrapper = mount(SOverlay, {
+      props: defaultProps,
+      slots: { default: slotContent },
+    })
+
     await overlayWrapper.setProps({ value: true, disabled: true, scrim: true })
     expect(overlayWrapper.find('.s_overlay').exists()).toBe(true)
   })
 
   it('do not display overlay/scrim flags are not set', async () => {
+    const overlayWrapper = mount(SOverlay, {
+      props: defaultProps,
+      slots: { default: slotContent },
+    })
+
     await overlayWrapper.setProps({ value: true, disabled: true })
     expect(overlayWrapper.find('.s_overlay').exists()).toBe(false)
   })

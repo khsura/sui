@@ -4,12 +4,6 @@ import { mount } from '@vue/test-utils'
 describe('SSelect', () => {
   const component = mount(SSelect, {
     props: { label: '', id: 'id', modelValue: '' },
-    global: {
-      stubs: {
-        Portal: true,
-        PortalTarget: true,
-      },
-    },
   })
 
   test('formError will be displayed if hideDetails is false', async () => {

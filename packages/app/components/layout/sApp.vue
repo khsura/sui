@@ -1,15 +1,13 @@
 <template>
   <div class="s_app" :style="styles">
     <slot></slot>
-    <PortalTarget :name="defaultOverlayClass" multiple></PortalTarget>
-    <div id="sAppOverlayContainer"></div>
+    <div :id="overlaysContainerId"></div>
   </div>
 </template>
 <script setup lang="ts">
-import { defaultOverlayClass } from '@khsura/sui/constants'
+import { overlaysContainerId } from '@khsura/sui/constants'
 import { propsApp } from '@khsura/sui/props'
 import { useAppService } from '@khsura/sui/services'
-import { PortalTarget } from 'portal-vue'
 
 const props = defineProps(propsApp())
 const { styles } = useAppService(props)

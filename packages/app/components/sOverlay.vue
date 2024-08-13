@@ -1,5 +1,5 @@
 <template>
-  <Teleport v-if="isReady" to="#sAppOverlayContainer" :disabled="disabled">
+  <Teleport v-if="isReady" :to="`#${overlaysContainerId}`" :disabled="disabled">
     <div v-if="position === 'fixed' || scrim" class="s_overlay" :style="{ zIndex }">
       <Transition name="s_transition--appear">
         <div v-if="scrim && value" class="s_overlay__scrim"></div>
@@ -17,6 +17,7 @@
 <script setup lang="ts">
 import { propsOverlay } from '@khsura/sui/props'
 import { onMounted, ref } from 'vue'
+import { overlaysContainerId } from '@khsura/sui/constants'
 
 defineProps(propsOverlay())
 

@@ -1,1 +1,1 @@
-export const defaultOverlayClass = 's_overlayContainer'
+export const overlaysContainerId = 'sAppOverlayContainer'

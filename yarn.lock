@@ -2248,7 +2248,6 @@ __metadata:
     "@vueuse/core": "npm:^10.11.1"
     dayjs: "npm:^1.11.12"
     lodash: "npm:^4.17.21"
-    portal-vue: "npm:^3.0.0"
     vue: "npm:^3.4.37"
     vue-i18n: "npm:^9.13.1"
     zod: "npm:^3.23.8"
@@ -10233,18 +10232,6 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.17.8"
   checksum: 10/0902fe2eb16aecde1587a00efee7db8081b1331ac7bcfb6e61214d266388723a84858d732ad9395028e0aecd2bb8d0c39cc03d14b4c24c22329a0e40c38141eb
-  languageName: node
-  linkType: hard
-
-"portal-vue@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "portal-vue@npm:3.0.0"
-  peerDependencies:
-    vue: ^3.0.4
-  peerDependenciesMeta:
-    vue:
-      optional: true
-  checksum: 10/2388f17408447e488fc7c8956b1593f3368aea102ee090dffca40b4b90b10f91e7cd8652c9c214a75e35055da5a1323cc96bc3937320cef17a00212ee2190d86
   languageName: node
   linkType: hard
 
