@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.10](https://github.com/khsura/sui/compare/sui-v1.0.9...sui-v1.0.10) (2024-08-15)
+
+
+### Bug Fixes
+
+* slide group hydration issue ([989ad69](https://github.com/khsura/sui/commit/989ad69e95a018e2aa8e5a7ee0c2792e44afeaed))
+
 ## [1.0.9](https://github.com/khsura/sui/compare/sui-v1.0.8...sui-v1.0.9) (2024-08-13)
 
 
