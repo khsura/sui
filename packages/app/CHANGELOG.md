@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.11](https://github.com/khsura/sui/compare/sui-v1.0.10...sui-v1.0.11) (2024-08-15)
+
+
+### Bug Fixes
+
+* add some readme file ([93887be](https://github.com/khsura/sui/commit/93887be1dac70cb7ed1c33f219df1522cc216d03))
+
 ## [1.0.10](https://github.com/khsura/sui/compare/sui-v1.0.9...sui-v1.0.10) (2024-08-15)
 
 
