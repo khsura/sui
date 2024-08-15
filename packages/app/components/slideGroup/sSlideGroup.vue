@@ -30,8 +30,9 @@ import { useSlideGroupService } from '@khsura/sui/services'
 import { type GroupItemValue } from '@khsura/sui/types'
 import SButton from '@khsura/sui/components/sButton.vue'
 import SIcon from '@khsura/sui/components/sIcon.vue'
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
+const isReady = ref(false)
 const props = defineProps(propsSlideGroup())
 const model = defineModel<GroupItemValue[]>({ default: [], required: false })
 
@@ -51,8 +52,12 @@ const {
 const slideGroupMainClass = computed(() => {
   return {
     s_slideGroup__main: true,
-    's_slideGroup__main--scrollable': canScroll.value,
+    's_slideGroup__main--scrollable': isReady.value && canScroll.value,
   }
+})
+
+onMounted(() => {
+  isReady.value = true
 })
 </script>
 
