@@ -1,6 +1,6 @@
 {
   "name": "@khsura/sui",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "type": "module",
   "scripts": {
     "prebuild": "yarn g:rimraf dist && yarn g:rimraf @types",
