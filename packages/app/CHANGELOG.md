@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.12](https://github.com/khsura/sui/compare/sui-v1.0.11...sui-v1.0.12) (2024-08-16)
+
+
+### Bug Fixes
+
+* remove third party dependency types ([#23](https://github.com/khsura/sui/issues/23)) ([8fee903](https://github.com/khsura/sui/commit/8fee903c1adb4dc08e227f8452fb732a540e4202))
+
 ## [1.0.11](https://github.com/khsura/sui/compare/sui-v1.0.10...sui-v1.0.11) (2024-08-15)
 
 
