@@ -10,7 +10,7 @@ $attrs in $s_headings {
 
 @for $z from 0 through 24 {
   .s_elevation__#{$z} {
-    @include s_elevation($z);
+    @include s_elevation($z, true);
   }
 }
 
