@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.13](https://github.com/khsura/sui/compare/sui-v1.0.12...sui-v1.0.13) (2024-08-17)
+
+
+### Bug Fixes
+
+* elevation ([0831788](https://github.com/khsura/sui/commit/0831788bb71ed78d28cc2c3138ce4c7c9c821cba))
+
 ## [1.0.12](https://github.com/khsura/sui/compare/sui-v1.0.11...sui-v1.0.12) (2024-08-16)
 
 
