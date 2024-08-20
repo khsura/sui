@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5](https://github.com/khsura/sui/compare/root-v1.0.4...root-v1.0.5) (2024-08-17)
+
+
+### Bug Fixes
+
+* elevation ([0831788](https://github.com/khsura/sui/commit/0831788bb71ed78d28cc2c3138ce4c7c9c821cba))
+
 ## [1.0.4](https://github.com/khsura/sui/compare/root-v1.0.3...root-v1.0.4) (2024-08-13)
 
 
