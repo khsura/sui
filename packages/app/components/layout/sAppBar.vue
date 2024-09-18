@@ -69,7 +69,6 @@ onBeforeUnmount(() => {
 .s_appBar {
   @include s_borderRadius($s_appBar__borderRadius);
   @include s_layoutTransition();
-  position: relative;
   justify-content: center;
   min-height: $s_appBar__minHeight;
   background-color: s_getAppColor('card');
