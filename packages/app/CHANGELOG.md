@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/khsura/sui/compare/sui-v1.1.0...sui-v1.1.1) (2024-09-18)
+
+
+### Bug Fixes
+
+* bug ([d82a380](https://github.com/khsura/sui/commit/d82a380b200c82f696b45283ddbc3c9a841c3245))
+
 ## [1.1.0](https://github.com/khsura/sui/compare/sui-v1.0.14...sui-v1.1.0) (2024-09-18)
 
 
