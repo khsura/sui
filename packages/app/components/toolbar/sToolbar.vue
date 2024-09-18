@@ -6,12 +6,7 @@
     <div class="s_toolbar__content" :class="contentClasses" :style="contentStyles">
       <slot></slot>
     </div>
-    <div
-      v-if="isExtended"
-      :style="extensionStyles"
-      class="s_toolbar__extension"
-      :class="{ 's_toolbar__extension--fixed': isFixedExtension }"
-    >
+    <div v-if="isExtended" :style="extensionStyles" class="s_toolbar__extension">
       <slot name="extension"></slot>
     </div>
     <div v-if="$slots.append" class="s_toolbar__append">
@@ -76,19 +71,21 @@ const classes = computed(() => {
     s_toolbar: true,
     's_toolbar--floating': props.floating,
     [`s_toolbar--density-${props.density}`]: props.density,
+    ['s_toolbar--fixedExtension']: isFixedExtension.value,
   }
 })
 
 const styles = computed(() => {
   return {
     ...styleListColor.value,
+    top: isFixedExtension.value ? getNumericCssAttribute(-1 * contentHeight.value) : undefined,
+    marginBottom: isFixedExtension.value ? getNumericCssAttribute(computedExtensionHeight.value) : undefined,
   }
 })
 
 const contentStyles = computed(() => {
   return {
     height: getNumericCssAttribute(contentHeight.value),
-    marginBottom: isFixedExtension.value ? getNumericCssAttribute(computedExtensionHeight.value) : undefined,
     ...contentServiceStyles.value,
   }
 })
@@ -156,11 +153,9 @@ onMounted(() => {
     margin-inline: auto 10px;
   }
 
-  &__extension {
-    &--fixed {
-      position: fixed;
-      top: 0;
-    }
+  &--fixedExtension {
+    position: fixed;
+    width: 100%;
   }
 }
 </style>
