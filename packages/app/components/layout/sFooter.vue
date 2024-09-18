@@ -45,11 +45,7 @@ const { left, right, width, app, isApp } = useLayoutService(props)
 const { measurableStyles } = useMeasurableStylesService(props)
 const { classListColor, styleListColor } = useColorService(props)
 const { classListElevation } = useElevationService(props)
-
-const { isAbsolutePosition, isFixedPosition, isFixedOrAbsolutePosition } = usePositionService(props, {
-  ignoreApp: true,
-})
-
+const { isAbsolutePosition, isFixedPosition, isFixedOrAbsolutePosition } = usePositionService(props)
 const footerElement = ref<HTMLElement | null>(null)
 
 const updateFooterHeight = (height?: number | undefined | null | string) => {
