@@ -1,7 +1,5 @@
-import { ProviderName } from '@khsura/sui/constants'
-
 interface Params {
-  position: 'absolute' | 'relative' | 'fixed' | null | undefined
+  position: 'absolute' | 'relative' | 'fixed' | null | undefined | 'sticky' | 'static'
   app?: boolean
   name?: string
   for?: string
@@ -11,19 +9,14 @@ export const getIsAbsolutePosition = (params: Params) => {
   return params.position === 'absolute'
 }
 
-export const getIsFixedPosition = (params: Params, options?: { ignoreApp?: boolean }) => {
+export const getIsFixedPosition = (params: Params) => {
   if (getIsAbsolutePosition(params)) {
     return false
   }
 
-  return (
-    (!options?.ignoreApp &&
-      (params.app === true || params.name === ProviderName.app || params.for === ProviderName.app) &&
-      !params.position) ||
-    params.position === 'fixed'
-  )
+  return params.position === 'fixed'
 }
 
-export const getIsFixedOrAbsolutePosition = (params: Params, options?: { ignoreApp?: boolean }) => {
-  return getIsAbsolutePosition(params) || getIsFixedPosition(params, options)
+export const getIsFixedOrAbsolutePosition = (params: Params) => {
+  return getIsAbsolutePosition(params) || getIsFixedPosition(params)
 }

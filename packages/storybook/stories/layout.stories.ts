@@ -30,7 +30,7 @@ type StoryComponent =
   | typeof SAppBar
   | typeof SMain
   | typeof SFooter
-  | { hasAppBar: boolean }
+  | { hasAppBar: boolean; hasExtension: boolean }
 
 const layout: Meta<StoryComponent> = {
   title: 'UI Components/Layout',
@@ -58,6 +58,7 @@ export const Layout = createStoryObj<StoryComponent>({
     miniVariant: false,
     density: 'default',
     hasAppBar: true,
+    hasExtension: false,
   },
   // TODO: Sura - fix any type
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -120,6 +121,9 @@ export const Layout = createStoryObj<StoryComponent>({
           <SAppBar v-if="args.hasAppBar" :for="args.name" :position="args.position" :density="args.density">
             <SButton icon @click="value = !value" id="activator"><SIcon :icon="menuIcon"></SIcon></SButton>
             <SAppBarTitle>surakh.com</SAppBarTitle>
+            <template v-if="args.hasExtension" #extension>
+              <SButton icon><SIcon icon="mdi-dots-vertical"></SIcon></SButton>
+            </template>
           </SAppBar>
           <SNavigationDrawer 
             v-model="value"

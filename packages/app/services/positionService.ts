@@ -6,14 +6,13 @@ import { getIsAbsolutePosition, getIsFixedPosition, getIsFixedOrAbsolutePosition
 
 export const usePositionService = (
   props: ExtractPropTypes<ReturnType<typeof propsPosition>> & Partial<ExtractPropTypes<ReturnType<typeof propsLayout>>>,
-  options?: { ignoreApp?: boolean },
 ) => {
   const isAbsolutePosition = computed(() => {
     return getIsAbsolutePosition(props)
   })
 
   const isFixedPosition = computed(() => {
-    return getIsFixedPosition(props, options)
+    return getIsFixedPosition(props)
   })
 
   const classListPosition = computed(() => {
@@ -24,7 +23,7 @@ export const usePositionService = (
   })
 
   const isFixedOrAbsolutePosition = computed(() => {
-    return getIsFixedOrAbsolutePosition(props, options)
+    return getIsFixedOrAbsolutePosition(props)
   })
 
   return {

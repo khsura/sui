@@ -1,12 +1,17 @@
 <template>
-  <component :is="tagName" :class="classes" :style="styles">
+  <component :is="tagName" ref="toolbarRef" :class="classes" :style="styles">
     <div v-if="$slots.prepend" class="s_toolbar__prepend">
       <slot name="prepend"></slot>
     </div>
     <div class="s_toolbar__content" :class="contentClasses" :style="contentStyles">
       <slot></slot>
     </div>
-    <div v-if="isExtended" :style="extensionStyles" class="s_toolbar__extension">
+    <div
+      v-if="isExtended"
+      :style="extensionStyles"
+      class="s_toolbar__extension"
+      :class="{ 's_toolbar__extension--fixed': isFixedExtension }"
+    >
       <slot name="extension"></slot>
     </div>
     <div v-if="$slots.append" class="s_toolbar__append">
@@ -16,7 +21,7 @@
 </template>
 <script setup lang="ts">
 import { ProviderPropsName } from '@khsura/sui/constants'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
+import { getNumericCssAttribute, getWindow } from '@khsura/sui/lib'
 import { propsToolbar } from '@khsura/sui/props'
 import {
   useBorderService,
@@ -28,7 +33,8 @@ import {
   useTagService,
   useToolbarService,
 } from '@khsura/sui/services'
-import { computed } from 'vue'
+import { useScroll } from '@vueuse/core'
+import { computed, onMounted, ref } from 'vue'
 
 const props = defineProps({
   ...propsToolbar(),
@@ -42,9 +48,24 @@ const { provideProps } = useProviderService()
 
 provideProps(ProviderPropsName.toolbar, props)
 
+const toolbarRef = ref<HTMLElement | null>(null)
+const { y } = useScroll(getWindow())
+const isReady = ref(false)
 const { contentHeight, computedExtensionHeight, isExtended } = useToolbarService(props)
 const { styles: contentServiceStyles, classes: contentClasses } = useContentService(props)
 const { tagName } = useTagService(props)
+
+const fixedExtensionThresholdY = computed(() => {
+  if (!isReady.value) {
+    return 0
+  }
+
+  return Math.max(toolbarRef.value?.getBoundingClientRect().y ?? 0, 0) + contentHeight.value
+})
+
+const isFixedExtension = computed(() => {
+  return props.position !== 'fixed' && props.fixedExtension && y.value > fixedExtensionThresholdY.value
+})
 
 const classes = computed(() => {
   return {
@@ -67,6 +88,7 @@ const styles = computed(() => {
 const contentStyles = computed(() => {
   return {
     height: getNumericCssAttribute(contentHeight.value),
+    marginBottom: isFixedExtension.value ? getNumericCssAttribute(computedExtensionHeight.value) : undefined,
     ...contentServiceStyles.value,
   }
 })
@@ -75,6 +97,10 @@ const extensionStyles = computed(() => {
   return {
     height: getNumericCssAttribute(computedExtensionHeight.value),
   }
+})
+
+onMounted(() => {
+  isReady.value = true
 })
 </script>
 
@@ -128,6 +154,13 @@ const extensionStyles = computed(() => {
 
   &__append {
     margin-inline: auto 10px;
+  }
+
+  &__extension {
+    &--fixed {
+      position: fixed;
+      top: 0;
+    }
   }
 }
 </style>

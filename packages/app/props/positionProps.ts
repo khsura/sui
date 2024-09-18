@@ -1,7 +1,14 @@
 import { type PropType } from 'vue'
 
 export const propsPosition = <
-  T extends 'fixed' | 'absolute' | 'relative' = 'fixed' | 'absolute' | 'relative',
+  T extends 'fixed' | 'absolute' | 'relative' | 'sticky' | 'static' | undefined | null =
+    | 'fixed'
+    | 'absolute'
+    | 'relative'
+    | 'sticky'
+    | 'static'
+    | undefined
+    | null,
 >(defaults?: {
   position?: null | T
 }) => {

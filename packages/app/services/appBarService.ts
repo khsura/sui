@@ -26,7 +26,7 @@ export const useAppBarService = (props: PropsAppBar) => {
     return true
   }
 
-  const { app, left, right, width, isApp } = useLayoutService(props)
+  const { app, left, right, width } = useLayoutService(props)
   const { isExtended, computedExtensionHeight, toolbarHeight } = useToolbarService(props)
   const { classListPosition, isFixedPosition, isFixedOrAbsolutePosition } = usePositionService(props)
 
@@ -96,18 +96,14 @@ export const useAppBarService = (props: PropsAppBar) => {
     return false
   })
 
-  const isFixedAppBar = computed(() => {
-    return isApp.value && isFixedPosition.value
-  })
-
   const classes = computed(() => {
     return {
       s_appBar: true,
       's_appBar--hideShadow': hideShadow.value,
       's_appBar--elevateOnScroll': props.elevateOnScroll,
-      's_appBar--fixed': isFixedAppBar.value,
-      k_position__fixed: isFixedAppBar.value && classListPosition.value.s_position__fixed,
-      k_position__absolute: !isFixedAppBar.value && classListPosition.value.s_position__absolute,
+      's_appBar--fixed': isFixedPosition.value,
+      k_position__fixed: isFixedPosition.value && classListPosition.value.s_position__fixed,
+      k_position__absolute: !isFixedPosition.value && classListPosition.value.s_position__absolute,
     }
   })
 
@@ -130,7 +126,6 @@ export const useAppBarService = (props: PropsAppBar) => {
     app,
     classes,
     styles,
-    isFixedAppBar,
     isActive,
     updateIsAppBarDisplayStatus,
   }

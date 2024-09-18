@@ -1,11 +1,5 @@
 <template>
-  <SToolbar
-    v-bind="toolbarProps"
-    :extension-height="computedExtensionHeight"
-    :class="classes"
-    :style="styles"
-    :position="appBarPosition"
-  >
+  <SToolbar v-bind="toolbarProps" :extension-height="computedExtensionHeight" :class="classes" :style="styles">
     <slot></slot>
     <template v-if="isExtended" #extension>
       <slot name="extension"></slot>
@@ -27,14 +21,9 @@ const toolbarProps = computed(() => {
   return remainingProps
 })
 
-const appBarPosition = computed(() => {
-  return props.position === 'fixed' ? (isFixedAppBar.value ? 'fixed' : 'relative') : props.position
-})
-
 const {
   computedExtensionHeight,
   isExtended,
-  isFixedAppBar,
   toolbarHeight,
   app,
   classes,

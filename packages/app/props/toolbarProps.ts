@@ -36,6 +36,10 @@ export const propsToolbar = (defaults?: { elevation?: number; tag?: 'div' | 'sec
       type: String as PropType<string | null | undefined>,
       default: null,
     },
+    fixedExtension: {
+      type: Boolean as PropType<boolean | undefined>,
+      default: false,
+    },
     ...propsContent(),
     ...propsTag({ tag: defaults?.tag }),
     ...propsColor(),
