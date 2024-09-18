@@ -3,7 +3,7 @@ export const defaultLayoutSizes: {
   right: number
   offsetTop: number
   bottomNavigationHeight: number
-  appBarPosition: undefined | null | 'fixed' | 'absolute' | 'relative'
+  appBarPosition: undefined | null | 'fixed' | 'absolute' | 'relative' | 'sticky' | 'static'
   appBarHeight: number
   footerHeight: number
 } = {

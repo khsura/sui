@@ -9,7 +9,7 @@ export const useToolbarService = (props: PropsToolbar) => {
   const slots = useSlots()
 
   const isExtended = computed(() => {
-    return !!(props.extended ?? slots.extension?.())
+    return !!(props.extended ?? !!slots.extension)
   })
 
   const contentHeight = computed(() => {
