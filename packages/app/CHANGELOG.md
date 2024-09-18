@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/khsura/sui/compare/sui-v1.0.14...sui-v1.1.0) (2024-09-18)
+
+
+### Features
+
+* add fixed extension option ([#27](https://github.com/khsura/sui/issues/27)) ([c135d2d](https://github.com/khsura/sui/commit/c135d2d4010d697ec3589b3e7e627cba2ecffe05))
+
 ## [1.0.14](https://github.com/khsura/sui/compare/sui-v1.0.13...sui-v1.0.14) (2024-09-16)
 
 
