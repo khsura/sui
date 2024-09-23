@@ -1,11 +1,10 @@
 <template>
   <SToolbar
     ref="toolbarRef"
-    v-bind="{ $attrs, ...toolbarProps }"
+    v-bind="{ ...$attrs, ...toolbarProps }"
     :extension-height="computedExtensionHeight"
     :class="{ ...classes, s_appBar__extensionFixed: isFixedExtension }"
-    :style="styles"
-    :extension-class="{ [`s_appBar__extension${isFixedExtension ? '--fixed' : ''}`]: isFixedExtension }"
+    :style="{ ...styles, ...styleForExtension }"
     :color="color ?? 'appBar'"
   >
     <slot></slot>
@@ -13,7 +12,7 @@
       <slot name="extension"></slot>
     </template>
   </SToolbar>
-  <div v-if="isFixedExtension" class="s_appBar__fixedExtensionPlaceholder"></div>
+  <div v-if="isFixedExtension" :style="fixedExtensionPlaceholderStyle"></div>
 </template>
 
 <script setup lang="ts">
@@ -77,6 +76,25 @@ const toolbarHeightPx = computed(() => {
   return getNumericCssAttribute(toolbarHeight.value)
 })
 
+const styleForExtension = computed(() => {
+  if (!isFixedExtension.value) {
+    return {}
+  }
+
+  return {
+    position: 'fixed',
+    top: `calc(-1 * ${contentHeightPx.value})`,
+    width: '100%',
+  }
+})
+
+const fixedExtensionPlaceholderStyle = computed(() => {
+  return {
+    width: '100%',
+    height: toolbarHeightPx.value,
+  }
+})
+
 watch(
   () => props.hideOnScroll,
   () => {
@@ -99,7 +117,6 @@ watch(
 
     app.value.appBarHeight = isActive ? height : 0
 
-    console.log(app.value.appBarHeight, height, toolbarHeight, extensionHeight)
     if (isFixedExtension) {
       app.value.appBarPosition = 'fixed'
     } else {
@@ -151,17 +168,6 @@ onBeforeUnmount(() => {
   &--bottom {
     top: unset;
     bottom: 0;
-  }
-
-  &__extensionFixed {
-    position: fixed;
-    top: calc(-1 * v-bind(contentHeightPx));
-    width: 100%;
-  }
-
-  &__fixedExtensionPlaceholder {
-    width: 100vw;
-    height: v-bind(toolbarHeightPx);
   }
 }
 </style>

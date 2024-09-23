@@ -6,7 +6,12 @@
     <div class="s_toolbar__content" :class="contentClasses" :style="contentStyles">
       <slot></slot>
     </div>
-    <div v-if="isExtended" :style="extensionStyles" :class="extensionClass" class="s_toolbar__extension">
+    <div
+      v-if="isExtended"
+      :style="{ ...extensionStyles, ...extensionStyle }"
+      :class="extensionClass"
+      class="s_toolbar__extension"
+    >
       <slot name="extension"></slot>
     </div>
     <div v-if="$slots.append" class="s_toolbar__append">
