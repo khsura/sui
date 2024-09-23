@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/khsura/sui/compare/sui-v1.1.2...sui-v1.1.3) (2024-09-23)
+
+
+### Bug Fixes
+
+* appBar related issues ([984dca0](https://github.com/khsura/sui/commit/984dca0425eb85ed0381c7442dffe3bdc35df5ad))
+
 ## [1.1.2](https://github.com/khsura/sui/compare/sui-v1.1.1...sui-v1.1.2) (2024-09-18)
 
 
