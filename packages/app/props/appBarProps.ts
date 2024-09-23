@@ -1,4 +1,4 @@
-import { type ComponentPropsOptions } from 'vue'
+import { type PropType, type ComponentPropsOptions } from 'vue'
 import { propsToolbar } from './toolbarProps'
 import { propsLayout } from './layoutProps'
 import { propsScrollable } from './scrollableProps'
@@ -14,7 +14,11 @@ export const propsAppBar = () => {
       type: Boolean,
       default: false,
     },
-    ...propsToolbar({ tag: 'header' }),
+    fixedExtension: {
+      type: Boolean as PropType<boolean | undefined>,
+      default: false,
+    },
+    ...propsToolbar({ tag: 'header', color: 'appBar' }),
     ...propsLayout({ app: false }),
     ...propsScrollable(),
     ...propsPosition(),

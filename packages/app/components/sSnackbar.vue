@@ -59,8 +59,8 @@ const wrapperClasses = computed(() => {
 })
 
 const offsetTop = computed(() => {
-  const isFixedAppBar = getIsFixedPosition({ position: app.value.appBarPosition, app: true })
-  const isAbsoluteAppBar = getIsAbsolutePosition({ position: app.value.appBarPosition, app: true })
+  const isFixedAppBar = getIsFixedPosition({ position: app.value.appBarPosition })
+  const isAbsoluteAppBar = getIsAbsolutePosition({ position: app.value.appBarPosition })
 
   if (isFixedAppBar) {
     return app.value.appBarHeight + Math.max(app.value.offsetTop - currentScroll.value, 0)

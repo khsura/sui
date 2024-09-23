@@ -13,7 +13,7 @@ export const useColorService = (
 ) => {
   const props = toReactive(data)
   const { config } = useAppProviderRepository()
-  const { getBackgroundColorAttributes, getIsPresetColor } = useColorRepository()
+  const { getBackgroundColorAttributes, getIsPresetColor, getIsAppColor } = useColorRepository()
 
   const isText = computed(() => {
     if (options.isText === undefined) {
@@ -28,7 +28,7 @@ export const useColorService = (
   })
 
   const isPresetColor = computed(() => {
-    return getIsPresetColor(props.color)
+    return getIsPresetColor(props.color) || getIsAppColor(props.color)
   })
 
   const hasPresetTextColor = computed(() => {

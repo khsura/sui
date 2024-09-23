@@ -1,0 +1,19 @@
+{
+  "name": "@khsura/samples",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "prebuild": "yarn g:rimraf ./dist",
+    "build": "yarn prebuild && yarn g:vite build",
+    "eslint": "yarn g:eslint",
+    "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
+    "dev": "yarn g:vite dev",
+    "start": "http-server ./dist -p 6006"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "dependencies": {
+    "vue-router": "^4.4.5"
+  }
+}

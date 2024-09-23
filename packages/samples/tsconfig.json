@@ -1,0 +1,11 @@
+{
+  "extends": "@khsura/shared/tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@khsura/sui/*": ["../app/*"],
+      "@khsura/samples/*": ["./src/*"],
+      "@khsura/shared/*": ["../shared/*"]
+    }
+  },
+  "include": ["**/*.js", "**/*.mjs", "**/*.ts", "**/*.tsx", "**/*.vue"]
+}

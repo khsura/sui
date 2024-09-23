@@ -1,9 +1,11 @@
+import { type Position } from '@khsura/sui/constants'
+
 export const defaultLayoutSizes: {
   left: number
   right: number
   offsetTop: number
   bottomNavigationHeight: number
-  appBarPosition: undefined | null | 'fixed' | 'absolute' | 'relative' | 'sticky' | 'static'
+  appBarPosition: Position
   appBarHeight: number
   footerHeight: number
 } = {

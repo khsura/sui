@@ -6,7 +6,7 @@
     <div class="s_toolbar__content" :class="contentClasses" :style="contentStyles">
       <slot></slot>
     </div>
-    <div v-if="isExtended" :style="extensionStyles" class="s_toolbar__extension">
+    <div v-if="isExtended" :style="extensionStyles" :class="extensionClass" class="s_toolbar__extension">
       <slot name="extension"></slot>
     </div>
     <div v-if="$slots.append" class="s_toolbar__append">
@@ -16,7 +16,7 @@
 </template>
 <script setup lang="ts">
 import { ProviderPropsName } from '@khsura/sui/constants'
-import { getNumericCssAttribute, getWindow } from '@khsura/sui/lib'
+import { getNumericCssAttribute } from '@khsura/sui/lib'
 import { propsToolbar } from '@khsura/sui/props'
 import {
   useBorderService,
@@ -28,13 +28,9 @@ import {
   useTagService,
   useToolbarService,
 } from '@khsura/sui/services'
-import { useScroll } from '@vueuse/core'
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 
-const props = defineProps({
-  ...propsToolbar(),
-})
-
+const props = defineProps(propsToolbar())
 const { classListColor, styleListColor } = useColorService(props)
 const { classListBorder } = useBorderService(props)
 const { classListElevation } = useElevationService(props)
@@ -44,23 +40,9 @@ const { provideProps } = useProviderService()
 provideProps(ProviderPropsName.toolbar, props)
 
 const toolbarRef = ref<HTMLElement | null>(null)
-const { y } = useScroll(getWindow())
-const isReady = ref(false)
 const { contentHeight, computedExtensionHeight, isExtended } = useToolbarService(props)
 const { styles: contentServiceStyles, classes: contentClasses } = useContentService(props)
 const { tagName } = useTagService(props)
-
-const fixedExtensionThresholdY = computed(() => {
-  if (!isReady.value) {
-    return 0
-  }
-
-  return Math.max(toolbarRef.value?.getBoundingClientRect().y ?? 0, 0) + contentHeight.value
-})
-
-const isFixedExtension = computed(() => {
-  return props.position !== 'fixed' && props.fixedExtension && y.value > fixedExtensionThresholdY.value
-})
 
 const classes = computed(() => {
   return {
@@ -69,17 +51,14 @@ const classes = computed(() => {
     ...classListElevation.value,
     ...classListPosition.value,
     s_toolbar: true,
-    's_toolbar--floating': props.floating,
     [`s_toolbar--density-${props.density}`]: props.density,
-    ['s_toolbar--fixedExtension']: isFixedExtension.value,
   }
 })
 
 const styles = computed(() => {
   return {
     ...styleListColor.value,
-    top: isFixedExtension.value ? getNumericCssAttribute(-1 * contentHeight.value) : undefined,
-    marginBottom: isFixedExtension.value ? getNumericCssAttribute(computedExtensionHeight.value) : undefined,
+    // top: isFixedExtension.value ? getNumericCssAttribute(-1 * contentHeight.value) : undefined,
   }
 })
 
@@ -95,10 +74,6 @@ const extensionStyles = computed(() => {
     height: getNumericCssAttribute(computedExtensionHeight.value),
   }
 })
-
-onMounted(() => {
-  isReady.value = true
-})
 </script>
 
 <style lang="scss">
@@ -113,10 +88,6 @@ onMounted(() => {
   max-width: 100%;
 
   @include s_layoutTransition();
-
-  &--floating {
-    display: inline-flex;
-  }
 
   &__content {
     > .s_toolbarButton:first-of-type {
@@ -150,11 +121,6 @@ onMounted(() => {
 
   &__append {
     margin-inline: auto 10px;
-  }
-
-  &--fixedExtension {
-    position: fixed;
-    width: 100%;
   }
 }
 </style>

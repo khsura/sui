@@ -2337,6 +2337,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@khsura/samples@workspace:packages/samples":
+  version: 0.0.0-use.local
+  resolution: "@khsura/samples@workspace:packages/samples"
+  dependencies:
+    http-server: "npm:^14.1.1"
+    vue-router: "npm:^4.4.5"
+  languageName: unknown
+  linkType: soft
+
 "@khsura/shared@workspace:^, @khsura/shared@workspace:packages/shared":
   version: 0.0.0-use.local
   resolution: "@khsura/shared@workspace:packages/shared"

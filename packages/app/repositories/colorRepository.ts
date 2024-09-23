@@ -10,6 +10,14 @@ export const useColorRepository = () => {
     return config.themes[config.theme]
   }
 
+  const getAppColor = (color: string | undefined | null) => {
+    if (!color) {
+      return undefined
+    }
+
+    return getTheme().appColors[color] ? color : undefined
+  }
+
   const getPresetColor = (color: string | undefined | null) => {
     if (!color) {
       return undefined
@@ -36,6 +44,10 @@ export const useColorRepository = () => {
     return getPresetColor(color) !== undefined
   }
 
+  const getIsAppColor = (color: string | undefined | null) => {
+    return getAppColor(color) !== undefined
+  }
+
   const getBackgroundColorAttributes = (color: string | undefined | null) => {
     const isPredefinedPresetColor = getIsPredefinedPresetColor(color)
 
@@ -48,6 +60,13 @@ export const useColorRepository = () => {
         return {
           backgroundColor: `var(--s-color-${color})`,
           color: `var(--s-color-${color}--text)`,
+        }
+      }
+
+      if (getIsAppColor(color)) {
+        return {
+          backgroundColor: `var(--s-app-color-${color})`,
+          color: `var(--s-app-color-${color}--text)`,
         }
       }
 
@@ -67,6 +86,8 @@ export const useColorRepository = () => {
   }
 
   return {
+    getAppColor,
+    getIsAppColor,
     getPresetColor,
     getIsPresetColor,
     getPresetColorValue,

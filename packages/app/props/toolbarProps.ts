@@ -9,7 +9,7 @@ import { propsElevation } from './core/elevationProps'
 import { propsTag } from './core/tagProps'
 import { propsPosition } from './positionProps'
 
-export const propsToolbar = (defaults?: { elevation?: number; tag?: 'div' | 'section' | 'header' }) => {
+export const propsToolbar = (defaults?: { elevation?: number; tag?: 'div' | 'section' | 'header'; color?: string }) => {
   return {
     density: {
       type: String as PropType<ToolbarDensityType | null | undefined>,
@@ -24,9 +24,13 @@ export const propsToolbar = (defaults?: { elevation?: number; tag?: 'div' | 'sec
       type: [Number, String] as PropType<number | string | undefined>,
       default: defaultToolbarExtensionHeight,
     },
-    floating: {
-      type: Boolean as PropType<boolean | undefined>,
-      default: false,
+    extensionStyle: {
+      type: Object as PropType<Record<string, string> | undefined>,
+      default: undefined,
+    },
+    extensionClass: {
+      type: [String, Object] as PropType<string | Record<string, boolean | undefined> | undefined>,
+      default: undefined,
     },
     height: {
       type: [Number, String] as PropType<number | string | null | undefined>,
@@ -36,13 +40,9 @@ export const propsToolbar = (defaults?: { elevation?: number; tag?: 'div' | 'sec
       type: String as PropType<string | null | undefined>,
       default: null,
     },
-    fixedExtension: {
-      type: Boolean as PropType<boolean | undefined>,
-      default: false,
-    },
     ...propsContent(),
     ...propsTag({ tag: defaults?.tag }),
-    ...propsColor(),
+    ...propsColor(defaults),
     ...propsBorder(),
     ...propsElevation(defaults),
     ...propsPosition(),

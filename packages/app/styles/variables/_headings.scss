@@ -7,7 +7,6 @@ $s_headings: map-deep-merge(
       'weight': 300,
       'line-height': 6.4rem,
       'letter-spacing': - 0.0156em,
-      'color': var(--s-app-color-title),
       'font-family': $s_heading__fontFamily,
       'text-transform': false
     ),
@@ -16,7 +15,6 @@ $s_headings: map-deep-merge(
       'weight': 300,
       'line-height': 3.75rem,
       'letter-spacing': - 0.0083em,
-      'color': var(--s-app-color-title),
       'font-family': $s_heading__fontFamily,
       'text-transform': false
     ),
@@ -25,7 +23,6 @@ $s_headings: map-deep-merge(
       'weight': 400,
       'line-height': 3.125rem,
       'letter-spacing': normal,
-      'color': var(--s-app-color-title),
       'font-family': $s_heading__fontFamily,
       'text-transform': false
     ),
@@ -34,7 +31,6 @@ $s_headings: map-deep-merge(
       'weight': 400,
       'line-height': 2.5rem,
       'letter-spacing': 0.0074em,
-      'color': var(--s-app-color-title),
       'font-family': $s_heading__fontFamily,
       'text-transform': false
     ),
@@ -43,7 +39,6 @@ $s_headings: map-deep-merge(
       'weight': 400,
       'line-height': 2rem,
       'letter-spacing': normal,
-      'color': var(--s-app-color-title),
       'font-family': $s_heading__fontFamily,
       'text-transform': false
     ),
@@ -52,7 +47,6 @@ $s_headings: map-deep-merge(
       'weight': 500,
       'line-height': 2rem,
       'letter-spacing': 0.0125em,
-      'color': var(--s-app-color-title),
       'font-family': $s_heading__fontFamily,
       'text-transform': false
     ),

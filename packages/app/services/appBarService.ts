@@ -27,7 +27,7 @@ export const useAppBarService = (props: PropsAppBar) => {
   }
 
   const { app, left, right, width } = useLayoutService(props)
-  const { isExtended, computedExtensionHeight, toolbarHeight } = useToolbarService(props)
+  const { isExtended, computedExtensionHeight, toolbarHeight, contentHeight } = useToolbarService(props)
   const { classListPosition, isFixedPosition, isFixedOrAbsolutePosition } = usePositionService(props)
 
   const { currentScroll, isActive, isScrollingUp, computedScrollThreshold } = useScrollableService(
@@ -121,6 +121,7 @@ export const useAppBarService = (props: PropsAppBar) => {
 
   return {
     computedExtensionHeight,
+    contentHeight,
     isExtended,
     toolbarHeight,
     app,

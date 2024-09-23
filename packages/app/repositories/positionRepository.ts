@@ -1,6 +1,7 @@
+import { type Position } from '@khsura/sui/constants'
+
 interface Params {
-  position: 'absolute' | 'relative' | 'fixed' | null | undefined | 'sticky' | 'static'
-  app?: boolean
+  position?: Position
   name?: string
   for?: string
 }

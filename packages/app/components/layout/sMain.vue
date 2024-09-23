@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import { type PropsMain } from '@khsura/sui/definitions'
 import { getNumericCssAttribute } from '@khsura/sui/lib'
-import { getIsFixedOrAbsolutePosition } from '@khsura/sui/repositories/positionRepository'
+import { getIsFixedPosition } from '@khsura/sui/repositories/positionRepository'
 import { useLayoutService } from '@khsura/sui/services'
 import { computed } from 'vue'
 
@@ -24,8 +24,8 @@ const elementTag = computed(() => {
 
 const styles = computed(() => {
   const widthToSubtract = app.value.left + app.value.right
-  const isFixedOrAbsoluteAppBar = getIsFixedOrAbsolutePosition({ position: app.value.appBarPosition, app: isApp.value })
-  const marginTop = isFixedOrAbsoluteAppBar ? app.value.appBarHeight + app.value.offsetTop : 0
+  const isFixedPosition = getIsFixedPosition({ position: app.value.appBarPosition })
+  const marginTop = isFixedPosition ? app.value.appBarHeight + app.value.offsetTop : 0
   const marginBottom = isApp.value ? app.value.bottomNavigationHeight : app.value.footerHeight
   const offsetTop = getNumericCssAttribute(marginTop)
 

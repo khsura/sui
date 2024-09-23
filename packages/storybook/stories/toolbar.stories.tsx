@@ -64,7 +64,6 @@ export const Toolbar = createStoryObj<typeof SToolbar>({
     elevation: null,
     ...argsColor,
     density: null,
-    fixedExtension: false,
     extended: true,
   },
 })

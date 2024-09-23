@@ -76,8 +76,8 @@ const onClickOutside = () => {
 
 const objectItems = computed<SelectItem[]>(() => {
   return props.items.map((item) => {
-    if (typeof item === 'string') {
-      return { value: item, text: item }
+    if (typeof item === 'string' || item === undefined || item === null) {
+      return { value: item, text: item ?? '-' }
     }
 
     return item
@@ -90,7 +90,7 @@ const getSelectedItemFromValue = (): SelectItem | null => {
       return item === props.modelValue
     }
 
-    return item.value === props.modelValue
+    return item?.value === props.modelValue
   })
 
   return typeof item === 'string' ? { value: item, text: item } : (item ?? null)

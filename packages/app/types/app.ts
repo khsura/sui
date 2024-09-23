@@ -10,6 +10,7 @@ interface AppColors {
   background: string
   button: string
   card: string
+  switch: string
   border: string
   disabled: string
   inputPlaceholderShown: string

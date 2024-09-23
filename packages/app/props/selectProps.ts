@@ -11,7 +11,7 @@ export const propsSelect = () => {
       default: null,
     },
     items: {
-      type: Array as PropType<Array<SelectItem | string>>,
+      type: Array as PropType<Array<SelectItem | string | undefined | null>>,
       default: () => [],
     },
     label: {

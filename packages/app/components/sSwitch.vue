@@ -97,7 +97,7 @@ const toggle = () => {
       width: 20px;
       height: 20px;
       content: '';
-      background-color: s_getAppColor('card');
+      background-color: s_getAppColor('switch');
 
       @include s_borderRadius('circle');
     }
