@@ -1,7 +1,7 @@
 <template>
   <SToolbar
     ref="toolbarRef"
-    v-bind="toolbarProps"
+    v-bind="{ $attrs, ...toolbarProps }"
     :extension-height="computedExtensionHeight"
     :class="{ ...classes, s_appBar__extensionFixed: isFixedExtension }"
     :style="styles"
@@ -23,6 +23,10 @@ import { propsAppBar } from '@khsura/sui/props'
 import { useAppBarService } from '@khsura/sui/services'
 import { useScroll } from '@vueuse/core'
 import { type ComponentPublicInstance, computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+
+defineOptions({
+  inheritAttrs: false,
+})
 
 const props = defineProps(propsAppBar())
 const toolbarRef = ref<ComponentPublicInstance<typeof SToolbar> | null>(null)
