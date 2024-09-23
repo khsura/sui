@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.8](https://github.com/khsura/sui/compare/root-v1.0.7...root-v1.0.8) (2024-09-23)
+
+
+### Bug Fixes
+
+* update yarn ([1cc1d36](https://github.com/khsura/sui/commit/1cc1d3641e46b100ed117e8efe70ed8db1708ab2))
+
 ## [1.0.7](https://github.com/khsura/sui/compare/root-v1.0.6...root-v1.0.7) (2024-09-23)
 
 
