@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/khsura/sui/compare/storybook-v1.1.0...storybook-v1.1.1) (2024-09-23)
+
+
+### Bug Fixes
+
+* appBar related issues ([984dca0](https://github.com/khsura/sui/commit/984dca0425eb85ed0381c7442dffe3bdc35df5ad))
+
 ## [1.1.0](https://github.com/khsura/sui/compare/storybook-v1.0.4...storybook-v1.1.0) (2024-09-18)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.7](https://github.com/khsura/sui/compare/root-v1.0.6...root-v1.0.7) (2024-09-23)
+
+
+### Bug Fixes
+
+* appBar related issues ([984dca0](https://github.com/khsura/sui/commit/984dca0425eb85ed0381c7442dffe3bdc35df5ad))
+
 ## [1.0.6](https://github.com/khsura/sui/compare/root-v1.0.5...root-v1.0.6) (2024-09-16)
 
 
