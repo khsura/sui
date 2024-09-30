@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/khsura/sui/compare/storybook-v1.1.2...storybook-v1.1.3) (2024-09-30)
+
+
+### Bug Fixes
+
+* remove vue-i18n dependency ([b23145b](https://github.com/khsura/sui/commit/b23145b285915b50595352188984ec04f95cac3d))
+
 ## [1.1.2](https://github.com/khsura/sui/compare/storybook-v1.1.1...storybook-v1.1.2) (2024-09-30)
 
 
