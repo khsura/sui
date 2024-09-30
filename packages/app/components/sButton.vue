@@ -131,9 +131,10 @@ const click = (event: Event) => {
 @import '@khsura/sui/styles/components/button';
 
 .s_button {
+  background-color: s_getAppColor('background');
+
   @include s_typography('button');
   @include s_button();
-  background-color: s_getAppColor('background');
 
   &--block {
     display: flex;

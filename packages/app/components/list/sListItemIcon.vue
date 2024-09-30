@@ -15,8 +15,9 @@ const { classes } = useListMediaItemService(props, { componentName: 'listItemIco
 $s_listItemIcon--margin: calc(4 * $s_spacer) !default;
 
 .s_listItemIcon {
-  @include s_createListItemMediaContent();
   margin-right: $s_listItemIcon--margin;
   margin-left: $s_listItemIcon--margin;
+
+  @include s_createListItemMediaContent();
 }
 </style>

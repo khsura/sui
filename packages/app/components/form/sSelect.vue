@@ -182,9 +182,10 @@ const displayText = computed(() => {
   position: relative;
 
   &__activator {
-    @include s_button();
     padding: 0 8px;
     background-color: s_getAppColor('card');
+
+    @include s_button();
 
     &--empty {
       color: s_getAppColor('textSecondary');

@@ -60,7 +60,7 @@ export default {
     'function-name-case': ['lower', { ignoreFunctions: ['/^(s_)?(([a-z]+[A-Z]?([a-z]+)?)+)$/'] }],
     'scss/dollar-variable-pattern': [variablePattern, { ignore: 'local' }],
     'scss/percent-placeholder-pattern': [variablePattern, { ignore: 'local' }],
-    'scss/selector-no-redundant-nesting-selector': true,
+    'scss/selector-no-redundant-nesting-selector': null,
     'scss/map-keys-quotes': 'always',
     'scss/at-each-key-value-single-line': true,
     'scss/at-function-parentheses-space-before': 'never',

@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "packages/**"
+      - "package.json"
+      - ".release-please-manifest.json"
+      - "release-please-config.json"
 
 permissions:
   contents: write
@@ -28,11 +33,11 @@ jobs:
       - uses: actions/checkout@v4
         if: ${{ steps.release.outputs.release_created }}
 
-      - name : Use Node.js
+      - name: Use Node.js
         uses: actions/setup-node@v4
         if: ${{ steps.release.outputs.release_created }}
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Enable Corepack
         if: ${{ steps.release.outputs.release_created }}

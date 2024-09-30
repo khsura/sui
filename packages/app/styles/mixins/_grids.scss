@@ -24,31 +24,33 @@
         }
       }
 
-      // Provide basic `.s_column-{bp}` classes for equal-width flexbox columns
-      @include s_breakpointUp($name: $breakpoint, $breakpoints: $breakpoints) {
-        flex-basis: 0;
-        flex-grow: 1;
-        max-width: 100%;
-
-        &__auto {
-          flex: 0 0 auto;
-          width: auto;
-          max-width: 100%; // Reset earlier grid tiers
-        }
-
-        &__grow {
-          flex: 1;
-          width: auto;
+      & {
+        // Provide basic `.s_column-{bp}` classes for equal-width flexbox columns
+        @include s_breakpointUp($name: $breakpoint, $breakpoints: $breakpoints) {
+          flex-grow: 1;
+          flex-basis: 0;
           max-width: 100%;
-        }
-
-        @for $i from 1 through $columns {
-          &__#{$i} {
-            flex: 0 0 percentage(calc($i / $columns));
-            // Add a `max-width` to ensure content within each column does not blow out
-            // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
-            // do not appear to require this.
-            max-width: percentage(calc($i / $columns));
+      
+          &__auto {
+            flex: 0 0 auto;
+            width: auto;
+            max-width: 100%; // Reset earlier grid tiers
+          }
+      
+          &__grow {
+            flex: 1;
+            width: auto;
+            max-width: 100%;
+          }
+      
+          @for $i from 1 through $columns {
+            &__#{$i} {
+              flex: 0 0 percentage(calc($i / $columns));
+              // Add a `max-width` to ensure content within each column does not blow out
+              // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
+              // do not appear to require this.
+              max-width: percentage(calc($i / $columns));
+            }
           }
         }
       }

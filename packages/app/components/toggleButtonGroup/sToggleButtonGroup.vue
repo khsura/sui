@@ -46,14 +46,14 @@ provideProps(ProviderPropsName.toggleButtonGroupProps, props)
 
 .s_toggleButtonGroup {
   @include s_borderRadius();
+  position: relative;
+  overflow: hidden;
 
   &--inset {
     padding: 2px;
     background-color: $s_toggleButton--insetBackgroundColor;
     border-radius: $s_toggleButton--insetBorderRadius;
   }
-  position: relative;
-  overflow: hidden;
 
   &--shrink {
     display: inline-block;

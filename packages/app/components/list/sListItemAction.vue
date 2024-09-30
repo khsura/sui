@@ -14,8 +14,9 @@ const { classes } = useListMediaItemService(props, { componentName: 'listItemAct
 @import './helper';
 
 .s_listItemAction {
-  @include s_createListItemMediaContent();
   margin-left: calc($s_spacer * 8);
+
+  @include s_createListItemMediaContent();
 
   &:first-of-type {
     margin-right: calc($s_spacer * 8);

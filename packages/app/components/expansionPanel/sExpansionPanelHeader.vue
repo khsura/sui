@@ -32,7 +32,6 @@ const { isExpanded, toggle } = useExpandableItemService()
 @import '../list/helper';
 
 .s_expansionPanelHeader {
-  @include s_createListItemLink();
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -42,6 +41,8 @@ const { isExpanded, toggle } = useExpandableItemService()
   text-decoration: none;
   letter-spacing: normal;
   outline: none;
+
+  @include s_createListItemLink();
 
   &__main {
     display: flex;
