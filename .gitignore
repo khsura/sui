@@ -13,6 +13,7 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+install-state.gz
 
 .env.yarn
 
