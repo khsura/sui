@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.7](https://github.com/khsura/sui/compare/sui-v1.1.6...sui-v1.1.7) (2024-09-30)
+
+
+### Bug Fixes
+
+* remove vue-i18n dependency ([b23145b](https://github.com/khsura/sui/commit/b23145b285915b50595352188984ec04f95cac3d))
+
 ## [1.1.6](https://github.com/khsura/sui/compare/sui-v1.1.5...sui-v1.1.6) (2024-09-30)
 
 
