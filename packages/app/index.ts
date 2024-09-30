@@ -1,7 +1,8 @@
 export * from '@khsura/sui/components'
 export * from '@khsura/sui/definitions'
 export * from '@khsura/sui/types'
-export { FileMimeType, LazyLoad, STransition } from '@khsura/sui/constants'
+export { FileMimeType, LazyLoad, STransition, i18nMessages } from '@khsura/sui/constants'
+export { i18nConfig } from '@khsura/sui/configs'
 export * from '@khsura/sui/helpers'
 export {
   useClickOutsideService as useClickOutside,
