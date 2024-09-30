@@ -1,4 +1,4 @@
-import { formInputModelValueRules } from '@khsura/sui/repositories'
+import { formInputModelValueRules } from '@khsura/storybook/configs'
 import type { PropsSelect } from '@khsura/sui/definitions'
 import { argsBorder, argsColor, argsDisabled } from './core'
 

@@ -7,7 +7,6 @@ export const defaultAppConfig = {
     thresholds,
     scrollBarWidth,
   },
-  locale: 'en',
   themes: {
     [AppTheme.light]: {
       appColors: {

@@ -1,5 +1,5 @@
 import { SInput, SCard, SCardTitle, SForm, SRow, SColumn, SButton, SSwitch } from '@khsura/sui/components'
-import { formInputModelValueRules } from '@khsura/sui/repositories'
+import { formInputModelValueRules } from '@khsura/storybook/configs'
 import { createStoryObj } from '@khsura/storybook/helpers'
 import { defineComponent, ref, computed } from 'vue'
 import type { FormComponent } from '@khsura/sui/definitions'

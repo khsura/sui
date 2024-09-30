@@ -1,16 +1,7 @@
-import { createSUI } from '@khsura/sui/index'
 import { setup } from '@storybook/vue3'
-
-const suiPlugin = createSUI({
-  themes: {
-    light: {
-      presetColors: {
-        tertiary: '#545499',
-      },
-    },
-  },
-})
+import { i18n, sui } from '@khsura/storybook/plugins'
 
 setup((app) => {
-  app.use(suiPlugin)
+  app.use(sui)
+  app.use(i18n)
 })

@@ -1,5 +1,5 @@
 import { SButton, SForm, SInput } from '@khsura/sui/components'
-import { formInputModelValueRules } from '@khsura/sui/repositories'
+import { formInputModelValueRules } from '@khsura/storybook/configs'
 import { createStoryObj } from '@khsura/storybook/helpers'
 import { action } from '@storybook/addon-actions'
 import { defineComponent, ref, nextTick } from 'vue'

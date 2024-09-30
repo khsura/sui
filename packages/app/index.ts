@@ -6,9 +6,8 @@ export * from '@khsura/sui/helpers'
 export {
   useClickOutsideService as useClickOutside,
   useDisplayService as useDisplay,
-  useLocaleService as useLocale,
   useScrollService as useScroll,
   useThemeService as useTheme,
 } from '@khsura/sui/services'
 export * from '@khsura/sui/modules'
-export { formInputModelValueRules } from '@khsura/sui/repositories/form'
+export { getFormInputModelValueRules } from '@khsura/sui/repositories/form'

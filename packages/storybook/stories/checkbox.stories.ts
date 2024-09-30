@@ -1,5 +1,5 @@
 import { SCheckbox, SForm } from '@khsura/sui/components'
-import { formInputModelValueRules } from '@khsura/sui/repositories'
+import { formInputModelValueRules } from '@khsura/storybook/configs'
 import { argTypesColor } from '@khsura/storybook/argTypes'
 import { createStoryObj, getSlot } from '@khsura/storybook/helpers'
 import { defineComponent, ref } from 'vue'

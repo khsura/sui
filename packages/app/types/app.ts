@@ -52,7 +52,6 @@ export type AppThemeType = 'light' | 'dark'
 export interface AppStateOptions {
   theme?: AppThemeType
   display?: DisplayOptions
-  locale?: 'en' | 'ja' | 'mn' | string
   themes?: {
     [AppTheme.light]?: ThemeConfigOptions
     [AppTheme.dark]?: ThemeConfigOptions
