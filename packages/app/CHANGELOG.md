@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.9](https://github.com/khsura/sui/compare/sui-v1.1.8...sui-v1.1.9) (2024-11-15)
+
+
+### Bug Fixes
+
+* form event ([648d486](https://github.com/khsura/sui/commit/648d48632f6b1c5f2079f04aaa29563e96d7fb2d))
+
 ## [1.1.8](https://github.com/khsura/sui/compare/sui-v1.1.7...sui-v1.1.8) (2024-09-30)
 
 
