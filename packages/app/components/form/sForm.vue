@@ -1,5 +1,5 @@
 <template>
-  <form class="s_form">
+  <form class="s_form" @submit="$emit('submit', $event)">
     <slot></slot>
   </form>
 </template>
@@ -11,7 +11,10 @@ import { type FormProviderRegisterInputAttribute } from '@khsura/sui/types'
 import { computed } from 'vue'
 
 defineProps(propsForm())
-defineEmits(['submit'])
+defineEmits<{
+  submit: [Event]
+}>()
+
 const model = defineModel<boolean>()
 const errors = defineModel<string[]>('errors', { default: [] })
 const error = defineModel<boolean>('error')
