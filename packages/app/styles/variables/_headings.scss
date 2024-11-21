@@ -7,7 +7,6 @@ $s_headings: map-deep-merge(
       'weight': 300,
       'line-height': 6.4rem,
       'letter-spacing': - 0.0156em,
-      'font-family': $s_heading__fontFamily,
       'text-transform': false
     ),
     'h2': (
@@ -15,7 +14,6 @@ $s_headings: map-deep-merge(
       'weight': 300,
       'line-height': 3.75rem,
       'letter-spacing': - 0.0083em,
-      'font-family': $s_heading__fontFamily,
       'text-transform': false
     ),
     'h3': (
@@ -23,7 +21,6 @@ $s_headings: map-deep-merge(
       'weight': 400,
       'line-height': 3.125rem,
       'letter-spacing': normal,
-      'font-family': $s_heading__fontFamily,
       'text-transform': false
     ),
     'h4': (
@@ -31,7 +28,6 @@ $s_headings: map-deep-merge(
       'weight': 400,
       'line-height': 2.5rem,
       'letter-spacing': 0.0074em,
-      'font-family': $s_heading__fontFamily,
       'text-transform': false
     ),
     'h5': (
@@ -39,7 +35,6 @@ $s_headings: map-deep-merge(
       'weight': 400,
       'line-height': 2rem,
       'letter-spacing': normal,
-      'font-family': $s_heading__fontFamily,
       'text-transform': false
     ),
     'h6': (
@@ -47,7 +42,6 @@ $s_headings: map-deep-merge(
       'weight': 500,
       'line-height': 2rem,
       'letter-spacing': 0.0125em,
-      'font-family': $s_heading__fontFamily,
       'text-transform': false
     ),
     'subtitle__1': (
@@ -55,7 +49,6 @@ $s_headings: map-deep-merge(
       'weight': normal,
       'line-height': 1.75rem,
       'letter-spacing': 0.0093em,
-      // 'font-family': $s_fontFamily,
       'text-transform': false
     ),
     'subtitle__2': (
@@ -63,7 +56,6 @@ $s_headings: map-deep-merge(
       'weight': 500,
       'line-height': 1.375rem,
       'letter-spacing': 0.0071em,
-      // 'font-family': $s_fontFamily,
       'text-transform': false
     ),
     'body__1': (
@@ -71,7 +63,6 @@ $s_headings: map-deep-merge(
       'weight': 400,
       'line-height': 1.5rem,
       'letter-spacing': 0.0312em,
-      // 'font-family': $s_fontFamily,
       'text-transform': false
     ),
     'body__2': (
@@ -79,7 +70,6 @@ $s_headings: map-deep-merge(
       'weight': 400,
       'line-height': 1.25rem,
       'letter-spacing': 0.0178em,
-      // 'font-family': $s_fontFamily,
       'text-transform': false
     ),
     'button': (
@@ -87,7 +77,6 @@ $s_headings: map-deep-merge(
       'weight': 500,
       'line-height': 2.25rem,
       'letter-spacing': 0.0892em,
-      // 'font-family': $s_fontFamily,
       'text-transform': uppercase
     ),
     'caption': (
@@ -95,7 +84,6 @@ $s_headings: map-deep-merge(
       'weight': 400,
       'line-height': 1.25rem,
       'letter-spacing': 0.0333em,
-      // 'font-family': $s_fontFamily,
       'text-transform': false
     ),
     'overline': (
@@ -103,7 +91,6 @@ $s_headings: map-deep-merge(
       'weight': 500,
       'line-height': 2rem,
       'letter-spacing': 0.1667em,
-      // 'font-family': $s_fontFamily,
       'text-transform': uppercase
     )
   ),
