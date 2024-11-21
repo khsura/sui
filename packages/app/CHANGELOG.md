@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.10](https://github.com/khsura/sui/compare/sui-v1.1.9...sui-v1.1.10) (2024-11-21)
+
+
+### Bug Fixes
+
+* font-family of header ([3333bc5](https://github.com/khsura/sui/commit/3333bc5e3e3f4f5195a36f5b74cfa2979f2545af))
+
 ## [1.1.9](https://github.com/khsura/sui/compare/sui-v1.1.8...sui-v1.1.9) (2024-11-15)
 
 
