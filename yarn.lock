@@ -2186,7 +2186,6 @@ __metadata:
     vite-node: "npm:^2.1.8"
     vite-plugin-checker: "npm:^0.8.0"
     vite-plugin-eslint: "npm:^1.8.1"
-    vite-plugin-externalize-deps: "npm:^0.8.0"
     vite-plugin-stylelint: "npm:^6.0.0"
     vite-tsconfig-paths: "npm:^5.1.3"
     vitest: "npm:^2.1.8"
@@ -11168,15 +11167,6 @@ __metadata:
     eslint: ">=7"
     vite: ">=2"
   checksum: 10/65598893e2063a287a690ae296ba1fc212ee50dbc810d396a6cda44ee60c6f400adb52fc4c4a5ff54a89c11100bbaaf43eada23c9a78654ab1717f097d78176f
-  languageName: node
-  linkType: hard
-
-"vite-plugin-externalize-deps@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "vite-plugin-externalize-deps@npm:0.8.0"
-  peerDependencies:
-    vite: ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
-  checksum: 10/a87b7bc44c810e5ef16314d76ccdd442d27018ea3fae531d22fc6bd803c20e0de4268d981bfc5db604ceb382cd9f646804da84df5a77dac98914be8ddc15b6ec
   languageName: node
   linkType: hard
 

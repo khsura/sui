@@ -4,11 +4,10 @@ import autoprefixer from 'autoprefixer'
 import flexbugsFixes from 'postcss-flexbugs-fixes'
 import mediaMinmax from 'postcss-media-minmax'
 import { defineConfig } from 'vite'
-import { externalizeDeps } from 'vite-plugin-externalize-deps'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
 export default defineConfig({
-  plugins: [externalizeDeps(), vue(), vueJsx()],
+  plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
       '@khsura/sui': __dirname,
@@ -20,6 +19,10 @@ export default defineConfig({
       entry: path.resolve(__dirname, './index.ts'),
       name: 'sUi',
       fileName: 's-ui',
+    },
+    rollupOptions: {
+      // External packages that should not be bundled into your library.
+      external: ['vue', '@vueuse/components', '@vueuse/core', 'dayjs', 'lodash', 'vue', 'vue-i18n', 'zod'],
     },
   },
   css: {
