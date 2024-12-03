@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.11](https://github.com/khsura/sui/compare/sui-v1.1.10...sui-v1.1.11) (2024-12-03)
+
+
+### Bug Fixes
+
+* add change event ([bcab6f8](https://github.com/khsura/sui/commit/bcab6f8d15758bbd6b5fd5d0850f9f5d67aa3a91))
+
 ## [1.1.10](https://github.com/khsura/sui/compare/sui-v1.1.9...sui-v1.1.10) (2024-11-21)
 
 
