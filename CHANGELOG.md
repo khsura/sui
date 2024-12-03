@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.11](https://github.com/khsura/sui/compare/root-v1.0.10...root-v1.0.11) (2024-12-03)
+
+
+### Bug Fixes
+
+* bug ([be831d7](https://github.com/khsura/sui/commit/be831d7c1643b829729a4d4a6f92dc672b0ee850))
+
 ## [1.0.10](https://github.com/khsura/sui/compare/root-v1.0.9...root-v1.0.10) (2024-12-03)
 
 
