@@ -19,6 +19,8 @@
   "module": "./dist/s-ui.js",
   "types": "./@types/index.d.ts",
   "exports": {
+    "./style.css": "./dist/s-ui.css",
+    "./helpers.scss": "./dist/styles/_helpers.scss",
     ".": {
       "import": {
         "types": "./@types/index.d.ts",
@@ -28,9 +30,7 @@
         "types": "./@types/index.d.ts",
         "default": "./dist/s-ui.umd.cjs"
       }
-    },
-    "./style.css": "./dist/style.css",
-    "./helpers.scss": "./dist/styles/_helpers.scss"
+    }
   },
   "dependencies": {
     "@vueuse/components": "^12.0.0",
