@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.10](https://github.com/khsura/sui/compare/root-v1.0.9...root-v1.0.10) (2024-12-03)
+
+
+### Bug Fixes
+
+* add change event ([bcab6f8](https://github.com/khsura/sui/commit/bcab6f8d15758bbd6b5fd5d0850f9f5d67aa3a91))
+
 ## [1.0.9](https://github.com/khsura/sui/compare/root-v1.0.8...root-v1.0.9) (2024-09-30)
 
 
