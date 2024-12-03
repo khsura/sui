@@ -19,26 +19,16 @@
   "module": "./dist/s-ui.js",
   "types": "./@types/index.d.ts",
   "exports": {
-    ".": {
-      "import": {
-        "default": "./dist/s-ui.js",
-        "types": "./@types/index.d.ts"
-      },
-      "require": {
-        "default": "./dist/s-ui.umd.cjs",
-        "types": "./@types/index.d.ts"
-      }
-    },
     "./style.css": "./dist/style.css",
     "./helpers.scss": "./dist/styles/_helpers.scss"
   },
   "dependencies": {
-    "@vueuse/components": "^11.1.0",
-    "@vueuse/core": "^11.1.0",
+    "@vueuse/components": "^12.0.0",
+    "@vueuse/core": "^12.0.0",
     "dayjs": "^1.11.13",
     "lodash": "^4.17.21",
-    "vue": "^3.5.10",
-    "vue-i18n": "^10.0.3",
+    "vue": "^3.5.13",
+    "vue-i18n": "^10.0.5",
     "zod": "^3.23.8"
   }
 }

@@ -109,6 +109,7 @@ const onEvent = async (name?: 'input' | 'blur', event?: Event) => {
         break
       case 'input':
         emit(name, event)
+        emit('change', model.value ?? null)
         break
     }
   }

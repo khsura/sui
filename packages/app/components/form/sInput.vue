@@ -226,7 +226,7 @@ const fixInput = async (event: Event) => {
   }
 }
 
-const onInput = async (event: Event) => {
+const onInput = async (event: Event, preventChangeEvent = false) => {
   const value = (event.target as HTMLInputElement).value
 
   if (props.type === 'number') {
@@ -237,6 +237,10 @@ const onInput = async (event: Event) => {
   }
 
   emit('input', event)
+
+  if (!preventChangeEvent) {
+    emit('change', model.value ?? null)
+  }
 }
 
 const onAutocompleteHandler = (element: HTMLInputElement) => {
@@ -253,7 +257,7 @@ const onFocus = async (event: Event) => {
 }
 
 const onBlur = async (event: Event) => {
-  await onInput(event)
+  await onInput(event, true)
   isFocused.value = false
   emit('blur', event)
 }

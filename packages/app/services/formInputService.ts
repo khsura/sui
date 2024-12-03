@@ -1,12 +1,12 @@
 import { ProviderName } from '@khsura/sui/constants/provider'
 import { type PropsFormInput } from '@khsura/sui/definitions'
 import { type EmitFormInput, type FormInputModelValue } from '@khsura/sui/types'
-import { ref, computed, nextTick, onUnmounted, watch, onMounted } from 'vue'
+import { ref, computed, nextTick, onUnmounted, watch, onMounted, type EmitFn } from 'vue'
 import { useProviderService } from './core/providerService'
 
 export const useFormInputService = <T extends FormInputModelValue = FormInputModelValue>(
   props: PropsFormInput<T>,
-  emit: EmitFormInput<T>,
+  emit: EmitFn<EmitFormInput<T>>,
 ) => {
   const { inject } = useProviderService()
   const rawErrors = ref<string[]>([])

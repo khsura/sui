@@ -4,6 +4,7 @@ import { createStoryObj } from '@khsura/storybook/helpers'
 import { defineComponent, ref, computed } from 'vue'
 import type { FormComponent } from '@khsura/sui/definitions'
 import type { Meta } from '@storybook/vue3'
+import { action } from '@storybook/addon-actions'
 
 const input: Meta<typeof SInput> = {
   title: 'UI Components/Form/Input',
@@ -24,6 +25,8 @@ export const Inputs = createStoryObj<typeof SInput>({
     textRight: false,
     readonly: false,
     placeholderBackground: '',
+    onInput: action('onInput'),
+    onChange: action('onChange'),
   },
   parameters: {
     controls: {
@@ -132,6 +135,8 @@ export const Inputs = createStoryObj<typeof SInput>({
                   :dirty="inputMetas.name.dirty"
                   @update:error="inputMetas.name.error = $event"
                   @update:dirty="inputMetas.name.dirty = $event"
+                  @input="args.onInput"
+                  @change="args.onChange"
 
                   :input-background="args.inputBackground"
                   :placeholder-background="args.placeholderBackground"

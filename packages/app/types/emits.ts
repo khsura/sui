@@ -7,18 +7,18 @@ export type EmitActivator<ModelName extends string = 'modelValue'> = EmitModelVa
 
 export type EmitDialog = EmitActivator
 
-export interface EmitFormInput<T extends FormInputModelValue> {
-  (event: 'change', value: T): void
-  (event: 'update:error', value: boolean): void
-  (event: 'update:errors', value: string[]): void
-  (event: 'update:dirty', value: boolean): void
+export interface EmitFormInput<T extends FormInputModelValue = FormInputModelValue> {
+  change: [T]
+  'update:error': [boolean]
+  'update:errors': [string[]]
+  'update:dirty': [boolean]
 }
 
-export interface EmitFormTextInput<T extends FormInputModelValue> extends EmitFormInput<T> {
-  (event: 'blur', value: Event): void
-  (event: 'focus', value: Event): void
-  (event: 'input', value: Event): void
-  (event: 'keydown', value: KeyboardEvent): void
-  (event: 'paste', value: ClipboardEvent): void
-  (event: 'autocomplete', value: HTMLInputElement | null): void
+export interface EmitFormTextInput<T extends FormInputModelValue = FormInputModelValue> extends EmitFormInput<T> {
+  blur: [Event]
+  focus: [Event]
+  input: [Event]
+  keydown: [KeyboardEvent]
+  paste: [ClipboardEvent]
+  autocomplete: [HTMLInputElement | null]
 }
