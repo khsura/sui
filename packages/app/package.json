@@ -1,6 +1,6 @@
 {
   "name": "@khsura/sui",
-  "version": "1.1.11",
+  "version": "1.1.10",
   "type": "module",
   "scripts": {
     "prebuild": "yarn g:rimraf dist && yarn g:rimraf @types",
@@ -19,6 +19,16 @@
   "module": "./dist/s-ui.js",
   "types": "./@types/index.d.ts",
   "exports": {
+    ".": {
+      "import": {
+        "types": "./@types/index.d.ts",
+        "default": "./dist/s-ui.js"
+      },
+      "require": {
+        "types": "./@types/index.d.ts",
+        "default": "./dist/s-ui.umd.cjs"
+      }
+    },
     "./style.css": "./dist/style.css",
     "./helpers.scss": "./dist/styles/_helpers.scss"
   },
