@@ -28,7 +28,7 @@ import {
   useSizeService,
   useTextColorService,
 } from '@khsura/sui/services'
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { getCleanSetObject, isDarkColor } from '@khsura/sui/lib'
 import { useColorRepository, useProviderRepository } from '@khsura/sui/repositories'
 import { SProgressCircular } from './progress'
@@ -42,6 +42,7 @@ const { getPresetColorValue } = useColorRepository()
 const isIcon = computed(() => props.variant === 'icon')
 const isFab = computed(() => props.variant === 'fab')
 const isText = computed(() => props.variant === 'text')
+const isReady = ref(false)
 
 const { classListColor, styleListColor } = useColorService(props, {
   isText: computed(() => {
@@ -91,7 +92,7 @@ const classList = computed((): Record<string, boolean | null | undefined> => {
     's_bottomNavigationButton--shift': !!bottomNavigationProps.value?.shift,
     s_toolbarButton: toolbarProps.value !== null,
     [bottomNavigationProps.value?.activeClass ?? '']: isSelected.value && bottomNavigationProps.value?.activeClass,
-    ...(isDarkToolbar.value ? { s_dark: true } : {}),
+    ...(isDarkToolbar.value && isReady.value ? { s_dark: true } : {}),
   })
 })
 
@@ -125,6 +126,10 @@ const click = (event: Event) => {
 
   emit('click', event)
 }
+
+onMounted(() => {
+  isReady.value = true
+})
 </script>
 
 <style lang="scss">
@@ -135,6 +140,7 @@ const click = (event: Event) => {
 
   @include s_typography('button');
   @include s_button();
+  @include s_dark(false);
 
   &--block {
     display: flex;

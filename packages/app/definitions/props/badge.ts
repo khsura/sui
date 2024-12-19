@@ -17,5 +17,4 @@ export interface PropsBadge extends PropsColor {
   inline?: boolean | undefined
   transitionName?: STransition | undefined
   color?: string | undefined
-  textColor: string | undefined
 }

@@ -3,15 +3,15 @@
   @each $themeName in $s_themeNames {
     @if ($isChild) {
       .s_#{$themeName} {
-        color: s_getThemeColor('text', $themeName) !important;
+        color: s_getThemeColor('text', $themeName);
         background-color: if($fillBackground, s_getThemeColor('card', $themeName), inherit);
-        fill: s_getThemeColor('text', $themeName) !important;
+        fill: s_getThemeColor('text', $themeName);
       }
     } @else {
       &.s_#{$themeName} {
-        color: s_getThemeColor('text', $themeName) !important;
+        color: s_getThemeColor('text', $themeName);
         background-color: if($fillBackground, s_getThemeColor('card', $themeName), inherit);
-        fill: s_getThemeColor('text', $themeName) !important;
+        fill: s_getThemeColor('text', $themeName);
       }
     }
   }

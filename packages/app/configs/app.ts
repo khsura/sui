@@ -47,7 +47,7 @@ export const defaultAppConfig = {
         card: '#222222',
         border: '#717171',
         disabled: '#717171',
-        inputPlaceholderShown: '#fff5cc',
+        inputPlaceholderShown: '#424242',
         snackbar: '#424242',
       },
       presetColors: {
