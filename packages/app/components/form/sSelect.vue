@@ -196,8 +196,20 @@ const displayText = computed(() => {
       height: #{map.get($s_button--sizes, 'small')}px;
     }
 
-    &:not(.s_outlined) {
+    &:not(.s_outlined, .s_underlined) {
       @include s_elevation(1);
+    }
+
+    &.s_outlined {
+      @include s_outlined();
+    }
+
+    &.s_underlined {
+      @include s_underlined();
+    }
+
+    &.s_rounded {
+      @include s_borderRadius(16px);
     }
   }
 
