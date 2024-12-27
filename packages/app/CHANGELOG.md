@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.16](https://github.com/khsura/sui/compare/sui-v1.1.15...sui-v1.1.16) (2024-12-27)
+
+
+### Bug Fixes
+
+* sSelect style error ([3ee88a2](https://github.com/khsura/sui/commit/3ee88a214dd9612618abfa6079dce7047a921724))
+
 ## [1.1.15](https://github.com/khsura/sui/compare/sui-v1.1.14...sui-v1.1.15) (2024-12-19)
 
 
