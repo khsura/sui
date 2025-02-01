@@ -189,15 +189,15 @@ const viewBox = computed(() => {
 
   &--indeterminate {
     > svg {
-      transition: all 0.2s ease-in-out;
       transform-origin: center center;
+      transition: all 0.2s ease-in-out;
       animation: progress-circular-rotate 1.4s linear infinite;
     }
 
     .s_progressCircular__overlay {
+      stroke-linecap: round;
       stroke-dasharray: 80, 200;
       stroke-dashoffset: 0;
-      stroke-linecap: round;
       animation: progress-circular-dash 1.4s ease-in-out infinite;
     }
   }

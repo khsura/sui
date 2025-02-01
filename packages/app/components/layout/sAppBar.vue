@@ -138,9 +138,6 @@ onBeforeUnmount(() => {
 })
 </script>
 <style lang="scss" scoped>
-@import '@khsura/sui/styles/components/appBar';
-@import '@khsura/sui/styles/components/layout';
-
 .s_appBar {
   @include s_borderRadius($s_appBar__borderRadius);
   @include s_layoutTransition();

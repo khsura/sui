@@ -20,7 +20,6 @@ const classList = computed(() => {
 </script>
 
 <style lang="scss">
-@import './helper';
 $s_listItemContentChildrenMarginBottom: calc($s_spacer / 2) !default;
 
 .s_listItemContent {

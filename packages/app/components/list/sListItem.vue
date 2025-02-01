@@ -53,8 +53,6 @@ const classList = computed(() => {
 })
 </script>
 <style lang="scss">
-@import './helper';
-
 .s_listItem {
   position: relative;
   display: flex;
@@ -62,8 +60,8 @@ const classList = computed(() => {
   align-items: center;
   min-height: $s_listItem__minHeight;
   padding: 0 calc($s_spacer * 4);
-  text-decoration: none;
   letter-spacing: normal;
+  text-decoration: none;
   outline: none;
 
   &--selectable {

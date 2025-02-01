@@ -107,12 +107,10 @@ onBeforeUnmount(() => {
 })
 </script>
 <style lang="scss">
-@import '@khsura/sui/styles/components/layout';
-
 $s_footerBorderRadius: 0 !default;
 $s_footerPadding: 6px 16px 16px !default;
 $s_footerPadlessPadding: 0 !default;
-$s_footerShapedBorderRadius: map-get($s_rounded, 'xl') $s_footerBorderRadius !default;
+$s_footerShapedBorderRadius: map.get($s_rounded, 'xl') $s_footerBorderRadius !default;
 
 .s_footer {
   position: relative;

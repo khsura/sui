@@ -1,7 +1,9 @@
+@use '../../variables';
+
 @mixin tableCell {
   $className: &;
   height: 48px;
-  padding: 0 calc($s_spacer * 4);
+  padding: 0 calc(variables.$s_spacer * 4);
 
   &--sticky {
     position: sticky;
@@ -13,7 +15,7 @@
     height: 36px;
 
     &:not(#{className}--noGutters) {
-      padding: $s_spacer;
+      padding: variables.$s_spacer;
     }
   }
 
@@ -27,21 +29,21 @@
     flex: 1 0 auto;
     text-align: start;
     white-space: nowrap;
-  
+
     &--textWrap {
       max-width: 100%;
       white-space: normal;
     }
-  
+
     &--align {
       &__start {
         text-align: start;
       }
-  
+
       &__end {
         text-align: end;
       }
-  
+
       &__center {
         text-align: center;
       }

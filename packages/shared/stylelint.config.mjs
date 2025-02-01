@@ -5,7 +5,7 @@ const variablePattern =
 export default {
   defaultSeverity: 'warning',
   extends: [
-    'stylelint-config-standard',
+    'stylelint-config-standard-scss',
     'stylelint-config-html',
     'stylelint-config-recess-order',
     'stylelint-config-recommended-scss',
@@ -14,6 +14,7 @@ export default {
   plugins: ['stylelint-scss'],
   rules: {
     'import-notation': null,
+    'declaration-property-value-no-unknown': null,
     'color-named': 'never',
     'shorthand-property-no-redundant-values': true,
     'declaration-block-no-redundant-longhand-properties': true,
@@ -69,17 +70,10 @@ export default {
       true,
       {
         ignoreFunctions: [
-          /map\.(get|merge|has-key)/,
-          /meta\.(type-of)/,
           /map-deep-(get|merge)/,
           'v-bind',
-          'map-get',
           'if',
-          'percentage',
-          'index',
-          'lighten',
           /s_(breakpointInfix|breakpointMin|borderRadius|typography|isDark|getTextColor|getPresetColor|getAppColor|getThemeColor)/,
-          /list\.(nth|append|length)/,
         ],
       },
     ],

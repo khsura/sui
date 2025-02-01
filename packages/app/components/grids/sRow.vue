@@ -44,14 +44,11 @@ const contentStyles = computed<CSSProperties>(() => {
 </script>
 
 <style lang="scss">
-/* stylelint-disable-next-line scss/map-keys-quotes */
 $s_row--paddings: (
   'default': calc($s_gridGutter / 2),
   'dense': calc($s_form--gridGutter / 2),
   'noGutters': 0,
 );
-
-/* stylelint-disable-next-line scss/map-keys-quotes */
 $s_column--paddings: (
   'default': calc($s_gridGutter / 2),
   'dense': calc($s_form--gridGutter / 2),
@@ -59,12 +56,12 @@ $s_column--paddings: (
 );
 
 @mixin s_makeRowPadding($padding: 'default') {
-  padding: map-get($s_row--paddings, $padding);
+  padding: map.get($s_row--paddings, $padding);
 }
 
 @mixin s_makeRowContentPadding($padding: 'default') {
   > .s_column {
-    padding: map-get($s_column--paddings, $padding);
+    padding: map.get($s_column--paddings, $padding);
   }
 }
 

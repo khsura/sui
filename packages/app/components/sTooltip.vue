@@ -105,8 +105,6 @@ watch(model, async (value) => {
 </script>
 
 <style lang="scss" scoped>
-@import '@khsura/sui/styles/components/menu';
-
 .s_tooltip {
   &__content {
     @include s_menuContent();

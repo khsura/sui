@@ -1,3 +1,5 @@
+@use '../lib';
+
 /* stylelint-disable custom-property-pattern */
 $s_color__black: #000000;
 $s_color__white: #ffffff;
@@ -11,9 +13,8 @@ $s_color__yellow: #ffd633;
 $s_color__light: #f7f7f7;
 $s_color__lightGrey: #d1d1d1;
 $s_color__darkCharcoal: #333333;
-
 $s_colors: () !default;
-$s_colors: map-deep-merge(
+$s_colors: lib.map-deep-merge(
   (
     'blue': $s_color__blue,
     'green': $s_color__green,
@@ -28,7 +29,6 @@ $s_colors: map-deep-merge(
   ),
   $s_colors
 );
-
 $s_presetColorNames: ('primary', 'secondary', 'success', 'info', 'warning', 'important', 'error');
 $s_appExposedColorNames: ('background', 'card');
 $s_themeNames: ('dark', 'light');

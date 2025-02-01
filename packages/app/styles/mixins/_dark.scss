@@ -1,17 +1,20 @@
+@use '../tools';
+@use '../variables';
+
 // used with colorService
 @mixin s_dark($fillBackground: true, $isChild: false) {
-  @each $themeName in $s_themeNames {
-    @if ($isChild) {
+  @each $themeName in variables.$s_themeNames {
+    @if $isChild {
       .s_#{$themeName} {
-        color: s_getThemeColor('text', $themeName);
-        background-color: if($fillBackground, s_getThemeColor('card', $themeName), inherit);
-        fill: s_getThemeColor('text', $themeName);
+        color: tools.s_getThemeColor('text', $themeName);
+        background-color: if($fillBackground, tools.s_getThemeColor('card', $themeName), inherit);
+        fill: tools.s_getThemeColor('text', $themeName);
       }
     } @else {
       &.s_#{$themeName} {
-        color: s_getThemeColor('text', $themeName);
-        background-color: if($fillBackground, s_getThemeColor('card', $themeName), inherit);
-        fill: s_getThemeColor('text', $themeName);
+        color: tools.s_getThemeColor('text', $themeName);
+        background-color: if($fillBackground, tools.s_getThemeColor('card', $themeName), inherit);
+        fill: tools.s_getThemeColor('text', $themeName);
       }
     }
   }

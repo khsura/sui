@@ -175,9 +175,6 @@ const displayText = computed(() => {
 </script>
 
 <style lang="scss">
-@import '@khsura/sui/styles/components/button';
-@import '@khsura/sui/styles/components/menu';
-
 .s_select {
   position: relative;
 

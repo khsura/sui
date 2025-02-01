@@ -1,7 +1,10 @@
+@use 'sass:map';
+@use '../variables';
+
 @mixin s_transitionDefault() {
   &-enter-active,
   &-leave-active {
-    transition: $s_primaryTransition !important;
+    transition: variables.$s_primaryTransition !important;
   }
 }
 
@@ -30,7 +33,7 @@
 .s_transition--appear {
   &-enter-active,
   &-leave-active {
-    transition: opacity, transform 0.1s map.get($s_transitions, 'fast-in-fast-out') !important;
+    transition: opacity, transform 0.1s map.get(variables.$s_transitions, 'fast-in-fast-out') !important;
   }
 
   &-enter-from,

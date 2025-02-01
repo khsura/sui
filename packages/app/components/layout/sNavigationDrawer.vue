@@ -430,8 +430,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss">
-@import '@khsura/sui/styles/components/layout';
-
 $s_navigationDrawerMobileTemporaryElevation: 16 !default;
 
 @keyframes s-animation-navigation-drawer-left {

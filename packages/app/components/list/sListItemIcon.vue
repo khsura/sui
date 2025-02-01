@@ -11,7 +11,6 @@ const props = defineProps(propsListMediaItem())
 const { classes } = useListMediaItemService(props, { componentName: 'listItemIcon' })
 </script>
 <style lang="scss">
-@import './helper';
 $s_listItemIcon--margin: calc(4 * $s_spacer) !default;
 
 .s_listItemIcon {

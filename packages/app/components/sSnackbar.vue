@@ -132,8 +132,8 @@ watch(model, () => {
     padding: 14px 16px;
     margin-right: auto;
     overflow: hidden;
-    text-align: initial;
     text-overflow: ellipsis;
+    text-align: initial;
     white-space: nowrap;
 
     &--multiLine {

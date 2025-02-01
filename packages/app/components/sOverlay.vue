@@ -40,9 +40,9 @@ onMounted(() => {
     position: fixed;
     inset: 0;
     pointer-events: auto;
+    outline: none;
     background-color: $s_color__black;
     border-radius: inherit;
-    outline: none;
     opacity: 0.5;
   }
 

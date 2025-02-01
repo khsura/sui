@@ -47,20 +47,18 @@ const styles = computed(() => {
 </script>
 
 <style lang="scss">
-@import '@khsura/sui/styles/components/cards';
-
 .s_card {
   @include s_elevation(0);
   @include s_dark();
   position: relative;
   display: block;
   width: 100%;
-  text-decoration: none;
   overflow-wrap: break-word;
   white-space: normal;
+  text-decoration: none;
+  outline: none;
   background-color: s_getAppColor('card');
   border-radius: $s_borderRadius;
-  outline: none;
   transition-property: box-shadow, opacity;
 
   /* stylelint-disable-next-line no-descending-specificity */

@@ -119,8 +119,8 @@ $s_checkbox--size: 24px;
     border-color: s_getAppColor('card');
     border-style: none none solid solid;
     border-width: 2px;
-    transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
     transform: rotate(-45deg) scale(0);
+    transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
   }
 
   :checked + &__label::after {

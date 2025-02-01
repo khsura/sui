@@ -1,11 +1,13 @@
+@use '../tools';
+
 @mixin s_disabled($isText: false) {
-  color: s_getAppColor('text');
+  color: tools.s_getAppColor('text');
   pointer-events: none;
   opacity: 0.5;
 
-  @if ($isText) {
+  @if $isText {
     background-color: unset;
   } @else {
-    background-color: s_getAppColor('disabled');
+    background-color: tools.s_getAppColor('disabled');
   }
 }

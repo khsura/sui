@@ -36,7 +36,6 @@ const styleList = computed(() => {
 </script>
 
 <style lang="scss">
-@import '@khsura/sui/styles/components/icon';
 $defaultSize: map.get($s_icon--fontSizes, 'default');
 
 .s_icon {

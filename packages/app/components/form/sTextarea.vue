@@ -138,9 +138,9 @@ $inputPadding: calc($s_spacer * 2);
     padding: $inputPadding calc($s_spacer * 4);
     font-size: 16px;
     color: s_getAppColor('text');
+    outline: none;
     background-color: s_getAppColor('card');
     border: thin s_getAppColor('border') solid;
-    outline: none;
 
     &:focus {
       outline: 2px solid s_getAppColor('text');

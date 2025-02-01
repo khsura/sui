@@ -1,7 +1,8 @@
-$s_icon__fontSize: 24px !default;
+@use '../../lib';
 
+$s_icon__fontSize: 24px !default;
 $s_icon--fontSizes: () !default;
-$s_icon--fontSizes: map-deep-merge(
+$s_icon--fontSizes: lib.map-deep-merge(
   (
     'mini': 14px,
     'small': 18px,

@@ -115,8 +115,6 @@ const updateValue = async () => {
 </script>
 
 <style lang="scss">
-@import '@khsura/sui/styles/components/button';
-
 .s_radio {
   &--column {
     display: flex;

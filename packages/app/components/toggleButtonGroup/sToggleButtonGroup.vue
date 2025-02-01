@@ -42,8 +42,6 @@ provideProps(ProviderPropsName.toggleButtonGroupProps, props)
 </script>
 
 <style lang="scss">
-@import './variables';
-
 .s_toggleButtonGroup {
   @include s_borderRadius();
   position: relative;

@@ -1,10 +1,13 @@
-@import './variables';
+@use 'sass:map';
+@use './variables';
+@use '../../mixins';
+@use '../../tools';
 
 @mixin s_button() {
-  @include s_elevation(0);
+  @include mixins.s_elevation(0);
 
-  $s_button--fontSize: map-get($s_button--fontSizes, 'default');
-  $s_button--size: map-get($s_button--sizes, 'default');
+  $s_button--fontSize: map.get(variables.$s_button--fontSizes, 'default');
+  $s_button--size: map.get(variables.$s_button--sizes, 'default');
   position: relative;
   display: inline-flex;
   flex: 0 0 auto;
@@ -15,17 +18,17 @@
   padding: 0 #{calc($s_button--size / 2.25)}px;
   font-size: $s_button--fontSize;
   line-height: 1;
-  color: s_getAppColor('text');
-  text-decoration: none;
-  text-indent: $s_button__letterSpacing;
-  white-space: nowrap;
   vertical-align: middle;
-  appearance: button;
-  border: none;
-  border-radius: $s_button__borderRadius;
+  color: tools.s_getAppColor('text');
+  text-indent: variables.$s_button__letterSpacing;
+  white-space: nowrap;
+  text-decoration: none;
+  appearance: auto;
   outline: 0;
-  transition-timing-function: $s_button__transitionTimingFunction;
-  transition-duration: $s_button__transitionDuration;
+  border: none;
+  border-radius: variables.$s_button__borderRadius;
+  transition-timing-function: variables.$s_button__transitionTimingFunction;
+  transition-duration: variables.$s_button__transitionDuration;
   transition-property: box-shadow, transform, opacity;
 
   &::before {
@@ -37,21 +40,21 @@
     background-color: currentcolor;
     border-radius: inherit;
     opacity: 0;
-    transition: $s_button__transition;
+    transition: variables.$s_button__transition;
   }
 
   &:focus::before {
-    opacity: $s_button--focus__opacity;
+    opacity: variables.$s_button--focus__opacity;
   }
 
   // except for touch devices
   @media (hover: hover) {
     &:hover::before {
-      opacity: $s_button--hover__opacity;
+      opacity: variables.$s_button--hover__opacity;
     }
 
     &:focus:hover::before {
-      opacity: $s_button--hover__opacity;
+      opacity: variables.$s_button--hover__opacity;
     }
   }
 }

@@ -133,8 +133,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import '@khsura/sui/styles/components/button';
-
 .s_button {
   background-color: s_getAppColor('background');
 
@@ -166,7 +164,7 @@ onMounted(() => {
     @include s_disabled(true);
   }
 
-  $s_button--size: map-get($s_button--sizes, 'default');
+  $s_button--size: map.get($s_button--sizes, 'default');
 
   @each $name, $size in $s_button--fontSizes {
     &--size__#{$name} {

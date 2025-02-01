@@ -82,8 +82,6 @@ const extensionStyles = computed(() => {
 </script>
 
 <style lang="scss">
-@import '@khsura/sui/styles/components/layout';
-
 .s_toolbar {
   z-index: 1;
   display: flex;

@@ -382,9 +382,9 @@ $inputPadding: calc($s_spacer * 2);
     font-size: 16px;
     line-height: inherit;
     color: s_getAppColor('text');
+    outline: none;
     background-color: s_getAppColor('card');
     border: none;
-    outline: none;
 
     &--textRight {
       padding: $inputPadding;
@@ -428,9 +428,9 @@ $inputPadding: calc($s_spacer * 2);
     }
 
     &.s_input__input--simple {
+      outline-color: transparent;
       background-color: transparent;
       border: none;
-      outline-color: transparent;
 
       &:placeholder-shown {
         background-color: transparent;

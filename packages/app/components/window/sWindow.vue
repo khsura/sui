@@ -126,8 +126,6 @@ defineExpose({
 </script>
 
 <style lang="scss">
-@import '@khsura/sui/styles/components/window';
-
 .s_window {
   overflow: hidden;
 

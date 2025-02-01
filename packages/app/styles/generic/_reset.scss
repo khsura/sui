@@ -1,3 +1,5 @@
+@use '../variables';
+
 html,
 body {
   box-sizing: border-box;
@@ -18,7 +20,7 @@ body {
 
 html {
   overflow-y: scroll;
-  font-size: $s_fontSize;
+  font-size: variables.$s_fontSize;
 }
 
 @supports (-webkit-touch-callout: none) {
@@ -131,7 +133,7 @@ sup {
 
 button {
   overflow: visible;
-  appearance: button;
+  appearance: auto;
   background-color: transparent;
   border-style: none;
 }
@@ -218,9 +220,9 @@ textarea {
 }
 
 blockquote {
-  padding: $s_spacer * 4 0 $s_spacer * 4 $s_spacer * 6;
-  font-size: $s_blockquote__fontSize;
-  font-weight: $s_blockquote__fontWeight;
+  padding: variables.$s_spacer * 4 0 variables.$s_spacer * 4 variables.$s_spacer * 6;
+  font-size: variables.$s_blockquote__fontSize;
+  font-weight: variables.$s_blockquote__fontWeight;
 }
 
 input::-webkit-outer-spin-button,
@@ -236,7 +238,7 @@ input[type='number'] {
 [type='button'],
 [type='reset'],
 [type='submit'] {
-  appearance: button;
+  appearance: auto;
 
   /* Correct the inability to style clickable types in iOS */
 }
@@ -251,10 +253,9 @@ input[type='number'] {
 
 ::before,
 ::after {
-  text-decoration: inherit;
-
   /* Inherit text-decoration and vertical align to ::before and ::after pseudo elements */
   vertical-align: inherit;
+  text-decoration: inherit;
 }
 
 p {
@@ -336,7 +337,7 @@ legend {
   color: inherit;
 
   /* Correct the inability to style clickable types in iOS and Safari */
-  appearance: button;
+  appearance: auto;
 
   /* Change font properties to `inherit` in Chrome and Safari */
 }

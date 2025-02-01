@@ -1,8 +1,9 @@
-$s_borderRadius: 4px !default;
+@use '../lib';
 
+$s_borderRadius: 4px !default;
 $s_rounded: () !default;
 /* stylelint-disable-next-line scss/map-keys-quotes */
-$s_rounded: map-deep-merge(
+$s_rounded: lib.map-deep-merge(
   (
     0: 0,
     'sm': calc($s_borderRadius / 2),
@@ -14,6 +15,5 @@ $s_rounded: map-deep-merge(
   ),
   $s_rounded
 );
-
 $s_outlined__borderWidth: 1px !default;
 $s_underlined__borderWidth: 3px !default;
