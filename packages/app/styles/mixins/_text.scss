@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use '../variables';
+
 @mixin s_textTruncate() {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -5,7 +8,7 @@
 }
 
 @mixin s_typography($style) {
-  $textStyles: map.get($s_headings, $style);
+  $textStyles: map.get(variables.$s_headings, $style);
   font-family: map.get($textStyles, 'font-family');
   font-size: map.get($textStyles, 'size');
 
@@ -21,15 +24,15 @@
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
+  -webkit-line-clamp: $i;
   white-space: initial;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: $i;
 }
 
 @mixin s_lineClamps($child: null) {
   @for $i from 1 through 6 {
     &--lineClamp__#{$i} {
-      @if ($child) {
+      @if $child {
         .#{$child} {
           @include s_lineClamp($i);
         }

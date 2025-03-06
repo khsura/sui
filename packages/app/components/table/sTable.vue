@@ -19,7 +19,7 @@
             v-for="header in headersListItem"
             ref="headerElements"
             :key="`headCell-${header.value.toString()}`"
-            v-model:sortOrders="sortOrders"
+            v-model:sort-orders="sortOrders"
             :header="header"
             :multi-sort="multiSort"
             :sticky="header.isSticked"
@@ -252,8 +252,6 @@ defineExpose({
 </script>
 
 <style lang="scss">
-@import './mixins';
-
 .s_table {
   $fontSize: map-deep-get($s_headings, 'body__2', 'size');
   width: 100%;

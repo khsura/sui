@@ -1,10 +1,10 @@
-@import '@khsura/sui/styles/variables/grid';
+@use '../variables';
 
 :export {
-  breakpointXs: $s_breakpointXs;
-  breakpointSm: $s_breakpointSm;
-  breakpointMd: $s_breakpointMd;
-  breakpointLg: $s_breakpointLg;
-  breakpointXl: $s_breakpointXl;
-  breakpointXxl: $s_breakpointXxl;
+  breakpointXs: variables.$s_breakpointXs;
+  breakpointSm: variables.$s_breakpointSm;
+  breakpointMd: variables.$s_breakpointMd;
+  breakpointLg: variables.$s_breakpointLg;
+  breakpointXl: variables.$s_breakpointXl;
+  breakpointXxl: variables.$s_breakpointXxl;
 }

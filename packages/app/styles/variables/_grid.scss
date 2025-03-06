@@ -1,12 +1,14 @@
+@use '../lib';
+@use './spacers';
+
 $s_breakpointXs: 640px !default;
 $s_breakpointSm: 768px !default;
 $s_breakpointMd: 1024px !default;
 $s_breakpointLg: 1280px !default;
 $s_breakpointXl: 1536px !default;
 $s_breakpointXxl: 1980px !default;
-
 $s_gridBreakpoints: () !default;
-$s_gridBreakpoints: map-deep-merge(
+$s_gridBreakpoints: lib.map-deep-merge(
   (
     'none': 0,
     'xs': $s_breakpointXs,
@@ -18,13 +20,11 @@ $s_gridBreakpoints: map-deep-merge(
   ),
   $s_gridBreakpoints
 );
-
-$s_gridGutter: $s_spacer * 4 !default;
-$s_form--gridGutter: $s_spacer * 2 !default;
+$s_gridGutter: spacers.$s_spacer * 4 !default;
+$s_form--gridGutter: spacers.$s_spacer * 2 !default;
 $s_gridColumns: 12 !default;
-
 $s_gridGutters: () !default;
-$s_gridGutters: map-deep-merge(
+$s_gridGutters: lib.map-deep-merge(
   (
     'xs': calc($s_gridGutter / 12),
     'sm': calc($s_gridGutter / 6),

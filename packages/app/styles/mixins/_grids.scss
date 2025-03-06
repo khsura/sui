@@ -1,12 +1,18 @@
+@use 'sass:math';
+@use 'sass:map';
+@use '../tools';
+@use '../variables';
+@use './media';
+
 @mixin s_makeColumn(
-  $columns: $s_gridColumns,
-  $gutters: $s_gridGutter,
-  $breakpoints: $s_gridBreakpoints,
+  $columns: variables.$s_gridColumns,
+  $gutters: variables.$s_gridGutter,
+  $breakpoints: variables.$s_gridBreakpoints,
 ) {
   $name: &;
 
-  @each $breakpoint in map-keys($breakpoints) {
-    $infix: s_breakpointInfix($name: $breakpoint, $breakpoints: $breakpoints);
+  @each $breakpoint in map.keys($breakpoints) {
+    $infix: tools.s_breakpointInfix($name: $breakpoint, $breakpoints: $breakpoints);
 
     &#{$infix} {
 
@@ -26,7 +32,7 @@
 
       & {
         // Provide basic `.s_column-{bp}` classes for equal-width flexbox columns
-        @include s_breakpointUp($name: $breakpoint, $breakpoints: $breakpoints) {
+        @include media.s_breakpointUp($name: $breakpoint, $breakpoints: $breakpoints) {
           flex-grow: 1;
           flex-basis: 0;
           max-width: 100%;
@@ -45,11 +51,12 @@
       
           @for $i from 1 through $columns {
             &__#{$i} {
-              flex: 0 0 percentage(calc($i / $columns));
+              flex: 0 0 math.percentage(calc($i / $columns));
+
               // Add a `max-width` to ensure content within each column does not blow out
               // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
               // do not appear to require this.
-              max-width: percentage(calc($i / $columns));
+              max-width: math.percentage(calc($i / $columns));
             }
           }
         }

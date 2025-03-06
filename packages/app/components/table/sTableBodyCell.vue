@@ -26,8 +26,6 @@ const cellClass = computed(() => {
 </script>
 
 <style lang="scss">
-@import './mixins';
-
 .s_tableBodyCell {
   @include tableCell();
   @include tableCellContent();

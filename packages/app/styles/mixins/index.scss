@@ -1,10 +1,10 @@
-@import './app';
-@import './elevation';
-@import './grids';
-@import './media';
-@import './border';
-@import './text';
-@import './utilities';
-@import './dark';
-@import './display';
+@forward './app';
+@forward './elevation';
+@forward './grids';
+@forward './media';
+@forward './border';
+@forward './text';
+@forward './utilities';
+@forward './dark';
+@forward './display';
 

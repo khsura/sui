@@ -131,8 +131,6 @@ const sortIcon = computed(() => {
 </script>
 
 <style lang="scss">
-@import './mixins';
-
 .s_tableHeadCell {
   font-size: map-deep-get($s_headings, 'caption', 'size');
 

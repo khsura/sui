@@ -1,3 +1,5 @@
-$s_cardItemPadding: calc($s_spacer * 4);
+@use '../../variables';
+
+$s_cardItemPadding: calc(variables.$s_spacer * 4);
 $s_cardAdjucentSibling--textPadding__top: 0 !default;
-$s_cardTitleAdjacentSibling--subtitleMargin__top: calc(-1 * $s_spacer * 4) !default;
+$s_cardTitleAdjacentSibling--subtitleMargin__top: calc(-1 * variables.$s_spacer * 4) !default;

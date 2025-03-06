@@ -122,8 +122,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss">
-@import '@khsura/sui/styles/components/layout';
-
 .s_bottomNavigation {
   @include s_layoutTransition();
   position: relative;

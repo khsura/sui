@@ -1,5 +1,10 @@
 <template>
   <SApp app>
+    <SNavigationDrawer v-model="navbar" :app="app" :position="position" :elevation="1" activator="#navbarActivator">
+      <SCard>
+        <SCardTitle>Navbar</SCardTitle>
+      </SCard>
+    </SNavigationDrawer>
     <SAppBar
       :fixed-extension="fixedExtension"
       :color="color"
@@ -40,6 +45,13 @@
             label="Color"
             :items="['primary', 'secondary', 'success', 'info', 'warning', 'important', 'error']"
           />
+          <SButton id="navbarActivator" @click="navbar = true">Open Navbar</SButton>
+          <SButton @click="modal = !modal">Open Modal</SButton>
+          <SDialog v-model="modal" width="100%">
+            <SCard>
+              <SCardTitle>Modal</SCardTitle>
+            </SCard>
+          </SDialog>
         </SCardText>
       </SCard>
       <router-view />
@@ -48,8 +60,9 @@
   </SApp>
 </template>
 <script lang="ts" setup>
-import { SApp, SAppBar, SCard, SCardText, SFooter, SMain } from '@khsura/sui/components'
+import { SApp, SAppBar, SCard, SCardText, SCardTitle, SDialog, SFooter, SMain, SButton } from '@khsura/sui/components'
 import SSelect from '@khsura/sui/components/form/sSelect.vue'
+import SNavigationDrawer from '@khsura/sui/components/layout/sNavigationDrawer.vue'
 import SSwitch from '@khsura/sui/components/sSwitch.vue'
 import { type Position } from '@khsura/sui/constants'
 import { type ToolbarDensityType } from '@khsura/sui/types'
@@ -72,6 +85,8 @@ const height = ref(64)
 const hideOnScroll = ref(false)
 const outlined = ref(false)
 const position = ref<Exclude<Position, null>>('static')
+const navbar = ref(false)
+const modal = ref(false)
 
 const positions = computed(() => {
   return ['static', 'fixed', 'absolute', 'relative', 'sticky', undefined] as Array<Exclude<Position, null>>

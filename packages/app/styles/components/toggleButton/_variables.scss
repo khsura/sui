@@ -1,0 +1,4 @@
+@use '../../variables';
+
+$s_toggleButton--insetBackgroundColor: #eeeef0;
+$s_toggleButton--insetBorderRadius: calc(variables.$s_spacer * 3);

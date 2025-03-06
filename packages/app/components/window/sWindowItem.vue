@@ -78,8 +78,6 @@ const styles = computed(() => {
 })
 </script>
 <style lang="scss">
-@import '@khsura/sui/styles/components/window';
-
 .s_windowItem {
   position: absolute;
   width: 100%;

@@ -13,8 +13,6 @@ const { tagName } = useTagService(props)
 </script>
 
 <style lang="scss">
-@import '@khsura/sui/styles/components/cards';
-
 .s_card__title {
   @include s_typography('h6');
   display: flex;

@@ -1,10 +1,10 @@
+@use '../lib';
+
 $s_shadowKeyUmbra__opacity: rgb(0 0 0 / 20%) !default;
 $s_shadowKeyPenumbra__opacity: rgb(0 0 0 / 14%) !default;
 $s_shadowKeyAmbient__opacity: rgb(0 0 0 / 12%) !default;
-
 $s_shadowKeyUmbra: () !default;
-
-$s_shadowKeyUmbra: map-deep-merge(
+$s_shadowKeyUmbra: lib.map-deep-merge(
   (
     0: (0 0 0 0 $s_shadowKeyUmbra__opacity),
     1: (0 2px 1px -1px $s_shadowKeyUmbra__opacity),
@@ -34,9 +34,8 @@ $s_shadowKeyUmbra: map-deep-merge(
   ),
   $s_shadowKeyUmbra
 );
-
 $s_shadowKeyPenumbra: () !default;
-$s_shadowKeyPenumbra: map-deep-merge(
+$s_shadowKeyPenumbra: lib.map-deep-merge(
   (
     0: (0 0 0 0 $s_shadowKeyPenumbra__opacity),
     1: (0 1px 1px 0 $s_shadowKeyPenumbra__opacity),
@@ -66,9 +65,8 @@ $s_shadowKeyPenumbra: map-deep-merge(
   ),
   $s_shadowKeyPenumbra
 );
-
 $s_shadowKeyAmbient: () !default;
-$s_shadowKeyAmbient: map-deep-merge(
+$s_shadowKeyAmbient: lib.map-deep-merge(
   (
     0: (0 0 0 0 $s_shadowKeyAmbient__opacity),
     1: (0 1px 3px 0 $s_shadowKeyAmbient__opacity),

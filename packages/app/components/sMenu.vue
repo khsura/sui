@@ -81,8 +81,6 @@ watch(
 </script>
 
 <style lang="scss">
-@import '@khsura/sui/styles/components/menu';
-
 .s_menu {
   position: relative;
 

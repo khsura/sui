@@ -1,55 +1,58 @@
+@use 'sass:map';
+@use '../tools';
+@use '../variables';
+@use './dark';
+
 @mixin s_tile($important: false) {
   border-radius: 0 if($important, !important, null);
 }
 
 @mixin s_borderRadius($r: null, $important: false) {
   // Key exists within the $rounded variable
-  @if (map-has-key($s_rounded, $r)) {
-    border-radius: map.get($s_rounded, $r) if($important, !important, null);
+  @if map.has-key(variables.$s_rounded, $r) {
+    border-radius: map.get(variables.$s_rounded, $r) if($important, !important, null);
   } @else {
     border-radius: $r if($important, !important, null);
   }
 }
 
-@mixin s_underlined($color: null, $width: $s_underlined__borderWidth, $important: false) {
+@mixin s_underlined($color: null, $width: variables.$s_underlined__borderWidth, $important: false) {
   $className: &;
 
-  @if ($color) {
-    border-bottom: $s_underlined__borderWidth $color solid if($important, !important, null);
-  }
-
-  @else {
-    border-bottom: $width s_getAppColor('border') solid if($important, !important, null);
+  @if $color {
+    border-bottom: variables.$s_underlined__borderWidth $color solid if($important, !important, null);
+  } @else {
+    border-bottom: $width tools.s_getAppColor('border') solid if($important, !important, null);
   }
 }
 
-@mixin s_outlined($color: null, $width: $s_outlined__borderWidth) {
+@mixin s_outlined($color: null, $width: variables.$s_outlined__borderWidth) {
   $className: &;
   border-style: solid;
   border-width: $width;
 
-  @if ($color) {
-    @if (list.index($s_presetColorNames, $color)) {
-      border-color: s_getPresetColor($color);
-    } @else if (s_getAppColor($color)) {
-      border-color: s_getAppColor($color);
+  @if $color {
+    @if list.index($s_presetColorNames, $color) {
+      border-color: tools.s_getPresetColor($color);
+    } @else if tools.s_getAppColor($color) {
+      border-color: tools.s_getAppColor($color);
     } @else {
       border-color: $color;
     }
   } @else {
-    border-color: s_getAppColor('border');
+    border-color: tools.s_getAppColor('border');
   }
 }
 
-@mixin s_buttonOutlined($width: $s_outlined__borderWidth) {
+@mixin s_buttonOutlined($width: variables.$s_outlined__borderWidth) {
   $className: &;
   margin: -#{$width};
-  color: s_getAppColor('text');
+  color: tools.s_getAppColor('text');
   background-color: transparent;
   border-style: solid;
   border-width: $width;
 
-  @include s_dark(false);
+  @include dark.s_dark(false);
 
   &[class*='s_textColor'],
   &[style*='color'] {
@@ -57,18 +60,18 @@
   }
 
   &:not([class*='s_textColor'], [style*='color']) {
-    border-color: s_getAppColor('border');
+    border-color: tools.s_getAppColor('border');
   }
 }
 
-@mixin s_buttonUnderlined($width: $s_underlined__borderWidth) {
+@mixin s_buttonUnderlined($width: variables.$s_underlined__borderWidth) {
   $className: &;
-  color: s_getAppColor('text');
+  color: tools.s_getAppColor('text');
   background-color: transparent;
   border-bottom-style: solid;
   border-bottom-width: $width;
 
-  @include s_dark(false);
+  @include dark.s_dark(false);
 
   &[class*='s_textColor'],
   &[style*='color'] {
@@ -76,6 +79,6 @@
   }
 
   &:not([class*='s_textColor'], [style*='color']) {
-    border-bottom-color: s_getAppColor('border');
+    border-bottom-color: tools.s_getAppColor('border');
   }
 }

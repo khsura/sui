@@ -65,8 +65,6 @@ defineSlots<{
 }>()
 </script>
 <style lang="scss">
-@import '@khsura/sui/styles/components/button';
-
 .s_chip {
   @include s_dark();
 
@@ -81,13 +79,13 @@ defineSlots<{
   overflow: hidden;
   font-size: $fontSize;
   line-height: calc($s_spacer * 4);
-  text-decoration: none;
-  white-space: nowrap;
   vertical-align: middle;
+  white-space: nowrap;
+  text-decoration: none;
   cursor: default;
+  outline: none;
   background-color: s_getAppColor('button');
   border-radius: #{calc($size / 2)}px;
-  outline: none;
   transition-timing-function: $s_button__transitionTimingFunction;
   transition-duration: $s_button__transitionDuration;
   transition-property: box-shadow, opacity;

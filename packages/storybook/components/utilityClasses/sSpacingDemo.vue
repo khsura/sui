@@ -89,6 +89,7 @@ const sampleText = faker.lorem.words({ max: 40, min: 30 })
   &__params {
     display: flex;
     flex-flow: row wrap;
+
     // gap: 10px;
     justify-content: center;
     width: 100%;

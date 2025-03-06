@@ -29,8 +29,6 @@ const { isExpanded, toggle } = useExpandableItemService()
 </script>
 
 <style lang="scss">
-@import '../list/helper';
-
 .s_expansionPanelHeader {
   position: relative;
   display: flex;
@@ -38,8 +36,8 @@ const { isExpanded, toggle } = useExpandableItemService()
   align-items: center;
   min-height: calc(12 * $s_spacer);
   padding: 0 calc($s_spacer * 4);
-  text-decoration: none;
   letter-spacing: normal;
+  text-decoration: none;
   outline: none;
 
   @include s_createListItemLink();

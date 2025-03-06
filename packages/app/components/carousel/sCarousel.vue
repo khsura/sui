@@ -128,8 +128,8 @@ $s_carouselDotHoverOpacity: 0.8 !default;
 
       .s_icon {
         color: s_getAppColor('card');
-        filter: drop-shadow(2px 2px 6px #000000ff);
         opacity: $s_carouselDotInactiveOpacity;
+        filter: drop-shadow(2px 2px 6px #000000ff);
         fill: s_getAppColor('card');
       }
 

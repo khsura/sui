@@ -1,6 +1,8 @@
+@use '../lib';
+
 $s_headings: () !default;
 /* stylelint-disable-next-line scss/map-keys-quotes */
-$s_headings: map-deep-merge(
+$s_headings: lib.map-deep-merge(
   (
     'h1': (
       'size': 6rem,

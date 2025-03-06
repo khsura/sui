@@ -11,8 +11,6 @@ const props = defineProps(propsListMediaItem())
 const { classes } = useListMediaItemService(props, { componentName: 'listItemAction' })
 </script>
 <style lang="scss">
-@import './helper';
-
 .s_listItemAction {
   margin-left: calc($s_spacer * 8);
 

@@ -153,8 +153,8 @@ const onClickDate = (value: { date: CalendarDate; events: CalendarEvent[] }) => 
     padding: 0 8px;
     margin-bottom: 2px;
     overflow: hidden;
-    color: #ffffff;
     text-overflow: ellipsis;
+    color: #ffffff;
     white-space: nowrap;
     cursor: pointer;
 

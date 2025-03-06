@@ -1,3 +1,10 @@
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:list';
+@use '../variables';
+@use './media';
+@use '../tools';
+
 @mixin s_createUtility($utility, $infix) {
   $name: map.get($utility, 'name');
   $modifier: map.get($utility, 'modifiers');
@@ -6,19 +13,19 @@
   $responsive: map.get($utility, 'responsive');
 
   .s_#{$name + $infix} {
-    @if ((not $responsive and not $infix) or $infix) {
+    @if (not $responsive and not $infix) or $infix {
       @each $modifier in $modifier {
         @each $property in $properties {
-          @if type-of($property) == 'string' or type-of($property) == 'number' {
+          @if meta.type-of($property) == 'string' or meta.type-of($property) == 'number' {
             &__#{$property} {
-              #{$modifier}: $property if(index($unimportants, $modifier), null, !important);
+              #{$modifier}: $property if(list.index($unimportants, $modifier), null, !important);
             }
           } @else {
             $propertyName: list.nth($property, 1);
             $propertyValue: list.nth($property, 2);
 
             &__#{$propertyName} {
-              #{$modifier}: $propertyValue if(index($unimportants, $modifier), null, !important);
+              #{$modifier}: $propertyValue if(list.index($unimportants, $modifier), null, !important);
             }
           }
         }
@@ -28,15 +35,15 @@
 }
 
 @mixin s_createUtilities() {
-  @each $breakpoint in map-keys($s_gridBreakpoints) {
+  @each $breakpoint in map.keys(variables.$s_gridBreakpoints) {
     // Generate media query if needed
-    @include s_breakpointUp($breakpoint) {
-      $infix: s_breakpointInfix($name: $breakpoint, $breakpoints: $s_gridBreakpoints);
+    @include media.s_breakpointUp($breakpoint) {
+      $infix: tools.s_breakpointInfix($name: $breakpoint, $breakpoints: variables.$s_gridBreakpoints);
 
       // Loop over each utility property
-      @each $key, $utility in $s_utilities {
+      @each $key, $utility in variables.$s_utilities {
         /* stylelint-disable-next-line max-nesting-depth */
-        @if type-of($utility) == 'map' and (map.get($utility, responsive) or $infix == '') {
+        @if meta.type-of($utility) == 'map' and (map.get($utility, responsive) or $infix == '') {
           @include s_createUtility($utility: $utility, $infix: $infix);
         }
       }
@@ -45,7 +52,7 @@
 
   // @media print {
   //   @each $key, $utility in $s_utilities {
-  //     @if type-of($utility) == 'map' and map.get($utility, print) == true {
+  //     @if meta.type-of($utility) == 'map' and map.get($utility, print) == true {
   //       @include s_createUtility($utility: $utility, $infix: '-print');
   //     }
   //   }

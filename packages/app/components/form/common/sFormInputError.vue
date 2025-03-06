@@ -28,14 +28,14 @@ const classList = computed(() => {
 <style lang="scss">
 .s_formInputError {
   @include s_typography('caption');
+  visibility: hidden;
   min-height: calc($s_spacer * 7);
   padding: $s_spacer calc($s_spacer * 4);
   color: s_getPresetColor('error');
-  visibility: hidden;
   opacity: 0;
   transition:
     visibility 1s,
-    opacity 0.15s map-get($s_transitions, 'swing');
+    opacity 0.15s map.get($s_transitions, 'swing');
 
   &--simple {
     padding-right: 0;

@@ -1,7 +1,7 @@
-@import './variables';
+@use './variables';
 
 @mixin s_layoutTransition() {
-  transition-timing-function: $s_layoutTransitionTimingFunction;
-  transition-duration: $s_layoutTransitionDuration;
-  transition-property: $s_layoutTransitionProperty;
+  transition-timing-function: variables.$s_layoutTransitionTimingFunction;
+  transition-duration: variables.$s_layoutTransitionDuration;
+  transition-property: variables.$s_layoutTransitionProperty;
 }

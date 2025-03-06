@@ -109,8 +109,8 @@ export const useAppBarService = (props: PropsAppBar) => {
 
   const styles = computed(() => {
     return getCleanSetObject({
-      left: left.value,
-      right: right.value,
+      marginLeft: left.value,
+      marginRight: right.value,
       width: width.value,
       top: isFixedOrAbsolutePosition.value
         ? getNumericCssAttribute(Math.max(app.value.offsetTop - currentScroll.value, 0))

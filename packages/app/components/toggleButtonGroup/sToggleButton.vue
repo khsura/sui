@@ -43,9 +43,6 @@ const classes = computed(() => {
 </script>
 
 <style lang="scss">
-@import '@khsura/sui/styles/components/button';
-@import './variables';
-
 .s_toggleButton {
   display: flex;
   flex: 1;

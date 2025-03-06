@@ -4,3 +4,5 @@ declare module 'postcss-media-minmax' {
 
   export default plugin
 }
+
+declare module '*.vue'

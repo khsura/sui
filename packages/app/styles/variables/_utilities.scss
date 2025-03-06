@@ -1,8 +1,9 @@
+@use './spacers';
+@use '../lib';
+
 $s_utilities: () !default;
-
 $s_textShadowColor: rgb(0 0 0 / 80%);
-
-$s_utilities: map-deep-merge(
+$s_utilities: lib.map-deep-merge(
   (
     'overflow': (
       'name': 'overflow',
@@ -156,109 +157,109 @@ $s_utilities: map-deep-merge(
     'margin': (
       'name': 'ma',
       'modifiers': (margin),
-      'properties': $s_marginSpacers,
+      'properties': spacers.$s_marginSpacers,
       'responsive': true,
     ),
     'marginX': (
       'name': 'mx',
       'modifiers': (margin-right, margin-left),
-      'properties': $s_marginSpacers,
+      'properties': spacers.$s_marginSpacers,
       'responsive': true,
     ),
     'marginY': (
       'name': 'my',
       'modifiers': (margin-top, margin-bottom),
-      'properties': $s_marginSpacers,
+      'properties': spacers.$s_marginSpacers,
       'responsive': true,
     ),
     'marginTop': (
       'name': 'mt',
       'modifiers': (margin-top),
-      'properties': $s_marginSpacers,
+      'properties': spacers.$s_marginSpacers,
       'responsive': true,
     ),
     'marginRight': (
       'name': 'mr',
       'modifiers': (margin-right),
-      'properties': $s_marginSpacers,
+      'properties': spacers.$s_marginSpacers,
       'responsive': true,
     ),
     'marginBottom': (
       'name': 'mb',
       'modifiers': (margin-bottom),
-      'properties': $s_marginSpacers,
+      'properties': spacers.$s_marginSpacers,
       'responsive': true,
     ),
     'marginLeft': (
       'name': 'ml',
       'modifiers': (margin-left),
-      'properties': $s_marginSpacers,
+      'properties': spacers.$s_marginSpacers,
       'responsive': true,
     ),
     /* 'marginStart': (*/
     /*   'name': 'ms',*/
     /*   'modifiers': (margin-left),*/
-    /*   'properties': $s_marginSpacers,*/
+    /*   'properties': spacers.$s_marginSpacers,*/
     /*   'responsive': true,*/
     /* ),*/
     /* 'marginEnd': (*/
     /*   'name': 'me',*/
     /*   'modifiers': (margin-right),*/
-    /*   'properties': $s_marginSpacers,*/
+    /*   'properties': spacers.$s_marginSpacers,*/
     /*   'responsive': true,*/
     /* ),*/
     'padding': (
       'name': 'pa',
       'modifiers': (padding),
-      'properties': $s_spacers,
+      'properties': spacers.$s_spacers,
       'responsive': true,
     ),
     'paddingX': (
       'name': 'px',
       'modifiers': (padding-right, padding-left),
-      'properties': $s_spacers,
+      'properties': spacers.$s_spacers,
       'responsive': true,
     ),
     'paddingY': (
       'name': 'py',
       'modifiers': (padding-top, padding-bottom),
-      'properties': $s_spacers,
+      'properties': spacers.$s_spacers,
       'responsive': true,
     ),
     'paddingTop': (
       'name': 'pt',
       'modifiers': (padding-top),
-      'properties': $s_spacers,
+      'properties': spacers.$s_spacers,
       'responsive': true,
     ),
     'paddingRight': (
       'name': 'pr',
       'modifiers': (padding-right),
-      'properties': $s_spacers,
+      'properties': spacers.$s_spacers,
       'responsive': true,
     ),
     'paddingBottom': (
       'name': 'pb',
       'modifiers': (padding-bottom),
-      'properties': $s_spacers,
+      'properties': spacers.$s_spacers,
       'responsive': true,
     ),
     'paddingLeft': (
       'name': 'pl',
       'modifiers': (padding-left),
-      'properties': $s_spacers,
+      'properties': spacers.$s_spacers,
       'responsive': true,
     ),
     /* 'paddingStart': (*/
     /*   'name': 'ps',*/
     /*   'modifiers': (padding-left),*/
-    /*   'properties': $s_spacers,*/
+    /*   'properties': spacers.$s_spacers,*/
     /*   'responsive': true,*/
     /* ),*/
     /* 'paddingEnd': (*/
     /*   'name': 'pe',*/
     /*   'modifiers': (padding-right),*/
-    /*   'properties': $s_spacers,*/
+    /*   'properties': spacers.$s_spacers,*/
     /*   'responsive': true,*/
     /* ),*/
     /* 'rounded': (*/

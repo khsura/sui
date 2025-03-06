@@ -62,8 +62,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import '@khsura/sui/styles/components/button';
-
 $slideGroupButtonSize: #{map-deep-get($s_button--sizes, 'default')}px;
 
 .s_slideGroup {

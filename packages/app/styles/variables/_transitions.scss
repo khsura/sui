@@ -1,5 +1,8 @@
+@use 'sass:map';
+@use '../lib';
+
 $s_transitions: () !default;
-$s_transitions: map-deep-merge(
+$s_transitions: lib.map-deep-merge(
   (
     'fast-out-slow-in': cubic-bezier(0.4, 0, 0.2, 1),
     'linear-out-slow-in': cubic-bezier(0, 0, 0.2, 1),
@@ -10,5 +13,4 @@ $s_transitions: map-deep-merge(
   ),
   $s_transitions
 );
-
-$s_primaryTransition: 0.3s map-get($s_transitions, 'swing') !default;
+$s_primaryTransition: 0.3s map.get($s_transitions, 'swing') !default;

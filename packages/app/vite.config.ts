@@ -37,7 +37,7 @@ export default defineConfig({
           @use 'sass:meta';
           @use 'sass:list';
           @use 'sass:string';
-          @import '@khsura/sui/styles/helpers';
+          @use '@khsura/sui/styles/helpers' as *;
         `,
       },
     },
