@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/khsura/sui/compare/shared-v1.0.2...shared-v1.1.0) (2025-03-06)
+
+
+### Features
+
+* upgrade sass and other packages ([#45](https://github.com/khsura/sui/issues/45)) ([714fcf6](https://github.com/khsura/sui/commit/714fcf620cb53428f8d3cb17fbe9d60c4439d4fc))
+
 ## [1.0.2](https://github.com/khsura/sui/compare/shared-v1.0.1...shared-v1.0.2) (2024-09-30)
 
 

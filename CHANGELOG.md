@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/khsura/sui/compare/root-v1.0.11...root-v1.1.0) (2025-03-06)
+
+
+### Features
+
+* upgrade sass and other packages ([#45](https://github.com/khsura/sui/issues/45)) ([714fcf6](https://github.com/khsura/sui/commit/714fcf620cb53428f8d3cb17fbe9d60c4439d4fc))
+
+
+### Bug Fixes
+
+* release please version ([2172bdc](https://github.com/khsura/sui/commit/2172bdc78d2f36426c9a1a09b52725917a10f159))
+
 ## [1.0.11](https://github.com/khsura/sui/compare/root-v1.0.10...root-v1.0.11) (2024-12-03)
 
 
