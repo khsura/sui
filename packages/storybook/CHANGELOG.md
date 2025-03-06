@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/khsura/sui/compare/storybook-v1.1.4...storybook-v1.2.0) (2025-03-06)
+
+
+### Features
+
+* upgrade sass and other packages ([#45](https://github.com/khsura/sui/issues/45)) ([714fcf6](https://github.com/khsura/sui/commit/714fcf620cb53428f8d3cb17fbe9d60c4439d4fc))
+
 ## [1.1.4](https://github.com/khsura/sui/compare/storybook-v1.1.3...storybook-v1.1.4) (2024-12-03)
 
 
