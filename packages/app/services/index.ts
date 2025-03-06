@@ -1,6 +1,7 @@
 export * from './appProviderService'
 export * from './appService'
 export * from './appBarService'
+export * from './backgroundScrollService'
 export * from './borderService'
 export * from './calendar'
 export * from './colorService'

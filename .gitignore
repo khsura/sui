@@ -20,3 +20,5 @@ install-state.gz
 
 .nx/cache
 .nx/workspace-data
+
+**/.DS_STORE

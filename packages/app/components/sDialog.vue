@@ -20,6 +20,7 @@ import SOverlay from '@khsura/sui/components/sOverlay.vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import { propsDialog, propsElevation } from '@khsura/sui/props'
 import { useDialogService, useProviderService } from '@khsura/sui/services'
+import { useBackgroundScrollService } from '@khsura/sui/services'
 import { OnClickOutside } from '@vueuse/components'
 import { watch } from 'vue'
 
@@ -29,17 +30,10 @@ const { provideProps } = useProviderService()
 
 provideProps(ProviderPropsName.dialog, props)
 
-const {
-  activatorOn,
-  activatorAttrs,
-  activatorElement,
-  contentClasses,
-  contentStyles,
-  transitionName,
-  onClickOutside,
-  enableBackgroundScroll,
-  disableBackgroundScroll,
-} = useDialogService(props, model)
+const { activatorOn, activatorAttrs, activatorElement, contentClasses, contentStyles, transitionName, onClickOutside } =
+  useDialogService(props, model)
+
+const { enableBackgroundScroll, disableBackgroundScroll } = useBackgroundScrollService()
 
 watch(model, async (value) => {
   if (value) {

@@ -5,9 +5,9 @@
       ref="navigationDrawer"
       :class="classes"
       :style="styles"
-      @touchstart="touchstart"
-      @touchend="isTouchless ? null : touchend"
-      @touchmove="isTouchless ? null : touchmove"
+      @touchstart.passive="touchstart"
+      @touchend.passive="isTouchless ? null : touchend"
+      @touchmove.passive="isTouchless ? null : touchmove"
       @mouseenter="isTouchless ? null : mouseenter"
       @mouseleave="isTouchless ? null : mouseleave"
     >
@@ -24,6 +24,7 @@ import { type TouchWrapper } from '@khsura/sui/types'
 import { getNumericCssAttribute } from '@khsura/sui/lib'
 import { propsNavigationDrawer } from '@khsura/sui/props'
 import {
+  useBackgroundScrollService,
   useClickOutsideService,
   useDisplayService,
   useElevationService,
@@ -105,6 +106,7 @@ const { app, isApp } = useLayoutService(props)
 const { classListElevation } = useElevationService(props)
 const { isAbsolutePosition, isFixedPosition, classListPosition } = usePositionService(props)
 const { currentScroll } = useScrollableService()
+const { enableBackgroundScroll, disableBackgroundScroll } = useBackgroundScrollService()
 
 const { touchstart, touchend, touchmove } = useTouchService({
   left: swipeLeft,
@@ -181,7 +183,7 @@ const reactsToResize = computed((): boolean => {
 })
 
 const isOverlay = computed((): boolean => {
-  if (!isApp.value) {
+  if (!hasApp.value) {
     return false
   }
 
@@ -252,8 +254,9 @@ const classes = computed(() => {
     ...classListElevation.value,
     ...classListPosition.value,
     s_navigationDrawer: true,
+    's_navigationDrawer--active': model.value,
     's_navigationDrawer--absolute': isAbsolutePosition.value || !isApp.value,
-    's_navigationDrawer--fixed': isFixedPosition.value,
+    's_navigationDrawer--fixed': isFixedPosition.value || isApp.value,
     's_navigationDrawer--bottom': isBottom.value,
     's_navigationDrawer--floating': props.floating,
     's_navigationDrawer--isMobile': isMobile.value,
@@ -314,8 +317,10 @@ watch(
   (value) => {
     if (value) {
       clickOutsideListener.register()
+      disableBackgroundScroll()
     } else {
       clickOutsideListener.unregister()
+      void enableBackgroundScroll()
     }
   },
   {
@@ -361,15 +366,6 @@ watch(
   () => props.permanent,
   () => {
     model.value = true
-  },
-)
-
-watch(
-  () => props.modelValue,
-  (value) => {
-    if (value !== model.value) {
-      model.value = value ?? false
-    }
   },
 )
 
