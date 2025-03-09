@@ -52,13 +52,17 @@
             label="Color"
             :items="['primary', 'secondary', 'success', 'info', 'warning', 'important', 'error']"
           />
-          <SButton id="navbarActivator" @click="navbar = true">Open Navbar</SButton>
+          <SButton id="navbarActivator" @click="navbar = !navbar">Toggle Navbar</SButton>
+          <SSwitch v-model="permanent" label="Permanent navbar"></SSwitch>
           <SButton @click="modal = !modal">Open Modal</SButton>
           <SDialog v-model="modal" width="100%">
             <SCard>
               <SCardTitle>Modal</SCardTitle>
             </SCard>
           </SDialog>
+          <pre>
+            {{ JSON.stringify({ navbar }) }}
+          </pre>
         </SCardText>
       </SCard>
       <router-view />
