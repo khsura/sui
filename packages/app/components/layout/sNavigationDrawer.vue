@@ -401,10 +401,16 @@ const appRightShiftWidth = computed(() => {
   return isRight.value ? appHorizontalShiftWidth.value : 0
 })
 
-watch([appLeftShiftWidth, appRightShiftWidth], ([left, right]) => {
-  app.value.left = left
-  app.value.right = right
-})
+watch(
+  [appLeftShiftWidth, appRightShiftWidth],
+  ([left, right]) => {
+    app.value.left = left
+    app.value.right = right
+  },
+  {
+    immediate: true,
+  },
+)
 
 const on = {
   click,

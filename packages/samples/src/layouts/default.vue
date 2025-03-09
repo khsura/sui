@@ -1,6 +1,13 @@
 <template>
   <SApp app>
-    <SNavigationDrawer v-model="navbar" :app="app" :position="position" :elevation="1" activator="#navbarActivator">
+    <SNavigationDrawer
+      v-model="navbar"
+      :app="app"
+      :position="position"
+      :elevation="1"
+      activator="#navbarActivator"
+      :permanent="permanent"
+    >
       <SCard>
         <SCardTitle>Navbar</SCardTitle>
       </SCard>
@@ -87,6 +94,7 @@ const outlined = ref(false)
 const position = ref<Exclude<Position, null>>('static')
 const navbar = ref(false)
 const modal = ref(false)
+const permanent = ref(true)
 
 const positions = computed(() => {
   return ['static', 'fixed', 'absolute', 'relative', 'sticky', undefined] as Array<Exclude<Position, null>>
