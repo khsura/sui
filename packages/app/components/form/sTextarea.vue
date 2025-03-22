@@ -43,11 +43,11 @@ import { nextTick } from 'vue'
 import { onMounted } from 'vue'
 import kFormInputError from './common/sFormInputError.vue'
 
-const props = defineProps(propsTextarea())
+const props = defineProps(propsTextarea<string | null>())
 const emit = defineEmits<EmitFormTextInput<string | number | null>>()
 const textareaElement = ref<HTMLTextAreaElement | null>(null)
 
-const model = defineModel<string | null>({
+const model = defineModel<string>({
   get: (v) => v ?? '',
   set: (v) => {
     void onEvent()
@@ -58,7 +58,7 @@ const model = defineModel<string | null>({
   default: '',
 })
 
-const { updateFormInput, errors } = useFormInputService<string | number | null>(props, emit)
+const { updateFormInput, errors } = useFormInputService<string | null>(props, emit)
 const { classListDisabled } = useDisabledService(props)
 // TODO - Sura: make able to use all preset colors
 const { getIsPredefinedPresetColor } = useColorRepository()

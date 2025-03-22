@@ -2,7 +2,7 @@ import { type PropType } from 'vue'
 import { propsFormInput } from './formInputProps'
 import { propsSizePreset } from './sizeProps'
 
-export const propsTextarea = () => {
+export const propsTextarea = <T extends string | null = string | null>() => {
   return {
     cols: {
       type: Number,
@@ -81,6 +81,6 @@ export const propsTextarea = () => {
       default: null,
     },
     ...propsSizePreset(),
-    ...propsFormInput<string>(),
+    ...propsFormInput<T>(),
   } as const
 }
