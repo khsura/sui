@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/khsura/sui/compare/storybook-v1.2.0...storybook-v1.2.1) (2025-03-22)
+
+
+### Bug Fixes
+
+* upgrade eslint and others, fix related bugs ([bd9f088](https://github.com/khsura/sui/commit/bd9f088f993a602e32cd5e8acce8f1825925d6c9))
+
 ## [1.2.0](https://github.com/khsura/sui/compare/storybook-v1.1.4...storybook-v1.2.0) (2025-03-06)
 
 

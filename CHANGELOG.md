@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/khsura/sui/compare/root-v1.1.0...root-v1.1.1) (2025-03-22)
+
+
+### Bug Fixes
+
+* upgrade eslint and others, fix related bugs ([bd9f088](https://github.com/khsura/sui/commit/bd9f088f993a602e32cd5e8acce8f1825925d6c9))
+
 ## [1.1.0](https://github.com/khsura/sui/compare/root-v1.0.1...root-v1.1.0) (2025-03-22)
 
 
