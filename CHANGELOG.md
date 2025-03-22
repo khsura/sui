@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.1.0](https://github.com/khsura/sui/compare/root-v1.0.1...root-v1.1.0) (2025-03-22)
+
+
+### Features
+
+* upgrade sass and other packages ([#45](https://github.com/khsura/sui/issues/45)) ([714fcf6](https://github.com/khsura/sui/commit/714fcf620cb53428f8d3cb17fbe9d60c4439d4fc))
+
+
+### Bug Fixes
+
+* add change event ([bcab6f8](https://github.com/khsura/sui/commit/bcab6f8d15758bbd6b5fd5d0850f9f5d67aa3a91))
+* appBar related issues ([984dca0](https://github.com/khsura/sui/commit/984dca0425eb85ed0381c7442dffe3bdc35df5ad))
+* bug ([be831d7](https://github.com/khsura/sui/commit/be831d7c1643b829729a4d4a6f92dc672b0ee850))
+* bug ([181dc62](https://github.com/khsura/sui/commit/181dc6231cbc279a35c9a08b900e0445d3c886c9))
+* bug ([6e9d97d](https://github.com/khsura/sui/commit/6e9d97dd99707a8e8837ea97da8019712175b3bc))
+* bug ([11d5593](https://github.com/khsura/sui/commit/11d55939446f8bf5f604a8f8c263172c1e4b06a5))
+* bug ([5e4ce0b](https://github.com/khsura/sui/commit/5e4ce0b88b6942b6be428221f9518753c47227d9))
+* bug ([7e3a51e](https://github.com/khsura/sui/commit/7e3a51eeb2c0a4bb96749996b220b2e999b92dec))
+* dialog etc many bugs ([12b5413](https://github.com/khsura/sui/commit/12b5413a9444683c776b10c4aa0f8a1b69f709f7))
+* elevation ([0831788](https://github.com/khsura/sui/commit/0831788bb71ed78d28cc2c3138ce4c7c9c821cba))
+* layout bug ([fb6c1dc](https://github.com/khsura/sui/commit/fb6c1dc1c6043f188561fd9cf75078fdbaeaaa8a))
+* refactor sCardText, sCardSubtitle ([#12](https://github.com/khsura/sui/issues/12)) ([eb6dfec](https://github.com/khsura/sui/commit/eb6dfeceb34a558c1c97b2653fed03be7862deb2))
+* release please version ([2172bdc](https://github.com/khsura/sui/commit/2172bdc78d2f36426c9a1a09b52725917a10f159))
+* rename package names ([72ac744](https://github.com/khsura/sui/commit/72ac744315485ca662961cc9bd3c073c78bd6030))
+* test ([35d105a](https://github.com/khsura/sui/commit/35d105a77088e2d6f8d4d97e8b36265c47e8023e))
+* update yarn ([1cc1d36](https://github.com/khsura/sui/commit/1cc1d3641e46b100ed117e8efe70ed8db1708ab2))
+
 ## [1.0.1](https://github.com/khsura/sui/compare/v1.0.0...v1.0.1) (2025-03-22)
 
 
