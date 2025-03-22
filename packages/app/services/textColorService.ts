@@ -1,7 +1,7 @@
-import { type PropsTextColor } from '@khsura/sui/definitions'
-import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
 import { toReactive } from '@vueuse/core'
 import { type Ref, computed } from 'vue'
+import { type PropsTextColor } from '@khsura/sui/definitions'
+import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
 
 export const useTextColorService = (data: PropsTextColor | Ref<Partial<PropsTextColor>>) => {
   const props = toReactive(data)

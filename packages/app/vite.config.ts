@@ -1,10 +1,10 @@
 import path from 'path'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import autoprefixer from 'autoprefixer'
 import flexbugsFixes from 'postcss-flexbugs-fixes'
 import mediaMinmax from 'postcss-media-minmax'
 import { defineConfig } from 'vite'
-import vueJsx from '@vitejs/plugin-vue-jsx'
 
 export default defineConfig({
   plugins: [vue(), vueJsx()],

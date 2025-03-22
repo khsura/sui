@@ -1,4 +1,4 @@
-import type { PropsLink } from '@khsura/sui/definitions'
+import type { PropsLink } from '@khsura/sui'
 import type { ArgTypes } from '@storybook/vue3'
 
 export const argTypesLink: ArgTypes<PropsLink> = {

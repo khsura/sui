@@ -9,11 +9,11 @@
   </span>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue'
 import SIcon from '@khsura/sui/components/sIcon.vue'
 import { getCleanSetObject } from '@khsura/sui/lib'
 import { propsChip } from '@khsura/sui/props'
 import { useBorderService, useColorService, useDisabledService, useSizeService } from '@khsura/sui/services'
-import { computed } from 'vue'
 
 const props = defineProps(propsChip())
 

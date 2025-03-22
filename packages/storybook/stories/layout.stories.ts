@@ -17,12 +17,12 @@ import {
   SListItemIcon,
   SListItemContent,
   SDivider,
-} from '@khsura/sui/components'
-import { ToolbarDensity } from '@khsura/sui/constants/toolbar'
-import { useDisplayService } from '@khsura/sui/services/displayService'
-import { createStoryObj } from '@khsura/storybook/helpers'
-import { computed, defineComponent, ref } from 'vue'
+  ToolbarDensity,
+  useDisplay,
+} from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { computed, defineComponent, ref } from 'vue'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 type StoryComponent =
   | typeof SLayout
@@ -85,7 +85,7 @@ export const Layout = createStoryObj<StoryComponent>({
       },
       setup() {
         const value = ref(false)
-        const { smAndUp } = useDisplayService()
+        const { smAndUp } = useDisplay()
         const dummyUrl = faker.internet.url()
 
         const links = computed(() => {

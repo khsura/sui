@@ -7,10 +7,10 @@
 </template>
 
 <script setup lang="ts">
+import { computed, onBeforeUnmount, onMounted, watch } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
-import { type GroupItemValue } from '@khsura/sui/types'
-import { isBrowser } from '@khsura/sui/lib/browser'
 import { getCleanSetObject, getNumericValue } from '@khsura/sui/lib'
+import { isBrowser } from '@khsura/sui/lib/browser'
 import { propsBottomNavigation } from '@khsura/sui/props'
 import {
   useBorderService,
@@ -22,8 +22,7 @@ import {
   useSingleGroupService,
   useTagService,
 } from '@khsura/sui/services'
-import { computed, onBeforeUnmount, onMounted } from 'vue'
-import { watch } from 'vue'
+import { type GroupItemValue } from '@khsura/sui/types'
 
 const props = defineProps({
   ...propsBottomNavigation(),

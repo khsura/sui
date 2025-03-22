@@ -1,6 +1,6 @@
+import { type PropType } from 'vue'
 import { sizeProperties } from '@khsura/sui/configs'
 import { type SizePropertyType, type SizePropertyUnionType } from '@khsura/sui/types'
-import { type PropType } from 'vue'
 
 export const propsSizePreset = () => {
   return {

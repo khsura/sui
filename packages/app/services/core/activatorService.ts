@@ -1,7 +1,7 @@
+import { ref, computed, type Ref, type ComputedRef } from 'vue'
 import { type PropsActivator } from '@khsura/sui/definitions'
 import { getDocument } from '@khsura/sui/lib/browser'
 import { getCleanSetObject } from '@khsura/sui/lib/getCleanSetObject'
-import { ref, computed, type Ref, type ComputedRef } from 'vue'
 
 export const useActivatorService = (props: PropsActivator, model: Ref<boolean | null | undefined>) => {
   const contentElement: Ref<HTMLElement | null> = ref(null)

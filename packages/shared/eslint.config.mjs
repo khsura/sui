@@ -1,14 +1,14 @@
 import eslint from '@eslint/js'
-import tslint from 'typescript-eslint'
-import vueEslint from 'eslint-plugin-vue'
-import prettier from 'eslint-plugin-prettier/recommended'
-import vueParser from 'vue-eslint-parser'
-import tsParser from '@typescript-eslint/parser'
-import typescriptEslint from '@typescript-eslint/eslint-plugin'
-import globals from 'globals'
-import htmlParser from '@html-eslint/parser'
 import htmlEslintPlugin from '@html-eslint/eslint-plugin'
-import eslintPluginImport from 'eslint-plugin-import'
+import * as htmlParser from '@html-eslint/parser'
+import typescriptEslint from '@typescript-eslint/eslint-plugin'
+import * as tsParser from '@typescript-eslint/parser'
+import importPlugin from 'eslint-plugin-import'
+import prettier from 'eslint-plugin-prettier/recommended'
+import vueEslint from 'eslint-plugin-vue'
+import globals from 'globals'
+import tslint from 'typescript-eslint'
+import vueParser from 'vue-eslint-parser'
 
 const jsRules = {
   'no-undef': 'off',
@@ -40,7 +40,7 @@ const jsRules = {
   'import/order': ['error'],
 }
 
-/** @type {import('eslint').Linter.FlatConfig[]} */
+/** @type {import('eslint').Linter.Config[]} */
 export default [
   {
     ignores: ['node_modules', 'dist', 'build', 'coverage', 'public', 'storybook-static', '@types'],
@@ -53,13 +53,48 @@ export default [
       globals: {
         ...globals.node,
       },
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+    },
+    plugins: { import: importPlugin },
+    settings: {
+      'import/resolver': {
+        // You will also need to install and configure the TypeScript resolver
+        // See also https://github.com/import-js/eslint-import-resolver-typescript#configuration
+        typescript: true,
+        node: {
+          extensions: ['.js', '.ts', '.vue'],
+        },
+      },
+      'import/parsers': {
+        '@typescript-eslint/parser': ['.ts', '.tsx'],
+      },
+      'import/extensions': ['.js', '.mjs', '.ts', '.tsx', '.vue'],
+      alias: {
+        map: [
+          ['@khsura/sui', '../app'],
+          ['@khsura/shared', '../shared'],
+          ['@khsura/storybook', '../storybook'],
+        ],
+        extensions: ['.vue', '.js', '.ts'],
+      },
+    },
+    rules: {
+      ...importPlugin.configs.recommended.rules,
+      'import/no-unresolved': ['off'],
+      'import/named': ['off'],
+      'import/default': ['off'],
+      'import/order': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'internal'],
+          alphabetize: { order: 'asc', caseInsensitive: true },
+        },
+      ],
     },
   },
   {
     files: ['**/*.js', '**/*.mjs'],
-    plugins: {
-      import: eslintPluginImport,
-    },
     rules: jsRules,
   },
   {
@@ -76,7 +111,6 @@ export default [
     },
     plugins: {
       '@typescript-eslint': typescriptEslint,
-      import: eslintPluginImport,
     },
     rules: {
       ...jsRules,

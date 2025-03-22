@@ -18,9 +18,9 @@
   </SOverlay>
 </template>
 <script setup lang="ts">
+import { type Ref, computed, ref, getCurrentInstance, watch, onBeforeMount, onBeforeUnmount } from 'vue'
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
-import { type TouchWrapper } from '@khsura/sui/types'
 import { getNumericCssAttribute } from '@khsura/sui/lib'
 import { propsNavigationDrawer } from '@khsura/sui/props'
 import {
@@ -36,7 +36,7 @@ import {
   useScrollableService,
   useTouchService,
 } from '@khsura/sui/services'
-import { type Ref, computed, ref, getCurrentInstance, watch, onBeforeMount, onBeforeUnmount } from 'vue'
+import { type TouchWrapper } from '@khsura/sui/types'
 
 const props = defineProps(propsNavigationDrawer({ app: false }))
 const { isBottom, isRight, computedLocation } = useLocationService(props)

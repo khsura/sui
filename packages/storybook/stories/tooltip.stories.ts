@@ -1,9 +1,8 @@
-import { SButton, STooltip, SSheet, SRow, SContainer, SIcon } from '@khsura/sui/components'
-import { presetColors } from '@khsura/sui/configs/color'
+import { SButton, STooltip, SSheet, SRow, SContainer, SIcon, presetColors } from '@khsura/sui'
+import type { Meta } from '@storybook/vue3'
+import { ref } from 'vue'
 import { argsColor } from '@khsura/storybook/args'
 import { createStoryObj, getMarkdownArrayTypeDescription } from '@khsura/storybook/helpers'
-import { ref } from 'vue'
-import type { Meta } from '@storybook/vue3'
 
 const tooltip: Meta<typeof STooltip> = {
   title: 'UI Components/Tooltip',

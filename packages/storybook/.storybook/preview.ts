@@ -1,8 +1,9 @@
 import './previewPlugins'
-import { getBrowserTheme } from '@khsura/sui/helpers'
+import { getBrowserTheme } from '@khsura/sui'
 import { themes } from '@storybook/theming'
 import { type Preview } from '@storybook/vue3'
 import { appDecorator } from './decorators'
+import '@khsura/sui/dist/s-ui.css'
 
 const preview: Preview = {
   decorators: [appDecorator()],

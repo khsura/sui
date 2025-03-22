@@ -1,8 +1,8 @@
 import { faker } from '@khsura/shared'
-import { useScrollService } from '@khsura/sui/services/scrollService'
-import { createStoryObj } from '@khsura/storybook/helpers'
-import { defineComponent } from 'vue'
+import { useScroll } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { defineComponent } from 'vue'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const smoothScroll: Meta = {
   title: 'UI Directives/SmoothScroll',
@@ -14,7 +14,7 @@ export const SmoothScroll = createStoryObj({
   render: () => {
     return defineComponent({
       setup() {
-        const { smoothScrollTo, scrollIntoView } = useScrollService()
+        const { smoothScrollTo, scrollIntoView } = useScroll()
 
         const scrollTargets = [
           {

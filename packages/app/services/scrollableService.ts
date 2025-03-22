@@ -1,7 +1,7 @@
+import { type Ref, computed, nextTick, onBeforeUnmount, onMounted, ref, watch, type WatchSource } from 'vue'
 import { type PropsScrollable } from '@khsura/sui/definitions'
 import { getWindow } from '@khsura/sui/lib'
 import { type ThresholdMetParams } from '@khsura/sui/types'
-import { type Ref, computed, nextTick, onBeforeUnmount, onMounted, ref, watch, type WatchSource } from 'vue'
 
 export const useScrollableService = (
   props?: Partial<PropsScrollable>,

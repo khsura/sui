@@ -40,13 +40,13 @@
   </SWindow>
 </template>
 <script setup lang="ts">
+import { ref, computed, watch, onMounted } from 'vue'
 import SButton from '@khsura/sui/components/sButton.vue'
 import SIcon from '@khsura/sui/components/sIcon.vue'
 import { SWindow } from '@khsura/sui/components/window'
 import { getNumericCssAttribute } from '@khsura/sui/lib'
 import { propsCarousel } from '@khsura/sui/props'
 import { type GroupItemValue } from '@khsura/sui/types'
-import { ref, computed, watch, onMounted } from 'vue'
 
 const styleList = computed(() => {
   return {

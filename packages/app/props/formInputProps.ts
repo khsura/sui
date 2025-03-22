@@ -1,5 +1,5 @@
-import { type FormInputModelValueRule, type FormInputModelValue } from '@khsura/sui/types'
 import { type PropType } from 'vue'
+import { type FormInputModelValueRule, type FormInputModelValue } from '@khsura/sui/types'
 import { propsDisabled } from './core'
 
 export const propsFormInput = <T extends FormInputModelValue = FormInputModelValue>(defaults?: {

@@ -1,9 +1,9 @@
-import { SCheckbox, SForm } from '@khsura/sui/components'
-import { formInputModelValueRules } from '@khsura/storybook/configs'
-import { argTypesColor } from '@khsura/storybook/argTypes'
-import { createStoryObj, getSlot } from '@khsura/storybook/helpers'
-import { defineComponent, ref } from 'vue'
+import { SCheckbox, SForm } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { defineComponent, ref } from 'vue'
+import { argTypesColor } from '@khsura/storybook/argTypes'
+import { formInputModelValueRules } from '@khsura/storybook/configs'
+import { createStoryObj, getSlot } from '@khsura/storybook/helpers'
 
 const checkbox: Meta<typeof SCheckbox> = {
   title: 'UI Components/Form/Checkbox',

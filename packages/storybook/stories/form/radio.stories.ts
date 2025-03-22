@@ -1,10 +1,10 @@
 import { faker } from '@khsura/shared'
-import { SForm, SRadioGroup, SRadio, SImage } from '@khsura/sui/components'
-import { argsRadioGroup } from '@khsura/storybook/args'
-import { createStoryObj } from '@khsura/storybook/helpers'
-import { defineComponent, ref } from 'vue'
+import { SForm, SRadioGroup, SRadio, SImage } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { defineComponent, ref } from 'vue'
+import { argsRadioGroup } from '@khsura/storybook/args'
 import { formInputModelValueRules } from '@khsura/storybook/configs'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const radio: Meta<typeof SRadioGroup> = {
   title: 'UI Components/Form/Radio',

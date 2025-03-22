@@ -17,6 +17,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import { computed, nextTick } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants/provider'
 import { propsDisabled, propsSingleGroupItem } from '@khsura/sui/props'
 import {
@@ -25,7 +26,6 @@ import {
   useProviderService,
   useSingleGroupItemService,
 } from '@khsura/sui/services'
-import { computed, nextTick } from 'vue'
 
 const props = defineProps({
   id: {

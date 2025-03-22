@@ -1,6 +1,6 @@
-import { SRow, SSpacer, SColumn } from '@khsura/sui/components'
-import { createStoryObj } from '@khsura/storybook/helpers'
+import { SRow, SSpacer, SColumn } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const spacer: Meta<typeof SSpacer | typeof SColumn> = {
   title: 'UI Components/Grids/Spacer',

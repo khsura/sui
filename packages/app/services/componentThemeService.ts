@@ -1,6 +1,6 @@
-import { type PropsComponentTheme } from '@khsura/sui/definitions'
 import { computed } from 'vue'
 import { AppTheme } from '@khsura/sui/constants'
+import { type PropsComponentTheme } from '@khsura/sui/definitions'
 
 export const useComponentThemeService = (props: PropsComponentTheme) => {
   const classes = {

@@ -1,9 +1,8 @@
-import { SSelect, SForm } from '@khsura/sui/components'
-import SIcon from '@khsura/sui/components/sIcon.vue'
+import { SSelect, SForm, SIcon } from '@khsura/sui'
+import type { Meta } from '@storybook/vue3'
+import { defineComponent, ref } from 'vue'
 import { argsSelect } from '@khsura/storybook/args'
 import { createStoryObj } from '@khsura/storybook/helpers'
-import { defineComponent, ref } from 'vue'
-import type { Meta } from '@storybook/vue3'
 
 const select: Meta<typeof SSelect> = {
   title: 'UI Components/Form/Select',

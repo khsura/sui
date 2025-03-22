@@ -1,4 +1,4 @@
-import type { SCard } from '@khsura/sui/components'
+import type { SCard } from '@khsura/sui'
 import type { ComponentPropsAndSlots } from '@storybook/vue3'
 import { argsBorder, argsColor, argsElevation, argsMeasurableStyles, argsSlot } from './core'
 

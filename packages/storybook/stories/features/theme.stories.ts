@@ -1,9 +1,7 @@
-import { SToggleButton, SToggleButtonGroup } from '@khsura/sui/components'
-import { AppTheme } from '@khsura/sui/constants'
-import { useThemeService } from '@khsura/sui/services'
-import { createStoryObj } from '@khsura/storybook/helpers'
-import { defineComponent } from 'vue'
+import { SToggleButton, SToggleButtonGroup, AppTheme, useTheme } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { defineComponent } from 'vue'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const theme: Meta = {
   title: 'Features/Theme',
@@ -19,7 +17,7 @@ export const Theme = createStoryObj({
         SToggleButtonGroup,
       },
       setup: () => {
-        const { theme, setTheme } = useThemeService()
+        const { theme, setTheme } = useTheme()
 
         return {
           theme,

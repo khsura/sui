@@ -1,6 +1,6 @@
+import { type PropType } from 'vue'
 import { propsComponentTheme } from '@khsura/sui/props/core'
 import { type ExposedAppColorType, type PresetColorType } from '@khsura/sui/types'
-import { type PropType } from 'vue'
 
 export const propsColor = <T extends PresetColorType | ExposedAppColorType | string = string>(defaults?: {
   color?: T | undefined

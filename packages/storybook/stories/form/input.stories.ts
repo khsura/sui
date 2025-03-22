@@ -1,18 +1,41 @@
-import { SInput, SCard, SCardTitle, SForm, SRow, SColumn, SButton, SSwitch } from '@khsura/sui/components'
+import { SInput, SCard, SCardTitle, SForm, SRow, SColumn, SButton, SSwitch } from '@khsura/sui'
+import type { FormComponent } from '@khsura/sui'
+import { action } from '@storybook/addon-actions'
+import type { Meta } from '@storybook/vue3'
+import { defineComponent, ref, computed } from 'vue'
+import { argsInput } from '@khsura/storybook/args'
 import { formInputModelValueRules } from '@khsura/storybook/configs'
 import { createStoryObj } from '@khsura/storybook/helpers'
-import { defineComponent, ref, computed } from 'vue'
-import type { FormComponent } from '@khsura/sui/definitions'
-import type { Meta } from '@storybook/vue3'
-import { action } from '@storybook/addon-actions'
 
-const input: Meta<typeof SInput> = {
+const input = {
   title: 'UI Components/Form/Input',
-}
+  component: SInput,
+} satisfies Meta<typeof SInput>
 
 export default input
 
-export const Inputs = createStoryObj<typeof SInput>({
+export const Input = createStoryObj<Meta>({
+  args: argsInput,
+  render: (args) =>
+    defineComponent({
+      components: {
+        SInput,
+      },
+      setup: () => {
+        const modelValue = ref<string | null>(null)
+
+        return {
+          args,
+          modelValue,
+        }
+      },
+      template: `
+        <SInput v-bind="args" v-model="modelValue"></SInput>
+      `,
+    }),
+})
+
+export const Inputs = createStoryObj<Meta>({
   args: {
     inputBackground: '',
     hideDetails: false,

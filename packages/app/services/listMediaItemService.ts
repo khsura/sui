@@ -1,6 +1,6 @@
+import { computed } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import { type PropsListMediaItem } from '@khsura/sui/definitions'
-import { computed } from 'vue'
 import { useProviderRepository } from '@khsura/sui/repositories'
 
 export const useListMediaItemService = (props: PropsListMediaItem, options: { componentName: string }) => {

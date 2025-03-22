@@ -1,9 +1,9 @@
 import { faker } from '@khsura/shared'
-import { SToggleButton, SToggleButtonGroup } from '@khsura/sui/components'
+import { SToggleButton, SToggleButtonGroup } from '@khsura/sui'
+import type { Meta } from '@storybook/vue3'
+import { ref } from 'vue'
 import { argTypesToggleButtonGroup } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'
-import { ref } from 'vue'
-import type { Meta } from '@storybook/vue3'
 
 const toggleButtonGroup: Meta<typeof SToggleButtonGroup> = {
   title: 'UI Components/Toggle Button Group',

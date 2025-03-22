@@ -5,10 +5,10 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { computed } from 'vue'
 import { LazyLoad } from '@khsura/sui/constants'
 import { propsImage, propsMeasurableStyles } from '@khsura/sui/props'
 import { useMeasurableStylesService } from '@khsura/sui/services'
-import { computed } from 'vue'
 
 const props = defineProps({
   ...propsImage(),

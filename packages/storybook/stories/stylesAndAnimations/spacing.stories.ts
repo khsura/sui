@@ -1,5 +1,5 @@
-import { sSpacingDemo } from '@khsura/storybook/components'
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { sSpacingDemo } from '@khsura/storybook/components'
 
 const meta: Meta<typeof sSpacingDemo> = {
   /* 👇 The title prop is optional.

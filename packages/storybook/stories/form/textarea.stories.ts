@@ -1,9 +1,9 @@
 import { faker } from '@khsura/shared'
-import { STextarea } from '@khsura/sui/components'
+import { STextarea } from '@khsura/sui'
+import type { Meta } from '@storybook/vue3'
+import { defineComponent, ref } from 'vue'
 import { formInputModelValueRules } from '@khsura/storybook/configs'
 import { createStoryObj } from '@khsura/storybook/helpers'
-import { defineComponent, ref } from 'vue'
-import type { Meta } from '@storybook/vue3'
 
 const textarea: Meta<typeof STextarea> = {
   title: 'UI Components/Form/Textarea',

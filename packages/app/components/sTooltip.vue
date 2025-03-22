@@ -29,13 +29,11 @@
   </div>
 </template>
 <script setup lang="ts">
+import { OnClickOutside } from '@vueuse/components'
+import { watch, nextTick, computed } from 'vue'
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
 import { propsTooltip } from '@khsura/sui/props'
 import { useColorService, useMeasurableStylesService, useMenuService } from '@khsura/sui/services'
-import { OnClickOutside } from '@vueuse/components'
-import { watch } from 'vue'
-import { nextTick } from 'vue'
-import { computed } from 'vue'
 
 const props = defineProps(propsTooltip())
 const { measurableStyles } = useMeasurableStylesService(props)

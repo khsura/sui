@@ -1,4 +1,4 @@
-import type { PropsColor } from '@khsura/sui/definitions'
+import type { PropsColor } from '@khsura/sui'
 import { argsComponentTheme } from './componentTheme'
 
 export const argsColor = {

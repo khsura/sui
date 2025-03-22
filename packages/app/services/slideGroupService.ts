@@ -1,12 +1,12 @@
+import { computed, ref, watch, type ModelRef } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import { type PropsSlideGroup } from '@khsura/sui/definitions'
-import { computed, ref, watch, type ModelRef } from 'vue'
 import { wait } from '@khsura/sui/lib'
 import { type GroupItemValue } from '@khsura/sui/types'
-import { useDisplayService } from './displayService'
-import { useScrollService } from './scrollService'
-import { useGroupService } from './groupService'
 import { useContentService, useProviderService } from './core'
+import { useDisplayService } from './displayService'
+import { useGroupService } from './groupService'
+import { useScrollService } from './scrollService'
 
 export const useSlideGroupService = (props: PropsSlideGroup, model: ModelRef<GroupItemValue[]>) => {
   const { isTouchDevice, width } = useDisplayService()

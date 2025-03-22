@@ -1,6 +1,6 @@
-import { type PropsDisabled } from '@khsura/sui/definitions'
 import { computed, isRef } from 'vue'
 import { type ComputedRef } from 'vue'
+import { type PropsDisabled } from '@khsura/sui/definitions'
 
 export const useDisabledService = (props: PropsDisabled | ComputedRef<PropsDisabled>) => {
   const getValue = (key: keyof PropsDisabled) => {

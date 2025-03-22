@@ -1,6 +1,5 @@
-import { type LazyLoad } from '@khsura/sui/constants'
-
 import { type PropType } from 'vue'
+import { type LazyLoad } from '@khsura/sui/constants'
 
 export const propsImage = () => {
   return {

@@ -4,6 +4,7 @@
   </Component>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue'
 import { propsBorder, propsColor, propsElevation, propsLink, propsMeasurableStyles, propsTag } from '@khsura/sui/props'
 import {
   useLinkService,
@@ -12,7 +13,6 @@ import {
   useElevationService,
   useMeasurableStylesService,
 } from '@khsura/sui/services'
-import { computed } from 'vue'
 
 const props = defineProps({
   ...propsTag<'div' | 'section'>({ tag: 'div' }),

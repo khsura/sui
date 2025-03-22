@@ -10,10 +10,10 @@ import {
   SListItemTitle,
   SMenu,
   SRow,
-} from '@khsura/sui/components'
-import { createStoryObj } from '@khsura/storybook/helpers'
-import { defineComponent } from 'vue'
+} from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { defineComponent } from 'vue'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const menu: Meta<typeof SMenu> = {
   title: 'UI Components/Menu',

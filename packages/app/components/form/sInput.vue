@@ -66,20 +66,19 @@
   </section>
 </template>
 <script setup lang="ts">
+import { useSlots, ref } from 'vue'
+import { computed, type Slots } from 'vue'
 import { SColumn, SRow } from '@khsura/sui/components/grids'
 import { getNumericValue, getCleanSetObject } from '@khsura/sui/lib'
 import { propsInput } from '@khsura/sui/props'
 import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
 import { useDisabledService, useFormInputService, useSizeService } from '@khsura/sui/services'
 import { type EmitFormTextInput } from '@khsura/sui/types'
-import { computed } from 'vue'
-import { useSlots } from 'vue'
-import { ref } from 'vue'
 import kFormInputError from './common/sFormInputError.vue'
 
 const props = defineProps(propsInput())
 const emit = defineEmits<EmitFormTextInput<string | number | null>>()
-const slots = useSlots()
+const slots: Slots = useSlots()
 const inputElement = ref<HTMLElement | null>()
 const model = defineModel<string | number | null>()
 const { updateFormInput, errors } = useFormInputService<string | number | null>(props, emit)
@@ -102,16 +101,16 @@ const classList = computed(() => {
   }
 })
 
-const inputClassList = computed(() => {
+const inputClassList = computed<Record<string, boolean>>(() => {
   return {
     s_input__input: true,
     's_input__input--simple': props.simple,
     's_input__input--textRight': props.textRight,
     [`s_input__input--${props.inputBackground}`]: !!isPresetInputBackground.value,
     [`s_input__inputPlaceholder--${props.placeholderBackground}`]: !!isPresetPlaceholderBackground.value,
-    's_input__input--suffix': !!slots.suffix || props.suffix,
+    's_input__input--suffix': !!slots.suffix,
     ...classListSize.value,
-  }
+  } as Record<string, boolean>
 })
 
 const inputStyleList = computed(() => {

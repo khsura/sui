@@ -1,5 +1,5 @@
-import { type ScrollDirectiveBinding, type ScrollDirectiveBindingValueObject } from '@khsura/sui/types'
 import { type Directive } from 'vue'
+import { type ScrollDirectiveBinding, type ScrollDirectiveBindingValueObject } from '@khsura/sui/types'
 
 const mounted = (
   el: HTMLElement & { _onScroll?: ScrollDirectiveBindingValueObject },

@@ -1,7 +1,7 @@
 import { faker } from '@khsura/shared'
-import { SSplitView, SSplitViewItem } from '@khsura/sui/components'
-import { createStoryObj } from '@khsura/storybook/helpers'
+import { SSplitView, SSplitViewItem } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 type SplitStoryType = typeof SSplitView | typeof SSplitViewItem | { views: number }
 

@@ -1,7 +1,7 @@
-import { useDisplayService } from '@khsura/sui/services/displayService'
-import { createStoryObj } from '@khsura/storybook/helpers'
-import { defineComponent, computed } from 'vue'
+import { useDisplay } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { defineComponent, computed } from 'vue'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const display: Meta = {
   title: 'Features/Display',
@@ -32,7 +32,7 @@ export const Display = createStoryObj({
           name,
           mobile,
           xxl,
-        } = useDisplayService()
+        } = useDisplay()
 
         const displayProperties = computed(() => {
           return {

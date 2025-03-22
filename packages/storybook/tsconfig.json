@@ -3,7 +3,7 @@
   "compilerOptions": {
     "paths": {
       "@khsura/sui/*": ["../app/*"],
-      "@khsura/storybook/*": ["./*"],
+      "@khsura/storybook/*": ["./*"]
     }
   },
   "include": [
@@ -18,6 +18,6 @@
     ".storybook/**/*.cjs",
     ".storybook/**/*.ts",
     ".storybook/**/*.tsx",
-    ".storybook/**/*.vue",
-  ],
+    ".storybook/**/*.vue"
+  ]
 }

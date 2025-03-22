@@ -1,6 +1,6 @@
+import { type ComputedRef, type Ref } from 'vue'
 import { type ProviderName, type ProviderPropsName, type defaultLayoutSizes } from '@khsura/sui/constants'
 import { type AppState, type GroupItemValue, type FormProviderRegisterInputAttribute } from '@khsura/sui/types'
-import { type ComputedRef, type Ref } from 'vue'
 import type * as props from './propsExtracted'
 
 export interface GroupProvider {

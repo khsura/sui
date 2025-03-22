@@ -7,11 +7,11 @@ import {
   SRow,
   SIcon,
   SColumn,
-} from '@khsura/sui/components'
-import { sizeProperties } from '@khsura/sui/configs'
-import { createStoryObj } from '@khsura/storybook/helpers'
-import { ref } from 'vue'
+  sizeProperties,
+} from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { ref } from 'vue'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const expansionPanels: Meta<typeof SExpansionPanels> = {
   title: 'UI Components/ExpansionPanels',

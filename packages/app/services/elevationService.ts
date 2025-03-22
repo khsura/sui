@@ -1,6 +1,6 @@
+import { computed } from 'vue'
 import { type PropsElevation } from '@khsura/sui/definitions'
 import { getNumericValue } from '@khsura/sui/lib/getNumericValue'
-import { computed } from 'vue'
 
 export const useElevationService = (props: PropsElevation) => {
   const classListElevation = computed(() => {

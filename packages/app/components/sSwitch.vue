@@ -14,10 +14,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { propsColor, propsFormInput } from '@khsura/sui/props'
-import { useColorService, useDisabledService } from '@khsura/sui/services'
 import { computed } from 'vue'
 import { CssColor } from '@khsura/sui/constants'
+import { propsColor, propsFormInput } from '@khsura/sui/props'
+import { useColorService, useDisabledService } from '@khsura/sui/services'
 
 const props = defineProps({
   label: {

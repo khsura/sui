@@ -1,5 +1,5 @@
-// import { STransition } from '@khsura/sui/constants/transition'
-import type { PropsBadge } from '@khsura/sui/definitions'
+// import { STransition } from '@khsura/sui'
+import type { PropsBadge } from '@khsura/sui'
 import { type ArgTypes } from '@storybook/vue3'
 import { argTypesColor, argTypesIcon, argTypesTransition } from './core'
 

@@ -1,5 +1,5 @@
-import { type PropsContent } from '@khsura/sui/types'
 import { computed } from 'vue'
+import { type PropsContent } from '@khsura/sui/types'
 
 export const useContentService = (props: PropsContent) => {
   const classes = computed(() => {

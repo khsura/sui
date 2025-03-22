@@ -16,12 +16,12 @@
 </template>
 
 <script setup lang="ts">
+import { useScroll } from '@vueuse/core'
+import { type ComponentPublicInstance, computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { SToolbar } from '@khsura/sui/components/toolbar'
 import { getNumericCssAttribute, getWindow } from '@khsura/sui/lib'
 import { propsAppBar } from '@khsura/sui/props'
 import { useAppBarService } from '@khsura/sui/services'
-import { useScroll } from '@vueuse/core'
-import { type ComponentPublicInstance, computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 defineOptions({
   inheritAttrs: false,

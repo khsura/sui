@@ -4,6 +4,7 @@
   </component>
 </template>
 <script setup lang="ts">
+import { computed, onBeforeUnmount, onMounted, ref, watch, type PropType } from 'vue'
 import { getCleanSetObject, getNumericCssAttribute, getNumericValue, getWindow } from '@khsura/sui/lib'
 import {
   propsColor,
@@ -21,7 +22,6 @@ import {
   usePositionService,
   useTagService,
 } from '@khsura/sui/services'
-import { computed, onBeforeUnmount, onMounted, ref, watch, type PropType } from 'vue'
 
 const props = defineProps({
   ...propsLayout({ app: false }),

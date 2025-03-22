@@ -1,7 +1,7 @@
-import { SCard, SCardTitle, SIcon, SRow, SButton, SImage, SDroppable } from '@khsura/sui/components'
-import { createStoryObj } from '@khsura/storybook/helpers'
-import { ref } from 'vue'
+import { SCard, SCardTitle, SIcon, SRow, SButton, SImage, SDroppable } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { ref } from 'vue'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const droppable: Meta<typeof SDroppable> = {
   title: 'UI Components/Droppable',

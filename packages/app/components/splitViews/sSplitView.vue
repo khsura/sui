@@ -4,11 +4,11 @@
   </div>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import { getNumericCssAttribute } from '@khsura/sui/lib'
 import { propsSplitView } from '@khsura/sui/props'
 import { useProviderService } from '@khsura/sui/services'
-import { computed } from 'vue'
 
 const { provideProps } = useProviderService()
 const props = defineProps(propsSplitView())

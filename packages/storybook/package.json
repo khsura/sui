@@ -11,18 +11,19 @@
     "start": "http-server ./storybook-static -p 6006"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^8.5.2",
-    "@storybook/addon-docs": "^8.5.2",
-    "@storybook/addon-essentials": "^8.5.2",
-    "@storybook/addon-interactions": "^8.5.2",
-    "@storybook/addon-links": "^8.5.2",
-    "@storybook/manager-api": "^8.5.2",
-    "@storybook/test": "^8.5.2",
-    "@storybook/theming": "^8.5.2",
-    "@storybook/vue3": "^8.5.2",
-    "@storybook/vue3-vite": "^8.5.2",
+    "@khsura/sui": "workspace:^",
+    "@storybook/addon-actions": "^8.6.8",
+    "@storybook/addon-docs": "^8.6.8",
+    "@storybook/addon-essentials": "^8.6.8",
+    "@storybook/addon-interactions": "^8.6.8",
+    "@storybook/addon-links": "^8.6.8",
+    "@storybook/manager-api": "^8.6.8",
+    "@storybook/test": "^8.6.8",
+    "@storybook/theming": "^8.6.8",
+    "@storybook/vue3": "^8.6.8",
+    "@storybook/vue3-vite": "^8.6.8",
     "http-server": "^14.1.1",
-    "storybook": "^8.5.2",
+    "storybook": "^8.6.8",
     "storybook-dark-mode": "^4.0.2"
   }
 }

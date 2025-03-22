@@ -5,10 +5,10 @@
 </template>
 
 <script lang="ts" setup generic="T extends TableItem = TableItem">
-import { type PropsTableBodyCell, type TableItem } from '@khsura/sui/types'
+import { computed } from 'vue'
 import { getCleanSetObject } from '@khsura/sui/lib'
 import { useTableBodyCellService } from '@khsura/sui/services'
-import { computed } from 'vue'
+import { type PropsTableBodyCell, type TableItem } from '@khsura/sui/types'
 
 // eslint-disable-next-line vue/no-unused-properties
 const props = defineProps<PropsTableBodyCell<T>>()

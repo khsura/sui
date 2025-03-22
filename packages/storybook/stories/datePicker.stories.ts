@@ -1,10 +1,9 @@
-import { SDatePicker } from '@khsura/sui/components'
-import { datePickerModelFormats } from '@khsura/sui/configs/datePicker'
-import { argTypesColor } from '@khsura/storybook/argTypes'
-import { createStoryObj } from '@khsura/storybook/helpers'
+import { SDatePicker, datePickerModelFormats } from '@khsura/sui'
+import type { Meta } from '@storybook/vue3'
 import dayjs from 'dayjs'
 import { ref } from 'vue'
-import type { Meta } from '@storybook/vue3'
+import { argTypesColor } from '@khsura/storybook/argTypes'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const datePicker: Meta<typeof SDatePicker> = {
   title: 'UI Components/DatePicker',

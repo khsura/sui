@@ -1,7 +1,7 @@
 import { useBreakpoints, useMediaQuery } from '@vueuse/core'
-import { type DisplayBreakpointThresholds } from '@khsura/sui/types'
 import { computed } from 'vue'
 import { store } from '@khsura/sui/store'
+import { type DisplayBreakpointThresholds } from '@khsura/sui/types'
 import { useAppProviderService } from './appProviderService'
 
 export const useDisplayService = (thresholds?: DisplayBreakpointThresholds) => {
@@ -13,7 +13,6 @@ export const useDisplayService = (thresholds?: DisplayBreakpointThresholds) => {
   const mdAndUp = breakpoints.greaterOrEqual('md')
   const mobile = breakpoints.smallerOrEqual('sm')
   const active = breakpoints.active()
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
   const name = computed(() => active.value || 'xs')
   const smAndDown = breakpoints.smallerOrEqual('sm')
   const smAndUp = breakpoints.greaterOrEqual('sm')

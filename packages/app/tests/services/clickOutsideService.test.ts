@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { useClickOutsideService } from '@khsura/sui/services'
 import { ref } from 'vue'
+import { useClickOutsideService } from '@khsura/sui/services'
 
 const simpleComponent = {
   template: /* html */ `

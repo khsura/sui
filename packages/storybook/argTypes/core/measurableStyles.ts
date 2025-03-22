@@ -1,4 +1,4 @@
-import type { PropsMeasurableStyles } from '@khsura/sui/definitions'
+import type { PropsMeasurableStyles } from '@khsura/sui'
 import type { ArgTypes } from '@storybook/vue3'
 
 export const argTypesMeasurableStyles: ArgTypes<PropsMeasurableStyles> = {

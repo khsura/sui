@@ -6,10 +6,10 @@
   </section>
 </template>
 <script lang="ts" setup>
-import { type PropsRow } from '@khsura/sui/types'
+import { type CSSProperties, computed } from 'vue'
 import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
 import { useContentService } from '@khsura/sui/services'
-import { type CSSProperties, computed } from 'vue'
+import { type PropsRow } from '@khsura/sui/types'
 
 // eslint-disable-next-line vue/no-unused-properties
 const props = defineProps<PropsRow>()

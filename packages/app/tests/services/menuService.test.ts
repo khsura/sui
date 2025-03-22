@@ -1,7 +1,7 @@
+import { ref } from 'vue'
 import { type PropsMenu } from '@khsura/sui/definitions/props'
 import { useMenuService } from '@khsura/sui/services'
 import { type PropsContent } from '@khsura/sui/types'
-import { ref } from 'vue'
 
 const defaultPropsContent: PropsContent = {
   contentClass: {},

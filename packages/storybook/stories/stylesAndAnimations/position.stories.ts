@@ -1,5 +1,5 @@
-import { sPositionDemo } from '@khsura/storybook/components'
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { sPositionDemo } from '@khsura/storybook/components'
 
 const meta: Meta<typeof sPositionDemo> = {
   title: 'Styles & Animations/Position',

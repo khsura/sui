@@ -1,6 +1,6 @@
-import { type PropsTableBodyCell } from '@khsura/sui/types'
-import { useTableCellCommonService } from '@khsura/sui/services'
 import { type Mutable } from '@vueuse/core'
+import { useTableCellCommonService } from '@khsura/sui/services'
+import { type PropsTableBodyCell } from '@khsura/sui/types'
 
 describe('tableCellCommonService', () => {
   const defaultProps: PropsTableBodyCell = {

@@ -34,6 +34,7 @@
   </Component>
 </template>
 <script setup lang="ts">
+import { computed, onMounted } from 'vue'
 import SButton from '@khsura/sui/components/sButton.vue'
 import SIcon from '@khsura/sui/components/sIcon.vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
@@ -46,7 +47,6 @@ import {
   useTouchService,
 } from '@khsura/sui/services'
 import { type GroupItemValue } from '@khsura/sui/types'
-import { computed, onMounted } from 'vue'
 
 const props = defineProps({
   ...propsWindow(),

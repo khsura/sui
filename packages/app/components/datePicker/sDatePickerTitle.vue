@@ -31,11 +31,11 @@
   </div>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue'
 import SButton from '@khsura/sui/components/sButton.vue'
 import { DatePickerSelectType } from '@khsura/sui/constants'
 import { propsColor, propsDatePickerItemTitle, propsDisabled } from '@khsura/sui/props'
 import { useColorService, useDatePickerItemTitleService } from '@khsura/sui/services'
-import { computed } from 'vue'
 
 const props = defineProps({
   ...propsDatePickerItemTitle(),

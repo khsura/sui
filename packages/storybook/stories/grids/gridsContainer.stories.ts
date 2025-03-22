@@ -1,6 +1,6 @@
-import { SContainer, SCard, SCardText } from '@khsura/sui/components'
-import { createStoryObj } from '@khsura/storybook/helpers'
+import { SContainer, SCard, SCardText } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const container: Meta<typeof SContainer> = {
   title: 'UI Components/Grids/Container',

@@ -1,9 +1,9 @@
-import { SChip, SIcon } from '@khsura/sui/components'
+import { SChip, SIcon } from '@khsura/sui'
+import { action } from '@storybook/addon-actions'
+import type { Meta } from '@storybook/vue3'
+import { defineComponent } from 'vue'
 import { argTypesColor, argTypesSizePreset } from '@khsura/storybook/argTypes'
 import { createStoryObj, getSlot } from '@khsura/storybook/helpers'
-import { action } from '@storybook/addon-actions'
-import { defineComponent } from 'vue'
-import type { Meta } from '@storybook/vue3'
 
 const chip: Meta<typeof SChip> = {
   title: 'UI Components/Chip',

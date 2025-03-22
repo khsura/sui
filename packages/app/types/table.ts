@@ -1,5 +1,4 @@
-import type { TableItem, TableItemClass, TableItemCellType, TableItemStyle, TableRowClass } from './core'
-import { type TableHeader } from './core'
+import type { TableItem, TableItemClass, TableItemCellType, TableItemStyle, TableRowClass, TableHeader } from './core'
 
 export enum KTableSortOrder {
   ascending,

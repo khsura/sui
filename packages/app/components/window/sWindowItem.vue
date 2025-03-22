@@ -4,10 +4,10 @@
   </div>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import { propsWindowItem } from '@khsura/sui/props'
 import { useProviderService, useSingleGroupItemService } from '@khsura/sui/services'
-import { computed } from 'vue'
 
 const translateXMapper: Record<string, string | undefined> = {
   '1': '100%',

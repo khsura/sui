@@ -1,6 +1,6 @@
-import { SRow, SColumn, SCard } from '@khsura/sui/components'
-import { createStoryObj } from '@khsura/storybook/helpers'
+import { SRow, SColumn, SCard } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const grids: Meta<typeof SColumn> = {
   title: 'UI Components/Grids/Column',

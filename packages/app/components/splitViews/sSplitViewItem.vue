@@ -5,9 +5,9 @@
   <div ref="resizer" :class="resizerClasses" @mousedown="mouseDownHandler"></div>
 </template>
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import { useProviderService } from '@khsura/sui/services'
-import { ref, computed } from 'vue'
 
 const resizer = ref<HTMLElement | null>(null)
 const { injectParentProps } = useProviderService()

@@ -1,5 +1,5 @@
-import { type MaterialDesignIcon } from '@khsura/sui/types'
 import { type PropType } from 'vue'
+import { type MaterialDesignIcon } from '@khsura/sui/types'
 import { propsWindow } from './windowProps'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

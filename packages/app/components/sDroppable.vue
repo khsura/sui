@@ -22,10 +22,10 @@
   </div>
 </template>
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import { hasDragDropFeature } from '@khsura/sui/lib/browser'
 import { propsDisabled, propsMeasurableStyles } from '@khsura/sui/props'
 import { useMeasurableStylesService } from '@khsura/sui/services'
-import { ref, computed } from 'vue'
 
 const props = defineProps({
   ...propsDisabled(),

@@ -1,3 +1,9 @@
+import { computed, ref } from 'vue'
+import { z } from 'zod'
+import { type STableHeadCell } from '@khsura/sui/components/table'
+import { getTableRowClass } from '@khsura/sui/helpers'
+import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
+import { store } from '@khsura/sui/store'
 import {
   type EmitTable,
   type PropsTable,
@@ -6,13 +12,7 @@ import {
   type TableHeader,
   type TableItemCellType,
 } from '@khsura/sui/types'
-import { computed, ref } from 'vue'
-import { type STableHeadCell } from '@khsura/sui/components/table'
-import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
 import { uniqueId } from '@khsura/sui/vendors/lodash'
-import { getTableRowClass } from '@khsura/sui/helpers'
-import { z } from 'zod'
-import { store } from '@khsura/sui/store'
 
 export const useTableService = <T extends TableItem = TableItem>(props: PropsTable<T>, emit: EmitTable<T>) => {
   const isMounted = ref(false)

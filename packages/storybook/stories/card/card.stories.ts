@@ -1,5 +1,7 @@
 import { faker } from '@khsura/shared'
-import { SButton, SCard, SCardActions, SCardSubtitle, SCardText, SCardTitle, SImage } from '@khsura/sui/components'
+import { SButton, SCard, SCardActions, SCardSubtitle, SCardText, SCardTitle, SImage } from '@khsura/sui'
+import type { Meta } from '@storybook/vue3'
+import { defineComponent } from 'vue'
 import { argsCard } from '@khsura/storybook/args'
 import {
   argTypesBorder,
@@ -9,8 +11,6 @@ import {
   argTypesSlot,
 } from '@khsura/storybook/argTypes'
 import { createStoryObj, getSlot } from '@khsura/storybook/helpers'
-import { defineComponent } from 'vue'
-import type { Meta } from '@storybook/vue3'
 
 const card: Meta<typeof SCard> = {
   title: 'UI Components/Card',

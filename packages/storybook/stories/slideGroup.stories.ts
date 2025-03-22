@@ -1,8 +1,7 @@
 import { faker } from '@khsura/shared'
-import { SSlideGroup, SImage, SCard, SSlideItem } from '@khsura/sui/components'
-import { useDisplayService } from '@khsura/sui/services/displayService'
-import { createStoryObj } from '@khsura/storybook/helpers'
+import { SSlideGroup, SImage, SCard, SSlideItem, useDisplay } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const banners = [
   {
@@ -128,7 +127,7 @@ export const SlideGroup = createStoryObj<typeof SSlideGroup>({
     return {
       components: { SSlideGroup, SImage, SSlideItem },
       setup() {
-        const { smAndUp } = useDisplayService()
+        const { smAndUp } = useDisplay()
 
         return {
           banners,
@@ -198,7 +197,7 @@ export const SlideGroupWithButtons = createStoryObj<typeof SSlideGroup>({
     return {
       components: { SSlideGroup, SImage, SSlideItem, SCard },
       setup() {
-        const { smAndUp } = useDisplayService()
+        const { smAndUp } = useDisplay()
 
         return {
           banners: banners.slice(0, 5),
@@ -238,7 +237,7 @@ export const SlideGroupWithFewItems = createStoryObj<typeof SSlideGroup>({
     return {
       components: { SSlideGroup, SImage, SSlideItem },
       setup() {
-        const { smAndUp } = useDisplayService()
+        const { smAndUp } = useDisplay()
 
         return {
           banners: banners.slice(0, 5),

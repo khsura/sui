@@ -1,7 +1,7 @@
-import { SProgressLinear } from '@khsura/sui/components'
+import { SProgressLinear } from '@khsura/sui'
+import type { Meta } from '@storybook/vue3'
 import { argTypesComponentTheme } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'
-import type { Meta } from '@storybook/vue3'
 
 const progressLinear: Meta<typeof SProgressLinear> = {
   title: 'UI Components/Progress Bar/Linear',

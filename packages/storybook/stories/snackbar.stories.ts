@@ -1,7 +1,7 @@
-import { SSnackbar, SButton } from '@khsura/sui/components'
-import { createStoryObj } from '@khsura/storybook/helpers'
-import { ref } from 'vue'
+import { SSnackbar, SButton } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { ref } from 'vue'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const snackbar: Meta<typeof SSnackbar> = {
   title: 'UI Components/Snackbar',

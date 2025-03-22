@@ -1,6 +1,5 @@
-import { type LocationRaw } from '@khsura/sui/types'
-
 import { type PropType } from 'vue'
+import { type LocationRaw } from '@khsura/sui/types'
 
 export const propsLocation = (defaults?: { location: LocationRaw }) => {
   return {

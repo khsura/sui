@@ -4,11 +4,11 @@
   </Component>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue'
+import { type PropType } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import { propsDisabled, propsLink, propsTag } from '@khsura/sui/props'
 import { useLinkService, useDisabledService, useProviderService } from '@khsura/sui/services'
-import { computed } from 'vue'
-import { type PropType } from 'vue'
 
 const props = defineProps({
   // TODO (Sura) Check if it's being used

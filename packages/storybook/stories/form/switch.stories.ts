@@ -1,7 +1,7 @@
-import { SSwitch } from '@khsura/sui/components'
-import { createStoryObj } from '@khsura/storybook/helpers'
-import { ref } from 'vue'
+import { SSwitch } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { ref } from 'vue'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const switcher: Meta<typeof SSwitch> = {
   title: 'UI Components/Switch',

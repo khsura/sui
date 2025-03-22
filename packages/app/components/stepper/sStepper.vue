@@ -8,10 +8,10 @@
   </div>
 </template>
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { ProviderName, ProviderPropsName } from '@khsura/sui/constants'
 import { propsStepper } from '@khsura/sui/props'
 import { useProviderService } from '@khsura/sui/services'
-import { computed, ref } from 'vue'
 import SStepperStep from './sStepperStep.vue'
 
 const props = defineProps(propsStepper())

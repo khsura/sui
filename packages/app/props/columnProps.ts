@@ -1,7 +1,6 @@
+import { type PropType } from 'vue'
 import { gridColumns } from '@khsura/sui/constants/app'
 import { isOptionalNumeric, orderValidator } from '@khsura/sui/repositories/columnRepository'
-
-import { type PropType } from 'vue'
 
 export const propsColumn = () => {
   return {

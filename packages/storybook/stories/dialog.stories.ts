@@ -1,5 +1,6 @@
 import { faker } from '@khsura/shared'
 import {
+  SMenu,
   SButton,
   SCard,
   SCardSubtitle,
@@ -12,12 +13,11 @@ import {
   SListItem,
   SListItemContent,
   SSpacer,
-} from '@khsura/sui/components'
+} from '@khsura/sui'
+import type { Meta } from '@storybook/vue3'
+import { defineComponent, ref } from 'vue'
 import { argTypesElevation, argTypesLocation } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'
-import { defineComponent, ref } from 'vue'
-import type { Meta } from '@storybook/vue3'
-import SMenu from '@khsura/sui/components/sMenu.vue'
 
 const dialog: Meta<typeof SDialog> = {
   title: 'UI Components/Dialog',

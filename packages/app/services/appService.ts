@@ -1,9 +1,9 @@
+import { computed, inject } from 'vue'
 import { ProviderName } from '@khsura/sui/constants'
 import { type PropsApp } from '@khsura/sui/definitions'
 import { createAppStore } from '@khsura/sui/helpers/createAppStore'
 import { isDarkColor } from '@khsura/sui/lib/color'
 import { type AppState } from '@khsura/sui/types'
-import { computed, inject } from 'vue'
 import { useProviderService } from './core'
 import { useLayoutProviderService } from './layoutProviderService'
 

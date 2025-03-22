@@ -1,5 +1,5 @@
-import { getDocument } from '@khsura/sui/lib/browser'
 import { type ComponentPublicInstance, type Ref } from 'vue'
+import { getDocument } from '@khsura/sui/lib/browser'
 
 export const useClickOutsideService = () => {
   const onClick = (

@@ -1,9 +1,9 @@
+import { type ModelRef, computed } from 'vue'
 import { STransition } from '@khsura/sui/constants'
 import { type PropsDialog } from '@khsura/sui/definitions'
 import { useActivatorService, useLocationService } from '@khsura/sui/services/core'
 import { useElevationService } from '@khsura/sui/services/elevationService'
 import { useMeasurableStylesService } from '@khsura/sui/services/measurableStylesService'
-import { type ModelRef, computed } from 'vue'
 
 export const useDialogService = (props: PropsDialog, isDialogOpen: ModelRef<boolean | null | undefined>) => {
   const { isBottom } = useLocationService(props)

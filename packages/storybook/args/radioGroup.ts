@@ -1,4 +1,4 @@
-import type { PropsRadioGroup } from '@khsura/sui/definitions'
+import type { PropsRadioGroup } from '@khsura/sui'
 import { argsBorder, argsDisabled } from './core'
 
 export const argsRadioGroup: Omit<PropsRadioGroup, 'modelValue' | 'rules' | 'error' | 'dirty'> = {

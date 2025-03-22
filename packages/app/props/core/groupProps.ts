@@ -1,6 +1,5 @@
-import { type GroupItemValue } from '@khsura/sui/types'
-
 import { type PropType } from 'vue'
+import { type GroupItemValue } from '@khsura/sui/types'
 
 export const propsGroup = <T extends GroupItemValue = GroupItemValue>() => {
   return {

@@ -1,10 +1,10 @@
-import { SButton, SForm, SInput } from '@khsura/sui/components'
+import { SButton, SForm, SInput } from '@khsura/sui'
+import type { FormComponent } from '@khsura/sui'
+import { action } from '@storybook/addon-actions'
+import type { Meta } from '@storybook/vue3'
+import { defineComponent, ref, nextTick } from 'vue'
 import { formInputModelValueRules } from '@khsura/storybook/configs'
 import { createStoryObj } from '@khsura/storybook/helpers'
-import { action } from '@storybook/addon-actions'
-import { defineComponent, ref, nextTick } from 'vue'
-import type { FormComponent } from '@khsura/sui/definitions'
-import type { Meta } from '@storybook/vue3'
 
 const form: Meta<typeof SForm> = {
   title: 'UI Components/Form',

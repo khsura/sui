@@ -1,5 +1,5 @@
 export * from './badge'
-export * from './badge'
+export * from './input'
 export * from './breadcrumbs'
 export * from './button'
 export * from './card'

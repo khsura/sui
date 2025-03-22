@@ -1,6 +1,6 @@
+import { type PropType } from 'vue'
 import { toolbarDensities } from '@khsura/sui/configs/toolbar'
 import { defaultToolbarContentHeight, defaultToolbarExtensionHeight } from '@khsura/sui/constants/toolbar'
-import { type PropType } from 'vue'
 import { type ToolbarDensityType } from '@khsura/sui/types'
 import { propsBorder } from './core/borderProps'
 import { propsColor } from './core/colorProps'

@@ -1,7 +1,7 @@
-import { SStepper, SStepperStep, SRow, SButton } from '@khsura/sui/components'
-import { createStoryObj } from '@khsura/storybook/helpers'
-import { ref } from 'vue'
+import { SStepper, SStepperStep, SRow, SButton } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { ref } from 'vue'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const stepper: Meta<typeof SStepper> = {
   title: 'UI Components/Stepper',

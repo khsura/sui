@@ -17,4 +17,15 @@ export type InputType =
   | 'time'
   | 'week'
 
-export type InputTypeText = 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url'
+export type InputTypeText =
+  | 'email'
+  | 'number'
+  | 'password'
+  | 'search'
+  | 'tel'
+  | 'text'
+  | 'url'
+  | 'date'
+  | 'datetime-local'
+  | 'time'
+  | 'week'

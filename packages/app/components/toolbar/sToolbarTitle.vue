@@ -6,10 +6,10 @@
   </Component>
 </template>
 <script setup lang="ts">
+import { computed, useSlots } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import { propsToolbarTitle } from '@khsura/sui/props'
 import { useColorService, useProviderService, useTagService } from '@khsura/sui/services'
-import { computed, useSlots } from 'vue'
 
 const props = defineProps({
   ...propsToolbarTitle(),

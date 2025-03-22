@@ -1,7 +1,7 @@
-import { type PropsBorder } from '@khsura/sui/definitions'
-import { toComputed } from '@khsura/sui/lib/compositionApi'
 import { computed } from 'vue'
 import { type ComputedRef } from 'vue'
+import { type PropsBorder } from '@khsura/sui/definitions'
+import { toComputed } from '@khsura/sui/lib/compositionApi'
 import { getCleanSetObject } from '../lib'
 
 export const useBorderService = (

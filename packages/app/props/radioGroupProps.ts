@@ -1,5 +1,5 @@
-import { type GroupItemValue } from '@khsura/sui/types'
 import { type PropType } from 'vue'
+import { type GroupItemValue } from '@khsura/sui/types'
 import { propsBorder } from './core/borderProps'
 import { propsFormInput } from './formInputProps'
 import { propsSingleGroup } from './singleGroupProps'

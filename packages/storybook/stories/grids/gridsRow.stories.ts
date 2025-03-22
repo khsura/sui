@@ -1,7 +1,5 @@
-import { SRow, SCard, SColumn } from '@khsura/sui/components'
-import { gridAlignProperties, gridJustifyProperties } from '@khsura/sui/configs'
-import { type Meta } from '@storybook/vue3'
-import { type StoryObj } from '@storybook/vue3'
+import { SRow, SCard, SColumn, gridAlignProperties, gridJustifyProperties } from '@khsura/sui'
+import { type Meta, type StoryObj } from '@storybook/vue3'
 
 const grids: Meta<typeof SRow> = {
   title: 'UI Components/Grids/Row',

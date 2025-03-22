@@ -20,11 +20,11 @@
   </nav>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue'
+import { type PropType } from 'vue'
 import { propsTextColor } from '@khsura/sui/props'
 import { useTextColorService } from '@khsura/sui/services'
 import { type BreadcrumbsItem } from '@khsura/sui/types'
-import { computed } from 'vue'
-import { type PropType } from 'vue'
 
 const props = defineProps({
   items: {
@@ -77,7 +77,7 @@ const getListItemLinkClasses = (id: number, item: BreadcrumbsItem) => {
   return {
     s_breadcrumbs__listItemLink: true,
     's_breadcrumbs__listItemLink--disabled': getDisabledOfItem(id, item),
-    ...(getDisabledOfItem(id, item) ? {} : classListTextColor),
+    ...(getDisabledOfItem(id, item) ? {} : classListTextColor.value),
   }
 }
 </script>

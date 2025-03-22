@@ -1,6 +1,6 @@
-import { getWindow } from '@khsura/sui/lib'
 import { nextTick } from 'vue'
 import { z } from 'zod'
+import { getWindow } from '@khsura/sui/lib'
 
 export const useBackgroundScrollService = () => {
   const window = getWindow()

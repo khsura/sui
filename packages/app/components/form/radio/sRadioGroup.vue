@@ -5,12 +5,12 @@
   </div>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue'
 import { SFormInputError } from '@khsura/sui/components'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import { propsRadioGroup } from '@khsura/sui/props'
 import { useFormInputService, useProviderService, useSingleGroupService } from '@khsura/sui/services'
 import { type GroupItemValue } from '@khsura/sui/types'
-import { computed } from 'vue'
 
 const props = defineProps(propsRadioGroup())
 

@@ -1,9 +1,9 @@
 import { faker } from '@khsura/shared'
-import { SCarousel, SCarouselItem, SRow } from '@khsura/sui/components'
-import { createStoryObj } from '@khsura/storybook/helpers'
-import { ref } from 'vue'
-import type { GroupItemValue } from '@khsura/sui/types'
+import { SCarousel, SCarouselItem, SRow } from '@khsura/sui'
+import type { GroupItemValue } from '@khsura/sui'
 import type { Meta } from '@storybook/vue3'
+import { ref } from 'vue'
+import { createStoryObj } from '@khsura/storybook/helpers'
 
 const carousel: Meta<typeof SCarousel> = {
   title: 'UI Components/Carousel',

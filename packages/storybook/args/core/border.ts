@@ -1,4 +1,4 @@
-import type { PropsBorder } from '@khsura/sui/definitions'
+import type { PropsBorder } from '@khsura/sui'
 
 export const argsBorder: PropsBorder = {
   outlined: false,

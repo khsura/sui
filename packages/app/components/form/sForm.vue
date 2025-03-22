@@ -4,11 +4,11 @@
   </form>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue'
 import { ProviderName } from '@khsura/sui/constants'
 import { propsForm } from '@khsura/sui/props'
 import { useProviderService } from '@khsura/sui/services'
 import { type FormProviderRegisterInputAttribute } from '@khsura/sui/types'
-import { computed } from 'vue'
 
 defineProps(propsForm())
 defineEmits<{

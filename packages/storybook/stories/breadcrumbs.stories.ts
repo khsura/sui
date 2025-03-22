@@ -1,9 +1,9 @@
-import { SBreadcrumbs } from '@khsura/sui/components'
+import { SBreadcrumbs } from '@khsura/sui'
+import type { Meta } from '@storybook/vue3'
+import { defineComponent } from 'vue'
 import { argsBreadcrumbs } from '@khsura/storybook/args'
 import { argTypesBreadcrumbs } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'
-import { defineComponent } from 'vue'
-import type { Meta } from '@storybook/vue3'
 
 const breadcrumbs: Meta<typeof SBreadcrumbs> = {
   title: 'UI Components/Breadcrumbs',

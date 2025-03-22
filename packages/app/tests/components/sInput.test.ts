@@ -1,5 +1,5 @@
-import { SInput } from '@khsura/sui/components'
 import { mount } from '@vue/test-utils'
+import { SInput } from '@khsura/sui/components'
 
 describe('SInput', () => {
   test('renders correctly', () => {

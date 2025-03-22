@@ -1,7 +1,7 @@
+import { type ModelRef, computed, ref } from 'vue'
 import { type PropsMenu } from '@khsura/sui/definitions'
 import { getCleanSetObject, getDocument, getNumericCssAttribute, getViewportLocation, getWindow } from '@khsura/sui/lib'
 import { type MenuContentStyle } from '@khsura/sui/types'
-import { type ModelRef, computed, ref } from 'vue'
 import { useActivatorService, useContentService, useLocationService } from './core'
 import { usePositionService } from './positionService'
 

@@ -1,6 +1,6 @@
+import type { Meta } from '@storybook/vue3'
 import { sTypographyDemo } from '@khsura/storybook/components'
 import { createStoryObj } from '@khsura/storybook/helpers'
-import type { Meta } from '@storybook/vue3'
 
 interface TypographyType {
   text: string

@@ -1,9 +1,8 @@
-import { SSheet } from '@khsura/sui/components'
+import { SSheet } from '@khsura/sui'
+import type { Meta } from '@storybook/vue3'
 import { argsColor } from '@khsura/storybook/args'
 import { argTypesColor } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'
-
-import type { Meta } from '@storybook/vue3'
 
 const sheet: Meta<typeof SSheet> = {
   title: 'UI Components/Sheet',

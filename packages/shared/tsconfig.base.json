@@ -17,6 +17,7 @@
     "emitDeclarationOnly": true,
     "declaration": true,
     "declarationDir": "@types",
+    "noImplicitAny": true,
 
     /* Linting */
     "strict": true,
@@ -25,5 +26,5 @@
     "noFallthroughCasesInSwitch": true,
 
     "types": ["vite/client", "vitest/globals", "node"]
-  },
+  }
 }

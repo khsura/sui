@@ -1,5 +1,5 @@
-import { type Position } from '@khsura/sui/constants'
 import { type PropType } from 'vue'
+import { type Position } from '@khsura/sui/constants'
 
 export const propsPosition = <T extends Position = Position>(defaults?: { position?: null | T }) => {
   return {

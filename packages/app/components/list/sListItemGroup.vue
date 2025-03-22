@@ -17,12 +17,12 @@
   </ul>
 </template>
 <script setup lang="ts">
+import { ref, computed } from 'vue'
+import { type PropType } from 'vue'
 import SIcon from '@khsura/sui/components/sIcon.vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import { getNumericCssAttribute } from '@khsura/sui/lib'
 import { useExpandableItemCoreService, useProviderService } from '@khsura/sui/services'
-import { ref, computed } from 'vue'
-import { type PropType } from 'vue'
 import SList from './sList.vue'
 import SListItem from './sListItem.vue'
 import SListItemAction from './sListItemAction.vue'

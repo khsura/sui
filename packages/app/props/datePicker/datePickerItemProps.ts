@@ -1,5 +1,5 @@
-import { type DatePickerTypeType, type DatePickerSelectTypeType } from '@khsura/sui/types'
 import { type PropType } from 'vue'
+import { type DatePickerTypeType, type DatePickerSelectTypeType } from '@khsura/sui/types'
 import { propsDatePickerRange } from './core/datePickerRangeProps'
 
 export const propsDatePickerItem = () => {

@@ -4,6 +4,7 @@
   </Component>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import { propsList } from '@khsura/sui/props'
 import {
@@ -13,7 +14,6 @@ import {
   useTagService,
   useTextColorService,
 } from '@khsura/sui/services'
-import { computed } from 'vue'
 
 const props = defineProps({
   ...propsList(),

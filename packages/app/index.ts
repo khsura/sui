@@ -1,14 +1,14 @@
-export * from '@khsura/sui/components'
-export * from '@khsura/sui/definitions'
-export * from '@khsura/sui/types'
-export { FileMimeType, LazyLoad, STransition, i18nMessages } from '@khsura/sui/constants'
-export { i18nConfig } from '@khsura/sui/configs'
-export * from '@khsura/sui/helpers'
+export * from './components'
+export * from './definitions'
+export * from './types'
+export * from './constants'
+export * from './configs'
+export * from './helpers'
 export {
   useClickOutsideService as useClickOutside,
   useDisplayService as useDisplay,
   useScrollService as useScroll,
   useThemeService as useTheme,
-} from '@khsura/sui/services'
-export * from '@khsura/sui/modules'
-export { getFormInputModelValueRules } from '@khsura/sui/repositories/form'
+} from './services'
+export * from './modules'
+export { getFormInputModelValueRules } from './repositories/form'

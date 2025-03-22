@@ -1,8 +1,8 @@
 import { type PropType, type ComponentPropsOptions } from 'vue'
-import { propsToolbar } from './toolbarProps'
 import { propsLayout } from './layoutProps'
-import { propsScrollable } from './scrollableProps'
 import { propsPosition } from './positionProps'
+import { propsScrollable } from './scrollableProps'
+import { propsToolbar } from './toolbarProps'
 
 export const propsAppBar = () => {
   return {

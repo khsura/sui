@@ -1,7 +1,7 @@
+import { mount } from '@vue/test-utils'
 import { SIcon } from '@khsura/sui/components'
 import { SizeProperty } from '@khsura/sui/constants'
 import { type PropsIcon } from '@khsura/sui/definitions'
-import { mount } from '@vue/test-utils'
 
 describe('SIcon', () => {
   const getSIconWithBuiltinIcon = (props?: Partial<PropsIcon>) => {

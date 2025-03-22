@@ -1,3 +1,4 @@
+import { type PropType } from 'vue'
 import { datePickerModelFormats } from '@khsura/sui/configs/datePicker'
 import { DatePickerType, datePickerWidth } from '@khsura/sui/constants/datePicker'
 import { propsColor } from '@khsura/sui/props/core/colorProps'
@@ -5,7 +6,6 @@ import { propsMeasurableStyles } from '@khsura/sui/props/core/measurableStyles'
 import { type PresetColorType, type DatePickerTypeType } from '@khsura/sui/types'
 import dayjs from '@khsura/sui/vendors/dayjs'
 
-import { type PropType } from 'vue'
 import { propsDisabled } from '../core/disabledProps'
 import { propsDatePickerFormat } from './core/datePickerFormatProps'
 import { propsDatePickerRange } from './core/datePickerRangeProps'

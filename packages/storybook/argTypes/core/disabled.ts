@@ -1,4 +1,4 @@
-import type { PropsDisabled } from '@khsura/sui/index'
+import type { PropsDisabled } from '@khsura/sui'
 import type { ArgTypes } from '@storybook/vue3'
 
 export const argTypesDisabled: ArgTypes<PropsDisabled> = {

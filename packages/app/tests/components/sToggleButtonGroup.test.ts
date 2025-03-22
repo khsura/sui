@@ -1,8 +1,8 @@
-import { SToggleButton, SToggleButtonGroup, SButton } from '@khsura/sui/components'
-import { propsToggleButtonGroup } from '@khsura/sui/props'
 import { mount } from '@vue/test-utils'
 import { defineComponent, ref } from 'vue'
+import { SToggleButton, SToggleButtonGroup, SButton } from '@khsura/sui/components'
 import { type PropsToggleButtonGroup } from '@khsura/sui/definitions'
+import { propsToggleButtonGroup } from '@khsura/sui/props'
 import { useMockProps } from '../_helpers'
 
 const argsToggleButtonGroup = useMockProps<PropsToggleButtonGroup>({

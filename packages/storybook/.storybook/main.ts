@@ -1,6 +1,6 @@
 import { dirname, join } from 'path'
-import { mergeConfig } from 'vite'
 import type { StorybookConfig } from '@storybook/vue3-vite'
+import { mergeConfig } from 'vite'
 import type { UserConfig } from 'vite'
 
 const getAbsolutePath = (value: string): string => {
@@ -9,6 +9,7 @@ const getAbsolutePath = (value: string): string => {
 
 const config: StorybookConfig = {
   stories: ['../**/*.mdx', '../**/*.stories.@(js|jsx|ts|tsx)'],
+
   addons: [
     getAbsolutePath('@storybook/addon-links'),
     getAbsolutePath('@storybook/addon-essentials'),
@@ -32,6 +33,10 @@ const config: StorybookConfig = {
     }
 
     return mergeConfig(previousConfig, additionalConfig)
+  },
+
+  docs: {
+    autodocs: true,
   },
 }
 

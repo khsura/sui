@@ -10,11 +10,11 @@ import {
   SListItemSubtitle,
   SListItemTitle,
   SSubheader,
-} from '@khsura/sui/components'
+} from '@khsura/sui'
+import type { Meta } from '@storybook/vue3'
 import { argsColor, argsMeasurableStyles } from '@khsura/storybook/args'
 import { argTypesMeasurableStyles } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'
-import type { Meta } from '@storybook/vue3'
 
 const list: Meta<typeof SList> = {
   title: 'UI Components/List',

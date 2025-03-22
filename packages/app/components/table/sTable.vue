@@ -167,15 +167,13 @@
   </div>
 </template>
 <script setup lang="ts" generic="T extends TableItem">
-import { type EmitTable, type PropsTable, type TableItem } from '@khsura/sui/types'
+import { useDebounceFn } from '@vueuse/core'
+import { computed, watch, onMounted } from 'vue'
 import { getCleanSetObject } from '@khsura/sui/lib'
 import { useBorderService, useTableService } from '@khsura/sui/services'
-import { useDebounceFn } from '@vueuse/core'
-import { computed } from 'vue'
-import { watch } from 'vue'
-import { onMounted } from 'vue'
-import STableHeadCell from './sTableHeadCell.vue'
+import { type EmitTable, type PropsTable, type TableItem } from '@khsura/sui/types'
 import STableBodyCell from './sTableBodyCell.vue'
+import STableHeadCell from './sTableHeadCell.vue'
 
 // eslint-disable-next-line vue/no-unused-properties
 const props = withDefaults(defineProps<PropsTable<T>>(), {

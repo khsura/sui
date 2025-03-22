@@ -1,4 +1,4 @@
-import type { PropsMeasurableStyles } from '@khsura/sui/definitions'
+import type { PropsMeasurableStyles } from '@khsura/sui'
 
 export const argsMeasurableStyles: PropsMeasurableStyles = {
   maxHeight: null,

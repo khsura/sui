@@ -1,8 +1,8 @@
-import { SProgressCircular } from '@khsura/sui/components'
+import { SProgressCircular } from '@khsura/sui'
+import type { Meta } from '@storybook/vue3'
 import { argsComponentTheme } from '@khsura/storybook/args'
 import { argTypesComponentTheme } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'
-import type { Meta } from '@storybook/vue3'
 
 const progressCircular: Meta<typeof SProgressCircular> = {
   title: 'UI Components/Progress Bar/Circular',

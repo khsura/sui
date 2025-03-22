@@ -2,9 +2,9 @@
   <span aria-hidden="true" :class="classList" :style="styleList"></span>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue'
 import { propsIcon } from '@khsura/sui/props'
 import { useComponentThemeService, useSizeService, useTextColorService } from '@khsura/sui/services'
-import { computed } from 'vue'
 
 const props = defineProps(propsIcon())
 const { classListTextColor, styleListTextColor, isPresetColor } = useTextColorService(props)
