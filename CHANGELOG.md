@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/khsura/sui/compare/v1.0.0...v1.0.1) (2025-03-22)
+
+
+### Bug Fixes
+
+* textarea model type ([9199d71](https://github.com/khsura/sui/commit/9199d71a62010de8d3bc65b3da2f658981701250))
+
 ## 1.0.0 (2025-03-22)
 
 
