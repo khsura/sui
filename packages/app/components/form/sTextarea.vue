@@ -47,7 +47,7 @@ const props = defineProps(propsTextarea())
 const emit = defineEmits<EmitFormTextInput<string | number | null>>()
 const textareaElement = ref<HTMLTextAreaElement | null>(null)
 
-const model = defineModel<string>({
+const model = defineModel<string | null>({
   get: (v) => v ?? '',
   set: (v) => {
     void onEvent()
