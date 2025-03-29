@@ -1,11 +1,5 @@
 {
   "extends": "@khsura/shared/tsconfig.base.json",
-  "include": [
-    "**/*.js",
-    "**/*.ts",
-    "**/*.mjs",
-    "**/*.tsx",
-    "**/*.vue"
-  ],
+  "include": ["**/*.js", "**/*.ts", "**/*.mjs", "**/*.tsx", "**/*.vue"],
   "exclude": ["packages", "node_modules", "dist"]
 }
