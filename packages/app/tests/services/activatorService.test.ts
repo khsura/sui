@@ -1,7 +1,7 @@
 import { Browser } from 'happy-dom'
 import { ref } from 'vue'
-import { type PropsActivator } from '@khsura/sui/index'
-import { useActivatorService } from '@khsura/sui/services'
+import { type PropsActivator } from '~/index'
+import { useActivatorService } from '~/services'
 
 const defaultPropsActivator: PropsActivator = {
   disabled: false,

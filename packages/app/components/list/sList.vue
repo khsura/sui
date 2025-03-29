@@ -5,15 +5,15 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsList } from '@khsura/sui/props'
+import { ProviderPropsName } from '~/constants'
+import { propsList } from '~/props'
 import {
   useColorService,
   useMeasurableStylesService,
   useProviderService,
   useTagService,
   useTextColorService,
-} from '@khsura/sui/services'
+} from '~/services'
 
 const props = defineProps({
   ...propsList(),

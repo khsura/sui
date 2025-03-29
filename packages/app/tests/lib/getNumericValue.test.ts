@@ -1,4 +1,4 @@
-import { getNumericValue } from '@khsura/sui/lib'
+import { getNumericValue } from '~/lib'
 
 describe('getNumericValue', () => {
   test('returns a number', () => {

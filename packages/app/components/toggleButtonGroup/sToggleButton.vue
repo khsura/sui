@@ -15,10 +15,10 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import SButton from '@khsura/sui/components/sButton.vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsColumn, propsGroupItem } from '@khsura/sui/props'
-import { useColumnService, useGroupItemService, useProviderService } from '@khsura/sui/services'
+import SButton from '~/components/sButton.vue'
+import { ProviderPropsName } from '~/constants'
+import { propsColumn, propsGroupItem } from '~/props'
+import { useColumnService, useGroupItemService, useProviderService } from '~/services'
 
 const props = defineProps({
   ...propsGroupItem(),

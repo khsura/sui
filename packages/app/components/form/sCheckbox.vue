@@ -9,10 +9,10 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import FormInputError from '@khsura/sui/components/form/common/sFormInputError.vue'
-import { propsCheckbox } from '@khsura/sui/props'
-import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
-import { useFormInputService } from '@khsura/sui/services'
+import FormInputError from '~/components/form/common/sFormInputError.vue'
+import { propsCheckbox } from '~/props'
+import { useColorRepository } from '~/repositories/colorRepository'
+import { useFormInputService } from '~/services'
 
 const props = defineProps(propsCheckbox())
 

@@ -7,10 +7,10 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsToggleButtonGroup } from '@khsura/sui/props'
-import { useBorderService, useGroupService, useProviderService } from '@khsura/sui/services'
-import { type GroupItemValue } from '@khsura/sui/types'
+import { ProviderPropsName } from '~/constants'
+import { propsToggleButtonGroup } from '~/props'
+import { useBorderService, useGroupService, useProviderService } from '~/services'
+import { type GroupItemValue } from '~/types'
 
 const props = defineProps(propsToggleButtonGroup())
 const model = defineModel<GroupItemValue[]>({ default: [], required: false })

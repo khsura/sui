@@ -5,14 +5,14 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { propsBorder, propsColor, propsElevation, propsLink, propsMeasurableStyles, propsTag } from '@khsura/sui/props'
+import { propsBorder, propsColor, propsElevation, propsLink, propsMeasurableStyles, propsTag } from '~/props'
 import {
   useLinkService,
   useBorderService,
   useColorService,
   useElevationService,
   useMeasurableStylesService,
-} from '@khsura/sui/services'
+} from '~/services'
 
 const props = defineProps({
   ...propsTag<'div' | 'section'>({ tag: 'div' }),

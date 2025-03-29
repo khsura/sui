@@ -33,11 +33,11 @@
 
 <script setup lang="ts">
 import { ref, computed, nextTick, onMounted } from 'vue'
-import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
-import { propsTextarea } from '@khsura/sui/props'
-import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
-import { useDisabledService, useFormInputService } from '@khsura/sui/services'
-import { type EmitFormTextInput } from '@khsura/sui/types'
+import { getCleanSetObject, getNumericCssAttribute } from '~/lib'
+import { propsTextarea } from '~/props'
+import { useColorRepository } from '~/repositories/colorRepository'
+import { useDisabledService, useFormInputService } from '~/services'
+import { type EmitFormTextInput } from '~/types'
 import kFormInputError from './common/sFormInputError.vue'
 
 const props = defineProps(propsTextarea<string | null>())

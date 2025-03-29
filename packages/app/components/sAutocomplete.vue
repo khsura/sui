@@ -4,7 +4,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { type GroupItemValue } from '@khsura/sui/types'
+import { type GroupItemValue } from '~/types'
 
 defineProps<{
   items: GroupItemValue[]

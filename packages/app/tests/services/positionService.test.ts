@@ -1,7 +1,7 @@
 import { type Mutable } from '@vueuse/core'
 import { reactive } from 'vue'
-import { type PropsPosition } from '@khsura/sui/definitions'
-import { usePositionService } from '@khsura/sui/services/positionService'
+import { type PropsPosition } from '~/definitions'
+import { usePositionService } from '~/services'
 
 describe('positionService', () => {
   it('can set position properly', () => {

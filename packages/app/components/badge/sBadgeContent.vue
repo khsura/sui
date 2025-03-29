@@ -18,10 +18,10 @@
 </template>
 <script setup lang="ts">
 import { ref, computed, watch, nextTick } from 'vue'
-import SIcon from '@khsura/sui/components/sIcon.vue'
-import { type PropsBadge } from '@khsura/sui/definitions'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
-import { useColorService } from '@khsura/sui/services'
+import SIcon from '~/components/sIcon.vue'
+import { type PropsBadge } from '~/definitions'
+import { getNumericCssAttribute } from '~/lib'
+import { useColorService } from '~/services'
 
 // eslint-disable-next-line vue/no-unused-properties
 const props = defineProps<PropsBadge>()

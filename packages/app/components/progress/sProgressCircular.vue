@@ -36,8 +36,8 @@
 </template>
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { propsTextColor, propsComponentTheme } from '@khsura/sui/props'
-import { useTextColorService, useComponentThemeService } from '@khsura/sui/services'
+import { propsTextColor, propsComponentTheme } from '~/props'
+import { useTextColorService, useComponentThemeService } from '~/services'
 
 const props = defineProps({
   ...propsTextColor(),

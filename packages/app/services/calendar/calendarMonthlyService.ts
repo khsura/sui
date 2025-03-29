@@ -1,9 +1,9 @@
 import { computed } from 'vue'
-import { type PropsCalendar } from '@khsura/sui/definitions'
-import { getCalendarDate } from '@khsura/sui/repositories/calendarRepository'
-import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
-import { type CalendarDate, type CalendarEvent } from '@khsura/sui/types'
-import dayjs from '@khsura/sui/vendors/dayjs'
+import { type PropsCalendar } from '~/definitions'
+import { getCalendarDate } from '~/repositories/calendarRepository'
+import { useColorRepository } from '~/repositories/colorRepository'
+import { type CalendarDate, type CalendarEvent } from '~/types'
+import dayjs from '~/vendors/dayjs'
 
 type CalendarEventExtended = CalendarEvent & {
   isStartDate: boolean

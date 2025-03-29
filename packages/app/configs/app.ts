@@ -1,5 +1,5 @@
-import { AppTheme, thresholds, scrollBarWidth } from '@khsura/sui/constants'
-import { type AppState } from '@khsura/sui/types'
+import { AppTheme, thresholds, scrollBarWidth } from '~/constants'
+import { type AppState } from '~/types'
 
 export const defaultAppConfig = {
   theme: AppTheme.light,

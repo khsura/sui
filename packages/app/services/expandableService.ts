@@ -1,6 +1,6 @@
 import { provide } from 'vue'
-import { ProviderName } from '@khsura/sui/constants/provider'
-import { type PropsGroupItem } from '@khsura/sui/definitions'
+import { ProviderName } from '~/constants/provider'
+import { type PropsGroupItem } from '~/definitions'
 import { useGroupItemService } from './groupItemService'
 
 export const useExpandableService = (props: PropsGroupItem) => {

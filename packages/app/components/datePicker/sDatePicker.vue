@@ -47,11 +47,11 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { SCard } from '@khsura/sui/components/cards'
-import { propsDatePicker } from '@khsura/sui/props'
-import { getDatePickerFormat } from '@khsura/sui/repositories'
-import { useDatePickerService, useMeasurableStylesService } from '@khsura/sui/services'
-import dayjs from '@khsura/sui/vendors/dayjs'
+import { SCard } from '~/components/cards'
+import { propsDatePicker } from '~/props'
+import { getDatePickerFormat } from '~/repositories'
+import { useDatePickerService, useMeasurableStylesService } from '~/services'
+import dayjs from '~/vendors/dayjs'
 import SDatePickerDate from './sDatePickerDate.vue'
 import SDatePickerMonth from './sDatePickerMonth.vue'
 import SDatePickerSwitch from './sDatePickerSwitch.vue'

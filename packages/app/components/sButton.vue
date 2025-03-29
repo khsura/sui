@@ -16,10 +16,10 @@
 
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue'
-import { ProviderPropsName, SizeProperty } from '@khsura/sui/constants'
-import { getCleanSetObject, isDarkColor } from '@khsura/sui/lib'
-import { propsButton } from '@khsura/sui/props'
-import { useColorRepository, useProviderRepository } from '@khsura/sui/repositories'
+import { ProviderPropsName, SizeProperty } from '~/constants'
+import { getCleanSetObject, isDarkColor } from '~/lib'
+import { propsButton } from '~/props'
+import { useColorRepository, useProviderRepository } from '~/repositories'
 import {
   useBorderService,
   useColorService,
@@ -30,7 +30,7 @@ import {
   useSingleGroupItemService,
   useSizeService,
   useTextColorService,
-} from '@khsura/sui/services'
+} from '~/services'
 import { SProgressCircular } from './progress'
 
 const props = defineProps(propsButton())

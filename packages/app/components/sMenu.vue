@@ -22,11 +22,11 @@
 <script setup lang="ts">
 import { OnClickOutside } from '@vueuse/components'
 import { computed, watch, nextTick } from 'vue'
-import SOverlay from '@khsura/sui/components/sOverlay.vue'
-import { getWindow } from '@khsura/sui/lib/browser'
-import { propsMeasurableStyles, propsMenu } from '@khsura/sui/props'
-import { useMeasurableStylesService, useMenuService } from '@khsura/sui/services'
-import { type EmitMenu } from '@khsura/sui/types'
+import SOverlay from '~/components/sOverlay.vue'
+import { getWindow } from '~/lib/browser'
+import { propsMeasurableStyles, propsMenu } from '~/props'
+import { useMeasurableStylesService, useMenuService } from '~/services'
+import { type EmitMenu } from '~/types'
 
 const props = defineProps({
   ...propsMeasurableStyles(),

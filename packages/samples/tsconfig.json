@@ -7,5 +7,5 @@
       "@khsura/shared/*": ["../shared/*"]
     }
   },
-  "include": ["**/*.js", "**/*.mjs", "**/*.ts", "**/*.tsx", "**/*.vue"]
+  "include": ["**/*.js", "**/*.mjs", "**/*.ts", "**/*.tsx", "**/*.vue", "../app/vitest.config.ts"]
 }

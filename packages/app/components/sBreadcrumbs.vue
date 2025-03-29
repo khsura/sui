@@ -22,9 +22,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { type PropType } from 'vue'
-import { propsTextColor } from '@khsura/sui/props'
-import { useTextColorService } from '@khsura/sui/services'
-import { type BreadcrumbsItem } from '@khsura/sui/types'
+import { propsTextColor } from '~/props'
+import { useTextColorService } from '~/services'
+import { type BreadcrumbsItem } from '~/types'
 
 const props = defineProps({
   items: {

@@ -26,11 +26,11 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import SButton from '@khsura/sui/components/sButton.vue'
-import SIcon from '@khsura/sui/components/sIcon.vue'
-import { propsSlideGroup } from '@khsura/sui/props'
-import { useSlideGroupService } from '@khsura/sui/services'
-import { type GroupItemValue } from '@khsura/sui/types'
+import SButton from '~/components/sButton.vue'
+import SIcon from '~/components/sIcon.vue'
+import { propsSlideGroup } from '~/props'
+import { useSlideGroupService } from '~/services'
+import { type GroupItemValue } from '~/types'
 
 const isReady = ref(false)
 const props = defineProps(propsSlideGroup())

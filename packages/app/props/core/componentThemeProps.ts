@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { type AppThemeType } from '@khsura/sui/types'
+import { type AppThemeType } from '~/types'
 
 export const propsComponentTheme = () => {
   return {

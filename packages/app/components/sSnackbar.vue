@@ -21,13 +21,13 @@
 </template>
 <script setup lang="ts">
 import { type PropType, watch, computed } from 'vue'
-import SOverlay from '@khsura/sui/components/sOverlay.vue'
-import { STransition } from '@khsura/sui/constants'
-import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
-import { getWindow } from '@khsura/sui/lib/browser'
-import { propsActivator, propsBorder } from '@khsura/sui/props'
-import { getIsAbsolutePosition, getIsFixedPosition } from '@khsura/sui/repositories/positionRepository'
-import { useActivatorService, useLayoutService, useScrollableService } from '@khsura/sui/services'
+import SOverlay from '~/components/sOverlay.vue'
+import { STransition } from '~/constants'
+import { getCleanSetObject, getNumericCssAttribute } from '~/lib'
+import { getWindow } from '~/lib/browser'
+import { propsActivator, propsBorder } from '~/props'
+import { getIsAbsolutePosition, getIsFixedPosition } from '~/repositories/positionRepository'
+import { useActivatorService, useLayoutService, useScrollableService } from '~/services'
 
 const props = defineProps({
   multiLine: {

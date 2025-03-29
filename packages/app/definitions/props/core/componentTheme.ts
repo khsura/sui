@@ -1,4 +1,4 @@
-import { type AppThemeType } from '@khsura/sui/types'
+import { type AppThemeType } from '~/types'
 
 export interface PropsComponentTheme {
   theme?: AppThemeType | undefined

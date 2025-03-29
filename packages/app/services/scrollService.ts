@@ -1,5 +1,5 @@
-import { hasScrollFeature } from '@khsura/sui/lib/browser'
-import { scrollIntoView, smoothScrollTo, smoothElementScroll } from '@khsura/sui/lib/scroll'
+import { hasScrollFeature } from '~/lib/browser'
+import { scrollIntoView, smoothScrollTo, smoothElementScroll } from '~/lib/scroll'
 
 export const useScrollService = () => {
   return {

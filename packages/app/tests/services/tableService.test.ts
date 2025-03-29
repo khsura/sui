@@ -1,7 +1,7 @@
 import { type Mutable } from '@vueuse/core'
 import { ref } from 'vue'
-import { useTableService } from '@khsura/sui/services'
-import { type TableRowClass, type PropsTable } from '@khsura/sui/types'
+import { type TableRowClass, type PropsTable } from '~/index'
+import { useTableService } from '~/services'
 import { headers, items } from '../mocks/sTable'
 
 const expanded = ref([items[3]])

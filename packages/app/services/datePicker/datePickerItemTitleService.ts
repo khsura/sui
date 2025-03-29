@@ -1,6 +1,6 @@
 import { computed } from 'vue'
-import { type PropsDatePickerItemTitle } from '@khsura/sui/definitions'
-import { type DatePickerItemEmits } from '@khsura/sui/types'
+import { type PropsDatePickerItemTitle } from '~/definitions'
+import { type DatePickerItemEmits } from '~/types'
 import { useDatePickerItemCoreService } from './datePickerItemCoreService'
 
 export const useDatePickerItemTitleService = (props: PropsDatePickerItemTitle, emit: DatePickerItemEmits) => {

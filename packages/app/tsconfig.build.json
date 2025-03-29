@@ -1,7 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "exclude": [
-    "vite.config.ts",
-    "tests"
-  ],
-}

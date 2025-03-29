@@ -1,5 +1,5 @@
 import { type PropType, type ComponentPublicInstance } from 'vue'
-import { validatorNumericCssAttribute } from '@khsura/sui/validators'
+import { validatorNumericCssAttribute } from '~/validators'
 import { propsLocation } from './core'
 import { propsElevation } from './core/elevationProps'
 import { propsTag } from './core/tagProps'

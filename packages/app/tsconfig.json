@@ -1,17 +1,9 @@
 {
-  "extends": "@khsura/shared/tsconfig.base.json",
+  "extends": "../shared/tsconfig.base.json",
+  "include": ["shims-jsx.d.ts", "shims-modules.d.ts", "shims-vue.d.ts", "./**/*", "./**/*.vue", ".storybook/**/*"],
   "compilerOptions": {
-    "declarationDir": "@types",
     "paths": {
-      "@khsura/sui/*": ["./*"]
+      "~/*": ["./*"]
     }
-  },
-  "include": [
-    "**/*.js",
-    "**/*.mjs",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.vue"
-  ],
-  "exclude": ["dist", "node_modules", "public", "@types"]
+  }
 }

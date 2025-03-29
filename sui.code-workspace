@@ -9,10 +9,6 @@
       "name": "app",
     },
     {
-      "path": "./packages/storybook",
-      "name": "storybook",
-    },
-    {
       "path": "./packages/samples",
       "name": "samples",
     },
@@ -29,6 +25,13 @@
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
     },
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+      "tsconfig.json": "tsconfig.*.json, shims-*.d.ts",
+      "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*",
+      "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .prettier*, prettier*, .editorconfig, stylelint*",
+    },
+    "editor.formatOnSave": true,
     "stylelint.stylelintPath": "./node_modules/stylelint",
     "stylelint.validate": ["css", "less", "postcss", "scss", "vue"],
     "files.exclude": {
@@ -54,6 +57,14 @@
     "i18n-ally.localesPaths": [],
   },
   "extensions": {
-    "recommendations": ["Vue.volar", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "stylelint.vscode-stylelint"],
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "EditorConfig.EditorConfig",
+      "esbenp.prettier-vscode",
+      "ms-playwright.playwright",
+      "stylelint.vscode-stylelint",
+      "vitest.explorer",
+      "Vue.volar",
+    ],
   },
 }

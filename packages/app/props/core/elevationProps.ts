@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { getNumericValue } from '@khsura/sui/lib/getNumericValue'
+import { getNumericValue } from '~/lib/getNumericValue'
 
 export const propsElevation = (defaults?: { elevation?: number }) => {
   return {

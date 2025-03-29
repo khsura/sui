@@ -4,8 +4,8 @@
   </Component>
 </template>
 <script setup lang="ts">
-import { type PropsTag } from '@khsura/sui/definitions'
-import { useTagService } from '@khsura/sui/services'
+import { type PropsTag } from '~/definitions'
+import { useTagService } from '~/services'
 
 // eslint-disable-next-line vue/no-unused-properties
 const props = defineProps<PropsTag>()

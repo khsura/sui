@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { validatorNumericCssAttribute } from '@khsura/sui/validators'
+import { validatorNumericCssAttribute } from '~/validators'
 
 export const propsSplitView = () => {
   return {

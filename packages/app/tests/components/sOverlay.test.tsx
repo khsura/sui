@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { SOverlay } from '@khsura/sui/components'
-import { overlaysContainerId } from '@khsura/sui/constants'
-import { type PropsOverlay } from '@khsura/sui/definitions'
+import { SOverlay } from '~/components'
+import { overlaysContainerId, type PropsOverlay } from '~/index'
 
 describe('SOverlay', () => {
   const slotId = 'one'

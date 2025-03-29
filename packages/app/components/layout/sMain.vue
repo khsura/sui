@@ -5,10 +5,10 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { type PropsMain } from '@khsura/sui/definitions'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
-import { getIsFixedPosition } from '@khsura/sui/repositories/positionRepository'
-import { useLayoutService } from '@khsura/sui/services'
+import { type PropsMain } from '~/definitions'
+import { getNumericCssAttribute } from '~/lib'
+import { getIsFixedPosition } from '~/repositories/positionRepository'
+import { useLayoutService } from '~/services'
 
 // eslint-disable-next-line vue/no-unused-properties
 const props = defineProps<PropsMain>()

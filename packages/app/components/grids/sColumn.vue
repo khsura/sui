@@ -5,8 +5,8 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { propsColumn } from '@khsura/sui/props'
-import { useColumnService } from '@khsura/sui/services'
+import { propsColumn } from '~/props'
+import { useColumnService } from '~/services'
 
 const props = defineProps(propsColumn())
 const { classListColumn } = useColumnService(props)

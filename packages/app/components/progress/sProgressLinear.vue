@@ -15,8 +15,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { type PropType } from 'vue'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
-import { useColorRepository } from '@khsura/sui/repositories'
+import { getNumericCssAttribute } from '~/lib'
+import { useColorRepository } from '~/repositories'
 
 const props = defineProps({
   fixed: {

@@ -7,9 +7,9 @@
 </template>
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsToolbarTitle } from '@khsura/sui/props'
-import { useColorService, useProviderService, useTagService } from '@khsura/sui/services'
+import { ProviderPropsName } from '~/constants'
+import { propsToolbarTitle } from '~/props'
+import { useColorService, useProviderService, useTagService } from '~/services'
 
 const props = defineProps({
   ...propsToolbarTitle(),

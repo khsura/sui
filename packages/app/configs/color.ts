@@ -1,5 +1,5 @@
-import { ExposedAppColor, PresetColor } from '@khsura/sui/constants/color'
-import { type PresetColorType, type ExposedAppColorType } from '@khsura/sui/types'
+import { ExposedAppColor, PresetColor } from '~/constants/color'
+import { type PresetColorType, type ExposedAppColorType } from '~/types'
 
 export const presetColors: Array<PresetColorType | ExposedAppColorType> = [
   PresetColor.primary,

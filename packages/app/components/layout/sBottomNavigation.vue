@@ -8,10 +8,10 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, watch } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { getCleanSetObject, getNumericValue } from '@khsura/sui/lib'
-import { isBrowser } from '@khsura/sui/lib/browser'
-import { propsBottomNavigation } from '@khsura/sui/props'
+import { ProviderPropsName } from '~/constants'
+import { getCleanSetObject, getNumericValue } from '~/lib'
+import { isBrowser } from '~/lib/browser'
+import { propsBottomNavigation } from '~/props'
 import {
   useBorderService,
   useLayoutService,
@@ -21,8 +21,8 @@ import {
   useScrollableService,
   useSingleGroupService,
   useTagService,
-} from '@khsura/sui/services'
-import { type GroupItemValue } from '@khsura/sui/types'
+} from '~/services'
+import { type GroupItemValue } from '~/types'
 
 const props = defineProps({
   ...propsBottomNavigation(),

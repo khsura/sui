@@ -1,4 +1,4 @@
-import { type Position } from '@khsura/sui/constants'
+import { type Position } from '~/constants'
 
 export const defaultLayoutSizes: {
   left: number

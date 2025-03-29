@@ -1,7 +1,7 @@
 import { type PropType } from 'vue'
-import { datePickerModelFormats } from '@khsura/sui/configs/datePicker'
-import { datePickerDefaultYearLimit } from '@khsura/sui/constants/datePicker'
-import dayjs from '@khsura/sui/vendors/dayjs'
+import { datePickerModelFormats } from '~/configs/datePicker'
+import { datePickerDefaultYearLimit } from '~/constants/datePicker'
+import dayjs from '~/vendors/dayjs'
 
 export const propsDatePickerRange = {
   max: {

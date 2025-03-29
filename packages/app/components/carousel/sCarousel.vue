@@ -41,12 +41,12 @@
 </template>
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
-import SButton from '@khsura/sui/components/sButton.vue'
-import SIcon from '@khsura/sui/components/sIcon.vue'
-import { SWindow } from '@khsura/sui/components/window'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
-import { propsCarousel } from '@khsura/sui/props'
-import { type GroupItemValue } from '@khsura/sui/types'
+import SButton from '~/components/sButton.vue'
+import SIcon from '~/components/sIcon.vue'
+import { SWindow } from '~/components/window'
+import { getNumericCssAttribute } from '~/lib'
+import { propsCarousel } from '~/props'
+import { type GroupItemValue } from '~/types'
 
 const styleList = computed(() => {
   return {

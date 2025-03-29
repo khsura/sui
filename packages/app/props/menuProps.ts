@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { type LocationRaw } from '@khsura/sui/types'
+import { type LocationRaw } from '~/types'
 
 import { propsActivator, propsContent, propsLocation } from './core'
 import { propsPosition } from './positionProps'

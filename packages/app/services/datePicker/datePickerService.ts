@@ -1,10 +1,10 @@
 import { type ModelRef, computed, ref } from 'vue'
-import { datePickerItemHeightDefault, datePickerItemHeightDense } from '@khsura/sui/constants'
-import { type PropsDatePicker } from '@khsura/sui/definitions'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
-import { getDatePickerFormat } from '@khsura/sui/repositories'
-import { type DatePickerSelectTypeType } from '@khsura/sui/types'
-import dayjs from '@khsura/sui/vendors/dayjs'
+import { datePickerItemHeightDefault, datePickerItemHeightDense } from '~/constants'
+import { type PropsDatePicker } from '~/definitions'
+import { getNumericCssAttribute } from '~/lib'
+import { getDatePickerFormat } from '~/repositories'
+import { type DatePickerSelectTypeType } from '~/types'
+import dayjs from '~/vendors/dayjs'
 
 export const useDatePickerService = (props: PropsDatePicker, model: ModelRef<string | null | undefined>) => {
   const selectedType = ref<DatePickerSelectTypeType>(props.type)

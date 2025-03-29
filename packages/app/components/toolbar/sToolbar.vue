@@ -21,9 +21,9 @@
 </template>
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
-import { propsToolbar } from '@khsura/sui/props'
+import { ProviderPropsName } from '~/constants'
+import { getNumericCssAttribute } from '~/lib'
+import { propsToolbar } from '~/props'
 import {
   useBorderService,
   useColorService,
@@ -33,7 +33,7 @@ import {
   useProviderService,
   useTagService,
   useToolbarService,
-} from '@khsura/sui/services'
+} from '~/services'
 
 const props = defineProps(propsToolbar())
 const { classListColor, styleListColor } = useColorService(props)

@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils'
 import { defineComponent, ref } from 'vue'
-import { SSlideGroup, SSlideItem } from '@khsura/sui/components'
-import { type PropsSlideGroup } from '@khsura/sui/definitions'
-import { propsSlideGroup } from '@khsura/sui/props'
+import { SSlideGroup, SSlideItem } from '~/components'
+import { type PropsSlideGroup } from '~/definitions'
+import { propsSlideGroup } from '~/props'
 
 describe('SSlideGroup', () => {
   const getWrapper = (props: Partial<PropsSlideGroup> = {}) => {

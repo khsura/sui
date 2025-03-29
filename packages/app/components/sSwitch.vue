@@ -15,9 +15,9 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { CssColor } from '@khsura/sui/constants'
-import { propsColor, propsFormInput } from '@khsura/sui/props'
-import { useColorService, useDisabledService } from '@khsura/sui/services'
+import { CssColor } from '~/constants'
+import { propsColor, propsFormInput } from '~/props'
+import { useColorService, useDisabledService } from '~/services'
 
 const props = defineProps({
   label: {

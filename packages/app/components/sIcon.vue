@@ -3,8 +3,8 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { propsIcon } from '@khsura/sui/props'
-import { useComponentThemeService, useSizeService, useTextColorService } from '@khsura/sui/services'
+import { propsIcon } from '~/props'
+import { useComponentThemeService, useSizeService, useTextColorService } from '~/services'
 
 const props = defineProps(propsIcon())
 const { classListTextColor, styleListTextColor, isPresetColor } = useTextColorService(props)

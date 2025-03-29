@@ -1,5 +1,5 @@
-import { SizeProperty } from '@khsura/sui/constants'
-import { type SizePropertyType } from '@khsura/sui/types'
+import { SizeProperty } from '~/constants'
+import { type SizePropertyType } from '~/types'
 
 export const sizeProperties: SizePropertyType[] = [
   SizeProperty.mini,

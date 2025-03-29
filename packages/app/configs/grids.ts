@@ -1,5 +1,5 @@
-import { GridAlignProperty, GridJustifyProperty } from '@khsura/sui/constants'
-import { type GridAlignPropertyType, type GridJustifyPropertyType } from '@khsura/sui/types'
+import { GridAlignProperty, GridJustifyProperty } from '~/constants'
+import { type GridAlignPropertyType, type GridJustifyPropertyType } from '~/types'
 
 export const gridAlignProperties: GridAlignPropertyType[] = [
   GridAlignProperty.baseline,

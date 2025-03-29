@@ -169,9 +169,9 @@
 <script setup lang="ts" generic="T extends TableItem">
 import { useDebounceFn } from '@vueuse/core'
 import { computed, watch, onMounted } from 'vue'
-import { getCleanSetObject } from '@khsura/sui/lib'
-import { useBorderService, useTableService } from '@khsura/sui/services'
-import { type EmitTable, type PropsTable, type TableItem } from '@khsura/sui/types'
+import { getCleanSetObject } from '~/lib'
+import { useBorderService, useTableService } from '~/services'
+import { type EmitTable, type PropsTable, type TableItem } from '~/types'
 import STableBodyCell from './sTableBodyCell.vue'
 import STableHeadCell from './sTableHeadCell.vue'
 

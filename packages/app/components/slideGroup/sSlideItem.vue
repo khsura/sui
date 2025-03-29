@@ -5,9 +5,9 @@
 </template>
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsGroupItem } from '@khsura/sui/props'
-import { useGroupItemService, useProviderService } from '@khsura/sui/services'
+import { ProviderPropsName } from '~/constants'
+import { propsGroupItem } from '~/props'
+import { useGroupItemService, useProviderService } from '~/services'
 
 const props = defineProps(propsGroupItem())
 const slideItem = ref<HTMLElement | null>(null)

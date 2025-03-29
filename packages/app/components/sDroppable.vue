@@ -23,9 +23,9 @@
 </template>
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { hasDragDropFeature } from '@khsura/sui/lib/browser'
-import { propsDisabled, propsMeasurableStyles } from '@khsura/sui/props'
-import { useMeasurableStylesService } from '@khsura/sui/services'
+import { hasDragDropFeature } from '~/lib/browser'
+import { propsDisabled, propsMeasurableStyles } from '~/props'
+import { useMeasurableStylesService } from '~/services'
 
 const props = defineProps({
   ...propsDisabled(),

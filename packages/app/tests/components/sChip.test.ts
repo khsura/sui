@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { SChip } from '@khsura/sui/components'
-import { type PropsChip } from '@khsura/sui/definitions'
+import { SChip } from '~/components'
+import { type PropsChip } from '~/definitions'
 
 describe('SChip', () => {
   const getSChip = (props?: Partial<PropsChip>) => {

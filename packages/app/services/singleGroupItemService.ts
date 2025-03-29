@@ -1,6 +1,6 @@
-import { type ProviderName } from '@khsura/sui/constants/provider'
-import { type Provider, type PropsSingleGroupItem } from '@khsura/sui/definitions'
-import { useGroupCoreItemService } from '@khsura/sui/services/core/groupCoreItemService'
+import { type ProviderName } from '~/constants/provider'
+import { type Provider, type PropsSingleGroupItem } from '~/definitions'
+import { useGroupCoreItemService } from '~/services/core/groupCoreItemService'
 
 export const useSingleGroupItemService = (
   props: PropsSingleGroupItem,

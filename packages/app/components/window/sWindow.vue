@@ -35,18 +35,12 @@
 </template>
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
-import SButton from '@khsura/sui/components/sButton.vue'
-import SIcon from '@khsura/sui/components/sIcon.vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsWindow } from '@khsura/sui/props'
-import {
-  useColorService,
-  useProviderService,
-  useSingleGroupService,
-  useTagService,
-  useTouchService,
-} from '@khsura/sui/services'
-import { type GroupItemValue } from '@khsura/sui/types'
+import SButton from '~/components/sButton.vue'
+import SIcon from '~/components/sIcon.vue'
+import { ProviderPropsName } from '~/constants'
+import { propsWindow } from '~/props'
+import { useColorService, useProviderService, useSingleGroupService, useTagService, useTouchService } from '~/services'
+import { type GroupItemValue } from '~/types'
 
 const props = defineProps({
   ...propsWindow(),

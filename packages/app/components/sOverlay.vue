@@ -16,8 +16,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { overlaysContainerId } from '@khsura/sui/constants'
-import { propsOverlay } from '@khsura/sui/props'
+import { overlaysContainerId } from '~/constants'
+import { propsOverlay } from '~/props'
 
 defineProps(propsOverlay())
 

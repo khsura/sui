@@ -1,0 +1,36 @@
+import type { StorybookConfig } from '@storybook/vue3-vite'
+import { mergeConfig } from 'vite'
+import type { UserConfig } from 'vite'
+
+const config: StorybookConfig = {
+  stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
+
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
+    'storybook-dark-mode',
+  ],
+
+  framework: {
+    name: '@storybook/vue3-vite',
+    options: {},
+  },
+
+  viteFinal: (previousConfig: UserConfig) => {
+    const additionalConfig: UserConfig = {
+      build: {
+        sourcemap: 'inline',
+      },
+      optimizeDeps: {
+        include: ['@storybook/theming', '@storybook/manager-api', 'storybook-dark-mode'],
+      },
+    }
+
+    return mergeConfig(previousConfig, additionalConfig)
+  },
+
+  docs: {},
+}
+
+export default config

@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { FileMimeType } from '@khsura/sui/constants'
+import { FileMimeType } from '~/constants'
 import { propsFormInput } from './formInputProps'
 
 export const propsImageLoader = (defaults?: { accept?: string }) => {

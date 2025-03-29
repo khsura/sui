@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { type MaterialDesignIcon, type SizePropertyType } from '@khsura/sui/types'
+import { type MaterialDesignIcon, type SizePropertyType } from '~/types'
 import { propsGroup } from './core/groupProps'
 
 export const propsExpansionPanels = () => {

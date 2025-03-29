@@ -1,5 +1,5 @@
-import { type PropsElevation } from '@khsura/sui/definitions/props'
-import { useElevationService } from '@khsura/sui/services'
+import { type PropsElevation } from '~/definitions'
+import { useElevationService } from '~/services'
 
 describe('useElevationService', () => {
   describe('classListElevation', () => {

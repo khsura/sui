@@ -40,10 +40,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import SButton from '@khsura/sui/components/sButton.vue'
-import SIcon from '@khsura/sui/components/sIcon.vue'
-import { propsDatePickerItemSwitch, propsDisabled } from '@khsura/sui/props'
-import { useDatePickerItemSwitchService } from '@khsura/sui/services'
+import SButton from '~/components/sButton.vue'
+import SIcon from '~/components/sIcon.vue'
+import { propsDatePickerItemSwitch, propsDisabled } from '~/props'
+import { useDatePickerItemSwitchService } from '~/services'
 
 const props = defineProps({
   ...propsDatePickerItemSwitch(),

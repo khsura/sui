@@ -1,5 +1,4 @@
-import { getTableItemClass, getTableItemStyle, getTableRowClass } from '@khsura/sui/helpers'
-import { type TableItemClass, type TableItemStyle } from '@khsura/sui/types'
+import { getTableItemClass, getTableItemStyle, getTableRowClass, type TableItemClass, type TableItemStyle } from '~/index'
 
 describe('Table helper', () => {
   describe('getTableItemClass', () => {

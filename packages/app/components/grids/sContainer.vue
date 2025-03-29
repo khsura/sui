@@ -7,8 +7,8 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { propsColor, propsTag } from '@khsura/sui/props'
-import { useColorService, useTagService } from '@khsura/sui/services'
+import { propsColor, propsTag } from '~/props'
+import { useColorService, useTagService } from '~/services'
 
 const props = defineProps({
   fill: {

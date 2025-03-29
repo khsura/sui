@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { type PresetColor } from '@khsura/sui/constants'
+import { type PresetColor } from '~/constants'
 import { propsColor } from './core'
 import { propsFormInput } from './formInputProps'
 

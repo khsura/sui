@@ -1,9 +1,9 @@
 import { computed, ref } from 'vue'
 import { z } from 'zod'
-import { type STableHeadCell } from '@khsura/sui/components/table'
-import { getTableRowClass } from '@khsura/sui/helpers'
-import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
-import { store } from '@khsura/sui/store'
+import { type STableHeadCell } from '~/components/table'
+import { getTableRowClass } from '~/helpers'
+import { getCleanSetObject, getNumericCssAttribute } from '~/lib'
+import { store } from '~/store'
 import {
   type EmitTable,
   type PropsTable,
@@ -11,8 +11,8 @@ import {
   KTableSortOrder,
   type TableHeader,
   type TableItemCellType,
-} from '@khsura/sui/types'
-import { uniqueId } from '@khsura/sui/vendors/lodash'
+} from '~/types'
+import { uniqueId } from '~/vendors/lodash'
 
 export const useTableService = <T extends TableItem = TableItem>(props: PropsTable<T>, emit: EmitTable<T>) => {
   const isMounted = ref(false)
@@ -242,9 +242,7 @@ export const useTableService = <T extends TableItem = TableItem>(props: PropsTab
     items.forEach((item) => {
       const groupName = groupBy.map((key) => item[key]).join(' ')
 
-      if (groupedItemObjects[groupName] === undefined) {
-        groupedItemObjects[groupName] = []
-      }
+      groupedItemObjects[groupName] ??= [];
 
       groupedItemObjects[groupName].push(item)
     })

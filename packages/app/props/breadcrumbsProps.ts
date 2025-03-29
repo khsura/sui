@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { type BreadcrumbsItem } from '@khsura/sui/types'
+import { type BreadcrumbsItem } from '~/types'
 
 import { propsTextColor } from './core'
 

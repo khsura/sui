@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { type InputModeTypeText, type InputTypeText } from '@khsura/sui/types'
+import { type InputModeTypeText, type InputTypeText } from '~/types'
 import { propsFormInput } from './formInputProps'
 import { propsSizePreset } from './sizeProps'
 
@@ -94,7 +94,7 @@ export const propsInput = () => {
       default: undefined,
     },
     maxlength: {
-      type: [String, Number] as PropType<string | number>,
+      type: [String, Number] as PropType<string | number | null>,
       default: undefined,
     },
     ariaLabelledby: {

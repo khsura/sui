@@ -1,8 +1,8 @@
 import { ref } from 'vue'
 import { type Ref } from 'vue'
-import { type ProviderName } from '@khsura/sui/constants'
-import { type Provider } from '@khsura/sui/definitions'
-import { type GroupItemValue } from '@khsura/sui/types'
+import { type ProviderName } from '~/constants'
+import { type Provider } from '~/definitions'
+import { type GroupItemValue } from '~/types'
 
 export const useGroupCoreService = () => {
   const items: Ref<Array<{ value: GroupItemValue; readonly element: HTMLElement | null }>> = ref([])

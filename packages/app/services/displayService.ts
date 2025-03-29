@@ -1,7 +1,7 @@
 import { useBreakpoints, useMediaQuery } from '@vueuse/core'
 import { computed } from 'vue'
-import { store } from '@khsura/sui/store'
-import { type DisplayBreakpointThresholds } from '@khsura/sui/types'
+import { store } from '~/store'
+import { type DisplayBreakpointThresholds } from '~/types'
 import { useAppProviderService } from './appProviderService'
 
 export const useDisplayService = (thresholds?: DisplayBreakpointThresholds) => {

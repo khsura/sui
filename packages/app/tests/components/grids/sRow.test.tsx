@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { SRow, SColumn } from '@khsura/sui/components'
-import { type PropsRow } from '@khsura/sui/types'
+import { SRow, SColumn } from '~/components'
+import { type PropsRow } from '~/index'
 
 describe('SRow', () => {
   test('renders correctly', () => {

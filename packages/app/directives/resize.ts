@@ -1,6 +1,6 @@
 import { type Directive } from 'vue'
-import { getWindow } from '@khsura/sui/lib/browser'
-import { type OnResizeObject, type ResizeDirectiveBinding } from '@khsura/sui/types'
+import { getWindow } from '~/lib/browser'
+import { type OnResizeObject, type ResizeDirectiveBinding } from '~/types'
 
 function mounted(el: HTMLElement & { _onResize?: OnResizeObject }, binding: ResizeDirectiveBinding) {
   const handler = binding.value

@@ -1,8 +1,8 @@
 import { type Ref, computed, ref, type ModelRef } from 'vue'
 import { watch } from 'vue'
-import { ProviderName, ProviderPropsName } from '@khsura/sui/constants/provider'
-import { type PropsGroup } from '@khsura/sui/definitions'
-import { type GroupItemValue } from '@khsura/sui/types'
+import { ProviderName, ProviderPropsName } from '~/constants/provider'
+import { type PropsGroup } from '~/definitions'
+import { type GroupItemValue } from '~/types'
 import { useGroupCoreService } from './core/groupCoreService'
 import { useProviderService } from './core/providerService'
 

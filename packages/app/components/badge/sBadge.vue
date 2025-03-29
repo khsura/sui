@@ -11,7 +11,7 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { type PropsBadge } from '@khsura/sui/definitions'
+import { type PropsBadge } from '~/definitions'
 import SBadgeContent from './sBadgeContent.vue'
 
 const props = defineProps<PropsBadge>()

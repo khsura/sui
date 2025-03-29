@@ -4,8 +4,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { propsListMediaItem } from '@khsura/sui/props'
-import { useListMediaItemService } from '@khsura/sui/services'
+import { propsListMediaItem } from '~/props'
+import { useListMediaItemService } from '~/services'
 
 const props = defineProps(propsListMediaItem())
 const { classes } = useListMediaItemService(props, { componentName: 'listItemAction' })

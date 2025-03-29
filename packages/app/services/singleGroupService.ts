@@ -1,7 +1,7 @@
 import { type Ref, computed, ref, watch } from 'vue'
-import { ProviderName, ProviderPropsName } from '@khsura/sui/constants/provider'
-import { type PropsSingleGroup } from '@khsura/sui/definitions'
-import { type GroupItemValue } from '@khsura/sui/types'
+import { ProviderName, ProviderPropsName } from '~/constants/provider'
+import { type PropsSingleGroup } from '~/definitions'
+import { type GroupItemValue } from '~/types'
 import { useGroupCoreService } from './core/groupCoreService'
 import { useProviderService } from './core/providerService'
 

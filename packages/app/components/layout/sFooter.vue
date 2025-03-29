@@ -5,15 +5,8 @@
 </template>
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch, type PropType } from 'vue'
-import { getCleanSetObject, getNumericCssAttribute, getNumericValue, getWindow } from '@khsura/sui/lib'
-import {
-  propsColor,
-  propsLayout,
-  propsMeasurableStyles,
-  propsPosition,
-  propsElevation,
-  propsTag,
-} from '@khsura/sui/props'
+import { getCleanSetObject, getNumericCssAttribute, getNumericValue, getWindow } from '~/lib'
+import { propsColor, propsLayout, propsMeasurableStyles, propsPosition, propsElevation, propsTag } from '~/props'
 import {
   useColorService,
   useElevationService,
@@ -21,7 +14,7 @@ import {
   useMeasurableStylesService,
   usePositionService,
   useTagService,
-} from '@khsura/sui/services'
+} from '~/services'
 
 const props = defineProps({
   ...propsLayout({ app: false }),

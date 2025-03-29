@@ -5,9 +5,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { overlaysContainerId } from '@khsura/sui/constants'
-import { propsApp } from '@khsura/sui/props'
-import { useAppService } from '@khsura/sui/services'
+import { overlaysContainerId } from '~/constants'
+import { propsApp } from '~/props'
+import { useAppService } from '~/services'
 
 const props = defineProps(propsApp())
 const { styles } = useAppService(props)

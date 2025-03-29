@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { STextarea } from '@khsura/sui/components'
+import { STextarea } from '~/components'
 
 describe('STextarea', () => {
   test('renders correctly', () => {

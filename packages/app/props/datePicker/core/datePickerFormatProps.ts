@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { datePickerDisplayFormat } from '@khsura/sui/configs/datePicker'
+import { datePickerDisplayFormat } from '~/configs/datePicker'
 
 export const propsDatePickerFormat = {
   yearFormat: {

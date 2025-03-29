@@ -1,4 +1,4 @@
-import { type PropsLayoutBase } from '@khsura/sui/definitions/props/core'
+import { type PropsLayoutBase } from '~/definitions/props/core'
 
 export interface PropsLayout extends PropsLayoutBase {
   for?: string | undefined

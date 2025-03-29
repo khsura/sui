@@ -4,8 +4,8 @@
   </SToggleButton>
 </template>
 <script setup lang="ts">
-import { SToggleButton } from '@khsura/sui/components/toggleButtonGroup'
-import { propsColumn } from '@khsura/sui/props'
+import { SToggleButton } from '~/components/toggleButtonGroup'
+import { propsColumn } from '~/props'
 
 defineProps({
   tab: {

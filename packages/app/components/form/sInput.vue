@@ -68,12 +68,12 @@
 <script setup lang="ts">
 import { useSlots, ref } from 'vue'
 import { computed, type Slots } from 'vue'
-import { SColumn, SRow } from '@khsura/sui/components/grids'
-import { getNumericValue, getCleanSetObject } from '@khsura/sui/lib'
-import { propsInput } from '@khsura/sui/props'
-import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
-import { useDisabledService, useFormInputService, useSizeService } from '@khsura/sui/services'
-import { type EmitFormTextInput } from '@khsura/sui/types'
+import { SColumn, SRow } from '~/components/grids'
+import { getNumericValue, getCleanSetObject } from '~/lib'
+import { propsInput } from '~/props'
+import { useColorRepository } from '~/repositories/colorRepository'
+import { useDisabledService, useFormInputService, useSizeService } from '~/services'
+import { type EmitFormTextInput } from '~/types'
 import kFormInputError from './common/sFormInputError.vue'
 
 const props = defineProps(propsInput())

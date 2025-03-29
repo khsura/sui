@@ -1,5 +1,5 @@
-import { type PropsTag, type PropsLink } from '@khsura/sui/definitions'
-import { useLinkService } from '@khsura/sui/services'
+import { type PropsTag, type PropsLink } from '~/definitions'
+import { useLinkService } from '~/services'
 
 describe('useLinkService', () => {
   const keibaWebURL = 'https://keiba.rakuten.co.jp/'

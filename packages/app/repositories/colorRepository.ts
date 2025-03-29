@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { PresetColor } from '@khsura/sui/constants'
-import { getCleanSetObject } from '@khsura/sui/lib'
+import { PresetColor } from '~/constants'
+import { getCleanSetObject } from '~/lib'
 import { useAppProviderRepository } from './appProviderRepository'
 
 export const useColorRepository = () => {

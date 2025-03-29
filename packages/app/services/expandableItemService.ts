@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { ProviderName } from '@khsura/sui/constants/provider'
+import { ProviderName } from '~/constants/provider'
 import { useExpandableItemCoreService, useProviderService } from './core'
 
 export const useExpandableItemService = () => {

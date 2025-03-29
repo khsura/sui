@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { type SelectItem } from '@khsura/sui/types'
+import { type SelectItem } from '~/types'
 import { propsBorder, propsColor, propsContent } from './core'
 import { propsFormInput } from './formInputProps'
 import { propsMenu } from './menuProps'

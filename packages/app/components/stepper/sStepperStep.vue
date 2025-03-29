@@ -14,8 +14,8 @@
 </template>
 <script setup lang="ts">
 import { inject, watch, onMounted, onUnmounted, computed } from 'vue'
-import { ProviderName, ProviderPropsName } from '@khsura/sui/constants'
-import { useProviderService } from '@khsura/sui/services'
+import { ProviderName, ProviderPropsName } from '~/constants'
+import { useProviderService } from '~/services'
 
 const props = defineProps({
   step: {

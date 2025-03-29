@@ -1,6 +1,6 @@
 import { type VueMessageType } from 'vue-i18n'
-import { i18nMessages } from '@khsura/sui/constants'
-import { formatNumber } from '@khsura/sui/lib'
+import { i18nMessages } from '~/constants'
+import { formatNumber } from '~/lib'
 
 export const i18nConfig = {
   availableLocales: ['en', 'mn', 'ja'],
