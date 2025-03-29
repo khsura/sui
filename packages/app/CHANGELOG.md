@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.7](https://github.com/khsura/sui/compare/sui-v1.2.6...sui-v1.2.7) (2025-03-29)
+
+
+### Bug Fixes
+
+* dayjs import bug ([9be23b6](https://github.com/khsura/sui/commit/9be23b63192ffcbdf1811479c4d32b4d6e783d0d))
+
 ## [1.2.6](https://github.com/khsura/sui/compare/sui-v1.2.5...sui-v1.2.6) (2025-03-29)
 
 
