@@ -1,5 +1,5 @@
 import { faker } from '@khsura/shared'
-import { SToggleButton, SToggleButtonGroup } from '@khsura/sui'
+import { SToggleButton, SToggleButtonGroup } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { ref } from 'vue'
 import { argTypesToggleButtonGroup } from '@khsura/storybook/argTypes'

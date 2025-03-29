@@ -1,5 +1,5 @@
-import type { SBadge } from '@khsura/sui'
-import { STransition } from '@khsura/sui'
+import type { SBadge } from '@khsura/sui/index'
+import { STransition } from '@khsura/sui/index'
 import type { ComponentPropsAndSlots } from '@storybook/vue3'
 
 export const argsBadge: Partial<ComponentPropsAndSlots<typeof SBadge>> = {

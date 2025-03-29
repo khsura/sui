@@ -1,6 +1,5 @@
 import { type PropType } from 'vue'
 import { type BreadcrumbsItem } from '@khsura/sui/types'
-
 import { propsTextColor } from './core'
 
 export const propsBreadcrumbs = () => {

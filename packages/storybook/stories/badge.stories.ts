@@ -1,4 +1,4 @@
-import { SBadge, SButton, SIcon, SInput } from '@khsura/sui'
+import { SBadge, SButton, SIcon, SInput } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { argsBadge } from '@khsura/storybook/args'
 import { argTypesBadge } from '@khsura/storybook/argTypes'

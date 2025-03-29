@@ -1,4 +1,4 @@
-import type { PropsColor } from '@khsura/sui'
+import type { PropsColor } from '@khsura/sui/index'
 import colorString from '@khsura/sui/types/core/color?raw'
 import type { ArgTypes } from '@storybook/vue3'
 import _ from 'lodash'

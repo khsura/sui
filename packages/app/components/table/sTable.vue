@@ -172,8 +172,8 @@ import { computed, watch, onMounted } from 'vue'
 import { getCleanSetObject } from '@khsura/sui/lib'
 import { useBorderService, useTableService } from '@khsura/sui/services'
 import { type EmitTable, type PropsTable, type TableItem } from '@khsura/sui/types'
-import STableBodyCell from './sTableBodyCell.vue'
 import STableHeadCell from './sTableHeadCell.vue'
+import STableBodyCell from './sTableBodyCell.vue'
 
 // eslint-disable-next-line vue/no-unused-properties
 const props = withDefaults(defineProps<PropsTable<T>>(), {

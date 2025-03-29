@@ -4,3 +4,11 @@ declare module 'postcss-media-minmax' {
 
   export default plugin
 }
+
+declare module 'eslint-plugin-import' {
+  import type { Linter } from 'eslint'
+
+  export const configs: {
+    recommended: Linter.Config
+  }
+}

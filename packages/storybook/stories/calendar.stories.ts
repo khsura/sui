@@ -1,6 +1,6 @@
 import { faker } from '@khsura/shared'
-import type { CalendarComponent, CalendarDate, CalendarEvent } from '@khsura/sui'
-import { SToolbar, SButton, SIcon, SToolbarTitle, SCalendar } from '@khsura/sui'
+import type { CalendarComponent, CalendarDate, CalendarEvent } from '@khsura/sui/index'
+import { SToolbar, SButton, SIcon, SToolbarTitle, SCalendar } from '@khsura/sui/index'
 import dayjs from '@khsura/sui/vendors/dayjs'
 import { action } from '@storybook/addon-actions'
 import type { Meta } from '@storybook/vue3'

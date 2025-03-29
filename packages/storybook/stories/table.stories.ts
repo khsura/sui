@@ -1,6 +1,6 @@
 import { faker } from '@khsura/shared'
-import { STable, SButton, SIcon, SCheckbox } from '@khsura/sui'
-import type { TableHeader, TableItem } from '@khsura/sui'
+import { STable, SButton, SIcon, SCheckbox } from '@khsura/sui/index'
+import type { TableHeader, TableItem } from '@khsura/sui/index'
 import { action } from '@storybook/addon-actions'
 import type { Meta } from '@storybook/vue3'
 import { ref } from 'vue'

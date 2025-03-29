@@ -1,4 +1,4 @@
-import { SChip, SIcon } from '@khsura/sui'
+import { SChip, SIcon } from '@khsura/sui/index'
 import { action } from '@storybook/addon-actions'
 import type { Meta } from '@storybook/vue3'
 import { defineComponent } from 'vue'

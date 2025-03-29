@@ -65,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { SRadioGroup, SRadio } from '@khsura/sui'
+import { SRadioGroup, SRadio } from '@khsura/sui/index'
 import { ref, computed } from 'vue'
 import type { Ref } from 'vue'
 

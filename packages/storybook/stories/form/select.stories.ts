@@ -1,4 +1,4 @@
-import { SSelect, SForm, SIcon } from '@khsura/sui'
+import { SSelect, SForm, SIcon } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { defineComponent, ref } from 'vue'
 import { argsSelect } from '@khsura/storybook/args'

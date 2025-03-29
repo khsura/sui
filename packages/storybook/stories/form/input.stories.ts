@@ -1,5 +1,5 @@
-import { SInput, SCard, SCardTitle, SForm, SRow, SColumn, SButton, SSwitch } from '@khsura/sui'
-import type { FormComponent } from '@khsura/sui'
+import { SInput, SCard, SCardTitle, SForm, SRow, SColumn, SButton, SSwitch } from '@khsura/sui/index'
+import type { FormComponent } from '@khsura/sui/index'
 import { action } from '@storybook/addon-actions'
 import type { Meta } from '@storybook/vue3'
 import { defineComponent, ref, computed } from 'vue'

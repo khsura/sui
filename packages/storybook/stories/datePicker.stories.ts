@@ -1,4 +1,4 @@
-import { SDatePicker, datePickerModelFormats } from '@khsura/sui'
+import { SDatePicker, datePickerModelFormats } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import dayjs from 'dayjs'
 import { ref } from 'vue'

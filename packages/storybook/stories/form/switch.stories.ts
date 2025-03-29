@@ -1,4 +1,4 @@
-import { SSwitch } from '@khsura/sui'
+import { SSwitch } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { ref } from 'vue'
 import { createStoryObj } from '@khsura/storybook/helpers'

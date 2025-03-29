@@ -1,5 +1,5 @@
 import { faker } from '@khsura/shared'
-import type { SBreadcrumbs } from '@khsura/sui'
+import type { SBreadcrumbs } from '@khsura/sui/index'
 import type { ComponentPropsAndSlots } from '@storybook/vue3'
 import dayjs from 'dayjs'
 

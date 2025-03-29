@@ -1,4 +1,4 @@
-import { SProgressCircular } from '@khsura/sui'
+import { SProgressCircular } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { argsComponentTheme } from '@khsura/storybook/args'
 import { argTypesComponentTheme } from '@khsura/storybook/argTypes'

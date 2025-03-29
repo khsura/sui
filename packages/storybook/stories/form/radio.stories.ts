@@ -1,5 +1,5 @@
 import { faker } from '@khsura/shared'
-import { SForm, SRadioGroup, SRadio, SImage } from '@khsura/sui'
+import { SForm, SRadioGroup, SRadio, SImage } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { defineComponent, ref } from 'vue'
 import { argsRadioGroup } from '@khsura/storybook/args'

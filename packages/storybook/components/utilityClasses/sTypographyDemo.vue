@@ -87,7 +87,7 @@
 
 <script setup lang="ts">
 import { faker } from '@khsura/shared'
-import { SCard, SCardTitle, SCardText, SList, SListItem, SListItemContent, SListItemTitle } from '@khsura/sui'
+import { SCard, SCardTitle, SCardText, SList, SListItem, SListItemContent, SListItemTitle } from '@khsura/sui/index'
 import { ref } from 'vue'
 import type { PropType } from 'vue'
 

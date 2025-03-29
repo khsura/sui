@@ -1,13 +1,13 @@
-import { type ModelRef, computed, ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 import { type PropsMenu } from '@khsura/sui/definitions'
 import { getCleanSetObject, getDocument, getNumericCssAttribute, getViewportLocation, getWindow } from '@khsura/sui/lib'
 import { type MenuContentStyle } from '@khsura/sui/types'
-import { useActivatorService, useContentService, useLocationService } from './core'
 import { usePositionService } from './positionService'
+import { useActivatorService, useContentService, useLocationService } from './core'
 
 export const useMenuService = (
   props: PropsMenu,
-  model: ModelRef<boolean | undefined, string>,
+  model: Ref<boolean | undefined, string>,
   options?: {
     noContentMinWidth?: boolean
     offset?: number

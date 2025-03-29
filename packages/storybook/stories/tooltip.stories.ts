@@ -1,4 +1,4 @@
-import { SButton, STooltip, SSheet, SRow, SContainer, SIcon, presetColors } from '@khsura/sui'
+import { SButton, STooltip, SSheet, SRow, SContainer, SIcon, presetColors } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { ref } from 'vue'
 import { argsColor } from '@khsura/storybook/args'

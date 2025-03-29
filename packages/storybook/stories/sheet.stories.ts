@@ -1,4 +1,4 @@
-import { SSheet } from '@khsura/sui'
+import { SSheet } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { argsColor } from '@khsura/storybook/args'
 import { argTypesColor } from '@khsura/storybook/argTypes'

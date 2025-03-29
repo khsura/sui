@@ -1,5 +1,5 @@
 import { type ComputedRef, computed } from 'vue'
-import { type PropsDisabled } from '@khsura/sui/definitions/props'
+import type { PropsDisabled } from '@khsura/sui/definitions'
 import { useDisabledService } from '@khsura/sui/services'
 
 describe('useDisabledService', () => {

@@ -10,7 +10,7 @@ import {
   SListItemTitle,
   SMenu,
   SRow,
-} from '@khsura/sui'
+} from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { defineComponent } from 'vue'
 import { createStoryObj } from '@khsura/storybook/helpers'

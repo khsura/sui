@@ -1,4 +1,4 @@
-import { SContainer, SCard, SCardText } from '@khsura/sui'
+import { SContainer, SCard, SCardText } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { createStoryObj } from '@khsura/storybook/helpers'
 

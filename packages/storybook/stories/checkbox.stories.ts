@@ -1,4 +1,4 @@
-import { SCheckbox, SForm } from '@khsura/sui'
+import { SCheckbox, SForm } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { defineComponent, ref } from 'vue'
 import { argTypesColor } from '@khsura/storybook/argTypes'

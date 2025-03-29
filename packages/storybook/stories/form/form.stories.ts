@@ -1,5 +1,5 @@
-import { SButton, SForm, SInput } from '@khsura/sui'
-import type { FormComponent } from '@khsura/sui'
+import { SButton, SForm, SInput } from '@khsura/sui/index'
+import type { FormComponent } from '@khsura/sui/index'
 import { action } from '@storybook/addon-actions'
 import type { Meta } from '@storybook/vue3'
 import { defineComponent, ref, nextTick } from 'vue'

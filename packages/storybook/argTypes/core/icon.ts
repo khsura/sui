@@ -1,4 +1,4 @@
-import type { MaterialDesignIcon } from '@khsura/sui'
+import type { MaterialDesignIcon } from '@khsura/sui/index'
 import type { ArgTypes } from '@storybook/vue3'
 
 export const argTypesIcon: ArgTypes<{ icon: MaterialDesignIcon }> = {

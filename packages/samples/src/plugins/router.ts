@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
 import { Index } from '@khsura/samples/pages'
+import { createRouter, createWebHistory } from 'vue-router'
 
 export const router = createRouter({
   history: createWebHistory(),

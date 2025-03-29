@@ -1,4 +1,4 @@
-import type { PropsBadge } from '@khsura/sui'
+import type { PropsBadge } from '@khsura/sui/index'
 import { ref, watch } from 'vue'
 
 export const useBadgeService = <T extends Partial<PropsBadge>>(args: T) => {

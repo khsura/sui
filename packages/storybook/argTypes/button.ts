@@ -1,4 +1,4 @@
-import type { SButton } from '@khsura/sui'
+import type { SButton } from '@khsura/sui/index'
 import type { ArgTypes, ComponentPropsAndSlots } from '@storybook/vue3'
 import {
   argTypesColor,

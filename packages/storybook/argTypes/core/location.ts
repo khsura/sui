@@ -1,4 +1,4 @@
-import type { PropsLocation } from '@khsura/sui'
+import type { PropsLocation } from '@khsura/sui/index'
 import type { ArgTypes } from '@storybook/vue3'
 import { getMarkdownArrayTypeDescription } from '@khsura/storybook/helpers'
 

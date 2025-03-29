@@ -1,5 +1,5 @@
 import './previewPlugins'
-import { getBrowserTheme } from '@khsura/sui'
+import { getBrowserTheme } from '@khsura/sui/index'
 import { themes } from '@storybook/theming'
 import { type Preview } from '@storybook/vue3'
 import { appDecorator } from './decorators'

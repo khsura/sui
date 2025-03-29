@@ -242,9 +242,7 @@ export const useTableService = <T extends TableItem = TableItem>(props: PropsTab
     items.forEach((item) => {
       const groupName = groupBy.map((key) => item[key]).join(' ')
 
-      if (groupedItemObjects[groupName] === undefined) {
-        groupedItemObjects[groupName] = []
-      }
+      groupedItemObjects[groupName] ??= []
 
       groupedItemObjects[groupName].push(item)
     })

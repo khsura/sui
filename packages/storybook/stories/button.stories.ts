@@ -1,6 +1,6 @@
 import { faker } from '@khsura/shared'
-import { SButton, SIcon } from '@khsura/sui'
-import type { MaterialDesignIcon } from '@khsura/sui'
+import { SButton, SIcon } from '@khsura/sui/index'
+import type { MaterialDesignIcon } from '@khsura/sui/index'
 import type { ComponentPropsAndSlots, Meta } from '@storybook/vue3'
 import { defineComponent } from 'vue'
 import { argsButton } from '@khsura/storybook/args'

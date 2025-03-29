@@ -1,5 +1,5 @@
 import { faker } from '@khsura/shared'
-import { SSplitView, SSplitViewItem } from '@khsura/sui'
+import { SSplitView, SSplitViewItem } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { createStoryObj } from '@khsura/storybook/helpers'
 

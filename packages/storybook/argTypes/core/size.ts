@@ -1,5 +1,5 @@
-import { sizeProperties } from '@khsura/sui'
-import type { PropsSizePreset } from '@khsura/sui'
+import { sizeProperties } from '@khsura/sui/index'
+import type { PropsSizePreset } from '@khsura/sui/index'
 import type { ArgTypes } from '@storybook/vue3'
 
 export const argTypesSizePreset: ArgTypes<PropsSizePreset> = {

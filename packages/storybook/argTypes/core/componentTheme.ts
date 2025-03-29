@@ -1,6 +1,6 @@
-import { AppTheme } from '@khsura/sui'
 import appThemeString from '@khsura/sui/constants/app?raw'
 import type { PropsComponentTheme } from '@khsura/sui/definitions'
+import { AppTheme } from '@khsura/sui/index'
 import type { ArgTypes } from '@storybook/vue3'
 import { extractInterfaceString } from '@khsura/storybook/helpers'
 

@@ -1,5 +1,5 @@
 import { faker } from '@khsura/shared'
-import { SImage, SRow } from '@khsura/sui'
+import { SImage, SRow } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { createStoryObj } from '@khsura/storybook/helpers'
 

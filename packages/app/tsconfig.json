@@ -6,12 +6,6 @@
       "@khsura/sui/*": ["./*"]
     }
   },
-  "include": [
-    "**/*.js",
-    "**/*.mjs",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.vue"
-  ],
+  "include": ["**/*.js", "**/*.mjs", "**/*.ts", "**/*.tsx", "**/*.vue"],
   "exclude": ["dist", "node_modules", "public", "@types"]
 }

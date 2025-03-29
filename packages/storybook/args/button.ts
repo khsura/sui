@@ -1,5 +1,5 @@
 import { faker } from '@khsura/shared'
-import type { SButton } from '@khsura/sui'
+import type { SButton } from '@khsura/sui/index'
 import { action } from '@storybook/addon-actions'
 import type { ComponentPropsAndSlots } from '@storybook/vue3'
 import { argsBorder, argsColor, argsDisabled, argsSlot } from './core'

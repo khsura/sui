@@ -1,4 +1,4 @@
-import { type SInput } from '@khsura/sui'
+import { type SInput } from '@khsura/sui/index'
 import { type ComponentProps } from 'vue-component-type-helpers'
 
 export const argsInput: Partial<ComponentProps<typeof SInput>> = {

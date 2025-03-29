@@ -1,4 +1,4 @@
-import type { PropsColor } from '@khsura/sui'
+import type { PropsColor } from '@khsura/sui/index'
 import type { ArgTypes } from '@storybook/vue3'
 import { argTypesComponentTheme } from './componentTheme'
 

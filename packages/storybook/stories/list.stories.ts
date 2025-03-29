@@ -10,7 +10,7 @@ import {
   SListItemSubtitle,
   SListItemTitle,
   SSubheader,
-} from '@khsura/sui'
+} from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { argsColor, argsMeasurableStyles } from '@khsura/storybook/args'
 import { argTypesMeasurableStyles } from '@khsura/storybook/argTypes'

@@ -1,4 +1,4 @@
-import { SBreadcrumbs } from '@khsura/sui'
+import { SBreadcrumbs } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { defineComponent } from 'vue'
 import { argsBreadcrumbs } from '@khsura/storybook/args'

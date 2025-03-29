@@ -1,4 +1,4 @@
-import type { PropsBorder } from '@khsura/sui'
+import type { PropsBorder } from '@khsura/sui/index'
 import type { ArgTypes } from '@storybook/vue3'
 
 export const argTypesBorder: ArgTypes<PropsBorder> = {

@@ -4,8 +4,8 @@ import { type PropsApp } from '@khsura/sui/definitions'
 import { createAppStore } from '@khsura/sui/helpers/createAppStore'
 import { isDarkColor } from '@khsura/sui/lib/color'
 import { type AppState } from '@khsura/sui/types'
-import { useProviderService } from './core'
 import { useLayoutProviderService } from './layoutProviderService'
+import { useProviderService } from './core'
 
 export const useAppService = (props: PropsApp) => {
   useLayoutProviderService(props)

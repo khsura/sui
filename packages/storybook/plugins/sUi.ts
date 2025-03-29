@@ -1,4 +1,4 @@
-import { createSUI } from '@khsura/sui'
+import { createSUI } from '@khsura/sui/index'
 
 export const sui = createSUI({
   themes: {

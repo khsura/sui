@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { type PropsMenu } from '@khsura/sui/definitions/props'
+import type { PropsMenu } from '@khsura/sui/definitions'
 import { useMenuService } from '@khsura/sui/services'
 import { type PropsContent } from '@khsura/sui/types'
 

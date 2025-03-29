@@ -1,4 +1,4 @@
-import { SDivider, SRow, SColumn } from '@khsura/sui'
+import { SDivider, SRow, SColumn } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { createStoryObj } from '@khsura/storybook/helpers'
 

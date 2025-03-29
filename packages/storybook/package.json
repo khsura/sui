@@ -4,26 +4,25 @@
   "type": "module",
   "scripts": {
     "prebuild": "yarn g:rimraf ./storybook-static && yarn g:rimraf ./@types",
-    "build": "yarn prebuild && yarn g:tsc && yarn storybook build",
+    "build": "yarn prebuild && yarn g:vue-tsc && yarn storybook build",
     "eslint": "yarn g:eslint",
     "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
     "dev": "storybook dev --port 6006",
     "start": "http-server ./storybook-static -p 6006"
   },
   "devDependencies": {
-    "@khsura/sui": "workspace:^",
-    "@storybook/addon-actions": "^8.6.8",
-    "@storybook/addon-docs": "^8.6.8",
-    "@storybook/addon-essentials": "^8.6.8",
-    "@storybook/addon-interactions": "^8.6.8",
-    "@storybook/addon-links": "^8.6.8",
-    "@storybook/manager-api": "^8.6.8",
-    "@storybook/test": "^8.6.8",
-    "@storybook/theming": "^8.6.8",
-    "@storybook/vue3": "^8.6.8",
-    "@storybook/vue3-vite": "^8.6.8",
+    "@storybook/addon-actions": "^8.6.11",
+    "@storybook/addon-docs": "^8.6.11",
+    "@storybook/addon-essentials": "^8.6.11",
+    "@storybook/addon-interactions": "^8.6.11",
+    "@storybook/addon-links": "^8.6.11",
+    "@storybook/manager-api": "^8.6.11",
+    "@storybook/test": "^8.6.11",
+    "@storybook/theming": "^8.6.11",
+    "@storybook/vue3": "^8.6.11",
+    "@storybook/vue3-vite": "^8.6.11",
     "http-server": "^14.1.1",
-    "storybook": "^8.6.8",
+    "storybook": "^8.6.11",
     "storybook-dark-mode": "^4.0.2"
   }
 }

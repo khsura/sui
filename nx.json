@@ -4,6 +4,9 @@
     "defaultBase": "main",
     "build": {
       "dependsOn": [
+        "eslint",
+        "stylelint",
+        "test",
         "^build"
       ],
       "outputs": [
@@ -35,9 +38,6 @@
     },
     "release": {
       "dependsOn": [
-        "eslint",
-        "stylelint",
-        "test",
         "build"
       ],
       "outputs": [

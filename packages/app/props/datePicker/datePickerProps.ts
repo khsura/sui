@@ -5,10 +5,9 @@ import { propsColor } from '@khsura/sui/props/core/colorProps'
 import { propsMeasurableStyles } from '@khsura/sui/props/core/measurableStyles'
 import { type PresetColorType, type DatePickerTypeType } from '@khsura/sui/types'
 import dayjs from '@khsura/sui/vendors/dayjs'
-
 import { propsDisabled } from '../core/disabledProps'
-import { propsDatePickerFormat } from './core/datePickerFormatProps'
 import { propsDatePickerRange } from './core/datePickerRangeProps'
+import { propsDatePickerFormat } from './core/datePickerFormatProps'
 
 export const propsDatePicker = () => {
   const { width } = propsMeasurableStyles({ width: datePickerWidth })

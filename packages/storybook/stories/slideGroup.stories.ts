@@ -1,5 +1,5 @@
 import { faker } from '@khsura/shared'
-import { SSlideGroup, SImage, SCard, SSlideItem, useDisplay } from '@khsura/sui'
+import { SSlideGroup, SImage, SCard, SSlideItem, useDisplay } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { createStoryObj } from '@khsura/storybook/helpers'
 

@@ -1,4 +1,4 @@
-import { SApp, SMain, SContainer } from '@khsura/sui'
+import { SApp, SMain, SContainer } from '@khsura/sui/index'
 import type { Decorator } from '@storybook/vue3'
 import { defineComponent } from 'vue'
 import type { Component } from 'vue'
