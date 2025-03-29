@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/khsura/sui/compare/shared-v1.1.1...shared-v1.1.2) (2025-03-29)
+
+
+### Bug Fixes
+
+* upgrade packages ([11e3452](https://github.com/khsura/sui/commit/11e3452be6518df62d52d3f00b68ba43ab2d9fbc))
+
 ## [1.1.1](https://github.com/khsura/sui/compare/shared-v1.1.0...shared-v1.1.1) (2025-03-22)
 
 

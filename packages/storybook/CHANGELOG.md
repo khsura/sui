@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/khsura/sui/compare/storybook-v1.2.1...storybook-v1.2.2) (2025-03-29)
+
+
+### Bug Fixes
+
+* upgrade packages ([11e3452](https://github.com/khsura/sui/commit/11e3452be6518df62d52d3f00b68ba43ab2d9fbc))
+
 ## [1.2.1](https://github.com/khsura/sui/compare/storybook-v1.2.0...storybook-v1.2.1) (2025-03-22)
 
 
