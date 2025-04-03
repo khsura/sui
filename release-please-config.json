@@ -1,8 +1,7 @@
 {
   "packages": {
     ".": {
-      "release-type": "node",
-      "exclude-paths": ["packages"]
+      "release-type": "node"
     },
     "packages/app": {
       "release-type": "node"
