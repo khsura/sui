@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/khsura/sui/compare/storybook-v1.2.2...storybook-v1.2.3) (2025-04-03)
+
+
+### Bug Fixes
+
+* navigationDrawer issue ([eb401c2](https://github.com/khsura/sui/commit/eb401c24748a13164aaa88c7e7e8a51a23314b8c))
+
 ## [1.2.2](https://github.com/khsura/sui/compare/storybook-v1.2.1...storybook-v1.2.2) (2025-03-29)
 
 

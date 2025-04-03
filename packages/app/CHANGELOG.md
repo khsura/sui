@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.8](https://github.com/khsura/sui/compare/sui-v1.2.7...sui-v1.2.8) (2025-04-03)
+
+
+### Bug Fixes
+
+* navigationDrawer issue ([eb401c2](https://github.com/khsura/sui/commit/eb401c24748a13164aaa88c7e7e8a51a23314b8c))
+
 ## [1.2.7](https://github.com/khsura/sui/compare/sui-v1.2.6...sui-v1.2.7) (2025-03-29)
 
 
