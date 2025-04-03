@@ -7,7 +7,7 @@ export const useBackgroundScrollService = () => {
 
   const enableBackgroundScroll = async () => {
     const activeCount = window?.document.querySelectorAll(
-      '.s_dialog__content--active, .s_navigationDrawer--active',
+      '.s_dialog__content--active, .s_navigationDrawer--active.s_navigationDrawer--mobile',
     ).length
 
     const html = window?.document.querySelector<HTMLElement>('html')
