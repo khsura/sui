@@ -7,6 +7,7 @@ export default mergeConfig(
   defineConfig({
     resolve: {
       alias: {
+        '@khsura/samples': path.resolve(__dirname, '../samples/src'),
         '@khsura/sui': path.resolve(__dirname, '../app'),
         '@khsura/shared': path.resolve(__dirname, '../shared'),
       },
