@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.3](https://github.com/khsura/sui/compare/root-v1.1.2...root-v1.1.3) (2025-04-03)
+
+
+### Bug Fixes
+
+* bug ([a0698c6](https://github.com/khsura/sui/commit/a0698c630c3b176b0dc89c9e0606a05d7437bd14))
+* dayjs import bug ([9be23b6](https://github.com/khsura/sui/commit/9be23b63192ffcbdf1811479c4d32b4d6e783d0d))
+* navigationDrawer issue ([eb401c2](https://github.com/khsura/sui/commit/eb401c24748a13164aaa88c7e7e8a51a23314b8c))
+* type issue ([3afd46c](https://github.com/khsura/sui/commit/3afd46c128557095d53f0af0374b80822bd39a17))
+
 ## [1.1.2](https://github.com/khsura/sui/compare/root-v1.1.1...root-v1.1.2) (2025-03-29)
 
 
