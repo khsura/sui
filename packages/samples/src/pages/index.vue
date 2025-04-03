@@ -14,8 +14,7 @@
 
 <script lang="ts" setup>
 import { faker } from '@khsura/shared'
-import { SContainer } from '@khsura/sui'
-import { SCard, SCardTitle, SToolbar } from '@khsura/sui/components'
+import { SContainer, SCard, SCardTitle, SToolbar } from '@khsura/sui/components'
 
 const paragraphs = faker.lorem.paragraphs(45).split('\n')
 </script>

@@ -54,10 +54,19 @@
           />
           <SButton id="navbarActivator" @click="navbar = !navbar">Toggle Navbar</SButton>
           <SSwitch v-model="permanent" label="Permanent navbar"></SSwitch>
-          <SButton @click="modal = !modal">Open Modal</SButton>
-          <SDialog v-model="modal" width="100%">
+          <SDialog v-model="modal" width="90%" max-width="500px">
+            <template #activator="{ on, attrs }">
+              <SButton v-bind="attrs" v-on="on">Open Modal</SButton>
+            </template>
             <SCard>
               <SCardTitle>Modal</SCardTitle>
+              <SCardText>
+                {{ faker.lorem.paragraphs() }}
+              </SCardText>
+              <SCardActions>
+                <SButton>Confirm</SButton>
+                <SButton @click="modal = false">Close</SButton>
+              </SCardActions>
             </SCard>
           </SDialog>
           <pre>
@@ -71,7 +80,19 @@
   </SApp>
 </template>
 <script lang="ts" setup>
-import { SApp, SAppBar, SCard, SCardText, SCardTitle, SDialog, SFooter, SMain, SButton } from '@khsura/sui/components'
+import { faker } from '@khsura/shared'
+import {
+  SApp,
+  SAppBar,
+  SCard,
+  SCardText,
+  SCardTitle,
+  SDialog,
+  SFooter,
+  SMain,
+  SButton,
+  SCardActions,
+} from '@khsura/sui/components'
 import SSelect from '@khsura/sui/components/form/sSelect.vue'
 import SNavigationDrawer from '@khsura/sui/components/layout/sNavigationDrawer.vue'
 import SSwitch from '@khsura/sui/components/sSwitch.vue'

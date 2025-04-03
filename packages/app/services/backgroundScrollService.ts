@@ -3,10 +3,10 @@ import { z } from 'zod'
 import { getWindow, retry } from '@khsura/sui/lib'
 
 export const useBackgroundScrollService = () => {
-  const window = getWindow()
-  const html = window?.document.querySelector<HTMLElement>('html')
-
   const enableBackgroundScrollOnce = async () => {
+    const window = getWindow()
+    const html = window?.document.querySelector<HTMLElement>('html')
+
     await nextTick()
 
     const overlays = window?.document.querySelectorAll(
@@ -40,6 +40,10 @@ export const useBackgroundScrollService = () => {
   }
 
   const disableBackgroundScroll = () => {
+    // must be called inside for ssr
+    const window = getWindow()
+    const html = window?.document.querySelector<HTMLElement>('html')
+
     if (html && window) {
       html.style.setProperty('--s-body-scroll-x', `-${window?.scrollX}px`)
       html.style.setProperty('--s-body-scroll-y', `-${window?.scrollY}px`)
