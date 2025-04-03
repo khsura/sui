@@ -34,10 +34,6 @@ export const propsNavigationDrawer = (defaults?: { app?: boolean }) => {
       type: Boolean as PropType<boolean>,
       default: false,
     },
-    disableResizeWatcher: {
-      type: Boolean as PropType<boolean>,
-      default: false,
-    },
     forceMobile: {
       type: Boolean as PropType<boolean>,
       default: false,
@@ -47,10 +43,6 @@ export const propsNavigationDrawer = (defaults?: { app?: boolean }) => {
     //   default: false,
     // },
     hideOverlay: {
-      type: Boolean as PropType<boolean>,
-      default: false,
-    },
-    floating: {
       type: Boolean as PropType<boolean>,
       default: false,
     },

@@ -23,6 +23,7 @@ import {
 import type { Meta } from '@storybook/vue3'
 import { computed, defineComponent, ref } from 'vue'
 import { createStoryObj } from '@khsura/storybook/helpers'
+import { argTypesLocation } from '@khsura/storybook/argTypes'
 
 type StoryComponent =
   | typeof SLayout
@@ -45,6 +46,7 @@ const layout: Meta<StoryComponent> = {
       control: 'select',
       options: [null, ToolbarDensity.default, ToolbarDensity.comfortable, ToolbarDensity.compact],
     },
+    ...argTypesLocation,
   },
 }
 
@@ -53,6 +55,7 @@ export default layout
 export const Layout = createStoryObj<StoryComponent>({
   args: {
     position: null,
+    location: null,
     name: 'sample',
     permanent: false,
     miniVariant: false,
@@ -132,6 +135,7 @@ export const Layout = createStoryObj<StoryComponent>({
             elevation="1"
             :permanent="args.permanent"
             :mini-variant="args.miniVariant"
+            :location="args.location"
           >
             <SList>
               <SDivider></SDivider>

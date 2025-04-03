@@ -6,10 +6,10 @@
       :class="classes"
       :style="styles"
       @touchstart.passive="touchstart"
-      @touchend.passive="isTouchless ? null : touchend"
-      @touchmove.passive="isTouchless ? null : touchmove"
-      @mouseenter="isTouchless ? null : mouseenter"
-      @mouseleave="isTouchless ? null : mouseleave"
+      @touchend.passive="touchless ? null : touchend"
+      @touchmove.passive="touchless ? null : touchmove"
+      @mouseenter="touchless ? null : mouseenter"
+      @mouseleave="touchless ? null : mouseleave"
     >
       <slot name="prepend" class="s_navigationDrawer__prepend"></slot>
       <div class="s_navigationDrawer__content"><slot :on="on"></slot></div>
@@ -25,7 +25,6 @@ import { getNumericCssAttribute } from '@khsura/sui/lib'
 import { propsNavigationDrawer } from '@khsura/sui/props'
 import {
   useBackgroundScrollService,
-  useClickOutsideService,
   useDisplayService,
   useElevationService,
   useLayoutService,
@@ -35,8 +34,10 @@ import {
   useResizeService,
   useScrollableService,
   useTouchService,
+  useNavigationDrawerService,
 } from '@khsura/sui/services'
 import { type TouchWrapper } from '@khsura/sui/types'
+import { onClickOutside } from '@vueuse/core'
 
 const props = defineProps(propsNavigationDrawer({ app: false }))
 const { isBottom, isRight, computedLocation } = useLocationService(props)
@@ -51,7 +52,11 @@ const isMouseover = ref(false)
 
 const model = defineModel<boolean>({
   get: (value) => {
-    return props.permanent ? true : value
+    if (isPermanentDesktopApp.value) {
+      return true
+    }
+
+    return value
   },
 })
 
@@ -99,7 +104,6 @@ const swipeRight = (e: TouchWrapper) => {
   }
 }
 
-const { onClick } = useClickOutsideService()
 const { provideProps } = useProviderService()
 const { mdAndUp } = useDisplayService()
 const { app, isApp } = useLayoutService(props)
@@ -107,6 +111,7 @@ const { classListElevation } = useElevationService(props)
 const { isAbsolutePosition, isFixedPosition, classListPosition } = usePositionService(props)
 const { currentScroll } = useScrollableService()
 const { enableBackgroundScroll, disableBackgroundScroll } = useBackgroundScrollService()
+const { elementTag, elementHeight, computedActivatorElement } = useNavigationDrawerService(props)
 
 const { touchstart, touchend, touchmove } = useTouchService({
   left: swipeLeft,
@@ -114,76 +119,30 @@ const { touchstart, touchend, touchmove } = useTouchService({
 })
 
 const { bindResizer, unbindResizer } = useResizeService(() => {
-  if (reactsToResize.value) {
-    model.value = !isMobile.value
-  }
+  model.value = !isMobile.value
 })
 
 provideProps(ProviderPropsName.navigationDrawerProps, props)
-
-const elementTag = computed(() => {
-  if (props.tag) {
-    return props.tag
-  }
-
-  return isApp.value ? 'nav' : 'aside'
-})
-
-const elementHeight = computed(() => {
-  if (props.height !== undefined && props.height !== null) {
-    return getNumericCssAttribute(props.height)
-  }
-
-  return isApp.value ? '100vh' : '100%'
-})
 
 const touchArea = ref({
   left: 0,
   right: 0,
 })
 
-const activatorElement = computed(() => {
-  if (!props.activator) {
-    return null
-  }
-
-  if (typeof props.activator === 'string') {
-    return document.querySelector<HTMLElement>(props.activator)
-  }
-
-  if (props.activator instanceof HTMLElement) {
-    return props.activator
-  }
-
-  return props.activator.$el as HTMLElement
-})
-
 const isMobile = computed(() => {
-  return (!props.permanent && !mdAndUp.value) || isBottom.value || props.forceMobile
+  return !mdAndUp.value || isBottom.value || props.forceMobile
 })
 
-const isTouchless = computed(() => {
-  return !props.touchless
-})
-
-const hasApp = computed(() => {
+const isDesktopApp = computed(() => {
   return isApp.value && !isMobile.value
 })
 
-const reactsToClick = computed((): boolean => {
-  return !props.permanent && !hasApp.value
-})
-
-const reactsToMobile = computed((): boolean => {
-  return isApp.value && !props.disableResizeWatcher && !props.permanent
-})
-
-const reactsToResize = computed((): boolean => {
-  return !props.disableResizeWatcher && !isBottom.value
+const isPermanentDesktopApp = computed(() => {
+  return props.permanent && isDesktopApp.value && !isBottom.value
 })
 
 const isOverlay = computed((): boolean => {
-  if (!hasApp.value) {
+  if (!isDesktopApp.value) {
     return false
   }
 
@@ -195,7 +154,7 @@ const isMiniVariant = computed(() => {
 })
 
 const computedSubtractHeight = computed((): number | null => {
-  if (!hasApp.value) {
+  if (!isDesktopApp.value) {
     return 0
   }
 
@@ -205,7 +164,7 @@ const computedSubtractHeight = computed((): number | null => {
 const computedTop = computed(() => {
   const top = Math.max(app.value.offsetTop - currentScroll.value, 0)
 
-  if (!hasApp.value) {
+  if (!isDesktopApp.value) {
     return top
   }
 
@@ -258,7 +217,6 @@ const classes = computed(() => {
     's_navigationDrawer--absolute': isAbsolutePosition.value || !isApp.value,
     's_navigationDrawer--fixed': isFixedPosition.value || isApp.value,
     's_navigationDrawer--bottom': isBottom.value,
-    's_navigationDrawer--floating': props.floating,
     's_navigationDrawer--isMobile': isMobile.value,
     's_navigationDrawer--isMouseover': isMouseover.value,
     's_navigationDrawer--miniVariant': isMiniVariant.value,
@@ -300,27 +258,23 @@ const transitionName = computed(() => {
   return transitions[computedLocation.value ?? 'left']
 })
 
-const init = () => {
-  if (props.permanent) {
-    model.value = true
-  }
-}
-
-const clickOutsideListener = onClick([navigationDrawer, activatorElement], ({ isOutside }) => {
-  if (isOutside) {
+onClickOutside(
+  navigationDrawer,
+  () => {
     model.value = false
-  }
-})
+  },
+  {
+    ignore: [computedActivatorElement],
+  },
+)
 
 watch(
-  () => model.value && reactsToClick.value,
-  (value) => {
-    if (value) {
-      clickOutsideListener.register()
-      disableBackgroundScroll()
+  () => model.value,
+  async (value) => {
+    if (isPermanentDesktopApp.value || !value) {
+      await enableBackgroundScroll()
     } else {
-      clickOutsideListener.unregister()
-      void enableBackgroundScroll()
+      disableBackgroundScroll()
     }
   },
   {
@@ -363,7 +317,7 @@ const updateMiniVariant = (val: boolean) => {
 watch(() => props.expandOnHover, updateMiniVariant)
 
 watch(
-  () => props.permanent,
+  () => props.permanent && isDesktopApp.value,
   () => {
     model.value = true
   },
@@ -374,7 +328,7 @@ watch(isMouseover, (value) => {
 })
 
 watch(isMobile, (value, previous) => {
-  if (previous == null || !reactsToResize.value || !reactsToMobile.value) {
+  if (previous == null || isBottom.value) {
     return
   }
 
@@ -382,7 +336,7 @@ watch(isMobile, (value, previous) => {
 })
 
 const appHorizontalShiftWidth = computed(() => {
-  if (props.permanent && !isBottom.value) {
+  if (isPermanentDesktopApp.value) {
     return computedWidth.value
   }
 
@@ -420,7 +374,6 @@ const on = {
 }
 
 onBeforeMount(() => {
-  init()
   bindResizer()
 })
 
@@ -532,12 +485,6 @@ $s_navigationDrawerOverlayTransitionAnimations: (
   &--fixed {
     position: fixed;
     z-index: 6;
-  }
-
-  &--floating {
-    &::after {
-      display: none;
-    }
   }
 
   &--isMobile {

@@ -3,22 +3,8 @@ import { type PropsActivator } from '@khsura/sui/definitions'
 import { getDocument } from '@khsura/sui/lib/browser'
 import { getCleanSetObject } from '@khsura/sui/lib/getCleanSetObject'
 
-export const useActivatorService = (props: PropsActivator, model: Ref<boolean | null | undefined>) => {
-  const contentElement: Ref<HTMLElement | null> = ref(null)
+export const useActivatorElementService = (props: Pick<PropsActivator, 'activator'>) => {
   const activatorElement: Ref<HTMLElement | null> = ref(null)
-
-  const activatorOn = {
-    click: () => {
-      model.value = !(props.closeOnClick && model.value)
-    },
-  }
-
-  const activatorAttrs = computed(() => {
-    return getCleanSetObject({
-      disabled: props.disabled,
-      readonly: props.readonly,
-    })
-  })
 
   const computedActivatorElement: ComputedRef<HTMLElement | null> = computed(() => {
     if (!props.activator || activatorElement.value !== null) {
@@ -34,6 +20,33 @@ export const useActivatorService = (props: PropsActivator, model: Ref<boolean | 
     }
 
     return props.activator.$el as HTMLElement
+  })
+
+  return {
+    activatorElement,
+    computedActivatorElement,
+  }
+}
+
+export const useActivatorService = (props: PropsActivator, model?: Ref<boolean | null | undefined>) => {
+  const contentElement: Ref<HTMLElement | null> = ref(null)
+  const { activatorElement, computedActivatorElement } = useActivatorElementService(props)
+
+  const activatorOn = {
+    click: () => {
+      if (model === undefined) {
+        return
+      }
+
+      model.value = !(props.closeOnClick && model.value)
+    },
+  }
+
+  const activatorAttrs = computed(() => {
+    return getCleanSetObject({
+      disabled: props.disabled,
+      readonly: props.readonly,
+    })
   })
 
   const getActivatorLocation = () => {
