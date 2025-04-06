@@ -80,7 +80,6 @@ export const Inputs = createStoryObj<Meta>({
         const bank = ref<string | null>(null)
         const mandatoryRadio = ref<boolean>(false)
         const growRadio = ref<boolean>(false)
-        const readonly = ref(false)
 
         const inputMetas = ref({
           name: {
@@ -138,7 +137,6 @@ export const Inputs = createStoryObj<Meta>({
           validate,
           resetValidation,
           args,
-          readonly,
         }
       },
       template: `
@@ -233,7 +231,7 @@ export const Inputs = createStoryObj<Meta>({
               </SColumn>
               <SColumn cols="12">
                 <SInput
-                    id="email"
+                    id="email2"
                     v-model="email"
                     autocomplete="off"
                     type="email"
@@ -245,14 +243,12 @@ export const Inputs = createStoryObj<Meta>({
                     :disabled="args.disabled"
                     :append-outer="args.appendOuter"
                     :simple="args.simple"
+                    :readonly="args.readonly"
                     :textRight="args.textRight"
                   >
                   <template #suffix>@surakh.com</template>
                 </SInput>
               </SColumn>
-            </SRow>
-            <SRow>
-              <SSwitch v-model="readonly" label="readonly" id="switch"></SSwitch>
             </SRow>
             <SRow>
               <SButton @click="validate">Validate</SButton>
