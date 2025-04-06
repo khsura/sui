@@ -11,7 +11,7 @@ describe('app', () => {
       components: { SApp },
       setup: () => {
         const { config } = useAppProviderService()
-        const { styles } = useAppService({ app: true, name: null })
+        const { styles } = useAppService({ app: true, name: undefined })
         const { setTheme, theme } = useTheme()
 
         return { config, setTheme, styles, theme }
