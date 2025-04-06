@@ -24,8 +24,8 @@ export type PropsInput = {
   usePreviousValueWhenExceeded?: boolean
   dense?: boolean
   tile?: boolean
-  minlength?: string | number
-  maxlength?: string | number
+  minlength?: string | number | null
+  maxlength?: string | number | null
   ariaLabelledby?: string
   name?: string
   isPasteDisabled?: boolean
