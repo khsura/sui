@@ -1,13 +1,11 @@
-import type SInput from '@khsura/sui/components/form/sInput.vue'
-import type { ComponentPropsAndSlots } from '@storybook/vue3'
+import type { PropsInput } from '@khsura/sui/definitions'
 
-export const argsInput: Partial<ComponentPropsAndSlots<typeof SInput>> = {
+export const argsInput: Partial<PropsInput> = {
   dirty: false,
   error: false,
   rules: [],
   hideDetails: false,
   readonly: false,
-  modelValue: '',
   placeholder: 'Text',
   type: 'text',
   autocomplete: 'off',

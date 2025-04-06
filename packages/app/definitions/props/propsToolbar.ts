@@ -1,4 +1,4 @@
-import type { ToolbarDensity } from '@khsura/sui/constants'
+import { type ToolbarDensityType } from '@khsura/sui/types'
 import {
   type PropsColor,
   type PropsTag,
@@ -9,7 +9,7 @@ import {
 } from './core'
 
 export type PropsToolbar = {
-  density?: ToolbarDensity | null | undefined
+  density?: ToolbarDensityType | null | undefined
   extended?: boolean | null | undefined
   extensionHeight?: number | string | undefined
   extensionStyle?: Record<string, string> | undefined

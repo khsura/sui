@@ -13,11 +13,11 @@ export const getNumericValue = <
   options?: {
     defaultValue?: D
     allowDecimal?: boolean
-    isPositive?: boolean
+    isPositive?: boolean | undefined | null
     isStrictIntCheck?: boolean
     isStrictParse?: S
-    max?: number | string | undefined | string
-    min?: number | string | undefined | string
+    max?: number | string | undefined | string | null
+    min?: number | string | undefined | string | null
   },
 ): R => {
   const defaultValue = options?.defaultValue ?? (null as unknown as D)

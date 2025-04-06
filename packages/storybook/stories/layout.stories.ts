@@ -64,7 +64,7 @@ export const Layout = createStoryObj<StoryComponent>({
     name: 'sample',
     permanent: false,
     miniVariant: false,
-    density: 'default',
+    density: null,
     hasAppBar: true,
     hasExtension: false,
   },

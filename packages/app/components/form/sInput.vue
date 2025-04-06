@@ -114,9 +114,13 @@ const inputClassList = computed<Record<string, boolean>>(() => {
 })
 
 const inputStyleList = computed(() => {
-  return {
-    ...(!isPresetInputBackground.value ? { backgroundColor: props.inputBackground } : {}),
+  if (!isPresetInputBackground.value) {
+    return {
+      backgroundColor: props.inputBackground ?? undefined,
+    }
   }
+
+  return {}
 })
 
 let previousValue: number | null = null

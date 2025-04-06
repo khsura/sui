@@ -3,25 +3,25 @@ import { type PropsFormInput } from './propsFormInput'
 import { type PropsSizePreset } from './propsSizePreset'
 
 export type PropsInput = {
-  placeholder?: string
-  type?: InputTypeText
-  inputmode?: InputModeTypeText
-  label?: string
-  inputBackground?: string
-  placeholderBackground?: string
-  max?: string | number
-  min?: string | number
-  spellcheck?: boolean
-  autocapitalize?: 'on' | 'off'
-  autocomplete?: string
-  autofocus?: boolean
-  pattern?: string
-  suffix?: string
-  simple?: boolean
-  appendOuter?: string
-  textRight?: boolean
-  positive?: boolean
-  usePreviousValueWhenExceeded?: boolean
+  placeholder?: string | undefined | null
+  type?: InputTypeText | undefined | null
+  inputmode?: InputModeTypeText | undefined | null
+  label?: string | undefined | null
+  inputBackground?: string | undefined | null
+  placeholderBackground?: string | undefined | null
+  max?: string | number | undefined | null
+  min?: string | number | undefined | null
+  spellcheck?: boolean | undefined | null
+  autocapitalize?: 'on' | 'off' | undefined | null
+  autocomplete?: string | undefined | null
+  autofocus?: boolean | undefined | null
+  pattern?: string | undefined | null
+  suffix?: string | undefined | null
+  simple?: boolean | undefined | null
+  appendOuter?: string | undefined | null
+  textRight?: boolean | undefined | null
+  positive?: boolean | undefined | null
+  usePreviousValueWhenExceeded?: boolean | undefined | null
   dense?: boolean
   tile?: boolean
   minlength?: string | number | null
