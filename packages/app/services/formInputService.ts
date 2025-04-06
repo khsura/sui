@@ -1,16 +1,19 @@
-import { ref, computed, nextTick, onUnmounted, watch, onMounted, type EmitFn } from 'vue'
+import { ref, computed, nextTick, onUnmounted, watch, onMounted, type EmitFn, useId, type Ref } from 'vue'
 import { ProviderName } from '@khsura/sui/constants/provider'
 import { type PropsFormInput } from '@khsura/sui/definitions'
 import { type EmitFormInput, type FormInputModelValue } from '@khsura/sui/types'
 import { useProviderService } from './core/providerService'
 
 export const useFormInputService = <T extends FormInputModelValue = FormInputModelValue>(
-  props: PropsFormInput<T>,
+  props: PropsFormInput,
   emit: EmitFn<EmitFormInput<T>>,
+  model: Ref<T | undefined>,
 ) => {
   const { inject } = useProviderService()
   const rawErrors = ref<string[]>([])
   const dirty = ref(false)
+  const uniqueId = useId()
+  const inputId = computed(() => props.id ?? uniqueId)
 
   const form = inject(ProviderName.form, {
     registerItem: () => undefined,
@@ -34,9 +37,9 @@ export const useFormInputService = <T extends FormInputModelValue = FormInputMod
 
   const validate = (value?: T) => {
     dirty.value = true
-    rawErrors.value = props.rules
+    rawErrors.value = (props.rules ?? [])
       .map((rule) => {
-        return rule(value ?? props.modelValue)
+        return rule(value ?? model.value)
       })
       .filter((error) => error && typeof error === 'string') as string[]
     emitEvents()
@@ -49,7 +52,7 @@ export const useFormInputService = <T extends FormInputModelValue = FormInputMod
   }
 
   onMounted(() => {
-    form.registerItem?.(props.id, {
+    form.registerItem?.(inputId.value, {
       validate,
       reset,
       errors,
@@ -74,7 +77,7 @@ export const useFormInputService = <T extends FormInputModelValue = FormInputMod
   })
 
   onUnmounted(() => {
-    form.unregisterItem?.(props.id)
+    form.unregisterItem?.(inputId.value)
   })
 
   const updateFormInput = async (value?: T) => {
@@ -88,7 +91,7 @@ export const useFormInputService = <T extends FormInputModelValue = FormInputMod
        * @see {@link ./src/components/form/form.vue}
        * if parent form exists, validate function will be called from form.vue
        */
-      form.updateItem(props.id)
+      form.updateItem(inputId.value)
     } else {
       validate(value)
     }

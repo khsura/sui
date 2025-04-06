@@ -25,7 +25,8 @@ export const Table = createStoryObj<typeof STable>({
         const expanded = ref<TableItem[]>([items.value[0]])
         const selected = ref<TableItem[]>([])
 
-        const itemClass = (_item: (typeof args.items)[number]) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const itemClass = (_item: any) => {
           return _item.value4 > 500 ? 's_backgroundColor__warning' : ''
         }
 

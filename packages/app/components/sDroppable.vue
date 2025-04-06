@@ -24,14 +24,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { hasDragDropFeature } from '@khsura/sui/lib/browser'
-import { propsDisabled, propsMeasurableStyles } from '@khsura/sui/props'
+import type { PropsDroppable } from '@khsura/sui/definitions'
 import { useMeasurableStylesService } from '@khsura/sui/services'
 
-const props = defineProps({
-  ...propsDisabled(),
-  ...propsMeasurableStyles(),
-})
-
+const props = defineProps<PropsDroppable>()
 const emit = defineEmits<(event: 'drop', value: DragEvent) => void>()
 const supportsDragAndDrop = hasDragDropFeature()
 const sDroppable = ref<HTMLElement | null>(null)

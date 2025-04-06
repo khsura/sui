@@ -21,25 +21,12 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { type PropType } from 'vue'
-import { propsTextColor } from '@khsura/sui/props'
 import { useTextColorService } from '@khsura/sui/services'
 import { type BreadcrumbsItem } from '@khsura/sui/types'
+import type { PropsBreadcrumbs } from '@khsura/sui/definitions'
 
-const props = defineProps({
-  items: {
-    type: Array as PropType<BreadcrumbsItem[]>,
-    default: () => [],
-  },
-  divider: {
-    type: String as PropType<string>,
-    default: '/',
-  },
-  large: {
-    type: Boolean,
-    default: false,
-  },
-  ...propsTextColor(),
+const props = withDefaults(defineProps<PropsBreadcrumbs>(), {
+  divider: '/',
 })
 
 const { classListTextColor, styleListTextColor } = useTextColorService(props)
@@ -51,7 +38,7 @@ const classList = computed(() => {
   }
 })
 
-const size = computed(() => props.items.length)
+const size = computed(() => props.items?.length ?? 0)
 
 const getTagOfItem = (id: number, item: BreadcrumbsItem) => {
   if (getDisabledOfItem(id, item)) {

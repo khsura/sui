@@ -1,4 +1,4 @@
-import { computed, getCurrentInstance, onMounted, onUnmounted, ref } from 'vue'
+import { computed, getCurrentInstance, onMounted, onUnmounted, ref, useId } from 'vue'
 import { ProviderName } from '@khsura/sui/constants'
 import {
   type GroupProvider,
@@ -20,13 +20,14 @@ export const useGroupCoreItemService = <T extends boolean>(
   const instance = getCurrentInstance()
   const group = inject(canSelectMultipleItem ? ProviderName.group : ProviderName.singleGroup)
   const identifier = canSelectMultipleItem ? 'index' : 'value'
+  const fallbackIdentifierValue = useId()
 
   const value = computed(() => {
     if (canSelectMultipleItem) {
-      return (props as PropsGroupItem).index ?? instance?.vnode.key ?? undefined
+      return (props as PropsGroupItem).index ?? instance?.vnode.key ?? fallbackIdentifierValue
     }
 
-    return (props as PropsSingleGroupItem).value ?? instance?.vnode.key ?? undefined
+    return (props as PropsSingleGroupItem).value ?? instance?.vnode.key ?? fallbackIdentifierValue
   })
 
   const item = computed(() => {

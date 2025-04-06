@@ -2,7 +2,6 @@ import { mount } from '@vue/test-utils'
 import { defineComponent, ref } from 'vue'
 import { SToggleButton, SToggleButtonGroup, SButton } from '@khsura/sui/components'
 import { type PropsToggleButtonGroup } from '@khsura/sui/definitions'
-import { propsToggleButtonGroup } from '@khsura/sui/props'
 import { useMockProps } from '../_helpers'
 
 const argsToggleButtonGroup = useMockProps<PropsToggleButtonGroup>({
@@ -12,10 +11,9 @@ const argsToggleButtonGroup = useMockProps<PropsToggleButtonGroup>({
   modelValue: [],
   multiple: false,
   outlined: false,
-  rounded: false,
+  borderRadius: null,
   selectedColor: 'primary',
   shrink: false,
-  tile: false,
   variant: null,
   nowrap: false,
 })
@@ -28,7 +26,19 @@ describe('SToggleButtonGroup', () => {
           SToggleButtonGroup,
           SToggleButton,
         },
-        props: propsToggleButtonGroup(),
+        props: [
+          'bordered',
+          'dense',
+          'mandatory',
+          'modelValue',
+          'multiple',
+          'outlined',
+          'borderRadius',
+          'selectedColor',
+          'shrink',
+          'variant',
+          'nowrap',
+        ],
         setup: (props) => {
           const model = ref(props.modelValue)
 
@@ -70,14 +80,14 @@ describe('SToggleButtonGroup', () => {
   it('rounded property work ok', async () => {
     const wrapper = getWrapper()
 
-    await wrapper.setProps(argsToggleButtonGroup({ rounded: true }))
+    await wrapper.setProps(argsToggleButtonGroup({ borderRadius: 'rounded' }))
     expect(wrapper.find('.s_rounded').exists()).toBe(true)
   })
 
   it('tile property work ok', async () => {
     const wrapper = getWrapper()
 
-    await wrapper.setProps(argsToggleButtonGroup({ tile: true }))
+    await wrapper.setProps(argsToggleButtonGroup({ borderRadius: 'tile' }))
     expect(wrapper.find('.s_tile').exists()).toBe(true)
   })
 

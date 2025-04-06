@@ -42,12 +42,12 @@
 <script setup lang="ts">
 import SButton from '@khsura/sui/components/sButton.vue'
 import SIcon from '@khsura/sui/components/sIcon.vue'
-import { propsDatePickerItemSwitch, propsDisabled } from '@khsura/sui/props'
+import type { PropsDatePickerItemSwitch } from '@khsura/sui/definitions'
 import { useDatePickerItemSwitchService } from '@khsura/sui/services'
 
-const props = defineProps({
-  ...propsDatePickerItemSwitch(),
-  ...propsDisabled(),
+const props = withDefaults(defineProps<PropsDatePickerItemSwitch>(), {
+  prevIcon: 'mdi-chevron-left',
+  nextIcon: 'mdi-chevron-right',
 })
 
 const emit = defineEmits<{

@@ -1,9 +1,9 @@
-import { STab, STabs } from '@khsura/sui/index'
+import { STab, STabs, type PropsTabs } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { ref } from 'vue'
 import { createStoryObj } from '@khsura/storybook/helpers'
 
-const tab: Meta<typeof STabs> = {
+const tab: Meta<PropsTabs> = {
   title: 'UI Components/Tabs',
   argTypes: {
     selectedTabColor: {
@@ -14,8 +14,7 @@ const tab: Meta<typeof STabs> = {
   },
   args: {
     outlined: false,
-    rounded: false,
-    tile: false,
+    borderRadius: null,
     dense: false,
     bordered: false,
     shrink: false,
@@ -25,7 +24,7 @@ const tab: Meta<typeof STabs> = {
 
 export default tab
 
-export const Tab = createStoryObj<typeof STabs>({
+export const Tab = createStoryObj<PropsTabs>({
   render: (args) => {
     return {
       components: {

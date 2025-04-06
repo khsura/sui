@@ -8,6 +8,8 @@
       :type="type"
       :color="color"
       :date-format="dateFormat"
+      :month-format="monthFormat"
+      :year-format="yearFormat"
       :today="today"
       :disabled="disabled"
       :readonly="readonly"
@@ -48,17 +50,24 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { SCard } from '@khsura/sui/components/cards'
-import { propsDatePicker } from '@khsura/sui/props'
+import type { PropsDatePicker } from '@khsura/sui/definitions'
 import { getDatePickerFormat } from '@khsura/sui/repositories'
 import { useDatePickerService, useMeasurableStylesService } from '@khsura/sui/services'
 import dayjs from '@khsura/sui/vendors/dayjs'
+import { datePickerDisplayFormat } from '@khsura/sui/configs'
 import SDatePickerDate from './sDatePickerDate.vue'
 import SDatePickerMonth from './sDatePickerMonth.vue'
 import SDatePickerSwitch from './sDatePickerSwitch.vue'
 import SDatePickerTitle from './sDatePickerTitle.vue'
 import SDatePickerYear from './sDatePickerYear.vue'
 
-const props = defineProps(propsDatePicker())
+const props = withDefaults(defineProps<PropsDatePicker>(), {
+  type: 'date',
+  today: () => dayjs().format('YYYY-MM-DD'),
+  dateFormat: datePickerDisplayFormat.date,
+  monthFormat: datePickerDisplayFormat.month,
+  yearFormat: datePickerDisplayFormat.year,
+})
 
 const emit = defineEmits<{
   (event: 'update:modelValue', value: string): void

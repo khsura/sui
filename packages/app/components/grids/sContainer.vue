@@ -7,34 +7,10 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { propsColor, propsTag } from '@khsura/sui/props'
+import { type PropsContainer } from '@khsura/sui/definitions'
 import { useColorService, useTagService } from '@khsura/sui/services'
 
-const props = defineProps({
-  fill: {
-    type: Boolean,
-    default: false,
-  },
-  narrow: {
-    type: Boolean,
-    default: false,
-  },
-  fluid: {
-    type: Boolean,
-    default: false,
-  },
-  wide: {
-    type: Boolean,
-    default: false,
-  },
-  padless: {
-    type: Boolean,
-    default: false,
-  },
-  ...propsTag(),
-  ...propsColor(),
-})
-
+const props = defineProps<PropsContainer>()
 const { classListColor, styleListColor } = useColorService(props)
 const { tagName } = useTagService(props)
 

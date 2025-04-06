@@ -1,7 +1,7 @@
-import { type SInput } from '@khsura/sui/index'
-import { type ComponentProps } from 'vue-component-type-helpers'
+import type SInput from '@khsura/sui/components/form/sInput.vue'
+import type { ComponentPropsAndSlots } from '@storybook/vue3'
 
-export const argsInput: Partial<ComponentProps<typeof SInput>> = {
+export const argsInput: Partial<ComponentPropsAndSlots<typeof SInput>> = {
   dirty: false,
   error: false,
   rules: [],

@@ -1,7 +1,7 @@
 <template>
   <SToggleButtonGroup
     v-model="model"
-    v-bind="{ outlined, underlined, rounded, tile }"
+    v-bind="{ outlined, underlined, borderRadius }"
     :multiple="false"
     :dense="dense"
     :bordered="bordered"
@@ -16,10 +16,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { SToggleButtonGroup } from '@khsura/sui/components/toggleButtonGroup'
-import { propsTabs } from '@khsura/sui/props'
+import type { PropsTabs } from '@khsura/sui/definitions'
 
-const props = defineProps({
-  ...propsTabs(),
+const props = withDefaults(defineProps<PropsTabs>(), {
+  selectedTabColor: 'primary',
 })
 
 const emit = defineEmits<(event: 'update:modelValue', value: number | string) => void>()

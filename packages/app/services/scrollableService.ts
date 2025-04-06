@@ -67,11 +67,17 @@ export const useScrollableService = (
   })
 
   if (watchers) {
-    watch(watchers, onScroll)
+    watch(watchers, onScroll, { immediate: true })
   }
 
   const getScrollTarget = () => {
-    const target = props?.scrollTarget ? document.querySelector<HTMLElement>(props.scrollTarget) : document
+    const scrollTarget = props?.scrollTarget
+
+    if (scrollTarget && typeof scrollTarget !== 'string') {
+      return scrollTarget
+    }
+
+    const target = scrollTarget ? document.querySelector<HTMLElement>(scrollTarget) : document
 
     if (!target) {
       console.warn(`Unable to locate element with identifier ${props?.scrollTarget}`, this)

@@ -1,17 +1,16 @@
 import { faker } from '@khsura/shared'
-import { SToggleButton, SToggleButtonGroup } from '@khsura/sui/index'
+import { SToggleButton, SToggleButtonGroup, type PropsToggleButtonGroup } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { ref } from 'vue'
 import { argTypesToggleButtonGroup } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'
 
-const toggleButtonGroup: Meta<typeof SToggleButtonGroup> = {
+const toggleButtonGroup: Meta<PropsToggleButtonGroup> = {
   title: 'UI Components/Toggle Button Group',
   argTypes: argTypesToggleButtonGroup,
   args: {
     outlined: false,
-    rounded: false,
-    tile: false,
+    borderRadius: null,
     dense: false,
     bordered: true,
     selectedColor: 'primary',

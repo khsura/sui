@@ -2,6 +2,7 @@
   <div class="s_calendar">
     <SCalendarMonthly
       v-if="type === 'month'"
+      :type="type"
       :focus="focus"
       :events="events"
       :event-color="eventColor"
@@ -13,14 +14,14 @@
 </template>
 <script setup lang="ts">
 import { datePickerModelFormats } from '@khsura/sui/configs'
-import { propsCalendar } from '@khsura/sui/props'
+import type { PropsCalendar } from '@khsura/sui/definitions'
 import { getCalendarDate } from '@khsura/sui/repositories'
 import { useCalendarService } from '@khsura/sui/services'
 import { type CalendarEmitEvents } from '@khsura/sui/types'
 import dayjs from '@khsura/sui/vendors/dayjs'
 import SCalendarMonthly from './sCalendarMonthly.vue'
 
-const props = defineProps(propsCalendar())
+const props = defineProps<PropsCalendar>()
 const emit = defineEmits<CalendarEmitEvents>()
 
 const focus = defineModel<string>('focus', {

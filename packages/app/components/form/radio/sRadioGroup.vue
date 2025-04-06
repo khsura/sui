@@ -8,11 +8,11 @@
 import { computed } from 'vue'
 import { SFormInputError } from '@khsura/sui/components'
 import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsRadioGroup } from '@khsura/sui/props'
+import { type PropsRadioGroup } from '@khsura/sui/definitions'
 import { useFormInputService, useProviderService, useSingleGroupService } from '@khsura/sui/services'
 import { type GroupItemValue } from '@khsura/sui/types'
 
-const props = defineProps(propsRadioGroup())
+const props = defineProps<PropsRadioGroup>()
 
 const emit = defineEmits<{
   (event: 'change', value: GroupItemValue | null): void
@@ -30,7 +30,7 @@ const model = defineModel<GroupItemValue>({
   },
 })
 
-const { errors, updateFormInput } = useFormInputService<GroupItemValue>(props, emit)
+const { errors, updateFormInput } = useFormInputService<GroupItemValue>(props, emit, model)
 
 useSingleGroupService(props, model)
 

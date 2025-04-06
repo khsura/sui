@@ -10,17 +10,31 @@ export const useBorderService = (
 ) => {
   const computedProps = toComputed(props)
   const classPrefix = options?.block ? `s_${options.block}--` : 's_'
+  const predefinedBorderRadiusTypes = ['tile', 'rounded'] as const
+
+  const isPredefinedBorderRadiusType = computed(() => {
+    return predefinedBorderRadiusTypes.includes(
+      computedProps.value.borderRadius as (typeof predefinedBorderRadiusTypes)[number],
+    )
+  })
+
+  const styleListBorder = computed(() => {
+    return getCleanSetObject({
+      [`border-radius`]: isPredefinedBorderRadiusType.value ? computedProps.value.borderRadius : undefined,
+    })
+  })
 
   const classListBorder = computed(() => {
     return getCleanSetObject({
       [`${classPrefix}outlined`]: computedProps.value.outlined,
-      [`${classPrefix}tile`]: computedProps.value.tile,
-      [`${classPrefix}rounded`]: computedProps.value.rounded,
+      [`${classPrefix}tile`]: computedProps.value.borderRadius === 'tile',
+      [`${classPrefix}rounded`]: computedProps.value.borderRadius === 'rounded',
       [`${classPrefix}underlined`]: computedProps.value.underlined,
     })
   })
 
   return {
     classListBorder,
+    styleListBorder,
   }
 }

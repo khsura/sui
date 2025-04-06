@@ -5,17 +5,7 @@
 </template>
 <script setup lang="ts">
 import { SToggleButton } from '@khsura/sui/components/toggleButtonGroup'
-import { propsColumn } from '@khsura/sui/props'
+import type { PropsTab } from '@khsura/sui/definitions'
 
-defineProps({
-  tab: {
-    type: [Number, String],
-    required: true,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  ...propsColumn(),
-})
+defineProps<PropsTab>()
 </script>

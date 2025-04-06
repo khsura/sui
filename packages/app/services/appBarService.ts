@@ -9,7 +9,7 @@ import { useToolbarService } from './toolbarService'
 
 export const useAppBarService = (props: PropsAppBar) => {
   const canScroll = computed((): boolean => {
-    return isBrowser() && (props.elevateOnScroll || props.hideOnScroll)
+    return isBrowser() && (!!props.elevateOnScroll || !!props.hideOnScroll)
   })
 
   const getIsWithinScrollThreshold = (data: Pick<ThresholdMetParams, 'currentScroll' | 'computedScrollThreshold'>) => {

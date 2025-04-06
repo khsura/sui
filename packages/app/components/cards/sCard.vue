@@ -5,7 +5,7 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { propsBorder, propsColor, propsElevation, propsLink, propsMeasurableStyles, propsTag } from '@khsura/sui/props'
+import type { PropsCard } from '@khsura/sui/definitions'
 import {
   useLinkService,
   useBorderService,
@@ -14,19 +14,11 @@ import {
   useMeasurableStylesService,
 } from '@khsura/sui/services'
 
-const props = defineProps({
-  ...propsTag<'div' | 'section'>({ tag: 'div' }),
-  ...propsMeasurableStyles(),
-  ...propsElevation(),
-  ...propsColor(),
-  ...propsLink(),
-  ...propsBorder(),
-})
-
+const props = defineProps<PropsCard>()
 const { classListElevation } = useElevationService(props)
 const { measurableStyles } = useMeasurableStylesService(props)
 const { classListColor, styleListColor } = useColorService(props)
-const { classListBorder } = useBorderService(props)
+const { classListBorder, styleListBorder } = useBorderService(props)
 const { tag, isLink } = useLinkService(props)
 
 const classes = computed(() => {
@@ -42,6 +34,7 @@ const styles = computed(() => {
   return {
     ...measurableStyles.value,
     ...styleListColor.value,
+    ...styleListBorder.value,
   }
 })
 </script>

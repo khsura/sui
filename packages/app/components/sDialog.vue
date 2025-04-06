@@ -20,10 +20,10 @@ import { OnClickOutside } from '@vueuse/components'
 import { watch } from 'vue'
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsDialog, propsElevation } from '@khsura/sui/props'
+import type { PropsDialog } from '@khsura/sui/definitions'
 import { useDialogService, useProviderService, useBackgroundScrollService } from '@khsura/sui/services'
 
-const props = defineProps({ ...propsDialog(), ...propsElevation() })
+const props = defineProps<PropsDialog>()
 const model = defineModel<boolean>()
 const { provideProps } = useProviderService()
 

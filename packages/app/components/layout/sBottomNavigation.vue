@@ -11,7 +11,6 @@ import { computed, onBeforeUnmount, onMounted, watch } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import { getCleanSetObject, getNumericValue } from '@khsura/sui/lib'
 import { isBrowser } from '@khsura/sui/lib/browser'
-import { propsBottomNavigation } from '@khsura/sui/props'
 import {
   useBorderService,
   useLayoutService,
@@ -23,11 +22,9 @@ import {
   useTagService,
 } from '@khsura/sui/services'
 import { type GroupItemValue } from '@khsura/sui/types'
+import type { PropsBottomNavigation } from '@khsura/sui/definitions'
 
-const props = defineProps({
-  ...propsBottomNavigation(),
-})
-
+const props = defineProps<PropsBottomNavigation>()
 const model = defineModel<GroupItemValue>()
 
 const canScroll = computed((): boolean => {
@@ -60,7 +57,7 @@ const { isActive } = useScrollableService(
 
 const { classListPosition, isAbsolutePosition, isFixedPosition } = usePositionService(props)
 const { measurableStyles } = useMeasurableStylesService(props)
-const { classListBorder } = useBorderService(props)
+const { classListBorder, styleListBorder } = useBorderService(props)
 const { provideProps } = useProviderService()
 const { left, right, width, app, isApp } = useLayoutService(props)
 const { tagName } = useTagService(props)
@@ -97,6 +94,7 @@ const styles = computed((): object => {
     left: left.value,
     right: right.value,
     width: width.value,
+    ...styleListBorder.value,
   }
 })
 

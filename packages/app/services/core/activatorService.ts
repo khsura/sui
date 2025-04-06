@@ -38,7 +38,11 @@ export const useActivatorService = (props: PropsActivator, model?: Ref<boolean |
         return
       }
 
-      model.value = !(props.closeOnClick && model.value)
+      if (props.preventCloseOnClick && model.value === true) {
+        return
+      }
+
+      model.value = !model.value
     },
   }
 

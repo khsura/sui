@@ -8,10 +8,7 @@
 <script setup lang="ts">
 import SImage from '@khsura/sui/components/sImage.vue'
 import SWindowItem from '@khsura/sui/components/window/sWindowItem.vue'
-import { propsImage, propsWindowItem } from '@khsura/sui/props'
+import type { PropsCarouselItem } from '@khsura/sui/definitions'
 
-defineProps({
-  ...propsImage(),
-  ...propsWindowItem(),
-})
+defineProps<PropsCarouselItem>()
 </script>

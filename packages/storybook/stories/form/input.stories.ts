@@ -1,11 +1,11 @@
 import { SInput, SCard, SCardTitle, SForm, SRow, SColumn, SButton, SSwitch } from '@khsura/sui/index'
-import type { FormComponent } from '@khsura/sui/index'
 import { action } from '@storybook/addon-actions'
 import type { Meta } from '@storybook/vue3'
 import { defineComponent, ref, computed } from 'vue'
 import { argsInput } from '@khsura/storybook/args'
 import { formInputModelValueRules } from '@khsura/storybook/configs'
 import { createStoryObj } from '@khsura/storybook/helpers'
+import type { ComponentPublicInstance } from 'vue'
 
 const input = {
   title: 'UI Components/Form/Input',
@@ -69,7 +69,7 @@ export const Inputs = createStoryObj<Meta>({
         SSwitch,
       },
       setup() {
-        const form = ref<FormComponent | null>(null)
+        const form = ref<(ComponentPublicInstance & { validate: () => void; resetValidation: () => void }) | null>(null)
         const name = ref('')
         const email = ref('')
         const amount = ref<number | null>(null)
@@ -143,7 +143,7 @@ export const Inputs = createStoryObj<Meta>({
       },
       template: `
         <SCard max-width="800" class="s_mx__auto">
-          <SForm ref="form" v-model="valid" v-model:errors="errors" v-model:error="error">
+          <SForm ref="form" v-model="valid" v-model:errors="errors" v-model:error="error" @submit.prevent>
             <SRow align="center" dense justify="center">
               <SColumn cols="12">
                 <SInput

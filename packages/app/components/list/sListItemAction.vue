@@ -4,15 +4,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import { propsListMediaItem } from '@khsura/sui/props'
+import type { PropsListMediaItem } from '@khsura/sui/definitions'
 import { useListMediaItemService } from '@khsura/sui/services'
 
-const props = defineProps(propsListMediaItem())
+const props = defineProps<PropsListMediaItem>()
 const { classes } = useListMediaItemService(props, { componentName: 'listItemAction' })
 </script>
 <style lang="scss">
 .s_listItemAction {
-  margin-left: calc($s_spacer * 8);
+  margin: 0 calc($s_spacer * 4) 0 calc($s_spacer * 8);
 
   @include s_createListItemMediaContent();
 

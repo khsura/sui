@@ -19,6 +19,11 @@ import {
   SDivider,
   ToolbarDensity,
   useDisplay,
+  type PropsAppBar,
+  type PropsMain,
+  type PropsFooter,
+  type PropsNavigationDrawer,
+  type PropsLayoutContainer,
 } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { computed, defineComponent, ref } from 'vue'
@@ -26,11 +31,11 @@ import { createStoryObj } from '@khsura/storybook/helpers'
 import { argTypesLocation } from '@khsura/storybook/argTypes'
 
 type StoryComponent =
-  | typeof SLayout
-  | typeof SNavigationDrawer
-  | typeof SAppBar
-  | typeof SMain
-  | typeof SFooter
+  | PropsLayoutContainer
+  | PropsNavigationDrawer
+  | PropsAppBar
+  | PropsMain
+  | PropsFooter
   | { hasAppBar: boolean; hasExtension: boolean }
 
 const layout: Meta<StoryComponent> = {

@@ -15,23 +15,10 @@
 <script setup lang="ts">
 import { inject, watch, onMounted, onUnmounted, computed } from 'vue'
 import { ProviderName, ProviderPropsName } from '@khsura/sui/constants'
+import type { PropsStepperStep } from '@khsura/sui/definitions'
 import { useProviderService } from '@khsura/sui/services'
 
-const props = defineProps({
-  step: {
-    type: Number,
-    required: true,
-  },
-  editable: {
-    type: Boolean,
-    default: false,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-})
-
+const props = defineProps<PropsStepperStep>()
 const { injectParentProps } = useProviderService()
 const stepperStepsProp = injectParentProps(ProviderPropsName.stepperProps)
 const registerStep = inject(ProviderName.stepperRegisterStepperStep, (_: number) => true)

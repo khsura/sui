@@ -2,12 +2,9 @@
   <Component :is="tagName" class="s_toolbarItem"></Component>
 </template>
 <script setup lang="ts">
-import { propsTag } from '@khsura/sui/props'
+import type { PropsTag } from '@khsura/sui/definitions'
 import { useTagService } from '@khsura/sui/services'
 
-const props = defineProps({
-  ...propsTag(),
-})
-
+const props = defineProps<PropsTag>()
 const { tagName } = useTagService(props)
 </script>

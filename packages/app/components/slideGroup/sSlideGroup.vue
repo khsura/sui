@@ -28,12 +28,12 @@
 import { computed, onMounted, ref } from 'vue'
 import SButton from '@khsura/sui/components/sButton.vue'
 import SIcon from '@khsura/sui/components/sIcon.vue'
-import { propsSlideGroup } from '@khsura/sui/props'
+import type { PropsSlideGroup } from '@khsura/sui/definitions'
 import { useSlideGroupService } from '@khsura/sui/services'
 import { type GroupItemValue } from '@khsura/sui/types'
 
 const isReady = ref(false)
-const props = defineProps(propsSlideGroup())
+const props = defineProps<PropsSlideGroup>()
 const model = defineModel<GroupItemValue[]>({ default: [], required: false })
 
 const {

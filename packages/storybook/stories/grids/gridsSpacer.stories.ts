@@ -19,7 +19,7 @@ export const Spacer = createStoryObj<typeof spacer>({
       template: /* html */ `        
       <SRow v-bind="args" align="center" class="s_textAlign__center">
         <SColumn cols="2">cols = 1</SColumn>
-        <SSpacer class="s_backgroundColor__warning">spacer take {{ 11 - args.cols }} cols</SSpacer>
+        <SSpacer class="s_backgroundColor__warning">spacer</SSpacer>
         <SColumn v-bind="args">cols = {{ args.cols }}</SColumn>
       </SRow>
       `,

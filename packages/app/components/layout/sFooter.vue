@@ -4,16 +4,8 @@
   </component>
 </template>
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch, type PropType } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { getCleanSetObject, getNumericCssAttribute, getNumericValue, getWindow } from '@khsura/sui/lib'
-import {
-  propsColor,
-  propsLayout,
-  propsMeasurableStyles,
-  propsPosition,
-  propsElevation,
-  propsTag,
-} from '@khsura/sui/props'
 import {
   useColorService,
   useElevationService,
@@ -22,22 +14,12 @@ import {
   usePositionService,
   useTagService,
 } from '@khsura/sui/services'
+import { type PropsFooter } from '@khsura/sui/definitions'
 
-const props = defineProps({
-  ...propsLayout({ app: false }),
-  ...propsTag<'div' | 'footer'>({ tag: 'footer' }),
-  ...propsColor(),
-  ...propsMeasurableStyles(),
-  ...propsElevation(),
-  ...propsPosition(),
-  inset: {
-    type: Boolean as PropType<boolean>,
-    default: false,
-  },
-  padless: {
-    type: Boolean as PropType<boolean>,
-    default: false,
-  },
+const props = withDefaults(defineProps<PropsFooter>(), {
+  tag: 'footer',
+  inset: false,
+  padless: false,
 })
 
 const { tagName } = useTagService(props)

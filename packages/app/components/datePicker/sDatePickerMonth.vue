@@ -31,13 +31,10 @@
 <script setup lang="ts">
 import { SColumn, SRow } from '@khsura/sui/components/grids'
 import SButton from '@khsura/sui/components/sButton.vue'
-import { propsColor, propsDatePickerItem } from '@khsura/sui/props'
+import type { PropsDatePickerItem } from '@khsura/sui/definitions'
 import { useColorService, useDatePickerItemMonthService } from '@khsura/sui/services'
 
-const props = defineProps({
-  ...propsDatePickerItem(),
-  ...propsColor(),
-})
+const props = defineProps<PropsDatePickerItem>()
 
 const emit = defineEmits<{
   (event: 'update:date', value: string): void

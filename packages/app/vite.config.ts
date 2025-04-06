@@ -5,10 +5,19 @@ import autoprefixer from 'autoprefixer'
 import flexbugsFixes from 'postcss-flexbugs-fixes'
 import mediaMinmax from 'postcss-media-minmax'
 import { defineConfig } from 'vite'
-import vueDevTools from 'vite-plugin-vue-devtools'
+// import vueDevTools from 'vite-plugin-vue-devtools'
+import { checker } from 'vite-plugin-checker'
 
 export default defineConfig({
-  plugins: [vue(), vueJsx(), vueDevTools()],
+  plugins: [
+    vue(),
+    vueJsx(),
+    // vueDevTools(),
+    checker({
+      vueTsc: true,
+      typescript: true,
+    }),
+  ],
   resolve: {
     alias: {
       '@khsura/sui': fileURLToPath(new URL('./', import.meta.url)),

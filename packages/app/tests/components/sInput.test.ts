@@ -56,7 +56,6 @@ describe('SInput', () => {
       placeholder: 'placeholder',
       spellcheck: 'true',
       type: 'number',
-      inputmode: 'text',
     })
   })
 })

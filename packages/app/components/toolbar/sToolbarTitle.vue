@@ -8,13 +8,10 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsToolbarTitle } from '@khsura/sui/props'
+import type { PropsToolbarTitle } from '@khsura/sui/definitions'
 import { useColorService, useProviderService, useTagService } from '@khsura/sui/services'
 
-const props = defineProps({
-  ...propsToolbarTitle(),
-})
-
+const props = defineProps<PropsToolbarTitle>()
 const slots = useSlots()
 const { tagName } = useTagService(props)
 const { injectParentProps } = useProviderService()

@@ -7,15 +7,13 @@ describe('positionService', () => {
   const props = reactive<Mutable<PropsBorder>>({
     outlined: null,
     underlined: null,
-    tile: null,
-    rounded: null,
+    borderRadius: null,
   })
 
   beforeEach(() => {
     props.outlined = null
     props.underlined = null
-    props.tile = null
-    props.rounded = null
+    props.borderRadius = null
   })
 
   it('can set outlined', () => {
@@ -47,10 +45,10 @@ describe('positionService', () => {
 
     expect(service.classListBorder.value).not.toHaveProperty('s_tile')
 
-    props.tile = false
+    props.borderRadius = 10
     expect(service.classListBorder.value).not.toHaveProperty('s_tile')
 
-    props.tile = true
+    props.borderRadius = 'tile'
     expect(service.classListBorder.value.s_tile).toBe(true)
   })
 
@@ -59,22 +57,22 @@ describe('positionService', () => {
 
     expect(service.classListBorder.value).not.toHaveProperty('s_rounded')
 
-    props.rounded = false
+    props.borderRadius = 10
     expect(service.classListBorder.value).not.toHaveProperty('s_rounded')
 
-    props.rounded = true
+    props.borderRadius = 'rounded'
     expect(service.classListBorder.value.s_rounded).toBe(true)
   })
 
   it('can set custom class', () => {
     const service = useBorderService(props, { block: 'test' })
 
-    expect(service.classListBorder.value).not.toHaveProperty('s_test--rounded')
+    expect(service.classListBorder.value).not.toHaveProperty('s_test--tile')
 
-    props.rounded = false
-    expect(service.classListBorder.value).not.toHaveProperty('s_test--rounded')
+    props.borderRadius = 10
+    expect(service.classListBorder.value).not.toHaveProperty('s_test--tile')
 
-    props.rounded = true
-    expect(service.classListBorder.value['s_test--rounded']).toBe(true)
+    props.borderRadius = 'tile'
+    expect(service.classListBorder.value['s_test--tile']).toBe(true)
   })
 })

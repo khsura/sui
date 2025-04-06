@@ -20,32 +20,16 @@
   </div>
 </template>
 <script setup lang="ts">
-import { type PropType, watch, computed } from 'vue'
+import { watch, computed } from 'vue'
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
 import { STransition } from '@khsura/sui/constants'
 import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
 import { getWindow } from '@khsura/sui/lib/browser'
-import { propsActivator, propsBorder } from '@khsura/sui/props'
+import type { PropsSnackbar } from '@khsura/sui/definitions'
 import { getIsAbsolutePosition, getIsFixedPosition } from '@khsura/sui/repositories/positionRepository'
 import { useActivatorService, useLayoutService, useScrollableService } from '@khsura/sui/services'
 
-const props = defineProps({
-  multiLine: {
-    type: Boolean as PropType<boolean | undefined | null>,
-    default: false,
-  },
-  timeout: {
-    type: Number as PropType<number | undefined | null>,
-    default: 6000,
-  },
-  location: {
-    type: String as PropType<'bottom' | 'top' | null | undefined>,
-    default: undefined,
-  },
-  ...propsActivator(),
-  ...propsBorder(),
-})
-
+const props = defineProps<PropsSnackbar>()
 const model = defineModel<boolean>()
 let timer: NodeJS.Timeout | number | undefined
 const { activatorAttrs, activatorElement, activatorOn, contentElement } = useActivatorService(props, model)

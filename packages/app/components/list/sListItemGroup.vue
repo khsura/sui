@@ -1,7 +1,7 @@
 <template>
   <ul :class="{ s_list__item: true, s_listItemGroup: true, 's_listItemGroup--expanded': isExpanded }">
     <slot name="activator">
-      <SListItem link @click="isExpanded = !isExpanded">
+      <SListItem link @click="isExpanded = !isExpanded" :class="{ 's_listItem--noUnderline': !isExpanded }">
         <SListItemContent>
           <SListItemTitle v-if="title">{{ title }}</SListItemTitle>
           <SListItemSubtitle v-if="subtitle">{{ subtitle }}</SListItemSubtitle>
@@ -11,7 +11,7 @@
         </SListItemAction>
       </SListItem>
     </slot>
-    <SList v-bind="listProps" :style="contentStyles" :outlined="false">
+    <SList v-bind="listProps" :class="{ 's_list--hidden': !isExpanded }" :style="contentStyles" :outlined="false">
       <slot></slot>
     </SList>
   </ul>
@@ -50,6 +50,7 @@ const contentStyles = computed(() => {
   return {
     maxHeight: getNumericCssAttribute(maxHeight.value),
     overflow: 'hidden',
+    display: isExpanded.value ? 'block' : 'none',
   }
 })
 </script>
@@ -58,6 +59,7 @@ const contentStyles = computed(() => {
 ul.s_listItemGroup,
 ol.s_listItemGroup {
   padding-inline-start: 0;
+  margin: 0;
 
   > .s_list {
     padding: 8px 0 8px 8px;

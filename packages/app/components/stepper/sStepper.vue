@@ -10,18 +10,21 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { ProviderName, ProviderPropsName } from '@khsura/sui/constants'
-import { propsStepper } from '@khsura/sui/props'
+import type { PropsStepper } from '@khsura/sui/definitions'
 import { useProviderService } from '@khsura/sui/services'
 import SStepperStep from './sStepperStep.vue'
 
-const props = defineProps(propsStepper())
+const props = withDefaults(defineProps<PropsStepper>(), {
+  items: () => [],
+})
+
 const emit = defineEmits<(event: 'update:modelValue', value: number) => void>()
 const { provideProps, provide } = useProviderService()
 
 const classList = computed(() => {
   return {
-    s_stepperSteps: true,
-    's_stepperSteps--shrink': props.shrink,
+    s_stepper: true,
+    's_stepper--shrink': props.shrink,
   }
 })
 
@@ -53,7 +56,7 @@ provide(
 )
 </script>
 <style lang="scss">
-.s_stepperSteps {
+.s_stepper {
   padding-left: 0;
   list-style: none;
   counter-reset: step;

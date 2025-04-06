@@ -9,9 +9,9 @@ export const argTypesTextColor = <T extends ArgTypes<PropsColor>>(params: Partia
       color: {
         control: { type: 'color' },
         table: {
-          defaultValue: { summary: 'null' },
+          defaultValue: { summary: 'undefined' },
           type: {
-            summary: 'PresetColorType | ExposedAppColorType | string',
+            summary: 'PresetColorType | ExposedAppColorType | string | null | undefined',
             detail: colorString.replace(/export /gs, ''),
           },
         },

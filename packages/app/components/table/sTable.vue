@@ -3,6 +3,7 @@
     ref="tableWrapperElement"
     class="s_table__wrapper"
     :class="{ 's_table__wrapper--outlined': outlined, 's_table__wrapper--noTopBottomBorders': hideTopBottomBorders }"
+    :style="styleListBorder"
     @scroll="onHorizontalScroll()"
   >
     <!-- Table -->
@@ -175,7 +176,6 @@ import { type EmitTable, type PropsTable, type TableItem } from '@khsura/sui/typ
 import STableHeadCell from './sTableHeadCell.vue'
 import STableBodyCell from './sTableBodyCell.vue'
 
-// eslint-disable-next-line vue/no-unused-properties
 const props = withDefaults(defineProps<PropsTable<T>>(), {
   items: () => [],
   headers: () => [],
@@ -194,7 +194,7 @@ const props = withDefaults(defineProps<PropsTable<T>>(), {
 })
 
 const emit = defineEmits<EmitTable<T>>()
-const { classListBorder } = useBorderService(props, { block: 'table' })
+const { classListBorder, styleListBorder } = useBorderService(props, { block: 'table' })
 
 const {
   isMounted,

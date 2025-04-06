@@ -4,10 +4,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { propsListMediaItem } from '@khsura/sui/props'
 import { useListMediaItemService } from '@khsura/sui/services'
+import type { PropsListMediaItem } from '@khsura/sui/definitions'
 
-const props = defineProps(propsListMediaItem())
+const props = defineProps<PropsListMediaItem>()
 const { classes } = useListMediaItemService(props, { componentName: 'listItemIcon' })
 </script>
 <style lang="scss">

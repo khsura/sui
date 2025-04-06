@@ -2,9 +2,9 @@ import { DatePickerSelectType, DatePickerType } from '@khsura/sui/constants/date
 import { type DatePickerSelectTypeType } from '@khsura/sui/types'
 
 export const datePickerDisplayFormat = {
-  [DatePickerSelectType.date]: 'M月D日',
+  [DatePickerSelectType.date]: 'MMM D',
   [DatePickerSelectType.month]: 'MMMM',
-  [DatePickerSelectType.year]: 'YYYY年',
+  [DatePickerSelectType.year]: 'YYYY',
 } as const
 
 export const datePickerModelFormats = {
@@ -20,5 +20,5 @@ export const datePickerSelectTypes: DatePickerSelectTypeType[] = [
 
 export const monthPickerDisplayFormat = {
   [DatePickerSelectType.month]: 'MMMM',
-  [DatePickerSelectType.year]: 'YYYY年',
+  [DatePickerSelectType.year]: 'YYYY',
 } as const

@@ -32,30 +32,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick, onMounted } from 'vue'
+import { ref, computed, nextTick, onMounted, watch } from 'vue'
 import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
-import { propsTextarea } from '@khsura/sui/props'
+import type { PropsTextarea } from '@khsura/sui/definitions'
 import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
 import { useDisabledService, useFormInputService } from '@khsura/sui/services'
 import { type EmitFormTextInput } from '@khsura/sui/types'
 import kFormInputError from './common/sFormInputError.vue'
 
-const props = defineProps(propsTextarea<string | null>())
-const emit = defineEmits<EmitFormTextInput<string | number | null>>()
+const props = withDefaults(defineProps<PropsTextarea<string>>(), {
+  rows: 2,
+  cols: 20,
+})
+
+const emit = defineEmits<EmitFormTextInput<string>>()
 const textareaElement = ref<HTMLTextAreaElement | null>(null)
 
 const model = defineModel<string>({
   get: (v) => v ?? '',
-  set: (v) => {
-    void onEvent()
-    void updateFormInput(model.value)
-
-    return v
-  },
   default: '',
 })
 
-const { updateFormInput, errors } = useFormInputService<string | null>(props, emit)
+const { updateFormInput, errors } = useFormInputService<string>(props, emit, model)
 const { classListDisabled } = useDisabledService(props)
 // TODO - Sura: make able to use all preset colors
 const { getIsPredefinedPresetColor } = useColorRepository()
@@ -106,11 +104,16 @@ const onEvent = async (name?: 'input' | 'blur', event?: Event) => {
         break
       case 'input':
         emit(name, event)
-        emit('change', model.value ?? null)
+        emit('change', model.value ?? '')
         break
     }
   }
 }
+
+watch(model, (value) => {
+  void onEvent()
+  void updateFormInput(value)
+})
 
 onMounted(async () => {
   await onEvent()

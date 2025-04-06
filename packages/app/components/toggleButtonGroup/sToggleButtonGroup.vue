@@ -1,5 +1,5 @@
 <template>
-  <section :class="classList">
+  <section :class="classList" :style="styleListBorder">
     <div class="s_toggleButtonGroup__content">
       <slot></slot>
     </div>
@@ -8,15 +8,18 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsToggleButtonGroup } from '@khsura/sui/props'
+import type { PropsToggleButtonGroup } from '@khsura/sui/definitions'
 import { useBorderService, useGroupService, useProviderService } from '@khsura/sui/services'
 import { type GroupItemValue } from '@khsura/sui/types'
 
-const props = defineProps(propsToggleButtonGroup())
+const props = withDefaults(defineProps<PropsToggleButtonGroup>(), {
+  selectedColor: 'primary',
+})
+
 const model = defineModel<GroupItemValue[]>({ default: [], required: false })
 
 useGroupService(props, model)
-const { classListBorder } = useBorderService(props)
+const { classListBorder, styleListBorder } = useBorderService(props)
 const { provideProps } = useProviderService()
 
 const isInset = computed(() => {

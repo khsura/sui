@@ -1,6 +1,6 @@
 <template>
-  <div ref="selectElement" class="s_select" :class="selectClasses">
-    <select :id="id" :value="modelValue" class="s_select__input" :name="name">
+  <div ref="selectElement" class="s_select" :class="selectClasses" :style="styleListBorder">
+    <select :id="id" :value="modelValue" class="s_select__input" :name="name ?? undefined">
       <option v-for="(item, id) in objectItems" :key="id" :value="getItemValue(item)">{{ getItemText(item) }}</option>
     </select>
     <div ref="activatorElement">
@@ -51,16 +51,16 @@ import SFormInputError from '@khsura/sui/components/form/common/sFormInputError.
 import { SList, SListItem, SListItemContent, SListItemSubtitle } from '@khsura/sui/components/list'
 import SIcon from '@khsura/sui/components/sIcon.vue'
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
-import { propsSelect } from '@khsura/sui/props'
+import { type PropsSelect } from '@khsura/sui/definitions'
 import { useBorderService, useDisabledService, useFormInputService, useMenuService } from '@khsura/sui/services'
 import { type SelectItem, type EmitFormInput } from '@khsura/sui/types'
 
-const props = defineProps(propsSelect())
-const emit = defineEmits<EmitFormInput<string | number>>()
+const props = defineProps<PropsSelect>()
+const emit = defineEmits<EmitFormInput<string | number | null>>()
 const selectElement = ref<HTMLElement | null>(null)
-const { classListBorder } = useBorderService(props)
+const { classListBorder, styleListBorder } = useBorderService(props)
 const model = defineModel<string | number | null>()
-const { errors, updateFormInput } = useFormInputService<string | number>(props, emit)
+const { errors, updateFormInput } = useFormInputService<string | number | null>(props, emit, model)
 const menuModel = defineModel<boolean>('menu')
 const { classListDisabled } = useDisabledService(props)
 
@@ -74,7 +74,7 @@ const onClickOutside = () => {
 }
 
 const objectItems = computed<SelectItem[]>(() => {
-  return props.items.map((item) => {
+  return (props.items ?? []).map((item) => {
     if (typeof item === 'string' || item === undefined || item === null) {
       return { value: item, text: item ?? '-' }
     }
@@ -84,12 +84,12 @@ const objectItems = computed<SelectItem[]>(() => {
 })
 
 const getSelectedItemFromValue = (): SelectItem | null => {
-  const item = props.items.find((item) => {
+  const item = (props.items ?? []).find((item) => {
     if (typeof item === 'string') {
-      return item === props.modelValue
+      return item === model.value
     }
 
-    return item?.value === props.modelValue
+    return item?.value === model.value
   })
 
   return typeof item === 'string' ? { value: item, text: item } : (item ?? null)
@@ -118,7 +118,7 @@ const selectClasses = computed(() => {
 
 const activatorClasses = computed(() => {
   return {
-    's_select__activator--empty': props.modelValue === null || props.modelValue === undefined,
+    's_select__activator--empty': model.value === null || model.value === undefined,
     's_select__activator--dense': props.dense,
     ...classListBorder.value,
     ...classListDisabled.value,
@@ -142,7 +142,7 @@ const getIsSelected = (item: SelectItem) => {
     return false
   }
 
-  return typeof item === 'string' ? item === props.modelValue : item.value === props.modelValue
+  return typeof item === 'string' ? item === model.value : item.value === model.value
 }
 
 const selectItem = async (value: SelectItem | null) => {

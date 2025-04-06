@@ -3,13 +3,9 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
+import type { PropsDivider } from '@khsura/sui/definitions'
 
-const props = defineProps({
-  vertical: {
-    type: Boolean,
-    default: false,
-  },
-})
+const props = defineProps<PropsDivider>()
 
 const classes = computed(() => {
   return {

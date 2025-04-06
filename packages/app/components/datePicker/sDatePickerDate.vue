@@ -33,14 +33,11 @@
 </template>
 <script setup lang="ts">
 import SButton from '@khsura/sui/components/sButton.vue'
-import { propsDatePickerItem, propsColor } from '@khsura/sui/props'
+import type { PropsDatePickerItem } from '@khsura/sui/definitions'
 import { useColorService, useDatePickerItemDateService } from '@khsura/sui/services'
 import dayjs from '@khsura/sui/vendors/dayjs'
 
-const props = defineProps({
-  ...propsDatePickerItem(),
-  ...propsColor(),
-})
+const props = defineProps<PropsDatePickerItem>()
 
 const emit = defineEmits<{
   (event: 'update:date', value: string): void

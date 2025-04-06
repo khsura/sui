@@ -12,14 +12,12 @@ import {
   SSubheader,
 } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
-import { argsColor, argsMeasurableStyles } from '@khsura/storybook/args'
-import { argTypesMeasurableStyles } from '@khsura/storybook/argTypes'
+import { argsColor } from '@khsura/storybook/args'
 import { createStoryObj } from '@khsura/storybook/helpers'
 
 const list: Meta<typeof SList> = {
   title: 'UI Components/List',
   argTypes: {
-    ...argTypesMeasurableStyles,
     lines: {
       control: {
         type: 'number',
@@ -101,7 +99,6 @@ export const List = createStoryObj<typeof SList>({
     }
   },
   args: {
-    ...argsMeasurableStyles,
     divided: false,
     lines: null,
     outlined: false,
@@ -173,7 +170,6 @@ export const ListColors = createStoryObj<typeof SList>({
     }
   },
   args: {
-    ...argsMeasurableStyles,
     divided: false,
     lines: null,
     dense: false,
@@ -246,7 +242,6 @@ export const ListRandom = createStoryObj<typeof SList>({
     }
   },
   args: {
-    ...argsMeasurableStyles,
     divided: false,
     lines: null,
     outlined: false,

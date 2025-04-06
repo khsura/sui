@@ -14,40 +14,13 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { type PropType } from 'vue'
+import type { PropsProgressLinear } from '@khsura/sui/definitions'
 import { getNumericCssAttribute } from '@khsura/sui/lib'
 import { useColorRepository } from '@khsura/sui/repositories'
 
-const props = defineProps({
-  fixed: {
-    type: Boolean,
-    default: true,
-  },
-  absolute: {
-    type: Boolean,
-    default: true,
-  },
-  backgroundColor: {
-    type: String as PropType<string | null>,
-    default: null,
-  },
-  backgroundOpacity: {
-    type: [Number, String] as PropType<string | number | null>,
-    default: null,
-  },
-  color: {
-    type: String,
-    default: 'info',
-  },
-  size: {
-    type: [Number, String] as PropType<string | number | null>,
-    default: null,
-  },
-  indeterminate: { type: Boolean, default: false },
-  value: {
-    type: [Number, String],
-    default: 0,
-  },
+const props = withDefaults(defineProps<PropsProgressLinear>(), {
+  color: 'info',
+  value: 0,
 })
 
 const { getBackgroundColorAttributes } = useColorRepository()

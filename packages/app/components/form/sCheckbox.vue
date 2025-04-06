@@ -10,11 +10,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import FormInputError from '@khsura/sui/components/form/common/sFormInputError.vue'
-import { propsCheckbox } from '@khsura/sui/props'
-import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
+import { type PropsCheckbox } from '@khsura/sui/definitions'
+import { useColorRepository } from '@khsura/sui/repositories'
 import { useFormInputService } from '@khsura/sui/services'
 
-const props = defineProps(propsCheckbox())
+const props = defineProps<PropsCheckbox>()
 
 const emit = defineEmits<{
   (event: 'change', value: boolean): void
@@ -37,7 +37,7 @@ const model = defineModel<boolean>('modelValue', {
   },
 })
 
-const { updateFormInput, errors } = useFormInputService<boolean>(props, emit)
+const { updateFormInput, errors } = useFormInputService<boolean>(props, emit, model)
 
 const checkboxClasses = computed(() => {
   return {
