@@ -274,7 +274,7 @@ watch(
     if (isPermanentDesktopApp.value || !value) {
       await enableBackgroundScroll()
     } else {
-      disableBackgroundScroll()
+      await disableBackgroundScroll()
     }
   },
   {
