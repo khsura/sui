@@ -31,6 +31,7 @@ onMounted(() => {
 .s_overlay {
   position: fixed;
   inset: 0;
+  z-index: 6;
   display: flex;
   pointer-events: none;
   border-radius: inherit;

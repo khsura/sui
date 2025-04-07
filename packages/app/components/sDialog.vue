@@ -36,7 +36,7 @@ const { enableBackgroundScroll, disableBackgroundScroll } = useBackgroundScrollS
 
 watch(model, async (value) => {
   if (value) {
-    disableBackgroundScroll()
+    await disableBackgroundScroll()
   } else {
     await enableBackgroundScroll()
   }

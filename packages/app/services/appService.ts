@@ -8,9 +8,10 @@ import { useLayoutProviderService } from './layoutProviderService'
 import { useProviderService } from './core'
 
 export const useAppService = (props: PropsApp) => {
-  useLayoutProviderService(props)
-  const store = inject<AppState>(props.name ?? 'sui', createAppStore())
   const { provide } = useProviderService()
+  const store = inject<AppState>(props.name ?? 'sui', createAppStore())
+
+  useLayoutProviderService(props)
 
   provide(ProviderName.sui, store)
 
