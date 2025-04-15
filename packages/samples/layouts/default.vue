@@ -53,21 +53,25 @@
           />
           <SButton id="navbarActivator" @click="navbar = !navbar">Toggle Navbar</SButton>
           <SSwitch v-model="permanent" label="Permanent navbar"></SSwitch>
-          <SDialog v-model="modal" width="90%" max-width="500px">
-            <template #activator="{ on, attrs }">
-              <SButton v-bind="attrs" v-on="on">Open Modal</SButton>
-            </template>
-            <SCard>
-              <SCardTitle>Modal</SCardTitle>
-              <SCardText>
-                {{ faker.lorem.paragraphs() }}
-              </SCardText>
-              <SCardActions>
-                <SButton>Confirm</SButton>
-                <SButton @click="modal = false">Close</SButton>
-              </SCardActions>
-            </SCard>
-          </SDialog>
+          <div>
+            <div v-for="(_modal, id) in modals" :key="id">
+              <SDialog v-model="modals[id]" width="90%" max-width="500px">
+                <template #activator="{ on, attrs }">
+                  <SButton v-bind="attrs" v-on="on">Open Modal {{ id }}</SButton>
+                </template>
+                <SCard>
+                  <SCardTitle>Modal</SCardTitle>
+                  <SCardText>
+                    {{ faker.lorem.paragraphs() }}
+                  </SCardText>
+                  <SCardActions>
+                    <SButton>Confirm</SButton>
+                    <SButton @click="modals[id] = false">Close</SButton>
+                  </SCardActions>
+                </SCard>
+              </SDialog>
+            </div>
+          </div>
           <pre>
             {{ JSON.stringify({ navbar }) }}
           </pre>
@@ -116,7 +120,7 @@ const hideOnScroll = ref(false)
 const outlined = ref(false)
 const position = ref<Exclude<Position, null>>('static')
 const navbar = ref(false)
-const modal = ref(false)
+const modals = ref([false, false, false])
 const permanent = ref(true)
 
 const positions = computed(() => {

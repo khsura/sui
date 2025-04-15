@@ -4,24 +4,19 @@
       <slot name="activator" :on="activatorOn" :attrs="activatorAttrs"></slot>
     </div>
     <SOverlay v-slot="{ attrs }" scrim :value="model" :transition="transitionName">
-      <OnClickOutside
-        :options="{ ignore: ['.s_menu__content', '.s_tooltip__content', 's_select__list', '.s_snackbar__wrapper'] }"
-        @trigger="onClickOutside"
-      >
-        <div v-bind="attrs" :class="contentClasses" :style="contentStyles">
-          <slot></slot>
-        </div>
-      </OnClickOutside>
+      <div v-bind="attrs" :class="contentClasses" :style="contentStyles" ref="dialogRef">
+        <slot></slot>
+      </div>
     </SOverlay>
   </section>
 </template>
 <script setup lang="ts">
-import { OnClickOutside } from '@vueuse/components'
-import { watch } from 'vue'
+import { watch, ref } from 'vue'
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import type { PropsDialog } from '@khsura/sui/definitions'
 import { useDialogService, useProviderService, useBackgroundScrollService } from '@khsura/sui/services'
+import { onClickOutside } from '@vueuse/core'
 
 const props = defineProps<PropsDialog>()
 const model = defineModel<boolean>()
@@ -29,10 +24,22 @@ const { provideProps } = useProviderService()
 
 provideProps(ProviderPropsName.dialog, props)
 
-const { activatorOn, activatorAttrs, activatorElement, contentClasses, contentStyles, transitionName, onClickOutside } =
-  useDialogService(props, model)
+const {
+  activatorOn,
+  activatorAttrs,
+  activatorElement,
+  contentClasses,
+  contentStyles,
+  transitionName,
+  onClickOutside: localOnClickOutside,
+} = useDialogService(props, model)
 
 const { enableBackgroundScroll, disableBackgroundScroll } = useBackgroundScrollService()
+const dialogRef = ref<HTMLElement | null>(null)
+
+onClickOutside(dialogRef, localOnClickOutside, {
+  ignore: ['.s_menu__content', '.s_tooltip__content', 's_select__list', '.s_snackbar__wrapper'],
+})
 
 watch(model, async (value) => {
   if (value) {
