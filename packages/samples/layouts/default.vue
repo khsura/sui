@@ -63,6 +63,13 @@
                   <SCardTitle>Modal</SCardTitle>
                   <SCardText>
                     {{ faker.lorem.paragraphs() }}
+                    <SSelect
+                      dense
+                      v-model="color"
+                      label="Color"
+                      :items="['primary', 'secondary', 'success', 'info', 'warning', 'important', 'error', 'none']"
+                    >
+                    </SSelect>
                   </SCardText>
                   <SCardActions>
                     <SButton>Confirm</SButton>
@@ -92,11 +99,11 @@ import {
   SCardTitle,
   SDialog,
   SFooter,
+  SSelect,
   SMain,
   SButton,
   SCardActions,
 } from '@khsura/sui/components'
-import SSelect from '@khsura/sui/components/form/sSelect.vue'
 import SNavigationDrawer from '@khsura/sui/components/layout/sNavigationDrawer.vue'
 import SSwitch from '@khsura/sui/components/sSwitch.vue'
 import { type Position } from '@khsura/sui/constants'

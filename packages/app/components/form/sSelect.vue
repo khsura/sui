@@ -35,7 +35,7 @@
               @click="selectItem(item)"
             >
               <SListItemContent>
-                <SListItemSubtitle>{{ getItemText(item) }}</SListItemSubtitle>
+                <SListItemSubtitle class="s_select__item">{{ getItemText(item) }}</SListItemSubtitle>
               </SListItemContent>
             </SListItem>
           </SList>
@@ -241,6 +241,11 @@ const displayText = computed(() => {
         font-weight: 700;
       }
     }
+  }
+
+  &__item {
+    padding: 0 8px;
+    cursor: pointer;
   }
 }
 </style>
