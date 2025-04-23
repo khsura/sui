@@ -103,9 +103,9 @@ import {
   SMain,
   SButton,
   SCardActions,
+  SNavigationDrawer,
+  SSwitch,
 } from '@khsura/sui/components'
-import SNavigationDrawer from '@khsura/sui/components/layout/sNavigationDrawer.vue'
-import SSwitch from '@khsura/sui/components/sSwitch.vue'
 import { type Position } from '@khsura/sui/constants'
 import { type ToolbarDensityType } from '@khsura/sui/types'
 import { computed, ref } from 'vue'
