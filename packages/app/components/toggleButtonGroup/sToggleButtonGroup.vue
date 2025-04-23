@@ -5,7 +5,7 @@
     </div>
   </section>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends GroupItemValue = GroupItemValue">
 import { computed } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import type { PropsToggleButtonGroup } from '@khsura/sui/definitions'
@@ -16,9 +16,10 @@ const props = withDefaults(defineProps<PropsToggleButtonGroup>(), {
   selectedColor: 'primary',
 })
 
-const model = defineModel<GroupItemValue[]>({ default: [], required: false })
+const model = defineModel<T[] | null>({ default: [], required: false })
 
-useGroupService(props, model)
+useGroupService<T>(props, model)
+
 const { classListBorder, styleListBorder } = useBorderService(props)
 const { provideProps } = useProviderService()
 

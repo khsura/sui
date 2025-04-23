@@ -54,6 +54,7 @@ const classes = computed(() => {
     max-height: 100%;
     padding: 0 calc($s_spacer * 2);
     background-color: s_getAppColor('card');
+    border-radius: unset;
 
     &:focus::before {
       opacity: 0;

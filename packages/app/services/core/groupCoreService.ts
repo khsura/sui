@@ -1,13 +1,12 @@
 import { ref } from 'vue'
 import { type Ref } from 'vue'
-import { type ProviderName } from '@khsura/sui/constants'
-import { type Provider } from '@khsura/sui/definitions'
+import { type GroupProvider } from '@khsura/sui/definitions'
 import { type GroupItemValue } from '@khsura/sui/types'
 
-export const useGroupCoreService = () => {
-  const items: Ref<Array<{ value: GroupItemValue; readonly element: HTMLElement | null }>> = ref([])
+export const useGroupCoreService = <T extends GroupItemValue = GroupItemValue>() => {
+  const items: Ref<Array<{ value: T; readonly element: HTMLElement | null }>> = ref([])
 
-  const getItemIndex = (value: GroupItemValue | null | undefined) => {
+  const getItemIndex = (value: T | null | undefined) => {
     if (value === null || value === undefined) {
       return -1
     }
@@ -15,7 +14,7 @@ export const useGroupCoreService = () => {
     return items.value.findIndex((item) => value === item.value)
   }
 
-  const register: Provider[ProviderName.group]['registerItem'] = (name, item) => {
+  const register: GroupProvider<T>['registerItem'] = (name, item) => {
     items.value = [
       ...items.value,
       {
@@ -29,7 +28,7 @@ export const useGroupCoreService = () => {
     return items.value.length - 1
   }
 
-  const unregister: Provider[ProviderName.group]['unregisterItem'] = (name) => {
+  const unregister: GroupProvider<T>['unregisterItem'] = (name) => {
     const index = getItemIndex(name)
     const tempItems = [...items.value]
 

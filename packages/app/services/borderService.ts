@@ -20,7 +20,7 @@ export const useBorderService = (
 
   const styleListBorder = computed(() => {
     return getCleanSetObject({
-      [`border-radius`]: isPredefinedBorderRadiusType.value ? computedProps.value.borderRadius : undefined,
+      borderRadius: !isPredefinedBorderRadiusType.value ? computedProps.value.borderRadius : undefined,
     })
   })
 

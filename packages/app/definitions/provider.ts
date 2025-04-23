@@ -3,12 +3,12 @@ import { type ProviderName, type ProviderPropsName, type defaultLayoutSizes } fr
 import { type AppState, type GroupItemValue, type FormProviderRegisterInputAttribute } from '@khsura/sui/types'
 import type * as props from './props'
 
-export interface GroupProvider {
-  registerItem: (name: GroupItemValue, attrs: { element?: Ref<HTMLElement | null> }) => number
-  unregisterItem: (name: GroupItemValue | undefined) => void
-  toggleItem: (name: GroupItemValue | undefined) => void
-  isSelectedItem: (name: GroupItemValue | undefined) => boolean
-  items: ComputedRef<Array<{ value: GroupItemValue; readonly element: HTMLElement | null }>>
+export interface GroupProvider<T extends GroupItemValue = GroupItemValue> {
+  registerItem: (name: T, attrs: { element?: Ref<HTMLElement | null> }) => number
+  unregisterItem: (name: T | undefined) => void
+  toggleItem: (name: T | undefined) => void
+  isSelectedItem: (name: T | undefined) => boolean
+  items: ComputedRef<Array<{ value: T; readonly element: HTMLElement | null }>>
 }
 
 export interface Provider {
