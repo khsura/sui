@@ -1,6 +1,6 @@
 import type { PropsContent } from './core'
 
-export type ColumnNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+export type ColumnNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'auto'
 
 export type PropsColumn = PropsContent & {
   cols?: ColumnNumber | `${ColumnNumber}` | null
