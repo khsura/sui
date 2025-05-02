@@ -22,6 +22,7 @@ $s_listItem__minHeight--dense: calc(10 * variables.$s_spacer);
 
   &--dense {
     min-height: $s_listItem__minHeight--dense;
+    margin-right: variables.$s_spacer;
     margin-left: calc(variables.$s_spacer * 2);
   }
 }
