@@ -58,7 +58,7 @@ ol.s_list,
   }
 
   &--dense {
-    padding: $s_spacer;
+    padding: 0;
   }
 }
 

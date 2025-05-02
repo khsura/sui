@@ -42,6 +42,7 @@ const classList = computed(() => {
   align-items: center;
   width: 100%;
   min-height: 48px;
+  padding: 0 0 0 calc($s_spacer * 2);
   text-decoration: none;
   transition: background-color 0.2s ease-in-out;
 
