@@ -20,14 +20,22 @@ import { useScroll } from '@vueuse/core'
 import { type ComponentPublicInstance, computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { SToolbar } from '@khsura/sui/components/toolbar'
 import { getNumericCssAttribute, getWindow } from '@khsura/sui/lib'
-import { propsAppBar } from '@khsura/sui/props'
 import { useAppBarService } from '@khsura/sui/services'
+import type { PropsAppBar } from '@khsura/sui/definitions'
+import { defaultToolbarContentHeight, defaultToolbarExtensionHeight } from '@khsura/sui/constants'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = defineProps(propsAppBar())
+const props = withDefaults(defineProps<PropsAppBar>(), {
+  scrollThreshold: defaultToolbarContentHeight,
+  tag: 'header',
+  color: 'appBar',
+  height: defaultToolbarContentHeight,
+  extensionHeight: defaultToolbarExtensionHeight,
+})
+
 const toolbarRef = ref<ComponentPublicInstance<typeof SToolbar> | null>(null)
 
 const toolbarProps = computed(() => {

@@ -34,13 +34,14 @@
 import { computed } from 'vue'
 import SButton from '@khsura/sui/components/sButton.vue'
 import { DatePickerSelectType } from '@khsura/sui/constants'
-import { propsColor, propsDatePickerItemTitle, propsDisabled } from '@khsura/sui/props'
+import type { PropsDatePickerItemTitle } from '@khsura/sui/definitions'
 import { useColorService, useDatePickerItemTitleService } from '@khsura/sui/services'
+import { datePickerDisplayFormat } from '@khsura/sui/configs'
 
-const props = defineProps({
-  ...propsDatePickerItemTitle(),
-  ...propsDisabled(),
-  ...propsColor(),
+const props = withDefaults(defineProps<PropsDatePickerItemTitle>(), {
+  dateFormat: datePickerDisplayFormat.date,
+  monthFormat: datePickerDisplayFormat.month,
+  yearFormat: datePickerDisplayFormat.year,
 })
 
 const emit = defineEmits<{

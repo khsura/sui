@@ -21,9 +21,9 @@
 </template>
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
+import { ProviderPropsName, defaultToolbarExtensionHeight, defaultToolbarContentHeight } from '@khsura/sui/constants'
 import { getNumericCssAttribute } from '@khsura/sui/lib'
-import { propsToolbar } from '@khsura/sui/props'
+import type { PropsToolbar } from '@khsura/sui/definitions'
 import {
   useBorderService,
   useColorService,
@@ -35,9 +35,13 @@ import {
   useToolbarService,
 } from '@khsura/sui/services'
 
-const props = defineProps(propsToolbar())
+const props = withDefaults(defineProps<PropsToolbar>(), {
+  extensionHeight: defaultToolbarExtensionHeight,
+  height: defaultToolbarContentHeight,
+})
+
 const { classListColor, styleListColor } = useColorService(props)
-const { classListBorder } = useBorderService(props)
+const { classListBorder, styleListBorder } = useBorderService(props)
 const { classListElevation } = useElevationService(props)
 const { classListPosition } = usePositionService(props)
 const { provideProps } = useProviderService()
@@ -63,6 +67,7 @@ const classes = computed(() => {
 const styles = computed(() => {
   return {
     ...styleListColor.value,
+    ...styleListBorder.value,
     // top: isFixedExtension.value ? getNumericCssAttribute(-1 * contentHeight.value) : undefined,
   }
 })

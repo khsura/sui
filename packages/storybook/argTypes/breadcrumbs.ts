@@ -35,7 +35,7 @@ export const argTypesBreadcrumbs: Partial<ArgTypes<ComponentPropsAndSlots<typeof
     description: 'makes font size larger',
     table: {
       defaultValue: {
-        summary: 'false',
+        summary: 'undefined',
       },
       type: {
         summary: 'boolean | null | undefined',

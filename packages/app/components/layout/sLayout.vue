@@ -4,14 +4,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { propsLayoutProvider, propsMeasurableStyles } from '@khsura/sui/props'
+import { type PropsLayoutContainer } from '@khsura/sui/definitions'
 import { useLayoutProviderService, useMeasurableStylesService } from '@khsura/sui/services'
 
-const props = defineProps({
-  ...propsLayoutProvider(),
-  ...propsMeasurableStyles(),
-})
-
+const props = defineProps<PropsLayoutContainer>()
 const { measurableStyles } = useMeasurableStylesService(props)
 
 useLayoutProviderService(props)

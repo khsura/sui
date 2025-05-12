@@ -1,3 +1,5 @@
+import { z } from 'zod'
+
 export const getDocument = () => {
   return typeof document !== 'undefined' ? document : null
 }
@@ -49,18 +51,23 @@ export interface ViewportLocation {
   height: number
   right: number
   bottom: number
+  isWithinOverlay: boolean
 }
 
 export const getViewportLocation = () => {
   const document = getDocument()
   const window = getWindow()
+  const html = window?.document.querySelector<HTMLElement>('html')
 
-  if (!document || !window) {
+  if (!document || !window || !html) {
     return null
   }
 
-  const left = document.documentElement.scrollLeft
-  const top = document.documentElement.scrollTop
+  const isWithinOverlay = html.classList.contains('s_overlay__scrollBlocked')
+  const scrollXProperty = z.coerce.number().parse(html.style.getPropertyValue('--s-body-scroll-x').replace('px', ''))
+  const scrollYProperty = z.coerce.number().parse(html.style.getPropertyValue('--s-body-scroll-y').replace('px', ''))
+  const left = isWithinOverlay ? -scrollXProperty : document.documentElement.scrollLeft
+  const top = isWithinOverlay ? -scrollYProperty : document.documentElement.scrollTop
   const width = window.innerWidth
   const height = window.innerHeight
 
@@ -71,5 +78,6 @@ export const getViewportLocation = () => {
     height,
     right: left + width,
     bottom: top + height,
+    isWithinOverlay,
   } satisfies ViewportLocation
 }

@@ -2,8 +2,9 @@ import { faker } from '@khsura/shared'
 import { SSplitView, SSplitViewItem } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { createStoryObj } from '@khsura/storybook/helpers'
+import type { PropsSplitView } from '@khsura/sui/definitions/props'
 
-type SplitStoryType = typeof SSplitView | typeof SSplitViewItem | { views: number }
+type SplitStoryType = PropsSplitView & { views: number }
 
 const splitView: Meta<SplitStoryType> = {
   title: 'UI Components/SplitView',

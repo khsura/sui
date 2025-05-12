@@ -45,7 +45,7 @@ import SButton from '@khsura/sui/components/sButton.vue'
 import SIcon from '@khsura/sui/components/sIcon.vue'
 import { SWindow } from '@khsura/sui/components/window'
 import { getNumericCssAttribute } from '@khsura/sui/lib'
-import { propsCarousel } from '@khsura/sui/props'
+import type { PropsCarousel } from '@khsura/sui/definitions'
 import { type GroupItemValue } from '@khsura/sui/types'
 
 const styleList = computed(() => {
@@ -56,7 +56,18 @@ const styleList = computed(() => {
   }
 })
 
-const props = defineProps(propsCarousel())
+const props = withDefaults(defineProps<PropsCarousel>(), {
+  delimiterIcon: 'mdi-circle',
+  height: 500,
+  interval: 6000,
+  controlsBackgroundColor: '#0000004d',
+  cycle: true,
+  noAnimation: false,
+  touch: true,
+  prevIcon: 'mdi-chevron-left',
+  nextIcon: 'mdi-chevron-right',
+})
+
 const model = defineModel<GroupItemValue>()
 const windowRef = ref<typeof SWindow | null>()
 let slideTimeout = -1

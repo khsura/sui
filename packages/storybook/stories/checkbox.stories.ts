@@ -1,4 +1,4 @@
-import { SCheckbox, SForm } from '@khsura/sui/index'
+import { SCheckbox, SForm } from '@khsura/sui/components'
 import type { Meta } from '@storybook/vue3'
 import { defineComponent, ref } from 'vue'
 import { argTypesColor } from '@khsura/storybook/argTypes'
@@ -114,6 +114,7 @@ export const RequiredCheckbox = createStoryObj<typeof SCheckbox>({
           :rules="rules"
           ></SCheckbox>
           ${getSlot(formSlot)}
+          {{ {isSelected} }}
         </SForm>
       `,
     }),

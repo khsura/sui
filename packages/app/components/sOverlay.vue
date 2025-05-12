@@ -17,10 +17,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { overlaysContainerId } from '@khsura/sui/constants'
-import { propsOverlay } from '@khsura/sui/props'
+import type { PropsOverlay } from '@khsura/sui/definitions'
 
-defineProps(propsOverlay())
-
+defineProps<PropsOverlay>()
 const isReady = ref(false)
 
 onMounted(() => {
@@ -32,6 +31,7 @@ onMounted(() => {
 .s_overlay {
   position: fixed;
   inset: 0;
+  z-index: 6;
   display: flex;
   pointer-events: none;
   border-radius: inherit;

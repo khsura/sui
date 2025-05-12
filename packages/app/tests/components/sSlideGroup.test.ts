@@ -2,14 +2,13 @@ import { mount } from '@vue/test-utils'
 import { defineComponent, ref } from 'vue'
 import { SSlideGroup, SSlideItem } from '@khsura/sui/components'
 import { type PropsSlideGroup } from '@khsura/sui/definitions'
-import { propsSlideGroup } from '@khsura/sui/props'
 
 describe('SSlideGroup', () => {
   const getWrapper = (props: Partial<PropsSlideGroup> = {}) => {
     return mount(
       defineComponent({
         components: { SSlideGroup, SSlideItem },
-        props: propsSlideGroup(),
+        props: ['scrollable', 'mandatory'],
         setup: () => {
           const model = ref<string[]>([])
 

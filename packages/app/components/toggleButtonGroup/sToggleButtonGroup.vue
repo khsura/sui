@@ -1,22 +1,26 @@
 <template>
-  <section :class="classList">
+  <section :class="classList" :style="styleListBorder">
     <div class="s_toggleButtonGroup__content">
       <slot></slot>
     </div>
   </section>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends GroupItemValue = GroupItemValue">
 import { computed } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsToggleButtonGroup } from '@khsura/sui/props'
+import type { PropsToggleButtonGroup } from '@khsura/sui/definitions'
 import { useBorderService, useGroupService, useProviderService } from '@khsura/sui/services'
 import { type GroupItemValue } from '@khsura/sui/types'
 
-const props = defineProps(propsToggleButtonGroup())
-const model = defineModel<GroupItemValue[]>({ default: [], required: false })
+const props = withDefaults(defineProps<PropsToggleButtonGroup>(), {
+  selectedColor: 'primary',
+})
 
-useGroupService(props, model)
-const { classListBorder } = useBorderService(props)
+const model = defineModel<T[] | null>({ default: [], required: false })
+
+useGroupService<T>(props, model)
+
+const { classListBorder, styleListBorder } = useBorderService(props)
 const { provideProps } = useProviderService()
 
 const isInset = computed(() => {

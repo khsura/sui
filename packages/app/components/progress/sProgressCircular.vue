@@ -36,32 +36,13 @@
 </template>
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { propsTextColor, propsComponentTheme } from '@khsura/sui/props'
 import { useTextColorService, useComponentThemeService } from '@khsura/sui/services'
+import type { PropsProgressCircular } from '@khsura/sui/definitions'
 
-const props = defineProps({
-  ...propsTextColor(),
-  size: {
-    type: [Number, String],
-    default: 32,
-  },
-  ...propsComponentTheme(),
-  indeterminate: {
-    type: Boolean,
-    default: false,
-  },
-  value: {
-    type: Number,
-    default: 0,
-  },
-  rotate: {
-    type: [Number, String],
-    default: null,
-  },
-  width: {
-    type: Number,
-    default: 4,
-  },
+const props = withDefaults(defineProps<PropsProgressCircular>(), {
+  size: 32,
+  width: 4,
+  value: 0,
 })
 
 const { classListTextColor, styleListTextColor } = useTextColorService(props)

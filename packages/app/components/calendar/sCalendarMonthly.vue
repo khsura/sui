@@ -15,7 +15,7 @@
           text
           variant="fab"
           size="small"
-          elevation="0"
+          :elevation="0"
           :disabled="!date.isThisMonth"
           :class="{
             s_calendarMonthly__dateButton: true,
@@ -52,11 +52,11 @@
 </template>
 <script setup lang="ts">
 import SButton from '@khsura/sui/components/sButton.vue'
-import { propsCalendar } from '@khsura/sui/props'
+import type { PropsCalendarMonthly } from '@khsura/sui/definitions'
 import { useCalendarMonthlyService } from '@khsura/sui/services'
 import { type CalendarDate, type CalendarEvent } from '@khsura/sui/types'
 
-const props = defineProps(propsCalendar())
+const props = defineProps<PropsCalendarMonthly>()
 
 const emit = defineEmits<{
   (event: 'change', value: { start: CalendarDate; end: CalendarDate }): void

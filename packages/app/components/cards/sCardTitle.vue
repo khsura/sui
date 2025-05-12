@@ -7,7 +7,6 @@
 import { type PropsTag } from '@khsura/sui/definitions'
 import { useTagService } from '@khsura/sui/services'
 
-// eslint-disable-next-line vue/no-unused-properties
 const props = defineProps<PropsTag>()
 const { tagName } = useTagService(props)
 </script>

@@ -1,5 +1,5 @@
 import { faker } from '@khsura/shared'
-import { SToolbar, SToolbarTitle, SButton, SIcon, SCard } from '@khsura/sui/index'
+import { SToolbar, SToolbarTitle, SButton, SIcon, SCard, type PropsToolbar } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3'
 import { argsColor } from '@khsura/storybook/args'
 import { createStoryObj } from '@khsura/storybook/helpers'
@@ -22,7 +22,7 @@ const toolbar: Meta<typeof SToolbar> = {
 
 export default toolbar
 
-export const Toolbar = createStoryObj<typeof SToolbar>({
+export const Toolbar = createStoryObj<PropsToolbar>({
   render: (args) => {
     return (
       <div>

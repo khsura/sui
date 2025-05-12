@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsWindowItem } from '@khsura/sui/props'
+import type { PropsWindowItem } from '@khsura/sui/definitions'
 import { useProviderService, useSingleGroupItemService } from '@khsura/sui/services'
 
 const translateXMapper: Record<string, string | undefined> = {
@@ -15,10 +15,7 @@ const translateXMapper: Record<string, string | undefined> = {
   '-1': '-100%',
 }
 
-const props = defineProps({
-  ...propsWindowItem(),
-})
-
+const props = defineProps<PropsWindowItem>()
 const { injectParentProps } = useProviderService()
 const windowProps = injectParentProps(ProviderPropsName.window)
 const { isSelected, group, item } = useSingleGroupItemService(props)

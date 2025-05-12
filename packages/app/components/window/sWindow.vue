@@ -38,7 +38,7 @@ import { computed, onMounted } from 'vue'
 import SButton from '@khsura/sui/components/sButton.vue'
 import SIcon from '@khsura/sui/components/sIcon.vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsWindow } from '@khsura/sui/props'
+import type { PropsWindow } from '@khsura/sui/definitions'
 import {
   useColorService,
   useProviderService,
@@ -48,8 +48,9 @@ import {
 } from '@khsura/sui/services'
 import { type GroupItemValue } from '@khsura/sui/types'
 
-const props = defineProps({
-  ...propsWindow(),
+const props = withDefaults(defineProps<PropsWindow>(), {
+  nextIcon: 'mdi-chevron-right',
+  prevIcon: 'mdi-chevron-left',
 })
 
 const model = defineModel<GroupItemValue>()

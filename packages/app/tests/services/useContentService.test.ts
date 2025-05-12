@@ -1,5 +1,5 @@
 import { useContentService } from '@khsura/sui/services'
-import { type PropsContent } from '@khsura/sui/types'
+import { type PropsContent } from '@khsura/sui/definitions'
 
 describe('useContentService', () => {
   const emptyPropsContent: PropsContent = {

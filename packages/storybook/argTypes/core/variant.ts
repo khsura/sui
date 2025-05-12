@@ -1,7 +1,7 @@
-import type { PropsVariant } from '@khsura/sui/index'
+import type { PropsButtonVariant } from '@khsura/sui/index'
 import type { ArgTypes } from '@storybook/vue3'
 
-export const argTypesVariant = (): ArgTypes<PropsVariant> => {
+export const argTypesVariant = (): ArgTypes<PropsButtonVariant> => {
   return {
     variant: {
       type: 'string',

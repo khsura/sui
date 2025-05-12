@@ -1,5 +1,5 @@
 <template>
-  <span :class="classList" :style="styles" @click.stop="click">
+  <span :class="classList" :style="styleList" @click.stop="click">
     <span class="s_chip__content">
       <slot></slot>
       <slot v-if="closable" name="close" :on="{ close }">
@@ -12,17 +12,17 @@
 import { computed } from 'vue'
 import SIcon from '@khsura/sui/components/sIcon.vue'
 import { getCleanSetObject } from '@khsura/sui/lib'
-import { propsChip } from '@khsura/sui/props'
+import type { PropsChip } from '@khsura/sui/definitions'
 import { useBorderService, useColorService, useDisabledService, useSizeService } from '@khsura/sui/services'
 
-const props = defineProps(propsChip())
+const props = defineProps<PropsChip>()
 
 const emit = defineEmits<{
   (event: 'close'): void
   (event: 'click', _: Event): void
 }>()
 
-const { classListBorder } = useBorderService(props, { block: 'chip' })
+const { classListBorder, styleListBorder } = useBorderService(props, { block: 'chip' })
 
 const { classListColor, styleListColor } = useColorService(props, {
   isText: computed(() => !!props.outlined || !!props.underlined),
@@ -53,9 +53,10 @@ const click = (event: Event) => {
   }
 }
 
-const styles = computed(() => {
+const styleList = computed(() => {
   return getCleanSetObject({
     ...styleListColor.value,
+    ...styleListBorder.value,
   })
 })
 

@@ -16,18 +16,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { CssColor } from '@khsura/sui/constants'
-import { propsColor, propsFormInput } from '@khsura/sui/props'
+import type { PropsSwitch } from '@khsura/sui/definitions'
 import { useColorService, useDisabledService } from '@khsura/sui/services'
 
-const props = defineProps({
-  label: {
-    type: String,
-    default: null,
-  },
-  ...propsFormInput<boolean>({ modelValue: { required: true } }),
-  ...propsColor(),
-})
-
+const props = defineProps<PropsSwitch>()
 const modelValue = defineModel<boolean>()
 const { classListDisabled, classListTextDisabled } = useDisabledService(props)
 const { colorVariable } = useColorService(props)

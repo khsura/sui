@@ -21,8 +21,6 @@ exports[`SInput > renders correctly 1`] = `
           <input
             class="s_input__input"
             id="password"
-            inputmode="text"
-            type="text"
           />
           <!-- eslint-disable-next-line vue/no-v-html -->
           <!--v-if-->

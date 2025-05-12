@@ -121,11 +121,11 @@ export const useSingleGroupService = (props: PropsSingleGroup, model: Ref<GroupI
   }
 
   const canMoveBack = computed(() => {
-    return props.continuous || selected.value.id !== 0
+    return !!props.continuous || selected.value.id !== 0
   })
 
   const canMoveForward = computed(() => {
-    return props.continuous || selected.value.id !== items.value.length - 1
+    return !!props.continuous || selected.value.id !== items.value.length - 1
   })
 
   const next = () => {

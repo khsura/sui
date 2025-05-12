@@ -32,10 +32,10 @@
 import { OnClickOutside } from '@vueuse/components'
 import { watch, nextTick, computed } from 'vue'
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
-import { propsTooltip } from '@khsura/sui/props'
+import type { PropsTooltip } from '@khsura/sui/definitions'
 import { useColorService, useMeasurableStylesService, useMenuService } from '@khsura/sui/services'
 
-const props = defineProps(propsTooltip())
+const props = defineProps<PropsTooltip>()
 const { measurableStyles } = useMeasurableStylesService(props)
 const model = defineModel<boolean>()
 
@@ -67,10 +67,7 @@ const classListContent = computed(() => {
 })
 
 const styleListContent = computed(() => {
-  // const { minWidth: tooltipMinWidth, ...tooltipStyles } = styleListTooltipContent.value
-
   return {
-    // ...tooltipStyles,
     ...contentStyles.value,
     ...styleListColor.value,
     ...measurableStyles.value,

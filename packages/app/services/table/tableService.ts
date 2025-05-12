@@ -160,7 +160,7 @@ export const useTableService = <T extends TableItem = TableItem>(props: PropsTab
         }
 
         if (headerInfo?.sort) {
-          return headerInfo.sort(a, b)
+          return headerInfo.sort(a, b, sortOrders.value[header])
         }
 
         const aValue = a[header]

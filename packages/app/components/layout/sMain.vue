@@ -10,7 +10,6 @@ import { getNumericCssAttribute } from '@khsura/sui/lib'
 import { getIsFixedPosition } from '@khsura/sui/repositories/positionRepository'
 import { useLayoutService } from '@khsura/sui/services'
 
-// eslint-disable-next-line vue/no-unused-properties
 const props = defineProps<PropsMain>()
 const { app, isApp } = useLayoutService(props)
 

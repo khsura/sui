@@ -25,15 +25,11 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref } from 'vue'
 import SButton from '@khsura/sui/components/sButton.vue'
-import { propsColor, propsDatePickerItem } from '@khsura/sui/props'
+import type { PropsDatePickerItem } from '@khsura/sui/definitions'
 import { useColorService, useDatePickerItemYearService, useScrollService } from '@khsura/sui/services'
 
 const datePickerYear = ref<HTMLElement | null>(null)
-
-const props = defineProps({
-  ...propsDatePickerItem(),
-  ...propsColor(),
-})
+const props = defineProps<PropsDatePickerItem>()
 
 const emit = defineEmits<{
   (event: 'update:date', value: string): void

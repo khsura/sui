@@ -7,9 +7,7 @@
 </template>
 <script setup lang="ts">
 import { SToolbarTitle } from '@khsura/sui/components/toolbar'
-import { propsToolbarTitle } from '@khsura/sui/props'
+import type { PropsToolbarTitle } from '@khsura/sui/definitions'
 
-defineProps({
-  ...propsToolbarTitle(),
-})
+defineProps<PropsToolbarTitle>()
 </script>

@@ -6,18 +6,21 @@ import { type GroupItemValue } from '@khsura/sui/types'
 import { useProviderService } from './core/providerService'
 import { useGroupCoreService } from './core/groupCoreService'
 
-export const useGroupService = (props: PropsGroup, model: ModelRef<GroupItemValue[] | null>) => {
+export const useGroupService = <T extends GroupItemValue = GroupItemValue>(
+  props: PropsGroup,
+  model: ModelRef<T[] | null>,
+) => {
   const { provide, provideProps } = useProviderService()
-  const { items, register, unregister, getItemIndex } = useGroupCoreService()
-  const clickValue: Ref<GroupItemValue | undefined> = ref()
+  const { items, register, unregister, getItemIndex } = useGroupCoreService<T>()
+  const clickValue: Ref<T | undefined> = ref()
 
   provideProps(ProviderPropsName.groupProps, props)
 
-  const firstIndexItem = computed<GroupItemValue | undefined>(() => {
+  const firstIndexItem = computed<T | undefined>(() => {
     return items.value[0]?.value ?? undefined
   })
 
-  const formatItems = (value?: GroupItemValue[] | null | undefined) => {
+  const formatItems = (value?: T[] | null | undefined) => {
     const toBeUpdatedItems = [...(value ?? [])]
     const firstItem = firstIndexItem.value
 
@@ -36,21 +39,21 @@ export const useGroupService = (props: PropsGroup, model: ModelRef<GroupItemValu
     get: () => {
       return formatItems(model.value)
     },
-    set: (value: GroupItemValue[] | null) => {
+    set: (value: T[] | null) => {
       model.value = formatItems(value)
     },
   })
 
-  const isSelectedItem = (value: GroupItemValue | undefined) => {
+  const isSelectedItem = (value: T | undefined) => {
     return value !== undefined && selectedItems.value.includes(value)
   }
 
-  const updateItems = (params: { clickValue: GroupItemValue | null; selectedItems: Iterable<GroupItemValue> }) => {
+  const updateItems = (params: { clickValue: T | null; selectedItems: Iterable<T> }) => {
     selectedItems.value = [...params.selectedItems]
     clickValue.value = params.clickValue ?? firstIndexItem.value
   }
 
-  const addSelectedItem = (value: GroupItemValue | undefined) => {
+  const addSelectedItem = (value: T | undefined) => {
     const clickValue = value ?? firstIndexItem.value
 
     if (clickValue === undefined) {
@@ -67,7 +70,7 @@ export const useGroupService = (props: PropsGroup, model: ModelRef<GroupItemValu
     }
   }
 
-  const removeSelectedItem = (value: GroupItemValue | undefined) => {
+  const removeSelectedItem = (value: T | undefined) => {
     const clickValue = value ?? firstIndexItem.value
 
     if (clickValue === undefined) {
@@ -92,25 +95,28 @@ export const useGroupService = (props: PropsGroup, model: ModelRef<GroupItemValu
 
   watch([() => props.mandatory, () => props.multiple], init)
 
+  // TODO: Fix types
   provide(ProviderName.group, {
     registerItem: (name, item) => {
-      const id = register(name, item)
+      const id = register(name as T, item)
 
       init()
 
       return id
     },
     unregisterItem: (name) => {
-      unregister(name)
+      unregister(name as T)
     },
     toggleItem: (value) => {
-      if (isSelectedItem(value)) {
-        removeSelectedItem(value)
+      if (isSelectedItem(value as T)) {
+        removeSelectedItem(value as T)
       } else {
-        addSelectedItem(value)
+        addSelectedItem(value as T)
       }
     },
-    isSelectedItem,
+    isSelectedItem: (value) => {
+      return isSelectedItem(value as T)
+    },
     items: computed<Array<{ value: GroupItemValue; element: Readonly<HTMLElement | null> }>>(() => {
       return items.value
     }),

@@ -17,14 +17,10 @@
 import { computed } from 'vue'
 import SButton from '@khsura/sui/components/sButton.vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsColumn, propsGroupItem } from '@khsura/sui/props'
+import type { PropsToggleButton } from '@khsura/sui/definitions'
 import { useColumnService, useGroupItemService, useProviderService } from '@khsura/sui/services'
 
-const props = defineProps({
-  ...propsGroupItem(),
-  ...propsColumn(),
-})
-
+const props = defineProps<PropsToggleButton>()
 const { classListColumn } = useColumnService(props, { classPrefix: 'toggleButton' })
 const { injectParentProps } = useProviderService()
 const { toggleGroupItem, isSelected } = useGroupItemService(props)
@@ -58,6 +54,7 @@ const classes = computed(() => {
     max-height: 100%;
     padding: 0 calc($s_spacer * 2);
     background-color: s_getAppColor('card');
+    border-radius: unset;
 
     &:focus::before {
       opacity: 0;

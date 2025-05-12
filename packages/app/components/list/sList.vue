@@ -6,20 +6,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsList } from '@khsura/sui/props'
-import {
-  useColorService,
-  useMeasurableStylesService,
-  useProviderService,
-  useTagService,
-  useTextColorService,
-} from '@khsura/sui/services'
+import { type PropsList } from '@khsura/sui/definitions'
+import { useColorService, useProviderService, useTagService, useTextColorService } from '@khsura/sui/services'
 
-const props = defineProps({
-  ...propsList(),
-})
-
-const { measurableStyles } = useMeasurableStylesService(props)
+const props = defineProps<PropsList>()
 const { provideProps, injectParentProps } = useProviderService()
 const { tagName } = useTagService(props)
 
@@ -36,7 +26,6 @@ const { classListTextColor, styleListTextColor } = useTextColorService(props)
 
 const styles = computed(() => {
   return {
-    ...measurableStyles.value,
     ...(props.text ? styleListTextColor.value : styleListColor.value),
   }
 })
@@ -76,6 +65,7 @@ ol.s_list,
 .s_list {
   position: static;
   display: block;
+  width: 100%;
   background-color: s_getAppColor('card');
   border-radius: $s_spacer;
 

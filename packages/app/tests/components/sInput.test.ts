@@ -11,8 +11,6 @@ describe('SInput', () => {
   test('attributes can be set properly', async () => {
     const wrapper = mount(SInput, { props: { id: 'password' } })
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     await wrapper.setProps({ max: 16, ariaLabelledby: 'hello', disabled: false, maxlength: null, type: 'number' })
 
     expect(wrapper.find('.s_input__input').attributes().max).toBe('16')
@@ -56,7 +54,6 @@ describe('SInput', () => {
       placeholder: 'placeholder',
       spellcheck: 'true',
       type: 'number',
-      inputmode: 'text',
     })
   })
 })

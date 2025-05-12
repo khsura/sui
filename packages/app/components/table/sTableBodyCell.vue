@@ -10,7 +10,6 @@ import { getCleanSetObject } from '@khsura/sui/lib'
 import { useTableBodyCellService } from '@khsura/sui/services'
 import { type PropsTableBodyCell, type TableItem } from '@khsura/sui/types'
 
-// eslint-disable-next-line vue/no-unused-properties
 const props = defineProps<PropsTableBodyCell<T>>()
 const { itemStyles, itemClasses } = useTableBodyCellService(props)
 

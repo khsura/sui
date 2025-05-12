@@ -58,12 +58,15 @@ export const useMenuService = (
       (isBottom.value ? activatorLocation.height : 0) +
       (isTop.value ? -height : 0)
 
+    const isBottomOverflow = viewportLocation.isWithinOverlay ? top + height >= viewportLocation.bottom : false
+    const adjustedTop = isBottomOverflow ? viewportLocation.bottom - height : top
+
     return {
       left,
-      top,
+      top: adjustedTop,
       width,
       height,
-      bottom: top + height,
+      bottom: adjustedTop + height,
       right: left + width,
     }
   }

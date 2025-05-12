@@ -6,10 +6,13 @@
 </template>
 <script setup lang="ts">
 import { overlaysContainerId } from '@khsura/sui/constants'
-import { propsApp } from '@khsura/sui/props'
 import { useAppService } from '@khsura/sui/services'
+import type { PropsApp } from '@khsura/sui/definitions'
 
-const props = defineProps(propsApp())
+const props = withDefaults(defineProps<PropsApp>(), {
+  app: true,
+})
+
 const { styles } = useAppService(props)
 </script>
 

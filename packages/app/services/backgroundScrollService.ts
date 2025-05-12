@@ -20,8 +20,15 @@ export const useBackgroundScrollService = () => {
     }
 
     if (activeCount === 0 && html) {
-      const x = z.coerce.number().parse(html.style.getPropertyValue('--s-body-scroll-x').replace('px', ''))
-      const y = z.coerce.number().parse(html.style.getPropertyValue('--s-body-scroll-y').replace('px', ''))
+      const scrollXProperty = html.style.getPropertyValue('--s-body-scroll-x').replace('px', '')
+      const scrollYProperty = html.style.getPropertyValue('--s-body-scroll-y').replace('px', '')
+
+      if (scrollXProperty === '' || scrollYProperty === '') {
+        return
+      }
+
+      const x = z.coerce.number().parse(scrollXProperty)
+      const y = z.coerce.number().parse(scrollYProperty)
 
       html.style.setProperty('--s-body-scroll-x', null)
       html.style.setProperty('--s-body-scroll-y', null)
@@ -39,7 +46,9 @@ export const useBackgroundScrollService = () => {
     await retry(enableBackgroundScrollOnce, 50, 20)
   }
 
-  const disableBackgroundScroll = () => {
+  const disableBackgroundScroll = async () => {
+    await nextTick()
+
     // must be called inside for ssr
     const window = getWindow()
     const html = window?.document.querySelector<HTMLElement>('html')
@@ -47,6 +56,7 @@ export const useBackgroundScrollService = () => {
     if (html && window) {
       html.style.setProperty('--s-body-scroll-x', `-${window?.scrollX}px`)
       html.style.setProperty('--s-body-scroll-y', `-${window?.scrollY}px`)
+      await nextTick()
       html.classList.add('s_overlay__scrollBlocked')
     }
   }

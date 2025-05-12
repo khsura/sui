@@ -6,10 +6,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
-import { propsGroupItem } from '@khsura/sui/props'
 import { useGroupItemService, useProviderService } from '@khsura/sui/services'
+import type { PropsGroupItem } from '@khsura/sui/definitions'
 
-const props = defineProps(propsGroupItem())
+const props = defineProps<PropsGroupItem>()
 const slideItem = ref<HTMLElement | null>(null)
 const { toggleGroupItem, isSelected } = useGroupItemService(props, { element: slideItem })
 const { injectParentProps } = useProviderService()

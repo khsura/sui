@@ -18,7 +18,7 @@
 import { computed, ref, onMounted } from 'vue'
 import { ProviderPropsName, SizeProperty } from '@khsura/sui/constants'
 import { getCleanSetObject, isDarkColor } from '@khsura/sui/lib'
-import { propsButton } from '@khsura/sui/props'
+import type { PropsButton } from '@khsura/sui/definitions'
 import { useColorRepository, useProviderRepository } from '@khsura/sui/repositories'
 import {
   useBorderService,
@@ -33,7 +33,10 @@ import {
 } from '@khsura/sui/services'
 import { SProgressCircular } from './progress'
 
-const props = defineProps(propsButton())
+const props = withDefaults(defineProps<PropsButton>(), {
+  tag: 'button',
+})
+
 const emit = defineEmits<(event: 'click', value: Event) => void>()
 const { measurableStyles } = useMeasurableStylesService(props)
 const { classListElevation } = useElevationService(props)
@@ -46,14 +49,13 @@ const isReady = ref(false)
 
 const { classListColor, styleListColor } = useColorService(props, {
   isText: computed(() => {
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    return props.outlined || props.underlined || isIcon.value
+    return !!props.outlined || !!props.underlined || isIcon.value
   }),
 })
 
 const { classListTextColor, styleListTextColor } = useTextColorService(props)
 const { classListSize, styleListSize, isPresetSize } = useSizeService(props, { block: 'button' })
-const { classListBorder } = useBorderService(props, { block: 'button' })
+const { classListBorder, styleListBorder } = useBorderService(props, { block: 'button' })
 const { tag: tagName, isLink } = useLinkService(props)
 const { injectParentProps } = useProviderRepository()
 const bottomNavigationProps = injectParentProps(ProviderPropsName.bottomNavigation, null)
@@ -100,6 +102,7 @@ const styleList = computed(() => {
   return {
     ...measurableStyles.value,
     ...styleListSize.value,
+    ...styleListBorder.value,
     ...(props.variant === 'text' ? styleListTextColor.value : styleListColor.value),
   }
 })

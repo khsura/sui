@@ -1,7 +1,7 @@
 import { toReactive } from '@vueuse/core'
 import { type Ref, computed, isRef } from 'vue'
 import { AppTheme } from '@khsura/sui/constants/app'
-import { type PropsColor } from '@khsura/sui/definitions/props'
+import { type PropsColor } from '@khsura/sui/definitions'
 import { getCssColor } from '@khsura/sui/helpers/colorHelpers'
 import { isDarkColor } from '@khsura/sui/lib/color'
 import { useAppProviderRepository } from '@khsura/sui/repositories'

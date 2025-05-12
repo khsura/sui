@@ -62,7 +62,7 @@
       <div v-if="$slots.appendOuter" class="s_input__appendOuter"><slot name="appendOuter"></slot></div>
       <div v-else-if="appendOuter" class="s_input__appendOuter">{{ appendOuter }}</div>
     </div>
-    <kFormInputError v-if="!hideDetails" :errors="errors" :simple="simple"></kFormInputError>
+    <SFormInputError v-if="!hideDetails" :errors="errors" :simple="simple"></SFormInputError>
   </section>
 </template>
 <script setup lang="ts">
@@ -70,18 +70,18 @@ import { useSlots, ref } from 'vue'
 import { computed, type Slots } from 'vue'
 import { SColumn, SRow } from '@khsura/sui/components/grids'
 import { getNumericValue, getCleanSetObject } from '@khsura/sui/lib'
-import { propsInput } from '@khsura/sui/props'
+import type { PropsInput } from '@khsura/sui/definitions'
 import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
 import { useDisabledService, useFormInputService, useSizeService } from '@khsura/sui/services'
 import { type EmitFormTextInput } from '@khsura/sui/types'
-import kFormInputError from './common/sFormInputError.vue'
+import { SFormInputError } from './common'
 
-const props = defineProps(propsInput())
+const props = defineProps<PropsInput>()
 const emit = defineEmits<EmitFormTextInput<string | number | null>>()
 const slots: Slots = useSlots()
 const inputElement = ref<HTMLElement | null>()
 const model = defineModel<string | number | null>()
-const { updateFormInput, errors } = useFormInputService<string | number | null>(props, emit)
+const { updateFormInput, errors } = useFormInputService<string | number | null>(props, emit, model)
 const { classListDisabled } = useDisabledService(props)
 // TODO: Sura - make able to use all preset colors
 const { getIsPredefinedPresetColor } = useColorRepository()
@@ -114,9 +114,13 @@ const inputClassList = computed<Record<string, boolean>>(() => {
 })
 
 const inputStyleList = computed(() => {
-  return {
-    ...(!isPresetInputBackground.value ? { backgroundColor: props.inputBackground } : {}),
+  if (!isPresetInputBackground.value) {
+    return {
+      backgroundColor: props.inputBackground ?? undefined,
+    }
   }
+
+  return {}
 })
 
 let previousValue: number | null = null
@@ -131,10 +135,10 @@ const maxNumber = computed(() => {
 
 const displayValue = computed(() => {
   if (props.type !== 'number') {
-    return props.modelValue
+    return model.value
   }
 
-  const value = getNumericValue(props.modelValue)
+  const value = getNumericValue(model.value)
 
   if (value === 0) {
     return null

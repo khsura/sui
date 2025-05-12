@@ -1,15 +1,13 @@
-import type { SCard } from '@khsura/sui/index'
-import type { ComponentPropsAndSlots } from '@storybook/vue3'
+import type { PropsCard } from '@khsura/sui/index'
 import { argsBorder, argsColor, argsElevation, argsMeasurableStyles, argsSlot } from './core'
 
-export const argsCard = <T extends Partial<ComponentPropsAndSlots<typeof SCard>>>(args?: T): T => {
-  const output: T = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const argsCard = (args?: Partial<PropsCard & { default: any }>): Partial<PropsCard> => {
+  return {
     ...argsBorder,
     ...argsColor,
     ...argsElevation,
     ...argsMeasurableStyles,
     ...argsSlot(args?.default),
-  } as T
-
-  return output
+  }
 }

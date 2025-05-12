@@ -7,7 +7,7 @@ const defaultPropsActivator: PropsActivator = {
   disabled: false,
   readonly: false,
   activator: 'string',
-  closeOnClick: false,
+  preventCloseOnClick: false,
 }
 
 describe('useActivatorService', () => {

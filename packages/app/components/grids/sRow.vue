@@ -9,9 +9,8 @@
 import { type CSSProperties, computed } from 'vue'
 import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
 import { useContentService } from '@khsura/sui/services'
-import { type PropsRow } from '@khsura/sui/types'
+import { type PropsRow } from '@khsura/sui/definitions'
 
-// eslint-disable-next-line vue/no-unused-properties
 const props = defineProps<PropsRow>()
 const content = useContentService(props)
 

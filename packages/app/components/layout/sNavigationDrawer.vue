@@ -22,7 +22,6 @@ import { type Ref, computed, ref, getCurrentInstance, watch, onBeforeMount, onBe
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import { getNumericCssAttribute } from '@khsura/sui/lib'
-import { propsNavigationDrawer } from '@khsura/sui/props'
 import {
   useBackgroundScrollService,
   useDisplayService,
@@ -38,8 +37,9 @@ import {
 } from '@khsura/sui/services'
 import { type TouchWrapper } from '@khsura/sui/types'
 import { onClickOutside } from '@vueuse/core'
+import type { PropsNavigationDrawer } from '@khsura/sui/definitions'
 
-const props = defineProps(propsNavigationDrawer({ app: false }))
+const props = defineProps<PropsNavigationDrawer>()
 const { isBottom, isRight, computedLocation } = useLocationService(props)
 
 const emit = defineEmits<{
@@ -274,7 +274,7 @@ watch(
     if (isPermanentDesktopApp.value || !value) {
       await enableBackgroundScroll()
     } else {
-      disableBackgroundScroll()
+      await disableBackgroundScroll()
     }
   },
   {

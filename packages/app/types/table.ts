@@ -1,10 +1,5 @@
 import type { TableItem, TableItemClass, TableItemCellType, TableItemStyle, TableRowClass, TableHeader } from './core'
 
-export enum KTableSortOrder {
-  ascending,
-  descending,
-}
-
 export interface PropsTableHeadCell {
   header: TableHeader
   multiSort?: boolean | null | undefined

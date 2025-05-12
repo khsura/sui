@@ -1,5 +1,10 @@
 import type { CSSProperties } from 'vue'
 
+export enum KTableSortOrder {
+  ascending,
+  descending,
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TableItem<T extends Record<string, any> = Record<string, any>> = T
 
@@ -34,7 +39,7 @@ export interface TableHeader<V extends string | number | symbol = string> {
   textWrap?: boolean
   noGutters?: boolean
   cellNoGutters?: boolean
-  sort?: (a: TableItem, b: TableItem) => number
+  sort?: (a: TableItem, b: TableItem, sortOrder?: KTableSortOrder) => number
   rowspan?: number
   colspan?: number
   scope?: 'colgroup' | 'col'

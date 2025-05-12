@@ -20,6 +20,7 @@ describe('useElevationService', () => {
     })
 
     test('if prop elevation is higher than 24 then it will be ignored', () => {
+      // @ts-expect-error - elevation is higher than 24
       const { classListElevation } = useElevationService({ elevation: 25 })
 
       expect(classListElevation.value).toEqual({})

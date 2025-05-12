@@ -4,9 +4,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { type GroupItemValue } from '@khsura/sui/types'
+import type { PropsAutocomplete } from '@khsura/sui/definitions'
 
-defineProps<{
-  items: GroupItemValue[]
-}>()
+defineProps<PropsAutocomplete>()
 </script>

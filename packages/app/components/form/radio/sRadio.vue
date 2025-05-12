@@ -1,10 +1,10 @@
 <template>
-  <div :class="classList">
+  <div :class="classList" :style="styleListBorder">
     <button :class="classListButton" @click="updateValue">
       <input
         :id="id"
         type="radio"
-        :name="groupProps.name || name"
+        :name="groupProps.name ?? name ?? undefined"
         :value="value"
         :checked="isSelected"
         :class="classListInput"
@@ -19,34 +19,23 @@
 <script setup lang="ts">
 import { computed, nextTick } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants/provider'
-import { propsDisabled, propsSingleGroupItem } from '@khsura/sui/props'
 import {
   useBorderService,
   useDisabledService,
   useProviderService,
   useSingleGroupItemService,
 } from '@khsura/sui/services'
+import type { PropsBorder, PropsDisabled, PropsSingleGroupItem } from '@khsura/sui/definitions'
 
-const props = defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    default: null,
-  },
-  label: {
-    type: String,
-    default: null,
-  },
-  outlined: {
-    type: Boolean,
-    default: null,
-  },
-  ...propsDisabled(),
-  ...propsSingleGroupItem(),
-})
+const props = defineProps<
+  {
+    id: string
+    name?: string | null
+    label?: string | null
+  } & PropsDisabled &
+    PropsSingleGroupItem &
+    PropsBorder
+>()
 
 const emit = defineEmits<(event: 'update:checked', value: boolean) => void>()
 const { injectParentProps } = useProviderService()
@@ -62,7 +51,7 @@ const { classListDisabled } = useDisabledService(
   }),
 )
 
-const { classListBorder } = useBorderService(groupProps)
+const { classListBorder, styleListBorder } = useBorderService(groupProps)
 
 const { classListDisabled: classListRadioGroupDisabled } = useDisabledService(
   computed(() => {
@@ -89,7 +78,7 @@ const classListButton = computed(() => {
     ...classListBorder.value,
     's_radio__button--grow': groupProps.value.grow,
     // TODO (Sura) classListBorder.value['s_outlined'] is not good. because it's hard to refer. improve in the future
-    s_outlined: props.outlined || classListBorder.value.s_outlined,
+    s_outlined: !!props.outlined || classListBorder.value.s_outlined,
     s_disabled: classListDisabled.value.s_disabled || classListRadioGroupDisabled.value.s_disabled,
   }
 })

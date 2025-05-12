@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { type PropsCalendar } from '@khsura/sui/definitions'
+import { type PropsCalendarMonthly } from '@khsura/sui/definitions'
 import { getCalendarDate } from '@khsura/sui/repositories/calendarRepository'
 import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
 import { type CalendarDate, type CalendarEvent } from '@khsura/sui/types'
@@ -16,13 +16,13 @@ type CalendarEventExtended = CalendarEvent & {
   style: Record<string, string>
 }
 
-export const useCalendarMonthlyService = (props: PropsCalendar) => {
+export const useCalendarMonthlyService = (props: PropsCalendarMonthly) => {
   const today = dayjs()
   const eventPadding = 4
   const { getBackgroundColorAttributes } = useColorRepository()
 
   const date = computed(() => {
-    return dayjs(props.focus || undefined)
+    return dayjs(props.focus)
   })
 
   const startDateOfMonth = computed(() => {
@@ -53,7 +53,7 @@ export const useCalendarMonthlyService = (props: PropsCalendar) => {
       }>((_, i) => {
         const target = startDateOfMonth.value.add(i, 'days')
 
-        const events: CalendarEventExtended[] = props.events
+        const events: CalendarEventExtended[] = (props.events ?? [])
           .map((event, id) => {
             return {
               ...event,
