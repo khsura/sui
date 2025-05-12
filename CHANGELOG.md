@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/khsura/sui/compare/root-v1.1.6...root-v1.2.0) (2025-05-12)
+
+
+### Features
+
+* replace all props by types ([#62](https://github.com/khsura/sui/issues/62)) ([55a6ee1](https://github.com/khsura/sui/commit/55a6ee15bfe0669cc24c42c8e428ebf8b9b01414))
+
 ## [1.1.6](https://github.com/khsura/sui/compare/root-v1.1.5...root-v1.1.6) (2025-04-03)
 
 
