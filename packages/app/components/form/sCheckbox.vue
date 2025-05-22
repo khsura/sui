@@ -8,7 +8,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import FormInputError from '@khsura/sui/components/form/common/sFormInputError.vue'
 import { type PropsCheckbox } from '@khsura/sui/definitions'
 import { useColorRepository } from '@khsura/sui/repositories'
@@ -24,20 +24,13 @@ const emit = defineEmits<{
 }>()
 
 // TODO: Sura - make able to use all preset colors
+const model = defineModel<boolean>()
 const { getIsPredefinedPresetColor } = useColorRepository()
-
-const model = defineModel<boolean>('modelValue', {
-  get: (v) => {
-    return v ?? false
-  },
-  set: (v) => {
-    void updateFormInput(v)
-
-    return v
-  },
-})
-
 const { updateFormInput, errors } = useFormInputService<boolean>(props, emit, model)
+
+watch(model, (v) => {
+  void updateFormInput(v)
+})
 
 const checkboxClasses = computed(() => {
   return {
