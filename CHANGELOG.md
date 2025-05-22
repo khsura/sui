@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/khsura/sui/compare/root-v1.2.1...root-v1.2.2) (2025-05-22)
+
+
+### Bug Fixes
+
+* bug ([c70993a](https://github.com/khsura/sui/commit/c70993a0e14824bc936c4ea26ff788f1a835b4c5))
+
 ## [1.2.1](https://github.com/khsura/sui/compare/root-v1.2.0...root-v1.2.1) (2025-05-12)
 
 
