@@ -1,7 +1,7 @@
 <template>
   <div class="s_checkbox" :class="checkboxClasses">
     <input :id="id" v-model="model" class="s_checkbox__input" type="checkbox" />
-    <label :for="id" class="s_checkbox__label">
+    <label :for="id" class="s_checkbox__label" @click="model = !model">
       <span v-if="label" class="s_checkbox__labelText">{{ label }}</span>
     </label>
     <FormInputError v-if="!hideDetails" :errors="errors"></FormInputError>

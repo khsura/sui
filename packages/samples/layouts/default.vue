@@ -51,6 +51,7 @@
             label="Color"
             :items="['primary', 'secondary', 'success', 'info', 'warning', 'important', 'error']"
           />
+          <SCheckbox v-model="checkbox" label="Checkbox" />
           <SButton id="navbarActivator" @click="navbar = !navbar">Toggle Navbar</SButton>
           <SSwitch v-model="permanent" label="Permanent navbar"></SSwitch>
           <div>
@@ -105,6 +106,7 @@ import {
   SCardActions,
   SNavigationDrawer,
   SSwitch,
+  SCheckbox,
 } from '@khsura/sui/components'
 import { type Position } from '@khsura/sui/constants'
 import { type ToolbarDensityType } from '@khsura/sui/types'
@@ -129,6 +131,7 @@ const position = ref<Exclude<Position, null>>('static')
 const navbar = ref(false)
 const modals = ref([false, false, false])
 const permanent = ref(true)
+const checkbox = ref(false)
 
 const positions = computed(() => {
   return ['static', 'fixed', 'absolute', 'relative', 'sticky', undefined] as Array<Exclude<Position, null>>
