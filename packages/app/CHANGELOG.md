@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/khsura/sui/compare/sui-v1.4.1...sui-v1.4.2) (2025-05-30)
+
+
+### Bug Fixes
+
+* checkbox bug ([742f82a](https://github.com/khsura/sui/commit/742f82a76bbac291fcf9dbafdcb55a601ccce6bb))
+
 ## [1.4.1](https://github.com/khsura/sui/compare/sui-v1.4.0...sui-v1.4.1) (2025-05-22)
 
 
