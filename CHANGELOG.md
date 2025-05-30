@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/khsura/sui/compare/root-v1.2.2...root-v1.2.3) (2025-05-30)
+
+
+### Bug Fixes
+
+* checkbox bug ([742f82a](https://github.com/khsura/sui/commit/742f82a76bbac291fcf9dbafdcb55a601ccce6bb))
+
 ## [1.2.2](https://github.com/khsura/sui/compare/root-v1.2.1...root-v1.2.2) (2025-05-22)
 
 
