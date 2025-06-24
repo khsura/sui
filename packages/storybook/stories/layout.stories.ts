@@ -25,7 +25,7 @@ import {
   type PropsNavigationDrawer,
   type PropsLayoutContainer,
 } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { computed, defineComponent, ref } from 'vue'
 import { createStoryObj } from '@khsura/storybook/helpers'
 import { argTypesLocation } from '@khsura/storybook/argTypes'

@@ -1,5 +1,5 @@
 import { SSheet } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { argsColor } from '@khsura/storybook/args'
 import { argTypesColor } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'

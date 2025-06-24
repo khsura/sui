@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 import { z } from 'zod'
 import { type STableHeadCell } from '@khsura/sui/components/table'
 import { getTableRowClass } from '@khsura/sui/helpers'
@@ -14,13 +14,18 @@ import {
 } from '@khsura/sui/types'
 import { uniqueId } from '@khsura/sui/vendors/lodash'
 
-export const useTableService = <T extends TableItem = TableItem>(props: PropsTable<T>, emit: EmitTable<T>) => {
+export const useTableService = <T extends TableItem = TableItem>(
+  props: PropsTable<T>,
+  emit: EmitTable<T>,
+  itemsPerPage: Ref<number | undefined>,
+) => {
   const isMounted = ref(false)
   const sortOrders = ref<Record<string, KTableSortOrder | undefined>>({})
   const tableWrapperElement = ref<HTMLElement | null>(null)
   const headerElements = ref<Array<InstanceType<typeof STableHeadCell>>>([])
   const tableId = ref(uniqueId())
   const isStickActive = ref(false)
+  const pageIndex = ref(0)
 
   const stickyLeftColumnsStart = computed(() => {
     const validationResult = z.coerce
@@ -236,6 +241,15 @@ export const useTableService = <T extends TableItem = TableItem>(props: PropsTab
     const groupedItemObjects: Record<string, T[]> = {}
 
     if (!groupBy || groupBy.length === 0) {
+      if (itemsPerPage.value) {
+        return [
+          {
+            name: '',
+            items: items.slice(pageIndex.value * itemsPerPage.value, (pageIndex.value + 1) * itemsPerPage.value),
+          },
+        ]
+      }
+
       return [{ name: '', items }]
     }
 
@@ -245,9 +259,39 @@ export const useTableService = <T extends TableItem = TableItem>(props: PropsTab
       groupedItemObjects[groupName] ??= []
 
       groupedItemObjects[groupName].push(item)
+
+      return
     })
 
-    return Object.entries(groupedItemObjects).map(([name, items]) => ({ name, items }))
+    const groupedItems = Object.entries(groupedItemObjects).map(([name, items]) => ({ name, items }))
+    const itemsPerPageValue = itemsPerPage.value
+
+    if (itemsPerPageValue) {
+      let currentIndex = 0
+      const startIndex = pageIndex.value * itemsPerPageValue
+      const endIndex = (pageIndex.value + 1) * itemsPerPageValue
+
+      return groupedItems.reduce<Array<{ name: string; items: T[] }>>((acc, group) => {
+        const groupLength = group.items.length
+
+        // Check if this group contains items in the current page range
+        if (currentIndex + groupLength > startIndex && currentIndex < endIndex) {
+          const groupStartIndex = Math.max(0, startIndex - currentIndex)
+          const groupEndIndex = Math.min(groupLength, endIndex - currentIndex)
+
+          acc.push({
+            ...group,
+            items: group.items.slice(groupStartIndex, groupEndIndex),
+          })
+        }
+
+        currentIndex += groupLength
+
+        return acc
+      }, [])
+    }
+
+    return groupedItems
   })
 
   const getItemRowClass = (data: { item: T; cellType: TableItemCellType }) => {
@@ -380,6 +424,7 @@ export const useTableService = <T extends TableItem = TableItem>(props: PropsTab
   }
 
   return {
+    pageIndex,
     isMounted,
     computedAllHeaders,
     computedColumnHeaders,

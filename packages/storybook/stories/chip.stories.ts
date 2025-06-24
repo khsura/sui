@@ -1,6 +1,6 @@
 import { SChip, SIcon } from '@khsura/sui/index'
-import { action } from '@storybook/addon-actions'
-import type { Meta } from '@storybook/vue3'
+import { action } from 'storybook/actions'
+import type { Meta } from '@storybook/vue3-vite'
 import { defineComponent } from 'vue'
 import { argTypesColor, argTypesSizePreset } from '@khsura/storybook/argTypes'
 import { createStoryObj, getSlot } from '@khsura/storybook/helpers'

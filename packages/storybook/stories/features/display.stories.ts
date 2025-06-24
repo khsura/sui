@@ -1,5 +1,5 @@
 import { useDisplay } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { defineComponent, computed } from 'vue'
 import { createStoryObj } from '@khsura/storybook/helpers'
 

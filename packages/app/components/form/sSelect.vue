@@ -26,7 +26,7 @@
     <SOverlay v-slot="{ attrs }" :value="menuModel">
       <OnClickOutside @trigger="onClickOutside">
         <div ref="contentElement" class="s_select__list" :style="contentStyles" :class="contentClasses" v-bind="attrs">
-          <SList link :dense="dense" :color="color" :text="text">
+          <SList link :dense="dense" :color="color" :text="text" :divided="divided">
             <SListItem
               v-for="(item, id) in objectItems"
               :key="id"

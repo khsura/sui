@@ -1,5 +1,5 @@
 import { SCheckbox, SForm } from '@khsura/sui/components'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { defineComponent, ref } from 'vue'
 import { argTypesColor } from '@khsura/storybook/argTypes'
 import { formInputModelValueRules } from '@khsura/storybook/configs'

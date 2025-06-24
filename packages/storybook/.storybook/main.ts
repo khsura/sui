@@ -12,9 +12,8 @@ const config: StorybookConfig = {
 
   addons: [
     getAbsolutePath('@storybook/addon-links'),
-    getAbsolutePath('@storybook/addon-essentials'),
-    getAbsolutePath('@storybook/addon-interactions'),
-    getAbsolutePath('storybook-dark-mode'),
+    // getAbsolutePath('storybook-dark-mode'),
+    getAbsolutePath('@storybook/addon-docs'),
   ],
 
   framework: {
@@ -28,15 +27,11 @@ const config: StorybookConfig = {
         sourcemap: 'inline',
       },
       optimizeDeps: {
-        include: ['@storybook/theming', '@storybook/manager-api', 'storybook-dark-mode'],
+        include: ['storybook/theming', 'storybook/manager-api'],
       },
     }
 
     return mergeConfig(previousConfig, additionalConfig)
-  },
-
-  docs: {
-    autodocs: true,
   },
 }
 

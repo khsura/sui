@@ -1,6 +1,6 @@
 import { SInput, SCard, SCardTitle, SForm, SRow, SColumn, SButton, SSwitch } from '@khsura/sui/index'
-import { action } from '@storybook/addon-actions'
-import type { Meta } from '@storybook/vue3'
+import { action } from 'storybook/actions'
+import type { Meta } from '@storybook/vue3-vite'
 import { defineComponent, ref, computed } from 'vue'
 import { argsInput } from '@khsura/storybook/args'
 import { formInputModelValueRules } from '@khsura/storybook/configs'

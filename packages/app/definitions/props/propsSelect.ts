@@ -10,6 +10,7 @@ export type PropsSelect = {
   dense?: boolean
   grow?: boolean
   text?: boolean
+  divided?: boolean
 } & PropsBorder &
   PropsMenu &
   PropsFormInput &

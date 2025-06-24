@@ -1,5 +1,8 @@
 export const i18nMessages = {
   en: {
+    table: {
+      itemsPerPage: 'Items per page',
+    },
     formRules: {
       required: `Please input '{target}'.`,
       maxLength: `Please input '{target}' within {maxLength} characters.`,
@@ -18,6 +21,9 @@ export const i18nMessages = {
     },
   },
   ja: {
+    table: {
+      itemsPerPage: '1ページあたりの表示件数',
+    },
     formRules: {
       required: `{target}を入力してください。`,
       maxLength: `{target}は{maxLength}文字以内で入力してください。`,
@@ -36,6 +42,9 @@ export const i18nMessages = {
     },
   },
   mn: {
+    table: {
+      itemsPerPage: 'Хуудас бүрт',
+    },
     formRules: {
       required: `'{target}'-г бичиж оруулаарай.`,
       maxLength: `'{target}'-г {maxLength} үсэг дотор оруулаарай.`,

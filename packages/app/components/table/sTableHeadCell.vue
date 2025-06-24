@@ -119,11 +119,11 @@ const sortIcon = computed(() => {
   const order = sortOrders.value[props.header.value.toString()]
 
   if (order === KTableSortOrder.ascending) {
-    return `↑${displayPriority}`
+    return `↓${displayPriority}`
   }
 
   if (order === KTableSortOrder.descending) {
-    return `↓${displayPriority}`
+    return `↑${displayPriority}`
   }
 
   return '⇅'

@@ -1,7 +1,7 @@
 import './previewPlugins'
 import { getBrowserTheme } from '@khsura/sui/index'
-import { themes } from '@storybook/theming'
-import { type Preview } from '@storybook/vue3'
+import { themes } from 'storybook/theming'
+import { type Preview } from '@storybook/vue3-vite'
 import { appDecorator } from './decorators'
 
 const preview: Preview = {

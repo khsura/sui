@@ -1,6 +1,6 @@
 import { faker } from '@khsura/shared'
 import { SSlideGroup, SImage, SCard, SSlideItem, useDisplay } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { createStoryObj } from '@khsura/storybook/helpers'
 
 const banners = [

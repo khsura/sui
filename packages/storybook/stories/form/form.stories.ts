@@ -1,6 +1,6 @@
 import { SButton, SForm, SInput } from '@khsura/sui/index'
-import { action } from '@storybook/addon-actions'
-import type { Meta } from '@storybook/vue3'
+import { action } from 'storybook/actions'
+import type { Meta } from '@storybook/vue3-vite'
 import { defineComponent, ref, nextTick } from 'vue'
 import { formInputModelValueRules } from '@khsura/storybook/configs'
 import { createStoryObj } from '@khsura/storybook/helpers'

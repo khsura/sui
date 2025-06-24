@@ -1,4 +1,4 @@
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { sTypographyDemo } from '@khsura/storybook/components'
 import { createStoryObj } from '@khsura/storybook/helpers'
 

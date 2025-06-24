@@ -38,15 +38,6 @@ interface ThemeConfigOptions {
   presetColors?: Partial<PresetColors> & Record<string, string>
 }
 
-export interface AppState<T extends string = 'sui'> extends Required<AppStateOptions> {
-  readonly name: T
-  display: DisplayPreset
-  themes: {
-    [AppTheme.light]: ThemeConfig
-    [AppTheme.dark]: ThemeConfig
-  }
-}
-
 export type AppThemeType = 'light' | 'dark'
 
 export interface AppStateOptions {
@@ -55,5 +46,14 @@ export interface AppStateOptions {
   themes?: {
     [AppTheme.light]?: ThemeConfigOptions
     [AppTheme.dark]?: ThemeConfigOptions
+  }
+}
+
+export interface AppState<T extends string = 'sui'> extends Required<AppStateOptions> {
+  readonly name: T
+  display: DisplayPreset
+  themes: {
+    [AppTheme.light]: ThemeConfig
+    [AppTheme.dark]: ThemeConfig
   }
 }

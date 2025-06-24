@@ -1,170 +1,178 @@
 <template>
-  <div
-    ref="tableWrapperElement"
-    class="s_table__wrapper"
-    :class="{ 's_table__wrapper--outlined': outlined, 's_table__wrapper--noTopBottomBorders': hideTopBottomBorders }"
-    :style="styleListBorder"
-    @scroll="onHorizontalScroll()"
-  >
-    <!-- Table -->
-    <table class="s_table" :class="tableClasses">
-      <!-- Table Head -->
-      <thead v-if="!hideHeader" class="s_table__head">
-        <tr
-          v-for="(headersListItem, headersListItemId) in headersList"
-          :key="`headersGroup-${headersListItemId}`"
-          class="s_table__row"
-          :class="{ 's_table__row--sticky': stickyHeader }"
-        >
-          <STableHeadCell
-            v-for="header in headersListItem"
-            ref="headerElements"
-            :key="`headCell-${header.value.toString()}`"
-            v-model:sort-orders="sortOrders"
-            :header="header"
-            :multi-sort="multiSort"
-            :sticky="header.isSticked"
-            :style="getTableCellStyle(header)"
-            :dense="dense"
+  <div class="s_table__container">
+    <div
+      ref="tableWrapperElement"
+      class="s_table__wrapper"
+      :class="{ 's_table__wrapper--outlined': outlined, 's_table__wrapper--noTopBottomBorders': hideTopBottomBorders }"
+      :style="styleListBorder"
+      @scroll="onHorizontalScroll()"
+    >
+      <!-- Table -->
+      <table class="s_table" :class="tableClasses">
+        <!-- Table Head -->
+        <thead v-if="!hideHeader" class="s_table__head">
+          <tr
+            v-for="(headersListItem, headersListItemId) in headersList"
+            :key="`headersGroup-${headersListItemId}`"
+            class="s_table__row"
+            :class="{ 's_table__row--sticky': stickyHeader }"
           >
-            <slot
-              :name="`header.${header.value.toString()}`"
+            <STableHeadCell
+              v-for="header in headersListItem"
+              ref="headerElements"
+              :key="`headCell-${header.value.toString()}`"
+              v-model:sort-orders="sortOrders"
               :header="header"
-              :is-sticked="isStickActive && header.isSticky"
-              >{{ header.text }}</slot
+              :multi-sort="multiSort"
+              :sticky="header.isSticked"
+              :style="getTableCellStyle(header)"
+              :dense="dense"
             >
-          </STableHeadCell>
-        </tr>
-      </thead>
-
-      <!-- Table Body -->
-      <tbody class="s_table__body">
-        <template v-for="{ name: group, items: groupItems } in groupedItems">
-          <!-- Table Item - Rows Group -->
-          <tr v-if="groupBy" :key="`row-group-${group}`">
-            <td :colspan="totalItemColumns" class="s_table__group">
-              <slot name="group" :items="groupItems" :group="group">{{ group }}</slot>
-            </td>
-          </tr>
-
-          <!-- Table Item - Row Header -->
-          <template v-for="(rowItems, row) in groupItems" :key="`row-${group}-${row}`">
-            <tr
-              v-if="itemHeader && rowItems[itemHeader]"
-              class="s_table__row"
-              :class="getItemRowClass({ item: rowItems, cellType: 'header' })"
-            >
-              <STableBodyCell
-                :colspan="totalItemColumns"
-                :item="rowItems"
-                :cell-class="props.itemHeaderClass"
-                :cell-style="props.itemHeaderStyle"
-                :cell-key="itemHeader"
-                cell-type="header"
-                :dense="dense"
-              >
-                <slot
-                  name="itemHeader"
-                  :item="rowItems"
-                  :value="rowItems[itemHeader]"
-                  :row="row"
-                  :group="group"
-                  :expand="() => toggleExpanded(rowItems)"
-                  :select="() => toggleSelected(rowItems)"
-                  :is-selected="getIsSelected(rowItems)"
-                  :is-expanded="getIsExpanded(rowItems)"
-                  :is-stick-active="isStickActive"
-                >
-                  {{ rowItems[itemHeader] }}
-                </slot>
-              </STableBodyCell>
-            </tr>
-
-            <!-- Table Item - Row -->
-            <tr
-              class="s_table__row"
-              :class="getItemRowClass({ item: rowItems, cellType: 'cell' })"
-              @click="() => onClickRow(rowItems)"
-            >
-              <STableBodyCell
-                v-for="(header, col) in computedColumnHeaders"
-                :key="`row-${group}-${row}-${col}BodyCell`"
+              <slot
+                :name="`header.${header.value.toString()}`"
                 :header="header"
-                :item="rowItems"
-                :cell-key="header.value"
-                cell-type="cell"
-                :cell-class="props.itemClass"
-                :cell-style="props.itemStyle"
-                :sticky="header.isSticked"
-                :dense="dense"
-                :style="getTableCellStyle(header)"
+                :is-sticked="isStickActive && header.isSticky"
+                >{{ header.text }}</slot
               >
-                <slot
-                  :name="`item.${header.value}`"
-                  :group="group"
-                  :header="header"
-                  :item="rowItems"
-                  :value="rowItems[header.value]"
-                  :row="row"
-                  :col="col"
-                  :expand="() => toggleExpanded(rowItems)"
-                  :select="() => toggleSelected(rowItems)"
-                  :is-selected="getIsSelected(rowItems)"
-                  :is-expanded="getIsExpanded(rowItems)"
-                  :is-sticked="getIsStickyCell(col) && isStickActive"
-                >
-                  {{ rowItems[header.value] }}
-                </slot>
-              </STableBodyCell>
-            </tr>
+            </STableHeadCell>
+          </tr>
+        </thead>
 
-            <!-- Table Item - Row Expansion -->
-            <tr
-              v-if="getIsExpanded(rowItems)"
-              :key="`row-${group}-${row}__expanded`"
-              :class="getItemRowClass({ item: rowItems, cellType: 'expansion' })"
-            >
-              <td :colspan="totalItemColumns" :class="getExpandedClass()">
-                <slot name="expanded" :item="rowItems"></slot>
+        <!-- Table Body -->
+        <tbody class="s_table__body">
+          <template v-for="{ name: group, items: groupItems } in groupedItems">
+            <!-- Table Item - Rows Group -->
+            <tr v-if="groupBy" :key="`row-group-${group}`">
+              <td :colspan="totalItemColumns" class="s_table__group">
+                <slot name="group" :items="groupItems" :group="group">{{ group }}</slot>
               </td>
             </tr>
 
-            <!-- Table Item - Row Footer -->
-            <tr
-              v-if="itemFooter && rowItems[itemFooter]"
-              :key="`row-${group}-${row}__footer`"
-              class="s_table__row"
-              :class="getItemRowClass({ item: rowItems, cellType: 'footer' })"
-            >
-              <STableBodyCell
-                :colspan="totalItemColumns"
-                :item="rowItems"
-                :cell-key="itemFooter"
-                :cell-class="props.itemFooterClass"
-                :cell-style="props.itemFooterStyle"
-                cell-type="footer"
-                :dense="dense"
+            <!-- Table Item - Row Header -->
+            <template v-for="(rowItems, row) in groupItems" :key="`row-${group}-${row}`">
+              <tr
+                v-if="itemHeader && rowItems[itemHeader]"
+                class="s_table__row"
+                :class="getItemRowClass({ item: rowItems, cellType: 'header' })"
               >
-                <slot
-                  name="itemFooter"
+                <STableBodyCell
+                  :colspan="totalItemColumns"
                   :item="rowItems"
-                  :value="rowItems[itemFooter]"
-                  :row="row"
-                  :group="group"
-                  :expand="() => toggleExpanded(rowItems)"
-                  :select="() => toggleSelected(rowItems)"
-                  :is-selected="getIsSelected(rowItems)"
-                  :is-expanded="getIsExpanded(rowItems)"
-                  :is-stick-active="isStickActive"
+                  :cell-class="props.itemHeaderClass"
+                  :cell-style="props.itemHeaderStyle"
+                  :cell-key="itemHeader"
+                  cell-type="header"
+                  :dense="dense"
                 >
-                  {{ rowItems[itemFooter] }}
-                </slot>
-              </STableBodyCell>
-            </tr>
+                  <slot
+                    name="itemHeader"
+                    :item="rowItems"
+                    :value="rowItems[itemHeader]"
+                    :row="row"
+                    :group="group"
+                    :expand="() => toggleExpanded(rowItems)"
+                    :select="() => toggleSelected(rowItems)"
+                    :is-selected="getIsSelected(rowItems)"
+                    :is-expanded="getIsExpanded(rowItems)"
+                    :is-stick-active="isStickActive"
+                  >
+                    {{ rowItems[itemHeader] }}
+                  </slot>
+                </STableBodyCell>
+              </tr>
+
+              <!-- Table Item - Row -->
+              <tr
+                class="s_table__row"
+                :class="getItemRowClass({ item: rowItems, cellType: 'cell' })"
+                @click="() => onClickRow(rowItems)"
+              >
+                <STableBodyCell
+                  v-for="(header, col) in computedColumnHeaders"
+                  :key="`row-${group}-${row}-${col}BodyCell`"
+                  :header="header"
+                  :item="rowItems"
+                  :cell-key="header.value"
+                  cell-type="cell"
+                  :cell-class="props.itemClass"
+                  :cell-style="props.itemStyle"
+                  :sticky="header.isSticked"
+                  :dense="dense"
+                  :style="getTableCellStyle(header)"
+                >
+                  <slot
+                    :name="`item.${header.value}`"
+                    :group="group"
+                    :header="header"
+                    :item="rowItems"
+                    :value="rowItems[header.value]"
+                    :row="row"
+                    :col="col"
+                    :expand="() => toggleExpanded(rowItems)"
+                    :select="() => toggleSelected(rowItems)"
+                    :is-selected="getIsSelected(rowItems)"
+                    :is-expanded="getIsExpanded(rowItems)"
+                    :is-sticked="getIsStickyCell(col) && isStickActive"
+                  >
+                    {{ rowItems[header.value] }}
+                  </slot>
+                </STableBodyCell>
+              </tr>
+
+              <!-- Table Item - Row Expansion -->
+              <tr
+                v-if="getIsExpanded(rowItems)"
+                :key="`row-${group}-${row}__expanded`"
+                :class="getItemRowClass({ item: rowItems, cellType: 'expansion' })"
+              >
+                <td :colspan="totalItemColumns" :class="getExpandedClass()">
+                  <slot name="expanded" :item="rowItems"></slot>
+                </td>
+              </tr>
+
+              <!-- Table Item - Row Footer -->
+              <tr
+                v-if="itemFooter && rowItems[itemFooter]"
+                :key="`row-${group}-${row}__footer`"
+                class="s_table__row"
+                :class="getItemRowClass({ item: rowItems, cellType: 'footer' })"
+              >
+                <STableBodyCell
+                  :colspan="totalItemColumns"
+                  :item="rowItems"
+                  :cell-key="itemFooter"
+                  :cell-class="props.itemFooterClass"
+                  :cell-style="props.itemFooterStyle"
+                  cell-type="footer"
+                  :dense="dense"
+                >
+                  <slot
+                    name="itemFooter"
+                    :item="rowItems"
+                    :value="rowItems[itemFooter]"
+                    :row="row"
+                    :group="group"
+                    :expand="() => toggleExpanded(rowItems)"
+                    :select="() => toggleSelected(rowItems)"
+                    :is-selected="getIsSelected(rowItems)"
+                    :is-expanded="getIsExpanded(rowItems)"
+                    :is-stick-active="isStickActive"
+                  >
+                    {{ rowItems[itemFooter] }}
+                  </slot>
+                </STableBodyCell>
+              </tr>
+            </template>
           </template>
-        </template>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
+    <STablePagination
+      v-if="!hidePagination"
+      v-model:items-per-page="itemsPerPage"
+      v-model:page-index="pageIndex"
+      :items-count="items.length"
+    />
   </div>
 </template>
 <script setup lang="ts" generic="T extends TableItem">
@@ -175,6 +183,7 @@ import { useBorderService, useTableService } from '@khsura/sui/services'
 import { type EmitTable, type PropsTable, type TableItem } from '@khsura/sui/types'
 import STableHeadCell from './sTableHeadCell.vue'
 import STableBodyCell from './sTableBodyCell.vue'
+import STablePagination from './sTablePagination.vue'
 
 const props = withDefaults(defineProps<PropsTable<T>>(), {
   items: () => [],
@@ -183,6 +192,7 @@ const props = withDefaults(defineProps<PropsTable<T>>(), {
   hideHeader: false,
   hideVerticalBorders: false,
   hideTopBottomBorders: false,
+  hidePagination: false,
   dense: false,
   stickyHeader: false,
   multiSort: false,
@@ -194,10 +204,12 @@ const props = withDefaults(defineProps<PropsTable<T>>(), {
 })
 
 const emit = defineEmits<EmitTable<T>>()
+const itemsPerPage = defineModel<number>('itemsPerPage')
 const { classListBorder, styleListBorder } = useBorderService(props, { block: 'table' })
 
 const {
   isMounted,
+  pageIndex,
   computedColumnHeaders,
   groupedItems,
   headerElements,
@@ -216,7 +228,7 @@ const {
   toggleSelected,
   onHorizontalScroll,
   updateTable,
-} = useTableService(props, emit)
+} = useTableService(props, emit, itemsPerPage)
 
 const tableClasses = computed(() => ({
   's_table--verticalBorder__hidden': props.hideVerticalBorders,

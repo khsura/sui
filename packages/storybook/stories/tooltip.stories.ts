@@ -1,5 +1,5 @@
 import { SButton, STooltip, SSheet, SRow, SContainer, SIcon, presetColors } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 import { argsColor } from '@khsura/storybook/args'
 import { createStoryObj, getMarkdownArrayTypeDescription } from '@khsura/storybook/helpers'
