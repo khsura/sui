@@ -11,7 +11,7 @@ import {
   SListItemTitle,
   SSubheader,
 } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { argsColor } from '@khsura/storybook/args'
 import { createStoryObj } from '@khsura/storybook/helpers'
 

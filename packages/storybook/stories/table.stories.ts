@@ -1,8 +1,8 @@
 import { faker } from '@khsura/shared'
-import { STable, SButton, SIcon, SCheckbox } from '@khsura/sui/index'
+import { STable, SButton, SIcon, SCheckbox } from '@khsura/sui/components'
 import type { TableHeader, TableItem } from '@khsura/sui/index'
-import { action } from '@storybook/addon-actions'
-import type { Meta } from '@storybook/vue3'
+import { action } from 'storybook/actions'
+import type { Meta } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 import { createStoryObj } from '@khsura/storybook/helpers'
 
@@ -24,6 +24,7 @@ export const Table = createStoryObj<typeof STable>({
       setup() {
         const expanded = ref<TableItem[]>([items.value[0]])
         const selected = ref<TableItem[]>([])
+        const itemsPerPage = ref(5)
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const itemClass = (_item: any) => {
@@ -37,6 +38,7 @@ export const Table = createStoryObj<typeof STable>({
           selected,
           itemClass,
           args,
+          itemsPerPage,
         }
       },
       template: /* html */ `
@@ -53,6 +55,7 @@ export const Table = createStoryObj<typeof STable>({
           @update:selected="selected = $event"
           @click:row="args.clicsRow"
           :style="{ maxHeight: args.stickyHeader ? '400px' : null,  }"
+          v-model:items-per-page="itemsPerPage"
         >
           <template #group="{group}">
             <strong>#Group: {{ group }}</strong>
@@ -96,6 +99,7 @@ export const Table = createStoryObj<typeof STable>({
   args: {
     itemKey: 'number',
     hideHeader: false,
+    hidePagination: false,
     dense: false,
     outlined: true,
     underlined: true,
@@ -248,5 +252,14 @@ const items = ref<TableItem[]>([
     value8: 7,
     value9: '6%',
     footerMessage: 'KitKat is very delicious',
+  },
+  {
+    number: 11,
+    value3: 'KitKat',
+    value2: faker.animal.type(),
+    value4: 518,
+    value6: 26.0,
+    value7: 65,
+    value8: 7,
   },
 ])

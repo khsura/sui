@@ -18,6 +18,7 @@ export const createSUI = <T extends string = 'sui'>(options?: AppStateOptions, n
 
       app.config.globalProperties[`$${appName}`] = store
       app.provide(appName, store)
+
       app.directive('scroll', scroll)
       app.directive('resize', resize)
       listenDisplayChange()

@@ -1,5 +1,5 @@
 import { SDatePicker, datePickerModelFormats } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import dayjs from 'dayjs'
 import { ref } from 'vue'
 import { argTypesColor } from '@khsura/storybook/argTypes'

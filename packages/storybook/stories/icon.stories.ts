@@ -1,5 +1,5 @@
 import { SIcon, sizeProperties, presetColors, SizeProperty } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { argsComponentTheme } from '@khsura/storybook/args'
 import { argTypesComponentTheme, argTypesIcon } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'

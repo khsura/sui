@@ -1,5 +1,5 @@
 import { SRow, SSpacer, SColumn } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { createStoryObj } from '@khsura/storybook/helpers'
 
 const spacer: Meta<typeof SSpacer | typeof SColumn> = {

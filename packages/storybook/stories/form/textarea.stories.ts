@@ -1,6 +1,6 @@
 import { faker } from '@khsura/shared'
 import { STextarea } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { defineComponent, ref } from 'vue'
 import { formInputModelValueRules } from '@khsura/storybook/configs'
 import { createStoryObj } from '@khsura/storybook/helpers'

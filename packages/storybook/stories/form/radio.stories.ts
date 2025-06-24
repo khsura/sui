@@ -1,6 +1,6 @@
 import { faker } from '@khsura/shared'
 import { SForm, SRadioGroup, SRadio, SImage } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { defineComponent, ref } from 'vue'
 import { argsRadioGroup } from '@khsura/storybook/args'
 import { formInputModelValueRules } from '@khsura/storybook/configs'

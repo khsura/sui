@@ -1,5 +1,5 @@
 import { SStepper, SStepperStep, SRow, SButton } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 import { createStoryObj } from '@khsura/storybook/helpers'
 

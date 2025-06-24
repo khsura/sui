@@ -1,6 +1,6 @@
 import { faker } from '@khsura/shared'
 import { SSplitView, SSplitViewItem } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { createStoryObj } from '@khsura/storybook/helpers'
 import type { PropsSplitView } from '@khsura/sui/definitions/props'
 

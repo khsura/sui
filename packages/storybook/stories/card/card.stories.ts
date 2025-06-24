@@ -1,6 +1,6 @@
 import { faker } from '@khsura/shared'
 import { SButton, SCard, SCardActions, SCardSubtitle, SCardText, SCardTitle, SImage } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { defineComponent } from 'vue'
 import { argsCard } from '@khsura/storybook/args'
 import {

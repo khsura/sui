@@ -14,7 +14,7 @@ import {
   SListItemContent,
   SSpacer,
 } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { defineComponent, ref } from 'vue'
 import { argTypesElevation, argTypesLocation } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'

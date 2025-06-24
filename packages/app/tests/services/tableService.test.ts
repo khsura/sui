@@ -6,6 +6,7 @@ import { headers, items } from '../mocks/sTable'
 
 const expanded = ref([items[3]])
 const selected = ref([items[2]])
+const itemsPerPage = ref(undefined)
 const dummyItemHeaderClass = 'dummyItemHeaderClass'
 const dummyItemClass = 'dummyItemClass'
 
@@ -39,7 +40,7 @@ const emit = vi.fn().mockImplementation((_event, _value) => {})
 
 describe('useTableService', () => {
   test('getItemRowClass', () => {
-    const { getItemRowClass } = useTableService(props, emit)
+    const { getItemRowClass } = useTableService(props, emit, itemsPerPage)
 
     expect(getItemRowClass({ item: items[0], cellType: 'cell' })).toStrictEqual({ dummyItemRowClass: true })
 
@@ -60,7 +61,7 @@ describe('useTableService', () => {
   })
 
   test('getIsSelected', () => {
-    const { getIsSelected } = useTableService(props, emit)
+    const { getIsSelected } = useTableService(props, emit, itemsPerPage)
 
     expect(getIsSelected(items[0])).toBe(false)
 
@@ -71,7 +72,7 @@ describe('useTableService', () => {
 
   test('getIsExpanded', () => {
     props.singleExpand = false
-    const { getIsExpanded } = useTableService(props, emit)
+    const { getIsExpanded } = useTableService(props, emit, itemsPerPage)
 
     expect(getIsExpanded(items[0])).toBe(true)
 
@@ -80,7 +81,7 @@ describe('useTableService', () => {
   })
 
   test('toggleExpanded', () => {
-    const { toggleExpanded } = useTableService(props, emit)
+    const { toggleExpanded } = useTableService(props, emit, itemsPerPage)
 
     expect(toggleExpanded(items[0])).toStrictEqual([items[3]])
 
@@ -89,7 +90,7 @@ describe('useTableService', () => {
   })
 
   test('toggleSelected', () => {
-    const { toggleSelected } = useTableService(props, emit)
+    const { toggleSelected } = useTableService(props, emit, itemsPerPage)
 
     expect(toggleSelected(items[1])).toStrictEqual([items[2]])
 
@@ -107,13 +108,13 @@ describe('useTableService', () => {
   })
 
   test('hasSubHeader return true if headers has colgroup', () => {
-    const { hasSubHeader } = useTableService(props, emit)
+    const { hasSubHeader } = useTableService(props, emit, itemsPerPage)
 
     expect(hasSubHeader.value).toBe(true)
   })
 
   test('computedAllHeaders should return headers with colspan and rowspan', () => {
-    const { computedAllHeaders } = useTableService(props, emit)
+    const { computedAllHeaders } = useTableService(props, emit, itemsPerPage)
 
     expect(computedAllHeaders.value[0]).toStrictEqual({
       text: '番号',
@@ -141,7 +142,7 @@ describe('useTableService', () => {
   })
 
   test('headersGroup should return two groups of headers', () => {
-    const { headersList: headersGroup } = useTableService(props, emit)
+    const { headersList: headersGroup } = useTableService(props, emit, itemsPerPage)
 
     expect(headersGroup.value.length).toBe(2)
     expect(headersGroup.value[0].length).toBe(5)
@@ -149,20 +150,20 @@ describe('useTableService', () => {
   })
 
   test('computedColumnHeaders should return headers without colgroup', () => {
-    const { computedColumnHeaders } = useTableService(props, emit)
+    const { computedColumnHeaders } = useTableService(props, emit, itemsPerPage)
 
     expect(computedColumnHeaders.value.length).toBe(7)
   })
 
   test('totalItemColumns should return total number of columns', () => {
-    const { totalItemColumns } = useTableService(props, emit)
+    const { totalItemColumns } = useTableService(props, emit, itemsPerPage)
 
     expect(totalItemColumns.value).toBe(7)
   })
 
   describe('isStickActive', () => {
     test('isStickActive should return false if column props are not set', () => {
-      const { isStickActive } = useTableService(props, emit)
+      const { isStickActive } = useTableService(props, emit, itemsPerPage)
 
       expect(isStickActive.value).toBe(false)
     })
@@ -173,6 +174,7 @@ describe('useTableService', () => {
       const { isStickActive, onHorizontalScroll } = useTableService(
         { ...props, stickyLeftColumnsStart: 0, stickyLeftColumnsSize: 1 },
         emit,
+        itemsPerPage,
       )
 
       onHorizontalScroll(10)
@@ -185,6 +187,7 @@ describe('useTableService', () => {
       const { isStickActive, onHorizontalScroll } = useTableService(
         { ...props, stickyLeftColumnsStart: 0, stickyLeftColumnsSize: 0 },
         emit,
+        itemsPerPage,
       )
 
       onHorizontalScroll(10)

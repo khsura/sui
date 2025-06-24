@@ -27,6 +27,7 @@ export type PropsTable<T extends TableItem = TableItem, C extends string = keyof
   hideHeader?: boolean | undefined
   hideVerticalBorders?: boolean | undefined
   hideTopBottomBorders?: boolean | undefined
+  hidePagination?: boolean | undefined
   itemClass?: TableItemClass<T, C> | undefined
   itemStyle?: TableItemStyle<T, C> | undefined
   itemFooter?: string | undefined

@@ -1,6 +1,6 @@
 import { faker } from '@khsura/shared'
 import { SToggleButton, SToggleButtonGroup, type PropsToggleButtonGroup } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 import { argTypesToggleButtonGroup } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'

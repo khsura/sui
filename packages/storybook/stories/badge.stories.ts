@@ -1,5 +1,5 @@
 import { SBadge, SButton, SIcon, SInput } from '@khsura/sui/index'
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 import { argsBadge } from '@khsura/storybook/args'
 import { argTypesBadge } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'
