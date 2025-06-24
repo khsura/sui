@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/khsura/sui/compare/root-v1.2.3...root-v1.3.0) (2025-06-24)
+
+
+### Features
+
+* upgrade issue ([#67](https://github.com/khsura/sui/issues/67)) ([17034d5](https://github.com/khsura/sui/commit/17034d563e3aa4792adacd96c18fb1b2e6acc4ba))
+
 ## [1.2.3](https://github.com/khsura/sui/compare/root-v1.2.2...root-v1.2.3) (2025-05-30)
 
 
