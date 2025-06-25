@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1](https://github.com/khsura/sui/compare/root-v1.3.0...root-v1.3.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* add server data table ([a90244b](https://github.com/khsura/sui/commit/a90244bb7686b34219a709b44e1a0390e12dd1c5))
+* storybook build bug ([b54bcff](https://github.com/khsura/sui/commit/b54bcff90f27c3bf571b65bd9e56c79d4efe6da0))
+
 ## [1.3.0](https://github.com/khsura/sui/compare/root-v1.2.3...root-v1.3.0) (2025-06-24)
 
 
