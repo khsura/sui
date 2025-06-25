@@ -2,12 +2,14 @@ import { SProgressLinear } from '@khsura/sui/index'
 import type { Meta } from '@storybook/vue3-vite'
 import { argTypesComponentTheme } from '@khsura/storybook/argTypes'
 import { createStoryObj } from '@khsura/storybook/helpers'
+import { argTypesPosition } from '@khsura/storybook/argTypes/core/position'
 
 const progressLinear: Meta<typeof SProgressLinear> = {
   title: 'UI Components/Progress Bar/Linear',
   component: SProgressLinear,
   argTypes: {
     ...argTypesComponentTheme,
+    ...argTypesPosition,
     value: {
       type: { required: false, name: 'union', value: [{ name: 'number' }, { name: 'string' }] },
       description: 'progress value',
@@ -39,16 +41,6 @@ const progressLinear: Meta<typeof SProgressLinear> = {
     backgroundColor: {
       control: { type: 'color' },
     },
-    fixed: {
-      type: { name: 'boolean', required: false },
-      description: 'Sets <i>position: fixed</i> css property',
-      table: { defaultValue: { summary: 'false', detail: 'boolean' } },
-    },
-    absolute: {
-      type: { name: 'boolean', required: false },
-      description: 'Sets <i>position: absolute</i> css property',
-      table: { defaultValue: { summary: 'false', detail: 'boolean' } },
-    },
   },
 }
 
@@ -70,6 +62,6 @@ export const ProgressLinear = createStoryObj<typeof SProgressLinear>({
     color: '',
     value: 45,
     indeterminate: false,
-    fixed: false,
+    position: 'relative',
   },
 })
