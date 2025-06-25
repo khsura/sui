@@ -1,10 +1,11 @@
-import { faker } from '@khsura/shared'
 import { STable, SButton, SIcon, SCheckbox } from '@khsura/sui/components'
-import type { TableHeader, TableItem } from '@khsura/sui/index'
+import type { TableItem } from '@khsura/sui/index'
 import { action } from 'storybook/actions'
 import type { Meta } from '@storybook/vue3-vite'
-import { ref } from 'vue'
+import { ref, defineComponent, onMounted } from 'vue'
 import { createStoryObj } from '@khsura/storybook/helpers'
+import { tableHeaders, tableItems } from '@khsura/storybook/constants'
+import { wait } from '@khsura/shared'
 
 const table: Meta<typeof STable> = {
   title: 'UI Components/Table',
@@ -22,6 +23,7 @@ export const Table = createStoryObj<typeof STable>({
         SCheckbox,
       },
       setup() {
+        const items = ref([...tableItems])
         const expanded = ref<TableItem[]>([items.value[0]])
         const selected = ref<TableItem[]>([])
         const itemsPerPage = ref(5)
@@ -32,7 +34,7 @@ export const Table = createStoryObj<typeof STable>({
         }
 
         return {
-          headers,
+          headers: tableHeaders,
           items,
           expanded,
           selected,
@@ -119,147 +121,67 @@ export const Table = createStoryObj<typeof STable>({
   },
 })
 
-const headers = ref<TableHeader[]>([
-  {
-    text: 'no',
-    value: 'number',
-    width: '20',
-    align: 'center',
-    textWrap: true,
-    sortable: true,
-    cellNoGutters: true,
-  },
-  { text: 'header2', value: 'value2', width: '150', align: 'start' },
-  {
-    text: 'header3',
-    align: 'center',
-    sortable: true,
-    value: 'value3',
-    width: '30%',
-    cellClass: 's_text--truncate',
-  },
-  {
-    text: 'header4',
-    value: 'value4',
-    sortable: true,
-    width: '20%',
-  },
-  { text: 'header5', value: 'value5', align: 'end', width: '10%' },
-  { text: 'header6', value: 'value6', align: 'center', width: '10%', sortable: true },
-  { text: 'header7', value: 'value7', width: '10%' },
-  { text: 'header8', value: 'value8', width: '300px' },
-])
+export const TableServer = createStoryObj<typeof STable>({
+  render: (args) => {
+    return defineComponent({
+      components: {
+        STable,
+      },
+      setup() {
+        const items = ref<TableItem[]>([])
+        const totalItems = ref(0)
+        const loading = ref(false)
+        const itemsPerPage = ref(5)
 
-const items = ref<TableItem[]>([
-  {
-    number: 1,
-    value2: faker.animal.type(),
-    value3: 'Frozen Yogurt',
-    value4: 159,
-    value5: 6.0,
-    value6: 24,
-    value7: 4.0,
-    value8: '1%',
+        const updateOptions = async (options: {
+          pageIndex: number
+          itemsPerPage: number
+          sortBy: { key: string; order: 'asc' | 'desc' }[]
+        }) => {
+          loading.value = true
+          await wait(1000)
+          items.value = tableItems.slice(
+            options.pageIndex * options.itemsPerPage,
+            (options.pageIndex + 1) * options.itemsPerPage,
+          )
+          totalItems.value = tableItems.length
+          loading.value = false
+          console.log(items.value)
+        }
+
+        onMounted(async () => {
+          await updateOptions({ pageIndex: 0, itemsPerPage: itemsPerPage.value, sortBy: [] })
+        })
+
+        return {
+          args,
+          updateOptions,
+          items,
+          totalItems,
+          loading,
+          headers: tableHeaders,
+          itemsPerPage,
+        }
+      },
+      template: /* html */ `
+        <STable
+          v-bind="args"
+          :items="items"
+          :item-key="args.itemKey"
+          :headers="headers"
+          :loading="loading"
+          v-model:items-per-page="itemsPerPage"
+          :total-items="totalItems"
+          @update:options="updateOptions"
+        />
+      `,
+    })
   },
-  {
-    number: 2,
-    value2: faker.animal.type(),
-    value3: 'Ice cream sandwich',
-    value4: 237,
-    value5: 9.0,
-    value6: 37,
-    value7: 4.3,
-    value8: '1%',
+  args: {
+    itemKey: 'number',
+    hideHeader: false,
+    hidePagination: false,
+    dense: false,
+    outlined: true,
   },
-  {
-    number: 3,
-    value2: faker.animal.type(),
-    value3: 'Eclair',
-    value4: 262,
-    value5: 16.0,
-    value6: 23,
-    value7: 6.0,
-    value8: '7%',
-  },
-  {
-    number: 4,
-    value3: 'Cupcake',
-    value2: faker.animal.type(),
-    value4: 305,
-    value5: 3.7,
-    value6: 67,
-    value7: '-',
-    value8: '8%',
-  },
-  {
-    number: 5,
-    value3: 'Gingerbread',
-    value2: faker.animal.type(),
-    value4: 356,
-    value5: 16.0,
-    value6: 49,
-    value7: 3.9,
-    value8: '16%',
-    footerMessage: 'Gingerbread is very delicious',
-  },
-  {
-    number: 6,
-    value3: 'Jelly bean',
-    value2: faker.animal.type(),
-    value4: 375,
-    value5: 0.0,
-    value6: 94,
-    value7: 0.0,
-    value8: '0%',
-  },
-  {
-    number: 7,
-    value3: 'Lollipop',
-    value2: faker.animal.type(),
-    value4: 392,
-    value6: 0.2,
-    value7: 98,
-    value8: '-',
-    value9: '2%',
-  },
-  {
-    number: 8,
-    value3: 'Honeycomb',
-    value2: faker.animal.type(),
-    value4: 408,
-    value5: 3.2,
-    value6: 87,
-    value7: 6.5,
-    value8: '45%',
-  },
-  {
-    number: 9,
-    value3: 'Donut',
-    value2: faker.animal.type(),
-    value4: 452,
-    value6: 25.0,
-    value7: 51,
-    value8: 4.9,
-    value9: '22%',
-  },
-  {
-    number: 10,
-    value3: 'KitKat',
-    value2: faker.animal.type(),
-    value4: 518,
-    value6: 26.0,
-    value7: 65,
-    value8: 7,
-    value9: '6%',
-    footerMessage: 'KitKat is very delicious',
-  },
-  {
-    number: 11,
-    value3: 'KitKat',
-    value2: faker.animal.type(),
-    value4: 518,
-    value6: 26.0,
-    value7: 65,
-    value8: 7,
-  },
-])
+})

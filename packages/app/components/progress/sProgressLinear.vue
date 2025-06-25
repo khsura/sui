@@ -36,8 +36,8 @@ const barColorAttrs = computed(() => {
 const progressClasses = computed(() => {
   return {
     s_progressLinear: true,
-    's_progressLinear--absolute': props.absolute,
-    's_progressLinear--fixed': props.fixed,
+    's_progressLinear--absolute': props.position === 'absolute',
+    's_progressLinear--fixed': props.position === 'fixed',
     's_progressLinear--indeterminate': props.indeterminate,
   }
 })

@@ -1,4 +1,12 @@
-import type { TableItem, TableItemClass, TableItemCellType, TableItemStyle, TableRowClass, TableHeader } from './core'
+import type {
+  TableItem,
+  TableItemClass,
+  TableItemCellType,
+  TableItemStyle,
+  TableRowClass,
+  TableHeader,
+  KTableSortOrder,
+} from './core'
 
 export interface PropsTableHeadCell {
   header: TableHeader
@@ -52,10 +60,13 @@ export type PropsTable<T extends TableItem = TableItem, C extends string = keyof
   stickyLeftColumnsOffset?: number | undefined
   tile?: boolean | undefined
   underlined?: boolean | undefined
+  loading?: boolean | undefined
+  totalItems?: number | undefined
 }
 
 export interface EmitTable<T extends TableItem = TableItem> {
-  (event: 'update:expanded', value: T[]): void
-  (event: 'update:selected', value: T[]): void
-  (event: 'click:row', value: { item: T; expand: () => void; isExpanded: boolean }): void
+  'update:options': [{ pageIndex: number; itemsPerPage: number; sortBy: { key: string; order: KTableSortOrder }[] }]
+  'update:expanded': [value: T[]]
+  'update:selected': [value: T[]]
+  'click:row': [value: { item: T; expand: () => void; isExpanded: boolean }]
 }

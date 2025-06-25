@@ -3,23 +3,30 @@
     <slot name="pagination" :items-per-page="itemsPerPage" :total-items="itemsCount">
       <div class="s_tablePagination__itemsPerPage">
         <span class="s_tablePagination__page"><slot name="itemsPerPageLabel">Items per page: </slot></span>
-        <SSelect :items="itemsPerPageOptions" divided outlined hide-details v-model="itemsPerPage"></SSelect>
+        <SSelect
+          :items="itemsPerPageOptions"
+          divided
+          outlined
+          hide-details
+          v-model="itemsPerPage"
+          :disabled="loading"
+        ></SSelect>
       </div>
       <span class="s_tablePagination__page s_px__3"
         >{{ pageIndex * itemsPerPage + 1 }} - {{ Math.min(pageIndex * itemsPerPage + itemsPerPage, itemsCount) }} /
         {{ itemsCount }}</span
       >
       <div class="s_tablePagination__actions">
-        <SButton variant="icon" @click="pageIndex = 0" :disabled="!canGoToFirst">
+        <SButton variant="icon" @click="pageIndex = 0" :disabled="!canGoToFirst || loading">
           <SIcon icon="mdi-chevron-double-left"></SIcon>
         </SButton>
-        <SButton variant="icon" @click="pageIndex--" :disabled="!canGoToFirst">
+        <SButton variant="icon" @click="pageIndex--" :disabled="!canGoToFirst || loading">
           <SIcon icon="mdi-chevron-left" />
         </SButton>
-        <SButton variant="icon" @click="pageIndex++" :disabled="!canGoToLast">
+        <SButton variant="icon" @click="pageIndex++" :disabled="!canGoToLast || loading">
           <SIcon icon="mdi-chevron-right" />
         </SButton>
-        <SButton variant="icon" @click="pageIndex = lastPageIndex" :disabled="!canGoToLast">
+        <SButton variant="icon" @click="pageIndex = lastPageIndex" :disabled="!canGoToLast || loading">
           <SIcon icon="mdi-chevron-double-right"></SIcon>
         </SButton>
       </div>
@@ -36,6 +43,7 @@ const itemsPerPage = defineModel<number>('itemsPerPage')
 
 const props = defineProps<{
   itemsCount: number
+  loading?: boolean | undefined
 }>()
 
 const getPageIndex = (value: number) => {

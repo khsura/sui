@@ -1,4 +1,4 @@
-import { computed, ref, type Ref } from 'vue'
+import { computed, ref, type Ref, type EmitFn } from 'vue'
 import { z } from 'zod'
 import { type STableHeadCell } from '@khsura/sui/components/table'
 import { getTableRowClass } from '@khsura/sui/helpers'
@@ -16,7 +16,7 @@ import { uniqueId } from '@khsura/sui/vendors/lodash'
 
 export const useTableService = <T extends TableItem = TableItem>(
   props: PropsTable<T>,
-  emit: EmitTable<T>,
+  emit: EmitFn<EmitTable<T>>,
   itemsPerPage: Ref<number | undefined>,
 ) => {
   const isMounted = ref(false)
@@ -242,6 +242,10 @@ export const useTableService = <T extends TableItem = TableItem>(
 
     if (!groupBy || groupBy.length === 0) {
       if (itemsPerPage.value) {
+        if (props.totalItems && props.totalItems > items.length) {
+          return [{ name: '', items }]
+        }
+
         return [
           {
             name: '',
@@ -267,6 +271,10 @@ export const useTableService = <T extends TableItem = TableItem>(
     const itemsPerPageValue = itemsPerPage.value
 
     if (itemsPerPageValue) {
+      if (props.totalItems && props.totalItems > items.length) {
+        return groupedItems
+      }
+
       let currentIndex = 0
       const startIndex = pageIndex.value * itemsPerPageValue
       const endIndex = (pageIndex.value + 1) * itemsPerPageValue

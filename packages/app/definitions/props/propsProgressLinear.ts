@@ -1,6 +1,6 @@
-export type PropsProgressLinear = {
-  fixed?: boolean
-  absolute?: boolean
+import type { PropsPosition } from '@khsura/sui/definitions/props/core'
+
+export interface PropsProgressLinear extends PropsPosition {
   backgroundColor?: string | null
   backgroundOpacity?: string | number | null
   color?: string

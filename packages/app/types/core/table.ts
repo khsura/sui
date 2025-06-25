@@ -1,8 +1,8 @@
 import type { CSSProperties } from 'vue'
 
 export enum KTableSortOrder {
-  ascending,
-  descending,
+  ascending = 'asc',
+  descending = 'desc',
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

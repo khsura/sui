@@ -167,11 +167,20 @@
         </tbody>
       </table>
     </div>
+    <SProgressLinear
+      class="s_table__loading"
+      v-if="loading"
+      position="absolute"
+      indeterminate
+      :size="3"
+    ></SProgressLinear>
     <STablePagination
       v-if="!hidePagination"
       v-model:items-per-page="itemsPerPage"
       v-model:page-index="pageIndex"
-      :items-count="items.length"
+      @update:page-index="updateOptions"
+      :loading="loading"
+      :items-count="totalItems ?? items.length"
     />
   </div>
 </template>
@@ -180,7 +189,8 @@ import { useDebounceFn } from '@vueuse/core'
 import { computed, watch, onMounted } from 'vue'
 import { getCleanSetObject } from '@khsura/sui/lib'
 import { useBorderService, useTableService } from '@khsura/sui/services'
-import { type EmitTable, type PropsTable, type TableItem } from '@khsura/sui/types'
+import { type KTableSortOrder, type EmitTable, type PropsTable, type TableItem } from '@khsura/sui/types'
+import SProgressLinear from '../progress/sProgressLinear.vue'
 import STableHeadCell from './sTableHeadCell.vue'
 import STableBodyCell from './sTableBodyCell.vue'
 import STablePagination from './sTablePagination.vue'
@@ -250,6 +260,17 @@ watch([() => props.dense, () => props.outlined, () => props.headers, () => props
   await updateTableDebounce()
 })
 
+const updateOptions = (pageIndex: number) => {
+  if (!itemsPerPage.value) return
+  emit('update:options', {
+    pageIndex,
+    itemsPerPage: itemsPerPage.value ?? 10,
+    sortBy: Object.entries(sortOrders.value ?? {})
+      .filter(([_, order]) => order)
+      .map(([key, order]) => ({ key, order: order as KTableSortOrder })),
+  })
+}
+
 onMounted(() => {
   onHorizontalScroll()
   isMounted.value = true
@@ -268,6 +289,11 @@ defineExpose({
   font-size: $fontSize;
   border-spacing: 0;
   background-color: s_getAppColor('card');
+
+  &__container {
+    position: relative;
+    overflow: hidden;
+  }
 
   &__wrapper {
     display: block;
@@ -367,6 +393,15 @@ defineExpose({
       }
     }
     /* stylelint-enable selector-max-compound-selectors */
+  }
+
+  &__loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
   }
 
   &__expanded {
