@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/khsura/sui/compare/sui-v1.5.0...sui-v1.5.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* add server data table ([a90244b](https://github.com/khsura/sui/commit/a90244bb7686b34219a709b44e1a0390e12dd1c5))
+
 ## [1.5.0](https://github.com/khsura/sui/compare/sui-v1.4.2...sui-v1.5.0) (2025-06-24)
 
 
