@@ -25,10 +25,10 @@ const classList = computed(() => {
   return {
     s_listItem: true,
     ...classListDisabled.value,
-    s_list__item: true,
     's_listItem--selectable': props.selectable,
     's_listItem--dense': listProps.value.dense === true,
-    's_listItem--link': isLink.value ?? props.link ?? listProps.value.link === true,
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+    's_listItem--link': isLink.value || props.link || listProps.value.link === true,
   }
 })
 </script>

@@ -175,7 +175,7 @@
       :size="3"
     ></SProgressLinear>
     <STablePagination
-      v-if="!hidePagination"
+      v-if="!shouldHidePagination"
       v-model:items-per-page="itemsPerPage"
       v-model:page-index="pageIndex"
       @update:page-index="updateOptions"
@@ -246,6 +246,14 @@ const tableClasses = computed(() => ({
   's_table--dense': props.dense,
   ...classListBorder.value,
 }))
+
+const shouldHidePagination = computed(() => {
+  if (props.hidePagination && (!itemsPerPage.value || itemsPerPage.value > (props.totalItems ?? props.items.length))) {
+    return true
+  }
+
+  return false
+})
 
 const getExpandedClass = () => {
   return getCleanSetObject({
