@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/khsura/sui/compare/root-v1.3.1...root-v1.4.0) (2025-09-15)
+
+
+### Features
+
+* add autocomplete component ([#70](https://github.com/khsura/sui/issues/70)) ([e98120a](https://github.com/khsura/sui/commit/e98120a1d3983a8c126924c0ddf2767392f4c84e))
+
 ## [1.3.1](https://github.com/khsura/sui/compare/root-v1.3.0...root-v1.3.1) (2025-06-25)
 
 
