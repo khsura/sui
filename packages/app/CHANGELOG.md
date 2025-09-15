@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/khsura/sui/compare/sui-v1.5.1...sui-v1.6.0) (2025-09-15)
+
+
+### Features
+
+* add autocomplete component ([#70](https://github.com/khsura/sui/issues/70)) ([e98120a](https://github.com/khsura/sui/commit/e98120a1d3983a8c126924c0ddf2767392f4c84e))
+
 ## [1.5.1](https://github.com/khsura/sui/compare/sui-v1.5.0...sui-v1.5.1) (2025-06-25)
 
 
