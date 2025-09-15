@@ -146,7 +146,6 @@ export const TableServer = createStoryObj<typeof STable>({
           )
           totalItems.value = tableItems.length
           loading.value = false
-          console.log(items.value)
         }
 
         onMounted(async () => {

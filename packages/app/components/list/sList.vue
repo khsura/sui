@@ -74,7 +74,7 @@ ol.s_list,
   }
 
   &--divided {
-    .s_list__item:not(:last-child) {
+    .s_listItem:not(:last-child) {
       border-bottom: thin solid s_getAppColor('border');
     }
 

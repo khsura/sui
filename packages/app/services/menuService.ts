@@ -12,6 +12,7 @@ export const useMenuService = (
     noContentMinWidth?: boolean
     offset?: number
     alignMiddle?: boolean
+    preventOverlap?: boolean
     onChange?: (v: boolean | undefined | null) => void
   },
 ) => {
@@ -33,9 +34,11 @@ export const useMenuService = (
       return null
     }
 
+    const elementOffsetWidth = element.offsetWidth ?? 0
+
     const width = options?.noContentMinWidth
-      ? element.offsetWidth
-      : Math.max(element.offsetWidth, activatorLocation.width)
+      ? elementOffsetWidth
+      : Math.max(elementOffsetWidth, activatorLocation.width)
 
     const height = element.offsetHeight
     const shouldAlignMiddle = !isLeft.value && !isRight.value && options?.alignMiddle
@@ -50,13 +53,24 @@ export const useMenuService = (
       (isLeft.value ? -width : 0) +
       transformX
 
-    const top =
-      offset +
-      (props.offsetY ?? 0) +
-      (props.position === 'fixed' ? 0 : viewportLocation.top) +
-      activatorLocation.top +
-      (isBottom.value ? activatorLocation.height : 0) +
-      (isTop.value ? -height : 0)
+    let top: number
+
+    if (options?.preventOverlap) {
+      top =
+        offset +
+        (props.offsetY ?? 0) +
+        (props.position === 'fixed' ? 0 : viewportLocation.top) +
+        activatorLocation.top +
+        activatorLocation.height
+    } else {
+      top =
+        offset +
+        (props.offsetY ?? 0) +
+        (props.position === 'fixed' ? 0 : viewportLocation.top) +
+        activatorLocation.top +
+        (isBottom.value ? activatorLocation.height : 0) +
+        (isTop.value ? -height : 0)
+    }
 
     const isBottomOverflow = viewportLocation.isWithinOverlay ? top + height >= viewportLocation.bottom : false
     const adjustedTop = isBottomOverflow ? viewportLocation.bottom - height : top

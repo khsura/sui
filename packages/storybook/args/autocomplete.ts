@@ -1,0 +1,41 @@
+import type { PropsAutocomplete } from '@khsura/sui/definitions'
+
+export const argsAutocomplete = {
+  items: [
+    'Apple',
+    'Banana',
+    'Cherry',
+    'Date',
+    'Elderberry',
+    'Fig',
+    'Grape',
+    'Honeydew',
+    'Kiwi',
+    'Lemon',
+    'Mango',
+    'Orange',
+    'Papaya',
+    'Quince',
+    'Raspberry',
+    'Strawberry',
+    'Tangerine',
+    'Ugli fruit',
+    'Watermelon',
+    'Xigua',
+    'Yellow passion fruit',
+    'Zucchini',
+  ],
+  placeholder: 'Search fruits...',
+  filterMode: 'contains',
+  // noDataText: 'No data available',
+  multiple: false,
+  chips: false,
+  closableChips: true,
+  dense: false,
+  loading: false,
+  clearable: false,
+  // Form input props
+  disabled: false,
+  // Size props
+  size: 'default',
+} satisfies Partial<PropsAutocomplete>
