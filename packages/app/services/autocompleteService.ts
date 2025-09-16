@@ -6,7 +6,7 @@ import type {
   AutocompleteModelType,
   AutocompleteModelTypeBase,
 } from '@khsura/sui/types/autocomplete'
-import { merge } from 'lodash'
+import lodash from 'lodash'
 import {
   isDelimiter,
   getItemFromText,
@@ -244,7 +244,7 @@ export const useAutocompleteService = <T extends boolean = false>(
   }
 
   const updateItemsPool = (items: SelectItem[] | string[]) => {
-    itemsPool.value = merge(
+    itemsPool.value = lodash.merge(
       itemsPool.value,
       items.reduce(
         (acc, item) => {
