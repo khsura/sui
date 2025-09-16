@@ -18,6 +18,7 @@
     "g:stylelint": "cd $INIT_CWD && stylelint",
     "g:publish": "cd $INIT_CWD && yarn npm publish",
     "g:tsc": "cd $INIT_CWD && vue-tsc && tsc-alias",
+    "g:sass": "cd $INIT_CWD && sass",
     "build": "nx run-many --target=build --all",
     "eslint": "nx run-many --target=eslint --all",
     "stylelint": "nx run-many --target=stylelint --all",

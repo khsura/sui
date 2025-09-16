@@ -4,8 +4,9 @@
   "type": "module",
   "scripts": {
     "prebuild": "yarn g:rimraf dist && yarn g:rimraf @types",
+    "build:style": "yarn g:sass styles/index.scss dist/base.css",
     "build:type": "yarn g:vue-tsc -p tsconfig.build.json && yarn g:tsc-alias -p tsconfig.build.json",
-    "build": "yarn prebuild && yarn build:type && yarn g:vite build && cp -R styles dist/styles",
+    "build": "yarn prebuild && yarn build:type && yarn g:vite build && yarn build:style && cp -R styles dist/styles",
     "eslint": "yarn g:eslint",
     "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
     "test": "yarn g:vitest run",
@@ -19,6 +20,7 @@
   "module": "./dist/s-ui.js",
   "types": "./@types/index.d.ts",
   "exports": {
+    "./base.css": "./dist/base.css",
     "./style.css": "./dist/s-ui.css",
     "./style.scss": "./dist/styles/index.scss",
     "./helpers.scss": "./dist/styles/_helpers.scss",

@@ -17,8 +17,6 @@ const { styles } = useAppService(props)
 </script>
 
 <style lang="scss">
-@use '@khsura/sui/styles/index.scss' as *;
-
 .s_app {
   display: flex;
   flex-flow: column;
