@@ -178,7 +178,8 @@
       v-if="!shouldHidePagination"
       v-model:items-per-page="itemsPerPage"
       v-model:page-index="pageIndex"
-      @update:page-index="updateOptions"
+      @update:page-index="updateOptions($event, itemsPerPage)"
+      @update:items-per-page="updateOptions(pageIndex, $event)"
       :loading="loading"
       :items-count="totalItems ?? items.length"
     />
@@ -268,11 +269,11 @@ watch([() => props.dense, () => props.outlined, () => props.headers, () => props
   await updateTableDebounce()
 })
 
-const updateOptions = (pageIndex: number) => {
-  if (!itemsPerPage.value) return
+const updateOptions = (pageIndex: number, itemsPerPage: number | undefined) => {
+  if (!itemsPerPage) return
   emit('update:options', {
     pageIndex,
-    itemsPerPage: itemsPerPage.value ?? 10,
+    itemsPerPage,
     sortBy: Object.entries(sortOrders.value ?? {})
       .filter(([_, order]) => order)
       .map(([key, order]) => ({ key, order: order as KTableSortOrder })),

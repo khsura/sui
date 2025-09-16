@@ -5,7 +5,7 @@ import type { Meta } from '@storybook/vue3-vite'
 import { ref, defineComponent, onMounted } from 'vue'
 import { createStoryObj } from '@khsura/storybook/helpers'
 import { tableHeaders, tableItems } from '@khsura/storybook/constants'
-import { wait } from '@khsura/shared'
+import { faker, wait } from '@khsura/shared'
 
 const table: Meta<typeof STable> = {
   title: 'UI Components/Table',
@@ -14,6 +14,76 @@ const table: Meta<typeof STable> = {
 export default table
 
 export const Table = createStoryObj<typeof STable>({
+  args: {
+    dense: false,
+    groupBy: undefined,
+    hideHeader: false,
+    hidePagination: false,
+    hideTopBottomBorders: false,
+    hideVerticalBorders: false,
+    itemFooter: 'footerMessage',
+    itemHeader: undefined,
+    itemsPerPage: 10,
+    itemKey: 'name',
+    multiSort: false,
+    outlined: true,
+    singleExpand: false,
+    stickyHeader: false,
+    stickyLeftColumnsOffset: undefined,
+    stickyLeftColumnsSize: undefined,
+    stickyLeftColumnsStart: undefined,
+    shadowExpandedContent: false,
+    singleSelect: false,
+    tile: false,
+    underlined: true,
+    loading: false,
+  },
+  render: (args) => {
+    return {
+      components: {
+        STable,
+      },
+      setup: () => {
+        const headers = [
+          {
+            text: 'Name',
+            value: 'name',
+          },
+          {
+            text: 'Age',
+            value: 'age',
+          },
+          {
+            text: 'Gender',
+            value: 'gender',
+          },
+        ]
+
+        const items = Array.from({ length: 50 }, () => ({
+          name: faker.person.fullName(),
+          age: faker.number.int({ min: 18, max: 65 }),
+          gender: faker.person.gender(),
+        }))
+
+        return {
+          args,
+          headers,
+          items,
+        }
+      },
+      template: /* html */ `
+        <STable
+          v-bind="args"
+          :items="items"
+          :item-key="args.itemKey ?? 'name'"
+          :headers="headers"
+        />
+      `,
+    }
+  },
+})
+
+export const TableMore = createStoryObj<typeof STable>({
   render: (args) => {
     return {
       components: {
