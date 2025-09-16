@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.4.0](https://github.com/khsura/sui/compare/root-v1.3.1...root-v1.4.0) (2025-09-15)
+
+
+### Features
+
+* add autocomplete component ([#70](https://github.com/khsura/sui/issues/70)) ([e98120a](https://github.com/khsura/sui/commit/e98120a1d3983a8c126924c0ddf2767392f4c84e))
+
+## [1.3.1](https://github.com/khsura/sui/compare/root-v1.3.0...root-v1.3.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* add server data table ([a90244b](https://github.com/khsura/sui/commit/a90244bb7686b34219a709b44e1a0390e12dd1c5))
+* storybook build bug ([b54bcff](https://github.com/khsura/sui/commit/b54bcff90f27c3bf571b65bd9e56c79d4efe6da0))
+
 ## [1.3.0](https://github.com/khsura/sui/compare/root-v1.2.3...root-v1.3.0) (2025-06-24)
 
 
