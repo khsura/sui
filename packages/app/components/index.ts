@@ -1,5 +1,3 @@
-import '@khsura/sui/styles/index.scss'
-
 export * from './badge'
 export * from './calendar'
 export * from './cards'

@@ -20,6 +20,7 @@
   "types": "./@types/index.d.ts",
   "exports": {
     "./style.css": "./dist/s-ui.css",
+    "./style.scss": "./dist/styles/index.scss",
     "./helpers.scss": "./dist/styles/_helpers.scss",
     ".": {
       "import": {
