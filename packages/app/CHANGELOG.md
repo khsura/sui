@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/khsura/sui/compare/sui-v1.6.0...sui-v1.6.1) (2025-09-16)
+
+
+### Bug Fixes
+
+* import issue ([f117308](https://github.com/khsura/sui/commit/f117308ce0d7e5ff437e110182a05e149ea035e8))
+
 ## [1.6.0](https://github.com/khsura/sui/compare/sui-v1.5.1...sui-v1.6.0) (2025-09-15)
 
 
