@@ -1,7 +1,7 @@
 import { SCheckbox, SForm } from '@khsura/sui/components'
 import type { Meta } from '@storybook/vue3-vite'
 import { defineComponent, ref } from 'vue'
-import { argTypesColor } from '@khsura/storybook/argTypes'
+import { argTypesColor, argTypesDisabled } from '@khsura/storybook/argTypes'
 import { formInputModelValueRules } from '@khsura/storybook/configs'
 import { createStoryObj, getSlot } from '@khsura/storybook/helpers'
 
@@ -14,6 +14,7 @@ const checkbox: Meta<typeof SCheckbox> = {
       options: ['default', 'large'],
     },
     ...argTypesColor,
+    ...argTypesDisabled,
   },
 }
 
@@ -34,6 +35,8 @@ export const OptionalCheckbox = createStoryObj<typeof SCheckbox>({
     bordered: false,
     color: undefined,
     hideDetails: false,
+    readonly: false,
+    disabled: false,
   },
   parameters: {
     controls: {
@@ -56,7 +59,9 @@ export const OptionalCheckbox = createStoryObj<typeof SCheckbox>({
           args,
         }
       },
-      template: `
+      template:
+        /* html */
+        `
         <div class="s_pa__3">
           <SCheckbox
             v-for="(selected, key) in selecteds" :key="key"
@@ -80,6 +85,8 @@ export const RequiredCheckbox = createStoryObj<typeof SCheckbox>({
     bordered: false,
     color: undefined,
     hideDetails: false,
+    readonly: false,
+    disabled: false,
   },
   render: (args) =>
     defineComponent({

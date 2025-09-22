@@ -1,14 +1,24 @@
 <template>
   <div class="s_checkbox" :class="checkboxClasses">
-    <input :id="id" v-model="model" class="s_checkbox__input" type="checkbox" />
-    <label :for="id" class="s_checkbox__label" @click="model = !model">
-      <span v-if="label" class="s_checkbox__labelText">{{ label }}</span>
-    </label>
+    <div class="s_checkbox__container">
+      <input
+        :id="id"
+        :value="model"
+        @input="toggleModel($event)"
+        class="s_checkbox__input"
+        type="checkbox"
+        :readonly="readonly ?? false"
+        :disabled="disabled ?? false"
+      />
+      <label :for="id" class="s_checkbox__label">
+        <span v-if="label" class="s_checkbox__labelText">{{ label }}</span>
+      </label>
+    </div>
     <FormInputError v-if="!hideDetails" :errors="errors"></FormInputError>
   </div>
 </template>
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, nextTick, watch } from 'vue'
 import FormInputError from '@khsura/sui/components/form/common/sFormInputError.vue'
 import { type PropsCheckbox } from '@khsura/sui/definitions'
 import { useColorRepository } from '@khsura/sui/repositories'
@@ -28,6 +38,20 @@ const model = defineModel<boolean>()
 const { getIsPredefinedPresetColor } = useColorRepository()
 const { updateFormInput, errors } = useFormInputService<boolean>(props, emit, model)
 
+const toggleModel = async (event: Event) => {
+  event.preventDefault()
+  const value = (event.target as HTMLInputElement).checked
+
+  if (props.disabled || props.readonly) {
+    ;(event.target as HTMLInputElement).checked = model.value ?? false
+    await nextTick()
+
+    return
+  }
+
+  model.value = value
+}
+
 watch(model, (v) => {
   void updateFormInput(v)
 })
@@ -36,6 +60,8 @@ const checkboxClasses = computed(() => {
   return {
     's_checkbox--bordered': props.bordered,
     's_checkbox--block': props.block,
+    's_checkbox--disabled': props.disabled,
+    's_checkbox--readonly': props.readonly,
     's_checkbox--size__large': props.size === 'large',
     [`s_checkbox--color__${props.color}`]: getIsPredefinedPresetColor(props.color),
   }
@@ -46,8 +72,10 @@ $s_checkbox--size__large: 32px;
 $s_checkbox--size: 24px;
 
 .s_checkbox {
-  position: relative;
-  display: inline-flex;
+  &__container {
+    position: relative;
+    display: inline-flex;
+  }
 
   &--bordered {
     border: 1px solid s_getAppColor('border');
@@ -97,7 +125,7 @@ $s_checkbox--size: 24px;
     border: 2px solid s_getPresetColor('info');
   }
 
-  &:hover &__label::before {
+  &:not(&--disabled):not(&--readonly):hover &__label::before {
     border: 2px solid s_getPresetColor('info');
   }
 
@@ -122,14 +150,51 @@ $s_checkbox--size: 24px;
 
   @each $colorName in $s_presetColorNames {
     &--color__#{$colorName} {
-      :checked + .s_checkbox__label::before {
-        background-color: s_getPresetColor($colorName);
-        border: 2px solid s_getPresetColor($colorName);
+      &:not(.s_checkbox--disabled) {
+        :checked + .s_checkbox__label::before {
+          background-color: s_getPresetColor($colorName);
+          border: 2px solid s_getPresetColor($colorName);
+        }
+
+        :checked + .s_checkbox__label::after {
+          border-color: s_getPresetColor($colorName, true);
+        }
       }
 
-      &:hover .s_checkbox__label::before {
+      &:not(.s_checkbox--disabled):not(.s_checkbox--readonly):hover .s_checkbox__label::before {
         border: 2px solid s_getPresetColor($colorName);
       }
+    }
+  }
+
+  &--disabled {
+    .s_checkbox__label::before {
+      background-color: s_getAppColor('disabled');
+      border: 1px solid s_getAppColor('disabled');
+      cursor: default;
+    }
+
+    .s_checkbox__label::after {
+      border-color: s_getAppColor('card');
+      cursor: default;
+    }
+
+    .s_checkbox__label {
+      cursor: default;
+    }
+  }
+
+  &--readonly {
+    .s_checkbox__label::before {
+      cursor: default;
+    }
+
+    .s_checkbox__label::after {
+      cursor: default;
+    }
+
+    .s_checkbox__label {
+      cursor: default;
     }
   }
 }
