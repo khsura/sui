@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.7.0](https://github.com/khsura/sui/compare/sui-v1.6.0...sui-v1.7.0) (2025-09-22)
+
+
+### Features
+
+* change style import way ([a93ee76](https://github.com/khsura/sui/commit/a93ee76f37cc462c359fe87fb96750a7dddb5245))
+
+
+### Bug Fixes
+
+* bug ([950affb](https://github.com/khsura/sui/commit/950affb7a6580cccd70d42e5967d256369ca9dc5))
+* checkbox issue ([46a2892](https://github.com/khsura/sui/commit/46a2892916af5c343a5fc5d17c786d04ccb82044))
+* import issue ([f117308](https://github.com/khsura/sui/commit/f117308ce0d7e5ff437e110182a05e149ea035e8))
+* lodash import issue ([9405b9e](https://github.com/khsura/sui/commit/9405b9e71ddb372fc299e1f0c6e66732e8d1422c))
+* table ([14adec0](https://github.com/khsura/sui/commit/14adec04e2f14dc34c5314c1706bee2e93095a7e))
+
 ## [1.6.0](https://github.com/khsura/sui/compare/sui-v1.5.1...sui-v1.6.0) (2025-09-15)
 
 

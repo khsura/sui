@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.6.0](https://github.com/khsura/sui/compare/storybook-v1.5.0...storybook-v1.6.0) (2025-09-22)
+
+
+### Features
+
+* change style import way ([a93ee76](https://github.com/khsura/sui/commit/a93ee76f37cc462c359fe87fb96750a7dddb5245))
+
+
+### Bug Fixes
+
+* bug ([950affb](https://github.com/khsura/sui/commit/950affb7a6580cccd70d42e5967d256369ca9dc5))
+* checkbox issue ([46a2892](https://github.com/khsura/sui/commit/46a2892916af5c343a5fc5d17c786d04ccb82044))
+* table ([14adec0](https://github.com/khsura/sui/commit/14adec04e2f14dc34c5314c1706bee2e93095a7e))
+* update storybook ([ef226eb](https://github.com/khsura/sui/commit/ef226ebce4b9a220391eb8a4f3dacfe9680134ff))
+
 ## [1.5.0](https://github.com/khsura/sui/compare/storybook-v1.4.1...storybook-v1.5.0) (2025-09-15)
 
 
