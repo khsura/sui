@@ -14,6 +14,7 @@ import {
   getItemFromValue,
   getItemText,
   getSelectItem,
+  getItemValue,
 } from '../helpers'
 import { useMenuService } from '../services'
 
@@ -33,47 +34,6 @@ export const useAutocompleteService = <T extends boolean = false>(
     props,
     isMenuOpen,
   )
-
-  const onBlur = (hideMenu?: boolean) => {
-    isFocused.value = false
-    if (queryText.value.trim()) {
-      addItemToModel('text', queryText.value.trim())
-    }
-
-    if (hideMenu) {
-      isMenuOpen.value = false
-    }
-  }
-
-  const onFocus = async () => {
-    isFocused.value = true
-    isMenuOpen.value = true
-    await nextTick()
-    updateLocation()
-  }
-
-  const onEnter = () => {
-    if (queryText.value.trim()) {
-      addItemToModel('text', queryText.value.trim())
-    }
-
-    queryText.value = ''
-  }
-
-  const onKeydown = (event: KeyboardEvent) => {
-    if (isDelimiter(event)) {
-      onEnter()
-      event.preventDefault()
-    }
-
-    if (debounceTimeout) {
-      clearTimeout(debounceTimeout)
-    }
-
-    debounceTimeout = setTimeout(() => {
-      emit('searchItem', queryText.value)
-    }, props.debounce)
-  }
 
   const getChangeModelValueType = <V extends boolean = boolean>(
     multiple?: V,
@@ -149,6 +109,47 @@ export const useAutocompleteService = <T extends boolean = false>(
     }
   }
 
+  const onBlur = (hideMenu?: boolean) => {
+    isFocused.value = false
+    if (queryText.value.trim()) {
+      addItemToModel('text', queryText.value.trim())
+    }
+
+    if (hideMenu) {
+      isMenuOpen.value = false
+    }
+  }
+
+  const onFocus = async () => {
+    isFocused.value = true
+    isMenuOpen.value = true
+    await nextTick()
+    updateLocation()
+  }
+
+  const onEnter = () => {
+    if (queryText.value.trim()) {
+      addItemToModel('text', queryText.value.trim())
+    }
+
+    queryText.value = ''
+  }
+
+  const onKeydown = (event: KeyboardEvent) => {
+    if (isDelimiter(event)) {
+      onEnter()
+      event.preventDefault()
+    }
+
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout)
+    }
+
+    debounceTimeout = setTimeout(() => {
+      emit('searchItem', queryText.value)
+    }, props.debounce)
+  }
+
   const removeInput = async (value: AutocompleteModelTypeBase) => {
     const multiple = props.multiple === true
 
@@ -172,6 +173,31 @@ export const useAutocompleteService = <T extends boolean = false>(
     if (queryText.value.trim() === '') {
       void removeInput(Array.isArray(model.value) ? model.value[model.value.length - 1] : model.value)
     }
+  }
+
+  const onClickOutside = (event: MouseEvent) => {
+    const target = event.target as HTMLElement
+
+    if (target.contains(inputElement.value)) {
+      return
+    }
+
+    isMenuOpen.value = false
+  }
+
+  const onSelectItem = async (item: SelectItem | string) => {
+    if (typeof item === 'string') {
+      addItemToModel('value', item)
+    } else {
+      addItemToModel('value', item.value)
+    }
+
+    if (!props.multiple) {
+      isMenuOpen.value = false
+    }
+
+    await nextTick()
+    updateLocation()
   }
 
   const filteredItems = computed(() => {
@@ -209,33 +235,17 @@ export const useAutocompleteService = <T extends boolean = false>(
     return model.value?.includes(typeof item === 'string' ? item : item.value)
   }
 
-  const onClickOutside = (event: MouseEvent) => {
-    const target = event.target as HTMLElement
-
-    if (target.contains(inputElement.value)) {
-      return
-    }
-
-    isMenuOpen.value = false
-  }
-
-  const onSelectItem = async (item: SelectItem | string) => {
-    if (typeof item === 'string') {
-      addItemToModel('value', item)
-    } else {
-      addItemToModel('value', item.value)
-    }
-
-    if (!props.multiple) {
-      isMenuOpen.value = false
-    }
-
-    await nextTick()
-    updateLocation()
-  }
-
   const updateModelType = (multiple: boolean) => {
+    console.log('updateModelType', model.value, getChangeModelValueType(multiple))
     model.value = getChangeModelValueType(multiple)
+
+    if (multiple) {
+      queryText.value = ''
+    } else {
+      queryText.value = props.chips
+        ? ''
+        : (getItemText(props.items?.find((item) => getItemValue(item) === model.value) ?? '') ?? '')
+    }
   }
 
   const clear = () => {

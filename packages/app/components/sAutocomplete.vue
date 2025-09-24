@@ -83,8 +83,13 @@
               :disabled="getSelectItem(item).disabled"
               @click="onSelectItem(item)"
             >
-              <SCheckbox v-if="multiple" :model-value="getIsSelected(item)"></SCheckbox>
-              {{ getItemText(item) }}
+              <SListItemIcon>
+                <SCheckbox v-if="multiple" :model-value="getIsSelected(item)" hide-details></SCheckbox>
+              </SListItemIcon>
+              <SListItemContent>
+                {{ getItemText(item) }}
+              </SListItemContent>
+              <span></span>
             </SListItem>
           </SList>
         </SCard>
@@ -109,6 +114,7 @@ import SChip from './sChip.vue'
 import SIcon from './sIcon.vue'
 import SButton from './sButton.vue'
 import SProgressCircular from './progress/sProgressCircular.vue'
+import SListItemIcon from './list/sListItemIcon.vue'
 
 const props = withDefaults(defineProps<PropsAutocomplete<T>>(), {
   location: 'bottom',
@@ -119,6 +125,7 @@ const props = withDefaults(defineProps<PropsAutocomplete<T>>(), {
 const model = defineModel<AutocompleteModelType<T> | null>()
 const emit = defineEmits<AutocompleteEmitEvents>()
 
+console.log('model', model.value)
 const {
   queryText,
   activatorElement,

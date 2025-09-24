@@ -4,6 +4,7 @@
       <input
         :id="id"
         :value="model"
+        ref="checkboxElement"
         @input="toggleModel($event)"
         class="s_checkbox__input"
         type="checkbox"
@@ -18,13 +19,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, nextTick, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import FormInputError from '@khsura/sui/components/form/common/sFormInputError.vue'
 import { type PropsCheckbox } from '@khsura/sui/definitions'
 import { useColorRepository } from '@khsura/sui/repositories'
 import { useFormInputService } from '@khsura/sui/services'
 
 const props = defineProps<PropsCheckbox>()
+const checkboxElement = ref<HTMLInputElement | null>(null)
 
 const emit = defineEmits<{
   (event: 'change', value: boolean): void
@@ -53,6 +55,10 @@ const toggleModel = async (event: Event) => {
 }
 
 watch(model, (v) => {
+  if (checkboxElement.value && checkboxElement.value.checked !== v) {
+    checkboxElement.value.checked = v ?? false
+  }
+
   void updateFormInput(v)
 })
 
@@ -72,6 +78,9 @@ $s_checkbox--size__large: 32px;
 $s_checkbox--size: 24px;
 
 .s_checkbox {
+  display: flex;
+  align-items: center;
+
   &__container {
     position: relative;
     display: inline-flex;

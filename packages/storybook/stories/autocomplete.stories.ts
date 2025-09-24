@@ -202,3 +202,40 @@ export const CustomFilter = createStoryObj<Meta>({
       `,
     }),
 })
+
+export const MultipleAutocompletes = createStoryObj<Meta>({
+  args: {
+    ...argsAutocomplete,
+  },
+  render: (args) =>
+    defineComponent({
+      components: {
+        SAutocomplete,
+      },
+      setup: () => {
+        const modelValue1 = ref<string | null>('Apple')
+        const modelValue2 = ref<string | null>(null)
+        const modelValue3 = ref<string | null>(null)
+        const items1 = ref<string[]>(['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape'])
+        const items2 = ref<string[]>([1, 2, 3, 4, 5].map(() => faker.animal.type()))
+        const items3 = ref<string[]>([1, 2, 3, 4, 5].map(() => faker.company.name()))
+
+        return {
+          args,
+          modelValue1,
+          modelValue2,
+          modelValue3,
+          items1,
+          items2,
+          items3,
+        }
+      },
+      template: /* html */ `
+        <div>
+          <SAutocomplete v-bind="args" v-model="modelValue1" :items="items1"></SAutocomplete>
+          <SAutocomplete v-bind="args" v-model="modelValue2" :items="items2"></SAutocomplete>
+          <SAutocomplete v-bind="args" v-model="modelValue3" :items="items3"></SAutocomplete>
+        </div>
+      `,
+    }),
+})
