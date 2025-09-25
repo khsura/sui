@@ -83,8 +83,8 @@
               :disabled="getSelectItem(item).disabled"
               @click="onSelectItem(item)"
             >
-              <SListItemIcon>
-                <SCheckbox v-if="multiple" :model-value="getIsSelected(item)" hide-details></SCheckbox>
+              <SListItemIcon v-if="multiple">
+                <SCheckbox :model-value="getIsSelected(item)" hide-details></SCheckbox>
               </SListItemIcon>
               <SListItemContent>
                 {{ getItemText(item) }}
