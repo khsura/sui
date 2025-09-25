@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.1](https://github.com/khsura/sui/compare/sui-v1.7.0...sui-v1.7.1) (2025-09-25)
+
+
+### Bug Fixes
+
+* bug ([2ce50a7](https://github.com/khsura/sui/commit/2ce50a7e93d8664364da4387a712a8305dd3acf0))
+* bug ([48c1090](https://github.com/khsura/sui/commit/48c1090f57c31eef7921ca9392d3390f107f1e30))
+
 ## [1.7.0](https://github.com/khsura/sui/compare/sui-v1.6.0...sui-v1.7.0) (2025-09-22)
 
 
