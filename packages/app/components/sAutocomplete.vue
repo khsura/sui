@@ -101,8 +101,7 @@
 import { watch } from 'vue'
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
 import SCard from '@khsura/sui/components/cards/sCard.vue'
-import SList from '@khsura/sui/components/list/sList.vue'
-import SListItem from '@khsura/sui/components/list/sListItem.vue'
+import { SList, SListItem, SListItemContent, SListItemIcon } from '@khsura/sui/components/list'
 import SCheckbox from '@khsura/sui/components/form/sCheckbox.vue'
 import { OnClickOutside } from '@vueuse/components'
 import { getSelectItem } from '../helpers'
@@ -114,7 +113,6 @@ import SChip from './sChip.vue'
 import SIcon from './sIcon.vue'
 import SButton from './sButton.vue'
 import SProgressCircular from './progress/sProgressCircular.vue'
-import SListItemIcon from './list/sListItemIcon.vue'
 
 const props = withDefaults(defineProps<PropsAutocomplete<T>>(), {
   location: 'bottom',
@@ -125,7 +123,6 @@ const props = withDefaults(defineProps<PropsAutocomplete<T>>(), {
 const model = defineModel<AutocompleteModelType<T> | null>()
 const emit = defineEmits<AutocompleteEmitEvents>()
 
-console.log('model', model.value)
 const {
   queryText,
   activatorElement,

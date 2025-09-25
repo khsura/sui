@@ -236,7 +236,6 @@ export const useAutocompleteService = <T extends boolean = false>(
   }
 
   const updateModelType = (multiple: boolean) => {
-    console.log('updateModelType', model.value, getChangeModelValueType(multiple))
     model.value = getChangeModelValueType(multiple)
 
     if (multiple) {

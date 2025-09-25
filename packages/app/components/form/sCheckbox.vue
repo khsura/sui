@@ -19,7 +19,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import FormInputError from '@khsura/sui/components/form/common/sFormInputError.vue'
 import { type PropsCheckbox } from '@khsura/sui/definitions'
 import { useColorRepository } from '@khsura/sui/repositories'
@@ -54,12 +54,19 @@ const toggleModel = async (event: Event) => {
   model.value = value
 }
 
-watch(model, (v) => {
-  if (checkboxElement.value && checkboxElement.value.checked !== v) {
-    checkboxElement.value.checked = v ?? false
+const initCheckbox = (initialValue: boolean | undefined) => {
+  if (checkboxElement.value && checkboxElement.value.checked !== initialValue) {
+    checkboxElement.value.checked = initialValue ?? false
   }
+}
 
+watch(model, (v) => {
+  initCheckbox(v)
   void updateFormInput(v)
+})
+
+onMounted(() => {
+  initCheckbox(model.value)
 })
 
 const checkboxClasses = computed(() => {
