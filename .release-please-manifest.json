@@ -1,6 +1,6 @@
 {
-  ".": "1.5.1",
-  "packages/app": "1.7.1",
+  ".": "1.5.2",
+  "packages/app": "1.7.2",
   "packages/storybook": "1.6.1",
   "packages/shared": "1.2.0"
 }
