@@ -1,72 +1,46 @@
-import type {
-  TableItem,
-  TableItemClass,
-  TableItemCellType,
-  TableItemStyle,
-  TableRowClass,
-  TableHeader,
-  KTableSortOrder,
-} from './core'
+import type { CSSProperties } from 'vue'
 
-export interface PropsTableHeadCell {
-  header: TableHeader
-  multiSort?: boolean | null | undefined
-  sticky?: boolean | undefined
-  dense?: boolean | undefined | null
+export enum KTableSortOrder {
+  ascending = 'asc',
+  descending = 'desc',
 }
 
-export interface PropsTableBodyCell<T extends TableItem = TableItem, CellKey extends string = string> {
-  header?: TableHeader | undefined
-  item: T
-  cellClass?: TableItemClass<T> | undefined
-  cellStyle?: TableItemStyle<T> | undefined
-  sticky?: boolean | undefined
-  colspan?: number | undefined
-  dense?: boolean | undefined | null
-  cellKey: CellKey
-  cellType: TableItemCellType
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type TableItem<T extends Record<string, any> = Record<string, any>> = T
 
-export type PropsTable<T extends TableItem = TableItem, C extends string = keyof TableItem> = {
-  dense?: boolean | undefined
-  expanded?: T[] | undefined
-  groupBy?: string | string[] | undefined
-  headers: TableHeader[]
-  hideHeader?: boolean | undefined
-  hideVerticalBorders?: boolean | undefined
-  hideTopBottomBorders?: boolean | undefined
-  hidePagination?: boolean | undefined
-  itemClass?: TableItemClass<T, C> | undefined
-  itemStyle?: TableItemStyle<T, C> | undefined
-  itemFooter?: string | undefined
-  itemFooterClass?: TableItemClass<T, C> | undefined
-  itemFooterStyle?: TableItemStyle<T, C> | undefined
-  itemHeader?: string | undefined
-  itemHeaderClass?: TableItemClass<T, C> | undefined
-  itemHeaderStyle?: TableItemStyle<T, C> | undefined
-  itemKey?: string | undefined
-  itemRowClass?: TableRowClass<T> | undefined
-  items: T[]
-  multiSort?: boolean | undefined
-  outlined?: boolean | undefined
-  rounded?: boolean | undefined
-  selected?: T[] | undefined
-  shadowExpandedContent?: boolean | undefined
-  singleExpand?: boolean | undefined
-  singleSelect?: boolean | undefined
-  stickyHeader?: boolean | undefined
-  stickyLeftColumnsSize?: number | undefined
-  stickyLeftColumnsStart?: number | undefined
-  stickyLeftColumnsOffset?: number | undefined
-  tile?: boolean | undefined
-  underlined?: boolean | undefined
-  loading?: boolean | undefined
-  totalItems?: number | undefined
-}
+export type TableItemCellType = 'footer' | 'header' | 'cell' | 'expansion'
 
-export interface EmitTable<T extends TableItem = TableItem> {
-  'update:options': [{ pageIndex: number; itemsPerPage: number; sortBy: { key: string; order: KTableSortOrder }[] }]
-  'update:expanded': [value: T[]]
-  'update:selected': [value: T[]]
-  'click:row': [value: { item: T; expand: () => void; isExpanded: boolean }]
+export type TableRowClass<T extends TableItem = TableItem> =
+  | string
+  | string[]
+  | Record<string, boolean>
+  | ((data: { item: T; cellType: TableItemCellType }) => string | string[] | Record<string, boolean>)
+
+export type TableItemClass<T extends TableItem = TableItem, CellKey extends string = string> =
+  | string
+  | string[]
+  | Record<string, boolean>
+  | ((data: { item: T; cellKey: CellKey; cellType: TableItemCellType }) => string | string[] | Record<string, boolean>)
+
+export type TableItemStyle<T extends TableItem = TableItem, CellKey extends string = string> =
+  | CSSProperties
+  | ((data: { item: T; cellKey: CellKey; cellType: TableItemCellType }) => CSSProperties)
+
+export interface TableHeader<V extends string | number | symbol = string> {
+  text: string
+  value: V
+  align?: 'start' | 'center' | 'end'
+  sortable?: boolean
+  groupable?: boolean
+  class?: string | string[] | Record<string, boolean | null | undefined> | undefined
+  cellClass?: TableItemClass | undefined
+  cellStyle?: TableItemStyle | undefined
+  width?: string | number
+  textWrap?: boolean
+  noGutters?: boolean
+  cellNoGutters?: boolean
+  sort?: (a: TableItem, b: TableItem, sortOrder?: KTableSortOrder) => number
+  rowspan?: number
+  colspan?: number
+  scope?: 'colgroup' | 'col'
 }

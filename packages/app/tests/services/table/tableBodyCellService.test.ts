@@ -1,6 +1,6 @@
 import { type Mutable } from '@vueuse/core'
 import { useTableBodyCellService } from '@khsura/sui/services'
-import { type PropsTableBodyCell } from '@khsura/sui/types'
+import { type PropsTableBodyCell } from '@khsura/sui/definitions'
 
 describe('tableBodyCellService', () => {
   const defaultProps: PropsTableBodyCell = {

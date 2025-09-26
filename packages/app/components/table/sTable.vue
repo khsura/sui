@@ -28,12 +28,9 @@
               :style="getTableCellStyle(header)"
               :dense="dense"
             >
-              <slot
-                :name="`header.${header.value.toString()}`"
-                :header="header"
-                :is-sticked="isStickActive && header.isSticky"
-                >{{ header.text }}</slot
-              >
+              <slot :name="`header.${header.value.toString()}`" :header="header" :is-sticked="header.isSticked">{{
+                header.text
+              }}</slot>
             </STableHeadCell>
           </tr>
         </thead>
@@ -74,7 +71,7 @@
                     :select="() => toggleSelected(rowItems)"
                     :is-selected="getIsSelected(rowItems)"
                     :is-expanded="getIsExpanded(rowItems)"
-                    :is-stick-active="isStickActive"
+                    :is-left-stick-active="isLeftStickActive"
                   >
                     {{ rowItems[itemHeader] }}
                   </slot>
@@ -112,7 +109,7 @@
                     :select="() => toggleSelected(rowItems)"
                     :is-selected="getIsSelected(rowItems)"
                     :is-expanded="getIsExpanded(rowItems)"
-                    :is-sticked="getIsStickyCell(col) && isStickActive"
+                    :is-left-sticked="getIsStickyLeftCell(col) && isLeftStickActive"
                   >
                     {{ rowItems[header.value] }}
                   </slot>
@@ -156,7 +153,7 @@
                     :select="() => toggleSelected(rowItems)"
                     :is-selected="getIsSelected(rowItems)"
                     :is-expanded="getIsExpanded(rowItems)"
-                    :is-stick-active="isStickActive"
+                    :is-stick-active="isLeftStickActive"
                   >
                     {{ rowItems[itemFooter] }}
                   </slot>
@@ -190,7 +187,8 @@ import { useDebounceFn } from '@vueuse/core'
 import { computed, watch, onMounted } from 'vue'
 import { getCleanSetObject } from '@khsura/sui/lib'
 import { useBorderService, useTableService } from '@khsura/sui/services'
-import { type KTableSortOrder, type EmitTable, type PropsTable, type TableItem } from '@khsura/sui/types'
+import { type KTableSortOrder, type TableItem } from '@khsura/sui/types'
+import type { EmitsTable, PropsTable } from '@khsura/sui/definitions'
 import SProgressLinear from '../progress/sProgressLinear.vue'
 import STableHeadCell from './sTableHeadCell.vue'
 import STableBodyCell from './sTableBodyCell.vue'
@@ -214,7 +212,7 @@ const props = withDefaults(defineProps<PropsTable<T>>(), {
   shadowExpandedContent: false,
 })
 
-const emit = defineEmits<EmitTable<T>>()
+const emit = defineEmits<EmitsTable<T>>()
 const itemsPerPage = defineModel<number>('itemsPerPage')
 const { classListBorder, styleListBorder } = useBorderService(props, { block: 'table' })
 
@@ -225,11 +223,11 @@ const {
   groupedItems,
   headerElements,
   headersList,
-  isStickActive,
+  isLeftStickActive,
   sortOrders,
   tableWrapperElement,
   totalItemColumns,
-  getIsStickyCell,
+  getIsStickyLeftCell,
   getIsExpanded,
   getIsSelected,
   getItemRowClass,
@@ -265,9 +263,12 @@ const getExpandedClass = () => {
 
 const updateTableDebounce = useDebounceFn(() => updateTable(), 10)
 
-watch([() => props.dense, () => props.outlined, () => props.headers, () => props.items, isStickActive], async () => {
-  await updateTableDebounce()
-})
+watch(
+  [() => props.dense, () => props.outlined, () => props.headers, () => props.items, isLeftStickActive],
+  async () => {
+    await updateTableDebounce()
+  },
+)
 
 const updateOptions = (pageIndex: number, itemsPerPage: number | undefined) => {
   if (!itemsPerPage) return
@@ -287,7 +288,7 @@ onMounted(() => {
 
 defineExpose({
   updateTable,
-  isStickActive,
+  isLeftStickActive,
 })
 </script>
 

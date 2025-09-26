@@ -1,5 +1,6 @@
+import type { PropsTableBodyCell } from '@khsura/sui/definitions'
 import { getCleanSetObject, getHtmlClassAttributeObject } from '@khsura/sui/lib'
-import type { PropsTableBodyCell, TableItem, TableItemClass, TableItemStyle, TableRowClass } from '@khsura/sui/types'
+import type { TableItem, TableItemClass, TableItemStyle, TableRowClass } from '@khsura/sui/types'
 
 export const getTableRowClass = <T extends TableItem = TableItem>(
   props: Pick<PropsTableBodyCell<T>, 'item' | 'cellType'>,

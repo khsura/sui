@@ -1,7 +1,8 @@
 import { type Mutable } from '@vueuse/core'
 import { ref } from 'vue'
 import { useTableService } from '@khsura/sui/services'
-import { type TableRowClass, type PropsTable } from '@khsura/sui/types'
+import { type TableRowClass } from '@khsura/sui/types'
+import { type PropsTable } from '@khsura/sui/definitions'
 import { headers, items } from '../mocks/sTable'
 
 const expanded = ref([items[3]])
@@ -163,7 +164,7 @@ describe('useTableService', () => {
 
   describe('isStickActive', () => {
     test('isStickActive should return false if column props are not set', () => {
-      const { isStickActive } = useTableService(props, emit, itemsPerPage)
+      const { isLeftStickActive: isStickActive } = useTableService(props, emit, itemsPerPage)
 
       expect(isStickActive.value).toBe(false)
     })
@@ -171,7 +172,7 @@ describe('useTableService', () => {
     test('isStickActive should return true if column props are set and scrolled', () => {
       props.stickyHeader = true
 
-      const { isStickActive, onHorizontalScroll } = useTableService(
+      const { isLeftStickActive: isStickActive, onHorizontalScroll } = useTableService(
         { ...props, stickyLeftColumnsStart: 0, stickyLeftColumnsSize: 1 },
         emit,
         itemsPerPage,
@@ -184,7 +185,7 @@ describe('useTableService', () => {
     test('isStickActive should return false if column props are not set and scrolled', () => {
       props.stickyHeader = true
 
-      const { isStickActive, onHorizontalScroll } = useTableService(
+      const { isLeftStickActive: isStickActive, onHorizontalScroll } = useTableService(
         { ...props, stickyLeftColumnsStart: 0, stickyLeftColumnsSize: 0 },
         emit,
         itemsPerPage,

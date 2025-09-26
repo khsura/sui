@@ -8,7 +8,8 @@
 import { computed } from 'vue'
 import { getCleanSetObject } from '@khsura/sui/lib'
 import { useTableBodyCellService } from '@khsura/sui/services'
-import { type PropsTableBodyCell, type TableItem } from '@khsura/sui/types'
+import { type TableItem } from '@khsura/sui/types'
+import type { PropsTableBodyCell } from '@khsura/sui/definitions'
 
 const props = defineProps<PropsTableBodyCell<T>>()
 const { itemStyles, itemClasses } = useTableBodyCellService(props)

@@ -1,4 +1,5 @@
 @use '../../variables';
+@use '../../tools';
 
 @mixin tableCell {
   $className: &;
@@ -8,7 +9,7 @@
   &--sticky {
     position: sticky;
     z-index: 2;
-    background-color: s_getAppColor('card');
+    background-color: tools.s_getAppColor('card');
   }
 
   &--dense {

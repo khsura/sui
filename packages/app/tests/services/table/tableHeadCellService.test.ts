@@ -1,6 +1,6 @@
 import { type Mutable } from '@vueuse/core'
 import { useTableHeadCellService } from '@khsura/sui/services'
-import { type PropsTableHeadCell } from '@khsura/sui/types'
+import { type PropsTableHeadCell } from '@khsura/sui/definitions'
 
 describe('tableHeadCellService', () => {
   const defaultProps: PropsTableHeadCell = {

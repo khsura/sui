@@ -4,19 +4,13 @@ import { type STableHeadCell } from '@khsura/sui/components/table'
 import { getTableRowClass } from '@khsura/sui/helpers'
 import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
 import { store } from '@khsura/sui/store'
-import {
-  type EmitTable,
-  type PropsTable,
-  type TableItem,
-  KTableSortOrder,
-  type TableHeader,
-  type TableItemCellType,
-} from '@khsura/sui/types'
+import { type TableItem, KTableSortOrder, type TableHeader, type TableItemCellType } from '@khsura/sui/types'
 import { uniqueId } from '@khsura/sui/vendors/lodash'
+import type { EmitsTable, PropsTable } from '@khsura/sui/definitions'
 
 export const useTableService = <T extends TableItem = TableItem>(
   props: PropsTable<T>,
-  emit: EmitFn<EmitTable<T>>,
+  emit: EmitFn<EmitsTable<T>>,
   itemsPerPage: Ref<number | undefined>,
 ) => {
   const isMounted = ref(false)
@@ -24,7 +18,7 @@ export const useTableService = <T extends TableItem = TableItem>(
   const tableWrapperElement = ref<HTMLElement | null>(null)
   const headerElements = ref<Array<InstanceType<typeof STableHeadCell>>>([])
   const tableId = ref(uniqueId())
-  const isStickActive = ref(false)
+  const isLeftStickActive = ref(false)
   const pageIndex = ref(0)
 
   const stickyLeftColumnsStart = computed(() => {
@@ -49,7 +43,7 @@ export const useTableService = <T extends TableItem = TableItem>(
     return validationResult.success ? validationResult.data : 0
   })
 
-  const getIsStickActive = (scrollLeft: number) => {
+  const getIsLeftStickActive = (scrollLeft: number) => {
     if (scrollLeft === 0) {
       return false
     }
@@ -314,8 +308,10 @@ export const useTableService = <T extends TableItem = TableItem>(
     let index = 0
 
     return props.headers.map((header, i) => {
-      const isSticky = header.scope !== 'colgroup' && getIsStickyCell(index)
-      const isSticked = isSticky && isStickActive.value
+      const isStickyLeft = getIsStickyLeftCell(index)
+      const isStickyRight = getIsStickyRightCell(index)
+      const isSticky = header.scope !== 'colgroup' && (isStickyLeft || isStickyRight)
+      const isSticked = (isStickyLeft && isLeftStickActive.value) || (isStickyRight && props.stickyRightColumn)
 
       if (header.scope === 'colgroup' && !header.colspan) {
         const colspan =
@@ -355,7 +351,11 @@ export const useTableService = <T extends TableItem = TableItem>(
     })
   })
 
-  const getIsStickyCell = (index: number) => {
+  const getIsStickyRightCell = (index: number) => {
+    return (props.stickyRightColumn && index === props.headers.length - 1) ?? false
+  }
+
+  const getIsStickyLeftCell = (index: number) => {
     const start = props.stickyLeftColumnsStart ?? 0
     const size = props.stickyLeftColumnsSize ?? 0
 
@@ -382,10 +382,10 @@ export const useTableService = <T extends TableItem = TableItem>(
   })
 
   const onHorizontalScroll = (value = tableWrapperElement.value?.scrollLeft ?? 0) => {
-    const isStickActiveNewValue = getIsStickActive(value)
+    const isStickActiveNewValue = getIsLeftStickActive(value)
 
-    if (isStickActive.value !== isStickActiveNewValue) {
-      isStickActive.value = isStickActiveNewValue
+    if (isLeftStickActive.value !== isStickActiveNewValue) {
+      isLeftStickActive.value = isStickActiveNewValue
     }
   }
 
@@ -412,6 +412,12 @@ export const useTableService = <T extends TableItem = TableItem>(
   }
 
   const getTableCellStyle = (header: TableHeader) => {
+    if (props.stickyRightColumn && props.headers[props.headers.length - 1].value === header.value) {
+      return getCleanSetObject({
+        right: 0,
+      })
+    }
+
     const left = getStickLeftValue(header)
 
     return getCleanSetObject({
@@ -444,11 +450,11 @@ export const useTableService = <T extends TableItem = TableItem>(
     sortOrders,
     tableWrapperElement,
     totalItemColumns,
-    isStickActive,
+    isLeftStickActive,
     getCellInfo,
     getIsExpanded,
     getIsSelected,
-    getIsStickyCell,
+    getIsStickyLeftCell,
     getItemRowClass,
     getTableCellStyle,
     onClickRow,

@@ -1,7 +1,8 @@
 import type { CSSProperties } from 'vue'
 import { computed } from 'vue'
 import { getNumericCssAttribute } from '@khsura/sui/lib'
-import type { PropsTableBodyCell, PropsTableHeadCell, TableItem } from '@khsura/sui/types'
+import type { TableItem } from '@khsura/sui/types'
+import { type PropsTableHeadCell, type PropsTableBodyCell } from '@khsura/sui/definitions'
 
 export const useTableCellCommonService = <T extends TableItem = TableItem>(
   props: PropsTableHeadCell | PropsTableBodyCell<T>,

@@ -9,6 +9,11 @@ import { faker, wait } from '@khsura/shared'
 
 const table: Meta<typeof STable> = {
   title: 'UI Components/Table',
+  argTypes: {
+    stickyRightColumn: {
+      type: 'boolean',
+    },
+  },
 }
 
 export default table
@@ -32,6 +37,7 @@ export const Table = createStoryObj<typeof STable>({
     stickyLeftColumnsOffset: undefined,
     stickyLeftColumnsSize: undefined,
     stickyLeftColumnsStart: undefined,
+    stickyRightColumn: undefined,
     shadowExpandedContent: false,
     singleSelect: false,
     tile: false,
