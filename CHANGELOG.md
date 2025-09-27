@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.5](https://github.com/khsura/sui/compare/root-v1.5.4...root-v1.5.5) (2025-09-27)
+
+
+### Bug Fixes
+
+* css bug ([058c67c](https://github.com/khsura/sui/commit/058c67c71924f21fc5fd7904454c1b296b71da96))
+
 ## [1.5.4](https://github.com/khsura/sui/compare/root-v1.5.3...root-v1.5.4) (2025-09-27)
 
 
