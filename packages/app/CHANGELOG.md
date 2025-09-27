@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.5](https://github.com/khsura/sui/compare/sui-v1.7.4...sui-v1.7.5) (2025-09-27)
+
+
+### Bug Fixes
+
+* css bug ([058c67c](https://github.com/khsura/sui/commit/058c67c71924f21fc5fd7904454c1b296b71da96))
+
 ## [1.7.4](https://github.com/khsura/sui/compare/sui-v1.7.3...sui-v1.7.4) (2025-09-27)
 
 
