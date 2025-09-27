@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.3](https://github.com/khsura/sui/compare/root-v1.5.2...root-v1.5.3) (2025-09-26)
+
+
+### Bug Fixes
+
+* table behavior ([f177039](https://github.com/khsura/sui/commit/f17703993b36a440a9ca96a6aad2a907b7f89d4b))
+
 ## [1.5.2](https://github.com/khsura/sui/compare/root-v1.5.1...root-v1.5.2) (2025-09-25)
 
 

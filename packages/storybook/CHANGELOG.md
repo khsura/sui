@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.2](https://github.com/khsura/sui/compare/storybook-v1.6.1...storybook-v1.6.2) (2025-09-26)
+
+
+### Bug Fixes
+
+* table behavior ([f177039](https://github.com/khsura/sui/commit/f17703993b36a440a9ca96a6aad2a907b7f89d4b))
+
 ## [1.6.1](https://github.com/khsura/sui/compare/storybook-v1.6.0...storybook-v1.6.1) (2025-09-25)
 
 
