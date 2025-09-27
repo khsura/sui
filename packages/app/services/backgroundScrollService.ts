@@ -1,6 +1,7 @@
 import { nextTick } from 'vue'
 import { z } from 'zod'
 import { getWindow, retry } from '@khsura/sui/lib'
+import { cssVariables } from '@khsura/sui/constants'
 
 export const useBackgroundScrollService = () => {
   const enableBackgroundScrollOnce = async () => {
@@ -20,8 +21,8 @@ export const useBackgroundScrollService = () => {
     }
 
     if (activeCount === 0 && html) {
-      const scrollXProperty = html.style.getPropertyValue('--s-body-scroll-x').replace('px', '')
-      const scrollYProperty = html.style.getPropertyValue('--s-body-scroll-y').replace('px', '')
+      const scrollXProperty = html.style.getPropertyValue(cssVariables.bodyScrollX).replace('px', '')
+      const scrollYProperty = html.style.getPropertyValue(cssVariables.bodyScrollY).replace('px', '')
 
       if (scrollXProperty === '' || scrollYProperty === '') {
         return
@@ -30,8 +31,8 @@ export const useBackgroundScrollService = () => {
       const x = z.coerce.number().parse(scrollXProperty)
       const y = z.coerce.number().parse(scrollYProperty)
 
-      html.style.setProperty('--s-body-scroll-x', null)
-      html.style.setProperty('--s-body-scroll-y', null)
+      html.style.setProperty(cssVariables.bodyScrollX, null)
+      html.style.setProperty(cssVariables.bodyScrollY, null)
       html.classList.remove('s_overlay__scrollBlocked')
 
       await nextTick()
@@ -54,8 +55,8 @@ export const useBackgroundScrollService = () => {
     const html = window?.document.querySelector<HTMLElement>('html')
 
     if (html && window) {
-      html.style.setProperty('--s-body-scroll-x', `-${window?.scrollX}px`)
-      html.style.setProperty('--s-body-scroll-y', `-${window?.scrollY}px`)
+      html.style.setProperty(cssVariables.bodyScrollX, `-${window?.scrollX}px`)
+      html.style.setProperty(cssVariables.bodyScrollY, `-${window?.scrollY}px`)
       await nextTick()
       html.classList.add('s_overlay__scrollBlocked')
     }

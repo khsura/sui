@@ -1,3 +1,4 @@
+import { cssVariables } from '@khsura/sui/constants'
 import { z } from 'zod'
 
 export const getDocument = () => {
@@ -64,8 +65,15 @@ export const getViewportLocation = () => {
   }
 
   const isWithinOverlay = html.classList.contains('s_overlay__scrollBlocked')
-  const scrollXProperty = z.coerce.number().parse(html.style.getPropertyValue('--s-body-scroll-x').replace('px', ''))
-  const scrollYProperty = z.coerce.number().parse(html.style.getPropertyValue('--s-body-scroll-y').replace('px', ''))
+
+  const scrollXProperty = z.coerce
+    .number()
+    .parse(html.style.getPropertyValue(cssVariables.bodyScrollX).replace('px', ''))
+
+  const scrollYProperty = z.coerce
+    .number()
+    .parse(html.style.getPropertyValue(cssVariables.bodyScrollY).replace('px', ''))
+
   const left = isWithinOverlay ? -scrollXProperty : document.documentElement.scrollLeft
   const top = isWithinOverlay ? -scrollYProperty : document.documentElement.scrollTop
   const width = window.innerWidth
