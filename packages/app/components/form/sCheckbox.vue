@@ -141,7 +141,7 @@ $s_checkbox--size: 24px;
     border: 2px solid s_getPresetColor('info');
   }
 
-  &:not(&--disabled):not(&--readonly):hover &__label::before {
+  &:not(&--disabled, &--readonly):hover &__label::before {
     border: 2px solid s_getPresetColor('info');
   }
 
@@ -177,7 +177,7 @@ $s_checkbox--size: 24px;
         }
       }
 
-      &:not(.s_checkbox--disabled):not(.s_checkbox--readonly):hover .s_checkbox__label::before {
+      &:not(.s_checkbox--disabled, .s_checkbox--readonly):hover .s_checkbox__label::before {
         border: 2px solid s_getPresetColor($colorName);
       }
     }
@@ -185,14 +185,14 @@ $s_checkbox--size: 24px;
 
   &--disabled {
     .s_checkbox__label::before {
+      cursor: default;
       background-color: s_getAppColor('disabled');
       border: 1px solid s_getAppColor('disabled');
-      cursor: default;
     }
 
     .s_checkbox__label::after {
-      border-color: s_getAppColor('card');
       cursor: default;
+      border-color: s_getAppColor('card');
     }
 
     .s_checkbox__label {

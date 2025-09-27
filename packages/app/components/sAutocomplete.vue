@@ -178,7 +178,6 @@ watch(
 <style lang="scss">
 .s_autocomplete {
   position: relative;
-  background-color: s_getAppColor('card');
 
   &__inputFieldContent {
     @include s_borderRadius();
@@ -187,12 +186,13 @@ watch(
     flex: 1 0 auto;
     flex-wrap: wrap;
     gap: $s_spacer;
-    padding: $s_spacer;
     align-items: center;
     width: 100%;
     max-width: 100%;
+    padding: $s_spacer;
     font-family: $s_inputFontFamily;
     line-height: 1.1;
+    background-color: s_getAppColor('card');
     border: thin s_getAppColor('border') solid;
 
     &--focus {
@@ -220,23 +220,25 @@ watch(
 
   &__selectedItem {
     display: flex;
-    font-size: 0.9rem;
     align-items: center;
+    font-size: 0.9rem;
   }
 
   &__inputContainer {
-    flex: 1 1 auto;
     display: inline-flex;
+    flex: 1 1 auto;
     align-items: center;
   }
 
   &__input {
     width: 100%;
-    height: 100%;
-    outline: none;
-    border: 0;
-    font-size: 1rem;
     min-width: 100px;
+    height: 100%;
+    font-size: 1rem;
+    color: s_getAppColor('card', true);
+    outline: none;
+    background-color: transparent;
+    border: 0;
   }
 
   &__list {
@@ -250,8 +252,8 @@ watch(
   }
 
   &__selectedItemCloseIcon {
-    cursor: pointer;
     padding-left: $s_spacer;
+    cursor: pointer;
   }
 }
 </style>
