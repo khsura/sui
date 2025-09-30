@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.6](https://github.com/khsura/sui/compare/sui-v1.7.5...sui-v1.7.6) (2025-09-30)
+
+
+### Bug Fixes
+
+* make checkbox without id ([5e5a2dc](https://github.com/khsura/sui/commit/5e5a2dcd2a2acc3728654daf3245c005b2554104))
+
 ## [1.7.5](https://github.com/khsura/sui/compare/sui-v1.7.4...sui-v1.7.5) (2025-09-27)
 
 
