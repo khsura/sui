@@ -2,7 +2,7 @@
   <div class="s_checkbox" :class="checkboxClasses">
     <div class="s_checkbox__container">
       <input
-        :id="id"
+        :id="id ?? innerId"
         :value="model"
         ref="checkboxElement"
         @input="toggleModel($event)"
@@ -11,7 +11,7 @@
         :readonly="readonly ?? false"
         :disabled="disabled ?? false"
       />
-      <label :for="id" class="s_checkbox__label">
+      <label :for="id ?? innerId" class="s_checkbox__label">
         <span v-if="label" class="s_checkbox__labelText">{{ label }}</span>
       </label>
     </div>
@@ -19,7 +19,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, useId, watch } from 'vue'
 import FormInputError from '@khsura/sui/components/form/common/sFormInputError.vue'
 import { type PropsCheckbox } from '@khsura/sui/definitions'
 import { useColorRepository } from '@khsura/sui/repositories'
@@ -27,6 +27,7 @@ import { useFormInputService } from '@khsura/sui/services'
 
 const props = defineProps<PropsCheckbox>()
 const checkboxElement = ref<HTMLInputElement | null>(null)
+const innerId = useId()
 
 const emit = defineEmits<{
   (event: 'change', value: boolean): void

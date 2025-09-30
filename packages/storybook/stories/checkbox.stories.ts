@@ -126,3 +126,12 @@ export const RequiredCheckbox = createStoryObj<typeof SCheckbox>({
       `,
     }),
 })
+
+export const OptionalCheckboxWithoutId = createStoryObj<typeof SCheckbox>({
+  args: {
+    label: 'Accept',
+    size: 'default',
+    block: false,
+    bordered: false,
+  },
+})
