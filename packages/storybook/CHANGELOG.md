@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.3](https://github.com/khsura/sui/compare/storybook-v1.6.2...storybook-v1.6.3) (2025-09-30)
+
+
+### Bug Fixes
+
+* make checkbox without id ([5e5a2dc](https://github.com/khsura/sui/commit/5e5a2dcd2a2acc3728654daf3245c005b2554104))
+
 ## [1.6.2](https://github.com/khsura/sui/compare/storybook-v1.6.1...storybook-v1.6.2) (2025-09-26)
 
 
