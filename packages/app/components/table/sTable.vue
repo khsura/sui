@@ -179,7 +179,12 @@
       @update:items-per-page="updateOptions(pageIndex, $event)"
       :loading="loading"
       :items-count="totalItems ?? items.length"
-    />
+    >
+      <template #itemsPerPageLabel>
+        <slot v-if="$slots.itemsPerPageLabel" name="itemsPerPageLabel"></slot>
+        <span v-else-if="itemsPerPageLabel">{{ itemsPerPageLabel }}</span>
+      </template>
+    </STablePagination>
   </div>
 </template>
 <script setup lang="ts" generic="T extends TableItem">

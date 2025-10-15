@@ -13,6 +13,9 @@ const table: Meta<typeof STable> = {
     stickyRightColumn: {
       type: 'boolean',
     },
+    itemsPerPageLabel: {
+      type: 'string',
+    },
   },
 }
 
@@ -43,6 +46,7 @@ export const Table = createStoryObj<typeof STable>({
     tile: false,
     underlined: true,
     loading: false,
+    itemsPerPageLabel: undefined,
   },
   render: (args) => {
     return {
