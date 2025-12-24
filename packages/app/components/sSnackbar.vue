@@ -4,13 +4,7 @@
       <slot name="activator" :on="activatorOn" :attrs="activatorAttrs"></slot>
     </div>
     <SOverlay v-slot="{ attrs }" :value="model" :transition="STransition.fade">
-      <div
-        v-bind="attrs"
-        ref="contentElement"
-        class="s_snackbar__wrapper"
-        :class="wrapperClasses"
-        :style="wrapperStyles"
-      >
+      <div v-bind="attrs" class="s_snackbar__wrapper" :class="wrapperClasses" :style="wrapperStyles">
         <div class="s_snackbar__content" :class="contentClasses"><slot></slot></div>
         <div class="s_snackbar__action">
           <slot name="action"></slot>
@@ -20,7 +14,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { watch, computed } from 'vue'
+import { watch, computed, useTemplateRef } from 'vue'
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
 import { STransition } from '@khsura/sui/constants'
 import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
@@ -32,7 +26,8 @@ import { useActivatorService, useLayoutService, useScrollableService } from '@kh
 const props = defineProps<PropsSnackbar>()
 const model = defineModel<boolean>()
 let timer: NodeJS.Timeout | number | undefined
-const { activatorAttrs, activatorElement, activatorOn, contentElement } = useActivatorService(props, model)
+const activatorElement = useTemplateRef('activatorElement')
+const { activatorAttrs, activatorOn } = useActivatorService(props, model, activatorElement)
 const { currentScroll } = useScrollableService()
 const { app } = useLayoutService({ app: true })
 

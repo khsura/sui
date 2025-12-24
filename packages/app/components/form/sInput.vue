@@ -313,7 +313,7 @@ $s_input--fontSizes: (
 $inputPadding: calc($s_spacer * 2);
 
 @mixin denseRightInput {
-  &::placeholder {
+  ::placeholder {
     padding-right: $s_spacer;
   }
   padding: $inputPadding 0;

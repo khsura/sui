@@ -11,8 +11,11 @@ exports[`STextarea > renders correctly 1`] = `
     id="textarea"
     rows="2"
   />
+  
+  <!-- eslint-disable vue/no-v-html -->
   <div
     class="s_formInputError"
   />
+  
 </section>
 `;

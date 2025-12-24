@@ -4,9 +4,17 @@
 @function s_breakpointMin($name, $breakpoints: variables.$s_gridBreakpoints) {
   $min: map.get($breakpoints, $name);
 
-  @return if($min != 0, $min, null);
+  @if $min != 0 {
+    @return $min;
+  }
+
+  @return null;
 }
 
 @function s_breakpointInfix($name, $breakpoints: variables.$s_gridBreakpoints) {
-  @return if(s_breakpointMin($name, $breakpoints) == null, '', '--#{$name}');
+  @if not s_breakpointMin($name, $breakpoints) {
+    @return '';
+  }
+
+  @return '--#{$name}';
 }

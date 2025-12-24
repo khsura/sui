@@ -98,7 +98,7 @@
   </div>
 </template>
 <script lang="ts" setup generic="T extends boolean = false">
-import { watch } from 'vue'
+import { watch, useTemplateRef } from 'vue'
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
 import SCard from '@khsura/sui/components/cards/sCard.vue'
 import { SList, SListItem, SListItemContent, SListItemIcon } from '@khsura/sui/components/list'
@@ -122,12 +122,12 @@ const props = withDefaults(defineProps<PropsAutocomplete<T>>(), {
 
 const model = defineModel<AutocompleteModelType<T> | null>()
 const emit = defineEmits<AutocompleteEmitEvents>()
+const activatorElement = useTemplateRef('activatorElement')
+const contentElement = useTemplateRef('contentElement')
+const inputElement = useTemplateRef('inputElement')
 
 const {
   queryText,
-  activatorElement,
-  inputElement,
-  contentElement,
   contentClasses,
   contentStyles,
   filteredItems,
@@ -147,7 +147,11 @@ const {
   updateModelType,
   updateItemsPool,
   getItemFromItemsPool,
-} = useAutocompleteService(props, model, emit)
+} = useAutocompleteService(props, model, emit, {
+  activatorElement,
+  contentElement,
+  inputElement,
+})
 
 updateItemsPool(props.items ?? [])
 

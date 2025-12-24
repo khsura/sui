@@ -1,13 +1,17 @@
-import { type ModelRef, computed } from 'vue'
+import { type ModelRef, type ShallowRef, computed } from 'vue'
 import { STransition } from '@khsura/sui/constants'
 import { type PropsDialog } from '@khsura/sui/definitions'
 import { useActivatorService, useLocationService } from '@khsura/sui/services/core'
 import { useElevationService } from '@khsura/sui/services/elevationService'
 import { useMeasurableStylesService } from '@khsura/sui/services/measurableStylesService'
 
-export const useDialogService = (props: PropsDialog, isDialogOpen: ModelRef<boolean | null | undefined>) => {
+export const useDialogService = (
+  props: PropsDialog,
+  isDialogOpen: ModelRef<boolean | null | undefined>,
+  activatorElement: Readonly<ShallowRef<HTMLElement | null>>,
+) => {
   const { isBottom } = useLocationService(props)
-  const { activatorAttrs, activatorElement, activatorOn } = useActivatorService(props, isDialogOpen)
+  const { activatorAttrs, activatorOn } = useActivatorService(props, isDialogOpen, activatorElement)
   const { measurableStyles } = useMeasurableStylesService(props)
   const { classListElevation } = useElevationService(props)
 

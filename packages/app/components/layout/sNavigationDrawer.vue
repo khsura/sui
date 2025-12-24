@@ -462,8 +462,8 @@ $s_navigationDrawerOverlayTransitionAnimations: (
     z-index: -1;
     width: 100%;
     height: 100%;
-    border-radius: inherit;
     contain: strict;
+    border-radius: inherit;
 
     .s_image {
       border-radius: inherit;

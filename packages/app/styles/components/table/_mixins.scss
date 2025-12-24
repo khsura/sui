@@ -26,28 +26,26 @@
 }
 
 @mixin tableCellContent {
-  & {
-    flex: 1 0 auto;
-    text-align: start;
-    white-space: nowrap;
+  flex: 1 0 auto;
+  text-align: start;
+  white-space: nowrap;
 
-    &--textWrap {
-      max-width: 100%;
-      white-space: normal;
+  &--textWrap {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  &--align {
+    &__start {
+      text-align: start;
     }
 
-    &--align {
-      &__start {
-        text-align: start;
-      }
+    &__end {
+      text-align: end;
+    }
 
-      &__end {
-        text-align: end;
-      }
-
-      &__center {
-        text-align: center;
-      }
+    &__center {
+      text-align: center;
     }
   }
 }

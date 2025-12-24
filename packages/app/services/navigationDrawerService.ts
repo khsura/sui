@@ -5,7 +5,7 @@ import { computed } from 'vue'
 
 export const useNavigationDrawerService = (props: PropsNavigationDrawer) => {
   const { isApp } = useLayoutCoreService(props)
-  const { activatorElement, computedActivatorElement } = useActivatorElementService(props)
+  const { computedActivatorElement } = useActivatorElementService(props)
 
   const elementTag = computed(() => {
     if (props.tag) {
@@ -26,7 +26,6 @@ export const useNavigationDrawerService = (props: PropsNavigationDrawer) => {
   return {
     elementTag,
     elementHeight,
-    activatorElement,
     computedActivatorElement,
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <SToggleButton :index="tab" :disabled="disabled" v-bind="$props">
+  <SToggleButton :index="tab" v-bind="$props">
     <slot></slot>
   </SToggleButton>
 </template>

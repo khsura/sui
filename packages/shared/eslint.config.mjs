@@ -44,7 +44,7 @@ export default defineConfigWithVueTs(
       parserOptions: {
         sourceType: 'module',
         ecmaVersion: 'latest',
-        project: true,
+        projectService: true,
         parser: tsParser,
       },
     },

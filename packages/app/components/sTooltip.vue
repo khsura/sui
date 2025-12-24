@@ -30,7 +30,7 @@
 </template>
 <script setup lang="ts">
 import { OnClickOutside } from '@vueuse/components'
-import { watch, nextTick, computed } from 'vue'
+import { watch, nextTick, computed, useTemplateRef } from 'vue'
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
 import type { PropsTooltip } from '@khsura/sui/definitions'
 import { useColorService, useMeasurableStylesService, useMenuService } from '@khsura/sui/services'
@@ -38,17 +38,19 @@ import { useColorService, useMeasurableStylesService, useMenuService } from '@kh
 const props = defineProps<PropsTooltip>()
 const { measurableStyles } = useMeasurableStylesService(props)
 const model = defineModel<boolean>()
+const activatorElement = useTemplateRef('activatorElement')
+const contentElement = useTemplateRef('contentElement')
 
-const {
-  activatorAttrs,
-  contentElement,
-  activatorOn,
-  updateLocation,
-  activatorElement,
-  computedActivatorElement,
-  contentClasses,
-  contentStyles,
-} = useMenuService(props, model, { noContentMinWidth: true, offset: 8, alignMiddle: true })
+const { activatorAttrs, activatorOn, updateLocation, computedActivatorElement, contentClasses, contentStyles } =
+  useMenuService(
+    props,
+    model,
+    {
+      activatorElement,
+      contentElement,
+    },
+    { noContentMinWidth: true, offset: 8, alignMiddle: true },
+  )
 
 const { classListColor, styleListColor } = useColorService(props)
 
@@ -108,12 +110,12 @@ watch(model, async (value) => {
     width: max-content;
     height: max-content;
     padding: 4px;
+    contain: content;
     color: $s_color__light;
     text-align: center;
     background-color: rgba($s_color__black, 0.5);
     backdrop-filter: blur(10px);
     animation: enlarge 200ms normal forwards running ease-in-out;
-    contain: content;
 
     @keyframes enlarge {
       0% {

@@ -1,7 +1,8 @@
 import { type DirectiveBinding } from 'vue'
 
-export interface ScrollDirectiveBinding<V extends ScrollDirectiveBindingValue = ScrollDirectiveBindingValue>
-  extends Omit<DirectiveBinding<V>, 'modifiers'> {
+export interface ScrollDirectiveBinding<
+  V extends ScrollDirectiveBindingValue = ScrollDirectiveBindingValue,
+> extends Omit<DirectiveBinding<V>, 'modifiers'> {
   value: V
   modifiers?: {
     self?: boolean

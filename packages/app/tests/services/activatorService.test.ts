@@ -1,5 +1,5 @@
 import { Browser } from 'happy-dom'
-import { ref } from 'vue'
+import { ref, shallowRef } from 'vue'
 import { type PropsActivator } from '@khsura/sui/index'
 import { useActivatorService } from '@khsura/sui/services'
 
@@ -19,7 +19,8 @@ describe('useActivatorService', () => {
       }
 
       const model = ref(false)
-      const { computedActivatorElement, activatorElement } = useActivatorService(props, model)
+      const activatorElement = shallowRef<HTMLElement | null>(null)
+      const { computedActivatorElement } = useActivatorService(props, model, activatorElement)
 
       expect(activatorElement.value).toBeNull()
       expect(computedActivatorElement.value).toBeNull()
@@ -35,7 +36,8 @@ describe('useActivatorService', () => {
 
       page.content = '<!DOCTYPE html><p id="dd"><span id="cc">Hi</span>Hello world</p>'
       const model = ref(false)
-      const { computedActivatorElement, activatorElement } = useActivatorService(props, model)
+      const activatorElement = shallowRef<HTMLElement | null>(null)
+      const { computedActivatorElement } = useActivatorService(props, model, activatorElement)
       const sampleNode = page.mainFrame.window.document.getElementById('dd') as unknown as HTMLElement
 
       activatorElement.value = sampleNode
@@ -88,7 +90,8 @@ describe('useActivatorService', () => {
       }
 
       const model = ref(false)
-      const { getActivatorLocation, activatorElement } = useActivatorService(props, model)
+      const activatorElement = shallowRef<HTMLElement | null>(null)
+      const { getActivatorLocation } = useActivatorService(props, model, activatorElement)
       const browser = new Browser()
       const page = browser.newPage()
 

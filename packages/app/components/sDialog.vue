@@ -11,7 +11,7 @@
   </section>
 </template>
 <script setup lang="ts">
-import { watch, ref } from 'vue'
+import { watch, useTemplateRef } from 'vue'
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import type { PropsDialog } from '@khsura/sui/definitions'
@@ -23,19 +23,19 @@ const model = defineModel<boolean>()
 const { provideProps } = useProviderService()
 
 provideProps(ProviderPropsName.dialog, props)
+const activatorElement = useTemplateRef('activatorElement')
 
 const {
   activatorOn,
   activatorAttrs,
-  activatorElement,
   contentClasses,
   contentStyles,
   transitionName,
   onClickOutside: localOnClickOutside,
-} = useDialogService(props, model)
+} = useDialogService(props, model, activatorElement)
 
 const { enableBackgroundScroll, disableBackgroundScroll } = useBackgroundScrollService()
-const dialogRef = ref<HTMLElement | null>(null)
+const dialogRef = useTemplateRef('dialogRef')
 
 onClickOutside(dialogRef, localOnClickOutside, {
   ignore: ['.s_menu__content', '.s_tooltip__content', '.s_select__list', '.s_snackbar__wrapper'],

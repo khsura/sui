@@ -142,10 +142,6 @@ $s_checkbox--size: 24px;
     border: 2px solid s_getPresetColor('info');
   }
 
-  &:not(&--disabled, &--readonly):hover &__label::before {
-    border: 2px solid s_getPresetColor('info');
-  }
-
   &__label::after {
     position: absolute;
     top: 7px;
@@ -213,6 +209,10 @@ $s_checkbox--size: 24px;
     .s_checkbox__label {
       cursor: default;
     }
+  }
+
+  &:not(&--disabled, &--readonly):hover &__label::before {
+    border: 2px solid s_getPresetColor('info');
   }
 }
 

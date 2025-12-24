@@ -1,5 +1,5 @@
 <template>
-  <component :is="tagName" ref="toolbarRef" :class="classes" :style="styles">
+  <component :is="tagName" :class="classes" :style="styles">
     <div v-if="$slots.prepend" class="s_toolbar__prepend">
       <slot name="prepend"></slot>
     </div>
@@ -20,7 +20,7 @@
   </component>
 </template>
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { ProviderPropsName, defaultToolbarExtensionHeight, defaultToolbarContentHeight } from '@khsura/sui/constants'
 import { getNumericCssAttribute } from '@khsura/sui/lib'
 import type { PropsToolbar } from '@khsura/sui/definitions'
@@ -48,7 +48,6 @@ const { provideProps } = useProviderService()
 
 provideProps(ProviderPropsName.toolbar, props)
 
-const toolbarRef = ref<HTMLElement | null>(null)
 const { contentHeight, computedExtensionHeight, isExtended } = useToolbarService(props)
 const { styles: contentServiceStyles, classes: contentClasses } = useContentService(props)
 const { tagName } = useTagService(props)

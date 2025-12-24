@@ -75,6 +75,11 @@ export const Table = createStoryObj<typeof STable>({
           gender: faker.person.gender(),
         }))
 
+        onMounted(async () => {
+          await wait(1000)
+          args.itemsPerPage = 1000
+        })
+
         return {
           args,
           headers,

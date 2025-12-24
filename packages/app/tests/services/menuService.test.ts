@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, shallowRef } from 'vue'
 import type { PropsMenu, PropsContent } from '@khsura/sui/definitions'
 import { useMenuService } from '@khsura/sui/services'
 
@@ -88,16 +88,24 @@ vi.mock('@khsura/sui/services/core/contentService', () => {
 })
 
 const model = ref(false)
+const activatorElement = shallowRef<HTMLElement | null>(null)
+const contentElement = shallowRef<HTMLElement | null>(null)
 
 describe('useMenuService', () => {
   test('content styles should contain styles from content service', () => {
-    const { contentStyles } = useMenuService(defaultProps, model)
+    const { contentStyles } = useMenuService(defaultProps, model, {
+      activatorElement,
+      contentElement,
+    })
 
     expect(contentStyles.value.border).toBe('double')
   })
 
   test('content classes should contain classes from content service', () => {
-    const { contentClasses } = useMenuService(defaultProps, model)
+    const { contentClasses } = useMenuService(defaultProps, model, {
+      activatorElement,
+      contentElement,
+    })
 
     expect(contentClasses.value.myClass).toBe(true)
   })

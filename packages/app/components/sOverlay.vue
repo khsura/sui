@@ -49,9 +49,9 @@ onMounted(() => {
   &__content {
     position: absolute;
     z-index: 1000;
+    contain: layout;
     pointer-events: auto;
     outline: none;
-    contain: layout;
   }
 }
 </style>

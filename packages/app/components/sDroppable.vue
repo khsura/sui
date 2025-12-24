@@ -1,6 +1,5 @@
 <template>
   <div
-    ref="sDroppable"
     class="s_droppable"
     :class="{
       's_droppable--drag': isDraggingOver,
@@ -30,7 +29,6 @@ import { useMeasurableStylesService } from '@khsura/sui/services'
 const props = defineProps<PropsDroppable>()
 const emit = defineEmits<(event: 'drop', value: DragEvent) => void>()
 const supportsDragAndDrop = hasDragDropFeature()
-const sDroppable = ref<HTMLElement | null>(null)
 const counter = ref(0)
 const { measurableStyles } = useMeasurableStylesService(props)
 

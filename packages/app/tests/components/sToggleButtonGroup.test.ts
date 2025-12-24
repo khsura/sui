@@ -108,16 +108,16 @@ describe('SToggleButtonGroup', () => {
 
     const toggleButtons = wrapper.findAllComponents(SButton)
 
-    await toggleButtons.at(0)?.trigger('click')
+    await toggleButtons[0]?.trigger('click')
     expect(wrapper.vm.model).toStrictEqual([1])
 
-    await toggleButtons.at(1)?.trigger('click')
+    await toggleButtons[1]?.trigger('click')
     expect(wrapper.vm.model).toStrictEqual([1, 2])
 
-    await toggleButtons.at(2)?.trigger('click')
+    await toggleButtons[2]?.trigger('click')
     expect(wrapper.vm.model).toStrictEqual([1, 2, 3])
 
-    await toggleButtons.at(1)?.trigger('click')
+    await toggleButtons[1]?.trigger('click')
     expect(wrapper.vm.model).toStrictEqual([1, 3])
   })
 

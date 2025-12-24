@@ -29,7 +29,6 @@
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
     },
-    "stylelint.stylelintPath": "../../node_modules/stylelint",
     "stylelint.validate": ["css", "less", "postcss", "scss", "vue"],
     "files.exclude": {
       "**/.git": true,

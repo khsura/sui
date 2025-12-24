@@ -1,4 +1,4 @@
-import { computed, ref, watch, type ModelRef } from 'vue'
+import { computed, ref, watch, type ModelRef, type Ref } from 'vue'
 import { ProviderPropsName } from '@khsura/sui/constants'
 import { type PropsSlideGroup } from '@khsura/sui/definitions'
 import { wait } from '@khsura/sui/lib'
@@ -8,7 +8,11 @@ import { useDisplayService } from './displayService'
 import { useGroupService } from './groupService'
 import { useScrollService } from './scrollService'
 
-export const useSlideGroupService = (props: PropsSlideGroup, model: ModelRef<GroupItemValue[]>) => {
+export const useSlideGroupService = (
+  props: PropsSlideGroup,
+  model: ModelRef<GroupItemValue[]>,
+  elementViewport: Ref<HTMLElement | null>,
+) => {
   const { isTouchDevice, width } = useDisplayService()
   const { smoothElementScroll } = useScrollService()
   const { items, clickValue } = useGroupService(props, model)
@@ -19,8 +23,6 @@ export const useSlideGroupService = (props: PropsSlideGroup, model: ModelRef<Gro
 
   const currentX = ref<number>(0)
   const isNavigating = ref<boolean>(false)
-  const elementViewport = ref<HTMLElement | null>(null)
-  const elementSlidesContainer = ref<HTMLElement | null>(null)
 
   const getIndexFromX = (currentX: number, addX = 0) => {
     const nextX = currentX + addX
@@ -162,8 +164,6 @@ export const useSlideGroupService = (props: PropsSlideGroup, model: ModelRef<Gro
   )
 
   return {
-    elementViewport,
-    elementSlidesContainer,
     isNavigating,
     canGoPrevious,
     canGoNext,

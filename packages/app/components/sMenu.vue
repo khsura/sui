@@ -21,7 +21,7 @@
 </template>
 <script setup lang="ts">
 import { OnClickOutside } from '@vueuse/components'
-import { computed, watch, nextTick } from 'vue'
+import { computed, watch, nextTick, useTemplateRef } from 'vue'
 import SOverlay from '@khsura/sui/components/sOverlay.vue'
 import { getWindow } from '@khsura/sui/lib/browser'
 import type { PropsMenu } from '@khsura/sui/definitions'
@@ -32,9 +32,13 @@ const props = defineProps<PropsMenu>()
 const emit = defineEmits<EmitMenu>()
 const model = defineModel<boolean>()
 const { measurableStyles } = useMeasurableStylesService(props)
+const activatorElement = useTemplateRef('activatorElement')
+const contentElement = useTemplateRef('contentElement')
 
-const { activatorElement, activatorOn, activatorAttrs, contentElement, contentClasses, contentStyles, updateLocation } =
-  useMenuService(props, model)
+const { activatorOn, activatorAttrs, contentClasses, contentStyles, updateLocation } = useMenuService(props, model, {
+  activatorElement,
+  contentElement,
+})
 
 const computedContentStyles = computed(() => {
   return {

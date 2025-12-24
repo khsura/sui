@@ -14,22 +14,30 @@
 
   .s_#{$name + $infix} {
     @if (not $responsive and not $infix) or $infix {
-      @each $modifier in $modifier {
-        @each $property in $properties {
-          @if meta.type-of($property) == 'string' or meta.type-of($property) == 'number' {
-            &__#{$property} {
-              #{$modifier}: $property if(list.index($unimportants, $modifier), null, !important);
-            }
-          } @else {
-            $propertyName: list.nth($property, 1);
-            $propertyValue: list.nth($property, 2);
+        @each $modifier in $modifier {
+          @each $property in $properties {
+            @if meta.type-of($property) == 'string' or meta.type-of($property) == 'number' {
+              &__#{$property} {
+                @if list.index($unimportants, $modifier) {
+                  #{$modifier}: $property;
+                } @else {
+                  #{$modifier}: $property !important;
+                }
+              }
+            } @else {
+              $propertyName: list.nth($property, 1);
+              $propertyValue: list.nth($property, 2);
 
-            &__#{$propertyName} {
-              #{$modifier}: $propertyValue if(list.index($unimportants, $modifier), null, !important);
+              &__#{$propertyName} {
+                @if list.index($unimportants, $modifier) {
+                  #{$modifier}: $propertyValue;
+                } @else {
+                  #{$modifier}: $propertyValue !important;
+                }
+              }
             }
           }
         }
-      }
     }
   }
 }

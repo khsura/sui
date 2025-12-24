@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { fileURLToPath } from 'url'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -51,7 +52,6 @@ export default defineConfig({
     },
     preprocessorOptions: {
       scss: {
-        api: 'modern-compiler',
         additionalData: `
           @use 'sass:map';
           @use 'sass:meta';

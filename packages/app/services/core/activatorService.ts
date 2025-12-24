@@ -1,14 +1,17 @@
-import { ref, computed, type Ref, type ComputedRef } from 'vue'
+import { computed, type Ref, type ComputedRef, type ShallowRef } from 'vue'
 import { type PropsActivator } from '@khsura/sui/definitions'
 import { getDocument } from '@khsura/sui/lib/browser'
 import { getCleanSetObject } from '@khsura/sui/lib/getCleanSetObject'
 
-export const useActivatorElementService = (props: Pick<PropsActivator, 'activator'>) => {
-  const activatorElement: Ref<HTMLElement | null> = ref(null)
-
+export const useActivatorElementService = (
+  props: Pick<PropsActivator, 'activator'>,
+  activatorElementRef?: Readonly<ShallowRef<HTMLElement | null>>,
+) => {
   const computedActivatorElement: ComputedRef<HTMLElement | null> = computed(() => {
-    if (!props.activator || activatorElement.value !== null) {
-      return (activatorElement.value?.firstElementChild ?? null) as HTMLElement | null
+    const activatorElementRefValue = activatorElementRef?.value ?? null
+
+    if (!props.activator || activatorElementRefValue !== null) {
+      return (activatorElementRefValue?.firstElementChild ?? null) as HTMLElement | null
     }
 
     if (typeof props.activator === 'string') {
@@ -23,14 +26,16 @@ export const useActivatorElementService = (props: Pick<PropsActivator, 'activato
   })
 
   return {
-    activatorElement,
     computedActivatorElement,
   }
 }
 
-export const useActivatorService = (props: PropsActivator, model?: Ref<boolean | null | undefined>) => {
-  const contentElement: Ref<HTMLElement | null> = ref(null)
-  const { activatorElement, computedActivatorElement } = useActivatorElementService(props)
+export const useActivatorService = (
+  props: PropsActivator,
+  model?: Ref<boolean | null | undefined>,
+  activatorElement?: Readonly<ShallowRef<HTMLElement | null>>,
+) => {
+  const { computedActivatorElement } = useActivatorElementService(props, activatorElement)
 
   const activatorOn = {
     click: () => {
@@ -64,9 +69,7 @@ export const useActivatorService = (props: PropsActivator, model?: Ref<boolean |
   }
 
   return {
-    activatorElement,
     computedActivatorElement,
-    contentElement,
     activatorOn,
     activatorAttrs,
     getActivatorLocation,

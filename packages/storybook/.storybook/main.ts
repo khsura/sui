@@ -1,7 +1,10 @@
 import { dirname, join } from 'path'
+import { createRequire } from 'module'
 import type { StorybookConfig } from '@storybook/vue3-vite'
 import { mergeConfig } from 'vite'
 import type { UserConfig } from 'vite'
+
+const require = createRequire(import.meta.url)
 
 const getAbsolutePath = (value: string): string => {
   return dirname(require.resolve(join(value, 'package.json')))

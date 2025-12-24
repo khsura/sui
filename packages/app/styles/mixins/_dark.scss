@@ -7,13 +7,23 @@
     @if $isChild {
       .s_#{$themeName} {
         color: tools.s_getThemeColor('text', $themeName);
-        background-color: if($fillBackground, tools.s_getThemeColor('card', $themeName), inherit);
+
+        @if $fillBackground {
+          background-color: tools.s_getThemeColor('card', $themeName);
+        } @else {
+          background-color: inherit;
+        }
         fill: tools.s_getThemeColor('text', $themeName);
       }
     } @else {
       &.s_#{$themeName} {
         color: tools.s_getThemeColor('text', $themeName);
-        background-color: if($fillBackground, tools.s_getThemeColor('card', $themeName), inherit);
+
+        @if $fillBackground {
+          background-color: tools.s_getThemeColor('card', $themeName);
+        } @else {
+          background-color: inherit;
+        }
         fill: tools.s_getThemeColor('text', $themeName);
       }
     }

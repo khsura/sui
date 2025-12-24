@@ -36,12 +36,15 @@
     }
   },
   "dependencies": {
-    "@vueuse/components": "^13.0.0",
-    "@vueuse/core": "^13.0.0",
-    "dayjs": "^1.11.13",
+    "@vueuse/components": "^14.1.0",
+    "@vueuse/core": "^14.1.0",
+    "dayjs": "^1.11.19",
     "lodash": "^4.17.21",
-    "vue": "^3.5.13",
-    "vue-i18n": "^11.1.2",
-    "zod": "^3.24.2"
+    "vue": "^3.5.26",
+    "vue-i18n": "^11.2.7",
+    "zod": "^4.2.1"
+  },
+  "devDependencies": {
+    "@tsconfig/node-lts": "^24.0.0"
   }
 }

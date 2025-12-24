@@ -21,7 +21,7 @@ export default {
     'declaration-block-single-line-max-declarations': 1,
     'selector-max-compound-selectors': 3,
     'selector-max-id': 0,
-    'max-nesting-depth': 4,
+    'max-nesting-depth': 6,
     'color-hex-length': 'long',
     'font-weight-notation': 'numeric',
     'length-zero-no-unit': true,
@@ -70,6 +70,8 @@ export default {
       true,
       {
         ignoreFunctions: [
+          'map.get',
+          'get',
           /map-deep-(get|merge)/,
           'v-bind',
           'if',
