@@ -5,9 +5,9 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import type { PropsWindowItem } from '@khsura/sui/definitions'
-import { useProviderService, useSingleGroupItemService } from '@khsura/sui/services'
+import { ProviderPropsName } from '@/app/constants'
+import type { PropsWindowItem } from '@/app/definitions'
+import { useProviderService, useSingleGroupItemService } from '@/app/services'
 
 const translateXMapper: Record<string, string | undefined> = {
   '1': '100%',

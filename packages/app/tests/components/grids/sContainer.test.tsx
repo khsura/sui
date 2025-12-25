@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { SContainer } from '@khsura/sui/components'
+import { SContainer } from '@/app/components'
 
 describe('SContainer', () => {
   test('renders correctly', () => {

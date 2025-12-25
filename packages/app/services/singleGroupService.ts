@@ -1,9 +1,9 @@
 import { type Ref, computed, ref, watch } from 'vue'
-import { ProviderName, ProviderPropsName } from '@khsura/sui/constants/provider'
-import { type PropsSingleGroup } from '@khsura/sui/definitions'
-import { type GroupItemValue } from '@khsura/sui/types'
 import { useProviderService } from './core/providerService'
 import { useGroupCoreService } from './core/groupCoreService'
+import { ProviderName, ProviderPropsName } from '@/app/constants/provider'
+import { type PropsSingleGroup } from '@/app/definitions'
+import { type GroupItemValue } from '@/app/types'
 
 export const useSingleGroupService = (props: PropsSingleGroup, model: Ref<GroupItemValue | null | undefined>) => {
   const { provide, provideProps } = useProviderService()

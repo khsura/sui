@@ -1,10 +1,10 @@
 import { type Mutable } from '@vueuse/core'
 import { ref, shallowRef } from 'vue'
-import { type STableHeadCell } from '@khsura/sui/components/table'
-import { type PropsTable } from '@khsura/sui/definitions'
-import { useTableService } from '@khsura/sui/services'
-import { type TableRowClass } from '@khsura/sui/types'
 import { headers, items } from '../mocks/sTable'
+import { type STableHeadCell } from '@/app/components/table'
+import { type PropsTable } from '@/app/definitions'
+import { useTableService } from '@/app/services'
+import { type TableRowClass } from '@/app/types'
 
 const expanded = ref([items[3]])
 const selected = ref([items[2]])

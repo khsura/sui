@@ -15,10 +15,10 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import SButton from '@khsura/sui/components/sButton.vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import type { PropsToggleButton } from '@khsura/sui/definitions'
-import { useColumnService, useGroupItemService, useProviderService } from '@khsura/sui/services'
+import SButton from '@/app/components/sButton.vue'
+import { ProviderPropsName } from '@/app/constants'
+import type { PropsToggleButton } from '@/app/definitions'
+import { useColumnService, useGroupItemService, useProviderService } from '@/app/services'
 
 const props = defineProps<PropsToggleButton>()
 const { classListColumn } = useColumnService(props, { classPrefix: 'toggleButton' })

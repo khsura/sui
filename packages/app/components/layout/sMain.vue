@@ -5,10 +5,10 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { type PropsMain } from '@khsura/sui/definitions'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
-import { getIsFixedPosition } from '@khsura/sui/repositories/positionRepository'
-import { useLayoutService } from '@khsura/sui/services'
+import { type PropsMain } from '@/app/definitions'
+import { getNumericCssAttribute } from '@/app/lib'
+import { getIsFixedPosition } from '@/app/repositories/positionRepository'
+import { useLayoutService } from '@/app/services'
 
 const props = defineProps<PropsMain>()
 const { app, isApp } = useLayoutService(props)

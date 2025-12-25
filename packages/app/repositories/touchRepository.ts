@@ -1,4 +1,4 @@
-import { type TouchWrapper } from '@khsura/sui/types'
+import { type TouchWrapper } from '@/app/types'
 
 const handleGesture = (wrapper: TouchWrapper) => {
   const { touchstartX, touchendX, touchstartY, touchendY } = wrapper

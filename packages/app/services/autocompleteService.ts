@@ -1,11 +1,4 @@
-import type { SelectItem } from '@khsura/sui/types'
-import type { PropsAutocomplete } from '@khsura/sui/definitions'
 import { computed, nextTick, ref, type ComponentPublicInstance, type EmitFn, type Ref, type ShallowRef } from 'vue'
-import type {
-  AutocompleteEmitEvents,
-  AutocompleteModelType,
-  AutocompleteModelTypeBase,
-} from '@khsura/sui/types/autocomplete'
 import lodash from 'lodash'
 import {
   isDelimiter,
@@ -16,7 +9,10 @@ import {
   getSelectItem,
   getItemValue,
 } from '../helpers'
-import { useMenuService } from '../services'
+import { useMenuService } from '../services/menuService'
+import type { AutocompleteEmitEvents, AutocompleteModelType, AutocompleteModelTypeBase } from '@/app/types/autocomplete'
+import type { PropsAutocomplete } from '@/app/definitions'
+import type { SelectItem } from '@/app/types'
 
 export const useAutocompleteService = <T extends boolean = false>(
   props: PropsAutocomplete<T>,

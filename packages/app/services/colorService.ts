@@ -1,11 +1,11 @@
 import { toReactive } from '@vueuse/core'
 import { type Ref, computed, isRef } from 'vue'
-import { AppTheme } from '@khsura/sui/constants/app'
-import { type PropsColor } from '@khsura/sui/definitions'
-import { getCssColor } from '@khsura/sui/helpers/colorHelpers'
-import { isDarkColor } from '@khsura/sui/lib/color'
-import { useAppProviderRepository } from '@khsura/sui/repositories'
-import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
+import { AppTheme } from '@/app/constants/app'
+import { type PropsColor } from '@/app/definitions'
+import { getCssColor } from '@/app/helpers/colorHelpers'
+import { isDarkColor } from '@/app/lib/color'
+import { useAppProviderRepository } from '@/app/repositories'
+import { useColorRepository } from '@/app/repositories/colorRepository'
 
 export const useColorService = (
   data: PropsColor | Ref<Partial<PropsColor>>,

@@ -15,8 +15,8 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { SToggleButtonGroup } from '@khsura/sui/components/toggleButtonGroup'
-import type { PropsTabs } from '@khsura/sui/definitions'
+import { SToggleButtonGroup } from '@/app/components/toggleButtonGroup'
+import type { PropsTabs } from '@/app/definitions'
 
 const props = withDefaults(defineProps<PropsTabs>(), {
   selectedTabColor: 'primary',

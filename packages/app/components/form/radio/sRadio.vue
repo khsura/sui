@@ -18,14 +18,9 @@
 </template>
 <script setup lang="ts">
 import { computed, nextTick } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants/provider'
-import {
-  useBorderService,
-  useDisabledService,
-  useProviderService,
-  useSingleGroupItemService,
-} from '@khsura/sui/services'
-import type { PropsBorder, PropsDisabled, PropsSingleGroupItem } from '@khsura/sui/definitions'
+import { ProviderPropsName } from '@/app/constants/provider'
+import { useBorderService, useDisabledService, useProviderService, useSingleGroupItemService } from '@/app/services'
+import type { PropsBorder, PropsDisabled, PropsSingleGroupItem } from '@/app/definitions'
 
 const props = defineProps<
   {

@@ -21,8 +21,13 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@khsura/sui': fileURLToPath(new URL('./', import.meta.url)),
+      '@/app': fileURLToPath(new URL('./', import.meta.url)),
     },
+  },
+  esbuild: {
+    jsxFactory: 'h',
+    jsxFragment: 'Fragment',
+    jsxInject: `import { h, Fragment } from 'vue'`,
   },
   build: {
     target: ['safari11', 'ios11'],
@@ -57,7 +62,7 @@ export default defineConfig({
           @use 'sass:meta';
           @use 'sass:list';
           @use 'sass:string';
-          @use '@khsura/sui/styles/helpers' as *;
+          @use '@/app/styles/helpers' as *;
         `,
       },
     },

@@ -6,9 +6,9 @@
   </SWindowItem>
 </template>
 <script setup lang="ts">
-import SImage from '@khsura/sui/components/sImage.vue'
-import SWindowItem from '@khsura/sui/components/window/sWindowItem.vue'
-import type { PropsCarouselItem } from '@khsura/sui/definitions'
+import SImage from '@/app/components/sImage.vue'
+import SWindowItem from '@/app/components/window/sWindowItem.vue'
+import type { PropsCarouselItem } from '@/app/definitions'
 
 defineProps<PropsCarouselItem>()
 </script>

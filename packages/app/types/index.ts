@@ -1,4 +1,5 @@
 export * from './app'
+export * from './autocomplete'
 export * from './breadcrumbs'
 export * from './calendar'
 export * from './core'

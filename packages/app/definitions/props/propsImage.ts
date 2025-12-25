@@ -1,5 +1,5 @@
-import type { LazyLoad } from '@khsura/sui/constants'
 import { type PropsMeasurableStyles } from './core'
+import type { LazyLoad } from '@/app/constants'
 
 export type PropsImage = {
   src: string | null | undefined

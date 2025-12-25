@@ -1,4 +1,4 @@
-import type { GroupItemValue } from '@khsura/sui/types'
+import type { GroupItemValue } from '@/app/types'
 
 export type PropsGroup<T extends GroupItemValue = GroupItemValue> = {
   multiple?: boolean

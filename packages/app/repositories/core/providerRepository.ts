@@ -1,7 +1,7 @@
 import { computed, inject as Inject, provide as Provide } from 'vue'
 import { type ComputedRef, type InjectionKey } from 'vue'
-import { type ProviderName, type ProviderPropsName } from '@khsura/sui/constants'
-import { type Provider, type ProviderProps } from '@khsura/sui/definitions'
+import { type ProviderName, type ProviderPropsName } from '@/app/constants'
+import { type Provider, type ProviderProps } from '@/app/definitions'
 
 export const useProviderRepository = () => {
   const provideProps = <P extends ProviderPropsName>(name: P, props: ProviderProps[P]) => {

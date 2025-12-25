@@ -1,5 +1,5 @@
-import { type BreadcrumbsItem } from '@khsura/sui/types'
 import { type PropsTextColor } from './core'
+import { type BreadcrumbsItem } from '@/app/types'
 
 export type PropsBreadcrumbs = {
   items?: BreadcrumbsItem[]

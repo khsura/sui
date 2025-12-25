@@ -5,9 +5,9 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { type PropsListItem } from '@khsura/sui/definitions'
-import { useLinkService, useDisabledService, useProviderService } from '@khsura/sui/services'
+import { ProviderPropsName } from '@/app/constants'
+import { type PropsListItem } from '@/app/definitions'
+import { useLinkService, useDisabledService, useProviderService } from '@/app/services'
 
 const props = defineProps<PropsListItem>()
 

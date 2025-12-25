@@ -5,10 +5,10 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
-import type { PropsSplitView } from '@khsura/sui/definitions'
-import { useProviderService } from '@khsura/sui/services'
+import { ProviderPropsName } from '@/app/constants'
+import { getNumericCssAttribute } from '@/app/lib'
+import type { PropsSplitView } from '@/app/definitions'
+import { useProviderService } from '@/app/services'
 
 const { provideProps } = useProviderService()
 

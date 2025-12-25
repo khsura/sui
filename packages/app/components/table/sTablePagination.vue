@@ -35,9 +35,9 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import SSelect from '@khsura/sui/components/form/sSelect.vue'
-import SButton from '@khsura/sui/components/sButton.vue'
-import SIcon from '@khsura/sui/components/sIcon.vue'
+import SSelect from '@/app/components/form/sSelect.vue'
+import SButton from '@/app/components/sButton.vue'
+import SIcon from '@/app/components/sIcon.vue'
 
 const itemsPerPage = defineModel<number>('itemsPerPage')
 

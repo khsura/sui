@@ -1,4 +1,4 @@
-import type { PropsLayoutProvider } from '@khsura/sui/definitions/props/propsLayoutProvider'
+import type { PropsLayoutProvider } from './propsLayoutProvider'
 import { type PropsLayoutBase, type PropsMeasurableStyles } from './core'
 
 export type PropsLayout = PropsLayoutBase & {

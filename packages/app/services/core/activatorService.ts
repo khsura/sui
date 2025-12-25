@@ -1,7 +1,7 @@
 import { computed, type Ref, type ComputedRef, type ShallowRef } from 'vue'
-import { type PropsActivator } from '@khsura/sui/definitions'
-import { getDocument } from '@khsura/sui/lib/browser'
-import { getCleanSetObject } from '@khsura/sui/lib/getCleanSetObject'
+import { type PropsActivator } from '@/app/definitions'
+import { getDocument } from '@/app/lib/browser'
+import { getCleanSetObject } from '@/app/lib/getCleanSetObject'
 
 export const useActivatorElementService = (
   props: Pick<PropsActivator, 'activator'>,

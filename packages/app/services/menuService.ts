@@ -1,9 +1,9 @@
 import { computed, ref, type ComponentPublicInstance, type Ref, type ShallowRef } from 'vue'
-import { type PropsMenu } from '@khsura/sui/definitions'
-import { getCleanSetObject, getDocument, getNumericCssAttribute, getViewportLocation, getWindow } from '@khsura/sui/lib'
-import { type MenuContentStyle } from '@khsura/sui/types'
 import { usePositionService } from './positionService'
 import { useActivatorService, useContentService, useLocationService } from './core'
+import { type PropsMenu } from '@/app/definitions'
+import { getCleanSetObject, getDocument, getNumericCssAttribute, getViewportLocation, getWindow } from '@/app/lib'
+import { type MenuContentStyle } from '@/app/types'
 
 export const useMenuService = (
   props: PropsMenu,

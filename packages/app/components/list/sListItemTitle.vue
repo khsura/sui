@@ -5,8 +5,8 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { useProviderService } from '@khsura/sui/services'
+import { ProviderPropsName } from '@/app/constants'
+import { useProviderService } from '@/app/services'
 
 const { injectParentProps } = useProviderService()
 const listProps = injectParentProps(ProviderPropsName.listProps)

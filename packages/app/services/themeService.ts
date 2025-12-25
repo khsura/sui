@@ -1,7 +1,7 @@
 import { computed } from 'vue'
-import { getBrowserTheme } from '@khsura/sui/helpers'
-import { type AppThemeType } from '@khsura/sui/types'
 import { useAppProviderService } from './appProviderService'
+import { getBrowserTheme } from '@/app/helpers'
+import { type AppThemeType } from '@/app/types'
 
 export const useThemeService = () => {
   const { config } = useAppProviderService()

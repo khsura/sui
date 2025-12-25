@@ -5,14 +5,14 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { PropsCard } from '@khsura/sui/definitions'
+import type { PropsCard } from '@/app/definitions'
 import {
   useLinkService,
   useBorderService,
   useColorService,
   useElevationService,
   useMeasurableStylesService,
-} from '@khsura/sui/services'
+} from '@/app/services'
 
 const props = defineProps<PropsCard>()
 const { classListElevation } = useElevationService(props)

@@ -32,11 +32,11 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import SButton from '@khsura/sui/components/sButton.vue'
-import { DatePickerSelectType } from '@khsura/sui/constants'
-import type { PropsDatePickerItemTitle } from '@khsura/sui/definitions'
-import { useColorService, useDatePickerItemTitleService } from '@khsura/sui/services'
-import { datePickerDisplayFormat } from '@khsura/sui/configs'
+import SButton from '@/app/components/sButton.vue'
+import { DatePickerSelectType } from '@/app/constants'
+import type { PropsDatePickerItemTitle } from '@/app/definitions'
+import { useColorService, useDatePickerItemTitleService } from '@/app/services'
+import { datePickerDisplayFormat } from '@/app/configs'
 
 const props = withDefaults(defineProps<PropsDatePickerItemTitle>(), {
   dateFormat: datePickerDisplayFormat.date,

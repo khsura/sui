@@ -6,8 +6,8 @@
   </SToolbarTitle>
 </template>
 <script setup lang="ts">
-import { SToolbarTitle } from '@khsura/sui/components/toolbar'
-import type { PropsToolbarTitle } from '@khsura/sui/definitions'
+import { SToolbarTitle } from '@/app/components/toolbar'
+import type { PropsToolbarTitle } from '@/app/definitions'
 
 defineProps<PropsToolbarTitle>()
 </script>

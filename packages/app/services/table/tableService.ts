@@ -1,12 +1,12 @@
 import { computed, ref, type Ref, type EmitFn, type ShallowRef } from 'vue'
 import { z } from 'zod'
-import { type STableHeadCell } from '@khsura/sui/components/table'
-import { getTableRowClass } from '@khsura/sui/helpers'
-import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
-import { store } from '@khsura/sui/store'
-import { type TableItem, KTableSortOrder, type TableHeader, type TableItemCellType } from '@khsura/sui/types'
-import { uniqueId } from '@khsura/sui/vendors/lodash'
-import type { EmitsTable, PropsTable } from '@khsura/sui/definitions'
+import type STableHeadCell from '@/app/components/table/sTableHeadCell.vue'
+import { getTableRowClass } from '@/app/helpers'
+import { getCleanSetObject, getNumericCssAttribute } from '@/app/lib'
+import { store } from '@/app/store'
+import { type TableItem, KTableSortOrder, type TableHeader, type TableItemCellType } from '@/app/types'
+import { uniqueId } from '@/app/vendors/lodash'
+import type { EmitsTable, PropsTable } from '@/app/definitions'
 
 export const useTableService = <T extends TableItem = TableItem>(
   props: PropsTable<T>,

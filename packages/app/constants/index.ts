@@ -1,5 +1,4 @@
 export * from './app'
-export * from './breakpoint'
 export * from './color'
 export * from './datePicker'
 export * from './form'

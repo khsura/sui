@@ -1,4 +1,4 @@
-import type { PropsPosition } from '@khsura/sui/definitions/props/core'
+import type { PropsPosition } from './core'
 
 export interface PropsProgressLinear extends PropsPosition {
   backgroundColor?: string | null

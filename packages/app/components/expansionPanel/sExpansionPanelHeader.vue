@@ -18,10 +18,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { SListItemContent, SListItemAction } from '@khsura/sui/components/list'
-import SIcon from '@khsura/sui/components/sIcon.vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { useExpandableItemService, useProviderService } from '@khsura/sui/services'
+import { SListItemContent, SListItemAction } from '@/app/components/list'
+import SIcon from '@/app/components/sIcon.vue'
+import { ProviderPropsName } from '@/app/constants'
+import { useExpandableItemService, useProviderService } from '@/app/services'
 
 const { injectParentProps } = useProviderService()
 const panelsProps = injectParentProps(ProviderPropsName.expansionPanelsProps)

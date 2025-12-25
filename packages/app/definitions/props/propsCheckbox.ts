@@ -1,6 +1,6 @@
-import { type PresetColor } from '@khsura/sui/constants'
 import { type PropsColor } from './core'
 import { type PropsFormInput } from './propsFormInput'
+import { type PresetColor } from '@/app/constants'
 
 export type PropsCheckbox = {
   label?: string

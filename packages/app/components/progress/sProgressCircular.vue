@@ -36,8 +36,8 @@
 </template>
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useTextColorService, useComponentThemeService } from '@khsura/sui/services'
-import type { PropsProgressCircular } from '@khsura/sui/definitions'
+import { useTextColorService, useComponentThemeService } from '@/app/services'
+import type { PropsProgressCircular } from '@/app/definitions'
 
 const props = withDefaults(defineProps<PropsProgressCircular>(), {
   size: 32,

@@ -31,9 +31,9 @@
 <script setup lang="ts">
 import { OnClickOutside } from '@vueuse/components'
 import { watch, nextTick, computed, useTemplateRef } from 'vue'
-import SOverlay from '@khsura/sui/components/sOverlay.vue'
-import type { PropsTooltip } from '@khsura/sui/definitions'
-import { useColorService, useMeasurableStylesService, useMenuService } from '@khsura/sui/services'
+import SOverlay from '@/app/components/sOverlay.vue'
+import type { PropsTooltip } from '@/app/definitions'
+import { useColorService, useMeasurableStylesService, useMenuService } from '@/app/services'
 
 const props = defineProps<PropsTooltip>()
 const { measurableStyles } = useMeasurableStylesService(props)

@@ -1,1 +1,1 @@
-export { useProviderRepository as useProviderService } from '@khsura/sui/repositories'
+export { useProviderRepository as useProviderService } from '@/app/repositories'

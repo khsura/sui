@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { defineComponent } from 'vue'
-import { SApp } from '@khsura/sui/components'
-import { AppTheme } from '@khsura/sui/constants'
-import { useTheme } from '@khsura/sui/index'
-import { useAppProviderService, useAppService } from '@khsura/sui/services'
+import { SApp } from '@/app/components'
+import { AppTheme } from '@/app/constants'
+import { useTheme } from '@/app/index'
+import { useAppProviderService, useAppService } from '@/app/services'
 
 describe('app', () => {
   const app = mount(

@@ -5,9 +5,9 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { type PropsList } from '@khsura/sui/definitions'
-import { useColorService, useProviderService, useTagService, useTextColorService } from '@khsura/sui/services'
+import { ProviderPropsName } from '@/app/constants'
+import { type PropsList } from '@/app/definitions'
+import { useColorService, useProviderService, useTagService, useTextColorService } from '@/app/services'
 
 const props = defineProps<PropsList>()
 const { provideProps, injectParentProps } = useProviderService()

@@ -1,6 +1,6 @@
 import { type ConfigType } from 'dayjs'
-import { type CalendarDate } from '@khsura/sui/types'
-import dayjs from '@khsura/sui/vendors/dayjs'
+import { type CalendarDate } from '@/app/types'
+import dayjs from '@/app/vendors/dayjs'
 
 export const getCalendarDate = (value: ConfigType): CalendarDate => {
   const date = dayjs(value)

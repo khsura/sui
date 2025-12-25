@@ -21,9 +21,9 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ProviderPropsName, defaultToolbarExtensionHeight, defaultToolbarContentHeight } from '@khsura/sui/constants'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
-import type { PropsToolbar } from '@khsura/sui/definitions'
+import { ProviderPropsName, defaultToolbarExtensionHeight, defaultToolbarContentHeight } from '@/app/constants'
+import { getNumericCssAttribute } from '@/app/lib'
+import type { PropsToolbar } from '@/app/definitions'
 import {
   useBorderService,
   useColorService,
@@ -33,7 +33,7 @@ import {
   useProviderService,
   useTagService,
   useToolbarService,
-} from '@khsura/sui/services'
+} from '@/app/services'
 
 const props = withDefaults(defineProps<PropsToolbar>(), {
   extensionHeight: defaultToolbarExtensionHeight,

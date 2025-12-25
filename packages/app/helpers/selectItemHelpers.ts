@@ -1,4 +1,4 @@
-import type { SelectItem } from '@khsura/sui/types'
+import type { SelectItem } from '@/app/types'
 
 export const getItemText = <T extends SelectItem | string | undefined | null = SelectItem | string | undefined | null>(
   item: T,

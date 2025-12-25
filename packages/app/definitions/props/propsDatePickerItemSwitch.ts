@@ -1,6 +1,6 @@
-import { type MaterialDesignIcon } from '@khsura/sui/types'
 import { type PropsDatePickerItem } from './propsDatePickerItem'
 import { type PropsDatePickerFormat } from './propsDatePickerFormat'
+import { type MaterialDesignIcon } from '@/app/types'
 
 export type PropsDatePickerItemSwitch = PropsDatePickerItem &
   PropsDatePickerFormat & {

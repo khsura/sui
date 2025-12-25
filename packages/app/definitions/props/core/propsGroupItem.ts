@@ -1,4 +1,4 @@
-import { type GroupItemValue } from '@khsura/sui/types/core'
+import { type GroupItemValue } from '@/app/types'
 
 export type PropsGroupItem<T extends GroupItemValue = GroupItemValue> = {
   index?: T | null

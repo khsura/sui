@@ -1,6 +1,6 @@
-import { ProviderName } from '@khsura/sui/constants'
-import { createAppStore } from '@khsura/sui/helpers/createAppStore'
 import { useProviderRepository } from './core'
+import { ProviderName } from '@/app/constants'
+import { createAppStore } from '@/app/helpers/createAppStore'
 
 export const useAppProviderRepository = () => {
   const { inject } = useProviderRepository()

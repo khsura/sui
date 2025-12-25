@@ -20,10 +20,10 @@
 </template>
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, useId, watch } from 'vue'
-import FormInputError from '@khsura/sui/components/form/common/sFormInputError.vue'
-import { type PropsCheckbox } from '@khsura/sui/definitions'
-import { useColorRepository } from '@khsura/sui/repositories'
-import { useFormInputService } from '@khsura/sui/services'
+import FormInputError from '@/app/components/form/common/sFormInputError.vue'
+import { type PropsCheckbox } from '@/app/definitions'
+import { useColorRepository } from '@/app/repositories'
+import { useFormInputService } from '@/app/services'
 
 const props = defineProps<PropsCheckbox>()
 const checkboxElement = ref<HTMLInputElement | null>(null)

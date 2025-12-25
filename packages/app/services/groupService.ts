@@ -1,10 +1,10 @@
 import { type Ref, computed, ref, type ModelRef } from 'vue'
 import { watch } from 'vue'
-import { ProviderName, ProviderPropsName } from '@khsura/sui/constants/provider'
-import { type PropsGroup } from '@khsura/sui/definitions'
-import { type GroupItemValue } from '@khsura/sui/types'
 import { useProviderService } from './core/providerService'
 import { useGroupCoreService } from './core/groupCoreService'
+import { ProviderName, ProviderPropsName } from '@/app/constants/provider'
+import { type PropsGroup } from '@/app/definitions'
+import { type GroupItemValue } from '@/app/types'
 
 export const useGroupService = <T extends GroupItemValue = GroupItemValue>(
   props: PropsGroup,

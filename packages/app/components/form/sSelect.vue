@@ -47,13 +47,13 @@
 <script setup lang="ts">
 import { OnClickOutside } from '@vueuse/components'
 import { computed, watch, nextTick, useTemplateRef } from 'vue'
-import SFormInputError from '@khsura/sui/components/form/common/sFormInputError.vue'
-import { SList, SListItem, SListItemContent, SListItemSubtitle } from '@khsura/sui/components/list'
-import SIcon from '@khsura/sui/components/sIcon.vue'
-import SOverlay from '@khsura/sui/components/sOverlay.vue'
-import { type PropsSelect } from '@khsura/sui/definitions'
-import { useBorderService, useDisabledService, useFormInputService, useMenuService } from '@khsura/sui/services'
-import { type SelectItem, type EmitFormInput } from '@khsura/sui/types'
+import SFormInputError from '@/app/components/form/common/sFormInputError.vue'
+import { SList, SListItem, SListItemContent, SListItemSubtitle } from '@/app/components/list'
+import SIcon from '@/app/components/sIcon.vue'
+import SOverlay from '@/app/components/sOverlay.vue'
+import { type PropsSelect } from '@/app/definitions'
+import { useBorderService, useDisabledService, useFormInputService, useMenuService } from '@/app/services'
+import { type SelectItem, type EmitFormInput } from '@/app/types'
 
 const props = defineProps<PropsSelect>()
 const emit = defineEmits<EmitFormInput<string | number | null>>()

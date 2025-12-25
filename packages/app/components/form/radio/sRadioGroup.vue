@@ -6,11 +6,11 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { SFormInputError } from '@khsura/sui/components'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { type PropsRadioGroup } from '@khsura/sui/definitions'
-import { useFormInputService, useProviderService, useSingleGroupService } from '@khsura/sui/services'
-import { type GroupItemValue } from '@khsura/sui/types'
+import { SFormInputError } from '@/app/components/form/common'
+import { ProviderPropsName } from '@/app/constants'
+import { type PropsRadioGroup } from '@/app/definitions'
+import { useFormInputService, useProviderService, useSingleGroupService } from '@/app/services'
+import { type GroupItemValue } from '@/app/types'
 
 const props = defineProps<PropsRadioGroup>()
 

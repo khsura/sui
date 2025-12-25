@@ -5,7 +5,7 @@
 </template>
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { getCleanSetObject, getNumericCssAttribute, getNumericValue, getWindow } from '@khsura/sui/lib'
+import { getCleanSetObject, getNumericCssAttribute, getNumericValue, getWindow } from '@/app/lib'
 import {
   useColorService,
   useElevationService,
@@ -13,8 +13,8 @@ import {
   useMeasurableStylesService,
   usePositionService,
   useTagService,
-} from '@khsura/sui/services'
-import { type PropsFooter } from '@khsura/sui/definitions'
+} from '@/app/services'
+import { type PropsFooter } from '@/app/definitions'
 
 const props = withDefaults(defineProps<PropsFooter>(), {
   tag: 'footer',

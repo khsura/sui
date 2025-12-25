@@ -15,13 +15,13 @@
 </template>
 <script setup lang="ts">
 import { watch, computed, useTemplateRef } from 'vue'
-import SOverlay from '@khsura/sui/components/sOverlay.vue'
-import { STransition } from '@khsura/sui/constants'
-import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
-import { getWindow } from '@khsura/sui/lib/browser'
-import type { PropsSnackbar } from '@khsura/sui/definitions'
-import { getIsAbsolutePosition, getIsFixedPosition } from '@khsura/sui/repositories/positionRepository'
-import { useActivatorService, useLayoutService, useScrollableService } from '@khsura/sui/services'
+import SOverlay from '@/app/components/sOverlay.vue'
+import { STransition } from '@/app/constants'
+import { getCleanSetObject, getNumericCssAttribute } from '@/app/lib'
+import { getWindow } from '@/app/lib/browser'
+import type { PropsSnackbar } from '@/app/definitions'
+import { getIsAbsolutePosition, getIsFixedPosition } from '@/app/repositories/positionRepository'
+import { useActivatorService, useLayoutService, useScrollableService } from '@/app/services'
 
 const props = defineProps<PropsSnackbar>()
 const model = defineModel<boolean>()

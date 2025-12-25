@@ -1,5 +1,5 @@
-import type { CalendarEvent } from '@khsura/sui/types'
 import { type PropsTag } from './core'
+import type { CalendarEvent } from '@/app/types'
 
 export type PropsCalendar = {
   type?: 'month'

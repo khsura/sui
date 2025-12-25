@@ -1,6 +1,6 @@
 import { computed } from 'vue'
-import { ProviderName } from '@khsura/sui/constants'
-import { type PropsLayout, type PropsLayoutProvider } from '@khsura/sui/definitions'
+import { ProviderName } from '@/app/constants'
+import { type PropsLayout, type PropsLayoutProvider } from '@/app/definitions'
 
 export const useLayoutCoreService = (props: PropsLayout | PropsLayoutProvider) => {
   const isApp = computed(() => {

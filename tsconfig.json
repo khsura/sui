@@ -1,11 +1,8 @@
 {
   "extends": "@khsura/shared/tsconfig.base.json",
-  "include": [
-    "**/*.js",
-    "**/*.ts",
-    "**/*.mjs",
-    "**/*.tsx",
-    "**/*.vue"
-  ],
-  "exclude": ["packages", "node_modules", "dist"]
+  "include": ["**/*.js", "**/*.ts", "**/*.mjs", "**/*.tsx", "**/*.vue"],
+  "exclude": ["packages", "node_modules", "dist"],
+  "compilerOptions": {
+    "skipLibCheck": true
+  }
 }

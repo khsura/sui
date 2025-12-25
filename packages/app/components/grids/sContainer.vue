@@ -7,8 +7,8 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { type PropsContainer } from '@khsura/sui/definitions'
-import { useColorService, useTagService } from '@khsura/sui/services'
+import { type PropsContainer } from '@/app/definitions'
+import { useColorService, useTagService } from '@/app/services'
 
 const props = defineProps<PropsContainer>()
 const { classListColor, styleListColor } = useColorService(props)

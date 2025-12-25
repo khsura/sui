@@ -13,13 +13,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import { datePickerModelFormats } from '@khsura/sui/configs'
-import type { PropsCalendar } from '@khsura/sui/definitions'
-import { getCalendarDate } from '@khsura/sui/repositories'
-import { useCalendarService } from '@khsura/sui/services'
-import { type CalendarEmitEvents } from '@khsura/sui/types'
-import dayjs from '@khsura/sui/vendors/dayjs'
 import SCalendarMonthly from './sCalendarMonthly.vue'
+import { datePickerModelFormats } from '@/app/configs'
+import type { PropsCalendar } from '@/app/definitions'
+import { getCalendarDate } from '@/app/repositories'
+import { useCalendarService } from '@/app/services'
+import { type CalendarEmitEvents } from '@/app/types'
+import dayjs from '@/app/vendors/dayjs'
 
 const props = defineProps<PropsCalendar>()
 const emit = defineEmits<CalendarEmitEvents>()

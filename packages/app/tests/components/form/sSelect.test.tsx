@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { SSelect } from '@khsura/sui/components'
+import { SSelect } from '@/app/components'
 
 describe('SSelect', () => {
   const component = mount(SSelect, {

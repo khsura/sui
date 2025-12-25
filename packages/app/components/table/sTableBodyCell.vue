@@ -6,10 +6,10 @@
 
 <script lang="ts" setup generic="T extends TableItem = TableItem">
 import { computed } from 'vue'
-import { getCleanSetObject } from '@khsura/sui/lib'
-import { useTableBodyCellService } from '@khsura/sui/services'
-import { type TableItem } from '@khsura/sui/types'
-import type { PropsTableBodyCell } from '@khsura/sui/definitions'
+import { getCleanSetObject } from '@/app/lib'
+import { useTableBodyCellService } from '@/app/services'
+import { type TableItem } from '@/app/types'
+import type { PropsTableBodyCell } from '@/app/definitions'
 
 const props = defineProps<PropsTableBodyCell<T>>()
 const { itemStyles, itemClasses } = useTableBodyCellService(props)

@@ -1,4 +1,4 @@
-import { KTableSortOrder } from '@khsura/sui/types'
+import { KTableSortOrder } from '@/app/types'
 
 export const getNextSortOrder = (currentSortOrder: KTableSortOrder | undefined) => {
   if (currentSortOrder === undefined) {

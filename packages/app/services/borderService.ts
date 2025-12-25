@@ -1,8 +1,8 @@
 import { computed } from 'vue'
 import { type ComputedRef } from 'vue'
-import { type PropsBorder } from '@khsura/sui/definitions'
-import { toComputed } from '@khsura/sui/lib/compositionApi'
 import { getCleanSetObject } from '../lib'
+import { type PropsBorder } from '@/app/definitions'
+import { toComputed } from '@/app/lib/compositionApi'
 
 export const useBorderService = (
   props: Partial<PropsBorder> | ComputedRef<Partial<PropsBorder>>,

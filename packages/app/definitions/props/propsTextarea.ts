@@ -1,6 +1,6 @@
-import { type FormInputModelValue } from '@khsura/sui/types'
 import { type PropsFormInput } from './propsFormInput'
 import { type PropsSizePreset } from './propsSizePreset'
+import { type FormInputModelValue } from '@/app/types'
 
 export type PropsTextarea<T extends FormInputModelValue = string> = {
   cols?: number | undefined

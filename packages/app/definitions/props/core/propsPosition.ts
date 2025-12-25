@@ -1,4 +1,4 @@
-import type { Position } from '@khsura/sui/constants'
+import type { Position } from '@/app/constants'
 
 export type PropsPosition = {
   position?: Position

@@ -4,8 +4,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { type PropsLayoutContainer } from '@khsura/sui/definitions'
-import { useLayoutProviderService, useMeasurableStylesService } from '@khsura/sui/services'
+import { type PropsLayoutContainer } from '@/app/definitions'
+import { useLayoutProviderService, useMeasurableStylesService } from '@/app/services'
 
 const props = defineProps<PropsLayoutContainer>()
 const { measurableStyles } = useMeasurableStylesService(props)

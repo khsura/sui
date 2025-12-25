@@ -1,7 +1,7 @@
 import { computed } from 'vue'
-import { getCleanSetObject } from '@khsura/sui/lib/getCleanSetObject'
-import { getIsAbsolutePosition, getIsFixedPosition, getIsFixedOrAbsolutePosition } from '@khsura/sui/repositories'
-import type { PropsLayout, PropsPosition } from '@khsura/sui/definitions'
+import { getCleanSetObject } from '@/app/lib/getCleanSetObject'
+import { getIsAbsolutePosition, getIsFixedPosition, getIsFixedOrAbsolutePosition } from '@/app/repositories'
+import type { PropsLayout, PropsPosition } from '@/app/definitions'
 
 export const usePositionService = (props: PropsPosition & PropsLayout) => {
   const isAbsolutePosition = computed(() => {

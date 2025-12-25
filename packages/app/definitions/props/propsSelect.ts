@@ -1,7 +1,7 @@
-import { type SelectItem } from '@khsura/sui/types'
 import { type PropsBorder, type PropsColor, type PropsContent } from './core'
 import { type PropsFormInput } from './propsFormInput'
 import { type PropsMenu } from './propsMenu'
+import { type SelectItem } from '@/app/types'
 
 export type PropsSelect = {
   name?: string | null

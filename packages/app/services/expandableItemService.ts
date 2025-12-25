@@ -1,6 +1,6 @@
 import { computed } from 'vue'
-import { ProviderName } from '@khsura/sui/constants/provider'
 import { useExpandableItemCoreService, useProviderService } from './core'
+import { ProviderName } from '@/app/constants/provider'
 
 export const useExpandableItemService = () => {
   const { inject } = useProviderService()

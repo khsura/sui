@@ -18,11 +18,11 @@
 <script setup lang="ts">
 import { useScroll } from '@vueuse/core'
 import { type ComponentPublicInstance, computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { SToolbar } from '@khsura/sui/components/toolbar'
-import { getNumericCssAttribute, getWindow } from '@khsura/sui/lib'
-import { useAppBarService } from '@khsura/sui/services'
-import type { PropsAppBar } from '@khsura/sui/definitions'
-import { defaultToolbarContentHeight, defaultToolbarExtensionHeight } from '@khsura/sui/constants'
+import { SToolbar } from '@/app/components/toolbar'
+import { getNumericCssAttribute, getWindow } from '@/app/lib'
+import { useAppBarService } from '@/app/services'
+import type { PropsAppBar } from '@/app/definitions'
+import { defaultToolbarContentHeight, defaultToolbarExtensionHeight } from '@/app/constants'
 
 defineOptions({
   inheritAttrs: false,

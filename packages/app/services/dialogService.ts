@@ -1,9 +1,9 @@
 import { type ModelRef, type ShallowRef, computed } from 'vue'
-import { STransition } from '@khsura/sui/constants'
-import { type PropsDialog } from '@khsura/sui/definitions'
-import { useActivatorService, useLocationService } from '@khsura/sui/services/core'
-import { useElevationService } from '@khsura/sui/services/elevationService'
-import { useMeasurableStylesService } from '@khsura/sui/services/measurableStylesService'
+import { STransition } from '@/app/constants'
+import { type PropsDialog } from '@/app/definitions'
+import { useActivatorService, useLocationService } from '@/app/services/core'
+import { useElevationService } from '@/app/services/elevationService'
+import { useMeasurableStylesService } from '@/app/services/measurableStylesService'
 
 export const useDialogService = (
   props: PropsDialog,

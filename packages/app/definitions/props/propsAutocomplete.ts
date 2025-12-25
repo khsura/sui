@@ -1,7 +1,6 @@
-import type { SelectItem } from '@khsura/sui/types'
-import type { PropsMenu } from '@khsura/sui/definitions/props/propsMenu'
-import type { AutocompleteModelType } from '@khsura/sui/types/autocomplete'
+import type { PropsMenu } from './propsMenu'
 import { type PropsSizePreset } from './propsSizePreset'
+import type { SelectItem, AutocompleteModelType } from '@/app/types'
 
 export type PropsAutocomplete<T extends boolean = false> = {
   // Model value

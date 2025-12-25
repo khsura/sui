@@ -6,8 +6,8 @@
 </template>
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { useProviderService } from '@khsura/sui/services'
+import { ProviderPropsName } from '@/app/constants'
+import { useProviderService } from '@/app/services'
 
 const resizer = ref<HTMLElement | null>(null)
 const { injectParentProps } = useProviderService()

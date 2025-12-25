@@ -1,8 +1,8 @@
 import { computed, useSlots } from 'vue'
-import { toolbarHeightSubractors, toolbarExtensionHeightSubractors } from '@khsura/sui/configs/toolbar'
-import { ToolbarDensity } from '@khsura/sui/constants/toolbar'
-import { type PropsToolbar } from '@khsura/sui/definitions'
-import { getNumericValue } from '@khsura/sui/lib'
+import { toolbarHeightSubractors, toolbarExtensionHeightSubractors } from '@/app/configs/toolbar'
+import { ToolbarDensity } from '@/app/constants/toolbar'
+import { type PropsToolbar } from '@/app/definitions'
+import { getNumericValue } from '@/app/lib'
 
 export const useToolbarService = (props: PropsToolbar) => {
   const slots = useSlots()

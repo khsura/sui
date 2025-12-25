@@ -1,7 +1,7 @@
 import { provide, ref } from 'vue'
-import { defaultLayoutSizes } from '@khsura/sui/constants/layout'
-import { type PropsLayoutProvider } from '@khsura/sui/definitions'
 import { useLayoutCoreService } from './core/layoutCoreService'
+import { defaultLayoutSizes } from '@/app/constants/layout'
+import { type PropsLayoutProvider } from '@/app/definitions'
 
 export const useLayoutProviderService = (props: PropsLayoutProvider) => {
   const { providerName } = useLayoutCoreService(props)

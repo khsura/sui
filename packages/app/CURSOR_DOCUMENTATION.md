@@ -714,7 +714,6 @@ When working with SUI in Cursor:
 4. **Component Props**: Check component prop definitions in `definitions/props/` for available props
 5. **Services**: Use composables for reusable logic (theme, display, scroll, etc.)
 6. **Styling**: Import base.css or style.scss - utility classes are available
-7. **Examples**: Refer to `packages/samples` for usage examples
 
 ---
 
@@ -739,8 +738,7 @@ When working with SUI in Cursor:
 
 ## Additional Resources
 
-- Check `packages/samples` for working examples
-- Check `packages/storybook` for component documentation and props
+- Check `packages/app/storybook` for component documentation and props
 - Component prop definitions are in `definitions/props/`
 - Type definitions are in `types/` directory
 

@@ -1,5 +1,5 @@
-import { type MaterialDesignIcon } from '@khsura/sui/types'
 import { type PropsWindow } from './propsWindow'
+import { type MaterialDesignIcon } from '@/app/types'
 
 export type PropsCarousel = {
   cycle?: boolean

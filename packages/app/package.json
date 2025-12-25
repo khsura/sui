@@ -7,10 +7,12 @@
     "build:style": "yarn g:sass styles/index.scss dist/base.css",
     "build:type": "yarn g:vue-tsc -p tsconfig.build.json && yarn g:tsc-alias -p tsconfig.build.json",
     "build": "yarn prebuild && yarn build:type && yarn g:vite build && yarn build:style && cp -R styles dist/styles",
-    "eslint": "yarn g:eslint",
+    "lint": "yarn g:eslint",
     "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
     "test": "yarn g:vitest run",
-    "release": "yarn g:publish"
+    "release": "yarn g:publish",
+    "storybook:dev": "storybook dev --port 6006",
+    "storybook:build": "storybook build"
   },
   "files": [
     "dist",
@@ -45,6 +47,11 @@
     "zod": "^4.2.1"
   },
   "devDependencies": {
-    "@tsconfig/node-lts": "^24.0.0"
+    "@storybook/addon-docs": "^10.1.10",
+    "@storybook/addon-links": "^10.1.10",
+    "@storybook/vue3-vite": "^10.1.10",
+    "eslint-plugin-storybook": "10.1.10",
+    "http-server": "^14.1.1",
+    "storybook": "^10.1.10"
   }
 }

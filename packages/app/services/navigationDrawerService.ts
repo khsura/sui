@@ -1,7 +1,7 @@
-import type { PropsNavigationDrawer } from '@khsura/sui/definitions'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
-import { useActivatorElementService, useLayoutCoreService } from '@khsura/sui/services/core'
 import { computed } from 'vue'
+import type { PropsNavigationDrawer } from '@/app/definitions'
+import { getNumericCssAttribute } from '@/app/lib'
+import { useActivatorElementService, useLayoutCoreService } from '@/app/services/core'
 
 export const useNavigationDrawerService = (props: PropsNavigationDrawer) => {
   const { isApp } = useLayoutCoreService(props)

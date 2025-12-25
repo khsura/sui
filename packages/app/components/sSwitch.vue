@@ -15,9 +15,9 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { CssColor } from '@khsura/sui/constants'
-import type { PropsSwitch } from '@khsura/sui/definitions'
-import { useColorService, useDisabledService } from '@khsura/sui/services'
+import { CssColor } from '@/app/constants'
+import type { PropsSwitch } from '@/app/definitions'
+import { useColorService, useDisabledService } from '@/app/services'
 
 const props = defineProps<PropsSwitch>()
 const modelValue = defineModel<boolean>()

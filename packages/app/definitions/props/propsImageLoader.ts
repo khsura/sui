@@ -1,5 +1,5 @@
-import { type FileMimeType } from '@khsura/sui/constants'
 import { type PropsFormInput } from './propsFormInput'
+import { type FileMimeType } from '@/app/constants'
 
 export type PropsImageLoader = {
   accept?: string

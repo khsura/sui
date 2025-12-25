@@ -190,14 +190,14 @@
 <script setup lang="ts" generic="T extends TableItem">
 import { useDebounceFn } from '@vueuse/core'
 import { computed, watch, onMounted, useTemplateRef } from 'vue'
-import { getCleanSetObject } from '@khsura/sui/lib'
-import { useBorderService, useTableService } from '@khsura/sui/services'
-import { type KTableSortOrder, type TableItem } from '@khsura/sui/types'
-import type { EmitsTable, PropsTable } from '@khsura/sui/definitions'
 import SProgressLinear from '../progress/sProgressLinear.vue'
 import STableHeadCell from './sTableHeadCell.vue'
 import STableBodyCell from './sTableBodyCell.vue'
 import STablePagination from './sTablePagination.vue'
+import { getCleanSetObject } from '@/app/lib'
+import { useBorderService, useTableService } from '@/app/services'
+import { type KTableSortOrder, type TableItem } from '@/app/types'
+import type { EmitsTable, PropsTable } from '@/app/definitions'
 
 const props = withDefaults(defineProps<PropsTable<T>>(), {
   items: () => [],

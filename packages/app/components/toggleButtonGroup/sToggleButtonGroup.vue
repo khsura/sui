@@ -7,10 +7,10 @@
 </template>
 <script setup lang="ts" generic="T extends GroupItemValue = GroupItemValue">
 import { computed } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import type { PropsToggleButtonGroup } from '@khsura/sui/definitions'
-import { useBorderService, useGroupService, useProviderService } from '@khsura/sui/services'
-import { type GroupItemValue } from '@khsura/sui/types'
+import { ProviderPropsName } from '@/app/constants'
+import type { PropsToggleButtonGroup } from '@/app/definitions'
+import { useBorderService, useGroupService, useProviderService } from '@/app/services'
+import { type GroupItemValue } from '@/app/types'
 
 const props = withDefaults(defineProps<PropsToggleButtonGroup>(), {
   selectedColor: 'primary',

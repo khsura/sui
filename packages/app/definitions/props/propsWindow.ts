@@ -1,6 +1,6 @@
-import { type MaterialDesignIcon, type TouchHandlers } from '@khsura/sui/types'
 import { type PropsColor, type PropsDisabled, type PropsTag } from './core'
 import { type PropsSingleGroup } from './propsSingleGroup'
+import { type MaterialDesignIcon, type TouchHandlers } from '@/app/types'
 
 export type PropsWindow = {
   nextIcon?: MaterialDesignIcon

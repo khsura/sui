@@ -1,7 +1,7 @@
 import { type Mutable } from '@vueuse/core'
 import { reactive } from 'vue'
-import { type PropsBorder } from '@khsura/sui/definitions'
-import { useBorderService } from '@khsura/sui/services'
+import { type PropsBorder } from '@/app/definitions'
+import { useBorderService } from '@/app/services'
 
 describe('positionService', () => {
   const props = reactive<Mutable<PropsBorder>>({

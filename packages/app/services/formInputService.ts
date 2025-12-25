@@ -1,8 +1,8 @@
 import { ref, computed, nextTick, onUnmounted, watch, onMounted, type EmitFn, useId, type Ref } from 'vue'
-import { ProviderName } from '@khsura/sui/constants/provider'
-import { type PropsFormInput } from '@khsura/sui/definitions'
-import { type EmitFormInput, type FormInputModelValue } from '@khsura/sui/types'
 import { useProviderService } from './core/providerService'
+import { ProviderName } from '@/app/constants/provider'
+import { type PropsFormInput } from '@/app/definitions'
+import { type EmitFormInput, type FormInputModelValue } from '@/app/types'
 
 export const useFormInputService = <T extends FormInputModelValue = FormInputModelValue>(
   props: PropsFormInput,
