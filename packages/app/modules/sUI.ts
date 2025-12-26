@@ -2,7 +2,7 @@ import { type Plugin } from 'vue'
 import { resize, scroll } from '@/app/directives'
 import { createAppStore } from '@/app/helpers/createAppStore'
 import { listenDisplayChange } from '@/app/helpers/display'
-import { type AppStateOptions } from '@/app/definitions'
+import type { AppStateOptions } from '@/app/definitions'
 
 export const createSUI = <T extends string = 'sui'>(options?: AppStateOptions, name?: T) => {
   const appName = name ?? 'sui'
