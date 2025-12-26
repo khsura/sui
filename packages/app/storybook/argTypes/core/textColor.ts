@@ -1,10 +1,10 @@
 import type { ArgTypes } from '@storybook/vue3'
-import _ from 'lodash'
+import { merge } from 'lodash'
 import type { PropsColor } from '@/app/index'
 import colorString from '@/app/types/core/color?raw'
 
 export const argTypesTextColor = <T extends ArgTypes<PropsColor>>(params: Partial<T>): T => {
-  return _.merge(
+  return merge(
     {
       color: {
         control: { type: 'color' },

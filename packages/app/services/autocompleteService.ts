@@ -1,5 +1,5 @@
 import { computed, nextTick, ref, type ComponentPublicInstance, type EmitFn, type Ref, type ShallowRef } from 'vue'
-import lodash from 'lodash'
+import { merge } from 'lodash'
 import {
   isDelimiter,
   getItemFromText,
@@ -253,7 +253,7 @@ export const useAutocompleteService = <T extends boolean = false>(
   }
 
   const updateItemsPool = (items: SelectItem[] | string[]) => {
-    itemsPool.value = lodash.merge(
+    itemsPool.value = merge(
       itemsPool.value,
       items.reduce(
         (acc, item) => {
