@@ -1,5 +1,4 @@
 import { computed, nextTick, ref, type ComponentPublicInstance, type EmitFn, type Ref, type ShallowRef } from 'vue'
-import { merge } from 'lodash'
 import {
   isDelimiter,
   getItemFromText,
@@ -10,6 +9,7 @@ import {
   getItemValue,
 } from '../helpers'
 import { useMenuService } from '../services/menuService'
+import { merge } from '@/app/vendors/deepmerge'
 import type { AutocompleteEmitEvents, AutocompleteModelType, AutocompleteModelTypeBase } from '@/app/types/autocomplete'
 import type { PropsAutocomplete } from '@/app/definitions'
 import type { SelectItem } from '@/app/types'

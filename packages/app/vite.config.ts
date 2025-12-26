@@ -43,7 +43,7 @@ export default defineConfig({
         '@vueuse/components',
         '@vueuse/core',
         'dayjs',
-        'lodash',
+        'deepmerge',
         'vue',
         'vue-i18n',
         'zod',

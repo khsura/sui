@@ -1,5 +1,5 @@
 import { type Mutable } from '@vueuse/core'
-import { merge } from 'lodash'
+import { merge } from '@/app/vendors/deepmerge'
 
 export const useMockProps = <T extends Record<string, unknown>>(defaultValue: Mutable<T>) => {
   return (overwrite?: ((data: T) => Partial<T>) | Partial<T>) => {
