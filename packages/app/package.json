@@ -1,6 +1,6 @@
 {
   "name": "@khsura/sui",
-  "version": "1.7.7-beta.4",
+  "version": "1.7.7-beta.5",
   "type": "module",
   "scripts": {
     "prebuild": "yarn g:rimraf dist && yarn g:rimraf @types",
@@ -41,7 +41,6 @@
     "@vueuse/components": "^14.1.0",
     "@vueuse/core": "^14.1.0",
     "dayjs": "^1.11.19",
-    "lodash.merge": "^4.6.2",
     "vue": "^3.5.26",
     "vue-i18n": "^11.2.7",
     "zod": "^4.2.1"
@@ -53,6 +52,7 @@
     "@types/lodash.merge": "^4",
     "eslint-plugin-storybook": "10.1.10",
     "http-server": "^14.1.1",
+    "lodash.merge": "^4.6.2",
     "storybook": "^10.1.10"
   }
 }
