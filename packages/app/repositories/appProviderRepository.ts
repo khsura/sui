@@ -1,10 +1,9 @@
-import { useProviderRepository } from './core'
-import { ProviderName } from '@/app/constants'
-import { createAppStore } from '@/app/helpers/createAppStore'
+import { inject } from 'vue'
+import { ProviderName } from '@/app/configs'
+import { createAppStore } from '@/app/helpers'
 
 export const useAppProviderRepository = () => {
-  const { inject } = useProviderRepository()
-  const config = inject(ProviderName.sui, createAppStore())
+  const config = inject(ProviderName.sui, createAppStore('sui'))
 
   return { config }
 }

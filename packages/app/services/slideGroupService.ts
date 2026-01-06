@@ -1,9 +1,9 @@
-import { computed, ref, watch, type ModelRef, type Ref } from 'vue'
-import { useContentService, useProviderService } from './core'
+import { computed, provide, ref, watch, type ModelRef, type Ref } from 'vue'
+import { useContentService } from './core'
 import { useDisplayService } from './displayService'
 import { useGroupService } from './groupService'
 import { useScrollService } from './scrollService'
-import { ProviderPropsName } from '@/app/constants'
+import { ProviderPropsName } from '@/app/configs'
 import { type PropsSlideGroup } from '@/app/definitions'
 import { wait } from '@/app/lib'
 import { type GroupItemValue } from '@/app/types'
@@ -16,10 +16,9 @@ export const useSlideGroupService = (
   const { isTouchDevice, width } = useDisplayService()
   const { smoothElementScroll } = useScrollService()
   const { items, clickValue } = useGroupService(props, model)
-  const { provideProps } = useProviderService()
   const { attrs: contentAttrs } = useContentService(props)
 
-  provideProps(ProviderPropsName.slideGroupProps, props)
+  provide(ProviderPropsName.slideGroupProps, props)
 
   const currentX = ref<number>(0)
   const isNavigating = ref<boolean>(false)

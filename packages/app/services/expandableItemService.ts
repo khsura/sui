@@ -1,10 +1,8 @@
-import { computed } from 'vue'
-import { useExpandableItemCoreService, useProviderService } from './core'
-import { ProviderName } from '@/app/constants/provider'
+import { computed, inject } from 'vue'
+import { useExpandableItemCoreService } from './core'
+import { ProviderName } from '@/app/configs'
 
 export const useExpandableItemService = () => {
-  const { inject } = useProviderService()
-
   const { isExpanded, toggle } = inject(ProviderName.expansionPanel, {
     isExpanded: computed(() => null),
     toggle: () => undefined,

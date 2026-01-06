@@ -4,10 +4,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
-import { ProviderPropsName } from '@/app/constants'
+import { computed, inject } from 'vue'
+import { ProviderPropsName } from '@/app/configs'
 import type { PropsWindowItem } from '@/app/definitions'
-import { useProviderService, useSingleGroupItemService } from '@/app/services'
+import { useSingleGroupItemService } from '@/app/services'
 
 const translateXMapper: Record<string, string | undefined> = {
   '1': '100%',
@@ -16,8 +16,7 @@ const translateXMapper: Record<string, string | undefined> = {
 }
 
 const props = defineProps<PropsWindowItem>()
-const { injectParentProps } = useProviderService()
-const windowProps = injectParentProps(ProviderPropsName.window)
+const windowProps = inject(ProviderPropsName.window, null)
 const { isSelected, group, item } = useSingleGroupItemService(props)
 
 const selectedItemId = computed(() => {
@@ -49,8 +48,8 @@ const canDisplay = computed(() => {
 const classes = computed(() => {
   return {
     s_windowItem: true,
-    [windowProps.value.selectedClass ?? '']: isSelected.value && !!windowProps.value.selectedClass,
-    's_windowItem--noTransition': windowProps.value.noAnimation,
+    [windowProps?.selectedClass ?? '']: isSelected.value && !!windowProps?.selectedClass,
+    's_windowItem--noTransition': windowProps?.noAnimation,
   }
 })
 

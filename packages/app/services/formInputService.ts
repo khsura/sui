@@ -1,6 +1,5 @@
-import { ref, computed, nextTick, onUnmounted, watch, onMounted, type EmitFn, useId, type Ref } from 'vue'
-import { useProviderService } from './core/providerService'
-import { ProviderName } from '@/app/constants/provider'
+import { ref, computed, nextTick, onUnmounted, watch, onMounted, type EmitFn, useId, type Ref, inject } from 'vue'
+import { ProviderName } from '@/app/configs'
 import { type PropsFormInput } from '@/app/definitions'
 import { type EmitFormInput, type FormInputModelValue } from '@/app/types'
 
@@ -9,7 +8,6 @@ export const useFormInputService = <T extends FormInputModelValue = FormInputMod
   emit: EmitFn<EmitFormInput<T>>,
   model: Ref<T | undefined>,
 ) => {
-  const { inject } = useProviderService()
   const rawErrors = ref<string[]>([])
   const dirty = ref(false)
   const uniqueId = useId()

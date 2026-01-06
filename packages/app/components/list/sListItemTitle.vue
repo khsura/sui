@@ -4,17 +4,19 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
-import { ProviderPropsName } from '@/app/constants'
-import { useProviderService } from '@/app/services'
+import { computed, inject } from 'vue'
+import { ProviderPropsName } from '@/app/configs'
 
-const { injectParentProps } = useProviderService()
-const listProps = injectParentProps(ProviderPropsName.listProps)
+const listProps = inject(ProviderPropsName.listProps, null)
+
+if (!listProps) {
+  throw new Error('List props not found')
+}
 
 const classList = computed(() => {
   return {
     s_listItemTitle: true,
-    's_listItemTitle--dense': !!listProps.value.dense,
+    's_listItemTitle--dense': !!listProps.dense,
   }
 })
 </script>

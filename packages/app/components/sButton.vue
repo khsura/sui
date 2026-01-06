@@ -15,12 +15,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, inject } from 'vue'
 import { SProgressCircular } from './progress'
-import { ProviderPropsName, SizeProperty } from '@/app/constants'
+import { SizeProperty } from '@/app/constants'
 import { getCleanSetObject, isDarkColor } from '@/app/lib'
 import type { PropsButton } from '@/app/definitions'
-import { useColorRepository, useProviderRepository } from '@/app/repositories'
+import { useColorRepository } from '@/app/repositories'
 import {
   useBorderService,
   useColorService,
@@ -32,6 +32,7 @@ import {
   useSizeService,
   useTextColorService,
 } from '@/app/services'
+import { ProviderPropsName } from '@/app/configs'
 
 const props = withDefaults(defineProps<PropsButton>(), {
   tag: 'button',
@@ -57,22 +58,21 @@ const { classListTextColor, styleListTextColor } = useTextColorService(props)
 const { classListSize, styleListSize, isPresetSize } = useSizeService(props, { block: 'button' })
 const { classListBorder, styleListBorder } = useBorderService(props, { block: 'button' })
 const { tag: tagName, isLink } = useLinkService(props)
-const { injectParentProps } = useProviderRepository()
-const bottomNavigationProps = injectParentProps(ProviderPropsName.bottomNavigation, null)
+const bottomNavigationProps = inject(ProviderPropsName.bottomNavigation, null)
 
 const { toggleGroupItem, isSelected } =
-  bottomNavigationProps.value !== null
+  bottomNavigationProps !== null
     ? useSingleGroupItemService(props)
     : {
         toggleGroupItem: () => undefined,
         isSelected: computed(() => false),
       }
 
-const toolbarProps = injectParentProps(ProviderPropsName.toolbar, null)
+const toolbarProps = inject(ProviderPropsName.toolbar, null)
 
 // TODO: Sura - use more common approach
 const isDarkToolbar = computed(() => {
-  return isDarkColor(getPresetColorValue(toolbarProps.value?.color), toolbarProps.value?.colorThreshold)
+  return isDarkColor(getPresetColorValue(toolbarProps?.color), toolbarProps?.colorThreshold)
 })
 
 const classList = computed((): Record<string, boolean | null | undefined> => {
@@ -89,11 +89,11 @@ const classList = computed((): Record<string, boolean | null | undefined> => {
     's_button--fab': isFab.value,
     's_button--text': isText.value,
     's_button--rounded': !!props.rounded && !isIcon.value,
-    s_bottomNavigationButton: bottomNavigationProps.value !== null,
-    's_bottomNavigationButton--grow': !!bottomNavigationProps.value?.grow,
-    's_bottomNavigationButton--shift': !!bottomNavigationProps.value?.shift,
-    s_toolbarButton: toolbarProps.value !== null,
-    [bottomNavigationProps.value?.activeClass ?? '']: isSelected.value && bottomNavigationProps.value?.activeClass,
+    s_bottomNavigationButton: bottomNavigationProps !== null,
+    's_bottomNavigationButton--grow': !!bottomNavigationProps?.grow,
+    's_bottomNavigationButton--shift': !!bottomNavigationProps?.shift,
+    s_toolbarButton: toolbarProps !== null,
+    [bottomNavigationProps?.activeClass ?? '']: isSelected.value && bottomNavigationProps?.activeClass,
     ...(isDarkToolbar.value && isReady.value ? { s_dark: true } : {}),
   })
 })
@@ -123,7 +123,7 @@ const progressSize = computed(() => {
 })
 
 const click = (event: Event) => {
-  if (bottomNavigationProps.value !== null) {
+  if (bottomNavigationProps !== null) {
     toggleGroupItem(props.value ?? undefined)
   }
 

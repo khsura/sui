@@ -5,13 +5,16 @@
   <div ref="resizer" :class="resizerClasses" @mousedown="mouseDownHandler"></div>
 </template>
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { ProviderPropsName } from '@/app/constants'
-import { useProviderService } from '@/app/services'
+import { ref, computed, inject } from 'vue'
+import { ProviderPropsName } from '@/app/configs'
 
 const resizer = ref<HTMLElement | null>(null)
-const { injectParentProps } = useProviderService()
-const splitViewProps = injectParentProps(ProviderPropsName.splitViewProps, { vertical: false })
+const splitViewProps = inject(ProviderPropsName.splitViewProps, { vertical: false })
+
+if (!splitViewProps) {
+  throw new Error('SplitView props not found')
+}
+
 const x = ref(0)
 const y = ref(0)
 
@@ -37,7 +40,7 @@ const mouseMoveHandler = (e: MouseEvent) => {
     return
   }
 
-  if (splitViewProps.value.vertical) {
+  if (splitViewProps.vertical) {
     resizer.value.style.cursor = 'row-resize'
     document.body.style.cursor = 'row-resize'
     const height = (resizer.value.parentNode as HTMLElement).getBoundingClientRect().height
@@ -90,7 +93,7 @@ const resizerClasses = computed(() => {
   return {
     s_splitViewItem: true,
     s_splitViewItem__resizer: true,
-    's_splitViewItem__resizer--vertical': splitViewProps.value.vertical,
+    's_splitViewItem__resizer--vertical': splitViewProps.vertical,
   }
 })
 </script>

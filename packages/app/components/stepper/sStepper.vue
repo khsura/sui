@@ -8,18 +8,16 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, provide, ref } from 'vue'
 import SStepperStep from './sStepperStep.vue'
-import { ProviderName, ProviderPropsName } from '@/app/constants'
+import { ProviderName, ProviderPropsName } from '@/app/configs'
 import type { PropsStepper } from '@/app/definitions'
-import { useProviderService } from '@/app/services'
 
 const props = withDefaults(defineProps<PropsStepper>(), {
   items: () => [],
 })
 
 const emit = defineEmits<(event: 'update:modelValue', value: number) => void>()
-const { provideProps, provide } = useProviderService()
 
 const classList = computed(() => {
   return {
@@ -32,7 +30,7 @@ const steps = ref<number[]>([])
 const firstStep = computed(() => steps.value[0] ?? 0)
 const lastStep = computed(() => steps.value[steps.value.length - 1] ?? 0)
 
-provideProps(ProviderPropsName.stepperProps, props)
+provide(ProviderPropsName.stepperProps, props)
 
 provide(ProviderName.stepperUpdateValue, (value: number) => {
   emit('update:modelValue', Math.min(Math.max(value, firstStep.value), lastStep.value))

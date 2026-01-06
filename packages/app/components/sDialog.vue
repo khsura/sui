@@ -11,18 +11,17 @@
   </section>
 </template>
 <script setup lang="ts">
-import { watch, useTemplateRef } from 'vue'
+import { watch, useTemplateRef, provide } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import SOverlay from '@/app/components/sOverlay.vue'
-import { ProviderPropsName } from '@/app/constants'
 import type { PropsDialog } from '@/app/definitions'
-import { useDialogService, useProviderService, useBackgroundScrollService } from '@/app/services'
+import { useDialogService, useBackgroundScrollService } from '@/app/services'
+import { ProviderPropsName } from '@/app/configs'
 
 const props = defineProps<PropsDialog>()
 const model = defineModel<boolean>()
-const { provideProps } = useProviderService()
 
-provideProps(ProviderPropsName.dialog, props)
+provide(ProviderPropsName.dialog, props)
 const activatorElement = useTemplateRef('activatorElement')
 
 const {

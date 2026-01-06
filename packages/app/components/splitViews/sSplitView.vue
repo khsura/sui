@@ -4,20 +4,17 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
-import { ProviderPropsName } from '@/app/constants'
+import { computed, provide } from 'vue'
+import { ProviderPropsName } from '@/app/configs'
 import { getNumericCssAttribute } from '@/app/lib'
 import type { PropsSplitView } from '@/app/definitions'
-import { useProviderService } from '@/app/services'
-
-const { provideProps } = useProviderService()
 
 const props = withDefaults(defineProps<PropsSplitView>(), {
   width: '100%',
   height: '100%',
 })
 
-provideProps(ProviderPropsName.splitViewProps, props)
+provide(ProviderPropsName.splitViewProps, props)
 
 const classes = computed(() => {
   return {

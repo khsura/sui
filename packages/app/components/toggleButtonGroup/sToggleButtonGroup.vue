@@ -6,11 +6,11 @@
   </section>
 </template>
 <script setup lang="ts" generic="T extends GroupItemValue = GroupItemValue">
-import { computed } from 'vue'
-import { ProviderPropsName } from '@/app/constants'
+import { computed, provide } from 'vue'
 import type { PropsToggleButtonGroup } from '@/app/definitions'
-import { useBorderService, useGroupService, useProviderService } from '@/app/services'
+import { useBorderService, useGroupService } from '@/app/services'
 import { type GroupItemValue } from '@/app/types'
+import { ProviderPropsName } from '@/app/configs'
 
 const props = withDefaults(defineProps<PropsToggleButtonGroup>(), {
   selectedColor: 'primary',
@@ -21,7 +21,6 @@ const model = defineModel<T[] | null>({ default: [], required: false })
 useGroupService<T>(props, model)
 
 const { classListBorder, styleListBorder } = useBorderService(props)
-const { provideProps } = useProviderService()
 
 const isInset = computed(() => {
   return props.variant === 'inset'
@@ -42,7 +41,7 @@ const classList = computed(() => {
   }
 })
 
-provideProps(ProviderPropsName.toggleButtonGroupProps, props)
+provide(ProviderPropsName.toggleButtonGroupProps, props)
 </script>
 
 <style lang="scss">

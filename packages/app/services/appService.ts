@@ -1,17 +1,21 @@
-import { computed, inject } from 'vue'
+import { computed, inject, provide } from 'vue'
 import { useLayoutProviderService } from './layoutProviderService'
-import { useProviderService } from './core'
-import { ProviderName } from '@/app/constants'
 import { type PropsApp, type AppState } from '@/app/definitions'
-import { createAppStore } from '@/app/helpers/createAppStore'
 import { isDarkColor } from '@/app/lib/color'
+import { ProviderName } from '@/app/configs'
+import { getPluginName } from '@/app/lib/getPluginName'
 
 export const useAppService = (props: PropsApp) => {
-  const { provide } = useProviderService()
-  const store = inject<AppState>(props.name ?? 'sui', createAppStore())
+  // AppLevel Provider -> Inject
+  const store = inject<AppState>(getPluginName(props.name))
+
+  if (!store) {
+    throw new Error('AppLevel Provider config not found')
+  }
 
   useLayoutProviderService(props)
 
+  // Provide from SApp Component
   provide(ProviderName.sui, store)
 
   const presetColors = computed(() => {

@@ -1,8 +1,5 @@
 import { type ComputedRef, type Ref } from 'vue'
-import type { AppState } from './app'
-import type * as props from './props'
-import { type ProviderName, type ProviderPropsName, type defaultLayoutSizes } from '@/app/constants'
-import { type GroupItemValue, type FormProviderRegisterInputAttribute } from '@/app/types'
+import { type GroupItemValue } from '@/app/types'
 
 export interface GroupProvider<T extends GroupItemValue = GroupItemValue> {
   registerItem: (name: T, attrs: { element?: Ref<HTMLElement | null> }) => number
@@ -10,45 +7,6 @@ export interface GroupProvider<T extends GroupItemValue = GroupItemValue> {
   toggleItem: (name: T | undefined) => void
   isSelectedItem: (name: T | undefined) => boolean
   items: ComputedRef<Array<{ value: T; readonly element: HTMLElement | null }>>
-}
-
-export interface Provider {
-  [ProviderName.form]: {
-    registerItem: (id: string, attrs: FormProviderRegisterInputAttribute) => void
-    unregisterItem: (id: string) => void
-    updateItem: (id: string) => void
-  }
-  [ProviderName.stepperUpdateValue]: (value: number) => void
-  [ProviderName.stepperRegisterStepperStep]: (step: number) => void
-  [ProviderName.stepperUnregisterStepperStep]: (step: number) => void
-  [ProviderName.stepperSteps]: ComputedRef<number>
-  [ProviderName.group]: GroupProvider
-  [ProviderName.singleGroup]: SingleGroupProvider
-  [ProviderName.app]: Ref<typeof defaultLayoutSizes>
-  [ProviderName.sui]: AppState
-  [ProviderName.expansionPanel]: {
-    isExpanded: ComputedRef<boolean | null>
-    toggle: (panel?: number) => void
-  }
-}
-
-export interface ProviderProps {
-  [ProviderPropsName.listProps]: props.PropsList
-  [ProviderPropsName.listItemProps]: { lines?: number | null }
-  [ProviderPropsName.radioGroupProps]: props.PropsRadioGroup
-  [ProviderPropsName.stepperProps]: props.PropsStepper
-  [ProviderPropsName.tabsProps]: props.PropsTabs
-  [ProviderPropsName.toggleButtonGroupProps]: props.PropsToggleButtonGroup
-  [ProviderPropsName.slideGroupProps]: props.PropsSlideGroup
-  [ProviderPropsName.groupProps]: props.PropsGroup
-  [ProviderPropsName.groupSingleProps]: props.PropsSingleGroup
-  [ProviderPropsName.navigationDrawerProps]: props.PropsNavigationDrawer
-  [ProviderPropsName.bottomNavigation]: props.PropsBottomNavigation
-  [ProviderPropsName.toolbar]: props.PropsToolbar
-  [ProviderPropsName.window]: props.PropsWindow
-  [ProviderPropsName.splitViewProps]: props.PropsSplitView
-  [ProviderPropsName.expansionPanelsProps]: props.PropsExpansionPanels
-  [ProviderPropsName.dialog]: props.PropsDialog
 }
 
 export interface SingleGroupProvider extends GroupProvider {

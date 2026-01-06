@@ -1,8 +1,7 @@
-import { type Ref, computed, ref, type ModelRef } from 'vue'
+import { type Ref, computed, ref, type ModelRef, provide } from 'vue'
 import { watch } from 'vue'
-import { useProviderService } from './core/providerService'
 import { useGroupCoreService } from './core/groupCoreService'
-import { ProviderName, ProviderPropsName } from '@/app/constants/provider'
+import { ProviderName, ProviderPropsName } from '@/app/configs'
 import { type PropsGroup } from '@/app/definitions'
 import { type GroupItemValue } from '@/app/types'
 
@@ -10,11 +9,10 @@ export const useGroupService = <T extends GroupItemValue = GroupItemValue>(
   props: PropsGroup,
   model: ModelRef<T[] | null>,
 ) => {
-  const { provide, provideProps } = useProviderService()
   const { items, register, unregister, getItemIndex } = useGroupCoreService<T>()
   const clickValue: Ref<T | undefined> = ref()
 
-  provideProps(ProviderPropsName.groupProps, props)
+  provide(ProviderPropsName.groupProps, props)
 
   const firstIndexItem = computed<T | undefined>(() => {
     return items.value[0]?.value ?? undefined

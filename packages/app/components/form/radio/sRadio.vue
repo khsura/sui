@@ -4,11 +4,11 @@
       <input
         :id="id"
         type="radio"
-        :name="groupProps.name ?? name ?? undefined"
+        :name="groupProps?.name ?? name ?? undefined"
         :value="value"
         :checked="isSelected"
         :class="classListInput"
-        :disabled="groupProps.disabled || !!disabled"
+        :disabled="groupProps?.disabled || !!disabled"
       />
       <slot name="label" :attrs="{ class: classListLabel }">
         <label v-if="label" :for="id" :class="classListLabel">{{ label }}</label>
@@ -17,9 +17,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, nextTick } from 'vue'
-import { ProviderPropsName } from '@/app/constants/provider'
-import { useBorderService, useDisabledService, useProviderService, useSingleGroupItemService } from '@/app/services'
+import { computed, inject, nextTick } from 'vue'
+import { ProviderPropsName } from '@/app/configs'
+import { useBorderService, useDisabledService, useSingleGroupItemService } from '@/app/services'
 import type { PropsBorder, PropsDisabled, PropsSingleGroupItem } from '@/app/definitions'
 
 const props = defineProps<
@@ -33,15 +33,14 @@ const props = defineProps<
 >()
 
 const emit = defineEmits<(event: 'update:checked', value: boolean) => void>()
-const { injectParentProps } = useProviderService()
-const groupProps = injectParentProps(ProviderPropsName.radioGroupProps)
+const groupProps = inject(ProviderPropsName.radioGroupProps)
 const { toggleGroupItem, isSelected } = useSingleGroupItemService(props)
 
 const { classListDisabled } = useDisabledService(
   computed(() => {
     return {
-      disabled: props.disabled ?? groupProps.value.disabled,
-      readonly: props.readonly ?? groupProps.value.readonly,
+      disabled: props.disabled ?? groupProps?.disabled,
+      readonly: props.readonly ?? groupProps?.readonly,
     }
   }),
 )
@@ -51,8 +50,8 @@ const { classListBorder, styleListBorder } = useBorderService(groupProps)
 const { classListDisabled: classListRadioGroupDisabled } = useDisabledService(
   computed(() => {
     return {
-      disabled: groupProps.value.disabled,
-      readonly: groupProps.value.readonly,
+      disabled: groupProps?.disabled,
+      readonly: groupProps?.readonly,
     }
   }),
 )
@@ -60,18 +59,18 @@ const { classListDisabled: classListRadioGroupDisabled } = useDisabledService(
 const classList = computed(() => {
   return {
     s_radio: true,
-    's_radio--column': groupProps.value.column,
-    's_radio--grow': groupProps.value.grow,
+    's_radio--column': groupProps?.column,
+    's_radio--grow': groupProps?.grow,
   }
 })
 
 const classListButton = computed(() => {
   return {
     s_radio__button: true,
-    's_radio__button--notSet': groupProps.value.modelValue === null || groupProps.value.modelValue === undefined,
-    [`s_radio__button--color__${groupProps.value.color}`]: !!groupProps.value.color,
+    's_radio__button--notSet': groupProps?.modelValue === null || groupProps?.modelValue === undefined,
+    [`s_radio__button--color__${groupProps?.color}`]: !!groupProps?.color,
     ...classListBorder.value,
-    's_radio__button--grow': groupProps.value.grow,
+    's_radio__button--grow': groupProps?.grow,
     // TODO (Sura) classListBorder.value['s_outlined'] is not good. because it's hard to refer. improve in the future
     s_outlined: !!props.outlined || classListBorder.value.s_outlined,
     s_disabled: classListDisabled.value.s_disabled || classListRadioGroupDisabled.value.s_disabled,

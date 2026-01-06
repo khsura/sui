@@ -14,26 +14,29 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import SButton from '@/app/components/sButton.vue'
-import { ProviderPropsName } from '@/app/constants'
+import { ProviderPropsName } from '@/app/configs'
 import type { PropsToggleButton } from '@/app/definitions'
-import { useColumnService, useGroupItemService, useProviderService } from '@/app/services'
+import { useColumnService, useGroupItemService } from '@/app/services'
 
 const props = defineProps<PropsToggleButton>()
 const { classListColumn } = useColumnService(props, { classPrefix: 'toggleButton' })
-const { injectParentProps } = useProviderService()
 const { toggleGroupItem, isSelected } = useGroupItemService(props)
-const groupProps = injectParentProps(ProviderPropsName.toggleButtonGroupProps)
+const groupProps = inject(ProviderPropsName.toggleButtonGroupProps)
+
+if (!groupProps) {
+  throw new Error('ToggleButtonGroup props not found')
+}
 
 const classes = computed(() => {
   return {
     ...classListColumn.value,
-    's_toggleButton--bordered': groupProps.value.bordered === true && groupProps.value.variant !== 'inset',
-    's_toggleButton--shrink': groupProps.value.shrink === true,
-    's_toggleButton--inset': groupProps.value.variant === 'inset',
+    's_toggleButton--bordered': groupProps.bordered === true && groupProps?.variant !== 'inset',
+    's_toggleButton--shrink': groupProps.shrink === true,
+    's_toggleButton--inset': groupProps.variant === 'inset',
     's_toggleButton--selected': isSelected.value,
-    's_toggleButton--dense': groupProps.value.dense,
+    's_toggleButton--dense': groupProps.dense,
   }
 })
 </script>

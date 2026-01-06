@@ -6,17 +6,16 @@
   </Component>
 </template>
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
-import { ProviderPropsName } from '@/app/constants'
+import { computed, useSlots, inject } from 'vue'
+import { ProviderPropsName } from '@/app/configs'
 import type { PropsToolbarTitle } from '@/app/definitions'
-import { useColorService, useProviderService, useTagService } from '@/app/services'
+import { useColorService, useTagService } from '@/app/services'
 
 const props = defineProps<PropsToolbarTitle>()
 const slots = useSlots()
 const { tagName } = useTagService(props)
-const { injectParentProps } = useProviderService()
-const toolbarProps = injectParentProps(ProviderPropsName.toolbar)
-const { classListColor, styleListColor } = useColorService(toolbarProps)
+const toolbarProps = inject(ProviderPropsName.toolbar, null)
+const { classListColor, styleListColor } = useColorService(toolbarProps ?? {})
 
 const hasText = computed(() => {
   return !!(slots.default ?? slots.text ?? props.text)

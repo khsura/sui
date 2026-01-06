@@ -18,10 +18,10 @@
   </SOverlay>
 </template>
 <script setup lang="ts">
-import { type Ref, computed, ref, getCurrentInstance, watch, onBeforeMount, onBeforeUnmount } from 'vue'
+import { type Ref, computed, ref, getCurrentInstance, watch, onBeforeMount, onBeforeUnmount, provide } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import SOverlay from '@/app/components/sOverlay.vue'
-import { ProviderPropsName } from '@/app/constants'
+import { ProviderPropsName } from '@/app/configs'
 import { getNumericCssAttribute } from '@/app/lib'
 import {
   useBackgroundScrollService,
@@ -30,7 +30,6 @@ import {
   useLayoutService,
   useLocationService,
   usePositionService,
-  useProviderService,
   useResizeService,
   useScrollableService,
   useTouchService,
@@ -104,7 +103,6 @@ const swipeRight = (e: TouchWrapper) => {
   }
 }
 
-const { provideProps } = useProviderService()
 const { mdAndUp } = useDisplayService()
 const { app, isApp } = useLayoutService(props)
 const { classListElevation } = useElevationService(props)
@@ -122,7 +120,7 @@ const { bindResizer, unbindResizer } = useResizeService(() => {
   model.value = !isMobile.value
 })
 
-provideProps(ProviderPropsName.navigationDrawerProps, props)
+provide(ProviderPropsName.navigationDrawerProps, props)
 
 const touchArea = ref({
   left: 0,

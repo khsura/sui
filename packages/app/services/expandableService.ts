@@ -1,6 +1,6 @@
 import { provide } from 'vue'
 import { useGroupItemService } from './groupItemService'
-import { ProviderName } from '@/app/constants/provider'
+import { ProviderName } from '@/app/configs'
 import { type PropsGroupItem } from '@/app/definitions'
 
 export const useExpandableService = (props: PropsGroupItem) => {

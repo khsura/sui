@@ -20,8 +20,8 @@
   </component>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
-import { ProviderPropsName, defaultToolbarExtensionHeight, defaultToolbarContentHeight } from '@/app/constants'
+import { computed, provide } from 'vue'
+import { defaultToolbarExtensionHeight, defaultToolbarContentHeight } from '@/app/constants'
 import { getNumericCssAttribute } from '@/app/lib'
 import type { PropsToolbar } from '@/app/definitions'
 import {
@@ -30,10 +30,10 @@ import {
   useContentService,
   useElevationService,
   usePositionService,
-  useProviderService,
   useTagService,
   useToolbarService,
 } from '@/app/services'
+import { ProviderPropsName } from '@/app/configs'
 
 const props = withDefaults(defineProps<PropsToolbar>(), {
   extensionHeight: defaultToolbarExtensionHeight,
@@ -44,9 +44,8 @@ const { classListColor, styleListColor } = useColorService(props)
 const { classListBorder, styleListBorder } = useBorderService(props)
 const { classListElevation } = useElevationService(props)
 const { classListPosition } = usePositionService(props)
-const { provideProps } = useProviderService()
 
-provideProps(ProviderPropsName.toolbar, props)
+provide(ProviderPropsName.toolbar, props)
 
 const { contentHeight, computedExtensionHeight, isExtended } = useToolbarService(props)
 const { styles: contentServiceStyles, classes: contentClasses } = useContentService(props)

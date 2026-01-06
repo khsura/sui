@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, watch } from 'vue'
-import { ProviderPropsName } from '@/app/constants'
+import { computed, onBeforeUnmount, onMounted, watch, provide } from 'vue'
+import { ProviderPropsName } from '@/app/configs'
 import { getCleanSetObject, getNumericValue } from '@/app/lib'
 import { isBrowser } from '@/app/lib/browser'
 import {
@@ -16,7 +16,6 @@ import {
   useLayoutService,
   useMeasurableStylesService,
   usePositionService,
-  useProviderService,
   useScrollableService,
   useSingleGroupService,
   useTagService,
@@ -58,13 +57,12 @@ const { isActive } = useScrollableService(
 const { classListPosition, isAbsolutePosition, isFixedPosition } = usePositionService(props)
 const { measurableStyles } = useMeasurableStylesService(props)
 const { classListBorder, styleListBorder } = useBorderService(props)
-const { provideProps } = useProviderService()
 const { left, right, width, app, isApp } = useLayoutService(props)
 const { tagName } = useTagService(props)
 
 useSingleGroupService(props, model)
 
-provideProps(ProviderPropsName.bottomNavigation, props)
+provide(ProviderPropsName.bottomNavigation, props)
 
 const classes = computed((): object => {
   return getCleanSetObject({

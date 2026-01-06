@@ -4,9 +4,8 @@
   </form>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
-import { ProviderName } from '@/app/constants'
-import { useProviderService } from '@/app/services'
+import { computed, provide } from 'vue'
+import { ProviderName } from '@/app/configs'
 import { type FormProviderRegisterInputAttribute } from '@/app/types'
 
 defineEmits<{
@@ -16,7 +15,6 @@ defineEmits<{
 const model = defineModel<boolean>()
 const errors = defineModel<string[]>('errors', { default: [] })
 const error = defineModel<boolean>('error')
-const { provide } = useProviderService()
 const formInputs: Record<string, FormProviderRegisterInputAttribute> = {}
 
 const updateProps = () => {

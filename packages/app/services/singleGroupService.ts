@@ -1,12 +1,10 @@
-import { type Ref, computed, ref, watch } from 'vue'
-import { useProviderService } from './core/providerService'
+import { type Ref, computed, provide, ref, watch } from 'vue'
 import { useGroupCoreService } from './core/groupCoreService'
-import { ProviderName, ProviderPropsName } from '@/app/constants/provider'
+import { ProviderName, ProviderPropsName } from '@/app/configs'
 import { type PropsSingleGroup } from '@/app/definitions'
 import { type GroupItemValue } from '@/app/types'
 
 export const useSingleGroupService = (props: PropsSingleGroup, model: Ref<GroupItemValue | null | undefined>) => {
-  const { provide, provideProps } = useProviderService()
   const { items, register, unregister, getItemIndex } = useGroupCoreService()
   const selected = ref<{ value: GroupItemValue | undefined; id: number }>({ value: undefined, id: -1 })
 
@@ -110,7 +108,7 @@ export const useSingleGroupService = (props: PropsSingleGroup, model: Ref<GroupI
     }),
   })
 
-  provideProps(ProviderPropsName.groupSingleProps, props)
+  provide(ProviderPropsName.groupSingleProps, props)
 
   const select = (options: { value: GroupItemValue; index?: undefined } | { index: number; value?: undefined }) => {
     if (options.index !== undefined) {

@@ -34,18 +34,12 @@
   </Component>
 </template>
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, provide } from 'vue'
 import SButton from '@/app/components/sButton.vue'
 import SIcon from '@/app/components/sIcon.vue'
-import { ProviderPropsName } from '@/app/constants'
+import { ProviderPropsName } from '@/app/configs'
 import type { PropsWindow } from '@/app/definitions'
-import {
-  useColorService,
-  useProviderService,
-  useSingleGroupService,
-  useTagService,
-  useTouchService,
-} from '@/app/services'
+import { useColorService, useSingleGroupService, useTagService, useTouchService } from '@/app/services'
 import { type GroupItemValue } from '@/app/types'
 
 const props = withDefaults(defineProps<PropsWindow>(), {
@@ -55,10 +49,9 @@ const props = withDefaults(defineProps<PropsWindow>(), {
 
 const model = defineModel<GroupItemValue>()
 const { classListColor, styleListColor } = useColorService(props)
-const { provideProps } = useProviderService()
 const { tagName } = useTagService(props)
 
-provideProps(ProviderPropsName.window, props)
+provide(ProviderPropsName.window, props)
 // TODO (Sura) Improve
 
 useTouchService(

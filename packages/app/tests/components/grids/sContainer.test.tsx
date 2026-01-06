@@ -1,9 +1,13 @@
 import { mount } from '@vue/test-utils'
-import { SContainer } from '@/app/components'
+import { SApp, SContainer } from '@/app/components'
 
 describe('SContainer', () => {
   test('renders correctly', () => {
-    const SContainerComponent = mount(<SContainer>Hello World</SContainer>)
+    const SContainerComponent = mount(
+      <SApp>
+        <SContainer>Hello World</SContainer>
+      </SApp>,
+    )
 
     expect(SContainerComponent.html()).toMatchSnapshot()
   })

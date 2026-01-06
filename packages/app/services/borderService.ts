@@ -5,10 +5,10 @@ import { type PropsBorder } from '@/app/definitions'
 import { toComputed } from '@/app/lib/compositionApi'
 
 export const useBorderService = (
-  props: Partial<PropsBorder> | ComputedRef<Partial<PropsBorder>>,
+  props?: Partial<PropsBorder> | ComputedRef<Partial<PropsBorder>>,
   options?: { block?: string },
 ) => {
-  const computedProps = toComputed(props)
+  const computedProps = toComputed(props ?? {})
   const classPrefix = options?.block ? `s_${options.block}--` : 's_'
   const predefinedBorderRadiusTypes = ['tile', 'rounded'] as const
 

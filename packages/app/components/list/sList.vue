@@ -4,17 +4,16 @@
   </Component>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
-import { ProviderPropsName } from '@/app/constants'
+import { computed, inject, provide } from 'vue'
+import { ProviderPropsName } from '@/app/configs'
 import { type PropsList } from '@/app/definitions'
-import { useColorService, useProviderService, useTagService, useTextColorService } from '@/app/services'
+import { useColorService, useTagService, useTextColorService } from '@/app/services'
 
 const props = defineProps<PropsList>()
-const { provideProps, injectParentProps } = useProviderService()
 const { tagName } = useTagService(props)
 
-provideProps(ProviderPropsName.listProps, props)
-const navigationDrawerProps = injectParentProps(ProviderPropsName.navigationDrawerProps, null)
+provide(ProviderPropsName.listProps, props)
+const navigationDrawerProps = inject(ProviderPropsName.navigationDrawerProps, null)
 
 const { classListColor, styleListColor } = useColorService(props, {
   isText: computed(() => {
@@ -39,7 +38,7 @@ const classes = computed(() => {
     's_list--dense': props.dense,
     's_list--link': props.link,
     's_list--inset': props.inset,
-    's_list--appMiniVariant': !!navigationDrawerProps.value?.miniVariant,
+    's_list--appMiniVariant': !!navigationDrawerProps?.miniVariant,
   }
 })
 </script>
