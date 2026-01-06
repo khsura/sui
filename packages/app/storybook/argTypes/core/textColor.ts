@@ -1,7 +1,7 @@
 import type { ArgTypes } from '@storybook/vue3'
 import type { PropsColor } from '@/app/index'
 import colorString from '@/app/types/core/color?raw'
-import { merge } from '@/app/vendors/deepmerge'
+import { merge } from '@/app/vendors/merge'
 
 export const argTypesTextColor = <T extends ArgTypes<PropsColor>>(params: Partial<T>): T => {
   return merge(
