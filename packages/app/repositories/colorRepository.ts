@@ -1,11 +1,10 @@
 import { z } from 'zod'
-import { inject } from 'vue'
 import { PresetColor } from '@/app/constants'
 import { getCleanSetObject } from '@/app/lib'
-import { ProviderName } from '@/app/configs'
+import { useAppProviderRepository } from '@/app/repositories/core/appProviderRepository'
 
-export const useColorRepository = () => {
-  const appState = inject(ProviderName.app)
+export const useColorRepository = (appName?: string | symbol) => {
+  const { appState } = useAppProviderRepository(appName)
 
   const getTheme = () => {
     return appState?.themes[appState.theme]

@@ -1,11 +1,11 @@
-import { mount } from '@vue/test-utils'
 import { SIcon } from '@/app/components'
 import { SizeProperty } from '@/app/constants'
 import { type PropsIcon } from '@/app/definitions'
+import { mountWithApp } from '@/app/tests/_helpers'
 
 describe('SIcon', () => {
   const getSIconWithBuiltinIcon = (props?: Partial<PropsIcon>) => {
-    return mount(SIcon, { props: { icon: 'mdi-camera-outline', ...props } })
+    return mountWithApp(SIcon, { props: { icon: 'mdi-camera-outline', ...props } })
   }
 
   test('can change size of builtin icon', () => {
@@ -27,7 +27,7 @@ describe('SIcon', () => {
   })
 
   test('can display mdi icon', () => {
-    const wrapper = mount(SIcon, { propsData: { icon: 'mdi-rabbit' } })
+    const wrapper = getSIconWithBuiltinIcon({ icon: 'mdi-rabbit' })
 
     expect(wrapper.classes('mdi')).toBe(true)
     expect(wrapper.classes('mdi-rabbit')).toBe(true)

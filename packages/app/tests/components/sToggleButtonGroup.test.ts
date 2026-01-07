@@ -1,5 +1,5 @@
-import { mount } from '@vue/test-utils'
 import { defineComponent, ref } from 'vue'
+import { mount } from '@vue/test-utils'
 import { useMockProps } from '../_helpers'
 import { SToggleButton, SToggleButtonGroup, SButton } from '@/app/components'
 import { type PropsToggleButtonGroup } from '@/app/definitions'

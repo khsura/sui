@@ -1,22 +1,16 @@
-import { mount } from '@vue/test-utils'
 import { STextarea } from '@/app/components'
+import { mountWithApp } from '@/app/tests/_helpers'
 
 describe('STextarea', () => {
   test('renders correctly', () => {
-    const wrapper = mount(STextarea, { props: { id: 'textarea' } })
+    const wrapper = mountWithApp(STextarea, { props: { id: 'textarea' } })
 
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  test('attributes can be set properly', async () => {
-    const wrapper = mount(STextarea, { props: { id: 'textarea' } })
-
-    await wrapper.setProps({
-      id: 'textarea',
-      cols: 4,
-      rows: 10,
-      ariaLabelledby: 'hello',
-      disabled: false,
+  test('attributes can be set properly', () => {
+    const wrapper = mountWithApp(STextarea, {
+      props: { id: 'textarea', cols: 4, rows: 10, ariaLabelledby: 'hello', disabled: false },
     })
 
     expect(wrapper.find('.s_textarea__input').attributes().cols).toBe('4')
@@ -24,14 +18,16 @@ describe('STextarea', () => {
     expect(wrapper.find('.s_textarea__input').attributes()['aria-labelledby']).toBe('hello')
     expect(wrapper.find('.s_textarea__input').attributes().disabled).toBeUndefined()
     expect(wrapper.find('.s_textarea__input').attributes().maxlength).toBeUndefined()
+  })
 
-    await wrapper.setProps({ disabled: true })
+  test('disabled attribute can be set properly', () => {
+    const wrapper = mountWithApp(STextarea, { props: { id: 'textarea', disabled: true } })
 
     expect(wrapper.find('.s_textarea__input').attributes().disabled).toBeDefined()
   })
 
   test('all attributes can be set properly', () => {
-    const wrapper = mount(STextarea, {
+    const wrapper = mountWithApp(STextarea, {
       props: {
         id: 'textarea',
         name: 'textarea',
@@ -59,10 +55,8 @@ describe('STextarea', () => {
     })
   })
 
-  test('resize can be set properly', async () => {
-    const wrapper = mount(STextarea, { props: { id: 'textarea' } })
-
-    await wrapper.setProps({ resize: true })
+  test('resize can be set properly', () => {
+    const wrapper = mountWithApp(STextarea, { props: { id: 'textarea', resize: true } })
 
     expect(wrapper.find('.s_textarea__input').classes()).not.contain('s_textarea--resize__none')
   })

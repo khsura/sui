@@ -1,13 +1,18 @@
 import { computed, inject } from 'vue'
 import { getBrowserTheme } from '@/app/helpers'
 import { type AppThemeType } from '@/app/types'
-import { ProviderName } from '@/app/configs'
+import { getPluginName } from '@/app/lib/getPluginName'
+import type { AppState } from '@/app/definitions'
 
-export const useThemeService = () => {
-  const appState = inject(ProviderName.app)
+export const useThemeService = (appName?: string | symbol) => {
+  const appState = inject<AppState>(getPluginName(appName))
+
+  if (!appState) {
+    throw new Error(`AppState for ${appName?.toString()} not found`)
+  }
 
   const theme = computed(() => {
-    return appState?.theme
+    return appState.theme
   })
 
   const setTheme = (theme: AppThemeType | null) => {
