@@ -5,7 +5,7 @@ import type { defaultLayoutSizes } from '@/app/constants'
 import type * as props from '@/app/definitions/props'
 
 export const ProviderName = {
-  sui: Symbol() as InjectionKey<AppState>,
+  app: Symbol() as InjectionKey<AppState>,
   form: Symbol() as InjectionKey<{
     registerItem: (id: string, attrs: FormProviderRegisterInputAttribute) => void
     unregisterItem: (id: string) => void
@@ -17,7 +17,7 @@ export const ProviderName = {
   stepperUpdateValue: Symbol() as InjectionKey<(value: number) => void>,
   group: Symbol() as InjectionKey<GroupProvider>,
   singleGroup: Symbol() as InjectionKey<SingleGroupProvider>,
-  app: Symbol() as InjectionKey<Ref<typeof defaultLayoutSizes>>,
+  layout: Symbol() as InjectionKey<Ref<typeof defaultLayoutSizes>>,
   expansionPanel: Symbol() as InjectionKey<{
     isExpanded: ComputedRef<boolean | null>
     toggle: (panel?: number) => void

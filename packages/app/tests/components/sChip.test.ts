@@ -1,10 +1,10 @@
-import { mount } from '@vue/test-utils'
 import { SChip } from '@/app/components'
 import { type PropsChip } from '@/app/definitions'
+import { mountWithApp } from '@/app/tests/_helpers'
 
 describe('SChip', () => {
   const getSChip = (props?: Partial<PropsChip>) => {
-    return mount(SChip, { props: { label: true, ...props } })
+    return mountWithApp(SChip, { props: { label: true, ...props } })
   }
 
   test('can display chip', () => {

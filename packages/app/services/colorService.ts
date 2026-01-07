@@ -1,18 +1,18 @@
 import { toReactive } from '@vueuse/core'
-import { type Ref, computed, isRef } from 'vue'
+import { type Ref, computed, inject, isRef } from 'vue'
 import { AppTheme } from '@/app/constants/app'
 import { type PropsColor } from '@/app/definitions'
 import { getCssColor } from '@/app/helpers/colorHelpers'
 import { isDarkColor } from '@/app/lib/color'
-import { useAppProviderRepository } from '@/app/repositories'
 import { useColorRepository } from '@/app/repositories/colorRepository'
+import { ProviderName } from '@/app/configs'
 
 export const useColorService = (
   data: PropsColor | Ref<Partial<PropsColor>>,
   options: { isText?: boolean | Ref<boolean | null | undefined> } = { isText: false },
 ) => {
   const props = toReactive(data)
-  const { config } = useAppProviderRepository()
+  const appState = inject(ProviderName.app)
   const { getBackgroundColorAttributes, getIsPresetColor, getIsAppColor } = useColorRepository()
 
   const isText = computed(() => {
@@ -48,7 +48,7 @@ export const useColorService = (
       return {}
     }
 
-    const presetColor: string | undefined = config.themes[config.theme].presetColors[props.color]
+    const presetColor: string | undefined = appState?.themes[appState.theme].presetColors[props.color]
     const backgroundColor = presetColor ?? getCssColor(props.color) ?? props.color
     const noNeedToSetTextColor = isPresetColor.value && props.colorThreshold === undefined
     const isDark = noNeedToSetTextColor ? null : isDarkColor(backgroundColor, props.colorThreshold)

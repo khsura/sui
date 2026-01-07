@@ -13,10 +13,10 @@ export const useAppService = (props: PropsApp) => {
     throw new Error('AppLevel Provider config not found')
   }
 
-  useLayoutProviderService(props)
-
   // Provide from SApp Component
-  provide(ProviderName.sui, store)
+  provide(ProviderName.app, store)
+
+  useLayoutProviderService(props, store)
 
   const presetColors = computed(() => {
     return store.themes[store.theme].presetColors

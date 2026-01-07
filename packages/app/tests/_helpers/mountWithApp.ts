@@ -1,14 +1,19 @@
 import { mount, type ComponentMountingOptions } from '@vue/test-utils'
-import { type Component } from 'vue'
+import { defineComponent, type Component, type ComponentPublicInstance } from 'vue'
 import { SApp } from '@/app/components'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const mountWithApp = (component: Component, mountingOptions?: ComponentMountingOptions<any, any>) => {
-  const parentWrapper = mount(SApp)
-  const container = parentWrapper.find('.s_app').element
+export const mountWithApp = <T extends Component>(component: T, mountingOptions?: ComponentMountingOptions<T>) => {
+  const wrapper = mount(
+    defineComponent({
+      components: { SApp, comp: component },
+      inheritAttrs: false,
+      props: Object.keys(mountingOptions?.props ?? {}),
+      template: `<SApp><comp v-bind="$props" /></SApp>`,
+    }),
+    {
+      ...mountingOptions,
+    },
+  )
 
-  return mount(component, {
-    ...mountingOptions,
-    attachTo: container,
-  })
+  return wrapper.findComponent<ComponentPublicInstance<T>>(component)
 }

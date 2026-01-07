@@ -1,17 +1,17 @@
 import { mount } from '@vue/test-utils'
 import { defineComponent } from 'vue'
-import { SApp } from '@/app/components'
-import { AppTheme } from '@/app/constants'
-import { useTheme } from '@/app/index'
-import { useAppProviderService, useAppService } from '@/app/services'
+import { SApp } from '@khsura/sui/components'
+import { AppTheme } from '@khsura/sui/constants'
+import { useTheme } from '@khsura/sui/index'
+import { useAppProviderService, useAppService } from '@khsura/sui/services'
 
 describe('app', () => {
   const app = mount(
     defineComponent({
       components: { SApp },
       setup: () => {
-        const { styles } = useAppService({ app: true, name: undefined })
         const { config } = useAppProviderService()
+        const { styles } = useAppService({ app: true, name: undefined })
         const { setTheme, theme } = useTheme()
 
         return { config, setTheme, styles, theme }
@@ -39,16 +39,8 @@ describe('app', () => {
   })
 
   it('theme getter works', () => {
-    app.vm.setTheme('dark')
-
-    expect(app.vm.theme).toBe(AppTheme.dark)
-  })
-
-  // TODO: getter and config should be synced but this test is not doing that
-  it('theme config getter should work', () => {
     app.vm.config.theme = AppTheme.dark
-
-    expect(app.vm.config.theme).toBe(AppTheme.dark)
+    expect(app.vm.theme).toBe(AppTheme.dark)
   })
 
   afterEach(() => {

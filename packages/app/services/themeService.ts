@@ -1,17 +1,19 @@
-import { computed } from 'vue'
-import { useAppProviderService } from './appProviderService'
+import { computed, inject } from 'vue'
 import { getBrowserTheme } from '@/app/helpers'
 import { type AppThemeType } from '@/app/types'
+import { ProviderName } from '@/app/configs'
 
 export const useThemeService = () => {
-  const { config } = useAppProviderService()
+  const appState = inject(ProviderName.app)
 
   const theme = computed(() => {
-    return config.theme
+    return appState?.theme
   })
 
   const setTheme = (theme: AppThemeType | null) => {
-    config.theme = theme ?? getBrowserTheme()
+    if (appState) {
+      appState.theme = theme ?? getBrowserTheme()
+    }
   }
 
   return {
