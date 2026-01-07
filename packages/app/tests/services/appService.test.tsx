@@ -1,22 +1,17 @@
-import { mount } from '@vue/test-utils'
-import { defineComponent } from 'vue'
-import { SApp } from '@khsura/sui/components'
-import { AppTheme } from '@khsura/sui/constants'
-import { useTheme } from '@khsura/sui/index'
-import { useAppProviderService, useAppService } from '@khsura/sui/services'
+import { defineComponent, inject } from 'vue'
+import { AppTheme, ProviderName, useTheme } from '@/app/index'
+import { mountWithApp } from '@/app/tests/_helpers'
 
 describe('app', () => {
-  const app = mount(
+  const app = mountWithApp(
     defineComponent({
-      components: { SApp },
       setup: () => {
-        const { config } = useAppProviderService()
-        const { styles } = useAppService({ app: true, name: undefined })
+        const config = inject(ProviderName.app)
         const { setTheme, theme } = useTheme()
 
-        return { config, setTheme, styles, theme }
+        return { config, setTheme, theme }
       },
-      template: `<SApp></SApp>`,
+      template: `<div></div>`,
     }),
   )
 
