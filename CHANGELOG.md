@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.5.7](https://github.com/khsura/sui/compare/root-v1.5.6...root-v1.5.7) (2026-01-08)
+
+
+### Bug Fixes
+
+* bug ([9be77e6](https://github.com/khsura/sui/commit/9be77e6f46458646168e4a2a627bda19946b6906))
+* package upgrade ([#82](https://github.com/khsura/sui/issues/82)) ([b43de9d](https://github.com/khsura/sui/commit/b43de9d6d04b9f01e7f5eb942e67a4755023fb3d))
+* table items per page label ([a5e2374](https://github.com/khsura/sui/commit/a5e23744ebfaefdcf15bce687f95cf285c2ba1a0))
+
 ## [1.5.6](https://github.com/khsura/sui/compare/root-v1.5.5...root-v1.5.6) (2025-09-30)
 
 
