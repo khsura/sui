@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.7](https://github.com/khsura/sui/compare/sui-v1.7.6...sui-v1.7.7) (2026-01-08)
+
+
+### Bug Fixes
+
+* package upgrade ([#82](https://github.com/khsura/sui/issues/82)) ([b43de9d](https://github.com/khsura/sui/commit/b43de9d6d04b9f01e7f5eb942e67a4755023fb3d))
+* table items per page label ([a5e2374](https://github.com/khsura/sui/commit/a5e23744ebfaefdcf15bce687f95cf285c2ba1a0))
+
 ## [1.7.6](https://github.com/khsura/sui/compare/sui-v1.7.5...sui-v1.7.6) (2025-09-30)
 
 
