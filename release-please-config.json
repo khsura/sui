@@ -6,9 +6,6 @@
     "packages/app": {
       "release-type": "node"
     },
-    "packages/storybook": {
-      "release-type": "node"
-    },
     "packages/shared": {
       "release-type": "node"
     }
