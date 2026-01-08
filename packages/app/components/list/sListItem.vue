@@ -4,19 +4,22 @@
   </Component>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { type PropsListItem } from '@khsura/sui/definitions'
-import { useLinkService, useDisabledService, useProviderService } from '@khsura/sui/services'
+import { computed, inject, provide } from 'vue'
+import { ProviderPropsName } from '@/app/configs'
+import { type PropsListItem } from '@/app/definitions'
+import { useLinkService, useDisabledService } from '@/app/services'
 
 const props = defineProps<PropsListItem>()
 
 defineEmits<(event: 'click', value: Event) => void>()
 
-const { injectParentProps, provideProps } = useProviderService()
-const listProps = injectParentProps(ProviderPropsName.listProps)
+const listProps = inject(ProviderPropsName.listProps, null)
 
-provideProps(ProviderPropsName.listItemProps, props)
+if (!listProps) {
+  throw new Error('List props not found')
+}
+
+provide(ProviderPropsName.listItemProps, props)
 
 const { classListDisabled } = useDisabledService(props)
 const { isLink, tag: tagName } = useLinkService(props)
@@ -26,9 +29,9 @@ const classList = computed(() => {
     s_listItem: true,
     ...classListDisabled.value,
     's_listItem--selectable': props.selectable,
-    's_listItem--dense': listProps.value.dense === true,
+    's_listItem--dense': listProps.dense === true,
     // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    's_listItem--link': isLink.value || props.link || listProps.value.link === true,
+    's_listItem--link': isLink.value || props.link || listProps.link === true,
   }
 })
 </script>

@@ -1,16 +1,18 @@
 {
   "name": "@khsura/sui",
-  "version": "1.7.6",
+  "version": "1.7.7-beta.7",
   "type": "module",
   "scripts": {
     "prebuild": "yarn g:rimraf dist && yarn g:rimraf @types",
     "build:style": "yarn g:sass styles/index.scss dist/base.css",
     "build:type": "yarn g:vue-tsc -p tsconfig.build.json && yarn g:tsc-alias -p tsconfig.build.json",
     "build": "yarn prebuild && yarn build:type && yarn g:vite build && yarn build:style && cp -R styles dist/styles",
-    "eslint": "yarn g:eslint",
+    "lint": "yarn g:eslint",
     "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
     "test": "yarn g:vitest run",
-    "release": "yarn g:publish"
+    "release": "yarn g:publish",
+    "storybook:dev": "storybook dev --port 6006",
+    "storybook:build": "storybook build"
   },
   "files": [
     "dist",
@@ -36,12 +38,21 @@
     }
   },
   "dependencies": {
-    "@vueuse/components": "^13.0.0",
-    "@vueuse/core": "^13.0.0",
-    "dayjs": "^1.11.13",
-    "lodash": "^4.17.21",
-    "vue": "^3.5.13",
-    "vue-i18n": "^11.1.2",
-    "zod": "^3.24.2"
+    "@vueuse/components": "^14.1.0",
+    "@vueuse/core": "^14.1.0",
+    "dayjs": "^1.11.19",
+    "vue": "^3.5.26",
+    "vue-i18n": "^11.2.7",
+    "zod": "^4.2.1"
+  },
+  "devDependencies": {
+    "@storybook/addon-docs": "^10.1.10",
+    "@storybook/addon-links": "^10.1.10",
+    "@storybook/vue3-vite": "^10.1.10",
+    "@types/lodash.merge": "^4",
+    "eslint-plugin-storybook": "10.1.10",
+    "http-server": "^14.1.1",
+    "lodash.merge": "^4.6.2",
+    "storybook": "^10.1.10"
   }
 }

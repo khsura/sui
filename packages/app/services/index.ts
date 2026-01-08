@@ -1,4 +1,3 @@
-export * from './appProviderService'
 export * from './appService'
 export * from './appBarService'
 export * from './autocompleteService'

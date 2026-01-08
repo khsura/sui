@@ -1,11 +1,13 @@
 import { computed, inject } from 'vue'
-import { defaultLayoutSizes } from '@khsura/sui/constants/layout'
-import { type PropsLayout } from '@khsura/sui/definitions'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
 import { useLayoutCoreService } from './core/layoutCoreService'
+import { defaultLayoutSizes } from '@/app/constants/layout'
+import { type PropsLayout } from '@/app/definitions'
+import { getNumericCssAttribute } from '@/app/lib'
+import { ProviderName } from '@/app/configs'
 
 export const useLayoutService = (props: PropsLayout) => {
-  const { isApp, providerName } = useLayoutCoreService(props)
+  const appState = inject(ProviderName.app)
+  const { isApp, providerName } = useLayoutCoreService(props, appState)
 
   const app = inject(
     providerName.value,

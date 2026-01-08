@@ -4,16 +4,18 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { useProviderService } from '@khsura/sui/services'
+import { computed, inject } from 'vue'
+import { ProviderPropsName } from '@/app/configs'
 
-const { injectParentProps } = useProviderService()
-const listProps = injectParentProps(ProviderPropsName.listProps)
-const listItemProps = injectParentProps(ProviderPropsName.listItemProps)
+const listProps = inject(ProviderPropsName.listProps, null)
+const listItemProps = inject(ProviderPropsName.listItemProps, null)
+
+if (!listItemProps || !listProps) {
+  throw new Error('List or ListItem props not found')
+}
 
 const classList = computed(() => {
-  const lines = listItemProps.value.lines ?? listProps.value.lines
+  const lines = listItemProps.lines ?? listProps.lines
 
   return {
     s_listItemSubtitle: true,

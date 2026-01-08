@@ -4,13 +4,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import { type PropsLayoutContainer } from '@khsura/sui/definitions'
-import { useLayoutProviderService, useMeasurableStylesService } from '@khsura/sui/services'
+import { type PropsLayoutContainer } from '@/app/definitions'
+import { useLayoutProviderService, useMeasurableStylesService } from '@/app/services'
+import { useAppProviderRepository } from '@/app/repositories/core/appProviderRepository'
 
 const props = defineProps<PropsLayoutContainer>()
 const { measurableStyles } = useMeasurableStylesService(props)
+const { appState } = useAppProviderRepository(props.name)
 
-useLayoutProviderService(props)
+useLayoutProviderService(props, appState)
 </script>
 <style lang="scss">
 .s_layout {

@@ -10,10 +10,10 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import SIcon from '@khsura/sui/components/sIcon.vue'
-import { getCleanSetObject } from '@khsura/sui/lib'
-import type { PropsChip } from '@khsura/sui/definitions'
-import { useBorderService, useColorService, useDisabledService, useSizeService } from '@khsura/sui/services'
+import SIcon from '@/app/components/sIcon.vue'
+import { getCleanSetObject } from '@/app/lib'
+import type { PropsChip } from '@/app/definitions'
+import { useBorderService, useColorService, useDisabledService, useSizeService } from '@/app/services'
 
 const props = defineProps<PropsChip>()
 

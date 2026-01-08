@@ -189,15 +189,15 @@
 </template>
 <script setup lang="ts" generic="T extends TableItem">
 import { useDebounceFn } from '@vueuse/core'
-import { computed, watch, onMounted } from 'vue'
-import { getCleanSetObject } from '@khsura/sui/lib'
-import { useBorderService, useTableService } from '@khsura/sui/services'
-import { type KTableSortOrder, type TableItem } from '@khsura/sui/types'
-import type { EmitsTable, PropsTable } from '@khsura/sui/definitions'
+import { computed, watch, onMounted, useTemplateRef } from 'vue'
 import SProgressLinear from '../progress/sProgressLinear.vue'
 import STableHeadCell from './sTableHeadCell.vue'
 import STableBodyCell from './sTableBodyCell.vue'
 import STablePagination from './sTablePagination.vue'
+import { getCleanSetObject } from '@/app/lib'
+import { useBorderService, useTableService } from '@/app/services'
+import { type KTableSortOrder, type TableItem } from '@/app/types'
+import type { EmitsTable, PropsTable } from '@/app/definitions'
 
 const props = withDefaults(defineProps<PropsTable<T>>(), {
   items: () => [],
@@ -220,17 +220,17 @@ const props = withDefaults(defineProps<PropsTable<T>>(), {
 const emit = defineEmits<EmitsTable<T>>()
 const itemsPerPage = defineModel<number>('itemsPerPage')
 const { classListBorder, styleListBorder } = useBorderService(props, { block: 'table' })
+const headerElements = useTemplateRef('headerElements')
+const tableWrapperElement = useTemplateRef('tableWrapperElement')
 
 const {
   isMounted,
   pageIndex,
   computedColumnHeaders,
   groupedItems,
-  headerElements,
   headersList,
   isLeftStickActive,
   sortOrders,
-  tableWrapperElement,
   totalItemColumns,
   getIsStickyLeftCell,
   getIsExpanded,
@@ -242,7 +242,7 @@ const {
   toggleSelected,
   onHorizontalScroll,
   updateTable,
-} = useTableService(props, emit, itemsPerPage)
+} = useTableService(props, emit, itemsPerPage, headerElements, tableWrapperElement)
 
 const tableClasses = computed(() => ({
   's_table--verticalBorder__hidden': props.hideVerticalBorders,

@@ -4,13 +4,7 @@
       <slot name="activator" :on="activatorOn" :attrs="activatorAttrs"></slot>
     </div>
     <SOverlay v-slot="{ attrs }" :value="model" :transition="STransition.fade">
-      <div
-        v-bind="attrs"
-        ref="contentElement"
-        class="s_snackbar__wrapper"
-        :class="wrapperClasses"
-        :style="wrapperStyles"
-      >
+      <div v-bind="attrs" class="s_snackbar__wrapper" :class="wrapperClasses" :style="wrapperStyles">
         <div class="s_snackbar__content" :class="contentClasses"><slot></slot></div>
         <div class="s_snackbar__action">
           <slot name="action"></slot>
@@ -20,19 +14,20 @@
   </div>
 </template>
 <script setup lang="ts">
-import { watch, computed } from 'vue'
-import SOverlay from '@khsura/sui/components/sOverlay.vue'
-import { STransition } from '@khsura/sui/constants'
-import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
-import { getWindow } from '@khsura/sui/lib/browser'
-import type { PropsSnackbar } from '@khsura/sui/definitions'
-import { getIsAbsolutePosition, getIsFixedPosition } from '@khsura/sui/repositories/positionRepository'
-import { useActivatorService, useLayoutService, useScrollableService } from '@khsura/sui/services'
+import { watch, computed, useTemplateRef } from 'vue'
+import SOverlay from '@/app/components/sOverlay.vue'
+import { STransition } from '@/app/constants'
+import { getCleanSetObject, getNumericCssAttribute } from '@/app/lib'
+import { getWindow } from '@/app/lib/browser'
+import type { PropsSnackbar } from '@/app/definitions'
+import { getIsAbsolutePosition, getIsFixedPosition } from '@/app/repositories/positionRepository'
+import { useActivatorService, useLayoutService, useScrollableService } from '@/app/services'
 
 const props = defineProps<PropsSnackbar>()
 const model = defineModel<boolean>()
 let timer: NodeJS.Timeout | number | undefined
-const { activatorAttrs, activatorElement, activatorOn, contentElement } = useActivatorService(props, model)
+const activatorElement = useTemplateRef('activatorElement')
+const { activatorAttrs, activatorOn } = useActivatorService(props, model, activatorElement)
 const { currentScroll } = useScrollableService()
 const { app } = useLayoutService({ app: true })
 

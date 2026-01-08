@@ -26,12 +26,12 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import kButton from '@khsura/sui/components/sButton.vue'
-import { getCleanSetObject, getHtmlClassAttributeObject } from '@khsura/sui/lib'
-import { getNextSortOrder } from '@khsura/sui/repositories/tableRepository'
-import { useTableHeadCellService } from '@khsura/sui/services'
-import { KTableSortOrder } from '@khsura/sui/types'
-import type { PropsTableHeadCell } from '@khsura/sui/definitions'
+import kButton from '@/app/components/sButton.vue'
+import { getCleanSetObject, getHtmlClassAttributeObject } from '@/app/lib'
+import { getNextSortOrder } from '@/app/repositories/tableRepository'
+import { useTableHeadCellService } from '@/app/services'
+import { KTableSortOrder } from '@/app/types'
+import type { PropsTableHeadCell } from '@/app/definitions'
 
 const props = defineProps<PropsTableHeadCell>()
 const sortOrders = defineModel<Record<string, KTableSortOrder | undefined>>('sortOrders', { default: {} })

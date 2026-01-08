@@ -1,5 +1,5 @@
 import { type useI18n } from 'vue-i18n'
-import { type FormInputModelValueRule } from '@khsura/sui/types'
+import { type FormInputModelValueRule } from '@/app/types'
 
 export const getFormInputModelValueRules = (i18n: Pick<ReturnType<typeof useI18n>, 't'>) => {
   return {

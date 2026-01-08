@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { type PropsLink, type PropsTag } from '@khsura/sui/definitions'
+import { type PropsLink, type PropsTag } from '@/app/definitions'
 
 export const useLinkService = (props: PropsLink & PropsTag) => {
   const tag = computed(() => {

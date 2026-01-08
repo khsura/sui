@@ -1,23 +1,22 @@
-import { computed, ref, type Ref, type EmitFn } from 'vue'
+import { computed, ref, type Ref, type EmitFn, type ShallowRef, useId } from 'vue'
 import { z } from 'zod'
-import { type STableHeadCell } from '@khsura/sui/components/table'
-import { getTableRowClass } from '@khsura/sui/helpers'
-import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
-import { store } from '@khsura/sui/store'
-import { type TableItem, KTableSortOrder, type TableHeader, type TableItemCellType } from '@khsura/sui/types'
-import { uniqueId } from '@khsura/sui/vendors/lodash'
-import type { EmitsTable, PropsTable } from '@khsura/sui/definitions'
+import type STableHeadCell from '@/app/components/table/sTableHeadCell.vue'
+import { getTableRowClass } from '@/app/helpers'
+import { getCleanSetObject, getNumericCssAttribute } from '@/app/lib'
+import { store } from '@/app/store'
+import { type TableItem, KTableSortOrder, type TableHeader, type TableItemCellType } from '@/app/types'
+import type { EmitsTable, PropsTable } from '@/app/definitions'
 
 export const useTableService = <T extends TableItem = TableItem>(
   props: PropsTable<T>,
   emit: EmitFn<EmitsTable<T>>,
   itemsPerPage: Ref<number | undefined>,
+  headerElements: Readonly<ShallowRef<(InstanceType<typeof STableHeadCell> | null)[] | null>>,
+  tableWrapperElement: Readonly<ShallowRef<HTMLDivElement | null>>,
 ) => {
   const isMounted = ref(false)
   const sortOrders = ref<Record<string, KTableSortOrder | undefined>>({})
-  const tableWrapperElement = ref<HTMLElement | null>(null)
-  const headerElements = ref<Array<InstanceType<typeof STableHeadCell>>>([])
-  const tableId = ref(uniqueId())
+  const tableId = ref(useId())
   const isLeftStickActive = ref(false)
   const pageIndex = ref(0)
 
@@ -56,10 +55,10 @@ export const useTableService = <T extends TableItem = TableItem>(
       return false
     }
 
-    const left = headerElements.value
+    const left = [...(headerElements.value ?? [])]
       .slice(0, stickyLeftColumnsStart.value + (props.stickyLeftColumnsOffset ?? 0))
-      .reduce((pre: number, cur: InstanceType<typeof STableHeadCell>) => {
-        return pre + cur.$el?.getBoundingClientRect().width
+      .reduce((pre: number, cur) => {
+        return pre + (cur?.$el?.getBoundingClientRect().width ?? 0)
       }, 0)
 
     return left !== undefined && scrollLeft >= left
@@ -404,11 +403,9 @@ export const useTableService = <T extends TableItem = TableItem>(
       return undefined
     }
 
-    return headerElements.value
-      .slice(stickyLeftColumnsStart.value, cell.index)
-      .reduce((pre: number, cur: InstanceType<typeof STableHeadCell>) => {
-        return pre + cur.$el?.getBoundingClientRect().width
-      }, 0)
+    return [...(headerElements.value ?? [])].slice(stickyLeftColumnsStart.value, cell.index).reduce((pre, cur) => {
+      return pre + (cur?.$el?.getBoundingClientRect().width ?? 0)
+    }, 0)
   }
 
   const getTableCellStyle = (header: TableHeader) => {
@@ -434,7 +431,7 @@ export const useTableService = <T extends TableItem = TableItem>(
   }
 
   const updateTable = () => {
-    tableId.value = uniqueId()
+    tableId.value = useId()
   }
 
   return {

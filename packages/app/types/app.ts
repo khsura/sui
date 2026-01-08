@@ -1,6 +1,3 @@
-import { type AppTheme } from '@khsura/sui/constants'
-import { type DisplayOptions, type DisplayPreset } from './display'
-
 interface AppColors {
   appBar: string
   title: string
@@ -28,32 +25,14 @@ interface PresetColors {
   error: string
 }
 
-interface ThemeConfig {
+export interface ThemeConfig {
   appColors: AppColors
   presetColors: PresetColors & Record<string, string>
 }
 
-interface ThemeConfigOptions {
+export interface ThemeConfigOptions {
   appColors?: Partial<AppColors>
   presetColors?: Partial<PresetColors> & Record<string, string>
 }
 
 export type AppThemeType = 'light' | 'dark'
-
-export interface AppStateOptions {
-  theme?: AppThemeType
-  display?: DisplayOptions
-  themes?: {
-    [AppTheme.light]?: ThemeConfigOptions
-    [AppTheme.dark]?: ThemeConfigOptions
-  }
-}
-
-export interface AppState<T extends string = 'sui'> extends Required<AppStateOptions> {
-  readonly name: T
-  display: DisplayPreset
-  themes: {
-    [AppTheme.light]: ThemeConfig
-    [AppTheme.dark]: ThemeConfig
-  }
-}

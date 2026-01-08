@@ -11,4 +11,6 @@ export {
   useThemeService as useTheme,
 } from './services'
 export * from './modules'
+export * from './componentsTypes'
+
 export { getFormInputModelValueRules } from './repositories/form'

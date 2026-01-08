@@ -1,7 +1,7 @@
 import { type ModelRef, computed } from 'vue'
-import { datePickerModelFormats } from '@khsura/sui/configs'
-import { type PropsCalendar } from '@khsura/sui/definitions'
-import dayjs from '@khsura/sui/vendors/dayjs'
+import { datePickerModelFormats } from '@/app/configs'
+import { type PropsCalendar } from '@/app/definitions'
+import dayjs from '@/app/vendors/dayjs'
 
 export const useCalendarService = (props: PropsCalendar, focus: ModelRef<string | null | undefined>) => {
   const next = (value = 1) => {

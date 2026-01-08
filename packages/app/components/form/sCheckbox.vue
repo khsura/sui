@@ -20,10 +20,10 @@
 </template>
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, useId, watch } from 'vue'
-import FormInputError from '@khsura/sui/components/form/common/sFormInputError.vue'
-import { type PropsCheckbox } from '@khsura/sui/definitions'
-import { useColorRepository } from '@khsura/sui/repositories'
-import { useFormInputService } from '@khsura/sui/services'
+import FormInputError from '@/app/components/form/common/sFormInputError.vue'
+import { type PropsCheckbox } from '@/app/definitions'
+import { useColorRepository } from '@/app/repositories'
+import { useFormInputService } from '@/app/services'
 
 const props = defineProps<PropsCheckbox>()
 const checkboxElement = ref<HTMLInputElement | null>(null)
@@ -142,10 +142,6 @@ $s_checkbox--size: 24px;
     border: 2px solid s_getPresetColor('info');
   }
 
-  &:not(&--disabled, &--readonly):hover &__label::before {
-    border: 2px solid s_getPresetColor('info');
-  }
-
   &__label::after {
     position: absolute;
     top: 7px;
@@ -213,6 +209,10 @@ $s_checkbox--size: 24px;
     .s_checkbox__label {
       cursor: default;
     }
+  }
+
+  &:not(&--disabled, &--readonly):hover &__label::before {
+    border: 2px solid s_getPresetColor('info');
   }
 }
 

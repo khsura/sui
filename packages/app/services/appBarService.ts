@@ -1,11 +1,11 @@
 import { computed, reactive } from 'vue'
-import { type ThresholdMetParams } from '@khsura/sui/types'
-import { getCleanSetObject, getNumericCssAttribute, isBrowser } from '@khsura/sui/lib'
-import { type PropsAppBar } from '@khsura/sui/definitions'
 import { useLayoutService } from './layoutService'
 import { usePositionService } from './positionService'
 import { useScrollableService } from './scrollableService'
 import { useToolbarService } from './toolbarService'
+import { type PropsAppBar } from '@/app/definitions'
+import { getCleanSetObject, getNumericCssAttribute, isBrowser } from '@/app/lib'
+import { type ThresholdMetParams } from '@/app/types'
 
 export const useAppBarService = (props: PropsAppBar) => {
   const canScroll = computed((): boolean => {

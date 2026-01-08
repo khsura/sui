@@ -8,9 +8,9 @@
       <SListItemAction align-center dense>
         <slot name="actions" :is-expanded="isExpanded">
           <SIcon
-            :icon="panelsProps.expandIcon ?? 'mdi-chevron-down'"
+            :icon="panelsProps?.expandIcon ?? 'mdi-chevron-down'"
             :rotated="isExpanded ?? false"
-            :size="panelsProps.expandIconSize"
+            :size="panelsProps?.expandIconSize"
           ></SIcon>
         </slot>
       </SListItemAction>
@@ -18,13 +18,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import { SListItemContent, SListItemAction } from '@khsura/sui/components/list'
-import SIcon from '@khsura/sui/components/sIcon.vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { useExpandableItemService, useProviderService } from '@khsura/sui/services'
+import { inject } from 'vue'
+import { SListItemContent, SListItemAction } from '@/app/components/list'
+import SIcon from '@/app/components/sIcon.vue'
+import { ProviderPropsName } from '@/app/configs'
+import { useExpandableItemService } from '@/app/services'
 
-const { injectParentProps } = useProviderService()
-const panelsProps = injectParentProps(ProviderPropsName.expansionPanelsProps)
+const panelsProps = inject(ProviderPropsName.expansionPanelsProps)
 const { isExpanded, toggle } = useExpandableItemService()
 </script>
 

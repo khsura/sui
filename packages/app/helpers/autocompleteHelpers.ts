@@ -1,6 +1,6 @@
-import type { SelectItem } from '@khsura/sui/types'
-import type { AutocompleteModelType } from '@khsura/sui/types/autocomplete'
 import { type AutocompleteModelTypeBase } from '../types/autocomplete'
+import type { SelectItem } from '@/app/types'
+import type { AutocompleteModelType } from '@/app/types/autocomplete'
 
 export const isDelimiter = (event: KeyboardEvent, delimiter: string | string[] | RegExp = ',') => {
   if (typeof delimiter === 'string') {

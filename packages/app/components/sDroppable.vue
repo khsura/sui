@@ -1,6 +1,5 @@
 <template>
   <div
-    ref="sDroppable"
     class="s_droppable"
     :class="{
       's_droppable--drag': isDraggingOver,
@@ -23,14 +22,13 @@
 </template>
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { hasDragDropFeature } from '@khsura/sui/lib/browser'
-import type { PropsDroppable } from '@khsura/sui/definitions'
-import { useMeasurableStylesService } from '@khsura/sui/services'
+import { hasDragDropFeature } from '@/app/lib/browser'
+import type { PropsDroppable } from '@/app/definitions'
+import { useMeasurableStylesService } from '@/app/services'
 
 const props = defineProps<PropsDroppable>()
 const emit = defineEmits<(event: 'drop', value: DragEvent) => void>()
 const supportsDragAndDrop = hasDragDropFeature()
-const sDroppable = ref<HTMLElement | null>(null)
 const counter = ref(0)
 const { measurableStyles } = useMeasurableStylesService(props)
 

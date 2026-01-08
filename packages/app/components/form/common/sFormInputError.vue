@@ -1,5 +1,5 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <div :class="classList" v-html="errors[0]"></div>
 </template>
 <script setup lang="ts">

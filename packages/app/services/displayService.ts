@@ -1,12 +1,25 @@
 import { useBreakpoints, useMediaQuery } from '@vueuse/core'
-import { computed } from 'vue'
-import { store } from '@khsura/sui/store'
-import { type DisplayBreakpointThresholds } from '@khsura/sui/types'
-import { useAppProviderService } from './appProviderService'
+import { computed, inject } from 'vue'
+import { store } from '@/app/store'
+import { type DisplayBreakpointThresholds } from '@/app/types'
+import { thresholds as defaultThresholds } from '@/app/configs/core/breakpoint'
+import { getPluginName } from '@/app/lib/getPluginName'
+import type { AppState } from '@/app/definitions'
 
-export const useDisplayService = (thresholds?: DisplayBreakpointThresholds) => {
-  const { config } = useAppProviderService()
-  const breakpoints = useBreakpoints(thresholds ?? config.display.thresholds)
+export const useDisplayService = ({
+  thresholds,
+  appName,
+}: {
+  thresholds?: DisplayBreakpointThresholds
+  appName?: string | symbol
+} = {}) => {
+  const appState = inject<AppState>(getPluginName(appName))
+
+  if (!appState) {
+    throw new Error(`AppState for ${appName?.toString()} not found`)
+  }
+
+  const breakpoints = useBreakpoints(thresholds ?? appState?.display.thresholds ?? defaultThresholds)
   const lgAndDown = breakpoints.smallerOrEqual('lg')
   const lgAndUp = breakpoints.greaterOrEqual('lg')
   const mdAndDown = breakpoints.smallerOrEqual('md')

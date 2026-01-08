@@ -7,22 +7,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, watch } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { getCleanSetObject, getNumericValue } from '@khsura/sui/lib'
-import { isBrowser } from '@khsura/sui/lib/browser'
+import { computed, onBeforeUnmount, onMounted, watch, provide } from 'vue'
+import { ProviderPropsName } from '@/app/configs'
+import { getCleanSetObject, getNumericValue } from '@/app/lib'
+import { isBrowser } from '@/app/lib/browser'
 import {
   useBorderService,
   useLayoutService,
   useMeasurableStylesService,
   usePositionService,
-  useProviderService,
   useScrollableService,
   useSingleGroupService,
   useTagService,
-} from '@khsura/sui/services'
-import { type GroupItemValue } from '@khsura/sui/types'
-import type { PropsBottomNavigation } from '@khsura/sui/definitions'
+} from '@/app/services'
+import { type GroupItemValue } from '@/app/types'
+import type { PropsBottomNavigation } from '@/app/definitions'
 
 const props = defineProps<PropsBottomNavigation>()
 const model = defineModel<GroupItemValue>()
@@ -58,13 +57,12 @@ const { isActive } = useScrollableService(
 const { classListPosition, isAbsolutePosition, isFixedPosition } = usePositionService(props)
 const { measurableStyles } = useMeasurableStylesService(props)
 const { classListBorder, styleListBorder } = useBorderService(props)
-const { provideProps } = useProviderService()
 const { left, right, width, app, isApp } = useLayoutService(props)
 const { tagName } = useTagService(props)
 
 useSingleGroupService(props, model)
 
-provideProps(ProviderPropsName.bottomNavigation, props)
+provide(ProviderPropsName.bottomNavigation, props)
 
 const classes = computed((): object => {
   return getCleanSetObject({

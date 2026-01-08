@@ -1,6 +1,6 @@
-import { datePickerModelFormats } from '@khsura/sui/configs/datePicker'
-import { DatePickerSelectType } from '@khsura/sui/constants/datePicker'
-import { type DatePickerSelectTypeType, type DatePickerSwitchType, type DatePickerTypeType } from '@khsura/sui/types'
+import { datePickerModelFormats } from '@/app/configs/datePicker'
+import { DatePickerSelectType } from '@/app/constants/datePicker'
+import { type DatePickerSelectTypeType, type DatePickerSwitchType, type DatePickerTypeType } from '@/app/types'
 
 export const getDatePickerFormat = (type: DatePickerTypeType) => {
   return datePickerModelFormats[type]

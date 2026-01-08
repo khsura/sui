@@ -4,10 +4,9 @@
   </form>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
-import { ProviderName } from '@khsura/sui/constants'
-import { useProviderService } from '@khsura/sui/services'
-import { type FormProviderRegisterInputAttribute } from '@khsura/sui/types'
+import { computed, provide } from 'vue'
+import { ProviderName } from '@/app/configs'
+import { type FormProviderRegisterInputAttribute } from '@/app/types'
 
 defineEmits<{
   submit: [Event]
@@ -16,7 +15,6 @@ defineEmits<{
 const model = defineModel<boolean>()
 const errors = defineModel<string[]>('errors', { default: [] })
 const error = defineModel<boolean>('error')
-const { provide } = useProviderService()
 const formInputs: Record<string, FormProviderRegisterInputAttribute> = {}
 
 const updateProps = () => {

@@ -49,17 +49,17 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { SCard } from '@khsura/sui/components/cards'
-import type { PropsDatePicker } from '@khsura/sui/definitions'
-import { getDatePickerFormat } from '@khsura/sui/repositories'
-import { useDatePickerService, useMeasurableStylesService } from '@khsura/sui/services'
-import dayjs from '@khsura/sui/vendors/dayjs'
-import { datePickerDisplayFormat } from '@khsura/sui/configs'
 import SDatePickerDate from './sDatePickerDate.vue'
 import SDatePickerMonth from './sDatePickerMonth.vue'
 import SDatePickerSwitch from './sDatePickerSwitch.vue'
 import SDatePickerTitle from './sDatePickerTitle.vue'
 import SDatePickerYear from './sDatePickerYear.vue'
+import { SCard } from '@/app/components/cards'
+import type { PropsDatePicker } from '@/app/definitions'
+import { getDatePickerFormat } from '@/app/repositories'
+import { useDatePickerService, useMeasurableStylesService } from '@/app/services'
+import dayjs from '@/app/vendors/dayjs'
+import { datePickerDisplayFormat } from '@/app/configs'
 
 const props = withDefaults(defineProps<PropsDatePicker>(), {
   type: 'date',

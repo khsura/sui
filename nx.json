@@ -3,54 +3,30 @@
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "defaultBase": "main",
     "build": {
-      "dependsOn": [
-        "eslint",
-        "stylelint",
-        "test",
-        "^build"
-      ],
-      "outputs": [
-        "{projectRoot}/dist",
-        "{projectRoot}/storybook-static"
-      ],
+      "dependsOn": ["lint", "stylelint", "test", "^build"],
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/storybook-static"],
       "cache": true
     },
-    "eslint": {
-      "dependsOn": [
-        "^eslint"
-      ],
+    "lint": {
+      "dependsOn": ["^lint"],
       "cache": true
     },
     "stylelint": {
-      "dependsOn": [
-        "^stylelint"
-      ],
+      "dependsOn": ["^stylelint"],
       "cache": true
     },
     "test": {
-      "dependsOn": [
-        "^test"
-      ],
-      "outputs": [
-        "{projectRoot}/coverage"
-      ],
+      "dependsOn": ["^test"],
+      "outputs": ["{projectRoot}/coverage"],
       "cache": true
     },
     "release": {
-      "dependsOn": [
-        "build"
-      ],
-      "outputs": [
-        "{projectRoot}/dist"
-      ]
+      "dependsOn": ["build"],
+      "outputs": ["{projectRoot}/dist"]
     },
     "build:type": {
-      "dependsOn": [
-        "^build:type"
-      ],
-      "outputs": [
-        "{projectRoot}/@types"
-      ],
+      "dependsOn": ["^build:type"],
+      "outputs": ["{projectRoot}/@types"],
       "cache": true
     }
   },
@@ -69,6 +45,17 @@
         "serveTargetName": "serve",
         "previewTargetName": "preview",
         "serveStaticTargetName": "serve-static"
+      }
+    },
+    {
+      "plugin": "@nx/storybook/plugin",
+      "options": {
+        "serveStorybookTargetName": "storybook",
+        "buildStorybookTargetName": "build-storybook",
+        "testStorybookTargetName": "test-storybook",
+        "staticStorybookTargetName": "static-storybook",
+        "buildDepsTargetName": "storybook:build-deps",
+        "watchDepsTargetName": "storybook:watch-deps"
       }
     }
   ]

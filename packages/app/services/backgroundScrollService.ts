@@ -1,7 +1,7 @@
 import { nextTick } from 'vue'
 import { z } from 'zod'
-import { getWindow, retry } from '@khsura/sui/lib'
-import { cssVariables } from '@khsura/sui/constants'
+import { getWindow, retry } from '@/app/lib'
+import { cssVariables } from '@/app/constants'
 
 export const useBackgroundScrollService = () => {
   const enableBackgroundScrollOnce = async () => {

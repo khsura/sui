@@ -21,9 +21,9 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useTextColorService } from '@khsura/sui/services'
-import { type BreadcrumbsItem } from '@khsura/sui/types'
-import type { PropsBreadcrumbs } from '@khsura/sui/definitions'
+import { useTextColorService } from '@/app/services'
+import { type BreadcrumbsItem } from '@/app/types'
+import type { PropsBreadcrumbs } from '@/app/definitions'
 
 const props = withDefaults(defineProps<PropsBreadcrumbs>(), {
   divider: '/',

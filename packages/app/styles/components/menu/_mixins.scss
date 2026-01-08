@@ -4,8 +4,8 @@
   width: min-content;
   max-width: 90vw;
   max-height: 90vh;
+  contain: content;
   overflow: hidden auto;
   text-overflow: ellipsis;
   white-space: nowrap;
-  contain: content;
 }

@@ -98,11 +98,7 @@
   </div>
 </template>
 <script lang="ts" setup generic="T extends boolean = false">
-import { watch } from 'vue'
-import SOverlay from '@khsura/sui/components/sOverlay.vue'
-import SCard from '@khsura/sui/components/cards/sCard.vue'
-import { SList, SListItem, SListItemContent, SListItemIcon } from '@khsura/sui/components/list'
-import SCheckbox from '@khsura/sui/components/form/sCheckbox.vue'
+import { watch, useTemplateRef } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
 import { getSelectItem } from '../helpers'
 import type { AutocompleteEmitEvents, AutocompleteModelType, AutocompleteModelTypeBase } from '../types/autocomplete'
@@ -113,6 +109,10 @@ import SChip from './sChip.vue'
 import SIcon from './sIcon.vue'
 import SButton from './sButton.vue'
 import SProgressCircular from './progress/sProgressCircular.vue'
+import SCheckbox from '@/app/components/form/sCheckbox.vue'
+import { SList, SListItem, SListItemContent, SListItemIcon } from '@/app/components/list'
+import SCard from '@/app/components/cards/sCard.vue'
+import SOverlay from '@/app/components/sOverlay.vue'
 
 const props = withDefaults(defineProps<PropsAutocomplete<T>>(), {
   location: 'bottom',
@@ -122,12 +122,12 @@ const props = withDefaults(defineProps<PropsAutocomplete<T>>(), {
 
 const model = defineModel<AutocompleteModelType<T> | null>()
 const emit = defineEmits<AutocompleteEmitEvents>()
+const activatorElement = useTemplateRef('activatorElement')
+const contentElement = useTemplateRef('contentElement')
+const inputElement = useTemplateRef('inputElement')
 
 const {
   queryText,
-  activatorElement,
-  inputElement,
-  contentElement,
   contentClasses,
   contentStyles,
   filteredItems,
@@ -147,7 +147,11 @@ const {
   updateModelType,
   updateItemsPool,
   getItemFromItemsPool,
-} = useAutocompleteService(props, model, emit)
+} = useAutocompleteService(props, model, emit, {
+  activatorElement,
+  contentElement,
+  inputElement,
+})
 
 updateItemsPool(props.items ?? [])
 

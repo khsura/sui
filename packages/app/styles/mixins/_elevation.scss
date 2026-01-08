@@ -3,7 +3,11 @@
 
 @mixin s_elevation($z, $important: false) {
   /* stylelint-disable-next-line max-line-length */
-  box-shadow: map.get(variables.$s_shadowKeyUmbra, $z), map.get(variables.$s_shadowKeyPenumbra, $z), map.get(variables.$s_shadowKeyAmbient, $z) if($important, !important, null);
+  @if $important {
+    box-shadow: map.get(variables.$s_shadowKeyUmbra, $z), map.get(variables.$s_shadowKeyPenumbra, $z), map.get(variables.$s_shadowKeyAmbient, $z) !important;
+  } @else {
+    box-shadow: map.get(variables.$s_shadowKeyUmbra, $z), map.get(variables.$s_shadowKeyPenumbra, $z), map.get(variables.$s_shadowKeyAmbient, $z);
+  }
 }
 
 @mixin s_elevationTransition($duration: 280ms, $easing: cubic-bezier(0.4, 0, 0.2, 1)) {

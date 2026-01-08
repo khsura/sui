@@ -5,12 +5,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
-import { SFormInputError } from '@khsura/sui/components'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { type PropsRadioGroup } from '@khsura/sui/definitions'
-import { useFormInputService, useProviderService, useSingleGroupService } from '@khsura/sui/services'
-import { type GroupItemValue } from '@khsura/sui/types'
+import { computed, provide } from 'vue'
+import { SFormInputError } from '@/app/components/form/common'
+import { ProviderPropsName } from '@/app/configs'
+import { type PropsRadioGroup } from '@/app/definitions'
+import { useFormInputService, useSingleGroupService } from '@/app/services'
+import { type GroupItemValue } from '@/app/types'
 
 const props = defineProps<PropsRadioGroup>()
 
@@ -34,9 +34,7 @@ const { errors, updateFormInput } = useFormInputService<GroupItemValue>(props, e
 
 useSingleGroupService(props, model)
 
-const { provideProps } = useProviderService()
-
-provideProps(ProviderPropsName.radioGroupProps, props)
+provide(ProviderPropsName.radioGroupProps, props)
 
 const radioGroupClasses = computed(() => {
   return {

@@ -1,9 +1,9 @@
 import type { CSSProperties } from 'vue'
 import { computed } from 'vue'
-import { getTableItemClass, getTableItemStyle } from '@khsura/sui/helpers'
-import { useTableCellCommonService } from '@khsura/sui/services/core'
-import type { PropsTableBodyCell } from '@khsura/sui/definitions'
-import type { TableItem } from '@khsura/sui/types'
+import { getTableItemClass, getTableItemStyle } from '@/app/helpers'
+import { useTableCellCommonService } from '@/app/services/core'
+import type { PropsTableBodyCell } from '@/app/definitions'
+import type { TableItem } from '@/app/types'
 
 export const useTableBodyCellService = <T extends TableItem = TableItem, CellKey extends string = string>(
   props: PropsTableBodyCell<T, CellKey>,

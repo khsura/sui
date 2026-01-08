@@ -1,12 +1,4 @@
-import type { SelectItem } from '@khsura/sui/types'
-import type { PropsAutocomplete } from '@khsura/sui/definitions'
-import { computed, nextTick, ref, type EmitFn, type Ref } from 'vue'
-import type {
-  AutocompleteEmitEvents,
-  AutocompleteModelType,
-  AutocompleteModelTypeBase,
-} from '@khsura/sui/types/autocomplete'
-import lodash from 'lodash'
+import { computed, nextTick, ref, type ComponentPublicInstance, type EmitFn, type Ref, type ShallowRef } from 'vue'
 import {
   isDelimiter,
   getItemFromText,
@@ -16,24 +8,32 @@ import {
   getSelectItem,
   getItemValue,
 } from '../helpers'
-import { useMenuService } from '../services'
+import { useMenuService } from '../services/menuService'
+import { merge } from '@/app/vendors/merge'
+import type { AutocompleteEmitEvents, AutocompleteModelType, AutocompleteModelTypeBase } from '@/app/types/autocomplete'
+import type { PropsAutocomplete } from '@/app/definitions'
+import type { SelectItem } from '@/app/types'
 
 export const useAutocompleteService = <T extends boolean = false>(
   props: PropsAutocomplete<T>,
   model: Ref<AutocompleteModelType<T> | null | undefined>,
   emit: EmitFn<AutocompleteEmitEvents>,
+  templateRefs: {
+    activatorElement: ShallowRef<HTMLElement | null>
+    contentElement: ShallowRef<HTMLElement | ComponentPublicInstance | null>
+    inputElement: Ref<HTMLElement | null>
+  },
 ) => {
   const queryText = ref('')
   const isFocused = ref(false)
   const isMenuOpen = ref(false)
-  const inputElement = ref<HTMLElement | null>(null)
   let debounceTimeout: NodeJS.Timeout | number | null = null
   const itemsPool = ref<Record<string, SelectItem | undefined>>({})
 
-  const { activatorElement, contentElement, contentClasses, contentStyles, updateLocation } = useMenuService(
-    props,
-    isMenuOpen,
-  )
+  const { contentClasses, contentStyles, updateLocation } = useMenuService(props, isMenuOpen, {
+    activatorElement: templateRefs.activatorElement,
+    contentElement: templateRefs.contentElement,
+  })
 
   const getChangeModelValueType = <V extends boolean = boolean>(
     multiple?: V,
@@ -175,10 +175,10 @@ export const useAutocompleteService = <T extends boolean = false>(
     }
   }
 
-  const onClickOutside = (event: MouseEvent) => {
-    const target = event.target as HTMLElement
+  const onClickOutside = (event: Event) => {
+    const target = (event.target ?? event.currentTarget) as HTMLElement
 
-    if (target.contains(inputElement.value)) {
+    if (target.contains(templateRefs.inputElement.value)) {
       return
     }
 
@@ -253,7 +253,7 @@ export const useAutocompleteService = <T extends boolean = false>(
   }
 
   const updateItemsPool = (items: SelectItem[] | string[]) => {
-    itemsPool.value = lodash.merge(
+    itemsPool.value = merge(
       itemsPool.value,
       items.reduce(
         (acc, item) => {
@@ -276,9 +276,6 @@ export const useAutocompleteService = <T extends boolean = false>(
 
   return {
     queryText,
-    inputElement,
-    activatorElement,
-    contentElement,
     contentClasses,
     contentStyles,
     filteredItems,

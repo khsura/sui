@@ -14,9 +14,9 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { PropsProgressLinear } from '@khsura/sui/definitions'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
-import { useColorRepository } from '@khsura/sui/repositories'
+import type { PropsProgressLinear } from '@/app/definitions'
+import { getNumericCssAttribute } from '@/app/lib'
+import { useColorRepository } from '@/app/repositories'
 
 const props = withDefaults(defineProps<PropsProgressLinear>(), {
   color: 'info',

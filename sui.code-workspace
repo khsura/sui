@@ -5,14 +5,6 @@
       "name": "app",
     },
     {
-      "path": "./packages/storybook",
-      "name": "storybook",
-    },
-    {
-      "path": "./packages/samples",
-      "name": "samples",
-    },
-    {
       "path": "./packages/shared",
       "name": "shared",
     },
@@ -29,7 +21,6 @@
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
     },
-    "stylelint.stylelintPath": "../../node_modules/stylelint",
     "stylelint.validate": ["css", "less", "postcss", "scss", "vue"],
     "files.exclude": {
       "**/.git": true,

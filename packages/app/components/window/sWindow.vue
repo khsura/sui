@@ -34,19 +34,13 @@
   </Component>
 </template>
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
-import SButton from '@khsura/sui/components/sButton.vue'
-import SIcon from '@khsura/sui/components/sIcon.vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import type { PropsWindow } from '@khsura/sui/definitions'
-import {
-  useColorService,
-  useProviderService,
-  useSingleGroupService,
-  useTagService,
-  useTouchService,
-} from '@khsura/sui/services'
-import { type GroupItemValue } from '@khsura/sui/types'
+import { computed, onMounted, provide } from 'vue'
+import SButton from '@/app/components/sButton.vue'
+import SIcon from '@/app/components/sIcon.vue'
+import { ProviderPropsName } from '@/app/configs'
+import type { PropsWindow } from '@/app/definitions'
+import { useColorService, useSingleGroupService, useTagService, useTouchService } from '@/app/services'
+import { type GroupItemValue } from '@/app/types'
 
 const props = withDefaults(defineProps<PropsWindow>(), {
   nextIcon: 'mdi-chevron-right',
@@ -55,10 +49,9 @@ const props = withDefaults(defineProps<PropsWindow>(), {
 
 const model = defineModel<GroupItemValue>()
 const { classListColor, styleListColor } = useColorService(props)
-const { provideProps } = useProviderService()
 const { tagName } = useTagService(props)
 
-provideProps(ProviderPropsName.window, props)
+provide(ProviderPropsName.window, props)
 // TODO (Sura) Improve
 
 useTouchService(

@@ -1,30 +1,32 @@
-import { mount } from '@vue/test-utils'
-import { SInput } from '@khsura/sui/components'
+import { SInput } from '@/app/components'
+import { mountWithApp } from '@/app/tests/_helpers'
 
 describe('SInput', () => {
   test('renders correctly', () => {
-    const wrapper = mount(SInput, { props: { id: 'password' } })
+    const wrapper = mountWithApp(SInput, { props: { id: 'password' } })
 
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  test('attributes can be set properly', async () => {
-    const wrapper = mount(SInput, { props: { id: 'password' } })
-
-    await wrapper.setProps({ max: 16, ariaLabelledby: 'hello', disabled: false, maxlength: null, type: 'number' })
+  test('attributes can be set properly', () => {
+    const wrapper = mountWithApp(SInput, {
+      props: { id: 'password', max: 16, ariaLabelledby: 'hello', disabled: false, maxlength: null, type: 'number' },
+    })
 
     expect(wrapper.find('.s_input__input').attributes().max).toBe('16')
     expect(wrapper.find('.s_input__input').attributes()['aria-labelledby']).toBe('hello')
     expect(wrapper.find('.s_input__input').attributes().disabled).toBeUndefined()
     expect(wrapper.find('.s_input__input').attributes().maxlength).toBeUndefined()
+  })
 
-    await wrapper.setProps({ disabled: true })
+  test('disabled attribute can be set properly', () => {
+    const wrapper = mountWithApp(SInput, { props: { id: 'password', disabled: true } })
 
     expect(wrapper.find('.s_input__input').attributes().disabled).toBeDefined()
   })
 
   test('all attributes can be set properly', () => {
-    const wrapper = mount(SInput, {
+    const wrapper = mountWithApp(SInput, {
       props: {
         id: 'password',
         name: 'password',

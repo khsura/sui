@@ -5,7 +5,7 @@ import type {
   TableItemStyle,
   TableRowClass,
   TableHeader,
-} from '@khsura/sui/types'
+} from '@/app/types'
 
 export interface PropsTableHeadCell {
   header: TableHeader

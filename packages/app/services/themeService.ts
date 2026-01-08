@@ -1,17 +1,24 @@
-import { computed } from 'vue'
-import { getBrowserTheme } from '@khsura/sui/helpers'
-import { type AppThemeType } from '@khsura/sui/types'
-import { useAppProviderService } from './appProviderService'
+import { computed, inject } from 'vue'
+import { getBrowserTheme } from '@/app/helpers'
+import { type AppThemeType } from '@/app/types'
+import { getPluginName } from '@/app/lib/getPluginName'
+import type { AppState } from '@/app/definitions'
 
-export const useThemeService = () => {
-  const { config } = useAppProviderService()
+export const useThemeService = (appName?: string | symbol) => {
+  const appState = inject<AppState>(getPluginName(appName))
+
+  if (!appState) {
+    throw new Error(`AppState for ${appName?.toString()} not found`)
+  }
 
   const theme = computed(() => {
-    return config.theme
+    return appState.theme
   })
 
   const setTheme = (theme: AppThemeType | null) => {
-    config.theme = theme ?? getBrowserTheme()
+    if (appState) {
+      appState.theme = theme ?? getBrowserTheme()
+    }
   }
 
   return {

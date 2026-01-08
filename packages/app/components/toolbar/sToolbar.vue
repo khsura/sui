@@ -1,5 +1,5 @@
 <template>
-  <component :is="tagName" ref="toolbarRef" :class="classes" :style="styles">
+  <component :is="tagName" :class="classes" :style="styles">
     <div v-if="$slots.prepend" class="s_toolbar__prepend">
       <slot name="prepend"></slot>
     </div>
@@ -20,20 +20,20 @@
   </component>
 </template>
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { ProviderPropsName, defaultToolbarExtensionHeight, defaultToolbarContentHeight } from '@khsura/sui/constants'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
-import type { PropsToolbar } from '@khsura/sui/definitions'
+import { computed, provide } from 'vue'
+import { defaultToolbarExtensionHeight, defaultToolbarContentHeight } from '@/app/constants'
+import { getNumericCssAttribute } from '@/app/lib'
+import type { PropsToolbar } from '@/app/definitions'
 import {
   useBorderService,
   useColorService,
   useContentService,
   useElevationService,
   usePositionService,
-  useProviderService,
   useTagService,
   useToolbarService,
-} from '@khsura/sui/services'
+} from '@/app/services'
+import { ProviderPropsName } from '@/app/configs'
 
 const props = withDefaults(defineProps<PropsToolbar>(), {
   extensionHeight: defaultToolbarExtensionHeight,
@@ -44,11 +44,9 @@ const { classListColor, styleListColor } = useColorService(props)
 const { classListBorder, styleListBorder } = useBorderService(props)
 const { classListElevation } = useElevationService(props)
 const { classListPosition } = usePositionService(props)
-const { provideProps } = useProviderService()
 
-provideProps(ProviderPropsName.toolbar, props)
+provide(ProviderPropsName.toolbar, props)
 
-const toolbarRef = ref<HTMLElement | null>(null)
 const { contentHeight, computedExtensionHeight, isExtended } = useToolbarService(props)
 const { styles: contentServiceStyles, classes: contentClasses } = useContentService(props)
 const { tagName } = useTagService(props)

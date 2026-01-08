@@ -4,20 +4,17 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
-import type { PropsSplitView } from '@khsura/sui/definitions'
-import { useProviderService } from '@khsura/sui/services'
-
-const { provideProps } = useProviderService()
+import { computed, provide } from 'vue'
+import { ProviderPropsName } from '@/app/configs'
+import { getNumericCssAttribute } from '@/app/lib'
+import type { PropsSplitView } from '@/app/definitions'
 
 const props = withDefaults(defineProps<PropsSplitView>(), {
   width: '100%',
   height: '100%',
 })
 
-provideProps(ProviderPropsName.splitViewProps, props)
+provide(ProviderPropsName.splitViewProps, props)
 
 const classes = computed(() => {
   return {

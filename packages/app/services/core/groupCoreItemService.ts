@@ -1,22 +1,19 @@
-import { computed, getCurrentInstance, onMounted, onUnmounted, ref, useId } from 'vue'
-import { ProviderName } from '@khsura/sui/constants'
+import { computed, getCurrentInstance, inject, onMounted, onUnmounted, ref, useId } from 'vue'
+import { ProviderName } from '@/app/configs'
 import {
   type GroupProvider,
   type PropsGroupItem,
   type PropsSingleGroupItem,
-  type Provider,
   type SingleGroupProvider,
-} from '@khsura/sui/definitions'
-import { useProviderRepository } from '@khsura/sui/repositories'
-import { type GroupItemValue } from '@khsura/sui/types'
+} from '@/app/definitions'
+import { type GroupItemValue } from '@/app/types'
 
 export const useGroupCoreItemService = <T extends boolean>(
   props: T extends true ? PropsGroupItem : PropsSingleGroupItem,
   canSelectMultipleItem: T,
-  injectParams?: Parameters<Provider[ProviderName.group]['registerItem']>[1],
+  injectParams?: Parameters<GroupProvider['registerItem']>[1],
 ) => {
   const id = ref<number | null>(null)
-  const { inject } = useProviderRepository()
   const instance = getCurrentInstance()
   const group = inject(canSelectMultipleItem ? ProviderName.group : ProviderName.singleGroup)
   const identifier = canSelectMultipleItem ? 'index' : 'value'

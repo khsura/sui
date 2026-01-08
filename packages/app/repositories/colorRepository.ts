@@ -1,13 +1,13 @@
 import { z } from 'zod'
-import { PresetColor } from '@khsura/sui/constants'
-import { getCleanSetObject } from '@khsura/sui/lib'
-import { useAppProviderRepository } from './appProviderRepository'
+import { PresetColor } from '@/app/constants'
+import { getCleanSetObject } from '@/app/lib'
+import { useAppProviderRepository } from '@/app/repositories/core/appProviderRepository'
 
-export const useColorRepository = () => {
-  const { config } = useAppProviderRepository()
+export const useColorRepository = (appName?: string | symbol) => {
+  const { appState } = useAppProviderRepository(appName)
 
   const getTheme = () => {
-    return config.themes[config.theme]
+    return appState?.themes[appState.theme]
   }
 
   const getAppColor = (color: string | undefined | null) => {
@@ -15,7 +15,7 @@ export const useColorRepository = () => {
       return undefined
     }
 
-    return getTheme().appColors[color] ? color : undefined
+    return getTheme()?.appColors[color] ? color : undefined
   }
 
   const getPresetColor = (color: string | undefined | null) => {
@@ -23,7 +23,7 @@ export const useColorRepository = () => {
       return undefined
     }
 
-    return getTheme().presetColors[color] ? color : undefined
+    return getTheme()?.presetColors[color] ? color : undefined
   }
 
   const getPresetColorValue = (color: string | undefined | null) => {
@@ -31,13 +31,13 @@ export const useColorRepository = () => {
       return undefined
     }
 
-    const presetColorValue = getTheme().presetColors[color]
+    const presetColorValue = getTheme()?.presetColors[color]
 
-    return presetColorValue ? presetColorValue : color
+    return presetColorValue ?? color
   }
 
   const getIsPredefinedPresetColor = (color: string | undefined | null) => {
-    return z.nativeEnum(PresetColor).safeParse(color).success
+    return z.enum(PresetColor).safeParse(color).success
   }
 
   const getIsPresetColor = (color: string | undefined | null) => {

@@ -4,8 +4,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { PropsGroupItem } from '@khsura/sui/definitions'
-import { useExpandableService } from '@khsura/sui/services'
+import type { PropsGroupItem } from '@/app/definitions'
+import { useExpandableService } from '@/app/services'
 
 const props = defineProps<PropsGroupItem<number>>()
 const { isExpanded } = useExpandableService(props)

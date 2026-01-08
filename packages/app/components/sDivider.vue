@@ -3,7 +3,7 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { PropsDivider } from '@khsura/sui/definitions'
+import type { PropsDivider } from '@/app/definitions'
 
 const props = defineProps<PropsDivider>()
 

@@ -5,14 +5,14 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { PropsSheet } from '@khsura/sui/definitions'
+import type { PropsSheet } from '@/app/definitions'
 import {
   useBorderService,
   useColorService,
   useElevationService,
   useMeasurableStylesService,
   useTagService,
-} from '@khsura/sui/services'
+} from '@/app/services'
 
 const props = defineProps<PropsSheet>()
 const { classListColor, styleListColor } = useColorService(props)

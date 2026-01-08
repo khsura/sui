@@ -16,8 +16,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { overlaysContainerId } from '@khsura/sui/constants'
-import type { PropsOverlay } from '@khsura/sui/definitions'
+import { overlaysContainerId } from '@/app/constants'
+import type { PropsOverlay } from '@/app/definitions'
 
 defineProps<PropsOverlay>()
 const isReady = ref(false)
@@ -49,9 +49,9 @@ onMounted(() => {
   &__content {
     position: absolute;
     z-index: 1000;
+    contain: layout;
     pointer-events: auto;
     outline: none;
-    contain: layout;
   }
 }
 </style>

@@ -6,9 +6,9 @@
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { LazyLoad } from '@khsura/sui/constants'
-import { useMeasurableStylesService } from '@khsura/sui/services'
-import type { PropsImage } from '@khsura/sui/definitions'
+import { LazyLoad } from '@/app/constants'
+import { useMeasurableStylesService } from '@/app/services'
+import type { PropsImage } from '@/app/definitions'
 
 const props = defineProps<PropsImage>()
 const { measurableStyles } = useMeasurableStylesService(props)

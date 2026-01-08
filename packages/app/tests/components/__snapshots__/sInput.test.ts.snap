@@ -31,8 +31,11 @@ exports[`SInput > renders correctly 1`] = `
     </section>
     <!--v-if-->
   </div>
+  
+  <!-- eslint-disable vue/no-v-html -->
   <div
     class="s_formInputError"
   />
+  
 </section>
 `;

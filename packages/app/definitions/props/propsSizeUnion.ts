@@ -1,4 +1,4 @@
-import { type SizePropertyUnionType } from '@khsura/sui/types'
+import { type SizePropertyUnionType } from '@/app/types'
 
 export type PropsSizeUnion = {
   size?: SizePropertyUnionType

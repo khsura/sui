@@ -1,4 +1,4 @@
-import { wait } from '@khsura/sui/lib/wait'
+import { wait } from '@/app/lib/wait'
 
 export const retry = async <T>(fn: () => Promise<T | false>, attempts: number, delay: number): Promise<T | false> => {
   for (let i = 0; i < attempts; i++) {

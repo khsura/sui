@@ -1,5 +1,5 @@
-import { type FormInputModelValueRule } from '@khsura/sui/types'
 import { type PropsDisabled } from './core'
+import { type FormInputModelValueRule } from '@/app/types'
 
 export type PropsFormInput = {
   id?: string | undefined

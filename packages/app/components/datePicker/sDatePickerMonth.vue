@@ -29,10 +29,10 @@
   </SRow>
 </template>
 <script setup lang="ts">
-import { SColumn, SRow } from '@khsura/sui/components/grids'
-import SButton from '@khsura/sui/components/sButton.vue'
-import type { PropsDatePickerItem } from '@khsura/sui/definitions'
-import { useColorService, useDatePickerItemMonthService } from '@khsura/sui/services'
+import { SColumn, SRow } from '@/app/components/grids'
+import SButton from '@/app/components/sButton.vue'
+import type { PropsDatePickerItem } from '@/app/definitions'
+import { useColorService, useDatePickerItemMonthService } from '@/app/services'
 
 const props = defineProps<PropsDatePickerItem>()
 

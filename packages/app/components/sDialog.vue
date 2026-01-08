@@ -11,31 +11,30 @@
   </section>
 </template>
 <script setup lang="ts">
-import { watch, ref } from 'vue'
-import SOverlay from '@khsura/sui/components/sOverlay.vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import type { PropsDialog } from '@khsura/sui/definitions'
-import { useDialogService, useProviderService, useBackgroundScrollService } from '@khsura/sui/services'
+import { watch, useTemplateRef, provide } from 'vue'
 import { onClickOutside } from '@vueuse/core'
+import SOverlay from '@/app/components/sOverlay.vue'
+import type { PropsDialog } from '@/app/definitions'
+import { useDialogService, useBackgroundScrollService } from '@/app/services'
+import { ProviderPropsName } from '@/app/configs'
 
 const props = defineProps<PropsDialog>()
 const model = defineModel<boolean>()
-const { provideProps } = useProviderService()
 
-provideProps(ProviderPropsName.dialog, props)
+provide(ProviderPropsName.dialog, props)
+const activatorElement = useTemplateRef('activatorElement')
 
 const {
   activatorOn,
   activatorAttrs,
-  activatorElement,
   contentClasses,
   contentStyles,
   transitionName,
   onClickOutside: localOnClickOutside,
-} = useDialogService(props, model)
+} = useDialogService(props, model, activatorElement)
 
 const { enableBackgroundScroll, disableBackgroundScroll } = useBackgroundScrollService()
-const dialogRef = ref<HTMLElement | null>(null)
+const dialogRef = useTemplateRef('dialogRef')
 
 onClickOutside(dialogRef, localOnClickOutside, {
   ignore: ['.s_menu__content', '.s_tooltip__content', '.s_select__list', '.s_snackbar__wrapper'],

@@ -3,9 +3,22 @@
   "compilerOptions": {
     "declarationDir": "@types",
     "paths": {
-      "@khsura/sui/*": ["./*"]
+      "@/app/*": ["./*"]
     }
   },
-  "include": ["**/*.js", "**/*.mjs", "**/*.ts", "**/*.tsx", "**/*.vue"],
+  "include": [
+    "**/*.js", 
+    "**/*.mjs", 
+    "**/*.ts", 
+    "**/*.tsx", 
+    "**/*.vue", 
+    ".storybook/**/*.js",
+    ".storybook/**/*.jsx",
+    ".storybook/**/*.mjs",
+    ".storybook/**/*.cjs",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx",
+    ".storybook/**/*.vue"
+  ],
   "exclude": ["dist", "node_modules", "public", "@types"]
 }

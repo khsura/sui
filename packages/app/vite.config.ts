@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { fileURLToPath } from 'url'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -20,8 +21,13 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@khsura/sui': fileURLToPath(new URL('./', import.meta.url)),
+      '@/app': fileURLToPath(new URL('./', import.meta.url)),
     },
+  },
+  esbuild: {
+    jsxFactory: 'h',
+    jsxFragment: 'Fragment',
+    jsxInject: `import { h, Fragment } from 'vue'`,
   },
   build: {
     target: ['safari11', 'ios11'],
@@ -32,17 +38,7 @@ export default defineConfig({
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.
-      external: [
-        'vue',
-        '@vueuse/components',
-        '@vueuse/core',
-        'dayjs',
-        'lodash',
-        'vue',
-        'vue-i18n',
-        'zod',
-        'vue-router',
-      ],
+      external: ['vue', '@vueuse/components', '@vueuse/core', 'dayjs', 'vue', 'vue-i18n', 'zod', 'vue-router'],
     },
   },
   css: {
@@ -51,13 +47,12 @@ export default defineConfig({
     },
     preprocessorOptions: {
       scss: {
-        api: 'modern-compiler',
         additionalData: `
           @use 'sass:map';
           @use 'sass:meta';
           @use 'sass:list';
           @use 'sass:string';
-          @use '@khsura/sui/styles/helpers' as *;
+          @use '@/app/styles/helpers' as *;
         `,
       },
     },

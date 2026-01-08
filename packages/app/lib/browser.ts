@@ -1,5 +1,5 @@
-import { cssVariables } from '@khsura/sui/constants'
 import { z } from 'zod'
+import { cssVariables } from '@/app/constants'
 
 export const getDocument = () => {
   return typeof document !== 'undefined' ? document : null

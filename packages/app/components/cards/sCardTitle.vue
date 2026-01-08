@@ -4,8 +4,8 @@
   </Component>
 </template>
 <script setup lang="ts">
-import { type PropsTag } from '@khsura/sui/definitions'
-import { useTagService } from '@khsura/sui/services'
+import { type PropsTag } from '@/app/definitions'
+import { useTagService } from '@/app/services'
 
 const props = defineProps<PropsTag>()
 const { tagName } = useTagService(props)

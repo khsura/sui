@@ -9,7 +9,7 @@
     </div>
     <!-- element.scroll does not work when scrollable prop changes, so used key to reload element -->
     <div ref="elementViewport" :key="canScroll ? 'touch' : 'non-touch'" :class="slideGroupMainClass" @scroll="onScroll">
-      <div ref="elementSlidesContainer" class="s_slideGroup__content" v-bind="contentAttrs">
+      <div class="s_slideGroup__content" v-bind="contentAttrs">
         <slot></slot>
       </div>
     </div>
@@ -25,29 +25,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import SButton from '@khsura/sui/components/sButton.vue'
-import SIcon from '@khsura/sui/components/sIcon.vue'
-import type { PropsSlideGroup } from '@khsura/sui/definitions'
-import { useSlideGroupService } from '@khsura/sui/services'
-import { type GroupItemValue } from '@khsura/sui/types'
+import { computed, onMounted, ref, useTemplateRef } from 'vue'
+import SButton from '@/app/components/sButton.vue'
+import SIcon from '@/app/components/sIcon.vue'
+import type { PropsSlideGroup } from '@/app/definitions'
+import { useSlideGroupService } from '@/app/services'
+import { type GroupItemValue } from '@/app/types'
 
 const isReady = ref(false)
 const props = defineProps<PropsSlideGroup>()
 const model = defineModel<GroupItemValue[]>({ default: [], required: false })
+const elementViewport = useTemplateRef('elementViewport')
 
-const {
-  isNavigatorVisible,
-  canGoNext,
-  canGoPrevious,
-  canScroll,
-  elementViewport,
-  elementSlidesContainer,
-  contentAttrs,
-  next,
-  prev,
-  onScroll,
-} = useSlideGroupService(props, model)
+const { isNavigatorVisible, canGoNext, canGoPrevious, canScroll, contentAttrs, next, prev, onScroll } =
+  useSlideGroupService(props, model, elementViewport)
 
 const slideGroupMainClass = computed(() => {
   return {

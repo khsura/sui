@@ -1,5 +1,5 @@
-import { type DatePickerTypeType } from '@khsura/sui/types/datePicker'
 import { type PropsColor, type PropsMeasurableStyles } from './core'
+import { type DatePickerTypeType } from '@/app/types'
 
 export type PropsDatePicker = {
   type: DatePickerTypeType

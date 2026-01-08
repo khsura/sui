@@ -1,4 +1,4 @@
-import type { LocationRaw } from '@khsura/sui/types'
+import type { LocationRaw } from '@/app/types'
 
 export type PropsLocation = {
   location?: LocationRaw | null | undefined

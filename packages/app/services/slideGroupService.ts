@@ -1,26 +1,27 @@
-import { computed, ref, watch, type ModelRef } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { type PropsSlideGroup } from '@khsura/sui/definitions'
-import { wait } from '@khsura/sui/lib'
-import { type GroupItemValue } from '@khsura/sui/types'
-import { useContentService, useProviderService } from './core'
+import { computed, provide, ref, watch, type ModelRef, type Ref } from 'vue'
+import { useContentService } from './core'
 import { useDisplayService } from './displayService'
 import { useGroupService } from './groupService'
 import { useScrollService } from './scrollService'
+import { ProviderPropsName } from '@/app/configs'
+import { type PropsSlideGroup } from '@/app/definitions'
+import { wait } from '@/app/lib'
+import { type GroupItemValue } from '@/app/types'
 
-export const useSlideGroupService = (props: PropsSlideGroup, model: ModelRef<GroupItemValue[]>) => {
+export const useSlideGroupService = (
+  props: PropsSlideGroup,
+  model: ModelRef<GroupItemValue[]>,
+  elementViewport: Ref<HTMLElement | null>,
+) => {
   const { isTouchDevice, width } = useDisplayService()
   const { smoothElementScroll } = useScrollService()
   const { items, clickValue } = useGroupService(props, model)
-  const { provideProps } = useProviderService()
   const { attrs: contentAttrs } = useContentService(props)
 
-  provideProps(ProviderPropsName.slideGroupProps, props)
+  provide(ProviderPropsName.slideGroupProps, props)
 
   const currentX = ref<number>(0)
   const isNavigating = ref<boolean>(false)
-  const elementViewport = ref<HTMLElement | null>(null)
-  const elementSlidesContainer = ref<HTMLElement | null>(null)
 
   const getIndexFromX = (currentX: number, addX = 0) => {
     const nextX = currentX + addX
@@ -162,8 +163,6 @@ export const useSlideGroupService = (props: PropsSlideGroup, model: ModelRef<Gro
   )
 
   return {
-    elementViewport,
-    elementSlidesContainer,
     isNavigating,
     canGoPrevious,
     canGoNext,

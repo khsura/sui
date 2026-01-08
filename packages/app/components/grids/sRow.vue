@@ -7,9 +7,9 @@
 </template>
 <script lang="ts" setup>
 import { type CSSProperties, computed } from 'vue'
-import { getCleanSetObject, getNumericCssAttribute } from '@khsura/sui/lib'
-import { useContentService } from '@khsura/sui/services'
-import { type PropsRow } from '@khsura/sui/definitions'
+import { getCleanSetObject, getNumericCssAttribute } from '@/app/lib'
+import { useContentService } from '@/app/services'
+import { type PropsRow } from '@/app/definitions'
 
 const props = defineProps<PropsRow>()
 const content = useContentService(props)

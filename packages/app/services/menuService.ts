@@ -1,13 +1,17 @@
-import { computed, ref, type Ref } from 'vue'
-import { type PropsMenu } from '@khsura/sui/definitions'
-import { getCleanSetObject, getDocument, getNumericCssAttribute, getViewportLocation, getWindow } from '@khsura/sui/lib'
-import { type MenuContentStyle } from '@khsura/sui/types'
+import { computed, ref, type ComponentPublicInstance, type Ref, type ShallowRef } from 'vue'
 import { usePositionService } from './positionService'
 import { useActivatorService, useContentService, useLocationService } from './core'
+import { type PropsMenu } from '@/app/definitions'
+import { getCleanSetObject, getDocument, getNumericCssAttribute, getViewportLocation, getWindow } from '@/app/lib'
+import { type MenuContentStyle } from '@/app/types'
 
 export const useMenuService = (
   props: PropsMenu,
   model: Ref<boolean | undefined, string>,
+  templateRefs: {
+    activatorElement: Readonly<ShallowRef<HTMLElement | null>>
+    contentElement: Readonly<ShallowRef<HTMLElement | ComponentPublicInstance | null>>
+  },
   options?: {
     noContentMinWidth?: boolean
     offset?: number
@@ -22,11 +26,23 @@ export const useMenuService = (
   const top = ref(0)
   const left = ref(0)
   const minWidth = ref<number | null>(null)
-  const activatorService = useActivatorService(props, model)
+  const activatorService = useActivatorService(props, model, templateRefs.activatorElement)
   const { classListPosition } = usePositionService(props)
 
+  const getContentHTMLElement = (element: HTMLElement | ComponentPublicInstance | null) => {
+    if (!element) {
+      return null
+    }
+
+    if (element instanceof HTMLElement) {
+      return element
+    }
+
+    return element.$el
+  }
+
   const getContentLocation = () => {
-    const element = activatorService.contentElement.value
+    const element = getContentHTMLElement(templateRefs.contentElement.value)
     const activatorLocation = activatorService.getActivatorLocation()
     const viewportLocation = getViewportLocation()
 

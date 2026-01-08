@@ -1,5 +1,3 @@
-export * from './core'
-export * from './appProviderRepository'
 export * from './calendarRepository'
 export * from './colorRepository'
 export * from './columnRepository'

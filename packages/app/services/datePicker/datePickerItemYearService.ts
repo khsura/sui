@@ -1,8 +1,8 @@
 import { computed } from 'vue'
-import { type PropsDatePickerItem } from '@khsura/sui/definitions'
-import { type DatePickerItemEmits } from '@khsura/sui/types'
-import dayjs from '@khsura/sui/vendors/dayjs'
 import { useDatePickerItemCoreService } from './datePickerItemCoreService'
+import { type PropsDatePickerItem } from '@/app/definitions'
+import { type DatePickerItemEmits } from '@/app/types'
+import dayjs from '@/app/vendors/dayjs'
 
 export const useDatePickerItemYearService = (props: PropsDatePickerItem, emit: DatePickerItemEmits) => {
   const { today, selected, updateDate, min, max, dateObject } = useDatePickerItemCoreService(props, emit)

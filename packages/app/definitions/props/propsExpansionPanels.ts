@@ -1,4 +1,4 @@
-import { type MaterialDesignIcon, type SizePropertyType } from '@khsura/sui/types'
+import { type MaterialDesignIcon, type SizePropertyType } from '@/app/types'
 
 export type PropsExpansionPanels = {
   expandIcon?: MaterialDesignIcon

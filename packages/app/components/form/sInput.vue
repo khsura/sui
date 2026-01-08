@@ -68,13 +68,13 @@
 <script setup lang="ts">
 import { useSlots, ref } from 'vue'
 import { computed, type Slots } from 'vue'
-import { SColumn, SRow } from '@khsura/sui/components/grids'
-import { getNumericValue, getCleanSetObject } from '@khsura/sui/lib'
-import type { PropsInput } from '@khsura/sui/definitions'
-import { useColorRepository } from '@khsura/sui/repositories/colorRepository'
-import { useDisabledService, useFormInputService, useSizeService } from '@khsura/sui/services'
-import { type EmitFormTextInput } from '@khsura/sui/types'
 import { SFormInputError } from './common'
+import { SColumn, SRow } from '@/app/components/grids'
+import { getNumericValue, getCleanSetObject } from '@/app/lib'
+import type { PropsInput } from '@/app/definitions'
+import { useColorRepository } from '@/app/repositories/colorRepository'
+import { useDisabledService, useFormInputService, useSizeService } from '@/app/services'
+import { type EmitFormTextInput } from '@/app/types'
 
 const props = defineProps<PropsInput>()
 const emit = defineEmits<EmitFormTextInput<string | number | null>>()
@@ -313,7 +313,7 @@ $s_input--fontSizes: (
 $inputPadding: calc($s_spacer * 2);
 
 @mixin denseRightInput {
-  &::placeholder {
+  ::placeholder {
     padding-right: $s_spacer;
   }
   padding: $inputPadding 0;

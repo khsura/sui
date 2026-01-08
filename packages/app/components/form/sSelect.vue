@@ -1,5 +1,5 @@
 <template>
-  <div ref="selectElement" class="s_select" :class="selectClasses" :style="styleListBorder">
+  <div class="s_select" :class="selectClasses" :style="styleListBorder">
     <select :id="id" :value="modelValue" class="s_select__input" :name="name ?? undefined">
       <option v-for="(item, id) in objectItems" :key="id" :value="getItemValue(item)">{{ getItemText(item) }}</option>
     </select>
@@ -46,26 +46,33 @@
 </template>
 <script setup lang="ts">
 import { OnClickOutside } from '@vueuse/components'
-import { ref, computed, watch, nextTick } from 'vue'
-import SFormInputError from '@khsura/sui/components/form/common/sFormInputError.vue'
-import { SList, SListItem, SListItemContent, SListItemSubtitle } from '@khsura/sui/components/list'
-import SIcon from '@khsura/sui/components/sIcon.vue'
-import SOverlay from '@khsura/sui/components/sOverlay.vue'
-import { type PropsSelect } from '@khsura/sui/definitions'
-import { useBorderService, useDisabledService, useFormInputService, useMenuService } from '@khsura/sui/services'
-import { type SelectItem, type EmitFormInput } from '@khsura/sui/types'
+import { computed, watch, nextTick, useTemplateRef } from 'vue'
+import SFormInputError from '@/app/components/form/common/sFormInputError.vue'
+import { SList, SListItem, SListItemContent, SListItemSubtitle } from '@/app/components/list'
+import SIcon from '@/app/components/sIcon.vue'
+import SOverlay from '@/app/components/sOverlay.vue'
+import { type PropsSelect } from '@/app/definitions'
+import { useBorderService, useDisabledService, useFormInputService, useMenuService } from '@/app/services'
+import { type SelectItem, type EmitFormInput } from '@/app/types'
 
 const props = defineProps<PropsSelect>()
 const emit = defineEmits<EmitFormInput<string | number | null>>()
-const selectElement = ref<HTMLElement | null>(null)
 const { classListBorder, styleListBorder } = useBorderService(props)
 const model = defineModel<string | number | null>()
 const { errors, updateFormInput } = useFormInputService<string | number | null>(props, emit, model)
 const menuModel = defineModel<boolean>('menu')
 const { classListDisabled } = useDisabledService(props)
+const activatorElement = useTemplateRef('activatorElement')
+const contentElement = useTemplateRef('contentElement')
 
-const { activatorElement, activatorOn, contentElement, updateLocation, activatorAttrs, contentClasses, contentStyles } =
-  useMenuService(props, menuModel)
+const { activatorOn, updateLocation, activatorAttrs, contentClasses, contentStyles } = useMenuService(
+  props,
+  menuModel,
+  {
+    activatorElement,
+    contentElement,
+  },
+)
 
 const onClickOutside = () => {
   if (menuModel.value) {

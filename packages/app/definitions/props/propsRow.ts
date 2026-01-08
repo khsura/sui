@@ -1,5 +1,5 @@
-import type { GridAlignPropertyType, GridJustifyPropertyType } from '@khsura/sui/types'
 import type { PropsContent } from './core'
+import type { GridAlignPropertyType, GridJustifyPropertyType } from '@/app/types'
 
 export type PropsRow = PropsContent & {
   noGutters?: boolean | null | undefined

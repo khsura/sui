@@ -1,17 +1,15 @@
-import { computed } from 'vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { type PropsListMediaItem } from '@khsura/sui/definitions'
-import { useProviderRepository } from '@khsura/sui/repositories'
+import { computed, inject } from 'vue'
+import { ProviderPropsName } from '@/app/configs'
+import { type PropsListMediaItem } from '@/app/definitions'
 
 export const useListMediaItemService = (props: PropsListMediaItem, options: { componentName: string }) => {
-  const { injectParentProps } = useProviderRepository()
-  const listProps = injectParentProps(ProviderPropsName.listProps)
+  const listProps = inject(ProviderPropsName.listProps, null)
 
   const classes = computed(() => {
     return {
       [`s_${options.componentName}`]: true,
       [`s_${options.componentName}--align__center`]: props.alignCenter,
-      [`s_${options.componentName}--dense`]: listProps.value.dense ?? props.dense,
+      [`s_${options.componentName}--dense`]: listProps?.dense ?? props.dense,
     }
   })
 

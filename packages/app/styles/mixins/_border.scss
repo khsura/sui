@@ -4,15 +4,27 @@
 @use './dark';
 
 @mixin s_tile($important: false) {
-  border-radius: 0 if($important, !important, null);
+  @if $important {
+    border-radius: 0 !important;
+  } @else {
+    border-radius: 0;
+  }
 }
 
 @mixin s_borderRadius($r: null, $important: false) {
   // Key exists within the $rounded variable
   @if map.has-key(variables.$s_rounded, $r) {
-    border-radius: map.get(variables.$s_rounded, $r) if($important, !important, null);
+    @if $important {
+      border-radius: map.get(variables.$s_rounded, $r) !important;
+    } @else {
+      border-radius: map.get(variables.$s_rounded, $r);
+    }
   } @else {
-    border-radius: $r if($important, !important, null);
+    @if $important {
+      border-radius: $r !important;
+    } @else {
+      border-radius: $r;
+    }
   }
 }
 
@@ -20,9 +32,17 @@
   $className: &;
 
   @if $color {
-    border-bottom: variables.$s_underlined__borderWidth $color solid if($important, !important, null);
+    @if $important {
+      border-bottom: variables.$s_underlined__borderWidth $color solid !important;
+    } @else {
+      border-bottom: variables.$s_underlined__borderWidth $color solid;
+    }
   } @else {
-    border-bottom: $width tools.s_getAppColor('border') solid if($important, !important, null);
+    @if $important {
+      border-bottom: $width tools.s_getAppColor('border') solid !important;
+    } @else {
+      border-bottom: $width tools.s_getAppColor('border') solid;
+    }
   }
 }
 

@@ -5,8 +5,9 @@ export interface OnResizeObject {
   options: AddEventListenerOptions
 }
 
-export interface ResizeDirectiveBinding<V extends ResizeDirectiveBindingValue = ResizeDirectiveBindingValue>
-  extends Omit<DirectiveBinding<V>, 'modifiers'> {
+export interface ResizeDirectiveBinding<
+  V extends ResizeDirectiveBindingValue = ResizeDirectiveBindingValue,
+> extends Omit<DirectiveBinding<V>, 'modifiers'> {
   modifiers?: {
     active?: boolean
     quiet?: boolean

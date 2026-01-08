@@ -1,6 +1,6 @@
-import { type InputModeTypeText, type InputTypeText } from '@khsura/sui/types'
 import { type PropsFormInput } from './propsFormInput'
 import { type PropsSizePreset } from './propsSizePreset'
+import { type InputModeTypeText, type InputTypeText } from '@/app/types'
 
 export type PropsInput = {
   placeholder?: string | undefined | null

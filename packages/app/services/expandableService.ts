@@ -1,7 +1,7 @@
 import { provide } from 'vue'
-import { ProviderName } from '@khsura/sui/constants/provider'
-import { type PropsGroupItem } from '@khsura/sui/definitions'
 import { useGroupItemService } from './groupItemService'
+import { ProviderName } from '@/app/configs'
+import { type PropsGroupItem } from '@/app/definitions'
 
 export const useExpandableService = (props: PropsGroupItem) => {
   const { isSelected: isExpanded, toggleGroupItem: toggle } = useGroupItemService(props)

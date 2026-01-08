@@ -1,5 +1,5 @@
-import type { PropsDisabled } from '@khsura/sui/definitions/props/core/propsDisabled'
 import type { ComponentPublicInstance } from 'vue'
+import type { PropsDisabled } from './propsDisabled'
 
 export type PropsActivator = {
   activator?: string | HTMLElement | ComponentPublicInstance | null

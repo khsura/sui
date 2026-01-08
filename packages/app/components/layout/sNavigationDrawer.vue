@@ -18,10 +18,11 @@
   </SOverlay>
 </template>
 <script setup lang="ts">
-import { type Ref, computed, ref, getCurrentInstance, watch, onBeforeMount, onBeforeUnmount } from 'vue'
-import SOverlay from '@khsura/sui/components/sOverlay.vue'
-import { ProviderPropsName } from '@khsura/sui/constants'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
+import { type Ref, computed, ref, getCurrentInstance, watch, onBeforeMount, onBeforeUnmount, provide } from 'vue'
+import { onClickOutside } from '@vueuse/core'
+import SOverlay from '@/app/components/sOverlay.vue'
+import { ProviderPropsName } from '@/app/configs'
+import { getNumericCssAttribute } from '@/app/lib'
 import {
   useBackgroundScrollService,
   useDisplayService,
@@ -29,15 +30,13 @@ import {
   useLayoutService,
   useLocationService,
   usePositionService,
-  useProviderService,
   useResizeService,
   useScrollableService,
   useTouchService,
   useNavigationDrawerService,
-} from '@khsura/sui/services'
-import { type TouchWrapper } from '@khsura/sui/types'
-import { onClickOutside } from '@vueuse/core'
-import type { PropsNavigationDrawer } from '@khsura/sui/definitions'
+} from '@/app/services'
+import { type TouchWrapper } from '@/app/types'
+import type { PropsNavigationDrawer } from '@/app/definitions'
 
 const props = defineProps<PropsNavigationDrawer>()
 const { isBottom, isRight, computedLocation } = useLocationService(props)
@@ -104,7 +103,6 @@ const swipeRight = (e: TouchWrapper) => {
   }
 }
 
-const { provideProps } = useProviderService()
 const { mdAndUp } = useDisplayService()
 const { app, isApp } = useLayoutService(props)
 const { classListElevation } = useElevationService(props)
@@ -122,7 +120,7 @@ const { bindResizer, unbindResizer } = useResizeService(() => {
   model.value = !isMobile.value
 })
 
-provideProps(ProviderPropsName.navigationDrawerProps, props)
+provide(ProviderPropsName.navigationDrawerProps, props)
 
 const touchArea = ref({
   left: 0,
@@ -462,8 +460,8 @@ $s_navigationDrawerOverlayTransitionAnimations: (
     z-index: -1;
     width: 100%;
     height: 100%;
-    border-radius: inherit;
     contain: strict;
+    border-radius: inherit;
 
     .s_image {
       border-radius: inherit;

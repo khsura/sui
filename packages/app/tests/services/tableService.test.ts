@@ -1,9 +1,10 @@
 import { type Mutable } from '@vueuse/core'
-import { ref } from 'vue'
-import { useTableService } from '@khsura/sui/services'
-import { type TableRowClass } from '@khsura/sui/types'
-import { type PropsTable } from '@khsura/sui/definitions'
+import { ref, shallowRef } from 'vue'
 import { headers, items } from '../mocks/sTable'
+import { type STableHeadCell } from '@/app/components/table'
+import { type PropsTable } from '@/app/definitions'
+import { useTableService } from '@/app/services'
+import { type TableRowClass } from '@/app/types'
 
 const expanded = ref([items[3]])
 const selected = ref([items[2]])
@@ -38,10 +39,12 @@ const props: Mutable<PropsTable> = {
 }
 
 const emit = vi.fn().mockImplementation((_event, _value) => {})
+const headerElements = shallowRef<Array<InstanceType<typeof STableHeadCell> | null> | null>(null)
+const tableWrapperElement = shallowRef<HTMLDivElement | null>(null)
 
 describe('useTableService', () => {
   test('getItemRowClass', () => {
-    const { getItemRowClass } = useTableService(props, emit, itemsPerPage)
+    const { getItemRowClass } = useTableService(props, emit, itemsPerPage, headerElements, tableWrapperElement)
 
     expect(getItemRowClass({ item: items[0], cellType: 'cell' })).toStrictEqual({ dummyItemRowClass: true })
 
@@ -62,7 +65,7 @@ describe('useTableService', () => {
   })
 
   test('getIsSelected', () => {
-    const { getIsSelected } = useTableService(props, emit, itemsPerPage)
+    const { getIsSelected } = useTableService(props, emit, itemsPerPage, headerElements, tableWrapperElement)
 
     expect(getIsSelected(items[0])).toBe(false)
 
@@ -73,7 +76,7 @@ describe('useTableService', () => {
 
   test('getIsExpanded', () => {
     props.singleExpand = false
-    const { getIsExpanded } = useTableService(props, emit, itemsPerPage)
+    const { getIsExpanded } = useTableService(props, emit, itemsPerPage, headerElements, tableWrapperElement)
 
     expect(getIsExpanded(items[0])).toBe(true)
 
@@ -82,7 +85,7 @@ describe('useTableService', () => {
   })
 
   test('toggleExpanded', () => {
-    const { toggleExpanded } = useTableService(props, emit, itemsPerPage)
+    const { toggleExpanded } = useTableService(props, emit, itemsPerPage, headerElements, tableWrapperElement)
 
     expect(toggleExpanded(items[0])).toStrictEqual([items[3]])
 
@@ -91,7 +94,7 @@ describe('useTableService', () => {
   })
 
   test('toggleSelected', () => {
-    const { toggleSelected } = useTableService(props, emit, itemsPerPage)
+    const { toggleSelected } = useTableService(props, emit, itemsPerPage, headerElements, tableWrapperElement)
 
     expect(toggleSelected(items[1])).toStrictEqual([items[2]])
 
@@ -109,13 +112,13 @@ describe('useTableService', () => {
   })
 
   test('hasSubHeader return true if headers has colgroup', () => {
-    const { hasSubHeader } = useTableService(props, emit, itemsPerPage)
+    const { hasSubHeader } = useTableService(props, emit, itemsPerPage, headerElements, tableWrapperElement)
 
     expect(hasSubHeader.value).toBe(true)
   })
 
   test('computedAllHeaders should return headers with colspan and rowspan', () => {
-    const { computedAllHeaders } = useTableService(props, emit, itemsPerPage)
+    const { computedAllHeaders } = useTableService(props, emit, itemsPerPage, headerElements, tableWrapperElement)
 
     expect(computedAllHeaders.value[0]).toStrictEqual({
       text: '番号',
@@ -143,7 +146,13 @@ describe('useTableService', () => {
   })
 
   test('headersGroup should return two groups of headers', () => {
-    const { headersList: headersGroup } = useTableService(props, emit, itemsPerPage)
+    const { headersList: headersGroup } = useTableService(
+      props,
+      emit,
+      itemsPerPage,
+      headerElements,
+      tableWrapperElement,
+    )
 
     expect(headersGroup.value.length).toBe(2)
     expect(headersGroup.value[0].length).toBe(5)
@@ -151,20 +160,26 @@ describe('useTableService', () => {
   })
 
   test('computedColumnHeaders should return headers without colgroup', () => {
-    const { computedColumnHeaders } = useTableService(props, emit, itemsPerPage)
+    const { computedColumnHeaders } = useTableService(props, emit, itemsPerPage, headerElements, tableWrapperElement)
 
     expect(computedColumnHeaders.value.length).toBe(7)
   })
 
   test('totalItemColumns should return total number of columns', () => {
-    const { totalItemColumns } = useTableService(props, emit, itemsPerPage)
+    const { totalItemColumns } = useTableService(props, emit, itemsPerPage, headerElements, tableWrapperElement)
 
     expect(totalItemColumns.value).toBe(7)
   })
 
   describe('isStickActive', () => {
     test('isStickActive should return false if column props are not set', () => {
-      const { isLeftStickActive: isStickActive } = useTableService(props, emit, itemsPerPage)
+      const { isLeftStickActive: isStickActive } = useTableService(
+        props,
+        emit,
+        itemsPerPage,
+        headerElements,
+        tableWrapperElement,
+      )
 
       expect(isStickActive.value).toBe(false)
     })
@@ -176,6 +191,8 @@ describe('useTableService', () => {
         { ...props, stickyLeftColumnsStart: 0, stickyLeftColumnsSize: 1 },
         emit,
         itemsPerPage,
+        headerElements,
+        tableWrapperElement,
       )
 
       onHorizontalScroll(10)
@@ -189,6 +206,8 @@ describe('useTableService', () => {
         { ...props, stickyLeftColumnsStart: 0, stickyLeftColumnsSize: 0 },
         emit,
         itemsPerPage,
+        headerElements,
+        tableWrapperElement,
       )
 
       onHorizontalScroll(10)

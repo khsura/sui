@@ -1,9 +1,9 @@
 import { computed } from 'vue'
-import { DatePickerSelectType } from '@khsura/sui/constants/datePicker'
-import { type PropsDatePickerItemSwitch } from '@khsura/sui/definitions'
-import { getDatePickerSwitchType } from '@khsura/sui/repositories/datePicker'
-import { type DatePickerItemEmits, type DatePickerSelectTypeType, type DatePickerSwitchType } from '@khsura/sui/types'
 import { useDatePickerItemCoreService } from './datePickerItemCoreService'
+import { DatePickerSelectType } from '@/app/constants/datePicker'
+import { type PropsDatePickerItemSwitch } from '@/app/definitions'
+import { getDatePickerSwitchType } from '@/app/repositories/datePicker'
+import { type DatePickerItemEmits, type DatePickerSelectTypeType, type DatePickerSwitchType } from '@/app/types'
 
 export const useDatePickerItemSwitchService = (props: PropsDatePickerItemSwitch, emit: DatePickerItemEmits) => {
   const { updateDate, date, updateSelectedType, min, max } = useDatePickerItemCoreService(props, emit)

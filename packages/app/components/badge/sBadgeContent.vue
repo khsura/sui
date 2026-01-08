@@ -18,10 +18,10 @@
 </template>
 <script setup lang="ts">
 import { ref, computed, watch, nextTick } from 'vue'
-import SIcon from '@khsura/sui/components/sIcon.vue'
-import type { PropsBadge } from '@khsura/sui/definitions'
-import { getNumericCssAttribute } from '@khsura/sui/lib'
-import { useColorService } from '@khsura/sui/services'
+import SIcon from '@/app/components/sIcon.vue'
+import type { PropsBadge } from '@/app/definitions'
+import { getNumericCssAttribute } from '@/app/lib'
+import { useColorService } from '@/app/services'
 
 const props = defineProps<PropsBadge>()
 const contentChanged = ref(false)

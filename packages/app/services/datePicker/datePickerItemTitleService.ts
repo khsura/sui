@@ -1,7 +1,7 @@
 import { computed } from 'vue'
-import { type PropsDatePickerItemTitle } from '@khsura/sui/definitions'
-import { type DatePickerItemEmits } from '@khsura/sui/types'
 import { useDatePickerItemCoreService } from './datePickerItemCoreService'
+import { type PropsDatePickerItemTitle } from '@/app/definitions'
+import { type DatePickerItemEmits } from '@/app/types'
 
 export const useDatePickerItemTitleService = (props: PropsDatePickerItemTitle, emit: DatePickerItemEmits) => {
   const { date, updateSelectedType, isLastSelectType } = useDatePickerItemCoreService(props, emit)

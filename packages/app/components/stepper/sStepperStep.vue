@@ -14,13 +14,16 @@
 </template>
 <script setup lang="ts">
 import { inject, watch, onMounted, onUnmounted, computed } from 'vue'
-import { ProviderName, ProviderPropsName } from '@khsura/sui/constants'
-import type { PropsStepperStep } from '@khsura/sui/definitions'
-import { useProviderService } from '@khsura/sui/services'
+import { ProviderName, ProviderPropsName } from '@/app/configs'
+import type { PropsStepperStep } from '@/app/definitions'
 
 const props = defineProps<PropsStepperStep>()
-const { injectParentProps } = useProviderService()
-const stepperStepsProp = injectParentProps(ProviderPropsName.stepperProps)
+const stepperStepsProp = inject(ProviderPropsName.stepperProps, null)
+
+if (!stepperStepsProp) {
+  throw new Error('Stepper props not found')
+}
+
 const registerStep = inject(ProviderName.stepperRegisterStepperStep, (_: number) => true)
 const unregisterStep = inject(ProviderName.stepperUnregisterStepperStep, (_: number) => true)
 const updateStepperStepsValue = inject(ProviderName.stepperUpdateValue, (_: number) => true)
@@ -37,11 +40,11 @@ onMounted(() => registerStep(props.step))
 onUnmounted(() => unregisterStep(props.step))
 
 const isVisited = computed(() => {
-  return stepperStepsProp.value.modelValue && stepperStepsProp.value.modelValue > props.step
+  return stepperStepsProp.modelValue && stepperStepsProp.modelValue > props.step
 })
 
 const isCurrent = computed(() => {
-  return stepperStepsProp.value.modelValue === props.step
+  return stepperStepsProp.modelValue === props.step
 })
 
 const classList = computed(() => {
