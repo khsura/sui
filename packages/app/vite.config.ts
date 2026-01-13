@@ -38,7 +38,7 @@ export default defineConfig({
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.
-      external: ['vue', '@vueuse/components', '@vueuse/core', 'dayjs', 'vue', 'vue-i18n', 'zod', 'vue-router'],
+      external: ['vue', '@vueuse/components', '@vueuse/core', 'dayjs', 'vue', 'vue-i18n', 'zod', 'vue-router', 'uuid'],
     },
   },
   css: {

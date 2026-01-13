@@ -400,12 +400,6 @@ export const useTableService = <T extends TableItem = TableItem>(
 
     const cell = getCellInfo(header)
 
-    if (cell?.isSticked) {
-      console.log('cell', cell)
-      console.log('store.width', store.width)
-      console.log('tableId.value', tableId.value)
-    }
-
     if (!cell?.isSticked || !store.width || !tableId.value) {
       return undefined
     }
