@@ -18,6 +18,7 @@ export interface CalendarEmitEvents {
   (event: 'change', value: { start: CalendarDate; end: CalendarDate }): void
   (event: 'click:event', value: { date: CalendarDate; event: CalendarEvent }): void
   (event: 'click:date', value: { date: CalendarDate; events: CalendarEvent[] }): void
+  (event: 'click:time', value: { date: CalendarDate; events: CalendarEvent[] }): void
 }
 
 export interface CalendarEvent {
