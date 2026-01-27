@@ -17,7 +17,7 @@
   </ul>
 </template>
 <script setup lang="ts">
-import { ref, computed, inject } from 'vue'
+import { computed, inject } from 'vue'
 import { type PropType } from 'vue'
 import SList from './sList.vue'
 import SListItem from './sListItem.vue'
@@ -27,8 +27,6 @@ import SListItemSubtitle from './sListItemSubtitle.vue'
 import SListItemTitle from './sListItemTitle.vue'
 import SIcon from '@/app/components/sIcon.vue'
 import { ProviderPropsName } from '@/app/configs'
-import { getNumericCssAttribute } from '@/app/lib'
-import { useExpandableItemCoreService } from '@/app/services'
 
 defineProps({
   title: {
@@ -41,18 +39,16 @@ defineProps({
   },
 })
 
-const isExpanded = ref(false)
+const isExpanded = defineModel<boolean>({ default: false })
 const listProps = inject(ProviderPropsName.listProps, null)
 
 if (!listProps) {
   throw new Error('List props not found')
 }
 
-const { maxHeight } = useExpandableItemCoreService(isExpanded)
-
 const contentStyles = computed(() => {
   return {
-    maxHeight: getNumericCssAttribute(maxHeight.value),
+    maxHeight: isExpanded.value ? null : '0px',
     overflow: 'hidden',
     display: isExpanded.value ? 'block' : 'none',
   }
