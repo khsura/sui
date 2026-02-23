@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.9](https://github.com/khsura/sui/compare/root-v1.5.8...root-v1.5.9) (2026-02-23)
+
+
+### Bug Fixes
+
+* button style ([966f725](https://github.com/khsura/sui/commit/966f7254905bea51db07570e30ee9d57884c36a2))
+* radio button type ([2cb2173](https://github.com/khsura/sui/commit/2cb2173ecbbc7b0fe53aabc9761daeef1e6e9a4d))
+
 ## [1.5.8](https://github.com/khsura/sui/compare/root-v1.5.7...root-v1.5.8) (2026-02-23)
 
 
