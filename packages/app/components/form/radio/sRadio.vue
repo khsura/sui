@@ -21,15 +21,15 @@ import { computed, inject, nextTick, useId } from 'vue'
 import { ProviderPropsName } from '@/app/configs'
 import { useBorderService, useDisabledService, useSingleGroupItemService } from '@/app/services'
 import type { PropsBorder, PropsDisabled, PropsSingleGroupItem } from '@/app/definitions'
-import type { ButtonType } from '@/app/constants'
 import { getButtonType } from '@/app/lib/button'
+import type { ButtonTypeType } from '@/app/types'
 
 const props = defineProps<
   {
     id?: string
     name?: string | null
     label?: string | null
-    type?: ButtonType
+    type?: ButtonTypeType
   } & PropsDisabled &
     PropsSingleGroupItem &
     PropsBorder
