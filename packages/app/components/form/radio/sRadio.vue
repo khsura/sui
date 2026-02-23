@@ -1,8 +1,8 @@
 <template>
   <div :class="classList" :style="styleListBorder">
-    <button :class="classListButton" @click="updateValue">
+    <button :class="classListButton" @click="updateValue" :type="getButtonType(type)">
       <input
-        :id="id"
+        :id="computedId"
         type="radio"
         :name="groupProps?.name ?? name ?? undefined"
         :value="value"
@@ -17,16 +17,19 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, inject, nextTick } from 'vue'
+import { computed, inject, nextTick, useId } from 'vue'
 import { ProviderPropsName } from '@/app/configs'
 import { useBorderService, useDisabledService, useSingleGroupItemService } from '@/app/services'
 import type { PropsBorder, PropsDisabled, PropsSingleGroupItem } from '@/app/definitions'
+import type { ButtonType } from '@/app/constants'
+import { getButtonType } from '@/app/lib/button'
 
 const props = defineProps<
   {
-    id: string
+    id?: string
     name?: string | null
     label?: string | null
+    type?: ButtonType
   } & PropsDisabled &
     PropsSingleGroupItem &
     PropsBorder
@@ -35,6 +38,8 @@ const props = defineProps<
 const emit = defineEmits<(event: 'update:checked', value: boolean) => void>()
 const groupProps = inject(ProviderPropsName.radioGroupProps)
 const { toggleGroupItem, isSelected } = useSingleGroupItemService(props)
+const generatedId = useId()
+const computedId = computed(() => props.id ?? generatedId)
 
 const { classListDisabled } = useDisabledService(
   computed(() => {

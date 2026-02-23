@@ -3,7 +3,7 @@
     :is="tagName"
     :disabled="disabled || loading"
     :class="classList"
-    :type="type"
+    :type="getButtonType(type)"
     :style="styleList"
     :href="href"
     :to="to"
@@ -33,6 +33,7 @@ import {
   useTextColorService,
 } from '@/app/services'
 import { ProviderPropsName } from '@/app/configs'
+import { getButtonType } from '@/app/lib/button'
 
 const props = withDefaults(defineProps<PropsButton>(), {
   tag: 'button',

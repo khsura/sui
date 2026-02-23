@@ -10,9 +10,10 @@ import {
 } from './core'
 import { type PropsSingleGroupItem } from './propsSingleGroupItem'
 import { type PropsSizePreset } from './propsSizePreset'
+import type { ButtonTypeType } from '@/app/types'
 
 export type PropsButton = {
-  type?: 'button' | 'reset' | 'submit'
+  type?: ButtonTypeType
   loading?: boolean
   block?: boolean
   rounded?: boolean
