@@ -268,12 +268,9 @@ const getExpandedClass = () => {
 
 const updateTableDebounce = useDebounceFn(() => updateTable(), 10)
 
-watch(
-  [() => props.dense, () => props.outlined, () => props.headers, () => props.items, isLeftStickActive],
-  async () => {
-    await updateTableDebounce()
-  },
-)
+watch([() => props.dense, () => props.outlined, () => props.headers, () => props.items], async () => {
+  await updateTableDebounce()
+})
 
 const updateOptions = (pageIndex: number, itemsPerPage: number | undefined) => {
   if (!itemsPerPage) return

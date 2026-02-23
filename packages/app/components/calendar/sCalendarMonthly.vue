@@ -20,6 +20,10 @@
           :class="{
             s_calendarMonthly__dateButton: true,
             's_calendarMonthly__dateButton--today': date.isToday,
+            ...dateButtonClasses(date),
+          }"
+          :style="{
+            ...dateButtonStyles(date),
           }"
           @click="onClickDate(getEvents(date))"
         >
@@ -42,10 +46,9 @@
           @click="event ? onClickEvent(getEvent(date, event)) : undefined"
         >
           <slot name="event" :event="event">
-            <div v-html="event?.isStartDate || event?.isWeekStart ? event.title : '&nbsp;'"></div>
+            <div v-html="event?.isStartDate || event?.isWeekStart ? event.name : '&nbsp;'"></div>
           </slot>
         </div>
-        <!-- eslint-enable vue/no-v-html -->
       </div>
     </div>
   </div>
@@ -53,39 +56,46 @@
 <script setup lang="ts">
 import SButton from '@/app/components/sButton.vue'
 import type { PropsCalendarMonthly } from '@/app/definitions'
-import { useCalendarMonthlyService } from '@/app/services'
-import { type CalendarDate, type CalendarEvent } from '@/app/types'
+import { useCalendarMonthlyService, useColorService, useCalendarEventHandlers } from '@/app/services'
+import type { CalendarEmitEvents, CalendarEvent } from '@/app/types'
 
 const props = defineProps<PropsCalendarMonthly>()
-
-const emit = defineEmits<{
-  (event: 'change', value: { start: CalendarDate; end: CalendarDate }): void
-  (event: 'click:event', value: { date: CalendarDate; event: CalendarEvent }): void
-  (event: 'click:date', value: { date: CalendarDate; events: CalendarEvent[] }): void
-}>()
-
+const emit = defineEmits<CalendarEmitEvents>()
 const { dates, days, eventPadding } = useCalendarMonthlyService(props)
+const { classListColor, styleListColor } = useColorService(props)
+
+const {
+  getEvents: getEventsHandler,
+  getEvent: getEventHandler,
+  onClickEvent,
+  onClickDate,
+} = useCalendarEventHandlers(emit)
 
 const getEvents = (date: (typeof dates.value)[0]) => {
-  return {
-    date: date.date,
-    events: date.events.filter((event) => event) as CalendarEvent[],
-  }
+  return getEventsHandler(date.date, date.events.filter((event) => event) as CalendarEvent[])
 }
 
 const getEvent = (date: (typeof dates.value)[0], event: CalendarEvent) => {
-  return {
-    date: date.date,
-    event,
+  return getEventHandler(date.date, event)
+}
+
+const dateButtonClasses = (date: (typeof dates.value)[0]) => {
+  if (props.focus === date.date.date) {
+    return {
+      's_calendarMonthly__dateButton--selected': true,
+      ...classListColor.value,
+    }
   }
+
+  return {}
 }
 
-const onClickEvent = (value: { date: CalendarDate; event: CalendarEvent }) => {
-  emit('click:event', value)
-}
-
-const onClickDate = (value: { date: CalendarDate; events: CalendarEvent[] }) => {
-  emit('click:date', value)
+const dateButtonStyles = (date: (typeof dates.value)[0]) => {
+  if (props.focus === date.date.date) {
+    return {
+      ...styleListColor.value,
+    }
+  }
 }
 </script>
 <style lang="scss">
@@ -118,13 +128,15 @@ const onClickDate = (value: { date: CalendarDate; events: CalendarEvent[] }) => 
   &__date {
     padding: 4px;
     text-align: center;
+  }
 
-    &Button {
-      padding: 16px;
+  &__dateButton {
+    padding: 16px;
 
-      &--today {
-        font-weight: 700;
-      }
+    &--today {
+      font-weight: 700;
+      background-color: transparent;
+      border: 1px solid s_getAppColor('border');
     }
   }
 
@@ -158,10 +170,6 @@ const onClickDate = (value: { date: CalendarDate; events: CalendarEvent[] }) => 
     white-space: nowrap;
     cursor: pointer;
 
-    &:hover {
-      opacity: 0.8;
-    }
-
     &--start {
       z-index: 1;
       margin-left: v-bind(eventPadding);
@@ -177,6 +185,10 @@ const onClickDate = (value: { date: CalendarDate; events: CalendarEvent[] }) => 
     &--weekEnd {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
+    }
+
+    &:hover {
+      opacity: 0.8;
     }
   }
 }

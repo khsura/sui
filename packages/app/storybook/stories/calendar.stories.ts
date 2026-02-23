@@ -3,14 +3,37 @@ import { action } from 'storybook/actions'
 import type { Meta } from '@storybook/vue3-vite'
 import { defineComponent, ref } from 'vue'
 import type { CalendarComponent, CalendarDate, CalendarEvent } from '@/app/index'
-import { SToolbar, SButton, SIcon, SToolbarTitle, SCalendar } from '@/app/index'
+import {
+  SToolbar,
+  SButton,
+  SIcon,
+  SToolbarTitle,
+  SCalendar,
+  SSpacer,
+  SToggleButtonGroup,
+  SToggleButton,
+} from '@/app/index'
 import dayjs from '@/app/vendors/dayjs'
 import { createStoryObj } from '@/app/storybook/helpers'
+import { argTypesColor } from '@/app/storybook/argTypes'
 
 const calendar: Meta<typeof SCalendar> = {
   title: 'UI Components/Calendar',
   component: SCalendar,
   argTypes: {
+    ...argTypesColor,
+    type: {
+      control: {
+        type: 'select',
+      },
+      options: ['month', 'week'],
+    },
+    eventOverlapMode: {
+      control: {
+        type: 'select',
+      },
+      options: ['column', 'stacked'],
+    },
     eventColor: {
       type: 'string',
       control: {
@@ -35,6 +58,7 @@ export const Calendar = createStoryObj<typeof SCalendar>({
     type: 'month',
     'onClick:event': action('click:event'),
     'onClick:date': action('click:date'),
+    'onClick:time': action('click:time'),
     onChange: action('change'),
     eventColor: (event: CalendarEvent) => {
       return event.color
@@ -42,9 +66,10 @@ export const Calendar = createStoryObj<typeof SCalendar>({
   },
   render: (args) =>
     defineComponent({
-      components: { SCalendar, SToolbar, SButton, SToolbarTitle, SIcon },
+      components: { SCalendar, SToolbar, SButton, SToolbarTitle, SIcon, SSpacer, SToggleButtonGroup, SToggleButton },
       setup() {
         const focus = ref('')
+        const type = ref<'month' | 'week'>('month')
         const calendar = ref<CalendarComponent | null>(null)
         const events = ref<CalendarEvent[]>([])
         const colors = ref(['blue', 'indigo', 'purple', 'crimson', 'green', 'orange', 'grey'])
@@ -59,7 +84,7 @@ export const Calendar = createStoryObj<typeof SCalendar>({
           const min = new Date(`${start.date}T00:00:00`)
           const max = new Date(`${end.date}T23:59:59`)
           const days = (max.getTime() - min.getTime()) / 86400000
-          const eventCount = getRandomNumber(days, days + 20)
+          const eventCount = getRandomNumber(days, days * 20)
 
           for (let i = 0; i < eventCount; i++) {
             const allDay = getRandomNumber(0, 3) === 0
@@ -104,6 +129,7 @@ export const Calendar = createStoryObj<typeof SCalendar>({
           events,
           focus,
           updateEvents,
+          type,
           calendar,
           arrowLeft: 'mdi-chevron-left',
           arrowRight: 'mdi-chevron-right',
@@ -119,14 +145,21 @@ export const Calendar = createStoryObj<typeof SCalendar>({
             <SButton @click="calendar?.next()" icon size="large">
               <SIcon :icon="arrowRight" size="large"></SIcon>
             </SButton>
+            <SSpacer></SSpacer>
+            <SToggleButtonGroup :model-value="[type]" @update:model-value="type = $event[0]" mandatory>
+              <SToggleButton key="month">Month</SToggleButton>
+              <SToggleButton key="week">Week</SToggleButton>
+            </SToggleButtonGroup>
           </SToolbar>
           <SCalendar
             ref="calendar"
             v-bind="args"
+            :type="type"
             v-model:focus="focus"
             :events="events"
             @change="updateEvents"
           ></SCalendar>
+          <pre>focus: {{ focus }}</pre>
           <pre style="max-height: 400px; overflow-y: auto;"><code>{{ events }}</code></pre>
         </div>
       `,

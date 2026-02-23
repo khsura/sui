@@ -1,20 +1,15 @@
 import { computed } from 'vue'
+import {
+  type CalendarEventExtended,
+  filterEventsForDate,
+  processCalendarEvent,
+  sortEvents,
+} from './calendarEventService'
 import { type PropsCalendarMonthly } from '@/app/definitions'
 import { getCalendarDate } from '@/app/repositories/calendarRepository'
 import { useColorRepository } from '@/app/repositories/colorRepository'
-import { type CalendarDate, type CalendarEvent } from '@/app/types'
+import { type CalendarDate } from '@/app/types'
 import dayjs from '@/app/vendors/dayjs'
-
-type CalendarEventExtended = CalendarEvent & {
-  isStartDate: boolean
-  isEndDate: boolean
-  title: string
-  id: number
-  isWeekStart: boolean
-  isWeekEnd: boolean
-  class: Record<string, boolean>
-  style: Record<string, string>
-}
 
 export const useCalendarMonthlyService = (props: PropsCalendarMonthly) => {
   const today = dayjs()
@@ -52,65 +47,20 @@ export const useCalendarMonthlyService = (props: PropsCalendarMonthly) => {
         date: CalendarDate
       }>((_, i) => {
         const target = startDateOfMonth.value.add(i, 'days')
+        const filteredEvents = filterEventsForDate(props.events, target)
 
-        const events: CalendarEventExtended[] = (props.events ?? [])
-          .map((event, id) => {
-            return {
-              ...event,
-              id,
-            }
-          })
-          .filter((event) => {
-            return target.isBetween(event.start, event.end ?? event.start, 'day', '[]')
-          })
-          .map<CalendarEventExtended>((event) => {
-            const startDate = dayjs(event.start)
-            const endDate = dayjs(event.end ?? event.start)
-            const isStartDate = startDate.isSame(target, 'day')
-            const isEndDate = endDate.isSame(target, 'day')
-            const diffBetweenStartAndEnd = endDate.diff(startDate, 'day')
-            const diffBetweenTargetAndEnd = endDate.diff(target, 'day')
-            const isWeekStart = !isStartDate && target.day() === 0
-            const diff = isWeekStart ? diffBetweenTargetAndEnd : diffBetweenStartAndEnd
-            const isLastOverflow = diff + 1 < 7 - target.day()
-            const isWeekEnd = !isEndDate && !isLastOverflow && target.day() === 6
-            const padding = !isLastOverflow ? eventPadding : isWeekStart ? eventPadding : eventPadding * 2
-            const displaySize = isStartDate || isWeekStart ? Math.min(diff + 1, 7 - target.day()) : 0
-            const displayWidth = `calc(${displaySize * 100}% - ${padding}px)`
-            const hasColorAttributes = isStartDate || isWeekStart
-            const color = props.eventColor ? props.eventColor(event) : event.color
-            const colorAttributes = getBackgroundColorAttributes(color)
-
-            const outputEvent: CalendarEventExtended = {
-              ...event,
-              isStartDate,
-              isWeekStart,
-              isWeekEnd,
-              isEndDate,
-              title: `${event.timed ? startDate.format('H:mm') + ' ' : ''}${event.name}`,
-              style: {
-                ...(hasColorAttributes ? colorAttributes.style : {}),
-                width: displayWidth,
-              },
-              class: {
-                ...(hasColorAttributes ? colorAttributes.class : {}),
-              },
-            }
-
-            return outputEvent
-          })
-
-        events.sort((a, b) => {
-          if (!a.timed) {
-            return -1
-          }
-
-          if (!b.timed) {
-            return 1
-          }
-
-          return 0
-        })
+        const events = sortEvents(
+          filteredEvents.map((event, id) =>
+            processCalendarEvent({
+              target,
+              event,
+              eventId: id,
+              eventColor: props.eventColor,
+              isWeekly: false,
+              getBackgroundColorAttributes,
+            }),
+          ),
+        )
 
         return {
           isToday: today.isSame(target, 'day'),

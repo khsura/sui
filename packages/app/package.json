@@ -1,6 +1,6 @@
 {
   "name": "@khsura/sui",
-  "version": "1.7.7",
+  "version": "1.7.8-beta.5",
   "type": "module",
   "scripts": {
     "prebuild": "yarn g:rimraf dist && yarn g:rimraf @types",
@@ -41,18 +41,19 @@
     "@vueuse/components": "^14.1.0",
     "@vueuse/core": "^14.1.0",
     "dayjs": "^1.11.19",
+    "uuid": "^13.0.0",
     "vue": "^3.5.26",
-    "vue-i18n": "^11.2.7",
-    "zod": "^4.2.1"
+    "vue-i18n": "^11.2.8",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
-    "@storybook/addon-docs": "^10.1.10",
-    "@storybook/addon-links": "^10.1.10",
-    "@storybook/vue3-vite": "^10.1.10",
-    "@types/lodash.merge": "^4",
-    "eslint-plugin-storybook": "10.1.10",
+    "@storybook/addon-docs": "^10.1.11",
+    "@storybook/addon-links": "^10.1.11",
+    "@storybook/vue3-vite": "^10.1.11",
+    "@types/lodash.merge": "^4.6.9",
+    "eslint-plugin-storybook": "10.1.11",
     "http-server": "^14.1.1",
     "lodash.merge": "^4.6.2",
-    "storybook": "^10.1.10"
+    "storybook": "^10.1.11"
   }
 }
