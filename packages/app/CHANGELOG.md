@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.10](https://github.com/khsura/sui/compare/sui-v1.7.9...sui-v1.7.10) (2026-02-23)
+
+
+### Bug Fixes
+
+* radio button without label ([155fa6f](https://github.com/khsura/sui/commit/155fa6f075bbcdf601a5b5741d4a60925cd25d75))
+
 ## [1.7.9](https://github.com/khsura/sui/compare/sui-v1.7.8...sui-v1.7.9) (2026-02-23)
 
 
