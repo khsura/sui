@@ -152,3 +152,28 @@ export const RadioWithIcon = createStoryObj<typeof SRadioGroup>({
       `,
     }),
 })
+
+export const RadioButtonWithoutLabel = createStoryObj<typeof SRadioGroup>({
+  args: {
+    ...argsRadioGroup,
+  },
+  render: (args) => {
+    return defineComponent({
+      components: {
+        SRadioGroup,
+        SRadio,
+      },
+      setup: () => {
+        return {
+          args,
+        }
+      },
+      template: `
+        <SRadioGroup v-bind="args">
+          <SRadio value="value1"></SRadio>
+          <SRadio value="value2"></SRadio>
+        </SRadioGroup>
+      `,
+    })
+  },
+})

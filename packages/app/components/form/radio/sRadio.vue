@@ -10,9 +10,11 @@
         :class="classListInput"
         :disabled="groupProps?.disabled || !!disabled"
       />
-      <slot name="label" :attrs="{ class: classListLabel }">
-        <label v-if="label" :for="id" :class="classListLabel">{{ label }}</label>
-      </slot>
+      <span :class="classListRadio">
+        <slot name="label" :attrs="{ class: classListLabel }">
+          <label v-if="label" :for="id" :class="classListLabel">{{ label }}</label>
+        </slot>
+      </span>
     </button>
   </div>
 </template>
@@ -88,6 +90,13 @@ const classListInput = computed(() => {
   }
 })
 
+const classListRadio = computed(() => {
+  return {
+    s_radio__radio: true,
+    's_radio__radio--checked': isSelected.value,
+  }
+})
+
 const classListLabel = computed(() => {
   return {
     s_radio__label: true,
@@ -146,12 +155,10 @@ const updateValue = async () => {
     display: none;
   }
 
-  &__label {
+  &__radio {
     position: relative;
     padding-left: 32px;
     color: s_getAppColor('secondaryText');
-    pointer-events: none;
-    cursor: inherit;
 
     &::before {
       position: absolute;
@@ -185,6 +192,12 @@ const updateValue = async () => {
         border-radius: 50%;
       }
     }
+  }
+
+  &__label {
+    position: relative;
+    pointer-events: none;
+    cursor: inherit;
   }
 }
 </style>
