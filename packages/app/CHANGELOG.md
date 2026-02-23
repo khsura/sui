@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.8](https://github.com/khsura/sui/compare/sui-v1.7.7...sui-v1.7.8) (2026-02-23)
+
+
+### Bug Fixes
+
+* radio & button ([a100d6c](https://github.com/khsura/sui/commit/a100d6cff34652ff2ec37ff4df7b48de4f3987eb))
+
 ## [1.7.7](https://github.com/khsura/sui/compare/sui-v1.7.6...sui-v1.7.7) (2026-01-08)
 
 

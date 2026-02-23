@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.8](https://github.com/khsura/sui/compare/root-v1.5.7...root-v1.5.8) (2026-02-23)
+
+
+### Bug Fixes
+
+* radio & button ([a100d6c](https://github.com/khsura/sui/commit/a100d6cff34652ff2ec37ff4df7b48de4f3987eb))
+
 ## [1.5.7](https://github.com/khsura/sui/compare/root-v1.5.6...root-v1.5.7) (2026-01-08)
 
 
