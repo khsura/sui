@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.10](https://github.com/khsura/sui/compare/root-v1.5.9...root-v1.5.10) (2026-02-23)
+
+
+### Bug Fixes
+
+* radio button without label ([155fa6f](https://github.com/khsura/sui/commit/155fa6f075bbcdf601a5b5741d4a60925cd25d75))
+
 ## [1.5.9](https://github.com/khsura/sui/compare/root-v1.5.8...root-v1.5.9) (2026-02-23)
 
 
