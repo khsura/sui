@@ -6,7 +6,11 @@
       @change="$emit('change', $event)"
       @click:date="onClickDate"
       @click:event="$emit('click:event', $event)"
-    ></SCalendarMonthly>
+    >
+      <template v-if="$slots.event" #event="{ event }">
+        <div v-html="event?.isStartDate || event?.isWeekStart ? event.name : '&nbsp;'"></div>
+      </template>
+    </SCalendarMonthly>
     <SCalendarWeekly
       v-else-if="type === 'week'"
       v-bind="weeklyProps"
