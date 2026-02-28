@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.11](https://github.com/khsura/sui/compare/sui-v1.7.10...sui-v1.7.11) (2026-02-28)
+
+
+### Bug Fixes
+
+* add event slot to calendar ([f161084](https://github.com/khsura/sui/commit/f161084a034fcd29cac82b3496cc3abeb7f80f09))
+
 ## [1.7.10](https://github.com/khsura/sui/compare/sui-v1.7.9...sui-v1.7.10) (2026-02-23)
 
 
