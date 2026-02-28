@@ -18,10 +18,10 @@ Then generate a complete Vue SFC using these rules:
 - Wrap everything in `<SForm @submit.prevent="submit">`
 - Use `SInput` for text/email/password/number — always include `label` and `v-model`
 - Use `STextarea` for multi-line text (add `auto-grow` if height should expand)
-- Use `SSelect` for dropdowns — `items` must be `{ title: string, value: any }[]` or `string[]`
-- Use `SAutocomplete` for searchable/multi-select — same `items` shape, add `multiple chips closable-chips` for multi-select
+- Use `SSelect` for dropdowns — `items` must be `SelectItem[]` or `string[]`. Type `SelectItem` from `@khsura/sui` (`text`, `value`, optional `disabled`).
+- Use `SAutocomplete` for searchable/multi-select — same `items` shape (`SelectItem[]` or `string[]`), add `multiple chips closable-chips` for multi-select
 - Use `SCheckbox` for boolean — `label` prop, not slot
-- Use `SRadioGroup` with `:items="[{ title, value }]"` for radio options; use `inline` for horizontal
+- Use `SRadioGroup` with `<SRadio value="..." label="...">` children (slot-based); use `column` for vertical layout
 - Use `SSwitch` for on/off toggles
 - Submit: `<SButton type="submit" color="primary" :loading="submitting">Submit</SButton>`
 - `:loading` on `SButton` implicitly disables it — do not also set `:disabled`
@@ -34,7 +34,7 @@ Then generate a complete Vue SFC using these rules:
 
 ## Predefined form rules (app)
 
-**`getFormInputModelValueRules(i18n)`** is exported from `@khsura/sui`. Use it when the form should use i18n for error messages. Predefined message strings for these rules (e.g. `required`, `maxLength`, `numeric`) live in **`i18nMessages`** from `@khsura/sui` (from `constants/i18n.ts`). Import `i18nMessages` and merge it with your app's i18n messages so validation errors use the same copy; see **sui-getting-started** for a full example. Each rule returns a `FormInputModelValueRule` and takes an `options` object.
+**`getFormInputModelValueRules(i18n)`** is exported from `@khsura/sui`. Use it when the form should use i18n for error messages. Predefined message strings for these rules (e.g. `required`, `maxLength`, `numeric`) live in **`i18nMessages`** from `@khsura/sui`. Import `i18nMessages` and merge it with your app's i18n messages so validation errors use the same copy; see **sui-getting-started** for a full example. Each rule returns a `FormInputModelValueRule` and takes an `options` object.
 
 **Setup:**
 ```typescript
@@ -93,13 +93,13 @@ Use this to choose the right component and props for each field.
 |-----------|---------|-----------|-------------|
 | **SInput** | `string \| number` | `label`, `type` (`text` \| `email` \| `password` \| `number` \| `tel` \| `url` \| `search`), `placeholder`, `suffix`, `dense`, `readonly`, `max`/`min`, `maxlength`/`minlength`, `inputmode` (`numeric` \| `decimal` \| `email` \| `tel`), `positive` (numbers), `size` | Single-line text, email, password, number |
 | **STextarea** | `string` | Same as SInput + `rows`, `autoGrow` | Multi-line text |
-| **SSelect** | `any` or `any[]` | `items` (`{ title, value }[]` or `string[]`), `label`, `placeholder`, `multiple`, `chips`, `clearable`, `dense` | Dropdown, single or multi select |
-| **SAutocomplete** | `any` or `any[]` | Same as SSelect + `filterMode` (`start` \| `contains` \| `exact` \| `none`), `debounce`, `closableChips`, `loading`, `@update:search-input` (async) | Searchable select, async options |
+| **SSelect** | `any` or `any[]` | `items`: `SelectItem[]` or `string[]` (type from `@khsura/sui`: `text`, `value`, optional `disabled`). Also `label`, `placeholder`, `multiple`, `chips`, `clearable`, `dense` | Dropdown, single or multi select |
+| **SAutocomplete** | `any` or `any[]` | Same `items` as SSelect; + `filter`, `filterMode`, `debounce`, `closableChips`, `loading`, `@update:search-input` (async) | Searchable select, async options |
 | **SCheckbox** | `boolean` or `any[]` | `label`, `value` (in groups), `color`, `indeterminate` | Boolean or multi-checkbox group |
-| **SRadioGroup** | `any` | `items` (`{ title, value }[]`), `inline`, `column`, `color` | Single choice from list |
+| **SRadioGroup** | `any` | Slot content: `<SRadio value="..." label="...">` children. Props: `column`, `color` | Single choice from list |
 | **SSwitch** | `boolean` | `label`, `color` | On/off toggle |
 
-**SelectItem shape:** `{ title: string, value: any }` or plain `string`. Use `title`/`value`, not `label`/`id`.
+**SelectItem** (SSelect, SAutocomplete): from `@khsura/sui` — `{ text: string, value: string | number | null | undefined, disabled?: boolean }` or plain `string`. Use `text` and `value`, not `title` or `label`.
 
 **Imports:** form components and `getFormInputModelValueRules` from `@khsura/sui`.
 
@@ -156,7 +156,7 @@ For full props, slots, and events per component, see **`docs/components/form.md`
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { SCard, SCardTitle, SCardText, SForm, SInput, SSelect, SCheckbox, SButton } from '@khsura/sui'
+import { type SelectItem, SCard, SCardTitle, SCardText, SForm, SInput, SSelect, SCheckbox, SButton } from '@khsura/sui'
 
 const submitting = ref(false)
 
@@ -168,9 +168,9 @@ const form = ref({
   agree: false,
 })
 
-const roles = [
-  { title: 'Admin', value: 'admin' },
-  { title: 'User', value: 'user' },
+const roles: SelectItem[] = [
+  { text: 'Admin', value: 'admin' },
+  { text: 'User', value: 'user' },
 ]
 
 const required = (v: unknown) => !!v || 'Required'
