@@ -102,7 +102,7 @@ import { watch, useTemplateRef } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
 import { getSelectItem } from '../helpers'
 import type { AutocompleteEmitEvents, AutocompleteModelType, AutocompleteModelTypeBase } from '../types/autocomplete'
-import { useAutocompleteService } from '../services'
+import { useAutocompleteService, useComponentDefaultsService } from '../services'
 import type { PropsAutocomplete } from '../definitions'
 import { isEmpty } from '../lib/isEmpty'
 import SChip from './sChip.vue'
@@ -114,12 +114,13 @@ import { SList, SListItem, SListItemContent, SListItemIcon } from '@/app/compone
 import SCard from '@/app/components/cards/sCard.vue'
 import SOverlay from '@/app/components/sOverlay.vue'
 
-const props = withDefaults(defineProps<PropsAutocomplete<T>>(), {
+const rawProps = withDefaults(defineProps<PropsAutocomplete<T>>(), {
   location: 'bottom',
   filterMode: 'contains',
   debounce: 500,
 })
 
+const props = useComponentDefaultsService('SAutocomplete', rawProps)
 const model = defineModel<AutocompleteModelType<T> | null>()
 const emit = defineEmits<AutocompleteEmitEvents>()
 const activatorElement = useTemplateRef('activatorElement')

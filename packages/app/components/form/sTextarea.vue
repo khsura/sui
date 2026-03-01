@@ -37,14 +37,15 @@ import kFormInputError from './common/sFormInputError.vue'
 import { getCleanSetObject, getNumericCssAttribute } from '@/app/lib'
 import type { PropsTextarea } from '@/app/definitions'
 import { useColorRepository } from '@/app/repositories/colorRepository'
-import { useDisabledService, useFormInputService } from '@/app/services'
+import { useComponentDefaultsService, useDisabledService, useFormInputService } from '@/app/services'
 import { type EmitFormTextInput } from '@/app/types'
 
-const props = withDefaults(defineProps<PropsTextarea<string>>(), {
+const rawProps = withDefaults(defineProps<PropsTextarea<string>>(), {
   rows: 2,
   cols: 20,
 })
 
+const props = useComponentDefaultsService('STextarea', rawProps)
 const emit = defineEmits<EmitFormTextInput<string>>()
 const textareaElement = ref<HTMLTextAreaElement | null>(null)
 

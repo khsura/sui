@@ -52,10 +52,17 @@ import { SList, SListItem, SListItemContent, SListItemSubtitle } from '@/app/com
 import SIcon from '@/app/components/sIcon.vue'
 import SOverlay from '@/app/components/sOverlay.vue'
 import { type PropsSelect } from '@/app/definitions'
-import { useBorderService, useDisabledService, useFormInputService, useMenuService } from '@/app/services'
+import {
+  useBorderService,
+  useComponentDefaultsService,
+  useDisabledService,
+  useFormInputService,
+  useMenuService,
+} from '@/app/services'
 import { type SelectItem, type EmitFormInput } from '@/app/types'
 
-const props = defineProps<PropsSelect>()
+const rawProps = defineProps<PropsSelect>()
+const props = useComponentDefaultsService('SSelect', rawProps)
 const emit = defineEmits<EmitFormInput<string | number | null>>()
 const { classListBorder, styleListBorder } = useBorderService(props)
 const model = defineModel<string | number | null>()

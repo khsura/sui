@@ -23,9 +23,10 @@ import { computed, nextTick, onMounted, ref, useId, watch } from 'vue'
 import FormInputError from '@/app/components/form/common/sFormInputError.vue'
 import { type PropsCheckbox } from '@/app/definitions'
 import { useColorRepository } from '@/app/repositories'
-import { useFormInputService } from '@/app/services'
+import { useComponentDefaultsService, useFormInputService } from '@/app/services'
 
-const props = defineProps<PropsCheckbox>()
+const rawProps = defineProps<PropsCheckbox>()
+const props = useComponentDefaultsService('SCheckbox', rawProps)
 const checkboxElement = ref<HTMLInputElement | null>(null)
 const innerId = useId()
 

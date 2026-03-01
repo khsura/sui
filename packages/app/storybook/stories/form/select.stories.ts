@@ -3,9 +3,13 @@ import { defineComponent, ref } from 'vue'
 import { SSelect, SForm, SIcon } from '@/app/index'
 import { argsSelect } from '@/app/storybook/args'
 import { createStoryObj } from '@/app/storybook/helpers'
+import { argTypesBorder } from '@/app/storybook/argTypes'
 
 const select: Meta<typeof SSelect> = {
   title: 'UI Components/Form/Select',
+  argTypes: {
+    ...argTypesBorder,
+  },
 }
 
 export default select

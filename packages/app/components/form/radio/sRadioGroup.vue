@@ -9,10 +9,11 @@ import { computed, provide } from 'vue'
 import { SFormInputError } from '@/app/components/form/common'
 import { ProviderPropsName } from '@/app/configs'
 import { type PropsRadioGroup } from '@/app/definitions'
-import { useFormInputService, useSingleGroupService } from '@/app/services'
+import { useComponentDefaultsService, useFormInputService, useSingleGroupService } from '@/app/services'
 import { type GroupItemValue } from '@/app/types'
 
-const props = defineProps<PropsRadioGroup>()
+const rawProps = defineProps<PropsRadioGroup>()
+const props = useComponentDefaultsService('SRadioGroup', rawProps)
 
 const emit = defineEmits<{
   (event: 'change', value: GroupItemValue | null): void
