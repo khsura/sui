@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.11](https://github.com/khsura/sui/compare/root-v1.5.10...root-v1.5.11) (2026-02-28)
+
+
+### Bug Fixes
+
+* add event slot to calendar ([f161084](https://github.com/khsura/sui/commit/f161084a034fcd29cac82b3496cc3abeb7f80f09))
+
 ## [1.5.10](https://github.com/khsura/sui/compare/root-v1.5.9...root-v1.5.10) (2026-02-23)
 
 
