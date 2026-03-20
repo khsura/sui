@@ -49,7 +49,7 @@ Full examples: [examples.md](./examples.md) (Activator, SDialog, SMenu, STooltip
 | **SDatePicker** | `v-model` string: `YYYY-MM-DD` (date) or `YYYY-MM` (month); `type="date"` \| `"month"` | [examples.md](./examples.md#sdatepicker) |
 | **SBreadcrumbs** | `:items="[{ text, to?, disabled? }]"` | [examples.md](./examples.md#sbreadcrumbs) |
 | **SStepper** | `SStepperStep` with `:step`, `:complete` | [examples.md](./examples.md#sstepper) |
-| **SToggleButtonGroup** | `v-model`, `multiple`; `SToggleButton value="..."` | [examples.md](./examples.md#stogglebuttongroup) |
+| **SToggleButtonGroup / SToggleButton** | Group: `v-model` (value or value[]), `multiple`, `mandatory`, `dense`, `bordered`, `variant="inset"`, `selectedColor`, `outlined`, `underlined`, `borderRadius`; Button: `value`, `disabled` | [examples.md](./examples.md#stogglebuttongroup) |
 
 ---
 

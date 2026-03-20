@@ -88,7 +88,7 @@ export default {
     'scss/at-mixin-argumentless-call-parentheses': 'always',
     'scss/at-mixin-pattern': variablePattern,
     'custom-property-pattern':
-      /^s-((color-(primary|secondary|success|info|warning|important|error)(--text)?)|(app-color-(border|title))|(body-scroll-y|body-scroll-x))$/,
+      /^s-((color-(primary|secondary|success|info|warning|important|error)(--text)?)|(app-color-(border|title))|(body-scroll-y|body-scroll-x|row-gap))$/,
     'media-query-no-invalid': null,
     'property-no-unknown': [
       true,
