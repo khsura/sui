@@ -6,6 +6,7 @@ export type PropsFormInput = {
   // modelValue?: T | undefined
   rules?: FormInputModelValueRule[] | undefined
   hideDetails?: boolean | undefined
+  hideError?: boolean | undefined
   error?: boolean | undefined
   dirty?: boolean | undefined
 } & PropsDisabled

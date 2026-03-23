@@ -12,7 +12,7 @@
       />
       <span :class="classListRadio">
         <slot name="label" :attrs="{ class: classListLabel }">
-          <label v-if="label" :for="id" :class="classListLabel">{{ label }}</label>
+          <label v-if="label" v-show="!groupProps?.hideDetails" :for="id" :class="classListLabel">{{ label }}</label>
         </slot>
       </span>
     </button>

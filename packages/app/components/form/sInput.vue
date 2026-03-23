@@ -62,7 +62,7 @@
       <div v-if="$slots.appendOuter" class="s_input__appendOuter"><slot name="appendOuter"></slot></div>
       <div v-else-if="appendOuter" class="s_input__appendOuter">{{ appendOuter }}</div>
     </div>
-    <SFormInputError v-if="!hideDetails" :errors="errors" :simple="simple"></SFormInputError>
+    <SFormInputError v-if="!hideDetails && !hideError" :errors="errors" :simple="simple"></SFormInputError>
   </section>
 </template>
 <script setup lang="ts">

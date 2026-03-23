@@ -27,7 +27,7 @@
       @input="(event) => onEvent('input', event)"
       @blur="(event) => onEvent('blur', event)"
     />
-    <kFormInputError v-if="!hideDetails" :errors="errors" :simple="simple"></kFormInputError>
+    <kFormInputError v-if="!hideDetails && !hideError" :errors="errors" :simple="simple"></kFormInputError>
   </section>
 </template>
 

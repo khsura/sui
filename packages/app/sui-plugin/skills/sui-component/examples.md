@@ -258,10 +258,46 @@ Key props: `color`, `variant` (`fab|text|icon`), `size`, `loading`, `block`, `ro
 
 ## SToggleButtonGroup
 
+**IMPORTANT:** `SToggleButton` uses **index** as its primary identifier, falling back to `key` — NOT a `value` prop.
+The group matches selected values against each button's index (or key if no index applies).
+
+### Static buttons (hardcoded)
 ```vue
-<SToggleButtonGroup v-model="selected" multiple>
-  <SToggleButton value="bold"><SIcon icon="mdi-format-bold" /></SToggleButton>
-  <SToggleButton value="italic"><SIcon icon="mdi-format-italic" /></SToggleButton>
-  <SToggleButton value="underline"><SIcon icon="mdi-format-underline" /></SToggleButton>
+<!-- Single-select: model-value is an array, handler unwraps first element -->
+<SToggleButtonGroup
+  :model-value="[currentView]"
+  mandatory
+  @update:model-value="val => currentView = val?.[0] ?? 'calendar'"
+>
+  <SToggleButton key="calendar"><SIcon icon="mdi-calendar" /></SToggleButton>
+  <SToggleButton key="list"><SIcon icon="mdi-view-list" /></SToggleButton>
+</SToggleButtonGroup>
+```
+
+### Dynamic buttons (v-for)
+```vue
+<!-- Use :key for Vue diffing — no :value prop -->
+<SToggleButtonGroup
+  :model-value="selection"
+  multiple
+  @update:model-value="onChange"
+>
+  <SToggleButton
+    v-for="opt in options"
+    :key="String(opt.value)"
+  >
+    {{ opt.text }}
+  </SToggleButton>
+</SToggleButtonGroup>
+```
+
+### With useToggleButtons composable (recommended for filter UIs)
+```vue
+const { displayOptions, selection, onChange } = useToggleButtons({ modelValue, items })
+
+<SToggleButtonGroup :model-value="selection" multiple @update:model-value="onChange">
+  <SToggleButton v-for="opt in displayOptions" :key="String(opt.value)">
+    {{ opt.text }}
+  </SToggleButton>
 </SToggleButtonGroup>
 ```

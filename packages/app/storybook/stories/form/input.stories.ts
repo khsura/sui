@@ -39,6 +39,7 @@ export const Inputs = createStoryObj<Meta>({
   args: {
     inputBackground: '',
     hideDetails: false,
+    hideError: false,
     disabled: false,
     suffix: '',
     appendOuter: '',
@@ -162,6 +163,7 @@ export const Inputs = createStoryObj<Meta>({
                   :input-background="args.inputBackground"
                   :placeholder-background="args.placeholderBackground"
                   :hide-details="args.hideDetails"
+                  :hide-error="args.hideError"
                   :disabled="args.disabled"
                   :suffix="args.suffix"
                   :append-outer="args.appendOuter"
@@ -190,6 +192,7 @@ export const Inputs = createStoryObj<Meta>({
                   :input-background="args.inputBackground"
                   :placeholder-background="args.placeholderBackground"
                   :hide-details="args.hideDetails"
+                  :hide-error="args.hideError"
                   :disabled="args.disabled"
                   :suffix="args.suffix"
                   :append-outer="args.appendOuter"
@@ -218,6 +221,7 @@ export const Inputs = createStoryObj<Meta>({
                     :input-background="args.inputBackground"
                     :placeholder-background="args.placeholderBackground"
                     :hide-details="args.hideDetails"
+                    :hide-error="args.hideError"
                     :disabled="args.disabled"
                     :suffix="args.suffix"
                     :append-outer="args.appendOuter"
@@ -240,6 +244,7 @@ export const Inputs = createStoryObj<Meta>({
                     :input-background="args.inputBackground"
                     :placeholder-background="args.placeholderBackground"
                     :hide-details="args.hideDetails"
+                    :hide-error="args.hideError"
                     :disabled="args.disabled"
                     :append-outer="args.appendOuter"
                     :simple="args.simple"

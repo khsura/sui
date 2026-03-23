@@ -1,7 +1,7 @@
 <template>
   <div class="s_radioGroup" :class="radioGroupClasses">
     <div class="s_radioGroup__content"><slot></slot></div>
-    <SFormInputError v-if="!hideDetails" :errors="errors"></SFormInputError>
+    <SFormInputError v-if="!hideDetails && !hideError" :errors="errors"></SFormInputError>
   </div>
 </template>
 <script setup lang="ts">

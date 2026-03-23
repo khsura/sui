@@ -12,10 +12,10 @@
         :disabled="disabled ?? false"
       />
       <label :for="id ?? innerId" class="s_checkbox__label">
-        <span v-if="label" class="s_checkbox__labelText">{{ label }}</span>
+        <span v-if="label" v-show="!hideDetails" class="s_checkbox__labelText">{{ label }}</span>
       </label>
     </div>
-    <FormInputError v-if="!hideDetails" :errors="errors"></FormInputError>
+    <FormInputError v-if="!hideDetails && !hideError" :errors="errors"></FormInputError>
   </div>
 </template>
 <script setup lang="ts">
