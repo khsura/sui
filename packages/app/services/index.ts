@@ -1,4 +1,5 @@
 export * from './appService'
+export * from './componentDefaultsService'
 export * from './appBarService'
 export * from './autocompleteService'
 export * from './backgroundScrollService'

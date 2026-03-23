@@ -81,6 +81,35 @@ export const RowWithColumn: StoryObj<typeof SRow> = {
   },
 }
 
+export const RowWithGap: StoryObj<typeof SRow> = {
+  render: (args) => {
+    return {
+      template: /* html */ `
+      <div>
+        <p style="margin-bottom: 8px; font-size: 12px; color: #666;">Each row has gap={{ args.gap }}. Columns should fill width correctly accounting for the gap.</p>
+        <div v-for="cols in [1, 2, 3, 4, 6, 12]" :key="cols" style="margin-bottom: 12px;">
+          <p style="font-size: 11px; color: #999; margin-bottom: 4px;">{{ 12 / cols }} × cols={{ cols }}</p>
+          <SRow style="border: 1px solid #ccc;" v-bind="args">
+            <SColumn v-for="i in (12 / cols)" :key="i" :cols="cols">
+              <SCard outlined class="s_textAlign__center" style="height: 40px; display: flex; align-items: center; justify-content: center;">
+                {{ i }}
+              </SCard>
+            </SColumn>
+          </SRow>
+        </div>
+      </div>
+      `,
+      components: { SRow, SCard, SColumn },
+      setup() {
+        return { args }
+      },
+    }
+  },
+  args: {
+    gap: 16,
+  },
+}
+
 export const RowWithoutColumn: StoryObj<typeof SRow> = {
   render: (args) => {
     return {

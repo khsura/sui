@@ -5,6 +5,7 @@ export const argsInput: Partial<PropsInput> = {
   error: false,
   rules: [],
   hideDetails: false,
+  hideError: false,
   readonly: false,
   placeholder: 'Text',
   type: 'text',

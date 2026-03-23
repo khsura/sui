@@ -1,7 +1,7 @@
 <template>
   <div class="s_radioGroup" :class="radioGroupClasses">
     <div class="s_radioGroup__content"><slot></slot></div>
-    <SFormInputError v-if="!hideDetails" :errors="errors"></SFormInputError>
+    <SFormInputError v-if="!hideDetails && !hideError" :errors="errors"></SFormInputError>
   </div>
 </template>
 <script setup lang="ts">
@@ -9,10 +9,11 @@ import { computed, provide } from 'vue'
 import { SFormInputError } from '@/app/components/form/common'
 import { ProviderPropsName } from '@/app/configs'
 import { type PropsRadioGroup } from '@/app/definitions'
-import { useFormInputService, useSingleGroupService } from '@/app/services'
+import { useComponentDefaultsService, useFormInputService, useSingleGroupService } from '@/app/services'
 import { type GroupItemValue } from '@/app/types'
 
-const props = defineProps<PropsRadioGroup>()
+const rawProps = defineProps<PropsRadioGroup>()
+const props = useComponentDefaultsService('SRadioGroup', rawProps)
 
 const emit = defineEmits<{
   (event: 'change', value: GroupItemValue | null): void

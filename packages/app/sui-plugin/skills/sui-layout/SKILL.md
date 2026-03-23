@@ -27,7 +27,18 @@ Then generate a complete Vue SFC using these rules:
 **Grid rules:**
 - `SContainer > SRow > SColumn` for responsive grids
 - `SColumn` props: `:cols` (default), `:sm`, `:md`, `:lg` — values 1–12, `'auto'`, or `'grow'`
-- `SRow` props: `align`, `justify`, `noGutters`
+- `SRow` props: `align`, `justify`, `noGutters`, `fillHeight`, `dense`, `gap`
+
+**Allowed prop values (use these, not CSS/flex names like flexEnd):**
+
+| Component | Prop | Allowed values |
+|-----------|------|----------------|
+| **SRow** | `align` | `'start'` \| `'center'` \| `'end'` \| `'stretch'` \| `'baseline'` |
+| **SRow** | `justify` | `'start'` \| `'center'` \| `'end'` \| `'spaceAround'` \| `'spaceBetween'` |
+| **SColumn** | `cols`, `sm`, `md`, `lg` | `1`–`12` \| `'auto'` \| `'grow'` |
+| **SColumn** | `alignSelf` | `'auto'` \| `'start'` \| `'center'` \| `'end'` \| `'stretch'` \| `'baseline'` \| etc. (CSS align-self values) |
+
+Do **not** use `flexStart`, `flexEnd`, or `space-between` (kebab) — use `start`, `end`, and `spaceAround` / `spaceBetween` (camelCase).
 
 **Imports:** all from `@khsura/sui`
 

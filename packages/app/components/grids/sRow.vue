@@ -35,9 +35,12 @@ const contentClasses = computed(() => {
 })
 
 const contentStyles = computed<CSSProperties>(() => {
+  const gap = getNumericCssAttribute(props.gap)
+
   return getCleanSetObject({
     ...content.styles.value,
-    gap: getNumericCssAttribute(props.gap),
+    gap,
+    '--s-row-gap': gap,
   })
 })
 </script>

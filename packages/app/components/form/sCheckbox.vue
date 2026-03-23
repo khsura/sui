@@ -12,10 +12,10 @@
         :disabled="disabled ?? false"
       />
       <label :for="id ?? innerId" class="s_checkbox__label">
-        <span v-if="label" class="s_checkbox__labelText">{{ label }}</span>
+        <span v-if="label" v-show="!hideDetails" class="s_checkbox__labelText">{{ label }}</span>
       </label>
     </div>
-    <FormInputError v-if="!hideDetails" :errors="errors"></FormInputError>
+    <FormInputError v-if="!hideDetails && !hideError" :errors="errors"></FormInputError>
   </div>
 </template>
 <script setup lang="ts">
@@ -23,9 +23,10 @@ import { computed, nextTick, onMounted, ref, useId, watch } from 'vue'
 import FormInputError from '@/app/components/form/common/sFormInputError.vue'
 import { type PropsCheckbox } from '@/app/definitions'
 import { useColorRepository } from '@/app/repositories'
-import { useFormInputService } from '@/app/services'
+import { useComponentDefaultsService, useFormInputService } from '@/app/services'
 
-const props = defineProps<PropsCheckbox>()
+const rawProps = defineProps<PropsCheckbox>()
+const props = useComponentDefaultsService('SCheckbox', rawProps)
 const checkboxElement = ref<HTMLInputElement | null>(null)
 const innerId = useId()
 

@@ -85,6 +85,7 @@ export const RequiredCheckbox = createStoryObj<typeof SCheckbox>({
     bordered: false,
     color: undefined,
     hideDetails: false,
+    hideError: false,
     readonly: false,
     disabled: false,
   },

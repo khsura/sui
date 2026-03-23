@@ -1,6 +1,6 @@
 {
   "name": "@khsura/sui",
-  "version": "1.7.11",
+  "version": "1.7.12-beta.3",
   "type": "module",
   "scripts": {
     "prebuild": "yarn g:rimraf dist && yarn g:rimraf @types",
@@ -16,7 +16,9 @@
   },
   "files": [
     "dist",
-    "@types"
+    "@types",
+    ".claude-plugin",
+    "sui-plugin"
   ],
   "main": "./dist/s-ui.umd.cjs",
   "module": "./dist/s-ui.js",

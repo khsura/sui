@@ -9,6 +9,7 @@ export const argsRadioGroup: Omit<PropsRadioGroup, 'modelValue' | 'rules' | 'err
   continuous: false,
   grow: false,
   hideDetails: false,
+  hideError: false,
   id: 'radioGroup',
   mandatory: false,
 }

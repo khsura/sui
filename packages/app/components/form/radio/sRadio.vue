@@ -12,7 +12,7 @@
       />
       <span :class="classListRadio">
         <slot name="label" :attrs="{ class: classListLabel }">
-          <label v-if="label" :for="id" :class="classListLabel">{{ label }}</label>
+          <label v-if="label" v-show="!groupProps?.hideDetails" :for="id" :class="classListLabel">{{ label }}</label>
         </slot>
       </span>
     </button>
@@ -21,12 +21,17 @@
 <script setup lang="ts">
 import { computed, inject, nextTick, useId } from 'vue'
 import { ProviderPropsName } from '@/app/configs'
-import { useBorderService, useDisabledService, useSingleGroupItemService } from '@/app/services'
+import {
+  useBorderService,
+  useComponentDefaultsService,
+  useDisabledService,
+  useSingleGroupItemService,
+} from '@/app/services'
 import type { PropsBorder, PropsDisabled, PropsSingleGroupItem } from '@/app/definitions'
 import { getButtonType } from '@/app/lib/button'
 import type { ButtonTypeType } from '@/app/types'
 
-const props = defineProps<
+const rawProps = defineProps<
   {
     id?: string
     name?: string | null
@@ -37,6 +42,7 @@ const props = defineProps<
     PropsBorder
 >()
 
+const props = useComponentDefaultsService('SRadio', rawProps)
 const emit = defineEmits<(event: 'update:checked', value: boolean) => void>()
 const groupProps = inject(ProviderPropsName.radioGroupProps)
 const { toggleGroupItem, isSelected } = useSingleGroupItemService(props)

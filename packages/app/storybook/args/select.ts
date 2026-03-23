@@ -11,6 +11,7 @@ export const argsSelect: Omit<PropsSelect, 'modelValue' | 'error' | 'dirty' | 'a
   closeOnScroll: false,
   grow: false,
   hideDetails: false,
+  hideError: false,
   id: 'select',
   label: 'Countries',
   location: null,

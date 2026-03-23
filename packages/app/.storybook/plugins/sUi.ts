@@ -8,4 +8,7 @@ export const sui = createSUI({
       },
     },
   },
+  components: {
+    SSelect: { outlined: true },
+  },
 })

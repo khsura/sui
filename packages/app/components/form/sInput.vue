@@ -62,7 +62,7 @@
       <div v-if="$slots.appendOuter" class="s_input__appendOuter"><slot name="appendOuter"></slot></div>
       <div v-else-if="appendOuter" class="s_input__appendOuter">{{ appendOuter }}</div>
     </div>
-    <SFormInputError v-if="!hideDetails" :errors="errors" :simple="simple"></SFormInputError>
+    <SFormInputError v-if="!hideDetails && !hideError" :errors="errors" :simple="simple"></SFormInputError>
   </section>
 </template>
 <script setup lang="ts">
@@ -73,10 +73,11 @@ import { SColumn, SRow } from '@/app/components/grids'
 import { getNumericValue, getCleanSetObject } from '@/app/lib'
 import type { PropsInput } from '@/app/definitions'
 import { useColorRepository } from '@/app/repositories/colorRepository'
-import { useDisabledService, useFormInputService, useSizeService } from '@/app/services'
+import { useComponentDefaultsService, useDisabledService, useFormInputService, useSizeService } from '@/app/services'
 import { type EmitFormTextInput } from '@/app/types'
 
-const props = defineProps<PropsInput>()
+const rawProps = defineProps<PropsInput>()
+const props = useComponentDefaultsService('SInput', rawProps)
 const emit = defineEmits<EmitFormTextInput<string | number | null>>()
 const slots: Slots = useSlots()
 const inputElement = ref<HTMLElement | null>()

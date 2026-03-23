@@ -1,5 +1,6 @@
 <template>
   <div class="s_select" :class="selectClasses" :style="styleListBorder">
+    <label v-if="label" v-show="!hideDetails" :for="id" class="s_select__label">{{ label }}</label>
     <select :id="id" :value="modelValue" class="s_select__input" :name="name ?? undefined">
       <option v-for="(item, id) in objectItems" :key="id" :value="getItemValue(item)">{{ getItemText(item) }}</option>
     </select>
@@ -21,7 +22,7 @@
       </div>
     </div>
 
-    <SFormInputError v-if="!hideDetails" :errors="errors"></SFormInputError>
+    <SFormInputError v-if="!hideDetails && !hideError" :errors="errors"></SFormInputError>
 
     <SOverlay v-slot="{ attrs }" :value="menuModel">
       <OnClickOutside @trigger="onClickOutside">
@@ -52,10 +53,17 @@ import { SList, SListItem, SListItemContent, SListItemSubtitle } from '@/app/com
 import SIcon from '@/app/components/sIcon.vue'
 import SOverlay from '@/app/components/sOverlay.vue'
 import { type PropsSelect } from '@/app/definitions'
-import { useBorderService, useDisabledService, useFormInputService, useMenuService } from '@/app/services'
+import {
+  useBorderService,
+  useComponentDefaultsService,
+  useDisabledService,
+  useFormInputService,
+  useMenuService,
+} from '@/app/services'
 import { type SelectItem, type EmitFormInput } from '@/app/types'
 
-const props = defineProps<PropsSelect>()
+const rawProps = defineProps<PropsSelect>()
+const props = useComponentDefaultsService('SSelect', rawProps)
 const emit = defineEmits<EmitFormInput<string | number | null>>()
 const { classListBorder, styleListBorder } = useBorderService(props)
 const model = defineModel<string | number | null>()
@@ -183,6 +191,13 @@ const displayText = computed(() => {
 <style lang="scss">
 .s_select {
   position: relative;
+
+  &__label {
+    @include s_typography('caption');
+    display: block;
+    padding: $s_spacer calc($s_spacer * 4);
+    color: s_getAppColor('secondaryText');
+  }
 
   &__activator {
     padding: 0 8px;

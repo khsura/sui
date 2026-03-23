@@ -17,9 +17,10 @@
 import { computed } from 'vue'
 import { CssColor } from '@/app/constants'
 import type { PropsSwitch } from '@/app/definitions'
-import { useColorService, useDisabledService } from '@/app/services'
+import { useColorService, useComponentDefaultsService, useDisabledService } from '@/app/services'
 
-const props = defineProps<PropsSwitch>()
+const rawProps = defineProps<PropsSwitch>()
+const props = useComponentDefaultsService('SSwitch', rawProps)
 const modelValue = defineModel<boolean>()
 const { classListDisabled, classListTextDisabled } = useDisabledService(props)
 const { colorVariable } = useColorService(props)
