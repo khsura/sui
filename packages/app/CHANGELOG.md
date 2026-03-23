@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.12](https://github.com/khsura/sui/compare/sui-v1.7.11...sui-v1.7.12) (2026-03-23)
+
+
+### Bug Fixes
+
+* version ([84b2b3a](https://github.com/khsura/sui/commit/84b2b3ae24ddc622018cc55858b1bc28bbb7fe5b))
+
 ## [1.7.11](https://github.com/khsura/sui/compare/sui-v1.7.10...sui-v1.7.11) (2026-02-28)
 
 
