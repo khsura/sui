@@ -11,24 +11,26 @@
     >
       <div class="s_calendarMonthly__grid"></div>
       <div class="s_calendarMonthly__date">
-        <SButton
-          text
-          variant="fab"
-          size="small"
-          :elevation="0"
-          :disabled="!date.isThisMonth"
-          :class="{
-            s_calendarMonthly__dateButton: true,
-            's_calendarMonthly__dateButton--today': date.isToday,
-            ...dateButtonClasses(date),
-          }"
-          :style="{
-            ...dateButtonStyles(date),
-          }"
-          @click="onClickDate(getEvents(date))"
-        >
-          {{ date.value }}
-        </SButton>
+        <slot name="date" :date="date">
+          <SButton
+            text
+            variant="fab"
+            size="small"
+            :elevation="0"
+            :disabled="!date.isThisMonth"
+            :class="{
+              s_calendarMonthly__dateButton: true,
+              's_calendarMonthly__dateButton--today': date.isToday,
+              ...dateButtonClasses(date),
+            }"
+            :style="{
+              ...dateButtonStyles(date),
+            }"
+            @click="onClickDate(getEvents(date))"
+          >
+            {{ date.value }}
+          </SButton>
+        </slot>
       </div>
       <div class="s_calendarMonthly__events">
         <!-- eslint-disable vue/no-v-html -->
@@ -53,14 +55,14 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends CalendarEvent">
 import SButton from '@/app/components/sButton.vue'
 import type { PropsCalendarMonthly } from '@/app/definitions'
 import { useCalendarMonthlyService, useColorService, useCalendarEventHandlers } from '@/app/services'
 import type { CalendarEmitEvents, CalendarEvent } from '@/app/types'
 
-const props = defineProps<PropsCalendarMonthly>()
-const emit = defineEmits<CalendarEmitEvents>()
+const props = defineProps<PropsCalendarMonthly<T>>()
+const emit = defineEmits<CalendarEmitEvents<T>>()
 const { dates, days, eventPadding } = useCalendarMonthlyService(props)
 const { classListColor, styleListColor } = useColorService(props)
 
@@ -72,7 +74,7 @@ const {
 } = useCalendarEventHandlers(emit)
 
 const getEvents = (date: (typeof dates.value)[0]) => {
-  return getEventsHandler(date.date, date.events.filter((event) => event) as CalendarEvent[])
+  return getEventsHandler(date.date, date.events)
 }
 
 const getEvent = (date: (typeof dates.value)[0], event: CalendarEvent) => {

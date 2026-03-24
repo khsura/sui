@@ -1,17 +1,12 @@
 import { computed } from 'vue'
-import {
-  type CalendarEventExtended,
-  filterEventsForDate,
-  processCalendarEvent,
-  sortEvents,
-} from './calendarEventService'
+import { filterEventsForDate, processCalendarEvent, sortEvents } from './calendarEventService'
 import { type PropsCalendarMonthly } from '@/app/definitions'
 import { getCalendarDate } from '@/app/repositories/calendarRepository'
 import { useColorRepository } from '@/app/repositories/colorRepository'
-import { type CalendarDate } from '@/app/types'
+import { type CalendarDate, type CalendarEvent, type CalendarEventExtended } from '@/app/types'
 import dayjs from '@/app/vendors/dayjs'
 
-export const useCalendarMonthlyService = (props: PropsCalendarMonthly) => {
+export const useCalendarMonthlyService = <T extends CalendarEvent>(props: PropsCalendarMonthly<T>) => {
   const today = dayjs()
   const eventPadding = 4
   const { getBackgroundColorAttributes } = useColorRepository()
@@ -43,7 +38,7 @@ export const useCalendarMonthlyService = (props: PropsCalendarMonthly) => {
         value: string
         isToday: boolean
         isThisMonth: boolean
-        events: Array<CalendarEventExtended | null>
+        events: Array<CalendarEventExtended<T>>
         date: CalendarDate
       }>((_, i) => {
         const target = startDateOfMonth.value.add(i, 'days')
@@ -70,38 +65,6 @@ export const useCalendarMonthlyService = (props: PropsCalendarMonthly) => {
           date: getCalendarDate(target),
         }
       })
-
-    dates.forEach((date, i) => {
-      const previousDate = i > 0 ? dates[i - 1] : undefined
-      const events: Array<CalendarEventExtended | null> = Array(date.events.length).fill(null)
-
-      const eventsData = date.events.map((event) => {
-        const indexOfPreviousDate =
-          previousDate?.events.findIndex((previousEvent) => previousEvent?.id === event?.id) ?? -1
-
-        return {
-          event: event ? { ...event } : null,
-          indexOfPreviousDate,
-        }
-      })
-
-      eventsData.forEach(({ event, indexOfPreviousDate }) => {
-        if (indexOfPreviousDate > -1) {
-          events[indexOfPreviousDate] = event
-        }
-      })
-
-      eventsData.forEach(({ event, indexOfPreviousDate }) => {
-        if (indexOfPreviousDate === -1) {
-          events[events.indexOf(null)] = event
-        }
-      })
-
-      dates[i] = {
-        ...date,
-        events,
-      }
-    })
 
     return dates
   })

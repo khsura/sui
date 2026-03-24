@@ -23,7 +23,7 @@
     ></SCalendarWeekly>
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends CalendarEvent">
 import { computed } from 'vue'
 import SCalendarMonthly from './sCalendarMonthly.vue'
 import SCalendarWeekly from './sCalendarWeekly.vue'
@@ -34,11 +34,11 @@ import { useCalendarService } from '@/app/services'
 import type { CalendarDate, CalendarEmitEvents, CalendarEvent } from '@/app/types'
 import dayjs from '@/app/vendors/dayjs'
 
-const props = withDefaults(defineProps<PropsCalendar>(), {
+const props = withDefaults(defineProps<PropsCalendar<T>>(), {
   type: 'month',
 })
 
-const emit = defineEmits<CalendarEmitEvents>()
+const emit = defineEmits<CalendarEmitEvents<T>>()
 
 const focus = defineModel<string>('focus', {
   get: (value) => {
@@ -84,7 +84,7 @@ const weeklyProps = computed(() => ({
   allDayRows: props.allDayRows,
 }))
 
-const onClickDate = (value: { date: CalendarDate; events: CalendarEvent[] }) => {
+const onClickDate = (value: { date: CalendarDate; events: T[] }) => {
   focus.value = value.date.date
   emit('click:date', value)
 }

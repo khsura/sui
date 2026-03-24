@@ -1,9 +1,9 @@
 import { type PropsColor, type PropsTag } from './core'
 import type { CalendarEvent } from '@/app/types'
 
-export type PropsCalendarBase = {
-  events?: CalendarEvent[]
-  eventColor?: (event: CalendarEvent) => string
+export type PropsCalendarBase<T extends CalendarEvent> = {
+  events?: T[]
+  eventColor?: (event: T) => string
 } & PropsTag &
   PropsColor
 
@@ -18,16 +18,16 @@ export type PropsCalendarWeeklySpecific = {
   allDayRows?: number
 }
 
-export type PropsCalendar = PropsCalendarBase & {
+export type PropsCalendar<T extends CalendarEvent> = PropsCalendarBase<T> & {
   type?: 'month' | 'week'
 } & Partial<PropsCalendarWeeklySpecific>
 
-export type PropsCalendarMonthly = PropsCalendarBase & {
+export type PropsCalendarMonthly<T extends CalendarEvent> = PropsCalendarBase<T> & {
   type: 'month'
   focus?: string
 }
 
-export type PropsCalendarWeekly = PropsCalendarBase &
+export type PropsCalendarWeekly<T extends CalendarEvent> = PropsCalendarBase<T> &
   PropsCalendarWeeklySpecific & {
     type: 'week'
     focus?: string

@@ -1,36 +1,14 @@
-import { type CalendarEvent } from '@/app/types'
+import { type CalendarEvent, type CalendarEventExtended, type ProcessEventOptions } from '@/app/types'
 import dayjs from '@/app/vendors/dayjs'
 
-export type CalendarEventExtended = CalendarEvent & {
-  isStartDate: boolean
-  isEndDate: boolean
-  id: number
-  isWeekStart: boolean
-  isWeekEnd: boolean
-  class: Record<string, boolean>
-  style: Record<string, string>
-}
-
-type ProcessEventOptions = {
-  target: dayjs.Dayjs
-  event: CalendarEvent
-  eventId: number
-  eventColor?: (event: CalendarEvent) => string
-  isWeekly?: boolean
-  getBackgroundColorAttributes: (color: string | null) => {
-    class: Record<string, boolean>
-    style: Record<string, string>
-  }
-}
-
-export const processCalendarEvent = ({
+export const processCalendarEvent = <T extends CalendarEvent>({
   target,
   event,
   eventId,
   eventColor,
   isWeekly = false,
   getBackgroundColorAttributes,
-}: ProcessEventOptions): CalendarEventExtended => {
+}: ProcessEventOptions<T>): CalendarEventExtended<T> => {
   const startDate = dayjs(event.start)
   const endDate = dayjs(event.end ?? event.start)
   const isStartDate = startDate.isSame(target, 'day')
@@ -68,7 +46,7 @@ export const processCalendarEvent = ({
   }
 }
 
-export const filterEventsForDate = (events: CalendarEvent[] | undefined, target: dayjs.Dayjs): CalendarEvent[] => {
+export const filterEventsForDate = <T extends CalendarEvent>(events: T[] | undefined, target: dayjs.Dayjs): T[] => {
   if (!events) {
     return []
   }
@@ -78,7 +56,7 @@ export const filterEventsForDate = (events: CalendarEvent[] | undefined, target:
   })
 }
 
-export const sortEvents = (events: CalendarEventExtended[]): CalendarEventExtended[] => {
+export const sortEvents = <T extends CalendarEvent>(events: CalendarEventExtended<T>[]): CalendarEventExtended<T>[] => {
   return [...events].sort((a, b) => {
     // All-day events first
     if (!a.timed && b.timed) {
