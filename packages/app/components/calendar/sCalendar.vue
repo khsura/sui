@@ -8,7 +8,9 @@
       @click:event="$emit('click:event', $event)"
     >
       <template v-if="$slots.event" #event="{ event }">
-        <div v-html="event?.isStartDate || event?.isWeekStart ? event.name : '&nbsp;'"></div>
+        <slot name="event" :event="event">
+          <div v-html="event?.isStartDate || event?.isWeekStart ? event.name : '&nbsp;'"></div>
+        </slot>
       </template>
     </SCalendarMonthly>
     <SCalendarWeekly
