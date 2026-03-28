@@ -143,7 +143,7 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends CalendarEvent">
 import { ref } from 'vue'
 import SButton from '@/app/components/sButton.vue'
 import SIcon from '@/app/components/sIcon.vue'
@@ -156,11 +156,11 @@ import {
   useCalendarWeeklyEventPositioning,
   useCalendarWeeklyAllDayEvents,
 } from '@/app/services'
-import type { CalendarEmitEvents, CalendarEvent } from '@/app/types'
+import type { CalendarEmitEvents, CalendarEvent, CalendarEventExtended } from '@/app/types'
 import dayjs from '@/app/vendors/dayjs'
 import { getCalendarDate } from '@/app/repositories'
 
-const props = withDefaults(defineProps<PropsCalendarWeekly>(), {
+const props = withDefaults(defineProps<PropsCalendarWeekly<T>>(), {
   shortWeekdays: true,
   showMonthOnFirst: true,
   shortMonths: true,
@@ -171,7 +171,7 @@ const props = withDefaults(defineProps<PropsCalendarWeekly>(), {
   allDayRows: 7,
 })
 
-const emit = defineEmits<CalendarEmitEvents>()
+const emit = defineEmits<CalendarEmitEvents<T>>()
 const { todayWeek, days, weeks } = useCalendarWeeklyService(props)
 const { classListColor, styleListColor } = useColorService(props)
 
@@ -237,10 +237,13 @@ const isOutside = (day: (typeof days.value)[0] | undefined) => {
 }
 
 const getEvents = (day: (typeof days.value)[0]) => {
-  return getEventsHandler(day.date, [...day.allDayEvents, ...day.events].filter((event) => event) as CalendarEvent[])
+  return getEventsHandler(
+    day.date,
+    [...day.allDayEvents, ...day.events].filter((event) => event),
+  )
 }
 
-const getEvent = (day: (typeof days.value)[0], event: CalendarEvent) => {
+const getEvent = (day: (typeof days.value)[0], event: CalendarEventExtended<T>) => {
   return getEventHandler(day.date, event)
 }
 
@@ -248,8 +251,11 @@ const hasMoreAllDayEvents = (day: (typeof days.value)[0], week: (typeof weeks.va
   return hasMoreAllDayEventsUtil(day, week)
 }
 
-const getAllDayEventsToDisplay = (day: (typeof days.value)[0], week: (typeof weeks.value)[0]) => {
-  return getAllDayEventsToDisplayUtil(day, week, isAllDayExpanded)
+const getAllDayEventsToDisplay = (
+  day: (typeof days.value)[0],
+  week: (typeof weeks.value)[0],
+): CalendarEventExtended<T>[] => {
+  return getAllDayEventsToDisplayUtil<T>(day, week, isAllDayExpanded)
 }
 
 const onClickDayArea = (event: MouseEvent, day: (typeof days.value)[0]) => {

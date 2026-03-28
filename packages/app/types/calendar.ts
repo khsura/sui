@@ -54,3 +54,5 @@ export type ProcessEventOptions<T extends CalendarEvent> = {
     style: Record<string, string>
   }
 }
+
+export type CalendarType = 'month' | 'week'

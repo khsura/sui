@@ -1,3 +1,4 @@
+export * from './alert'
 export * from './app'
 export * from './color'
 export * from './datePicker'

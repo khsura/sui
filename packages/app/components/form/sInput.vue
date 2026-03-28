@@ -65,7 +65,7 @@
     <SFormInputError v-if="!hideDetails && !hideError" :errors="errors" :simple="simple"></SFormInputError>
   </section>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string | number = string | number">
 import { useSlots, ref } from 'vue'
 import { computed, type Slots } from 'vue'
 import { SFormInputError } from './common'
@@ -81,7 +81,7 @@ const props = useComponentDefaultsService('SInput', rawProps)
 const emit = defineEmits<EmitFormTextInput<string | number | null>>()
 const slots: Slots = useSlots()
 const inputElement = ref<HTMLElement | null>()
-const model = defineModel<string | number | null>()
+const model = defineModel<T | null>()
 const { updateFormInput, errors } = useFormInputService<string | number | null>(props, emit, model)
 const { classListDisabled } = useDisabledService(props)
 // TODO: Sura - make able to use all preset colors
@@ -220,11 +220,11 @@ const fixInput = async (event: Event) => {
     )
 
     inputElement.value = normalizedValue?.toString() ?? ''
-    model.value = normalizedValue
+    model.value = normalizedValue as T
     await updateFormInput(normalizedValue)
     previousValue = normalizedValue
   } else {
-    model.value = value
+    model.value = value as T
     await updateFormInput(value)
     previousValue = value
   }
@@ -236,7 +236,7 @@ const onInput = async (event: Event, preventChangeEvent = false) => {
   if (props.type === 'number') {
     await fixInput(event)
   } else {
-    model.value = value
+    model.value = value as T
     await updateFormInput(value)
   }
 
@@ -291,7 +291,7 @@ const onPaste = async (event: ClipboardEvent) => {
         : clipboardText,
     )
 
-    model.value = convertedNumber
+    model.value = convertedNumber as T
     await updateFormInput(convertedNumber)
   }
 

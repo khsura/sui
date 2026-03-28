@@ -1,17 +1,12 @@
 import { computed } from 'vue'
-import {
-  type CalendarEventExtended,
-  filterEventsForDate,
-  processCalendarEvent,
-  sortEvents,
-} from './calendarEventService'
+import { filterEventsForDate, processCalendarEvent, sortEvents } from './calendarEventService'
 import { type PropsCalendarWeekly } from '@/app/definitions'
 import { getCalendarDate } from '@/app/repositories/calendarRepository'
 import { useColorRepository } from '@/app/repositories/colorRepository'
-import { type CalendarDate } from '@/app/types'
+import { type CalendarDate, type CalendarEvent, type CalendarEventExtended } from '@/app/types'
 import dayjs from '@/app/vendors/dayjs'
 
-export const useCalendarWeeklyService = (props: PropsCalendarWeekly) => {
+export const useCalendarWeeklyService = <T extends CalendarEvent>(props: PropsCalendarWeekly<T>) => {
   const today = dayjs()
   const { getBackgroundColorAttributes } = useColorRepository()
 
@@ -59,8 +54,8 @@ export const useCalendarWeeklyService = (props: PropsCalendarWeekly) => {
         value: string
         isToday: boolean
         isOutside: boolean
-        events: CalendarEventExtended[]
-        allDayEvents: CalendarEventExtended[]
+        events: CalendarEventExtended<T>[]
+        allDayEvents: CalendarEventExtended<T>[]
         date: CalendarDate
         weekNumber: number
       }>((_, i) => {

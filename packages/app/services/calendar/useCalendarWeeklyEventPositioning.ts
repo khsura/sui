@@ -1,23 +1,25 @@
-import type { CalendarEventExtended } from './calendarEventService'
 import type { PropsCalendarWeekly } from '@/app/definitions'
+import { type CalendarEventExtended, type CalendarEvent } from '@/app/types'
 import dayjs from '@/app/vendors/dayjs'
 
-type DayWithEvents = {
+type DayWithEvents<T extends CalendarEvent> = {
   date: { date: string }
-  events: CalendarEventExtended[]
-  allDayEvents: CalendarEventExtended[]
+  events: CalendarEventExtended<T>[]
+  allDayEvents: CalendarEventExtended<T>[]
 }
 
-type Week = {
-  days: DayWithEvents[]
+type Week<T extends CalendarEvent> = {
+  days: DayWithEvents<T>[]
 }
 
-export const useCalendarWeeklyEventPositioning = (props: Pick<PropsCalendarWeekly, 'eventOverlapMode'>) => {
-  const calculateAllDayEventRows = (week: Week) => {
+export const useCalendarWeeklyEventPositioning = <T extends CalendarEvent>(
+  props: Pick<PropsCalendarWeekly<T>, 'eventOverlapMode'>,
+) => {
+  const calculateAllDayEventRows = (week: Week<T>) => {
     const uniqueEvents = new Map<
       string,
       {
-        event: CalendarEventExtended
+        event: CalendarEventExtended<T>
         startDate: dayjs.Dayjs
         endDate: dayjs.Dayjs
         instances: Array<{ dayIndex: number; eventIndex: number }>
@@ -102,7 +104,7 @@ export const useCalendarWeeklyEventPositioning = (props: Pick<PropsCalendarWeekl
     return { rowMap, totalRows: rows.length }
   }
 
-  const getAllDayEventRow = (day: DayWithEvents, eventIndex: number, week: Week) => {
+  const getAllDayEventRow = (day: DayWithEvents<T>, eventIndex: number, week: Week<T>) => {
     const dayIndex = week.days.findIndex((d) => d.date.date === day.date.date)
 
     if (dayIndex === -1) {
@@ -116,7 +118,7 @@ export const useCalendarWeeklyEventPositioning = (props: Pick<PropsCalendarWeekl
     return row
   }
 
-  const calculateEventStacking = (dayEvents: CalendarEventExtended[]) => {
+  const calculateEventStacking = (dayEvents: CalendarEventExtended<T>[]) => {
     if (dayEvents.length === 0) {
       return new Map<number, { column: number; totalColumns: number }>()
     }
@@ -200,7 +202,7 @@ export const useCalendarWeeklyEventPositioning = (props: Pick<PropsCalendarWeekl
     return eventPositions
   }
 
-  const getEventStacking = (day: DayWithEvents, eventIndex: number) => {
+  const getEventStacking = (day: DayWithEvents<T>, eventIndex: number) => {
     const stacking = calculateEventStacking(day.events)
     const position = stacking.get(eventIndex)
 
@@ -226,7 +228,7 @@ export const useCalendarWeeklyEventPositioning = (props: Pick<PropsCalendarWeekl
     return { left, width }
   }
 
-  const getEventPosition = (event: CalendarEventExtended, day: DayWithEvents, eventIndex: number) => {
+  const getEventPosition = (event: CalendarEventExtended<T>, day: DayWithEvents<T>, eventIndex: number) => {
     const startDate = dayjs(event.start)
     const endDate = dayjs(event.end ?? event.start)
     const startHour = startDate.hour()

@@ -59,7 +59,7 @@
 import SButton from '@/app/components/sButton.vue'
 import type { PropsCalendarMonthly } from '@/app/definitions'
 import { useCalendarMonthlyService, useColorService, useCalendarEventHandlers } from '@/app/services'
-import type { CalendarEmitEvents, CalendarEvent } from '@/app/types'
+import type { CalendarEmitEvents, CalendarEvent, CalendarEventExtended } from '@/app/types'
 
 const props = defineProps<PropsCalendarMonthly<T>>()
 const emit = defineEmits<CalendarEmitEvents<T>>()
@@ -77,7 +77,7 @@ const getEvents = (date: (typeof dates.value)[0]) => {
   return getEventsHandler(date.date, date.events)
 }
 
-const getEvent = (date: (typeof dates.value)[0], event: CalendarEvent) => {
+const getEvent = (date: (typeof dates.value)[0], event: CalendarEventExtended<T>) => {
   return getEventHandler(date.date, event)
 }
 

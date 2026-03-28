@@ -2,10 +2,12 @@ import { type ModelRef, computed } from 'vue'
 import { datePickerModelFormats } from '@/app/configs'
 import { type PropsCalendar } from '@/app/definitions'
 import dayjs from '@/app/vendors/dayjs'
+import type { CalendarEvent, CalendarType } from '@/app/types'
 
-type CalendarType = 'month' | 'week'
-
-export const useCalendarService = (props: PropsCalendar, focus: ModelRef<string | null | undefined>) => {
+export const useCalendarService = <T extends CalendarEvent>(
+  props: PropsCalendar<T>,
+  focus: ModelRef<string | null | undefined>,
+) => {
   const calendarType: CalendarType = props.type ?? 'month'
 
   const navigate = (direction: 1 | -1, value = 1) => {

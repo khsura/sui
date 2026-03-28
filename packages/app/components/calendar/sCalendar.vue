@@ -23,7 +23,7 @@
     ></SCalendarWeekly>
   </div>
 </template>
-<script setup lang="ts" generic="T extends CalendarEvent">
+<script setup lang="ts" generic="T extends CalendarEvent = CalendarEvent">
 import { computed } from 'vue'
 import SCalendarMonthly from './sCalendarMonthly.vue'
 import SCalendarWeekly from './sCalendarWeekly.vue'

@@ -1,15 +1,16 @@
-import { action } from 'storybook/actions'
 import type { Meta } from '@storybook/vue3-vite'
-import { defineComponent, ref, computed } from 'vue'
+import { action } from 'storybook/actions'
 import type { ComponentPublicInstance } from 'vue'
-import { SInput, SCard, SCardTitle, SForm, SRow, SColumn, SButton, SSwitch } from '@/app/index'
+import { computed, defineComponent, ref } from 'vue'
+import { SButton, SCard, SCardTitle, SColumn, SForm, SInput, SRow, SSwitch } from '@/app/index'
 import { argsInput } from '@/app/storybook/args'
 import { formInputModelValueRules } from '@/app/storybook/configs'
 import { createStoryObj } from '@/app/storybook/helpers'
 
 const input = {
   title: 'UI Components/Form/Input',
-  component: SInput,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component: SInput as ComponentPublicInstance<any>,
 } satisfies Meta<typeof SInput>
 
 export default input
@@ -244,7 +245,6 @@ export const Inputs = createStoryObj<Meta>({
                     :input-background="args.inputBackground"
                     :placeholder-background="args.placeholderBackground"
                     :hide-details="args.hideDetails"
-                    :hide-error="args.hideError"
                     :disabled="args.disabled"
                     :append-outer="args.appendOuter"
                     :simple="args.simple"

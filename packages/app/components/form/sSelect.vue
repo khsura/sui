@@ -45,7 +45,7 @@
     </SOverlay>
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string | number = string | number">
 import { OnClickOutside } from '@vueuse/components'
 import { computed, watch, nextTick, useTemplateRef } from 'vue'
 import SFormInputError from '@/app/components/form/common/sFormInputError.vue'
@@ -64,10 +64,10 @@ import { type SelectItem, type EmitFormInput } from '@/app/types'
 
 const rawProps = defineProps<PropsSelect>()
 const props = useComponentDefaultsService('SSelect', rawProps)
-const emit = defineEmits<EmitFormInput<string | number | null>>()
+const emit = defineEmits<EmitFormInput<T | null>>()
 const { classListBorder, styleListBorder } = useBorderService(props)
-const model = defineModel<string | number | null>()
-const { errors, updateFormInput } = useFormInputService<string | number | null>(props, emit, model)
+const model = defineModel<T | null>()
+const { errors, updateFormInput } = useFormInputService<T | null>(props, emit, model)
 const menuModel = defineModel<boolean>('menu')
 const { classListDisabled } = useDisabledService(props)
 const activatorElement = useTemplateRef('activatorElement')
@@ -121,7 +121,7 @@ const selectedItem = computed<SelectItem | null>({
       return
     }
 
-    model.value = item.value
+    model.value = item.value as T
   },
 })
 

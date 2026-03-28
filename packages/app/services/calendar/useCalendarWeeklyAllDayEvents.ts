@@ -1,24 +1,24 @@
 import { computed } from 'vue'
-import type { CalendarEventExtended } from './calendarEventService'
 import type { PropsCalendarWeekly } from '@/app/definitions'
+import type { CalendarEvent, CalendarEventExtended } from '@/app/types'
 
-type DayWithEvents = {
+type DayWithEvents<T extends CalendarEvent> = {
   date: { date: string }
-  events: CalendarEventExtended[]
-  allDayEvents: CalendarEventExtended[]
+  events: CalendarEventExtended<T>[]
+  allDayEvents: CalendarEventExtended<T>[]
 }
 
-type Week = {
-  days: DayWithEvents[]
+type Week<T extends CalendarEvent> = {
+  days: DayWithEvents<T>[]
 }
 
-export const useCalendarWeeklyAllDayEvents = (
-  props: Pick<PropsCalendarWeekly, 'allDayRows'>,
-  getAllDayEventRow: (day: DayWithEvents, eventIndex: number, week: Week) => number,
+export const useCalendarWeeklyAllDayEvents = <T extends CalendarEvent>(
+  props: Pick<PropsCalendarWeekly<T>, 'allDayRows'>,
+  getAllDayEventRow: <T extends CalendarEvent>(day: DayWithEvents<T>, eventIndex: number, week: Week<T>) => number,
 ) => {
   const computedAllDayRows = computed(() => props.allDayRows ?? 7)
 
-  const getMaxAllDayRowForDay = (day: DayWithEvents, week: Week) => {
+  const getMaxAllDayRowForDay = <T extends CalendarEvent>(day: DayWithEvents<T>, week: Week<T>) => {
     if (day.allDayEvents.length === 0) {
       return -1
     }
@@ -26,7 +26,11 @@ export const useCalendarWeeklyAllDayEvents = (
     return Math.max(...day.allDayEvents.map((_, eventIndex) => getAllDayEventRow(day, eventIndex, week)), -1)
   }
 
-  const getAllDayEventsToDisplay = (day: DayWithEvents, week: Week, isAllDayExpanded: (dayDate: string) => boolean) => {
+  const getAllDayEventsToDisplay = <T extends CalendarEvent>(
+    day: DayWithEvents<T>,
+    week: Week<T>,
+    isAllDayExpanded: (dayDate: string) => boolean,
+  ): CalendarEventExtended<T>[] => {
     const maxRows = computedAllDayRows.value
     const isExpanded = isAllDayExpanded(day.date.date)
     const maxRow = getMaxAllDayRowForDay(day, week)
@@ -42,14 +46,18 @@ export const useCalendarWeeklyAllDayEvents = (
     })
   }
 
-  const hasMoreAllDayEvents = (day: DayWithEvents, week: Week) => {
+  const hasMoreAllDayEvents = (day: DayWithEvents<T>, week: Week<T>) => {
     const maxRows = computedAllDayRows.value
     const maxRow = getMaxAllDayRowForDay(day, week)
 
     return maxRow >= maxRows
   }
 
-  const getAllDayRowHeightForDay = (day: DayWithEvents, week: Week, isAllDayExpanded: (dayDate: string) => boolean) => {
+  const getAllDayRowHeightForDay = (
+    day: DayWithEvents<T>,
+    week: Week<T>,
+    isAllDayExpanded: (dayDate: string) => boolean,
+  ) => {
     const maxRows = computedAllDayRows.value
     const isExpanded = isAllDayExpanded(day.date.date)
     const maxRow = getMaxAllDayRowForDay(day, week)
@@ -63,7 +71,7 @@ export const useCalendarWeeklyAllDayEvents = (
     return visibleRows * 24
   }
 
-  const getAllDayRowHeight = (week: Week, isAllDayExpanded: (dayDate: string) => boolean) => {
+  const getAllDayRowHeight = (week: Week<T>, isAllDayExpanded: (dayDate: string) => boolean) => {
     let maxHeight = 0
 
     for (const day of week.days) {

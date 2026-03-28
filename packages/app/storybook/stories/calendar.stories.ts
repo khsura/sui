@@ -1,25 +1,26 @@
 import { faker } from '@khsura/shared'
-import { action } from 'storybook/actions'
 import type { Meta } from '@storybook/vue3-vite'
-import { defineComponent, ref } from 'vue'
+import { action } from 'storybook/actions'
+import { defineComponent, ref, type ComponentPublicInstance } from 'vue'
 import type { CalendarComponent, CalendarDate, CalendarEvent } from '@/app/index'
 import {
-  SToolbar,
   SButton,
-  SIcon,
-  SToolbarTitle,
   SCalendar,
+  SIcon,
   SSpacer,
-  SToggleButtonGroup,
   SToggleButton,
+  SToggleButtonGroup,
+  SToolbar,
+  SToolbarTitle,
 } from '@/app/index'
-import dayjs from '@/app/vendors/dayjs'
-import { createStoryObj } from '@/app/storybook/helpers'
 import { argTypesColor } from '@/app/storybook/argTypes'
+import { createStoryObj } from '@/app/storybook/helpers'
+import dayjs from '@/app/vendors/dayjs'
 
 const calendar: Meta<typeof SCalendar> = {
   title: 'UI Components/Calendar',
-  component: SCalendar,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component: SCalendar as ComponentPublicInstance<any>,
   argTypes: {
     ...argTypesColor,
     type: {
