@@ -11,9 +11,11 @@ const getAbsolutePath = (value: string) => {
 export default {
   stories: ['../storybook/stories/**/*.stories.ts'],
   addons: [
-    getAbsolutePath('@storybook/addon-links'),
     // 'storybook-dark-mode',
+    getAbsolutePath('@storybook/addon-links'),
     getAbsolutePath('@storybook/addon-docs'),
+    getAbsolutePath('@storybook/addon-vitest'),
+    getAbsolutePath('@storybook/addon-a11y'),
   ],
   framework: {
     name: getAbsolutePath('@storybook/vue3-vite'),

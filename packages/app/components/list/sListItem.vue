@@ -15,10 +15,6 @@ defineEmits<(event: 'click', value: Event) => void>()
 
 const listProps = inject(ProviderPropsName.listProps, null)
 
-if (!listProps) {
-  throw new Error('List props not found')
-}
-
 provide(ProviderPropsName.listItemProps, props)
 
 const { classListDisabled } = useDisabledService(props)
@@ -29,9 +25,9 @@ const classList = computed(() => {
     s_listItem: true,
     ...classListDisabled.value,
     's_listItem--selectable': props.selectable,
-    's_listItem--dense': listProps.dense === true,
+    's_listItem--dense': listProps?.dense === true,
     // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    's_listItem--link': isLink.value || props.link || listProps.link === true,
+    's_listItem--link': isLink.value || props.link || listProps?.link === true,
   }
 })
 </script>

@@ -10,6 +10,7 @@
     "lint": "yarn g:eslint",
     "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
     "test": "yarn g:vitest run",
+    "test-storybook": "yarn g:vitest --project storybook",
     "release": "yarn g:publish",
     "storybook:dev": "storybook dev --port 6006",
     "storybook:build": "storybook build"
@@ -40,22 +41,28 @@
     }
   },
   "dependencies": {
-    "@vueuse/components": "^14.1.0",
-    "@vueuse/core": "^14.1.0",
-    "dayjs": "^1.11.19",
+    "@vueuse/components": "^14.2.1",
+    "@vueuse/core": "^14.2.1",
+    "dayjs": "^1.11.20",
     "uuid": "^13.0.0",
-    "vue": "^3.5.26",
-    "vue-i18n": "^11.2.8",
-    "zod": "^4.3.5"
+    "vue": "^3.5.31",
+    "vue-i18n": "^11.3.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@storybook/addon-docs": "^10.1.11",
-    "@storybook/addon-links": "^10.1.11",
-    "@storybook/vue3-vite": "^10.1.11",
+    "@storybook/addon-a11y": "^10.3.3",
+    "@storybook/addon-docs": "^10.3.3",
+    "@storybook/addon-links": "^10.3.3",
+    "@storybook/addon-vitest": "^10.3.3",
+    "@storybook/vue3-vite": "^10.3.3",
     "@types/lodash.merge": "^4.6.9",
-    "eslint-plugin-storybook": "10.1.11",
+    "@vitest/browser-playwright": "^4.1.2",
+    "chokidar": "^5.0.0",
+    "eslint-plugin-storybook": "10.3.3",
     "http-server": "^14.1.1",
     "lodash.merge": "^4.6.2",
-    "storybook": "^10.1.11"
+    "playwright": "^1.58.2",
+    "storybook": "^10.3.3",
+    "vitest": "^4.1.2"
   }
 }
