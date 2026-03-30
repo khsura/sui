@@ -9,7 +9,7 @@
     "build": "yarn prebuild && yarn build:type && yarn g:vite build && yarn build:style && cp -R styles dist/styles",
     "lint": "yarn g:eslint",
     "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
-    "test": "yarn g:vitest run",
+    "test": "yarn g:vitest run --project unit",
     "test-storybook": "yarn g:vitest --project storybook",
     "release": "yarn g:publish",
     "storybook:dev": "storybook dev --port 6006",
