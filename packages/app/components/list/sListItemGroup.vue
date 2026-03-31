@@ -58,7 +58,7 @@ const contentStyles = computed(() => {
 .s_listItemGroup,
 ul.s_listItemGroup,
 ol.s_listItemGroup {
-  padding-inline-start: 0;
+  padding-left: 0;
   margin: 0;
 
   > .s_list {
