@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.15](https://github.com/khsura/sui/compare/root-v1.5.14...root-v1.5.15) (2026-03-31)
+
+
+### Bug Fixes
+
+* sListGroup bug ([f068f52](https://github.com/khsura/sui/commit/f068f52aac08fa6021cdb82159bd302493e8598f))
+
 ## [1.5.14](https://github.com/khsura/sui/compare/root-v1.5.13...root-v1.5.14) (2026-03-30)
 
 
