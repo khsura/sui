@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.15](https://github.com/khsura/sui/compare/sui-v1.7.14...sui-v1.7.15) (2026-03-31)
+
+
+### Bug Fixes
+
+* sListGroup bug ([f068f52](https://github.com/khsura/sui/commit/f068f52aac08fa6021cdb82159bd302493e8598f))
+
 ## [1.7.14](https://github.com/khsura/sui/compare/sui-v1.7.13...sui-v1.7.14) (2026-03-30)
 
 
