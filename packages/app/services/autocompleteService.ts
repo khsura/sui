@@ -30,10 +30,15 @@ export const useAutocompleteService = <T extends boolean = false>(
   let debounceTimeout: NodeJS.Timeout | number | null = null
   const itemsPool = ref<Record<string, SelectItem | undefined>>({})
 
-  const { contentClasses, contentStyles, updateLocation } = useMenuService(props, isMenuOpen, {
-    activatorElement: templateRefs.activatorElement,
-    contentElement: templateRefs.contentElement,
-  })
+  const { contentClasses, contentStyles, updateLocation } = useMenuService(
+    props,
+    isMenuOpen,
+    {
+      activatorElement: templateRefs.activatorElement,
+      contentElement: templateRefs.contentElement,
+    },
+    { autoFlip: true },
+  )
 
   const getChangeModelValueType = <V extends boolean = boolean>(
     multiple?: V,

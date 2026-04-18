@@ -17,6 +17,7 @@ export const useMenuService = (
     offset?: number
     alignMiddle?: boolean
     preventOverlap?: boolean
+    autoFlip?: boolean
     onChange?: (v: boolean | undefined | null) => void
   },
 ) => {
@@ -26,6 +27,7 @@ export const useMenuService = (
   const top = ref(0)
   const left = ref(0)
   const minWidth = ref<number | null>(null)
+  const maxHeight = ref<number | null>(null)
   const activatorService = useActivatorService(props, model, templateRefs.activatorElement)
   const { classListPosition } = usePositionService(props)
 
@@ -69,9 +71,41 @@ export const useMenuService = (
       (isLeft.value ? -width : 0) +
       transformX
 
+    // autoFlip: pick whichever side (above/below activator) has more room,
+    // and clamp the menu's height so it never overlaps the activator.
+    let placementIsTop = isTop.value
+    let resolvedMaxHeight: number | null = null
+
+    if (options?.autoFlip) {
+      const padding = 8
+      const spaceAbove = activatorLocation.top - offset - padding
+      const spaceBelow = viewportLocation.height - (activatorLocation.top + activatorLocation.height) - offset - padding
+      const preferredIsTop = isTop.value
+      const preferredSpace = preferredIsTop ? spaceAbove : spaceBelow
+      const oppositeSpace = preferredIsTop ? spaceBelow : spaceAbove
+
+      if (preferredSpace < height && oppositeSpace > preferredSpace) {
+        placementIsTop = !preferredIsTop
+      } else {
+        placementIsTop = preferredIsTop
+      }
+
+      const chosenSpace = placementIsTop ? spaceAbove : spaceBelow
+
+      resolvedMaxHeight = Math.max(120, chosenSpace)
+    }
+
+    const effectiveHeight = resolvedMaxHeight !== null ? Math.min(height, resolvedMaxHeight) : height
     let top: number
 
-    if (options?.preventOverlap) {
+    if (options?.autoFlip) {
+      top =
+        offset +
+        (props.offsetY ?? 0) +
+        (props.position === 'fixed' ? 0 : viewportLocation.top) +
+        activatorLocation.top +
+        (placementIsTop ? -effectiveHeight : activatorLocation.height)
+    } else if (options?.preventOverlap) {
       top =
         offset +
         (props.offsetY ?? 0) +
@@ -88,16 +122,19 @@ export const useMenuService = (
         (isTop.value ? -height : 0)
     }
 
-    const isBottomOverflow = viewportLocation.isWithinOverlay ? top + height >= viewportLocation.bottom : false
+    const isBottomOverflow =
+      !options?.autoFlip && viewportLocation.isWithinOverlay ? top + height >= viewportLocation.bottom : false
+
     const adjustedTop = isBottomOverflow ? viewportLocation.bottom - height : top
 
     return {
       left,
       top: adjustedTop,
       width,
-      height,
-      bottom: adjustedTop + height,
+      height: effectiveHeight,
+      bottom: adjustedTop + effectiveHeight,
       right: left + width,
+      maxHeight: resolvedMaxHeight,
     }
   }
 
@@ -117,6 +154,7 @@ export const useMenuService = (
     top.value = Math.min(contentLocation.top, contentLocation.top - overflowBottom)
     left.value = Math.max(viewportLocation.left, contentLocation.left - overflowRight)
     minWidth.value = options?.noContentMinWidth ? null : activatorWidth
+    maxHeight.value = contentLocation.maxHeight
 
     if (props.screenPadding) {
       // Adding margin so menu will have some space between border of the window screen
@@ -146,6 +184,10 @@ export const useMenuService = (
 
     if (minWidthToSet) {
       styles.minWidth = minWidthToSet
+    }
+
+    if (maxHeight.value !== null) {
+      styles.maxHeight = getNumericCssAttribute(maxHeight.value)
     }
 
     return styles
