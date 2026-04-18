@@ -6,6 +6,10 @@
 **/.vscode
 **/storybook-static
 
+# Plugin files copied into packages/app at build time (see build:plugin script)
+/packages/app/.claude-plugin
+/packages/app/sui-plugin
+
 .pnp.*
 .yarn/*
 !.yarn/patches

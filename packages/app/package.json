@@ -3,10 +3,11 @@
   "version": "1.8.0",
   "type": "module",
   "scripts": {
-    "prebuild": "yarn g:rimraf dist && yarn g:rimraf @types",
+    "prebuild": "yarn g:rimraf dist && yarn g:rimraf @types && yarn g:rimraf .claude-plugin && yarn g:rimraf sui-plugin",
     "build:style": "yarn g:sass styles/index.scss dist/base.css",
     "build:type": "yarn g:vue-tsc -p tsconfig.build.json && yarn g:tsc-alias -p tsconfig.build.json",
-    "build": "yarn prebuild && yarn build:type && yarn g:vite build && yarn build:style && cp -R styles dist/styles",
+    "build:plugin": "cp -R ../../.claude-plugin . && cp -R ../../plugins/sui-plugin .",
+    "build": "yarn prebuild && yarn build:type && yarn g:vite build && yarn build:style && cp -R styles dist/styles && yarn build:plugin",
     "lint": "yarn g:eslint",
     "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
     "test": "yarn g:vitest run --project unit",
