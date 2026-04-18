@@ -1,0 +1,18 @@
+{
+  "name": "sui-framework",
+  "owner": {
+    "name": "Sura Kh",
+    "email": "sura0111@gmail.com"
+  },
+  "metadata": {
+    "description": "Claude Code skills for the SUI Vue 3 component framework",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "sui-plugin",
+      "source": "./plugins/sui-plugin",
+      "description": "SUI framework skills — components, layout, forms, utilities"
+    }
+  ]
+}
