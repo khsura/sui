@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.8.0](https://github.com/khsura/sui/compare/sui-v1.7.15...sui-v1.8.0) (2026-04-18)
+
+
+### Features
+
+* **plugin:** relocate sui-plugin and marketplace to repo root ([7bb635c](https://github.com/khsura/sui/commit/7bb635c3bcfc821331c8b7e550def0720e9dc22d))
+
+
+### Bug Fixes
+
+* **autocomplete:** prevent dropdown from covering input on mobile ([a48194c](https://github.com/khsura/sui/commit/a48194c1bc8a6105b19acf8a9cb51694b1df5efb))
+
 ## [1.7.15](https://github.com/khsura/sui/compare/sui-v1.7.14...sui-v1.7.15) (2026-03-31)
 
 
