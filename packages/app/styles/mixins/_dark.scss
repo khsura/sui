@@ -11,7 +11,7 @@
         @if $fillBackground {
           background-color: tools.s_getThemeColor('card', $themeName);
         } @else {
-          background-color: inherit;
+          // do nothing
         }
         fill: tools.s_getThemeColor('text', $themeName);
       }
@@ -22,7 +22,7 @@
         @if $fillBackground {
           background-color: tools.s_getThemeColor('card', $themeName);
         } @else {
-          background-color: inherit;
+          // do nothing
         }
         fill: tools.s_getThemeColor('text', $themeName);
       }
