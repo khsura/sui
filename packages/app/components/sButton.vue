@@ -137,6 +137,12 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.s_app {
+  .s_button {
+    @include s_dark(false);
+  }
+}
+
 .s_button {
   background-color: s_getAppColor('background');
 

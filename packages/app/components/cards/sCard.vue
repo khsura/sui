@@ -40,6 +40,12 @@ const styles = computed(() => {
 </script>
 
 <style lang="scss">
+.s_app {
+  .s_card {
+    @include s_dark();
+  }
+}
+
 .s_card {
   @include s_elevation(0);
   @include s_dark();
