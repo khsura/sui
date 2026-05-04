@@ -4,6 +4,7 @@ interface AppColors {
   text: string
   textErrorHover: string
   secondaryText: string
+  anchor: string
   background: string
   button: string
   card: string
