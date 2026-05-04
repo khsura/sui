@@ -31,6 +31,11 @@ const autocomplete: Meta<typeof SAutocomplete> = {
         type: 'boolean',
       },
     },
+    allowUnlisted: {
+      control: {
+        type: 'boolean',
+      },
+    },
     filterMode: {
       control: {
         type: 'select',
@@ -199,6 +204,51 @@ export const CustomFilter = createStoryObj<Meta>({
       },
       template: /* html */ `
         <SAutocomplete v-bind="args" v-model="modelValue"></SAutocomplete>
+      `,
+    }),
+})
+
+export const AllowUnlisted = createStoryObj<Meta>({
+  args: {
+    ...argsAutocomplete,
+    allowUnlisted: true,
+    multiple: true,
+    chips: true,
+    closableChips: true,
+    placeholder: 'Add tags... (press Enter to create new)',
+  },
+  render: (args) =>
+    defineComponent({
+      components: {
+        SAutocomplete,
+      },
+      setup: () => {
+        const modelValue = ref<string[]>([])
+        const createdItems = ref<SelectItem[]>([])
+
+        const onCreateItem = (item: SelectItem) => {
+          createdItems.value.push(item)
+        }
+
+        return {
+          args,
+          modelValue,
+          createdItems,
+          onCreateItem,
+        }
+      },
+      template: /* html */ `
+        <div>
+          <SAutocomplete
+            v-bind="args"
+            v-model="modelValue"
+            @create-item="onCreateItem"
+          ></SAutocomplete>
+          <h4>model</h4>
+          <pre>{{ JSON.stringify(modelValue, null, 2) }}</pre>
+          <h4>createItem events</h4>
+          <pre>{{ JSON.stringify(createdItems, null, 2) }}</pre>
+        </div>
       `,
     }),
 })

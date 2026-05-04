@@ -33,7 +33,7 @@ const { styles } = useAppService(props)
   }
 
   a {
-    color: s_getAppColor('text');
+    color: s_getAppColor('anchor');
 
     &:hover {
       text-decoration: none;

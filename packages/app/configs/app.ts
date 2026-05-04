@@ -14,6 +14,7 @@ export const defaultAppConfig = {
         appBar: '#ffffff',
         title: '#1a2b49',
         text: '#333333',
+        anchor: '#000000',
         textErrorHover: '#b76d48',
         secondaryText: '#6d6d6d',
         background: '#f7f7f7',
@@ -39,6 +40,7 @@ export const defaultAppConfig = {
       appColors: {
         appBar: '#222222',
         text: '#fdfdfd',
+        anchor: '#ffffff',
         title: '#fefefe',
         textErrorHover: '#b76d48',
         secondaryText: '#cccccc',

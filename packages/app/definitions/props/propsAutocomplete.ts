@@ -20,6 +20,12 @@ export type PropsAutocomplete<T extends boolean = false> = {
   chips?: boolean
   closableChips?: boolean
   dense?: boolean
+  /**
+   * @description When true, allows the user to add items that are not in the `items` list.
+   * The typed text is used as both `text` and `value`. A `createItem` event is emitted
+   * so the parent can react (e.g. persist to backend).
+   */
+  allowUnlisted?: boolean
 
   // Loading and async
   loading?: boolean

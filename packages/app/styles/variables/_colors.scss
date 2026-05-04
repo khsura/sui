@@ -30,5 +30,5 @@ $s_colors: lib.map-deep-merge(
   $s_colors
 );
 $s_presetColorNames: ('primary', 'secondary', 'success', 'info', 'warning', 'important', 'error');
-$s_appExposedColorNames: ('background', 'card');
+$s_appExposedColorNames: ('background', 'card', 'anchor');
 $s_themeNames: ('dark', 'light');

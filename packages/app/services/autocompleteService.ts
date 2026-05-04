@@ -71,8 +71,29 @@ export const useAutocompleteService = <T extends boolean = false>(
   }
 
   const addItemToModel = (type: 'text' | 'value', inputText?: AutocompleteModelTypeBase) => {
-    const foundItem =
+    let foundItem =
       type === 'text' ? getItemFromText(props.items ?? [], inputText) : getItemFromValue(props.items ?? [], inputText)
+
+    if (
+      !foundItem &&
+      props.allowUnlisted &&
+      type === 'text' &&
+      typeof inputText === 'string' &&
+      inputText.trim() !== ''
+    ) {
+      const trimmed = inputText.trim()
+      const existing = getItemFromItemsPool(trimmed)
+
+      if (existing) {
+        foundItem = existing
+      } else {
+        const newItem: SelectItem = { text: trimmed, value: trimmed }
+
+        updateItemsPool([newItem])
+        emit('createItem', newItem)
+        foundItem = newItem
+      }
+    }
 
     if (!foundItem) {
       if (props.multiple) {
@@ -205,6 +226,31 @@ export const useAutocompleteService = <T extends boolean = false>(
     updateLocation()
   }
 
+  const onSelectUnlisted = async () => {
+    const trimmed = queryText.value.trim()
+
+    if (!trimmed) return
+
+    addItemToModel('text', trimmed)
+
+    if (!props.multiple) {
+      isMenuOpen.value = false
+    }
+
+    await nextTick()
+    updateLocation()
+  }
+
+  const showCreateOption = computed(() => {
+    if (!props.allowUnlisted) return false
+
+    const trimmed = queryText.value.trim()
+
+    if (trimmed === '') return false
+
+    return !(props.items ?? []).some((item) => getItemText(item) === trimmed)
+  })
+
   const filteredItems = computed(() => {
     return (
       props.items?.filter((item) => {
@@ -284,6 +330,7 @@ export const useAutocompleteService = <T extends boolean = false>(
     contentClasses,
     contentStyles,
     filteredItems,
+    showCreateOption,
     isFocused,
     isMenuOpen,
     clear,
@@ -298,6 +345,7 @@ export const useAutocompleteService = <T extends boolean = false>(
     getItemText,
     onClickOutside,
     onSelectItem,
+    onSelectUnlisted,
     updateModelType,
     updateItemsPool,
     getItemFromItemsPool,

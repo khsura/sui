@@ -83,12 +83,24 @@
               :disabled="getSelectItem(item).disabled"
               @click="onSelectItem(item)"
             >
-              <SListItemIcon v-if="multiple">
+              <SListItemIcon v-if="multiple" class="s_autocomplete__checkboxIcon">
                 <SCheckbox :model-value="getIsSelected(item)" hide-details></SCheckbox>
               </SListItemIcon>
               <SListItemContent>
                 {{ getItemText(item) }}
               </SListItemContent>
+              <span></span>
+            </SListItem>
+            <SListItem
+              v-if="showCreateOption"
+              :link="true"
+              class="s_autocomplete__createOption"
+              @click="onSelectUnlisted"
+            >
+              <SListItemIcon v-if="multiple" class="s_autocomplete__checkboxIcon">
+                <SIcon icon="mdi-plus" size="small"></SIcon>
+              </SListItemIcon>
+              <SListItemContent>Add "{{ queryText.trim() }}"</SListItemContent>
               <span></span>
             </SListItem>
           </SList>
@@ -132,6 +144,7 @@ const {
   contentClasses,
   contentStyles,
   filteredItems,
+  showCreateOption,
   isFocused,
   isMenuOpen,
   clear,
@@ -145,6 +158,7 @@ const {
   getItemText,
   onClickOutside,
   onSelectItem,
+  onSelectUnlisted,
   updateModelType,
   updateItemsPool,
   getItemFromItemsPool,
@@ -259,6 +273,13 @@ watch(
   &__selectedItemCloseIcon {
     padding-left: $s_spacer;
     cursor: pointer;
+  }
+
+  // Make the checkbox visual-only — clicks pass through to the SListItem so
+  // we get a single toggle. Without this, clicking the <label> double-fires
+  // (label click bubbles + browser-synthesized input click also bubbles).
+  &__checkboxIcon {
+    pointer-events: none;
   }
 }
 </style>
