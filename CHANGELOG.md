@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.6.1](https://github.com/khsura/sui/compare/root-v1.6.0...root-v1.6.1) (2026-05-04)
+
+
+### Bug Fixes
+
+* autocomplete, anchor color ([d475eee](https://github.com/khsura/sui/commit/d475eeeca4ab3b6106a58a3d3e0d3a05ead4678f))
+* bug ([f02a7b7](https://github.com/khsura/sui/commit/f02a7b783512aeef495c4f99e3fedd37747ac169))
+* bug ([38aa611](https://github.com/khsura/sui/commit/38aa611707334031ef61bddc525bc974637635d9))
+* bugs ([068814c](https://github.com/khsura/sui/commit/068814cb2e26fe3a6b1fa278bc7ae77255dd3750))
+* color ([4c7a490](https://github.com/khsura/sui/commit/4c7a490a47949f791d9d85c66d7bbcb0eefd0d36))
+* css issue ([de4bc99](https://github.com/khsura/sui/commit/de4bc99343d7f49e67c84d0bf3ddce070656796c))
+
 ## [1.6.0](https://github.com/khsura/sui/compare/root-v1.5.15...root-v1.6.0) (2026-04-18)
 
 
