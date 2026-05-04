@@ -23,7 +23,7 @@
     "lint": "nx run-many --target=lint --all",
     "stylelint": "nx run-many --target=stylelint --all",
     "release": "nx run-many --target=release --all",
-    "test": "vitest --run",
+    "test": "nx run-many --target=test --all",
     "postinstall": "husky",
     "prepack": "pinst --disable",
     "postpack": "pinst --enable",

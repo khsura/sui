@@ -9,25 +9,19 @@ import { defineConfig } from 'vite'
 // import vueDevTools from 'vite-plugin-vue-devtools'
 import { checker } from 'vite-plugin-checker'
 
+const isTest = !!process.env.VITEST
+
 export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
     // vueDevTools(),
-    checker({
-      vueTsc: true,
-      typescript: true,
-    }),
+    ...(isTest ? [] : [checker({ vueTsc: true, typescript: true })]),
   ],
   resolve: {
     alias: {
       '@/app': fileURLToPath(new URL('./', import.meta.url)),
     },
-  },
-  esbuild: {
-    jsxFactory: 'h',
-    jsxFragment: 'Fragment',
-    jsxInject: `import { h, Fragment } from 'vue'`,
   },
   build: {
     target: ['safari11', 'ios11'],
