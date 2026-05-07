@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/khsura/sui/compare/sui-v1.8.1...sui-v1.9.0) (2026-05-07)
+
+
+### Features
+
+* useComponentDefaultsService rollout ([0200c17](https://github.com/khsura/sui/commit/0200c17817484f54ba8d5bd250b15696180042a9))
+
 ## [1.8.1](https://github.com/khsura/sui/compare/sui-v1.8.0...sui-v1.8.1) (2026-05-04)
 
 
