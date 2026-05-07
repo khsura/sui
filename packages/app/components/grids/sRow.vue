@@ -8,10 +8,11 @@
 <script lang="ts" setup>
 import { type CSSProperties, computed } from 'vue'
 import { getCleanSetObject, getNumericCssAttribute } from '@/app/lib'
-import { useContentService } from '@/app/services'
+import { useComponentDefaultsService, useContentService } from '@/app/services'
 import { type PropsRow } from '@/app/definitions'
 
-const props = defineProps<PropsRow>()
+const rawProps = defineProps<PropsRow>()
+const props = useComponentDefaultsService('SRow', rawProps)
 const content = useContentService(props)
 
 const classes = computed(() => {

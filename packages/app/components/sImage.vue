@@ -7,10 +7,11 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { LazyLoad } from '@/app/constants'
-import { useMeasurableStylesService } from '@/app/services'
+import { useComponentDefaultsService, useMeasurableStylesService } from '@/app/services'
 import type { PropsImage } from '@/app/definitions'
 
-const props = defineProps<PropsImage>()
+const rawProps = defineProps<PropsImage>()
+const props = useComponentDefaultsService('SImage', rawProps)
 const { measurableStyles } = useMeasurableStylesService(props)
 
 const styles = computed(() => {

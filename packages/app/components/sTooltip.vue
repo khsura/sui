@@ -33,9 +33,15 @@ import { OnClickOutside } from '@vueuse/components'
 import { watch, nextTick, computed, useTemplateRef } from 'vue'
 import SOverlay from '@/app/components/sOverlay.vue'
 import type { PropsTooltip } from '@/app/definitions'
-import { useColorService, useMeasurableStylesService, useMenuService } from '@/app/services'
+import {
+  useColorService,
+  useComponentDefaultsService,
+  useMeasurableStylesService,
+  useMenuService,
+} from '@/app/services'
 
-const props = defineProps<PropsTooltip>()
+const rawProps = defineProps<PropsTooltip>()
+const props = useComponentDefaultsService('STooltip', rawProps)
 const { measurableStyles } = useMeasurableStylesService(props)
 const model = defineModel<boolean>()
 const activatorElement = useTemplateRef('activatorElement')

@@ -21,9 +21,10 @@ import { ref, computed, watch, nextTick } from 'vue'
 import SIcon from '@/app/components/sIcon.vue'
 import type { PropsBadge } from '@/app/definitions'
 import { getNumericCssAttribute } from '@/app/lib'
-import { useColorService } from '@/app/services'
+import { useColorService, useComponentDefaultsService } from '@/app/services'
 
-const props = defineProps<PropsBadge>()
+const rawProps = defineProps<PropsBadge>()
+const props = useComponentDefaultsService('SBadgeContent', rawProps)
 const contentChanged = ref(false)
 const { classListColor, styleListColor } = useColorService(props)
 

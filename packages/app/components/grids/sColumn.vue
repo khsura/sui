@@ -6,9 +6,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { type PropsColumn } from '@/app/definitions'
-import { useColumnService } from '@/app/services'
+import { useColumnService, useComponentDefaultsService } from '@/app/services'
 
-const props = defineProps<PropsColumn>()
+const rawProps = defineProps<PropsColumn>()
+const props = useComponentDefaultsService('SColumn', rawProps)
 const { classListColumn } = useColumnService(props)
 
 const classList = computed(() => {

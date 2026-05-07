@@ -21,14 +21,15 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useTextColorService } from '@/app/services'
+import { useComponentDefaultsService, useTextColorService } from '@/app/services'
 import { type BreadcrumbsItem } from '@/app/types'
 import type { PropsBreadcrumbs } from '@/app/definitions'
 
-const props = withDefaults(defineProps<PropsBreadcrumbs>(), {
+const rawProps = withDefaults(defineProps<PropsBreadcrumbs>(), {
   divider: '/',
 })
 
+const props = useComponentDefaultsService('SBreadcrumbs', rawProps)
 const { classListTextColor, styleListTextColor } = useTextColorService(props)
 
 const classList = computed(() => {

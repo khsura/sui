@@ -195,11 +195,11 @@ import STableHeadCell from './sTableHeadCell.vue'
 import STableBodyCell from './sTableBodyCell.vue'
 import STablePagination from './sTablePagination.vue'
 import { getCleanSetObject } from '@/app/lib'
-import { useBorderService, useTableService } from '@/app/services'
+import { useBorderService, useComponentDefaultsService, useTableService } from '@/app/services'
 import { type KTableSortOrder, type TableItem } from '@/app/types'
 import type { EmitsTable, PropsTable } from '@/app/definitions'
 
-const props = withDefaults(defineProps<PropsTable<T>>(), {
+const rawProps = withDefaults(defineProps<PropsTable<T>>(), {
   items: () => [],
   headers: () => [],
   outlined: false,
@@ -217,6 +217,7 @@ const props = withDefaults(defineProps<PropsTable<T>>(), {
   shadowExpandedContent: false,
 })
 
+const props = useComponentDefaultsService<PropsTable<T>>('STable', rawProps)
 const emit = defineEmits<EmitsTable<T>>()
 const itemsPerPage = defineModel<number>('itemsPerPage')
 const { classListBorder, styleListBorder } = useBorderService(props, { block: 'table' })

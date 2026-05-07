@@ -13,6 +13,7 @@ export type PropsDialog = {
   borderless?: boolean
   scrollableBackground?: boolean
   closeOnClick?: boolean
+  zIndex?: number | undefined
 } & PropsLocation &
   PropsMeasurableStyles &
   PropsActivator &

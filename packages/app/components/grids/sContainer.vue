@@ -8,9 +8,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { type PropsContainer } from '@/app/definitions'
-import { useColorService, useTagService } from '@/app/services'
+import { useColorService, useComponentDefaultsService, useTagService } from '@/app/services'
 
-const props = defineProps<PropsContainer>()
+const rawProps = defineProps<PropsContainer>()
+const props = useComponentDefaultsService('SContainer', rawProps)
 const { classListColor, styleListColor } = useColorService(props)
 const { tagName } = useTagService(props)
 

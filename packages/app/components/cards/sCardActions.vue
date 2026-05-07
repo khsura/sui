@@ -5,9 +5,10 @@
 </template>
 <script setup lang="ts">
 import { type PropsTag } from '@/app/definitions'
-import { useTagService } from '@/app/services'
+import { useComponentDefaultsService, useTagService } from '@/app/services'
 
-const props = defineProps<PropsTag>()
+const rawProps = defineProps<PropsTag>()
+const props = useComponentDefaultsService('SCardActions', rawProps)
 const { tagName } = useTagService(props)
 </script>
 <style lang="scss">

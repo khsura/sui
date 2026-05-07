@@ -24,6 +24,7 @@ import { useColorRepository } from '@/app/repositories'
 import {
   useBorderService,
   useColorService,
+  useComponentDefaultsService,
   useDisabledService,
   useElevationService,
   useLinkService,
@@ -35,10 +36,11 @@ import {
 import { ProviderPropsName } from '@/app/configs'
 import { getButtonType } from '@/app/lib/button'
 
-const props = withDefaults(defineProps<PropsButton>(), {
+const rawProps = withDefaults(defineProps<PropsButton>(), {
   tag: 'button',
 })
 
+const props = useComponentDefaultsService('SButton', rawProps)
 const emit = defineEmits<(event: 'click', value: Event) => void>()
 const { measurableStyles } = useMeasurableStylesService(props)
 const { classListElevation } = useElevationService(props)

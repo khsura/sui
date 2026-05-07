@@ -36,15 +36,16 @@
 </template>
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useTextColorService, useComponentThemeService } from '@/app/services'
+import { useComponentDefaultsService, useComponentThemeService, useTextColorService } from '@/app/services'
 import type { PropsProgressCircular } from '@/app/definitions'
 
-const props = withDefaults(defineProps<PropsProgressCircular>(), {
+const rawProps = withDefaults(defineProps<PropsProgressCircular>(), {
   size: 32,
   width: 4,
   value: 0,
 })
 
+const props = useComponentDefaultsService('SProgressCircular', rawProps)
 const { classListTextColor, styleListTextColor } = useTextColorService(props)
 const { themeClasses } = useComponentThemeService(props)
 const radius = ref(20)

@@ -7,9 +7,10 @@
 import { computed, useSlots } from 'vue'
 import type { PropsAlert } from '@/app/definitions'
 import { alertDefaultSize, alertPaddingsMap, alertDensePaddingsMap, alertFontSizeMap } from '@/app/constants'
-import { useColorService } from '@/app/services'
+import { useColorService, useComponentDefaultsService } from '@/app/services'
 
-const props = defineProps<PropsAlert>()
+const rawProps = defineProps<PropsAlert>()
+const props = useComponentDefaultsService('SAlert', rawProps)
 const slots = useSlots()
 const hasContent = computed(() => !!slots.default?.().length)
 const shouldRender = computed(() => props.fixedHeight || hasContent.value)

@@ -21,9 +21,15 @@ import { getCleanSetObject, getNumericCssAttribute } from '@/app/lib'
 import { getWindow } from '@/app/lib/browser'
 import type { PropsSnackbar } from '@/app/definitions'
 import { getIsAbsolutePosition, getIsFixedPosition } from '@/app/repositories/positionRepository'
-import { useActivatorService, useLayoutService, useScrollableService } from '@/app/services'
+import {
+  useActivatorService,
+  useComponentDefaultsService,
+  useLayoutService,
+  useScrollableService,
+} from '@/app/services'
 
-const props = defineProps<PropsSnackbar>()
+const rawProps = defineProps<PropsSnackbar>()
+const props = useComponentDefaultsService('SSnackbar', rawProps)
 const model = defineModel<boolean>()
 let timer: NodeJS.Timeout | number | undefined
 const activatorElement = useTemplateRef('activatorElement')

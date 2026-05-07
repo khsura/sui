@@ -30,6 +30,14 @@ export const useAutocompleteService = <T extends boolean = false>(
   let debounceTimeout: NodeJS.Timeout | number | null = null
   const itemsPool = ref<Record<string, SelectItem | undefined>>({})
 
+  const isMultiple = computed<boolean>(() => {
+    if (props.multiple === undefined || props.multiple === false) {
+      return false
+    }
+
+    return true
+  })
+
   const { contentClasses, contentStyles, updateLocation } = useMenuService(
     props,
     isMenuOpen,
@@ -96,7 +104,7 @@ export const useAutocompleteService = <T extends boolean = false>(
     }
 
     if (!foundItem) {
-      if (props.multiple) {
+      if (isMultiple.value) {
         queryText.value = ''
       } else {
         model.value = undefined
@@ -106,22 +114,20 @@ export const useAutocompleteService = <T extends boolean = false>(
       return
     }
 
-    const multiple = props.multiple === true
-
-    if (multiple) {
-      const val = getSafeTypeModelValue<true>(multiple, getChangeModelValueType(multiple))
+    if (isMultiple.value) {
+      const val = getSafeTypeModelValue<true>(isMultiple.value, getChangeModelValueType(isMultiple.value))
 
       if (val?.includes(foundItem.value)) {
-        model.value = getSafeTypeModelValue<T>(multiple, val.filter((item) => item !== foundItem.value) ?? [])
+        model.value = getSafeTypeModelValue<T>(isMultiple.value, val.filter((item) => item !== foundItem.value) ?? [])
       } else {
-        model.value = getSafeTypeModelValue<T>(multiple, [...(val ?? []), foundItem.value])
+        model.value = getSafeTypeModelValue<T>(isMultiple.value, [...(val ?? []), foundItem.value])
       }
 
       queryText.value = ''
     } else {
-      const val = getChangeModelValueType(multiple)
+      const val = getChangeModelValueType(isMultiple.value)
 
-      if (val === foundItem.value && !multiple) {
+      if (val === foundItem.value && !isMultiple.value) {
         queryText.value = foundItem.text
 
         return
@@ -129,7 +135,7 @@ export const useAutocompleteService = <T extends boolean = false>(
 
       const newValue = foundItem.value !== val ? foundItem.value : undefined
 
-      model.value = getSafeTypeModelValue<T>(multiple, newValue)
+      model.value = getSafeTypeModelValue<T>(isMultiple.value, newValue)
 
       queryText.value = props.chips ? '' : foundItem.text
     }
@@ -177,14 +183,12 @@ export const useAutocompleteService = <T extends boolean = false>(
   }
 
   const removeInput = async (value: AutocompleteModelTypeBase) => {
-    const multiple = props.multiple === true
+    if (isMultiple.value) {
+      const val = getSafeTypeModelValue<true>(isMultiple.value, getChangeModelValueType<true>(isMultiple.value))
 
-    if (multiple) {
-      const val = getSafeTypeModelValue<true>(multiple, getChangeModelValueType<true>(multiple))
-
-      model.value = getSafeTypeModelValue<T>(multiple, val.filter((item) => item !== value) ?? [])
+      model.value = getSafeTypeModelValue<T>(isMultiple.value, val.filter((item) => item !== value) ?? [])
     } else {
-      const val = getChangeModelValueType(multiple)
+      const val = getChangeModelValueType(isMultiple.value)
 
       if (val === value) {
         model.value = undefined
@@ -218,7 +222,7 @@ export const useAutocompleteService = <T extends boolean = false>(
       addItemToModel('value', item.value)
     }
 
-    if (!props.multiple) {
+    if (!isMultiple.value) {
       isMenuOpen.value = false
     }
 
@@ -233,7 +237,7 @@ export const useAutocompleteService = <T extends boolean = false>(
 
     addItemToModel('text', trimmed)
 
-    if (!props.multiple) {
+    if (!isMultiple.value) {
       isMenuOpen.value = false
     }
 
@@ -299,7 +303,7 @@ export const useAutocompleteService = <T extends boolean = false>(
   }
 
   const clear = () => {
-    model.value = getSafeTypeModelValue<T>(props.multiple, props.multiple ? [] : undefined)
+    model.value = getSafeTypeModelValue<T>(isMultiple.value, isMultiple.value ? [] : undefined)
     queryText.value = ''
   }
 
@@ -333,6 +337,7 @@ export const useAutocompleteService = <T extends boolean = false>(
     showCreateOption,
     isFocused,
     isMenuOpen,
+    isMultiple,
     clear,
     updateLocation,
     onBlur,

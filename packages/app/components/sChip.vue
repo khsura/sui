@@ -13,9 +13,16 @@ import { computed } from 'vue'
 import SIcon from '@/app/components/sIcon.vue'
 import { getCleanSetObject } from '@/app/lib'
 import type { PropsChip } from '@/app/definitions'
-import { useBorderService, useColorService, useDisabledService, useSizeService } from '@/app/services'
+import {
+  useBorderService,
+  useColorService,
+  useComponentDefaultsService,
+  useDisabledService,
+  useSizeService,
+} from '@/app/services'
 
-const props = defineProps<PropsChip>()
+const rawProps = defineProps<PropsChip>()
+const props = useComponentDefaultsService('SChip', rawProps)
 
 const emit = defineEmits<{
   (event: 'close'): void

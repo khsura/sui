@@ -3,10 +3,16 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useComponentThemeService, useSizeService, useTextColorService } from '@/app/services'
+import {
+  useComponentDefaultsService,
+  useComponentThemeService,
+  useSizeService,
+  useTextColorService,
+} from '@/app/services'
 import type { PropsIcon } from '@/app/definitions'
 
-const props = defineProps<PropsIcon>()
+const rawProps = defineProps<PropsIcon>()
+const props = useComponentDefaultsService('SIcon', rawProps)
 const { classListTextColor, styleListTextColor, isPresetColor } = useTextColorService(props)
 const { themeClasses } = useComponentThemeService(props)
 const { classListSize, styleListSize } = useSizeService(props, { block: 'icon' })

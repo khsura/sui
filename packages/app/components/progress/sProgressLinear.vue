@@ -17,12 +17,14 @@ import { computed } from 'vue'
 import type { PropsProgressLinear } from '@/app/definitions'
 import { getNumericCssAttribute } from '@/app/lib'
 import { useColorRepository } from '@/app/repositories'
+import { useComponentDefaultsService } from '@/app/services'
 
-const props = withDefaults(defineProps<PropsProgressLinear>(), {
+const rawProps = withDefaults(defineProps<PropsProgressLinear>(), {
   color: 'info',
   value: 0,
 })
 
+const props = useComponentDefaultsService('SProgressLinear', rawProps)
 const { getBackgroundColorAttributes } = useColorRepository()
 
 const backgroundColorAttrs = computed(() => {

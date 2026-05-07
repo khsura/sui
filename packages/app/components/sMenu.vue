@@ -25,10 +25,11 @@ import { computed, watch, nextTick, useTemplateRef } from 'vue'
 import SOverlay from '@/app/components/sOverlay.vue'
 import { getWindow } from '@/app/lib/browser'
 import type { PropsMenu } from '@/app/definitions'
-import { useMeasurableStylesService, useMenuService } from '@/app/services'
+import { useComponentDefaultsService, useMeasurableStylesService, useMenuService } from '@/app/services'
 import { type EmitMenu } from '@/app/types'
 
-const props = defineProps<PropsMenu>()
+const rawProps = defineProps<PropsMenu>()
+const props = useComponentDefaultsService('SMenu', rawProps)
 const emit = defineEmits<EmitMenu>()
 const model = defineModel<boolean>()
 const { measurableStyles } = useMeasurableStylesService(props)

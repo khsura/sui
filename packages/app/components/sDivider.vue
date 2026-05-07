@@ -4,8 +4,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { PropsDivider } from '@/app/definitions'
+import { useComponentDefaultsService } from '@/app/services'
 
-const props = defineProps<PropsDivider>()
+const rawProps = defineProps<PropsDivider>()
+const props = useComponentDefaultsService('SDivider', rawProps)
 
 const classes = computed(() => {
   return {

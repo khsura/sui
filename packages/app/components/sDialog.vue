@@ -3,7 +3,7 @@
     <div ref="activatorElement">
       <slot name="activator" :on="activatorOn" :attrs="activatorAttrs"></slot>
     </div>
-    <SOverlay v-slot="{ attrs }" scrim :value="model" :transition="transitionName">
+    <SOverlay v-slot="{ attrs }" scrim :value="model" :z-index="zIndex" :transition="transitionName">
       <div v-bind="attrs" :class="contentClasses" :style="contentStyles" ref="dialogRef">
         <slot></slot>
       </div>
@@ -15,10 +15,11 @@ import { watch, useTemplateRef, provide } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import SOverlay from '@/app/components/sOverlay.vue'
 import type { PropsDialog } from '@/app/definitions'
-import { useDialogService, useBackgroundScrollService } from '@/app/services'
+import { useBackgroundScrollService, useComponentDefaultsService, useDialogService } from '@/app/services'
 import { ProviderPropsName } from '@/app/configs'
 
-const props = defineProps<PropsDialog>()
+const rawProps = defineProps<PropsDialog>()
+const props = useComponentDefaultsService('SDialog', rawProps)
 const model = defineModel<boolean>()
 
 provide(ProviderPropsName.dialog, props)

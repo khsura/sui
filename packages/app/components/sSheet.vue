@@ -9,12 +9,14 @@ import type { PropsSheet } from '@/app/definitions'
 import {
   useBorderService,
   useColorService,
+  useComponentDefaultsService,
   useElevationService,
   useMeasurableStylesService,
   useTagService,
 } from '@/app/services'
 
-const props = defineProps<PropsSheet>()
+const rawProps = defineProps<PropsSheet>()
+const props = useComponentDefaultsService('SSheet', rawProps)
 const { classListColor, styleListColor } = useColorService(props)
 const { measurableStyles } = useMeasurableStylesService(props)
 const { classListBorder, styleListBorder } = useBorderService(props)

@@ -13,8 +13,10 @@
 import { computed } from 'vue'
 import SBadgeContent from './sBadgeContent.vue'
 import type { PropsBadge } from '@/app/definitions'
+import { useComponentDefaultsService } from '@/app/services'
 
-const props = defineProps<PropsBadge>()
+const rawProps = defineProps<PropsBadge>()
+const props = useComponentDefaultsService('SBadge', rawProps)
 
 const classes = computed(() => ({
   's_badge--inline': props.inline,

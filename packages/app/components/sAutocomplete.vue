@@ -25,7 +25,7 @@
           </div>
         </template>
         <SChip
-          v-if="!multiple && chips && model"
+          v-if="!isMultiple && chips && model"
           size="small"
           class="s_autocomplete__selectedItem"
           :class="{
@@ -83,7 +83,7 @@
               :disabled="getSelectItem(item).disabled"
               @click="onSelectItem(item)"
             >
-              <SListItemIcon v-if="multiple" class="s_autocomplete__checkboxIcon">
+              <SListItemIcon v-if="isMultiple" class="s_autocomplete__checkboxIcon">
                 <SCheckbox :model-value="getIsSelected(item)" hide-details></SCheckbox>
               </SListItemIcon>
               <SListItemContent>
@@ -97,7 +97,7 @@
               class="s_autocomplete__createOption"
               @click="onSelectUnlisted"
             >
-              <SListItemIcon v-if="multiple" class="s_autocomplete__checkboxIcon">
+              <SListItemIcon v-if="isMultiple" class="s_autocomplete__checkboxIcon">
                 <SIcon icon="mdi-plus" size="small"></SIcon>
               </SListItemIcon>
               <SListItemContent>Add "{{ queryText.trim() }}"</SListItemContent>
@@ -147,6 +147,7 @@ const {
   showCreateOption,
   isFocused,
   isMenuOpen,
+  isMultiple,
   clear,
   onBlur,
   onFocus,
@@ -172,7 +173,7 @@ updateItemsPool(props.items ?? [])
 
 // Watch for external changes to modelValue
 watch(
-  () => props.multiple,
+  isMultiple,
   (newValue) => {
     updateModelType(newValue ?? false)
   },

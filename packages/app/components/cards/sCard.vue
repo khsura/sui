@@ -1,5 +1,5 @@
 <template>
-  <Component :is="tag" class="s_card" :class="classes" :style="styles" :href="href" :to="to">
+  <Component :is="tagName" class="s_card" :class="classes" :style="styles" :href="href" :to="to">
     <slot></slot>
   </Component>
 </template>
@@ -7,19 +7,21 @@
 import { computed } from 'vue'
 import type { PropsCard } from '@/app/definitions'
 import {
-  useLinkService,
   useBorderService,
   useColorService,
+  useComponentDefaultsService,
   useElevationService,
+  useLinkService,
   useMeasurableStylesService,
 } from '@/app/services'
 
-const props = defineProps<PropsCard>()
+const rawProps = defineProps<PropsCard>()
+const props = useComponentDefaultsService('SCard', rawProps)
 const { classListElevation } = useElevationService(props)
 const { measurableStyles } = useMeasurableStylesService(props)
 const { classListColor, styleListColor } = useColorService(props)
 const { classListBorder, styleListBorder } = useBorderService(props)
-const { tag, isLink } = useLinkService(props)
+const { tag: tagName, isLink } = useLinkService(props)
 
 const classes = computed(() => {
   return {
