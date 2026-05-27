@@ -37,3 +37,10 @@ export interface ThemeConfigOptions {
 }
 
 export type AppThemeType = 'light' | 'dark'
+
+/**
+ * The user's persisted color-mode choice.
+ * `'auto'` follows the OS preference; `'light'`/`'dark'` are explicit overrides.
+ * Distinct from `AppThemeType`, which is always the *resolved* theme.
+ */
+export type ThemePreference = AppThemeType | 'auto'
