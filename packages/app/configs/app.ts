@@ -4,6 +4,7 @@ import { type AppState } from '@/app/definitions'
 
 export const defaultAppConfig = {
   theme: AppTheme.light,
+  themePreference: 'auto',
   display: {
     thresholds,
     scrollBarWidth,
