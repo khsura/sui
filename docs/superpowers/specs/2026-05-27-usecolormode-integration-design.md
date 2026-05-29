@@ -60,18 +60,24 @@ flash prevention for the page background/text.
   `'auto'`. Default config preference becomes `'auto'` (today hardcoded `light`).
 - `AppState.themePreference` is `Required` (defaulted by `defaultAppConfig`).
 
-### 3. The `useColorMode` instance — one per app
+### 3. The `useColorMode` instance — one global singleton
 
-Created once and cached in a module-level `Map<string, UseColorModeReturn>` keyed by
-`appName`, so the install hook and `useThemeService` share a single instance (no duplicate
-matchMedia/storage listeners). A small internal helper (e.g.
-`getThemeColorMode(appName, initialValue)`) lazily creates and caches it.
+Theme is intentionally **global** across the page: a single `useColorMode` instance,
+a single persisted preference (`localStorage['sui-theme']`), and a single DOM hook
+(`<html data-theme>`). Multiple SUI app instances on the same page share theme by
+design — they cannot diverge.
+
+Implemented as a module-level singleton (`let colorMode | null`) created on first call
+to `getThemeColorMode(appState?, initialValue?)`, inside a detached `effectScope` so
+internal watchers have an owner. A `WeakSet<AppState>` deduplicates per-`appState`
+bindings, so each app's install hook can register its store exactly once even if it
+calls the helper multiple times.
 
 ```ts
 useColorMode({
   selector: 'html',
-  attribute: 'data-theme',          // global hook → <html data-theme="light|dark">
-  storageKey: `${appName}-theme`,    // scoped per app; default 'sui-theme'
+  attribute: 'data-theme',     // global hook → <html data-theme="light|dark">
+  storageKey: 'sui-theme',      // global, not per-app
   initialValue: options?.theme ?? 'auto',
   // no emitAuto (deprecated); disableTransition defaults to true (good)
 })
@@ -80,11 +86,11 @@ useColorMode({
 Wire-up happens in `createSUI` install (`modules/sUI.ts`), alongside the existing
 `listenDisplayChange()` precedent:
 
-- bind the **resolved** ref → `appState.theme`
+- bind the **resolved** ref → `appState.theme` (synchronously, via `watchSyncEffect`)
 - bind `mode.store` → `appState.themePreference`
 
-(Use `watch`/`watchEffect`. On the server the composable returns defaults and registers
-nothing harmful; on the client it reads storage + OS and sets the attribute.)
+(On the server the composable returns defaults and registers nothing harmful; on the
+client it reads storage + OS and sets the attribute.)
 
 ### 4. `useThemeService` / `useTheme` — `services/themeService.ts`
 
@@ -96,14 +102,15 @@ Returns `{ theme, preference, setTheme }`:
   `null` coerces to `'auto'` (kept as a backward-compatible fallback; replaces the old
   `getBrowserTheme()` path).
 
-`useThemeService` obtains the shared instance via `getThemeColorMode(appName)` and continues
-to read `appState.theme` (resolved) for the `theme` getter.
+`useThemeService` obtains the shared instance via `getThemeColorMode()` (no args after
+install has bound `appState`) and continues to read `appState.theme` (resolved) for the
+`theme` getter.
 
 ### 5. SSR flash prevention (C2-root)
 
-- **Head-script helper:** export `getThemeHeadScript(appName?)` returning an inline
-  `<script>` body (string). Consumers inject it in `<head>` (or Nuxt `app.head`). It reads
-  `localStorage['<app>-theme']`, resolves `auto` via `matchMedia`, and sets
+- **Head-script helper:** export `getThemeHeadScript()` returning an inline `<script>`
+  body (string). Consumers inject it in `<head>` (or Nuxt `app.head`). It reads
+  `localStorage['sui-theme']`, resolves `auto` via `matchMedia`, and sets
   `document.documentElement.setAttribute('data-theme', resolved)` **before** hydration.
 - **Root CSS layer:** add a thin SCSS rule keyed on `html[data-theme="dark"]` /
   `html[data-theme="light"]` setting page **background + text** color from existing theme
@@ -111,13 +118,14 @@ to read `appState.theme` (resolved) for the `theme` getter.
   background correct at first paint. Per-component colors still settle via `appState.theme`
   on hydration — the documented C2-root boundary.
 
-### 6. Compatibility & known limits
+### 6. Compatibility & intentional design choices
 
 - `getBrowserTheme()` is **kept** (still exported; used in `.storybook/preview.ts`) and
   marked `@deprecated` pointing to `useTheme`. No breaking removal.
-- **Known limit:** the global `data-theme` attribute is single-per-document, so two SUI apps
-  on one page would contend for it. Documented, not solved (rare; matches today's single-app
-  norm). Per-app `appState.theme` reactivity still works correctly for both regardless.
+- **Theme is global by design.** Multiple SUI apps on the same page share one persisted
+  preference (`localStorage['sui-theme']`) and one `<html data-theme>` attribute — they
+  cannot diverge. Each app's `appState.theme` is still mirrored independently so per-app
+  reactivity works, but the source of truth is the single global color mode.
 
 ### 7. Testing (vitest)
 
@@ -133,7 +141,7 @@ to read `appState.theme` (resolved) for the `theme` getter.
 
 - C2-full: refactoring every component to key styling off the global `[data-theme]` attribute
   (true zero-flash for all widgets). Separate, much larger effort.
-- Multi-app contention over the single global `data-theme` attribute.
+- Per-app independent themes (the design intentionally makes theme global; see §6).
 
 ## Affected files (anticipated)
 

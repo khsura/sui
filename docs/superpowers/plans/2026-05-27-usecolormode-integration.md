@@ -216,9 +216,9 @@ git commit -m "test(theme): mock window.matchMedia in unit setup"
 
 ---
 
-## Task 4: Create the `useColorMode` registry helper
+## Task 4: Create the global `useColorMode` helper
 
-This owns one `useColorMode` per app (created inside a detached `effectScope` to avoid "no active instance" warnings and to live for the app's lifetime), and mirrors its resolved value → `appState.theme` and its store → `appState.themePreference` **synchronously**.
+Theme is intentionally global across the page — a single `useColorMode` instance, a single `localStorage['sui-theme']` key, a single `<html data-theme>` attribute. Multiple SUI app instances share theme by design. The helper is a module-level singleton created inside a detached `effectScope` (to avoid "no active instance" warnings and to live for the page's lifetime). A `WeakSet<AppState>` deduplicates per-`appState` mirror bindings so each app's install hook registers its store at most once. Project ESLint forbids `@typescript-eslint/no-non-null-assertion`, so `scope.run(...)` is cast rather than `!`-asserted; TypeScript widens `UseColorModeReturn`'s generic to `ThemePreference` because `initialValue` is typed that way (runtime semantics unchanged — `.value` is still always resolved `'light'|'dark'`).
 
 **Files:**
 - Create: `packages/app/helpers/themeColorMode.ts`
@@ -235,56 +235,63 @@ import { useColorMode, type UseColorModeReturn } from '@vueuse/core'
 import type { AppState } from '@/app/definitions'
 import type { AppThemeType, ThemePreference } from '@/app/types'
 
-const registry = new Map<string, UseColorModeReturn>()
+const STORAGE_KEY = 'sui-theme'
+
+let scope: ReturnType<typeof effectScope> | null = null
+let colorMode: UseColorModeReturn<ThemePreference> | null = null
+let boundStates = new WeakSet<AppState>()
 
 /**
- * Returns the single useColorMode instance for `appName`, creating it on first
- * call. When `appState` is provided on the creating call, a synchronous effect
- * mirrors the resolved color mode into `appState.theme` (always 'light'|'dark')
- * and the persisted preference into `appState.themePreference`.
+ * Returns the single, global useColorMode instance, creating it on first call.
+ * Theme is intentionally global across all SUI app instances on the page — they
+ * share one persisted preference (`localStorage['sui-theme']`) and one DOM hook
+ * (`<html data-theme>`).
  *
- * The instance is created in a detached effect scope so it persists for the
- * app's lifetime without being tied to a component instance.
+ * When `appState` is provided and has not already been bound, a synchronous
+ * effect mirrors the resolved color mode into `appState.theme` (always
+ * `'light' | 'dark'`) and the persisted preference into `appState.themePreference`.
+ * Each app's install hook passes its store once; subsequent retrievals (e.g.
+ * from `useThemeService`) omit `appState`.
+ *
+ * The instance lives in a detached effect scope for the page's lifetime.
  */
 export const getThemeColorMode = (
-  appName: string,
   appState?: AppState,
   initialValue: ThemePreference = 'auto',
-): UseColorModeReturn => {
-  const existing = registry.get(appName)
-
-  if (existing) {
-    return existing
+): UseColorModeReturn<ThemePreference> => {
+  if (!scope || !colorMode) {
+    scope = effectScope(true)
+    colorMode = scope.run(() =>
+      useColorMode({
+        selector: 'html',
+        attribute: 'data-theme',
+        storageKey: STORAGE_KEY,
+        initialValue,
+      }),
+    ) as UseColorModeReturn<ThemePreference>
   }
 
-  const scope = effectScope(true)
+  if (appState && !boundStates.has(appState)) {
+    boundStates.add(appState)
+    const mode = colorMode
 
-  const colorMode = scope.run(() => {
-    const mode = useColorMode({
-      selector: 'html',
-      attribute: 'data-theme',
-      storageKey: `${appName}-theme`,
-      initialValue,
-    })
-
-    if (appState) {
+    scope.run(() => {
       watchSyncEffect(() => {
         appState.theme = mode.value as AppThemeType
         appState.themePreference = mode.store.value as ThemePreference
       })
-    }
-
-    return mode
-  })!
-
-  registry.set(appName, colorMode)
+    })
+  }
 
   return colorMode
 }
 
-/** Test-only: clear the registry so each test starts from a fresh instance. */
+/** Test-only: stop the scope and reset singleton + bound-state tracking. */
 export const __resetThemeColorModeRegistry = () => {
-  registry.clear()
+  scope?.stop()
+  scope = null
+  colorMode = null
+  boundStates = new WeakSet<AppState>()
 }
 ```
 
@@ -369,9 +376,10 @@ export const createSUI = <T extends string = 'sui'>(options?: AppStateOptions, n
       app.directive('resize', resize)
       listenDisplayChange()
 
-      // Reactive color mode: persists to localStorage, follows OS in 'auto',
-      // writes <html data-theme>, and mirrors the resolved value into store.theme.
-      getThemeColorMode(appName, store as unknown as AppState, themePreference)
+      // Reactive color mode (global singleton): persists to localStorage, follows
+      // OS in 'auto', writes <html data-theme>, and mirrors the resolved value
+      // into store.theme.
+      getThemeColorMode(store as unknown as AppState, themePreference)
     },
   }
 
@@ -412,13 +420,12 @@ Replace the entire contents of `packages/app/services/themeService.ts` with:
 ```ts
 import { computed } from 'vue'
 import { getThemeColorMode } from '@/app/helpers/themeColorMode'
-import { getPluginName } from '@/app/lib/getPluginName'
 import { useAppProviderRepository } from '@/app/repositories/core/appProviderRepository'
 import type { ThemePreference } from '@/app/types'
 
 export const useThemeService = (appName?: string | symbol) => {
   const { appState } = useAppProviderRepository(appName)
-  const colorMode = getThemeColorMode(getPluginName(appName), appState)
+  const colorMode = getThemeColorMode(appState)
 
   /** Resolved theme actually applied ('light' | 'dark'). */
   const theme = computed(() => appState.theme)
@@ -605,7 +612,7 @@ git commit -m "refactor(theme): deprecate getBrowserTheme in favor of useTheme"
 
 ## Task 9: Add `getThemeHeadScript` head-script helper
 
-Pure function returning an inline `<script>` body that sets `data-theme` before hydration. Reads the same `localStorage` key (`<appName>-theme`) that `useColorMode` writes.
+Pure function returning an inline `<script>` body that sets `data-theme` before hydration. Reads the global `localStorage['sui-theme']` key that `useColorMode` writes.
 
 **Files:**
 - Create: `packages/app/helpers/themeHeadScript.ts`
@@ -622,16 +629,10 @@ import { describe, expect, it } from 'vitest'
 import { getThemeHeadScript } from '@/app/index'
 
 describe('getThemeHeadScript', () => {
-  it('uses the default app storage key', () => {
+  it('reads the global sui-theme storage key', () => {
     const script = getThemeHeadScript()
 
     expect(script).toContain("localStorage.getItem('sui-theme')")
-  })
-
-  it('uses a scoped storage key for a named app', () => {
-    const script = getThemeHeadScript('admin')
-
-    expect(script).toContain("localStorage.getItem('admin-theme')")
   })
 
   it('resolves auto via prefers-color-scheme and sets data-theme', () => {
@@ -661,24 +662,20 @@ Expected: FAIL with module/export not found for `getThemeHeadScript`.
 Create `packages/app/helpers/themeHeadScript.ts`:
 
 ```ts
-import { defaultAppPluginName } from '@/app/constants'
-
 /**
  * Returns an inline `<script>` body that applies the persisted color mode to
  * `<html data-theme>` before hydration, preventing a flash of the wrong theme.
  *
  * Inject the returned string into `<head>` (e.g. a Nuxt `app.head` script child,
- * or a raw `<script>` in `index.html`). It reads the same localStorage key that
- * `useColorMode` writes (`<appName>-theme`) and resolves `'auto'` via matchMedia.
+ * or a raw `<script>` in `index.html`). It reads the global localStorage key
+ * that `useColorMode` writes (`sui-theme`) and resolves `'auto'` via matchMedia.
  *
  * @example
  * // index.html
  * <script>{{ getThemeHeadScript() }}</script>
  */
-export const getThemeHeadScript = (appName: string = defaultAppPluginName): string => {
-  const key = `${appName}-theme`
-
-  return `(function(){try{var p=localStorage.getItem('${key}');var m=(p&&p!=='auto')?p:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',m);}catch(e){}})();`
+export const getThemeHeadScript = (): string => {
+  return `(function(){try{var p=localStorage.getItem('sui-theme');var m=(p&&p!=='auto')?p:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',m);}catch(e){}})();`
 }
 ```
 
