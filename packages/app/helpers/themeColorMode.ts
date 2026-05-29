@@ -3,54 +3,60 @@ import { useColorMode, type UseColorModeReturn } from '@vueuse/core'
 import type { AppState } from '@/app/definitions'
 import type { AppThemeType, ThemePreference } from '@/app/types'
 
-const registry = new Map<string, UseColorModeReturn<ThemePreference>>()
+const STORAGE_KEY = 'sui-theme'
+let scope: ReturnType<typeof effectScope> | null = null
+let colorMode: UseColorModeReturn<ThemePreference> | null = null
+let boundStates = new WeakSet<AppState>()
 
 /**
- * Returns the single useColorMode instance for `appName`, creating it on first
- * call. When `appState` is provided on the creating call, a synchronous effect
- * mirrors the resolved color mode into `appState.theme` (always 'light'|'dark')
- * and the persisted preference into `appState.themePreference`.
+ * Returns the single, global useColorMode instance, creating it on first call.
+ * Theme is intentionally global across all SUI app instances on the page — they
+ * share one persisted preference (`localStorage['sui-theme']`) and one DOM hook
+ * (`<html data-theme>`).
  *
- * The instance is created in a detached effect scope so it persists for the
- * app's lifetime without being tied to a component instance.
+ * When `appState` is provided and has not already been bound, a synchronous
+ * effect mirrors the resolved color mode into `appState.theme` (always
+ * `'light' | 'dark'`) and the persisted preference into `appState.themePreference`.
+ * Each app's install hook passes its store once; subsequent retrievals (e.g.
+ * from `useThemeService`) omit `appState`.
+ *
+ * The instance lives in a detached effect scope for the page's lifetime.
  */
 export const getThemeColorMode = (
-  appName: string,
   appState?: AppState,
   initialValue: ThemePreference = 'auto',
 ): UseColorModeReturn<ThemePreference> => {
-  const existing = registry.get(appName)
-
-  if (existing) {
-    return existing
+  if (!scope || !colorMode) {
+    scope = effectScope(true)
+    colorMode = scope.run(() =>
+      useColorMode({
+        selector: 'html',
+        attribute: 'data-theme',
+        storageKey: STORAGE_KEY,
+        initialValue,
+      }),
+    ) as UseColorModeReturn<ThemePreference>
   }
 
-  const scope = effectScope(true)
+  if (appState && !boundStates.has(appState)) {
+    boundStates.add(appState)
+    const mode = colorMode
 
-  const colorMode = scope.run(() => {
-    const mode = useColorMode({
-      selector: 'html',
-      attribute: 'data-theme',
-      storageKey: `${appName}-theme`,
-      initialValue,
-    })
-
-    if (appState) {
+    scope.run(() => {
       watchSyncEffect(() => {
         appState.theme = mode.value as AppThemeType
         appState.themePreference = mode.store.value as ThemePreference
       })
-    }
-
-    return mode
-  }) as UseColorModeReturn<ThemePreference>
-
-  registry.set(appName, colorMode)
+    })
+  }
 
   return colorMode
 }
 
-/** Test-only: clear the registry so each test starts from a fresh instance. */
+/** Test-only: stop the scope and reset singleton + bound-state tracking. */
 export const __resetThemeColorModeRegistry = () => {
-  registry.clear()
+  scope?.stop()
+  scope = null
+  colorMode = null
+  boundStates = new WeakSet<AppState>()
 }
