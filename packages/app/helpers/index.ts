@@ -1,6 +1,7 @@
 export * from './createAppStore'
 export * from './display'
 export * from './themeHelpers'
+export * from './themeColorMode'
 export * from './tableHelpers'
 export * from './autocompleteHelpers'
 export * from './selectItemHelpers'
