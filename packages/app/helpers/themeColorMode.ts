@@ -21,6 +21,12 @@ let boundStates = new WeakSet<AppState>()
  * from `useThemeService`) omit `appState`.
  *
  * The instance lives in a detached effect scope for the page's lifetime.
+ *
+ * `initialValue` is honoured only on the first call (when the singleton is
+ * created); subsequent calls reuse the existing instance and ignore the
+ * argument. This matches the global-by-design intent — the first app's
+ * configured `theme` seeds the page's preference if `localStorage['sui-theme']`
+ * is empty.
  */
 export const getThemeColorMode = (
   appState?: AppState,
@@ -28,6 +34,7 @@ export const getThemeColorMode = (
 ): UseColorModeReturn<ThemePreference> => {
   if (!scope || !colorMode) {
     scope = effectScope(true)
+    // scope was just created above — scope.run cannot return undefined here.
     colorMode = scope.run(() =>
       useColorMode({
         selector: 'html',
