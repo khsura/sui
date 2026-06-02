@@ -1,28 +1,24 @@
-import { computed, inject } from 'vue'
-import { getBrowserTheme } from '@/app/helpers'
-import { type AppThemeType } from '@/app/types'
-import { getPluginName } from '@/app/lib/getPluginName'
-import type { AppState } from '@/app/definitions'
+import { computed } from 'vue'
+import { getThemeColorMode } from '@/app/helpers/themeColorMode'
+import { useAppProviderRepository } from '@/app/repositories/core/appProviderRepository'
+import type { ThemePreference } from '@/app/types'
 
 export const useThemeService = (appName?: string | symbol) => {
-  const appState = inject<AppState>(getPluginName(appName))
+  const { appState } = useAppProviderRepository(appName)
+  const colorMode = getThemeColorMode(appState)
+  /** Resolved theme actually applied ('light' | 'dark'). */
+  const theme = computed(() => appState.theme)
+  /** The user's persisted preference ('auto' | 'light' | 'dark'). */
+  const preference = computed(() => appState.themePreference)
 
-  if (!appState) {
-    throw new Error(`AppState for ${appName?.toString()} not found`)
-  }
-
-  const theme = computed(() => {
-    return appState.theme
-  })
-
-  const setTheme = (theme: AppThemeType | null) => {
-    if (appState) {
-      appState.theme = theme ?? getBrowserTheme()
-    }
+  /** Set the color-mode preference. `null` resets to 'auto' (follow OS). */
+  const setTheme = (value: ThemePreference | null) => {
+    colorMode.value = value ?? 'auto'
   }
 
   return {
     theme,
+    preference,
     setTheme,
   }
 }
