@@ -474,8 +474,10 @@ git commit -m "feat(theme): useTheme returns { theme, preference, setTheme }"
 
 Create `packages/app/tests/services/themeService.test.tsx`:
 
+Note: `appState.theme`/`themePreference` updates are **synchronous** (our `watchSyncEffect` in the helper). But VueUse's internal `useStorage` writes localStorage with `flush: 'pre'` and `useColorMode` writes the DOM attribute with `flush: 'post'` — neither is synchronous. The two tests that observe those side-effects (`localStorage`, `data-theme` attribute) `await nextTick()` before asserting. This is canonical Vue testing; forcing sync flush in production would be unnecessary overhead.
+
 ```tsx
-import { defineComponent } from 'vue'
+import { defineComponent, nextTick } from 'vue'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { useTheme } from '@/app/index'
 import { __resetThemeColorModeRegistry } from '@/app/helpers/themeColorMode'
@@ -520,10 +522,11 @@ describe('useThemeService', () => {
     expect(app.vm.theme).toBe('dark')
   })
 
-  it('setTheme persists the preference to localStorage', () => {
+  it('setTheme persists the preference to localStorage', async () => {
     const app = mountTheme()
 
     app.vm.setTheme('dark')
+    await nextTick() // useStorage write is flush: 'pre' — await one tick
 
     expect(localStorage.getItem('sui-theme')).toBe('dark')
   })
@@ -546,10 +549,11 @@ describe('useThemeService', () => {
     expect(['light', 'dark']).toContain(app.vm.theme)
   })
 
-  it('writes the resolved value to <html data-theme>', () => {
+  it('writes the resolved value to <html data-theme>', async () => {
     const app = mountTheme()
 
     app.vm.setTheme('dark')
+    await nextTick() // useColorMode's attribute watcher is flush: 'post' — await one tick
 
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark')
   })
