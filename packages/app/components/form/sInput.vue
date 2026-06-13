@@ -141,10 +141,6 @@ const displayValue = computed(() => {
 
   const value = getNumericValue(model.value)
 
-  if (value === 0) {
-    return null
-  }
-
   return value !== null && minNumber.value !== null && value <= minNumber.value ? null : (value?.toString() ?? null)
 })
 
@@ -189,8 +185,11 @@ const onKeydown = (event: KeyboardEvent) => {
       return
     }
 
-    // disallow 0 input when input field is already empty
-    if (!getElementValue() && event.key === '0') {
+    // disallow a leading 0 keystroke only when it would violate `positive` or a positive `min`;
+    // a plain 0 is otherwise a valid value and leading zeros (e.g. 01) are normalized on input
+    const zeroBlocked = !!props.positive || (minNumber.value !== null && minNumber.value > 0)
+
+    if (zeroBlocked && !getElementValue() && event.key === '0') {
       event.preventDefault()
 
       return
