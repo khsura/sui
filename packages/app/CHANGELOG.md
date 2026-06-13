@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.1](https://github.com/khsura/sui/compare/sui-v1.9.0...sui-v1.9.1) (2026-06-13)
+
+
+### Bug Fixes
+
+* **form:** SInput accepts 0, STextarea emits keydown, form-rule number formatting ([#96](https://github.com/khsura/sui/issues/96)) ([865f10e](https://github.com/khsura/sui/commit/865f10e7e5cb4640fe41ac63477c2d5dee570b76))
+
 ## [1.9.0](https://github.com/khsura/sui/compare/sui-v1.8.1...sui-v1.9.0) (2026-05-07)
 
 

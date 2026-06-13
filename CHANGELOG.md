@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.1](https://github.com/khsura/sui/compare/root-v1.7.0...root-v1.7.1) (2026-06-13)
+
+
+### Bug Fixes
+
+* **form:** SInput accepts 0, STextarea emits keydown, form-rule number formatting ([#96](https://github.com/khsura/sui/issues/96)) ([865f10e](https://github.com/khsura/sui/commit/865f10e7e5cb4640fe41ac63477c2d5dee570b76))
+
 ## [1.7.0](https://github.com/khsura/sui/compare/root-v1.6.1...root-v1.7.0) (2026-05-07)
 
 
