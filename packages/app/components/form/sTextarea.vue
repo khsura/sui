@@ -24,6 +24,7 @@
       v-model="model"
       :class="inputClassList"
       :style="inputStyleList"
+      @keydown="(event) => onEvent('keydown', event)"
       @input="(event) => onEvent('input', event)"
       @blur="(event) => onEvent('blur', event)"
     />
@@ -88,7 +89,7 @@ const inputStyleList = computed(() => {
   }
 })
 
-const onEvent = async (name?: 'input' | 'blur', event?: Event) => {
+const onEvent = async (name?: string, event?: Event | KeyboardEvent) => {
   if (textareaElement.value) {
     if (props.autogrow) {
       textareaHeight.value = 'auto'
@@ -101,11 +102,14 @@ const onEvent = async (name?: 'input' | 'blur', event?: Event) => {
   if (event) {
     switch (name) {
       case 'blur':
-        emit(name, event)
+        emit(name, event as Event)
         break
       case 'input':
-        emit(name, event)
+        emit(name, event as Event)
         emit('change', model.value ?? '')
+        break
+      case 'keydown':
+        emit(name, event as KeyboardEvent)
         break
     }
   }
