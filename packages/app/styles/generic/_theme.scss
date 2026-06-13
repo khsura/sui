@@ -1,0 +1,13 @@
+@use '../tools';
+@use '../variables';
+
+// C2-root: set page background + text from the resolved theme so the dominant
+// full-viewport flash is gone before hydration. Per-component colors still
+// settle via appState.theme. `data-theme` is written by useColorMode and by
+// getThemeHeadScript() before paint.
+@each $themeName in variables.$s_themeNames {
+  html[data-theme='#{$themeName}'] {
+    background-color: tools.s_getThemeColor('background', $themeName);
+    color: tools.s_getThemeColor('text', $themeName);
+  }
+}
