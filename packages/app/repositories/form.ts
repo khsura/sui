@@ -1,4 +1,5 @@
 import { type useI18n } from 'vue-i18n'
+import { formatNumber } from '@/app/lib'
 import { type FormInputModelValueRule } from '@/app/types'
 
 export const getFormInputModelValueRules = (i18n: Pick<ReturnType<typeof useI18n>, 't'>) => {
@@ -50,7 +51,7 @@ export const getFormInputModelValueRules = (i18n: Pick<ReturnType<typeof useI18n
       return (v) => {
         return (
           (v !== null && v !== undefined && Number(v) * (options.multiplier ?? 1) <= options.max) ||
-          i18n.t('formRules.maxUnit', options)
+          i18n.t('formRules.maxUnit', { ...options, max: formatNumber(options.max) })
         )
       }
     },
@@ -58,7 +59,7 @@ export const getFormInputModelValueRules = (i18n: Pick<ReturnType<typeof useI18n
       return (v) => {
         return (
           (v !== null && v !== undefined && Number(v) * (options.multiplier ?? 1) <= options.max) ||
-          i18n.t('formRules.max', options)
+          i18n.t('formRules.max', { ...options, max: formatNumber(options.max) })
         )
       }
     },
@@ -67,7 +68,7 @@ export const getFormInputModelValueRules = (i18n: Pick<ReturnType<typeof useI18n
       return (v) => {
         return (
           (v !== null && v !== undefined && (Number(v) * (options.multiplier ?? 1)) % options.step === 0) ||
-          i18n.t('formRules.step', options)
+          i18n.t('formRules.step', { ...options, step: formatNumber(options.step) })
         )
       }
     },
