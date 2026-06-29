@@ -5,10 +5,11 @@
 </template>
 <script setup lang="ts">
 import { type PropsLayoutContainer } from '@/app/definitions'
-import { useLayoutProviderService, useMeasurableStylesService } from '@/app/services'
+import { useComponentDefaultsService, useLayoutProviderService, useMeasurableStylesService } from '@/app/services'
 import { useAppProviderRepository } from '@/app/repositories/core/appProviderRepository'
 
-const props = defineProps<PropsLayoutContainer>()
+const rawProps = defineProps<PropsLayoutContainer>()
+const props = useComponentDefaultsService('SLayout', rawProps)
 const { measurableStyles } = useMeasurableStylesService(props)
 const { appState } = useAppProviderRepository(props.name)
 

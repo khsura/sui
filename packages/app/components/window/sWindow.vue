@@ -39,14 +39,21 @@ import SButton from '@/app/components/sButton.vue'
 import SIcon from '@/app/components/sIcon.vue'
 import { ProviderPropsName } from '@/app/configs'
 import type { PropsWindow } from '@/app/definitions'
-import { useColorService, useSingleGroupService, useTagService, useTouchService } from '@/app/services'
+import {
+  useComponentDefaultsService,
+  useColorService,
+  useSingleGroupService,
+  useTagService,
+  useTouchService,
+} from '@/app/services'
 import { type GroupItemValue } from '@/app/types'
 
-const props = withDefaults(defineProps<PropsWindow>(), {
+const rawProps = withDefaults(defineProps<PropsWindow>(), {
   nextIcon: 'mdi-chevron-right',
   prevIcon: 'mdi-chevron-left',
 })
 
+const props = useComponentDefaultsService('SWindow', rawProps)
 const model = defineModel<GroupItemValue>()
 const { classListColor, styleListColor } = useColorService(props)
 const { tagName } = useTagService(props)

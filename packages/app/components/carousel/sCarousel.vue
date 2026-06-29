@@ -47,6 +47,7 @@ import { SWindow } from '@/app/components/window'
 import { getNumericCssAttribute } from '@/app/lib'
 import type { PropsCarousel } from '@/app/definitions'
 import { type GroupItemValue } from '@/app/types'
+import { useComponentDefaultsService } from '@/app/services'
 
 const styleList = computed(() => {
   return {
@@ -56,7 +57,7 @@ const styleList = computed(() => {
   }
 })
 
-const props = withDefaults(defineProps<PropsCarousel>(), {
+const rawProps = withDefaults(defineProps<PropsCarousel>(), {
   delimiterIcon: 'mdi-circle',
   height: 500,
   interval: 6000,
@@ -68,6 +69,7 @@ const props = withDefaults(defineProps<PropsCarousel>(), {
   nextIcon: 'mdi-chevron-right',
 })
 
+const props = useComponentDefaultsService('SCarousel', rawProps)
 const model = defineModel<GroupItemValue>()
 const windowRef = ref<typeof SWindow | null>()
 let slideTimeout = -1

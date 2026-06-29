@@ -25,6 +25,7 @@ import { defaultToolbarExtensionHeight, defaultToolbarContentHeight } from '@/ap
 import { getNumericCssAttribute } from '@/app/lib'
 import type { PropsToolbar } from '@/app/definitions'
 import {
+  useComponentDefaultsService,
   useBorderService,
   useColorService,
   useContentService,
@@ -35,11 +36,12 @@ import {
 } from '@/app/services'
 import { ProviderPropsName } from '@/app/configs'
 
-const props = withDefaults(defineProps<PropsToolbar>(), {
+const rawProps = withDefaults(defineProps<PropsToolbar>(), {
   extensionHeight: defaultToolbarExtensionHeight,
   height: defaultToolbarContentHeight,
 })
 
+const props = useComponentDefaultsService('SToolbar', rawProps)
 const { classListColor, styleListColor } = useColorService(props)
 const { classListBorder, styleListBorder } = useBorderService(props)
 const { classListElevation } = useElevationService(props)

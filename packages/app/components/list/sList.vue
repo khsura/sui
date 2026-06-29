@@ -7,9 +7,10 @@
 import { computed, inject, provide } from 'vue'
 import { ProviderPropsName } from '@/app/configs'
 import { type PropsList } from '@/app/definitions'
-import { useColorService, useTagService, useTextColorService } from '@/app/services'
+import { useComponentDefaultsService, useColorService, useTagService, useTextColorService } from '@/app/services'
 
-const props = defineProps<PropsList>()
+const rawProps = defineProps<PropsList>()
+const props = useComponentDefaultsService('SList', rawProps)
 const { tagName } = useTagService(props)
 
 provide(ProviderPropsName.listProps, props)

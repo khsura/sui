@@ -17,11 +17,13 @@
 import { computed } from 'vue'
 import { SToggleButtonGroup } from '@/app/components/toggleButtonGroup'
 import type { PropsTabs } from '@/app/definitions'
+import { useComponentDefaultsService } from '@/app/services'
 
-const props = withDefaults(defineProps<PropsTabs>(), {
+const rawProps = withDefaults(defineProps<PropsTabs>(), {
   selectedTabColor: 'primary',
 })
 
+const props = useComponentDefaultsService('STabs', rawProps)
 const emit = defineEmits<(event: 'update:modelValue', value: number | string) => void>()
 
 const model = computed({

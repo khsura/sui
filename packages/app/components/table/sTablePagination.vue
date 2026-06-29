@@ -38,13 +38,16 @@ import { computed } from 'vue'
 import SSelect from '@/app/components/form/sSelect.vue'
 import SButton from '@/app/components/sButton.vue'
 import SIcon from '@/app/components/sIcon.vue'
+import { useComponentDefaultsService } from '@/app/services'
 
 const itemsPerPage = defineModel<number>('itemsPerPage')
 
-const props = defineProps<{
+const rawProps = defineProps<{
   itemsCount: number
   loading?: boolean | undefined
 }>()
+
+const props = useComponentDefaultsService('STablePagination', rawProps)
 
 const getPageIndex = (value: number) => {
   return Math.max(0, Math.min(value, Math.ceil(props.itemsCount / (itemsPerPage.value ?? 10)) - 1))

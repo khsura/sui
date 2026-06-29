@@ -1,5 +1,5 @@
 <template>
-  <td class="s_tableBodyCell" :class="cellClass" :style="itemStyles" v-bind="getCleanSetObject({ colspan })">
+  <td class="s_tableBodyCell" :class="computedCellClass" :style="itemStyles" v-bind="getCleanSetObject({ colspan })">
     <slot></slot>
   </td>
 </template>
@@ -7,14 +7,15 @@
 <script lang="ts" setup generic="T extends TableItem = TableItem">
 import { computed } from 'vue'
 import { getCleanSetObject } from '@/app/lib'
-import { useTableBodyCellService } from '@/app/services'
+import { useComponentDefaultsService, useTableBodyCellService } from '@/app/services'
 import { type TableItem } from '@/app/types'
 import type { PropsTableBodyCell } from '@/app/definitions'
 
-const props = defineProps<PropsTableBodyCell<T>>()
+const rawProps = defineProps<PropsTableBodyCell<T>>()
+const props = useComponentDefaultsService('STableBodyCell', rawProps)
 const { itemStyles, itemClasses } = useTableBodyCellService(props)
 
-const cellClass = computed(() => {
+const computedCellClass = computed(() => {
   return getCleanSetObject({
     's_tableBodyCell--sticky': props.sticky,
     [`s_tableBodyCell--align__${props.header?.align}`]: !!props.header?.align,

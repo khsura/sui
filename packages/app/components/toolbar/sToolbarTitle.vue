@@ -9,9 +9,10 @@
 import { computed, useSlots, inject } from 'vue'
 import { ProviderPropsName } from '@/app/configs'
 import type { PropsToolbarTitle } from '@/app/definitions'
-import { useColorService, useTagService } from '@/app/services'
+import { useComponentDefaultsService, useColorService, useTagService } from '@/app/services'
 
-const props = defineProps<PropsToolbarTitle>()
+const rawProps = defineProps<PropsToolbarTitle>()
+const props = useComponentDefaultsService('SToolbarTitle', rawProps)
 const slots = useSlots()
 const { tagName } = useTagService(props)
 const toolbarProps = inject(ProviderPropsName.toolbar, null)

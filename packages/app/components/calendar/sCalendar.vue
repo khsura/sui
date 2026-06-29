@@ -30,14 +30,15 @@ import SCalendarWeekly from './sCalendarWeekly.vue'
 import { datePickerModelFormats } from '@/app/configs'
 import type { PropsCalendar } from '@/app/definitions'
 import { getCalendarDate } from '@/app/repositories'
-import { useCalendarService } from '@/app/services'
+import { useComponentDefaultsService, useCalendarService } from '@/app/services'
 import type { CalendarDate, CalendarEmitEvents, CalendarEvent } from '@/app/types'
 import dayjs from '@/app/vendors/dayjs'
 
-const props = withDefaults(defineProps<PropsCalendar<T>>(), {
+const rawProps = withDefaults(defineProps<PropsCalendar<T>>(), {
   type: 'month',
 })
 
+const props = useComponentDefaultsService('SCalendar', rawProps)
 const emit = defineEmits<CalendarEmitEvents<T>>()
 
 const focus = defineModel<string>('focus', {

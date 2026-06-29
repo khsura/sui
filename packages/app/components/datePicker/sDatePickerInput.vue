@@ -57,11 +57,11 @@ import SIcon from '@/app/components/sIcon.vue'
 import SOverlay from '@/app/components/sOverlay.vue'
 import type { PropsDatePickerInput, PropsMenu } from '@/app/definitions'
 import { datePickerDisplayFormat, datePickerModelFormats } from '@/app/configs'
-import { useFormInputService, useMenuService } from '@/app/services'
+import { useComponentDefaultsService, useFormInputService, useMenuService } from '@/app/services'
 import type { EmitFormInput } from '@/app/types'
 import dayjs from '@/app/vendors/dayjs'
 
-const props = withDefaults(defineProps<PropsDatePickerInput>(), {
+const rawProps = withDefaults(defineProps<PropsDatePickerInput>(), {
   type: 'date',
   today: () => dayjs().format('YYYY-MM-DD'),
   dateFormat: datePickerDisplayFormat.date,
@@ -69,6 +69,7 @@ const props = withDefaults(defineProps<PropsDatePickerInput>(), {
   yearFormat: datePickerDisplayFormat.year,
 })
 
+const props = useComponentDefaultsService('SDatePickerInput', rawProps)
 const emit = defineEmits<EmitFormInput<string | null>>()
 const model = defineModel<string | null>()
 const menuModel = ref(false)

@@ -20,7 +20,7 @@ import { useScroll } from '@vueuse/core'
 import { type ComponentPublicInstance, computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { SToolbar } from '@/app/components/toolbar'
 import { getNumericCssAttribute, getWindow } from '@/app/lib'
-import { useAppBarService } from '@/app/services'
+import { useComponentDefaultsService, useAppBarService } from '@/app/services'
 import type { PropsAppBar } from '@/app/definitions'
 import { defaultToolbarContentHeight, defaultToolbarExtensionHeight } from '@/app/constants'
 
@@ -28,7 +28,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<PropsAppBar>(), {
+const rawProps = withDefaults(defineProps<PropsAppBar>(), {
   scrollThreshold: defaultToolbarContentHeight,
   tag: 'header',
   color: 'appBar',
@@ -36,6 +36,7 @@ const props = withDefaults(defineProps<PropsAppBar>(), {
   extensionHeight: defaultToolbarExtensionHeight,
 })
 
+const props = useComponentDefaultsService('SAppBar', rawProps)
 const toolbarRef = ref<ComponentPublicInstance<typeof SToolbar> | null>(null)
 
 const toolbarProps = computed(() => {
@@ -49,7 +50,7 @@ const {
   contentHeight,
   isExtended,
   toolbarHeight,
-  app,
+  app: appBarState,
   classes,
   styles,
   isActive,
@@ -113,7 +114,7 @@ watch(
 watch(
   () => props.position,
   (value) => {
-    app.value.appBarPosition = value
+    appBarState.value.appBarPosition = value
   },
   { immediate: true },
 )
@@ -123,12 +124,12 @@ watch(
   ([toolbarHeight, extensionHeight, isActive, isFixedExtension]) => {
     const height = isFixedExtension ? extensionHeight : toolbarHeight
 
-    app.value.appBarHeight = isActive ? height : 0
+    appBarState.value.appBarHeight = isActive ? height : 0
 
     if (isFixedExtension) {
-      app.value.appBarPosition = 'fixed'
+      appBarState.value.appBarPosition = 'fixed'
     } else {
-      app.value.appBarPosition = props.position
+      appBarState.value.appBarPosition = props.position
     }
   },
   {
@@ -141,8 +142,8 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  app.value.appBarHeight = 0
-  app.value.appBarPosition = null
+  appBarState.value.appBarHeight = 0
+  appBarState.value.appBarPosition = null
 })
 </script>
 <style lang="scss" scoped>

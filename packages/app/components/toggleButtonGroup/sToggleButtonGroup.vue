@@ -8,14 +8,15 @@
 <script setup lang="ts" generic="T extends GroupItemValue = GroupItemValue">
 import { computed, provide } from 'vue'
 import type { PropsToggleButtonGroup } from '@/app/definitions'
-import { useBorderService, useGroupService } from '@/app/services'
+import { useComponentDefaultsService, useBorderService, useGroupService } from '@/app/services'
 import { type GroupItemValue } from '@/app/types'
 import { ProviderPropsName } from '@/app/configs'
 
-const props = withDefaults(defineProps<PropsToggleButtonGroup>(), {
+const rawProps = withDefaults(defineProps<PropsToggleButtonGroup>(), {
   selectedColor: 'primary',
 })
 
+const props = useComponentDefaultsService('SToggleButtonGroup', rawProps)
 const model = defineModel<T[] | null>({ default: [], required: false })
 
 useGroupService<T>(props, model)

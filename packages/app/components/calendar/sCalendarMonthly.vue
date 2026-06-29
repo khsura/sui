@@ -58,10 +58,16 @@
 <script setup lang="ts" generic="T extends CalendarEvent">
 import SButton from '@/app/components/sButton.vue'
 import type { PropsCalendarMonthly } from '@/app/definitions'
-import { useCalendarMonthlyService, useColorService, useCalendarEventHandlers } from '@/app/services'
+import {
+  useComponentDefaultsService,
+  useCalendarMonthlyService,
+  useColorService,
+  useCalendarEventHandlers,
+} from '@/app/services'
 import type { CalendarEmitEvents, CalendarEvent, CalendarEventExtended } from '@/app/types'
 
-const props = defineProps<PropsCalendarMonthly<T>>()
+const rawProps = defineProps<PropsCalendarMonthly<T>>()
+const props = useComponentDefaultsService('SCalendarMonthly', rawProps)
 const emit = defineEmits<CalendarEmitEvents<T>>()
 const { dates, days, eventPadding } = useCalendarMonthlyService(props)
 const { classListColor, styleListColor } = useColorService(props)

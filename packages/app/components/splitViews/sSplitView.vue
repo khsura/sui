@@ -8,11 +8,14 @@ import { computed, provide } from 'vue'
 import { ProviderPropsName } from '@/app/configs'
 import { getNumericCssAttribute } from '@/app/lib'
 import type { PropsSplitView } from '@/app/definitions'
+import { useComponentDefaultsService } from '@/app/services'
 
-const props = withDefaults(defineProps<PropsSplitView>(), {
+const rawProps = withDefaults(defineProps<PropsSplitView>(), {
   width: '100%',
   height: '100%',
 })
+
+const props = useComponentDefaultsService('SSplitView', rawProps)
 
 provide(ProviderPropsName.splitViewProps, props)
 
