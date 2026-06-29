@@ -1,14 +1,17 @@
 <template>
   <SToggleButtonGroup
     v-model="model"
-    v-bind="{ outlined, underlined, borderRadius }"
+    v-bind="{
+      outlined: props.outlined,
+      underlined: props.underlined,
+      borderRadius: props.borderRadius,
+      dense: props.dense,
+      shrink: props.shrink,
+      bordered: props.bordered,
+      selectedColor: props.selectedTabColor,
+    }"
     :multiple="false"
-    :dense="dense"
-    :bordered="bordered"
-    :shrink="shrink"
-    :selected-button-color="selectedTabColor"
     mandatory
-    selected-button-underlined
   >
     <slot></slot>
   </SToggleButtonGroup>
