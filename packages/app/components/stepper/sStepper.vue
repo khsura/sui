@@ -12,11 +12,13 @@ import { computed, provide, ref } from 'vue'
 import SStepperStep from './sStepperStep.vue'
 import { ProviderName, ProviderPropsName } from '@/app/configs'
 import type { PropsStepper } from '@/app/definitions'
+import { useComponentDefaultsService } from '@/app/services'
 
-const props = withDefaults(defineProps<PropsStepper>(), {
+const rawProps = withDefaults(defineProps<PropsStepper>(), {
   items: () => [],
 })
 
+const props = useComponentDefaultsService('SStepper', rawProps)
 const emit = defineEmits<(event: 'update:modelValue', value: number) => void>()
 
 const classList = computed(() => {

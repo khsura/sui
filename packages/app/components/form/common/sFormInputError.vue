@@ -5,8 +5,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { type PropType } from 'vue'
+import { useComponentDefaultsService } from '@/app/services'
 
-const props = defineProps({
+const rawProps = defineProps({
   errors: {
     type: Array as PropType<string[]>,
     default: () => [],
@@ -16,6 +17,8 @@ const props = defineProps({
     default: false,
   },
 })
+
+const props = useComponentDefaultsService('SFormInputError', rawProps)
 
 const classList = computed(() => {
   return {

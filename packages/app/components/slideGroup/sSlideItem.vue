@@ -6,10 +6,11 @@
 <script setup lang="ts">
 import { ref, computed, inject } from 'vue'
 import { ProviderPropsName } from '@/app/configs'
-import { useGroupItemService } from '@/app/services'
+import { useComponentDefaultsService, useGroupItemService } from '@/app/services'
 import type { PropsGroupItem } from '@/app/definitions'
 
-const props = defineProps<PropsGroupItem>()
+const rawProps = defineProps<PropsGroupItem>()
+const props = useComponentDefaultsService('SSlideItem', rawProps)
 const slideItem = ref<HTMLElement | null>(null)
 const { toggleGroupItem, isSelected } = useGroupItemService(props, { element: slideItem })
 const groupProps = inject(ProviderPropsName.slideGroupProps, null)

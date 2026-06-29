@@ -16,8 +16,10 @@
 import { inject, watch, onMounted, onUnmounted, computed } from 'vue'
 import { ProviderName, ProviderPropsName } from '@/app/configs'
 import type { PropsStepperStep } from '@/app/definitions'
+import { useComponentDefaultsService } from '@/app/services'
 
-const props = defineProps<PropsStepperStep>()
+const rawProps = defineProps<PropsStepperStep>()
+const props = useComponentDefaultsService('SStepperStep', rawProps)
 const stepperStepsProp = inject(ProviderPropsName.stepperProps, null)
 
 if (!stepperStepsProp) {

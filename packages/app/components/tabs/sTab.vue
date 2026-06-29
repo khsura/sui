@@ -1,11 +1,13 @@
 <template>
-  <SToggleButton :index="tab" v-bind="$props">
+  <SToggleButton :index="tab" v-bind="props">
     <slot></slot>
   </SToggleButton>
 </template>
 <script setup lang="ts">
 import { SToggleButton } from '@/app/components/toggleButtonGroup'
 import type { PropsTab } from '@/app/definitions'
+import { useComponentDefaultsService } from '@/app/services'
 
-defineProps<PropsTab>()
+const rawProps = defineProps<PropsTab>()
+const props = useComponentDefaultsService('STab', rawProps)
 </script>

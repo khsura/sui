@@ -7,6 +7,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { getCleanSetObject, getNumericCssAttribute, getNumericValue, getWindow } from '@/app/lib'
 import {
+  useComponentDefaultsService,
   useColorService,
   useElevationService,
   useLayoutService,
@@ -16,14 +17,15 @@ import {
 } from '@/app/services'
 import { type PropsFooter } from '@/app/definitions'
 
-const props = withDefaults(defineProps<PropsFooter>(), {
+const rawProps = withDefaults(defineProps<PropsFooter>(), {
   tag: 'footer',
   inset: false,
   padless: false,
 })
 
+const props = useComponentDefaultsService('SFooter', rawProps)
 const { tagName } = useTagService(props)
-const { left, right, width, app, isApp } = useLayoutService(props)
+const { left, right, width: layoutWidth, app: layoutApp, isApp } = useLayoutService(props)
 const { measurableStyles } = useMeasurableStylesService(props)
 const { classListColor, styleListColor } = useColorService(props)
 const { classListElevation } = useElevationService(props)
@@ -35,16 +37,16 @@ const updateFooterHeight = (height?: number | undefined | null | string) => {
 
   const footerHeight = shouldUseElementHeight
     ? (footerElement.value?.offsetHeight ?? 0)
-    : getNumericValue(height, { defaultValue: 0, isPositive: true }) + app.value.bottomNavigationHeight
+    : getNumericValue(height, { defaultValue: 0, isPositive: true }) + layoutApp.value.bottomNavigationHeight
 
-  if (footerHeight !== app.value.footerHeight) {
-    app.value.footerHeight = footerHeight
+  if (footerHeight !== layoutApp.value.footerHeight) {
+    layoutApp.value.footerHeight = footerHeight
   }
 }
 
 const getPaddingBottom = () => {
-  if (isApp.value && app.value.bottomNavigationHeight) {
-    return getNumericCssAttribute(app.value.bottomNavigationHeight + (props.padless ? 0 : 16))
+  if (isApp.value && layoutApp.value.bottomNavigationHeight) {
+    return getNumericCssAttribute(layoutApp.value.bottomNavigationHeight + (props.padless ? 0 : 16))
   }
 
   return undefined
@@ -68,7 +70,7 @@ const styles = computed(() => {
     left: left.value,
     right: right.value,
     bottom: isFixedOrAbsolutePosition ? '0px' : undefined,
-    width: width.value,
+    width: layoutWidth.value,
     paddingBottom: getPaddingBottom(),
   })
 })

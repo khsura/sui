@@ -8,10 +8,11 @@ import { computed } from 'vue'
 import { type PropsMain } from '@/app/definitions'
 import { getNumericCssAttribute } from '@/app/lib'
 import { getIsFixedPosition } from '@/app/repositories/positionRepository'
-import { useLayoutService } from '@/app/services'
+import { useComponentDefaultsService, useLayoutService } from '@/app/services'
 
-const props = defineProps<PropsMain>()
-const { app, isApp } = useLayoutService(props)
+const rawProps = defineProps<PropsMain>()
+const props = useComponentDefaultsService('SMain', rawProps)
+const { app: layoutApp, isApp } = useLayoutService(props)
 
 const elementTag = computed(() => {
   if (props.tag) {
@@ -22,16 +23,16 @@ const elementTag = computed(() => {
 })
 
 const styles = computed(() => {
-  const widthToSubtract = app.value.left + app.value.right
-  const isFixedPosition = getIsFixedPosition({ position: app.value.appBarPosition })
-  const marginTop = isFixedPosition ? app.value.appBarHeight + app.value.offsetTop : 0
-  const marginBottom = isApp.value ? app.value.bottomNavigationHeight : app.value.footerHeight
+  const widthToSubtract = layoutApp.value.left + layoutApp.value.right
+  const isFixedPosition = getIsFixedPosition({ position: layoutApp.value.appBarPosition })
+  const marginTop = isFixedPosition ? layoutApp.value.appBarHeight + layoutApp.value.offsetTop : 0
+  const marginBottom = isApp.value ? layoutApp.value.bottomNavigationHeight : layoutApp.value.footerHeight
   const offsetTop = getNumericCssAttribute(marginTop)
 
   return {
     marginTop: offsetTop,
-    marginLeft: getNumericCssAttribute(app.value.left),
-    marginRight: getNumericCssAttribute(app.value.right),
+    marginLeft: getNumericCssAttribute(layoutApp.value.left),
+    marginRight: getNumericCssAttribute(layoutApp.value.right),
     width: `calc(100% - ${getNumericCssAttribute(widthToSubtract)})`,
     minHeight: `calc(${isApp.value ? '100vh' : '100%'} - ${getNumericCssAttribute(marginTop + marginBottom)})`,
   }

@@ -149,6 +149,7 @@ import SButton from '@/app/components/sButton.vue'
 import SIcon from '@/app/components/sIcon.vue'
 import type { PropsCalendarWeekly } from '@/app/definitions'
 import {
+  useComponentDefaultsService,
   useCalendarWeeklyService,
   useColorService,
   useCalendarEventHandlers,
@@ -160,7 +161,7 @@ import type { CalendarEmitEvents, CalendarEvent, CalendarEventExtended } from '@
 import dayjs from '@/app/vendors/dayjs'
 import { getCalendarDate } from '@/app/repositories'
 
-const props = withDefaults(defineProps<PropsCalendarWeekly<T>>(), {
+const rawProps = withDefaults(defineProps<PropsCalendarWeekly<T>>(), {
   shortWeekdays: true,
   showMonthOnFirst: true,
   shortMonths: true,
@@ -171,6 +172,7 @@ const props = withDefaults(defineProps<PropsCalendarWeekly<T>>(), {
   allDayRows: 7,
 })
 
+const props = useComponentDefaultsService('SCalendarWeekly', rawProps)
 const emit = defineEmits<CalendarEmitEvents<T>>()
 const { todayWeek, days, weeks } = useCalendarWeeklyService(props)
 const { classListColor, styleListColor } = useColorService(props)

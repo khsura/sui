@@ -57,17 +57,19 @@ import SDatePickerYear from './sDatePickerYear.vue'
 import { SCard } from '@/app/components/cards'
 import type { PropsDatePicker } from '@/app/definitions'
 import { getDatePickerFormat } from '@/app/repositories'
-import { useDatePickerService, useMeasurableStylesService } from '@/app/services'
+import { useComponentDefaultsService, useDatePickerService, useMeasurableStylesService } from '@/app/services'
 import dayjs from '@/app/vendors/dayjs'
 import { datePickerDisplayFormat } from '@/app/configs'
 
-const props = withDefaults(defineProps<PropsDatePicker>(), {
+const rawProps = withDefaults(defineProps<PropsDatePicker>(), {
   type: 'date',
   today: () => dayjs().format('YYYY-MM-DD'),
   dateFormat: datePickerDisplayFormat.date,
   monthFormat: datePickerDisplayFormat.month,
   yearFormat: datePickerDisplayFormat.year,
 })
+
+const props = useComponentDefaultsService('SDatePicker', rawProps)
 
 const emit = defineEmits<{
   (event: 'update:modelValue', value: string): void

@@ -24,9 +24,10 @@
 import { ref, computed } from 'vue'
 import { hasDragDropFeature } from '@/app/lib/browser'
 import type { PropsDroppable } from '@/app/definitions'
-import { useMeasurableStylesService } from '@/app/services'
+import { useComponentDefaultsService, useMeasurableStylesService } from '@/app/services'
 
-const props = defineProps<PropsDroppable>()
+const rawProps = defineProps<PropsDroppable>()
+const props = useComponentDefaultsService('SDroppable', rawProps)
 const emit = defineEmits<(event: 'drop', value: DragEvent) => void>()
 const supportsDragAndDrop = hasDragDropFeature()
 const counter = ref(0)

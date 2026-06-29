@@ -29,11 +29,12 @@ import { computed } from 'vue'
 import kButton from '@/app/components/sButton.vue'
 import { getCleanSetObject, getHtmlClassAttributeObject } from '@/app/lib'
 import { getNextSortOrder } from '@/app/repositories/tableRepository'
-import { useTableHeadCellService } from '@/app/services'
+import { useComponentDefaultsService, useTableHeadCellService } from '@/app/services'
 import { KTableSortOrder } from '@/app/types'
 import type { PropsTableHeadCell } from '@/app/definitions'
 
-const props = defineProps<PropsTableHeadCell>()
+const rawProps = defineProps<PropsTableHeadCell>()
+const props = useComponentDefaultsService('STableHeadCell', rawProps)
 const sortOrders = defineModel<Record<string, KTableSortOrder | undefined>>('sortOrders', { default: {} })
 const { cellStyle, isScopeColType } = useTableHeadCellService(props)
 

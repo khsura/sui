@@ -7,9 +7,10 @@
 import { computed, inject, provide } from 'vue'
 import { ProviderPropsName } from '@/app/configs'
 import { type PropsListItem } from '@/app/definitions'
-import { useLinkService, useDisabledService } from '@/app/services'
+import { useComponentDefaultsService, useLinkService, useDisabledService } from '@/app/services'
 
-const props = defineProps<PropsListItem>()
+const rawProps = defineProps<PropsListItem>()
+const props = useComponentDefaultsService('SListItem', rawProps)
 
 defineEmits<(event: 'click', value: Event) => void>()
 

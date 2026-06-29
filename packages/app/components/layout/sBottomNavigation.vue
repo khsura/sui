@@ -12,6 +12,7 @@ import { ProviderPropsName } from '@/app/configs'
 import { getCleanSetObject, getNumericValue } from '@/app/lib'
 import { isBrowser } from '@/app/lib/browser'
 import {
+  useComponentDefaultsService,
   useBorderService,
   useLayoutService,
   useMeasurableStylesService,
@@ -23,7 +24,8 @@ import {
 import { type GroupItemValue } from '@/app/types'
 import type { PropsBottomNavigation } from '@/app/definitions'
 
-const props = defineProps<PropsBottomNavigation>()
+const rawProps = defineProps<PropsBottomNavigation>()
+const props = useComponentDefaultsService('SBottomNavigation', rawProps)
 const model = defineModel<GroupItemValue>()
 
 const canScroll = computed((): boolean => {
@@ -57,7 +59,7 @@ const { isActive } = useScrollableService(
 const { classListPosition, isAbsolutePosition, isFixedPosition } = usePositionService(props)
 const { measurableStyles } = useMeasurableStylesService(props)
 const { classListBorder, styleListBorder } = useBorderService(props)
-const { left, right, width, app, isApp } = useLayoutService(props)
+const { left, right, width: layoutWidth, app: layoutApp, isApp } = useLayoutService(props)
 const { tagName } = useTagService(props)
 
 useSingleGroupService(props, model)
@@ -91,13 +93,13 @@ const styles = computed((): object => {
     transform: isActive.value ? 'none' : 'translateY(100%)',
     left: left.value,
     right: right.value,
-    width: width.value,
+    width: layoutWidth.value,
     ...styleListBorder.value,
   }
 })
 
 const updateAppHeight = () => {
-  app.value.bottomNavigationHeight = getNumericValue(props.height, { defaultValue: 0 })
+  layoutApp.value.bottomNavigationHeight = getNumericValue(props.height, { defaultValue: 0 })
 }
 
 watch(
@@ -112,7 +114,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  app.value.bottomNavigationHeight = 0
+  layoutApp.value.bottomNavigationHeight = 0
 })
 </script>
 

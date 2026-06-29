@@ -24,6 +24,7 @@ import SOverlay from '@/app/components/sOverlay.vue'
 import { ProviderPropsName } from '@/app/configs'
 import { getNumericCssAttribute } from '@/app/lib'
 import {
+  useComponentDefaultsService,
   useBackgroundScrollService,
   useDisplayService,
   useElevationService,
@@ -38,7 +39,8 @@ import {
 import { type TouchWrapper } from '@/app/types'
 import type { PropsNavigationDrawer } from '@/app/definitions'
 
-const props = defineProps<PropsNavigationDrawer>()
+const rawProps = defineProps<PropsNavigationDrawer>()
+const props = useComponentDefaultsService('SNavigationDrawer', rawProps)
 const { isBottom, isRight, computedLocation } = useLocationService(props)
 
 const emit = defineEmits<{
@@ -104,7 +106,7 @@ const swipeRight = (e: TouchWrapper) => {
 }
 
 const { mdAndUp } = useDisplayService()
-const { app, isApp } = useLayoutService(props)
+const { app: layoutApp, isApp } = useLayoutService(props)
 const { classListElevation } = useElevationService(props)
 const { isAbsolutePosition, isFixedPosition, classListPosition } = usePositionService(props)
 const { currentScroll } = useScrollableService()
@@ -156,11 +158,11 @@ const computedSubtractHeight = computed((): number | null => {
     return 0
   }
 
-  return appHorizontalShiftWidth.value ? 0 : app.value.appBarHeight + app.value.footerHeight
+  return appHorizontalShiftWidth.value ? 0 : layoutApp.value.appBarHeight + layoutApp.value.footerHeight
 })
 
 const computedTop = computed(() => {
-  const top = Math.max(app.value.offsetTop - currentScroll.value, 0)
+  const top = Math.max(layoutApp.value.offsetTop - currentScroll.value, 0)
 
   if (!isDesktopApp.value) {
     return top
@@ -170,7 +172,7 @@ const computedTop = computed(() => {
     return top
   }
 
-  return app.value.appBarHeight + top
+  return layoutApp.value.appBarHeight + top
 })
 
 const computedWidth = computed(() => {
@@ -356,8 +358,8 @@ const appRightShiftWidth = computed(() => {
 watch(
   [appLeftShiftWidth, appRightShiftWidth],
   ([left, right]) => {
-    app.value.left = left
-    app.value.right = right
+    layoutApp.value.left = left
+    layoutApp.value.right = right
   },
   {
     immediate: true,
@@ -377,8 +379,8 @@ onBeforeMount(() => {
 
 onBeforeUnmount(() => {
   unbindResizer()
-  app.value.left = 0
-  app.value.right = 0
+  layoutApp.value.left = 0
+  layoutApp.value.right = 0
 })
 </script>
 
