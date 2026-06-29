@@ -1,6 +1,6 @@
 {
   "name": "@khsura/root",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "main": "index.js",
   "type": "module",
   "private": true,

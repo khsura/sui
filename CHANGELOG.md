@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.1](https://github.com/khsura/sui/compare/root-v1.8.0...root-v1.8.1) (2026-06-29)
+
+
+### Bug Fixes
+
+* tabs ([2f2fba5](https://github.com/khsura/sui/commit/2f2fba5814e34326e0f1769f53384b3c03799e98))
+
 ## [1.8.0](https://github.com/khsura/sui/compare/root-v1.7.1...root-v1.8.0) (2026-06-29)
 
 
