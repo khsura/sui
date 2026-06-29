@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/khsura/sui/compare/sui-v1.9.1...sui-v1.10.0) (2026-06-29)
+
+
+### Features
+
+* apply component defaults to safe components ([#98](https://github.com/khsura/sui/issues/98)) ([5b7f3a9](https://github.com/khsura/sui/commit/5b7f3a93069702fd067ab1fe9867e1d1266fe25c))
+
 ## [1.9.1](https://github.com/khsura/sui/compare/sui-v1.9.0...sui-v1.9.1) (2026-06-13)
 
 

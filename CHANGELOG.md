@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/khsura/sui/compare/root-v1.7.1...root-v1.8.0) (2026-06-29)
+
+
+### Features
+
+* apply component defaults to safe components ([#98](https://github.com/khsura/sui/issues/98)) ([5b7f3a9](https://github.com/khsura/sui/commit/5b7f3a93069702fd067ab1fe9867e1d1266fe25c))
+
 ## [1.7.1](https://github.com/khsura/sui/compare/root-v1.7.0...root-v1.7.1) (2026-06-13)
 
 
