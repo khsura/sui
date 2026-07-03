@@ -31,6 +31,7 @@ Full-featured data table with sorting, selection, expansion, grouping, sticky co
 | `itemKey` | `string` | `'id'` | Unique key field in item objects |
 | `totalItems` | `number` | `undefined` | Total item count (for server-side pagination) |
 | `itemsPerPageLabel` | `string` | `undefined` | Custom items-per-page label |
+| `noDataText` | `string` | `undefined` | Empty-state text when `items` is empty. Falls back to i18n `table.noData`, then `'No data'`. Overridden by the `#noData` slot. |
 | `itemClass` | `TableItemClass<T>` | `undefined` | Dynamic CSS class for rows |
 | `itemStyle` | `TableItemStyle<T>` | `undefined` | Dynamic inline styles for rows |
 | `itemRowClass` | `TableRowClass<T>` | `undefined` | Class applied to `<tr>` element |
@@ -78,6 +79,7 @@ type TableHeader = {
 | `expanded` | Expanded row content — receives `{ item }` |
 | `group` | Group header row — receives `{ group }` |
 | `itemsPerPageLabel` | Custom pagination label |
+| `noData` | Empty-state content shown when `items` is empty (and not `loading`) |
 
 ## Usage
 

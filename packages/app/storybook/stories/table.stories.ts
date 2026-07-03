@@ -1,4 +1,5 @@
 import { action } from 'storybook/actions'
+import { expect } from 'storybook/test'
 import type { Meta } from '@storybook/vue3-vite'
 import { ref, defineComponent, onMounted } from 'vue'
 import { faker, wait } from '@khsura/shared'
@@ -262,5 +263,66 @@ export const TableServer = createStoryObj<typeof STable>({
     hidePagination: false,
     dense: false,
     outlined: true,
+  },
+})
+
+export const NoData = createStoryObj<typeof STable>({
+  args: {
+    outlined: true,
+    hidePagination: true,
+  },
+  render: (args) => {
+    return {
+      components: {
+        STable,
+      },
+      setup: () => {
+        const headers = [
+          { text: 'Name', value: 'name' },
+          { text: 'Age', value: 'age' },
+        ]
+
+        return { args, headers }
+      },
+      template: /* html */ `
+        <div>
+          <div data-testid="noData-default">
+            <p class="s_text--caption">Default (localized via i18n table.noData):</p>
+            <STable v-bind="args" :items="[]" :headers="headers" item-key="name" />
+          </div>
+
+          <div data-testid="noData-prop" style="margin-top: 16px;">
+            <p class="s_text--caption">Prop override (noDataText):</p>
+            <STable v-bind="args" :items="[]" :headers="headers" item-key="name" no-data-text="No items found" />
+          </div>
+
+          <div data-testid="noData-slot" style="margin-top: 16px;">
+            <p class="s_text--caption">Slot override (#noData):</p>
+            <STable v-bind="args" :items="[]" :headers="headers" item-key="name">
+              <template #noData>
+                <span class="s_textColor__primary">Nothing here yet 🗒️</span>
+              </template>
+            </STable>
+          </div>
+        </div>
+      `,
+    }
+  },
+  play: async ({ canvasElement }) => {
+    // updateTable is debounced on mount, give the tables a tick to render.
+    await wait(50)
+
+    const defaultCell = canvasElement.querySelector('[data-testid="noData-default"] .s_table__noData')
+
+    await expect(defaultCell).toBeInTheDocument()
+    await expect(defaultCell?.textContent?.trim()).toBeTruthy()
+
+    const propCell = canvasElement.querySelector('[data-testid="noData-prop"] .s_table__noData')
+
+    await expect(propCell).toHaveTextContent('No items found')
+
+    const slotCell = canvasElement.querySelector('[data-testid="noData-slot"] .s_table__noData')
+
+    await expect(slotCell).toHaveTextContent('Nothing here yet')
   },
 })
