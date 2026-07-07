@@ -17,7 +17,7 @@ const rawProps = withDefaults(defineProps<PropsToggleButtonGroup>(), {
 })
 
 const props = useComponentDefaultsService('SToggleButtonGroup', rawProps)
-const model = defineModel<T[] | null>({ default: [], required: false })
+const model = defineModel<T[] | null>({ default: () => [], required: false })
 
 useGroupService<T>(props, model)
 

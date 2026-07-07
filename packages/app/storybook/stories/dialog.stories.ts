@@ -1,7 +1,7 @@
 import { faker, wait } from '@khsura/shared'
 import type { Meta } from '@storybook/vue3-vite'
 import { defineComponent, ref } from 'vue'
-import { expect } from '@storybook/test'
+import { expect } from 'storybook/test'
 import {
   SMenu,
   SButton,
@@ -101,13 +101,23 @@ export const BottomSheet = createStoryObj<typeof SDialog>({
   play: async ({ canvasElement, userEvent }) => {
     const button = canvasElement.querySelector('.s_button')
 
+    await expect(button).toBeInTheDocument()
+
+    if (!button) return
+
     await userEvent.click(button)
 
     await wait(200)
 
     await expect(canvasElement.querySelector('.s_dialog__content')).toBeInTheDocument()
 
-    await userEvent.click(canvasElement.querySelector('.s_overlay__scrim'))
+    const scrim = canvasElement.querySelector('.s_overlay__scrim')
+
+    await expect(scrim).toBeInTheDocument()
+
+    if (!scrim) return
+
+    await userEvent.click(scrim)
 
     await wait(200)
 

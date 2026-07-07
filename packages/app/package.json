@@ -42,29 +42,28 @@
     }
   },
   "dependencies": {
-    "@vueuse/components": "^14.2.1",
-    "@vueuse/core": "^14.2.1",
-    "dayjs": "^1.11.20",
-    "uuid": "^13.0.0",
-    "vue": "^3.5.31",
-    "vue-i18n": "^11.3.0",
-    "zod": "^4.3.6"
+    "@vueuse/components": "^14.3.0",
+    "@vueuse/core": "^14.3.0",
+    "dayjs": "^1.11.21",
+    "uuid": "^14.0.1",
+    "vue": "^3.5.39",
+    "vue-i18n": "^11.4.6",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "^10.3.3",
-    "@storybook/addon-docs": "^10.3.3",
-    "@storybook/addon-links": "^10.3.3",
-    "@storybook/addon-vitest": "^10.3.3",
-    "@storybook/test": "8.6.15",
-    "@storybook/vue3-vite": "^10.3.3",
+    "@storybook/addon-a11y": "^10.4.6",
+    "@storybook/addon-docs": "^10.4.6",
+    "@storybook/addon-links": "^10.4.6",
+    "@storybook/addon-vitest": "^10.4.6",
+    "@storybook/vue3-vite": "^10.4.6",
     "@types/lodash.merge": "^4.6.9",
-    "@vitest/browser-playwright": "^4.1.2",
+    "@vitest/browser-playwright": "^4.1.9",
     "chokidar": "^5.0.0",
-    "eslint-plugin-storybook": "10.3.3",
+    "eslint-plugin-storybook": "10.4.6",
     "http-server": "^14.1.1",
     "lodash.merge": "^4.6.2",
-    "playwright": "^1.58.2",
-    "storybook": "^10.3.3",
-    "vitest": "^4.1.2"
+    "playwright": "^1.61.1",
+    "storybook": "^10.4.6",
+    "vitest": "^4.1.9"
   }
 }

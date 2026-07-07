@@ -34,7 +34,7 @@ import { type GroupItemValue } from '@/app/types'
 
 const isReady = ref(false)
 const props = defineProps<PropsSlideGroup>()
-const model = defineModel<GroupItemValue[]>({ default: [], required: false })
+const model = defineModel<GroupItemValue[]>({ default: () => [], required: false })
 const elementViewport = useTemplateRef('elementViewport')
 
 const { isNavigatorVisible, canGoNext, canGoPrevious, canScroll, contentAttrs, next, prev, onScroll } =

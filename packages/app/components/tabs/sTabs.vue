@@ -1,6 +1,7 @@
 <template>
   <SToggleButtonGroup
     v-model="model"
+    class="s_tabs"
     v-bind="{
       outlined: props.outlined,
       underlined: props.underlined,

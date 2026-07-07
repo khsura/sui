@@ -11,7 +11,7 @@ import { useGroupService } from '@/app/services'
 import type { GroupItemValue } from '@/app/types/core'
 
 const props = defineProps<PropsExpansionPanels>()
-const model = defineModel<GroupItemValue[]>({ default: [], required: false })
+const model = defineModel<GroupItemValue[]>({ default: () => [], required: false })
 
 provide(ProviderPropsName.expansionPanelsProps, props)
 useGroupService(props, model)

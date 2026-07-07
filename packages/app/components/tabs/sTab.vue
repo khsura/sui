@@ -1,5 +1,5 @@
 <template>
-  <SToggleButton :index="tab" v-bind="props">
+  <SToggleButton class="s_tab" :index="tab" v-bind="props">
     <slot></slot>
   </SToggleButton>
 </template>
