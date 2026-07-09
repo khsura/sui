@@ -93,3 +93,19 @@ $attrs in variables.$s_headings {
   width: 100%;
   height: 100%;
 }
+
+// Respect the user's reduced-motion preference by neutralizing SUI's own
+// transitions and animations. Scoped to the `s_` class prefix so the host
+// app's motion is left untouched — a library should not silence the whole page.
+@media (prefers-reduced-motion: reduce) {
+  [class^='s_'],
+  [class*=' s_'] {
+    &,
+    &::before,
+    &::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+}
