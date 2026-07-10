@@ -13,7 +13,7 @@ defineEmits<{
 }>()
 
 const model = defineModel<boolean>()
-const errors = defineModel<string[]>('errors', { default: [] })
+const errors = defineModel<string[]>('errors', { default: () => [] })
 const error = defineModel<boolean>('error')
 const formInputs: Record<string, FormProviderRegisterInputAttribute> = {}
 

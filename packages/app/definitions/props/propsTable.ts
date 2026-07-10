@@ -63,4 +63,5 @@ export type PropsTable<T extends TableItem = TableItem, C extends string = keyof
   loading?: boolean | undefined
   totalItems?: number | undefined
   itemsPerPageLabel?: string | undefined
+  noDataText?: string | undefined
 }

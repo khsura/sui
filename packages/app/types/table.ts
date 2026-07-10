@@ -23,8 +23,7 @@ export type TableItemClass<T extends TableItem = TableItem, CellKey extends stri
   | ((data: { item: T; cellKey: CellKey; cellType: TableItemCellType }) => string | string[] | Record<string, boolean>)
 
 export type TableItemStyle<T extends TableItem = TableItem, CellKey extends string = string> =
-  | CSSProperties
-  | ((data: { item: T; cellKey: CellKey; cellType: TableItemCellType }) => CSSProperties)
+  CSSProperties | ((data: { item: T; cellKey: CellKey; cellType: TableItemCellType }) => CSSProperties)
 
 export interface TableHeader<V extends string | number | symbol = string> {
   text: string

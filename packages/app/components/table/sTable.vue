@@ -161,6 +161,13 @@
               </tr>
             </template>
           </template>
+
+          <!-- Table Item - No Data -->
+          <tr v-if="showNoData" class="s_table__row s_table__row--noData">
+            <td :colspan="totalItemColumns" class="s_table__noData">
+              <slot name="noData">{{ computedNoDataText }}</slot>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -189,7 +196,7 @@
 </template>
 <script setup lang="ts" generic="T extends TableItem">
 import { useDebounceFn } from '@vueuse/core'
-import { computed, watch, onMounted, useTemplateRef } from 'vue'
+import { computed, watch, onMounted, useTemplateRef, getCurrentInstance } from 'vue'
 import SProgressLinear from '../progress/sProgressLinear.vue'
 import STableHeadCell from './sTableHeadCell.vue'
 import STableBodyCell from './sTableBodyCell.vue'
@@ -251,6 +258,19 @@ const tableClasses = computed(() => ({
   's_table--dense': props.dense,
   ...classListBorder.value,
 }))
+
+const instance = getCurrentInstance()
+
+// Resolve the localized default text via the globally-registered `$t` (app.use(i18n)).
+// Read defensively so an app without vue-i18n degrades to the hardcoded fallback.
+const translate = (key: string): string | undefined => {
+  const globalTranslate = instance?.appContext.config.globalProperties.$t
+
+  return typeof globalTranslate === 'function' ? globalTranslate(key) : undefined
+}
+
+const showNoData = computed(() => !props.loading && props.items.length === 0)
+const computedNoDataText = computed(() => props.noDataText ?? translate('table.noData') ?? 'No data')
 
 const shouldHidePagination = computed(() => {
   if (props.hidePagination && (!itemsPerPage.value || itemsPerPage.value > (props.totalItems ?? props.items.length))) {
@@ -345,6 +365,12 @@ defineExpose({
 
   &__group {
     padding: calc($s_spacer * 2);
+  }
+
+  &__noData {
+    padding: calc($s_spacer * 6) calc($s_spacer * 4);
+    color: s_getAppColor('disabled');
+    text-align: center;
   }
 
   .s_table__row {

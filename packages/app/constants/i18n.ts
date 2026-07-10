@@ -2,6 +2,7 @@ export const i18nMessages = {
   en: {
     table: {
       itemsPerPage: 'Items per page',
+      noData: 'No data',
     },
     formRules: {
       required: `Please input '{target}'.`,
@@ -23,6 +24,7 @@ export const i18nMessages = {
   ja: {
     table: {
       itemsPerPage: '1ページあたりの表示件数',
+      noData: 'データがありません',
     },
     formRules: {
       required: `{target}を入力してください。`,
@@ -44,6 +46,7 @@ export const i18nMessages = {
   mn: {
     table: {
       itemsPerPage: 'Хуудас бүрт',
+      noData: 'Мэдээлэл алга',
     },
     formRules: {
       required: `'{target}'-г бичиж оруулаарай.`,

@@ -7,7 +7,7 @@ import { z } from 'zod'
 export const getNumericValue = <
   D extends number | null = null,
   S extends boolean = false,
-  R extends S extends true ? number : D | number = S extends true ? number : D | number,
+  R extends (S extends true ? number : D | number) = S extends true ? number : D | number,
 >(
   value: number | string | null | undefined,
   options?: {

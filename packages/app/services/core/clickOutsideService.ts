@@ -4,8 +4,7 @@ import { getDocument } from '@/app/lib/browser'
 export const useClickOutsideService = () => {
   const onClick = (
     content:
-      | Ref<HTMLElement | ComponentPublicInstance | null>
-      | Array<Ref<HTMLElement | ComponentPublicInstance | null>>,
+      Ref<HTMLElement | ComponentPublicInstance | null> | Array<Ref<HTMLElement | ComponentPublicInstance | null>>,
     listener: (data: { isOutside: boolean }, event: Event) => void,
   ) => {
     const onClick = (event: MouseEvent) => {

@@ -10,9 +10,7 @@ export interface ScrollDirectiveBinding<
 }
 
 export type ScrollDirectiveBindingValue =
-  | EventListener
-  | ScrollDirectiveBindingValueObject
-  | (EventListenerObject & { options?: AddEventListenerOptions })
+  EventListener | ScrollDirectiveBindingValueObject | (EventListenerObject & { options?: AddEventListenerOptions })
 
 export interface ScrollDirectiveBindingValueObject {
   handler: EventListener | EventListenerObject

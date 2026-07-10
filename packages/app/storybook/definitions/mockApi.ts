@@ -22,5 +22,4 @@ export interface MockApiRequest<RequestParams = Record<string, any>, M extends H
 }
 
 export type MockApiResponse<Response, Request, Method extends HttpMethod> =
-  | Response
-  | ((request: MockApiRequest<Request, Method>) => Response)
+  Response | ((request: MockApiRequest<Request, Method>) => Response)

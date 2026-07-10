@@ -35,7 +35,7 @@ import type { PropsTableHeadCell } from '@/app/definitions'
 
 const rawProps = defineProps<PropsTableHeadCell>()
 const props = useComponentDefaultsService('STableHeadCell', rawProps)
-const sortOrders = defineModel<Record<string, KTableSortOrder | undefined>>('sortOrders', { default: {} })
+const sortOrders = defineModel<Record<string, KTableSortOrder | undefined>>('sortOrders', { default: () => ({}) })
 const { cellStyle, isScopeColType } = useTableHeadCellService(props)
 
 const cellClass = computed(() => {
