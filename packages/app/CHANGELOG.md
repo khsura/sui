@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.11.0](https://github.com/khsura/sui/compare/sui-v1.10.1...sui-v1.11.0) (2026-07-10)
+
+
+### Features
+
+* **table:** add no-data placeholder to STable ([#101](https://github.com/khsura/sui/issues/101)) ([5252f67](https://github.com/khsura/sui/commit/5252f6773b058b766cd19a0cc19a954f3eddbd2e))
+
+## [1.10.1](https://github.com/khsura/sui/compare/sui-v1.10.0...sui-v1.10.1) (2026-06-29)
+
+
+### Bug Fixes
+
+* tabs ([2f2fba5](https://github.com/khsura/sui/commit/2f2fba5814e34326e0f1769f53384b3c03799e98))
+
 ## [1.10.0](https://github.com/khsura/sui/compare/sui-v1.9.1...sui-v1.10.0) (2026-06-29)
 
 

@@ -5,7 +5,7 @@ import type STableHeadCell from '@/app/components/table/sTableHeadCell.vue'
 import { getTableRowClass } from '@/app/helpers'
 import { getCleanSetObject, getNumericCssAttribute } from '@/app/lib'
 import { store } from '@/app/store'
-import { type TableItem, KTableSortOrder, type TableHeader, type TableItemCellType } from '@/app/types'
+import { type TableItem, TableSortOrder, type TableHeader, type TableItemCellType } from '@/app/types'
 import type { EmitsTable, PropsTable } from '@/app/definitions'
 
 export const useTableService = <T extends TableItem = TableItem>(
@@ -16,7 +16,7 @@ export const useTableService = <T extends TableItem = TableItem>(
   tableWrapperElement: Readonly<ShallowRef<HTMLDivElement | null>>,
 ) => {
   const isMounted = ref(false)
-  const sortOrders = ref<Record<string, KTableSortOrder | undefined>>({})
+  const sortOrders = ref<Record<string, TableSortOrder | undefined>>({})
   const tableId = ref(uuidv4())
   const isLeftStickActive = ref(false)
   const pageIndex = ref(0)
@@ -191,7 +191,7 @@ export const useTableService = <T extends TableItem = TableItem>(
             return 1
           }
 
-          if (order === KTableSortOrder.ascending) {
+          if (order === TableSortOrder.ascending) {
             if (isANumeric && isBNumeric) {
               return aValueNumeric - bValueNumeric
             }
@@ -204,7 +204,7 @@ export const useTableService = <T extends TableItem = TableItem>(
             }
           }
 
-          if (order === KTableSortOrder.descending) {
+          if (order === TableSortOrder.descending) {
             if (isANumeric && isBNumeric) {
               return bValueNumeric - aValueNumeric
             }

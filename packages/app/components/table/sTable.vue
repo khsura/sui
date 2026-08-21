@@ -203,7 +203,7 @@ import STableBodyCell from './sTableBodyCell.vue'
 import STablePagination from './sTablePagination.vue'
 import { getCleanSetObject } from '@/app/lib'
 import { useBorderService, useComponentDefaultsService, useTableService } from '@/app/services'
-import { type KTableSortOrder, type TableItem } from '@/app/types'
+import { type TableSortOrder, type TableItem } from '@/app/types'
 import type { EmitsTable, PropsTable } from '@/app/definitions'
 
 const rawProps = withDefaults(defineProps<PropsTable<T>>(), {
@@ -300,7 +300,7 @@ const updateOptions = (pageIndex: number, itemsPerPage: number | undefined) => {
     itemsPerPage,
     sortBy: Object.entries(sortOrders.value ?? {})
       .filter(([_, order]) => order)
-      .map(([key, order]) => ({ key, order: order as KTableSortOrder })),
+      .map(([key, order]) => ({ key, order: order as TableSortOrder })),
   })
 }
 

@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'vue'
 
-export enum KTableSortOrder {
+export enum TableSortOrder {
   ascending = 'asc',
   descending = 'desc',
 }
@@ -38,7 +38,7 @@ export interface TableHeader<V extends string | number | symbol = string> {
   textWrap?: boolean
   noGutters?: boolean
   cellNoGutters?: boolean
-  sort?: (a: TableItem, b: TableItem, sortOrder?: KTableSortOrder) => number
+  sort?: (a: TableItem, b: TableItem, sortOrder?: TableSortOrder) => number
   rowspan?: number
   colspan?: number
   scope?: 'colgroup' | 'col'
