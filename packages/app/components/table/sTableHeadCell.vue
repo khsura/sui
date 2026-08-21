@@ -10,7 +10,7 @@
         <slot></slot>
       </div>
 
-      <kButton
+      <sButton
         v-if="header.sortable && isScopeColType"
         class="s_tableHeadCell__sorter"
         :icon="!multiSort"
@@ -19,23 +19,23 @@
         @click="sortBy()"
       >
         {{ sortIcon }}
-      </kButton>
+      </sButton>
     </div>
   </th>
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import kButton from '@/app/components/sButton.vue'
+import sButton from '@/app/components/sButton.vue'
 import { getCleanSetObject, getHtmlClassAttributeObject } from '@/app/lib'
 import { getNextSortOrder } from '@/app/repositories/tableRepository'
 import { useComponentDefaultsService, useTableHeadCellService } from '@/app/services'
-import { KTableSortOrder } from '@/app/types'
+import { TableSortOrder } from '@/app/types'
 import type { PropsTableHeadCell } from '@/app/definitions'
 
 const rawProps = defineProps<PropsTableHeadCell>()
 const props = useComponentDefaultsService('STableHeadCell', rawProps)
-const sortOrders = defineModel<Record<string, KTableSortOrder | undefined>>('sortOrders', { default: () => ({}) })
+const sortOrders = defineModel<Record<string, TableSortOrder | undefined>>('sortOrders', { default: () => ({}) })
 const { cellStyle, isScopeColType } = useTableHeadCellService(props)
 
 const cellClass = computed(() => {
@@ -120,11 +120,11 @@ const sortIcon = computed(() => {
   const displayPriority = props.multiSort ? (sortPriority.value?.toString() ?? '') : ''
   const order = sortOrders.value[props.header.value.toString()]
 
-  if (order === KTableSortOrder.ascending) {
+  if (order === TableSortOrder.ascending) {
     return `↓${displayPriority}`
   }
 
-  if (order === KTableSortOrder.descending) {
+  if (order === TableSortOrder.descending) {
     return `↑${displayPriority}`
   }
 
@@ -149,21 +149,20 @@ const sortIcon = computed(() => {
   &__content {
     @include tableCellContent();
   }
+}
 
-  &__sorter {
-    margin-left: calc($s_spacer / 2);
-    font-size: map-deep-get($s_headings, 'caption', 'size');
-    color: s_getAppColor('disabled');
+.s_button.s_tableHeadCell__sorter {
+  flex: 0 0 auto;
+  min-width: 24px !important;
+  padding: 0 !important;
+  margin-left: calc($s_spacer / 2);
+  font-size: 0.9rem;
+  font-size: map-deep-get($s_headings, 'caption', 'size');
+  color: s_getAppColor('disabled');
+  background-color: transparent;
 
-    &.s_button {
-      flex: 0 0 auto;
-      padding: 0;
-      font-size: 0.9rem;
-    }
-
-    &--sorted {
-      color: s_getPresetColor('info');
-    }
+  &--sorted {
+    color: s_getPresetColor('info');
   }
 }
 </style>

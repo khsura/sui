@@ -1,12 +1,12 @@
-import { KTableSortOrder } from '@/app/types'
+import { TableSortOrder } from '@/app/types'
 
-export const getNextSortOrder = (currentSortOrder: KTableSortOrder | undefined) => {
+export const getNextSortOrder = (currentSortOrder: TableSortOrder | undefined) => {
   if (currentSortOrder === undefined) {
-    return KTableSortOrder.ascending
+    return TableSortOrder.ascending
   }
 
-  if (currentSortOrder === KTableSortOrder.ascending) {
-    return KTableSortOrder.descending
+  if (currentSortOrder === TableSortOrder.ascending) {
+    return TableSortOrder.descending
   }
 
   return undefined
