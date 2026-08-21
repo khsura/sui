@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.11.1](https://github.com/khsura/sui/compare/sui-v1.11.0...sui-v1.11.1) (2026-08-21)
+
+
+### Bug Fixes
+
+* table sorter color ([40feb55](https://github.com/khsura/sui/commit/40feb5507c57e6c331df5017aae822e57d3d26e3))
+* table sorter color ([fb1946c](https://github.com/khsura/sui/commit/fb1946cd6d831c8d4408599b7c2b9c37c579340a))
+
 ## [1.11.0](https://github.com/khsura/sui/compare/sui-v1.10.1...sui-v1.11.0) (2026-07-10)
 
 
