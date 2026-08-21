@@ -19,6 +19,7 @@ const computedCellClass = computed(() => {
   return getCleanSetObject({
     's_tableBodyCell--sticky': props.sticky,
     [`s_tableBodyCell--align__${props.header?.align}`]: !!props.header?.align,
+    's_tableBodyCell--dense': props.dense,
     's_tableBodyCell--textWrap': !!props.header?.textWrap,
     's_tableBodyCell--noGutters': !!props.header?.cellNoGutters,
     ...itemClasses.value,
