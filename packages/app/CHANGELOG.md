@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.2](https://github.com/khsura/sui/compare/sui-v1.11.1...sui-v1.11.2) (2026-08-21)
+
+
+### Bug Fixes
+
+* sTableBodyCell class ([89a6ede](https://github.com/khsura/sui/commit/89a6ede3aa8bbdb4bbe8dee0fddba94558a5d7e2))
+
 ## [1.11.1](https://github.com/khsura/sui/compare/sui-v1.11.0...sui-v1.11.1) (2026-08-21)
 
 

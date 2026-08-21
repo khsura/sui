@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.2](https://github.com/khsura/sui/compare/root-v1.9.1...root-v1.9.2) (2026-08-21)
+
+
+### Bug Fixes
+
+* sTableBodyCell class ([89a6ede](https://github.com/khsura/sui/commit/89a6ede3aa8bbdb4bbe8dee0fddba94558a5d7e2))
+
 ## [1.9.1](https://github.com/khsura/sui/compare/root-v1.9.0...root-v1.9.1) (2026-08-21)
 
 
