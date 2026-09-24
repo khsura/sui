@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.11.0](https://github.com/khsura/sui/compare/root-v1.10.0...root-v1.11.0) (2026-09-24)
+
+
+### Features
+
+* **form:** add allowDecimal prop to SInput ([9eafe3e](https://github.com/khsura/sui/commit/9eafe3ece232a0797ad784c748745d4182adb17d))
+* **form:** SInput allowDecimal + fix value equal to min hidden ([5fac0c1](https://github.com/khsura/sui/commit/5fac0c12bbd8666b532ac45491aaf06e4cf31a54))
+
+
+### Bug Fixes
+
+* **form:** show SInput number value equal to min ([7b256be](https://github.com/khsura/sui/commit/7b256be62de48ee114d1efbedd9e50b2e5c54467))
+
 ## [1.10.0](https://github.com/khsura/sui/compare/root-v1.9.2...root-v1.10.0) (2026-09-24)
 
 
