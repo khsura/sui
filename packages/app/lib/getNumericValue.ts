@@ -12,7 +12,7 @@ export const getNumericValue = <
   value: number | string | null | undefined,
   options?: {
     defaultValue?: D
-    allowDecimal?: boolean
+    allowDecimal?: boolean | undefined | null
     isPositive?: boolean | undefined | null
     isStrictIntCheck?: boolean
     isStrictParse?: S

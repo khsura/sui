@@ -71,6 +71,7 @@ Single-line text input field.
 | `readonly` | `boolean` | `false` | Read-only (not disabled) |
 | `isPasteDisabled` | `boolean` | `false` | Block paste events |
 | `positive` | `boolean` | `false` | Restrict to positive numbers |
+| `allowDecimal` | `boolean` | `false` | Accept decimals with `type="number"` (`min` / `positive` are enforced on blur) |
 | `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `undefined` | Preset size |
 | `name` | `string` | `undefined` | Input name for forms |
 
@@ -343,4 +344,4 @@ const onSearch = debounce(async (query: string) => {
 - `rules` array functions receive the current model value and must return `true` or an error string.
 - `hideDetails` prevents the error message area from rendering — use only when you're handling errors externally.
 - `SForm` does NOT auto-validate on mount; call `validate()` on form ref or listen to `@submit`.
-- For number inputs, combine `type="number"` with `inputmode="numeric"` for best mobile UX.
+- For number inputs, combine `type="number"` with `inputmode="numeric"` for best mobile UX (`inputmode="decimal"` together with `allowDecimal`).

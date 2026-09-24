@@ -63,11 +63,11 @@ Use them to disable the submit button; `resetValidation()` (exposed) clears ever
 
 ## `hideDetails` vs `hideError`
 
-| Prop | Hides the label | Hides the error message | Red error frame |
-|---|---|---|---|
-| _(neither)_ | no | no | shown (since PR #109) |
-| `hideError` | no | **yes** | shown |
-| `hideDetails` | **yes** | **yes** | shown |
+| Prop          | Hides the label | Hides the error message | Red error frame       |
+| ------------- | --------------- | ----------------------- | --------------------- |
+| _(neither)_   | no              | no                      | shown (since PR #109) |
+| `hideError`   | no              | **yes**                 | shown                 |
+| `hideDetails` | **yes**         | **yes**                 | shown                 |
 
 - Use **`hideError`** when you only want to drop the message line (dense tables, inline filters) but keep the label.
 - Use **`hideDetails`** only when the field should have no label either — it is not a "compact" switch.
@@ -135,21 +135,21 @@ Use this to choose the right component and props for each field.
 
 **Common to all form inputs:** `label`, `rules`, `disabled`, `hideDetails`, `hideError`, `error`, `dirty`, `id`
 
-| Component         | v-model              | Key props                                                                                                                                                                                                                                                               | When to use                               |
-| ----------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| **SInput**        | `string \| number`   | `label`, `type` (`text` \| `email` \| `password` \| `number` \| `tel` \| `url` \| `search`), `placeholder`, `suffix`, `dense`, `readonly`, `max`/`min`, `maxlength`/`minlength`, `inputmode` (`numeric` \| `decimal` \| `email` \| `tel`), `positive` (numbers), `size` | Single-line text, email, password, number |
-| **STextarea**     | `string`             | `label`, `placeholder`, `rows`, `cols`, `autogrow`, `resize`, `dense`, `tile`, `maxlength`/`minlength`, `readonly`                                                                                                                                                      | Multi-line text                           |
-| **SSelect**       | `string \| number`   | `items`: `SelectItem[]` or `string[]` (type from `@khsura/sui`: `text`, `value`, optional `disabled`). Also `label`, `dense`, `grow`, `text`, `divided`, `color`, `outlined`/`underlined`/`borderRadius`. **No** `multiple`/`chips`/`clearable`/`placeholder`        | Single-value dropdown                     |
-| **SAutocomplete** | `any` or `any[]`     | Same `items` as SSelect; + `multiple`, `chips`, `closableChips`, `clearable`, `placeholder`, `filter`, `filterMode`, `debounce`, `loading`, `allowUnlisted`, `delimiter`. Events: **`@search-item`** (search text, for async options), **`@create-item`** (with `allowUnlisted`) | Searchable / multi / async select         |
-| **SCheckbox**     | `boolean`            | `label`, `color`, `size`, `block`, `bordered`, `readonly`                                                                                                                                                                                                               | Single boolean                            |
-| **SRadioGroup**   | `any`                | Slot content: `<SRadio value="..." label="...">` children (no `items` prop). Props: `column`, `grow`, `color`, `name`                                                                                                                                                   | Single choice from list                   |
-| **SSwitch**       | `boolean`            | `label`, `color`                                                                                                                                                                                                                                                        | On/off toggle                             |
+| Component         | v-model            | Key props                                                                                                                                                                                                                                                                                | When to use                               |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| **SInput**        | `string \| number` | `label`, `type` (`text` \| `email` \| `password` \| `number` \| `tel` \| `url` \| `search`), `placeholder`, `suffix`, `dense`, `readonly`, `max`/`min`, `maxlength`/`minlength`, `inputmode` (`numeric` \| `decimal` \| `email` \| `tel`), `positive` / `allowDecimal` (numbers), `size` | Single-line text, email, password, number |
+| **STextarea**     | `string`           | `label`, `placeholder`, `rows`, `cols`, `autogrow`, `resize`, `dense`, `tile`, `maxlength`/`minlength`, `readonly`                                                                                                                                                                       | Multi-line text                           |
+| **SSelect**       | `string \| number` | `items`: `SelectItem[]` or `string[]` (type from `@khsura/sui`: `text`, `value`, optional `disabled`). Also `label`, `dense`, `grow`, `text`, `divided`, `color`, `outlined`/`underlined`/`borderRadius`. **No** `multiple`/`chips`/`clearable`/`placeholder`                            | Single-value dropdown                     |
+| **SAutocomplete** | `any` or `any[]`   | Same `items` as SSelect; + `multiple`, `chips`, `closableChips`, `clearable`, `placeholder`, `filter`, `filterMode`, `debounce`, `loading`, `allowUnlisted`, `delimiter`. Events: **`@search-item`** (search text, for async options), **`@create-item`** (with `allowUnlisted`)         | Searchable / multi / async select         |
+| **SCheckbox**     | `boolean`          | `label`, `color`, `size`, `block`, `bordered`, `readonly`                                                                                                                                                                                                                                | Single boolean                            |
+| **SRadioGroup**   | `any`              | Slot content: `<SRadio value="..." label="...">` children (no `items` prop). Props: `column`, `grow`, `color`, `name`                                                                                                                                                                    | Single choice from list                   |
+| **SSwitch**       | `boolean`          | `label`, `color`                                                                                                                                                                                                                                                                         | On/off toggle                             |
 
 **SelectItem** (SSelect, SAutocomplete): from `@khsura/sui` — `{ text: string, value: string | number | null | undefined, disabled?: boolean }` or plain `string`. Use `text` and `value`, not `title` or `label`.
 
 **SAutocomplete async search:** listen to `@search-item`, not `@update:search-input` (that name is accepted by the typings but never emitted).
 
-**SInput `type="number"`:** bind a plain `v-model` — SInput already writes a `number | null` to the model, so `.number` is unnecessary. Use `min`/`max`/`positive` when the value should be clamped while typing; use a rule when the user should see a message instead.
+**SInput `type="number"`:** bind a plain `v-model` — SInput already writes a `number | null` to the model, so `.number` is unnecessary. Use `min`/`max`/`positive` when the value should be clamped while typing; use a rule when the user should see a message instead. Number inputs are **integer-only by default** — `.` is blocked and pasted decimals are rounded; add `allowDecimal` (with `inputmode="decimal"`) to accept decimals, in which case `min`/`positive` are enforced on blur so values like `0.5` can be typed.
 
 **Imports:** form components and `getFormInputModelValueRules` from `@khsura/sui`.
 
