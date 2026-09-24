@@ -21,6 +21,7 @@ export type PropsInput = {
   appendOuter?: string | undefined | null
   textRight?: boolean | undefined | null
   positive?: boolean | undefined | null
+  allowDecimal?: boolean | undefined | null
   usePreviousValueWhenExceeded?: boolean | undefined | null
   dense?: boolean
   tile?: boolean

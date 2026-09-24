@@ -1,5 +1,6 @@
 import type { Meta } from '@storybook/vue3-vite'
 import { action } from 'storybook/actions'
+import { expect } from 'storybook/test'
 import type { ComponentPublicInstance } from 'vue'
 import { computed, defineComponent, ref } from 'vue'
 import { SButton, SCard, SCardTitle, SColumn, SForm, SInput, SRow, SSwitch } from '@/app/index'
@@ -34,6 +35,107 @@ export const Input = createStoryObj<Meta>({
         <SInput v-bind="args" v-model="modelValue"></SInput>
       `,
     }),
+})
+
+const renderNumberInput = (args: Record<string, unknown>) =>
+  defineComponent({
+    components: {
+      SInput,
+    },
+    setup: () => {
+      const modelValue = ref<number | null>(null)
+
+      return {
+        args,
+        modelValue,
+      }
+    },
+    template: `
+      <SInput v-bind="args" v-model="modelValue"></SInput>
+      <div class="s_pa__4">v-model: <span data-testid="model">{{ JSON.stringify(modelValue) }}</span></div>
+    `,
+  })
+
+const getNumberInputElements = (canvasElement: HTMLElement) => {
+  const input = canvasElement.querySelector<HTMLInputElement>('.s_input__input')
+  const model = canvasElement.querySelector('[data-testid="model"]')
+
+  if (!input || !model) {
+    throw new Error('NumberInput story did not render')
+  }
+
+  return { input, model }
+}
+
+export const NumberInput = createStoryObj<Meta>({
+  args: {
+    ...argsInput,
+    id: 'numberInput',
+    type: 'number',
+    label: 'Number (min 1, max 100)',
+    placeholder: 'Number',
+    min: 1,
+    max: 100,
+    positive: false,
+    allowDecimal: false,
+    usePreviousValueWhenExceeded: false,
+  },
+  render: renderNumberInput,
+  play: async ({ canvasElement, userEvent }) => {
+    const { input, model } = getNumberInputElements(canvasElement)
+
+    // a value equal to `min` must stay visible
+    await userEvent.type(input, '1')
+    await expect(input).toHaveValue(1)
+    await expect(model.textContent).toBe('1')
+
+    // decimals are blocked by default: `.` is ignored, so `1.5` becomes `15`
+    await userEvent.clear(input)
+    await userEvent.type(input, '1.5')
+    await expect(model.textContent).toBe('15')
+
+    // values above `max` are clamped while typing
+    await userEvent.clear(input)
+    await userEvent.type(input, '500')
+    await expect(model.textContent).toBe('100')
+  },
+})
+
+export const DecimalInput = createStoryObj<Meta>({
+  args: {
+    ...argsInput,
+    id: 'decimalInput',
+    type: 'number',
+    inputmode: 'decimal',
+    label: 'Decimal (min 0.5, max 10)',
+    placeholder: 'Decimal',
+    min: 0.5,
+    max: 10,
+    positive: false,
+    allowDecimal: true,
+    usePreviousValueWhenExceeded: false,
+  },
+  render: renderNumberInput,
+  play: async ({ canvasElement, userEvent }) => {
+    const { input, model } = getNumberInputElements(canvasElement)
+
+    // the `0` of `1.05` must not be dropped while typing
+    await userEvent.type(input, '1.05')
+    await expect(input).toHaveValue(1.05)
+    await expect(model.textContent).toBe('1.05')
+
+    // values below `min` are allowed while typing and clamped on blur
+    await userEvent.clear(input)
+    await userEvent.type(input, '0.2')
+    await expect(model.textContent).toBe('0.2')
+    await userEvent.tab()
+    await expect(model.textContent).toBe('0.5')
+
+    // values above `max` are clamped while typing
+    await userEvent.clear(input)
+    await userEvent.type(input, '12.5')
+    await expect(model.textContent).toBe('10')
+  },
 })
 
 export const Inputs = createStoryObj<Meta>({

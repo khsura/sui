@@ -126,13 +126,15 @@ const inputStyleList = computed(() => {
 })
 
 let previousValue: number | null = null
+// raw text of the last accepted number, so `1.0` (while typing `1.05`) is not re-rendered as `1`
+const typedText = ref<string | null>(null)
 
 const minNumber = computed(() => {
-  return getNumericValue(props.min, { min: props.min, isPositive: props.positive })
+  return getNumericValue(props.min, { min: props.min, isPositive: props.positive, allowDecimal: props.allowDecimal })
 })
 
 const maxNumber = computed(() => {
-  return getNumericValue(props.max, { max: props.max, isPositive: props.positive })
+  return getNumericValue(props.max, { max: props.max, isPositive: props.positive, allowDecimal: props.allowDecimal })
 })
 
 const displayValue = computed(() => {
@@ -140,9 +142,15 @@ const displayValue = computed(() => {
     return model.value
   }
 
-  const value = getNumericValue(model.value)
+  const value = getNumericValue(model.value, { allowDecimal: props.allowDecimal })
 
-  return value !== null && minNumber.value !== null && value < minNumber.value ? null : (value?.toString() ?? null)
+  // integer mode keeps hiding values below `min` (e.g. a `0` default); with decimals such values are
+  // legitimate while typing (the `0` of `0.5`) and are clamped on blur instead
+  if (value === null || (!props.allowDecimal && minNumber.value !== null && value < minNumber.value)) {
+    return null
+  }
+
+  return typedText.value !== null && Number(typedText.value) === value ? typedText.value : value.toString()
 })
 
 const getNormalizedValue = (value: number | string | null, max?: number | null) => {
@@ -162,8 +170,8 @@ const getNormalizedValue = (value: number | string | null, max?: number | null) 
     return null
   }
 
-  const intValue = parseInt(value.toString(), 10)
-  const lowPassValue = minNumber.value !== null ? Math.max(intValue, minNumber.value) : intValue
+  const baseValue = props.allowDecimal ? numberValue : parseInt(value.toString(), 10)
+  const lowPassValue = minNumber.value !== null ? Math.max(baseValue, minNumber.value) : baseValue
   const highLowPassValue = maxValue ? Math.min(lowPassValue, Number(maxValue)) : lowPassValue
 
   return highLowPassValue
@@ -179,16 +187,19 @@ const onKeydown = (event: KeyboardEvent) => {
       return Number.isNaN(numberValue) ? null : numberValue
     }
 
-    // disallow non-digit character such as `.`, `,`
-    if (/^\D$/.test(event.key) && !(event.ctrlKey || event.metaKey)) {
+    const isDecimalSeparator = !!props.allowDecimal && event.key === '.'
+
+    // disallow non-digit character such as `,` (and `.` unless `allowDecimal`)
+    if (/^\D$/.test(event.key) && !isDecimalSeparator && !(event.ctrlKey || event.metaKey)) {
       event.preventDefault()
 
       return
     }
 
     // disallow a leading 0 keystroke only when it would violate `positive` or a positive `min`;
-    // a plain 0 is otherwise a valid value and leading zeros (e.g. 01) are normalized on input
-    const zeroBlocked = !!props.positive || (minNumber.value !== null && minNumber.value > 0)
+    // a plain 0 is otherwise a valid value and leading zeros (e.g. 01) are normalized on input.
+    // With `allowDecimal` a leading 0 can start a valid value such as `0.5`, so it is never blocked.
+    const zeroBlocked = !props.allowDecimal && (!!props.positive || (minNumber.value !== null && minNumber.value > 0))
 
     if (zeroBlocked && !getElementValue() && event.key === '0') {
       event.preventDefault()
@@ -202,17 +213,21 @@ const onKeydown = (event: KeyboardEvent) => {
 
 const fixInput = async (event: Event) => {
   const inputElement = event.target as HTMLInputElement
-  const value = getNumericValue(inputElement.value)
+  const value = getNumericValue(inputElement.value, { allowDecimal: props.allowDecimal })
+  // with decimals, keystrokes such as the `0` of `0.5` pass below `min` / `positive`, so those bounds wait for blur
+  const isLowerBoundEnforced = !props.allowDecimal || event.type === 'blur'
 
   if (Number.isNaN(value) || inputElement.value === '') {
     inputElement.value = ''
+    typedText.value = null
     model.value = null
     await updateFormInput(null)
   } else if (
     (maxNumber.value !== null && value !== null && value > maxNumber.value) ||
-    (minNumber.value !== null && value !== null && value < minNumber.value) ||
-    /^0{1,}/.test(inputElement.value) ||
-    !Number.isInteger(value)
+    (isLowerBoundEnforced && minNumber.value !== null && value !== null && value < minNumber.value) ||
+    (isLowerBoundEnforced && !!props.positive && value !== null && value <= 0) ||
+    /^0\d/.test(inputElement.value) ||
+    (!props.allowDecimal && !Number.isInteger(value))
   ) {
     const normalizedValue = getNormalizedValue(
       value ?? null,
@@ -220,10 +235,12 @@ const fixInput = async (event: Event) => {
     )
 
     inputElement.value = normalizedValue?.toString() ?? ''
+    typedText.value = normalizedValue?.toString() ?? null
     model.value = normalizedValue as T
     await updateFormInput(normalizedValue)
     previousValue = normalizedValue
   } else {
+    typedText.value = inputElement.value
     model.value = value as T
     await updateFormInput(value)
     previousValue = value
@@ -285,12 +302,17 @@ const onPaste = async (event: ClipboardEvent) => {
     const clipboardText = event.clipboardData?.getData('text/plain') ?? ''
     const maxInputLength = props.max?.toString().length
 
-    const convertedNumber = getNumericValue(
-      maxInputLength !== undefined && clipboardText.length > maxInputLength
-        ? clipboardText.slice(0, maxInputLength)
-        : clipboardText,
-    )
+    // cutting the text to the length of `max` only works for integers (`12.75` would become `12.`),
+    // so decimals are clamped by value instead
+    const convertedNumber = props.allowDecimal
+      ? getNormalizedValue(clipboardText)
+      : getNumericValue(
+          maxInputLength !== undefined && clipboardText.length > maxInputLength
+            ? clipboardText.slice(0, maxInputLength)
+            : clipboardText,
+        )
 
+    typedText.value = null
     model.value = convertedNumber as T
     await updateFormInput(convertedNumber)
   }
