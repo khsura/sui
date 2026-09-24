@@ -7,6 +7,7 @@
           class="s_input__field"
           :class="{
             's_input__field--focus': isFocused,
+            's_input__field--error': hasError,
             ...classListDisabled,
           }"
         >
@@ -55,7 +56,7 @@
           class="s_input__highlight"
           :class="{
             's_input__highlight--focus': isFocused && simple && !disabled,
-            's_input__highlight--error': errors.length !== 0,
+            's_input__highlight--error': hasError,
           }"
         ></SColumn>
       </SRow>
@@ -82,7 +83,7 @@ const emit = defineEmits<EmitFormTextInput<string | number | null>>()
 const slots: Slots = useSlots()
 const inputElement = ref<HTMLElement | null>()
 const model = defineModel<T | null>()
-const { updateFormInput, errors } = useFormInputService<string | number | null>(props, emit, model)
+const { updateFormInput, errors, hasError } = useFormInputService<string | number | null>(props, emit, model)
 const { classListDisabled } = useDisabledService(props)
 // TODO: Sura - make able to use all preset colors
 const { getIsPredefinedPresetColor } = useColorRepository()
@@ -354,6 +355,15 @@ $inputPadding: calc($s_spacer * 2);
         content: '';
         border: 2px solid s_getAppColor('text');
         border-radius: 4px;
+      }
+    }
+
+    // Kept visible even when `hideError` / `hideDetails` hides the message text
+    &--error {
+      border-color: s_getPresetColor('error');
+
+      &::before {
+        border-color: s_getPresetColor('error');
       }
     }
 
