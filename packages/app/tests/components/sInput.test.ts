@@ -93,6 +93,28 @@ describe('SInput', () => {
 
       expect(lastModelValue(wrapper)).toEqual([null])
     })
+
+    test('displays an initial value equal to min', () => {
+      const wrapper = mountNumber({ min: 1, modelValue: 1 })
+
+      expect((wrapper.find('.s_input__input').element as HTMLInputElement).value).toBe('1')
+    })
+
+    test('hides an initial value below min', () => {
+      const wrapper = mountNumber({ min: 1, modelValue: 0 })
+
+      expect((wrapper.find('.s_input__input').element as HTMLInputElement).value).toBe('')
+    })
+
+    test('keeps a typed value equal to min', async () => {
+      const wrapper = mountNumber({ min: 1 })
+      const input = wrapper.find('.s_input__input')
+
+      await input.setValue('1')
+
+      expect(lastModelValue(wrapper)).toEqual([1])
+      expect((input.element as HTMLInputElement).value).toBe('1')
+    })
   })
 
   test('all attributes can be set properly', () => {
