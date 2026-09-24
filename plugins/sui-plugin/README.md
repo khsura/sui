@@ -38,9 +38,13 @@ Or add to your project's `.claude/settings.json`:
 | [`sui-component`](./skills/sui-component/) | Using a specific component (`SButton`, `SCard`, `SAutocomplete`, …) — imports, props, slots, events, examples. |
 | [`sui-form`](./skills/sui-form/) | Building validated forms with `SInput`, `SSelect`, `SCheckbox`, etc., including `rules` validation. |
 | [`sui-layout`](./skills/sui-layout/) | Scaffolding app shells with `SLayout`, `SAppBar`, `SNavigationDrawer`, `SMain`, `SFooter`, `SBottomNavigation`. |
-| [`sui-docs`](./skills/sui-utilities/) | Looking up SUI utility classes (`s_*`), Vue directives, and SCSS helpers / mixins. |
+| [`sui-utilities`](./skills/sui-utilities/) | Looking up SUI utility classes (`s_*`), Vue directives, and SCSS helpers / mixins; restyling components without `:deep()`. |
 
 Each skill lives in its own folder with a `SKILL.md` describing when Claude should invoke it.
+
+`skills/sui-utilities/docs/` holds copies of `packages/app/docs/{classes,directives,helpers}.md` so they ship with the plugin — update both when those docs change.
+
+Install the plugin rather than copying skill files into a project (`.agents/skills/`, `.claude/skills/`): copies drift out of date as SUI changes.
 
 ## Example prompts
 
@@ -48,7 +52,7 @@ Each skill lives in its own folder with a `SKILL.md` describing when Claude shou
 /sui-component SAutocomplete with multiple selection
 /sui-form registration form with email, password, confirm password
 /sui-layout admin dashboard with nav drawer and toolbar
-/sui-docs flex utility classes
+/sui-utilities flex utility classes
 ```
 
 ## Repository

@@ -1,7 +1,7 @@
 {
   "name": "sui-plugin",
   "description": "Integration guide and code generation skills for the @khsura/sui Vue 3 component framework",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "Sura Kh",
     "email": "sura0111@gmail.com"

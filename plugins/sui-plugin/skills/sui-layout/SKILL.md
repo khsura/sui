@@ -15,7 +15,8 @@ Then generate a complete Vue SFC using these rules:
 
 **Layout rules:**
 - `SLayout name="app"` is always the root
-- All layout children must use `for="app"` to match the layout name
+- All layout children must use `for="app"` to match the layout name. (`name`/`for` can be omitted together — everything then uses the app's default layout name — but never set `name` and leave `for` off: that child will not attach.)
+- Do not add Vuetify's `app` prop to `SAppBar`/`SMain`/`SFooter` — it doesn't exist; `SLayout` handles placement
 - `SAppBar for="app"` — top bar (use `#prepend` for hamburger, `#append` for right-side actions)
 - `SNavigationDrawer for="app" v-model="drawer"` — sidebar
 - `SMain for="app"` — wraps all page content
