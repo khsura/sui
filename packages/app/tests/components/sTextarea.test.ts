@@ -1,3 +1,4 @@
+import { flushPromises } from '@vue/test-utils'
 import { STextarea } from '@/app/components'
 import { mountWithApp } from '@/app/tests/_helpers'
 
@@ -59,5 +60,17 @@ describe('STextarea', () => {
     const wrapper = mountWithApp(STextarea, { props: { id: 'textarea', resize: true } })
 
     expect(wrapper.find('.s_textarea__input').classes()).not.contain('s_textarea--resize__none')
+  })
+
+  test('marks the field frame when validation fails, even with hideError', async () => {
+    const requiredRule = (value: unknown) => !!value || 'Required'
+    const wrapper = mountWithApp(STextarea, { props: { id: 'memo', rules: [requiredRule], hideError: true } })
+
+    await wrapper.find('.s_textarea__input').setValue('a')
+    await wrapper.find('.s_textarea__input').setValue('')
+    await flushPromises()
+
+    expect(wrapper.classes()).toContain('s_textarea--error')
+    expect(wrapper.find('.s_formInputError').exists()).toBe(false)
   })
 })

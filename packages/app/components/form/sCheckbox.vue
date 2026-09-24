@@ -40,7 +40,7 @@ const emit = defineEmits<{
 // TODO: Sura - make able to use all preset colors
 const model = defineModel<boolean>()
 const { getIsPredefinedPresetColor } = useColorRepository()
-const { updateFormInput, errors } = useFormInputService<boolean>(props, emit, model)
+const { updateFormInput, errors, hasError } = useFormInputService<boolean>(props, emit, model)
 
 const toggleModel = async (event: Event) => {
   event.preventDefault()
@@ -77,6 +77,7 @@ const checkboxClasses = computed(() => {
     's_checkbox--block': props.block,
     's_checkbox--disabled': props.disabled,
     's_checkbox--readonly': props.readonly,
+    's_checkbox--error': hasError.value,
     's_checkbox--size__large': props.size === 'large',
     [`s_checkbox--color__${props.color}`]: getIsPredefinedPresetColor(props.color),
   }
@@ -214,6 +215,11 @@ $s_checkbox--size: 24px;
 
   &:not(&--disabled, &--readonly):hover &__label::before {
     border: 2px solid s_getPresetColor('info');
+  }
+
+  // Kept visible even when `hideError` / `hideDetails` hides the message text
+  &--error:not(&--disabled) &__input:not(:checked) + &__label::before {
+    border-color: s_getPresetColor('error');
   }
 }
 
