@@ -31,7 +31,7 @@ const model = defineModel<GroupItemValue>({
   },
 })
 
-const { errors, updateFormInput } = useFormInputService<GroupItemValue>(props, emit, model)
+const { errors, hasError, updateFormInput } = useFormInputService<GroupItemValue>(props, emit, model)
 
 useSingleGroupService(props, model)
 
@@ -40,6 +40,7 @@ provide(ProviderPropsName.radioGroupProps, props)
 const radioGroupClasses = computed(() => {
   return {
     's_radioGroup--column': props.column,
+    's_radioGroup--error': hasError.value,
   }
 })
 </script>
@@ -52,6 +53,11 @@ const radioGroupClasses = computed(() => {
     .s_radio {
       margin: $s_spacer;
     }
+  }
+
+  // Kept visible even when `hideError` / `hideDetails` hides the message text
+  &--error .s_radio__radio::before {
+    border-color: s_getPresetColor('error');
   }
 }
 </style>

@@ -55,7 +55,7 @@ const model = defineModel<string>({
   default: '',
 })
 
-const { updateFormInput, errors } = useFormInputService<string>(props, emit, model)
+const { updateFormInput, errors, hasError } = useFormInputService<string>(props, emit, model)
 const { classListDisabled } = useDisabledService(props)
 // TODO - Sura: make able to use all preset colors
 const { getIsPredefinedPresetColor } = useColorRepository()
@@ -68,6 +68,7 @@ const classList = computed(() => {
     's_textarea--disabled': props.disabled,
     's_textarea--dense': props.dense,
     's_textarea--tile': props.tile,
+    's_textarea--error': hasError.value,
     [`s_textarea--size__${props.size}`]: props.size,
     ...classListDisabled.value,
   }
@@ -201,6 +202,15 @@ $inputPadding: calc($s_spacer * 2);
   &--tile {
     .s_textarea__input {
       border-radius: 0;
+    }
+  }
+
+  // Kept visible even when `hideError` / `hideDetails` hides the message text
+  &--error .s_textarea__input {
+    border-color: s_getPresetColor('error');
+
+    &:focus {
+      outline-color: s_getPresetColor('error');
     }
   }
 

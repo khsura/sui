@@ -1,3 +1,4 @@
+import { flushPromises } from '@vue/test-utils'
 import { SInput } from '@/app/components'
 import { mountWithApp } from '@/app/tests/_helpers'
 
@@ -125,6 +126,29 @@ describe('SInput', () => {
       placeholder: 'placeholder',
       spellcheck: 'true',
       type: 'number',
+    })
+  })
+
+  describe('error frame', () => {
+    const requiredRule = (value: unknown) => !!value || 'Required'
+
+    test('marks the field frame when validation fails, even with hideError', async () => {
+      const wrapper = mountWithApp(SInput, { props: { id: 'name', rules: [requiredRule], hideError: true } })
+
+      await wrapper.find('.s_input__input').trigger('input')
+      await flushPromises()
+
+      expect(wrapper.find('.s_input__field').classes()).toContain('s_input__field--error')
+      expect(wrapper.find('.s_formInputError').exists()).toBe(false)
+    })
+
+    test('does not mark the field frame when disabled', async () => {
+      const wrapper = mountWithApp(SInput, { props: { id: 'name', rules: [requiredRule], disabled: true } })
+
+      await wrapper.find('.s_input__input').trigger('input')
+      await flushPromises()
+
+      expect(wrapper.find('.s_input__field').classes()).not.toContain('s_input__field--error')
     })
   })
 })

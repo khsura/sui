@@ -67,7 +67,7 @@ const props = useComponentDefaultsService('SSelect', rawProps)
 const emit = defineEmits<EmitFormInput<T | null>>()
 const { classListBorder, styleListBorder } = useBorderService(props)
 const model = defineModel<T | null>()
-const { errors, updateFormInput } = useFormInputService<T | null>(props, emit, model)
+const { errors, hasError, updateFormInput } = useFormInputService<T | null>(props, emit, model)
 const menuModel = defineModel<boolean>('menu')
 const { classListDisabled } = useDisabledService(props)
 const activatorElement = useTemplateRef('activatorElement')
@@ -135,6 +135,7 @@ const activatorClasses = computed(() => {
   return {
     's_select__activator--empty': model.value === null || model.value === undefined,
     's_select__activator--dense': props.dense,
+    's_select__activator--error': hasError.value,
     ...classListBorder.value,
     ...classListDisabled.value,
   }
@@ -212,6 +213,17 @@ const displayText = computed(() => {
 
     &--dense {
       height: #{map.get($s_button--sizes, 'small')}px;
+    }
+
+    // Kept visible even when `hideError` / `hideDetails` hides the message text.
+    // `::before` is taken by the button hover overlay, so the frame uses `::after`.
+    &--error::after {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      content: '';
+      border: thin solid s_getPresetColor('error');
+      border-radius: inherit;
     }
 
     &:not(.s_outlined, .s_underlined) {

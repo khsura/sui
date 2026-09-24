@@ -12,12 +12,7 @@ export const useFormInputService = <T extends FormInputModelValue = FormInputMod
   const dirty = ref(false)
   const uniqueId = useId()
   const inputId = computed(() => props.id ?? uniqueId)
-
-  const form = inject(ProviderName.form, {
-    registerItem: () => undefined,
-    unregisterItem: () => undefined,
-    updateItem: () => undefined,
-  })
+  const form = inject(ProviderName.form, null)
 
   const hasError = computed(() => {
     return props.disabled ? false : rawErrors.value.length > 0
@@ -50,7 +45,7 @@ export const useFormInputService = <T extends FormInputModelValue = FormInputMod
   }
 
   onMounted(() => {
-    form.registerItem?.(inputId.value, {
+    form?.registerItem(inputId.value, {
       validate,
       reset,
       errors,
@@ -75,7 +70,7 @@ export const useFormInputService = <T extends FormInputModelValue = FormInputMod
   })
 
   onUnmounted(() => {
-    form.unregisterItem?.(inputId.value)
+    form?.unregisterItem(inputId.value)
   })
 
   const updateFormInput = async (value?: T) => {
@@ -84,7 +79,7 @@ export const useFormInputService = <T extends FormInputModelValue = FormInputMod
     }
 
     await nextTick()
-    if (form.updateItem) {
+    if (form) {
       /**
        * @see {@link ./src/components/form/form.vue}
        * if parent form exists, validate function will be called from form.vue
@@ -100,5 +95,6 @@ export const useFormInputService = <T extends FormInputModelValue = FormInputMod
   return {
     updateFormInput,
     errors,
+    hasError,
   }
 }
