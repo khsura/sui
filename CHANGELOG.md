@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.10.0](https://github.com/khsura/sui/compare/root-v1.9.2...root-v1.10.0) (2026-09-24)
+
+
+### Features
+
+* show error frame on form inputs even when error text is hidden ([6c4d04e](https://github.com/khsura/sui/commit/6c4d04ea01f4732d08320c38f37a4947aa822e89))
+* show error frame on SInput even when error text is hidden ([c80b765](https://github.com/khsura/sui/commit/c80b765b6381ce859e6b622465c1d30d79043878))
+* show error frame on STextarea, SSelect, SCheckbox and SRadioGroup ([d18d423](https://github.com/khsura/sui/commit/d18d4233f9ad06ce8af4ed940abf0a69fb842024))
+
 ## [1.9.2](https://github.com/khsura/sui/compare/root-v1.9.1...root-v1.9.2) (2026-08-21)
 
 
