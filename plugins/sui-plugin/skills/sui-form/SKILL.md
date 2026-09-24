@@ -17,12 +17,12 @@ Then generate a complete Vue SFC using these rules:
 
 **Form rules:**
 
-- Wrap everything in `<SForm @submit.prevent="submit">`
+- Wrap everything in `<SForm ref="formRef" @submit.prevent="submit">` and validate in `submit` (see **SForm.validate()** below — its return value is inverted from what you'd expect)
 - Use `SInput` for text/email/password/number — always include `label` and `v-model`
-- Use `STextarea` for multi-line text (add `auto-grow` if height should expand)
-- Use `SSelect` for dropdowns — `items` must be `SelectItem[]` or `string[]`. Type `SelectItem` from `@khsura/sui` (`text`, `value`, optional `disabled`).
-- Use `SAutocomplete` for searchable/multi-select — same `items` shape (`SelectItem[]` or `string[]`), add `multiple chips closable-chips` for multi-select
-- Use `SCheckbox` for boolean — `label` prop, not slot
+- Use `STextarea` for multi-line text (add `autogrow` if height should expand — all lowercase, not `auto-grow`)
+- Use `SSelect` for a plain single-value dropdown — `items` must be `SelectItem[]` or `string[]`. Type `SelectItem` from `@khsura/sui` (`text`, `value`, optional `disabled`). **SSelect has no `multiple`, `chips`, `clearable` or `placeholder`** — when you need any of those, use `SAutocomplete`.
+- Use `SAutocomplete` for searchable, clearable or multi-select — same `items` shape, add `multiple chips closable-chips` for multi-select
+- Use `SCheckbox` for a single boolean — `label` prop, not slot. It has no `value`/`indeterminate`, so build checkbox groups from several boolean models
 - Use `SRadioGroup` with `<SRadio value="..." label="...">` children (slot-based); use `column` for vertical layout
 - Use `SSwitch` for on/off toggles
 - Submit: `<SButton type="submit" color="primary" :loading="submitting">Submit</SButton>`
@@ -30,8 +30,48 @@ Then generate a complete Vue SFC using these rules:
 
 **Validation rules signature:** `(value: unknown) => true | string`
 
-- Return `true` to pass, return an error string to fail
+- Return `true` to pass, return an error string to fail. Returning `false` does **not** show an error (non-string results are dropped) — always return a message string
 - Pass arrays to `:rules="[rule1, rule2]"`
+- Rules run on input/change. Inside `SForm` the form runs them; a standalone input (no `SForm`) runs its own rules — note that before the fix in PR #109, standalone inputs silently never ran their rules, so wrap inputs in `SForm` on older versions
+
+---
+
+## SForm.validate() returns `true` when the form is INVALID
+
+`validate()` returns **whether there are errors**, not whether the form is valid. This is the most common SUI form bug.
+
+```typescript
+const formRef = ref<InstanceType<typeof SForm> | null>(null)
+
+// ❌ Wrong — submits invalid forms and blocks valid ones
+if (!formRef.value?.validate()) return
+
+// ✅ Correct
+const hasErrors = formRef.value?.validate()
+if (hasErrors) return
+```
+
+`SForm` also exposes its state as models, updated whenever an input validates:
+
+- `v-model="isValid"` — `true` when there are no errors
+- `v-model:error="hasError"` — `true` while any input has an error
+- `v-model:errors="messages"` — all current error strings
+
+Use them to disable the submit button; `resetValidation()` (exposed) clears every input's errors.
+
+---
+
+## `hideDetails` vs `hideError`
+
+| Prop | Hides the label | Hides the error message | Red error frame |
+|---|---|---|---|
+| _(neither)_ | no | no | shown (since PR #109) |
+| `hideError` | no | **yes** | shown |
+| `hideDetails` | **yes** | **yes** | shown |
+
+- Use **`hideError`** when you only want to drop the message line (dense tables, inline filters) but keep the label.
+- Use **`hideDetails`** only when the field should have no label either — it is not a "compact" switch.
+- Since PR #109, the field frame turns red on error even with either flag set (`SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SDatePickerInput`), so users can still see which field is invalid. Don't add your own `:deep()` error border.
 
 ---
 
@@ -93,19 +133,23 @@ const numeric = (v: string) => /^\d+$/.test(v) || 'Must be a number'
 
 Use this to choose the right component and props for each field.
 
-**Common to all form inputs:** `label`, `rules`, `disabled`, `hideDetails`, `hideError` `error`, `dirty`, `id`
+**Common to all form inputs:** `label`, `rules`, `disabled`, `hideDetails`, `hideError`, `error`, `dirty`, `id`
 
 | Component         | v-model              | Key props                                                                                                                                                                                                                                                               | When to use                               |
 | ----------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
 | **SInput**        | `string \| number`   | `label`, `type` (`text` \| `email` \| `password` \| `number` \| `tel` \| `url` \| `search`), `placeholder`, `suffix`, `dense`, `readonly`, `max`/`min`, `maxlength`/`minlength`, `inputmode` (`numeric` \| `decimal` \| `email` \| `tel`), `positive` (numbers), `size` | Single-line text, email, password, number |
-| **STextarea**     | `string`             | Same as SInput + `rows`, `autoGrow`                                                                                                                                                                                                                                     | Multi-line text                           |
-| **SSelect**       | `any` or `any[]`     | `items`: `SelectItem[]` or `string[]` (type from `@khsura/sui`: `text`, `value`, optional `disabled`). Also `label`, `placeholder`, `multiple`, `chips`, `clearable`, `dense`                                                                                           | Dropdown, single or multi select          |
-| **SAutocomplete** | `any` or `any[]`     | Same `items` as SSelect; + `filter`, `filterMode`, `debounce`, `closableChips`, `loading`, `@update:search-input` (async)                                                                                                                                               | Searchable select, async options          |
-| **SCheckbox**     | `boolean` or `any[]` | `label`, `value` (in groups), `color`, `indeterminate`                                                                                                                                                                                                                  | Boolean or multi-checkbox group           |
-| **SRadioGroup**   | `any`                | Slot content: `<SRadio value="..." label="...">` children. Props: `column`, `color`                                                                                                                                                                                     | Single choice from list                   |
+| **STextarea**     | `string`             | `label`, `placeholder`, `rows`, `cols`, `autogrow`, `resize`, `dense`, `tile`, `maxlength`/`minlength`, `readonly`                                                                                                                                                      | Multi-line text                           |
+| **SSelect**       | `string \| number`   | `items`: `SelectItem[]` or `string[]` (type from `@khsura/sui`: `text`, `value`, optional `disabled`). Also `label`, `dense`, `grow`, `text`, `divided`, `color`, `outlined`/`underlined`/`borderRadius`. **No** `multiple`/`chips`/`clearable`/`placeholder`        | Single-value dropdown                     |
+| **SAutocomplete** | `any` or `any[]`     | Same `items` as SSelect; + `multiple`, `chips`, `closableChips`, `clearable`, `placeholder`, `filter`, `filterMode`, `debounce`, `loading`, `allowUnlisted`, `delimiter`. Events: **`@search-item`** (search text, for async options), **`@create-item`** (with `allowUnlisted`) | Searchable / multi / async select         |
+| **SCheckbox**     | `boolean`            | `label`, `color`, `size`, `block`, `bordered`, `readonly`                                                                                                                                                                                                               | Single boolean                            |
+| **SRadioGroup**   | `any`                | Slot content: `<SRadio value="..." label="...">` children (no `items` prop). Props: `column`, `grow`, `color`, `name`                                                                                                                                                   | Single choice from list                   |
 | **SSwitch**       | `boolean`            | `label`, `color`                                                                                                                                                                                                                                                        | On/off toggle                             |
 
 **SelectItem** (SSelect, SAutocomplete): from `@khsura/sui` — `{ text: string, value: string | number | null | undefined, disabled?: boolean }` or plain `string`. Use `text` and `value`, not `title` or `label`.
+
+**SAutocomplete async search:** listen to `@search-item`, not `@update:search-input` (that name is accepted by the typings but never emitted).
+
+**SInput `type="number"`:** bind a plain `v-model` — SInput already writes a `number | null` to the model, so `.number` is unnecessary. Use `min`/`max`/`positive` when the value should be clamped while typing; use a rule when the user should see a message instead.
 
 **Imports:** form components and `getFormInputModelValueRules` from `@khsura/sui`.
 
@@ -118,7 +162,7 @@ For full props, slots, and events per component, see **`docs/components/form.md`
   <SCard :max-width="480">
     <SCardTitle>Form Title</SCardTitle>
     <SCardText>
-      <SForm @submit.prevent="submit">
+      <SForm ref="formRef" @submit.prevent="submit">
         <SInput v-model="form.name" label="Full Name" :rules="[required]" />
 
         <SInput v-model="form.email" label="Email" type="email" :rules="[required, email]" />
@@ -139,6 +183,7 @@ For full props, slots, and events per component, see **`docs/components/form.md`
 import { ref } from 'vue'
 import { type SelectItem, SCard, SCardTitle, SCardText, SForm, SInput, SSelect, SCheckbox, SButton } from '@khsura/sui'
 
+const formRef = ref<InstanceType<typeof SForm> | null>(null)
 const submitting = ref(false)
 
 const form = ref({
@@ -159,6 +204,10 @@ const email = (v: string) => /.+@.+\..+/.test(v) || 'Invalid email'
 const minLength = (n: number) => (v: string) => v.length >= n || `Min ${n} characters`
 
 const submit = async () => {
+  // validate() returns true when there ARE errors
+  const hasErrors = formRef.value?.validate()
+  if (hasErrors) return
+
   submitting.value = true
   try {
     // TODO: handle submit (API call, emit, etc.)

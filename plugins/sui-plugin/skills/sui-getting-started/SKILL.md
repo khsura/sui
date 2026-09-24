@@ -87,8 +87,29 @@ app.use(createSUI({ ...defaultAppConfig, themes: { light: { presetColors: { prim
 | `theme`   | `'light' \| 'dark'`                                         | Initial theme                            |
 | `display` | `{ thresholds?, scrollBarWidth? }`                          | Breakpoints and scrollbar width          |
 | `themes`  | `{ light?: ThemeConfigOptions, dark?: ThemeConfigOptions }` | Per-theme `appColors` and `presetColors` |
+| `components` | `{ [ComponentName]: Record<string, unknown> }`           | App-wide default props per component     |
 
 The default config (theme, display thresholds, `appColors`, `presetColors` for light/dark) is defined in `configs/app.ts`. Pass partial options to override; they are merged with these defaults.
+
+**Theme colors:** use opaque hex values (`#ffc107`) for `presetColors`. An alpha hex such as `#ffc10799` makes that color look washed out everywhere it is used. For a translucent variant, use `color-mix(in srgb, #{s_getPresetColor('warning')} 60%, transparent)` in SCSS instead.
+
+### Component default props (`components`)
+
+Set a prop once for every instance instead of repeating it — and instead of overriding classes with `:deep(.s_*)`:
+
+```typescript
+app.use(
+  createSUI({
+    components: {
+      SSelect: { outlined: true },
+      SButton: { color: 'primary', size: 'small' },
+      SInput: { dense: true },
+    },
+  }),
+)
+```
+
+Priority: **explicit prop on the element > `components` default > built-in default**. Keys are the component names (`SButton`, `SInput`, …). In Nuxt, put the same object under `sui.components` in `nuxt.config.ts`. Don't repeat these defaults on individual elements.
 
 ### Predefined i18n (form rules)
 
@@ -140,7 +161,7 @@ Always bind **both** `v-on="on"` and `v-bind="attrs"`:
 
 ### Named Layout System
 
-Layout children are linked to `SLayout` via matching `name`/`for`:
+Layout children are linked to `SLayout` via `name`/`for`. Both are optional: when `SLayout` has no `name` and its children have no `for`, they all fall back to the app's default layout name. **Once `SLayout` has a `name`, every child needs the matching `for`** — a child without `for` falls back to the default name and does not attach to `name="app"`.
 
 ```vue
 <SLayout name="app">
@@ -153,7 +174,7 @@ Layout children are linked to `SLayout` via matching `name`/`for`:
 </SLayout>
 ```
 
-All children **must** use the same string for `name`/`for`.
+When you do set `for`, it must equal the `SLayout`'s `name`. Vuetify's `app` prop does not exist here — drop it.
 
 ### Validation Rules
 
@@ -239,14 +260,14 @@ All form inputs share: `disabled`, `rules`, `hideDetails`, `hideError`, `error`,
 | --------------- | ------------------ | ----------------------------------------------------------------- |
 | `SForm`         | —                  | `@submit` event                                                   |
 | `SInput`        | `string \| number` | `type`, `placeholder`, `suffix`, `dense`, `readonly`, `autofocus` |
-| `STextarea`     | `string`           | `rows`, `autoGrow`                                                |
-| `SSelect`       | `any \| any[]`     | `items: [{title, value}]`, `multiple`, `chips`, `clearable`       |
-| `SAutocomplete` | `any \| any[]`     | `items`, `filterMode`, `debounce`, `@update:search-input`         |
-| `SCheckbox`     | `boolean \| any[]` | `label`, `value`, `indeterminate`                                 |
-| `SRadioGroup`   | `any`              | `items: [{title, value}]`, `inline`, `column`                     |
-| `SSwitch`       | `boolean`          | `label`, `color`                                                  |
+| `STextarea`     | `string`           | `rows`, `autogrow`, `resize`                                      |
+| `SSelect`       | `string \| number` | `items: [{text, value}]`, `dense`, `grow` — single value only     |
+| `SAutocomplete` | `any \| any[]`     | `items`, `multiple`, `chips`, `clearable`, `debounce`, `@search-item` |
+| `SCheckbox`     | `boolean`          | `label`, `color`, `size`, `bordered`                              |
+| `SRadioGroup`   | `any`              | `<SRadio value label>` children, `column`, `grow`                 |
+| `SSwitch`       | `boolean`          | `label`                                                           |
 
-`SelectItem` shape: `{ title: string, value: any }` or plain string.
+`SelectItem` shape: `{ text: string, value: string | number | null, disabled?: boolean }` or plain string. See **sui-form** for the full props table and gotchas.
 
 ### Navigation
 
@@ -368,27 +389,34 @@ Directives are auto-registered by `createSUI()`.
 - Typography: `s_text--h5`, `s_text--body1`, `s_text--caption`
 - Colors: `s_color--primary`, `s_color--error`
 
-Import utility classes: `import '@khsura/sui/helpers.scss'`
+The utility classes ship in the base stylesheet: `import '@khsura/sui/base.css'` (or `@khsura/sui/style.scss`), which the Nuxt module loads for you.
+
+`@khsura/sui/helpers.scss` is different: it holds SCSS **functions and mixins** only (`s_getPresetColor`, `s_getAppColor`, `s_elevation`, …) and emits no classes. Use it in component styles with `@use '@khsura/sui/helpers.scss' as *`. See **sui-utilities** for the full class, directive and helper reference.
 
 ---
 
 ## Common Mistakes to Avoid
 
 - **Activator**: always bind both `v-on="on"` AND `v-bind="attrs"` — missing either breaks popup behavior
-- **Layout**: `SMain`, `SAppBar`, `SNavigationDrawer` etc. must have matching `for` = `SLayout`'s `name`
-- **SSelect/SAutocomplete items**: must be `{ title, value }` objects or plain strings — not `{ label, id }`
-- **Validation rules**: return `true` to pass (not `null`/`undefined`) and a `string` to fail
+- **Layout**: set `name`/`for` on all of `SLayout` and its children or on none of them — a named `SLayout` with un-`for`ed children does not connect
+- **SSelect/SAutocomplete items**: must be `{ text, value }` objects or plain strings — not `{ title, value }` or `{ label, id }`
+- **SSelect is single-value**: no `multiple`/`chips`/`clearable`/`placeholder` — use `SAutocomplete`
+- **Validation rules**: return `true` to pass and a `string` to fail — `false`/`null` show no error
 - **`loading` on SButton**: implicitly disables it — don't set `disabled` separately
-- **SForm**: does not auto-validate on mount — call `.validate()` on a ref or use `@submit`
+- **SForm**: does not auto-validate on mount. `formRef.value.validate()` returns **`true` when there are errors** — `if (formRef.value?.validate()) return`
+- **`hideDetails` hides the label too**: use `hideError` to hide only the error message
+- **Unknown props do nothing silently**: `SDialog title`, `persistent-hint`, `app`, … — check `@types/definitions/props` when unsure
+- **Styling SUI internals**: prefer props and `createSUI({ components })` defaults over `:deep(.s_*)` + `!important`, which break on library updates
 - **SDatePicker**: model value must be a string in the correct format, not a Date object
 
 ---
 
 ## Related Skills
 
-Use these skills in the same `claude/skills/` folder for focused tasks:
+Use these skills from the same `sui-plugin` for focused tasks. Prefer the installed plugin over copying these files into a project's `.agents/skills/` or `.claude/skills/` — local copies go stale when SUI updates.
 
 - **sui-getting-started** (this skill) — installation, setup, app config, predefined i18n, component list, patterns
 - **sui-layout** — scaffold an app layout (app bar, drawer, grid)
 - **sui-form** — build a validated form with SUI form components
 - **sui-component** — look up and use a specific SUI component with examples
+- **sui-utilities** — utility classes, directives and SCSS helpers reference

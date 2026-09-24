@@ -31,15 +31,12 @@ Full examples: [examples.md](./examples.md) (Activator, SDialog, SMenu, STooltip
 
 ---
 
-## Component index
-
 ## Non-existent components — do NOT use
 
 These components do not exist in `@khsura/sui`. Using them will cause a runtime error. Verify every component name against the index below before writing code.
 
 | Name | Status | Correct alternative |
 |------|--------|---------------------|
-| `SAlert` | Does NOT exist in `@khsura/sui` | Use `CoreAlert` (see below) |
 | `SSkeletonLoader` | Does NOT exist in `@khsura/sui` | Use `SProgressCircular` with `indeterminate` prop, wrapped in a centered div |
 | `SNavigationDrawer` | App-shell only — never in feature components | Use `SDialog` with `location="end"` for feature-level panels (see below) |
 | `STextField` | Does NOT exist in `@khsura/sui` | Use `STextarea` (multi-line) or `SInput` (single-line) |
@@ -66,19 +63,19 @@ These CSS custom properties do **NOT** exist in `@khsura/sui`. Using them produc
 
 Use `color-mix(in srgb, #{fn()} N%, transparent)` for any opacity variant.
 
-### CoreAlert — project component for alert/banner messages
+---
 
-`CoreAlert` is auto-imported from `apps/onetab/app/components/core/Alert.vue`.
+## Unknown props are silent no-ops
 
-```vue
-<CoreAlert color="warning">
-  Overlapping absence detected for this period.
-</CoreAlert>
-```
+Vue passes an undeclared prop through as an HTML attribute — no error, no warning, nothing happens. Vuetify habits are the usual source. Before using a prop you are not sure about, check its definition in `node_modules/@khsura/sui/@types/definitions/props/props<Component>.d.ts`.
 
-- **Props:** `color: 'warning' | 'error' | 'success' | 'info'`
-- **Default slot:** all message content
-- No `variant`, `icon`, or `title` props
+| ❌ Does nothing | ✅ Do this instead |
+|---|---|
+| `<SDialog title="...">` | Put the heading in the content: `<SCard><SCardTitle>...</SCardTitle>...</SCard>` |
+| `<SSelect clearable>` / `chips` / `multiple` / `placeholder` | Use `SAutocomplete`, which has `clearable`, `chips`, `multiple`, `placeholder` |
+| `<SInput persistent-hint hint="...">` | No hint props — render helper text yourself below the input |
+| `app` on `SMain` / `SFooter` / `SAppBar` | Remove it; placement comes from `SLayout` |
+| `<SCheckbox indeterminate>` / `:value` | `SCheckbox` is a single boolean `v-model` only |
 
 ---
 
@@ -102,7 +99,7 @@ Use `color-mix(in srgb, #{fn()} N%, transparent)` for any opacity variant.
 |-----------|--------|----------|
 | **SButton** | `color`, `variant` (fab\|text\|icon only — `outlined` is NOT a valid variant), `size`, `loading`, `block`, `rounded`, `disabled`, `href`, `to`. Use `color` prop for visual differentiation, not `outlined`. | [examples.md](./examples.md#sbutton) |
 | **SCard** | `SCardTitle`, `SCardSubtitle`, `SCardText`, `SCardActions`; use `SSpacer` in actions for right-align | [examples.md](./examples.md#scard) |
-| **SDialog** | `v-model`, `#activator`, `location` (bottom sheet), `fullscreen`, `persistent`. **ALWAYS wrap dialog content in `SCard` or `SSheet`** — SDialog has no background color, so unwrapped content appears transparent/broken. | [examples.md](./examples.md#sdialog) |
+| **SDialog** | `v-model`, `#activator`, `location` (bottom sheet), `fullscreen`, `persistent`, `scrollable`, `width`/`maxWidth`. **No `title` prop.** **ALWAYS wrap dialog content in `SCard` or `SSheet`** — SDialog has no background color, so unwrapped content appears transparent/broken. | [examples.md](./examples.md#sdialog) |
 | **SMenu** | `#activator` + `SList` / `SListItem` | [examples.md](./examples.md#smenu) |
 | **STooltip** | `text` prop, `#activator` | [examples.md](./examples.md#stooltip) |
 | **SSnackbar** | `v-model`, `timeout`, `#action` slot | [examples.md](./examples.md#ssnackbar) |
@@ -114,6 +111,9 @@ Use `color-mix(in srgb, #{fn()} N%, transparent)` for any opacity variant.
 | **SDatePicker** | `v-model` string: `YYYY-MM-DD` (date) or `YYYY-MM` (month); `type="date"` \| `"month"` | [examples.md](./examples.md#sdatepicker) |
 | **SBreadcrumbs** | `:items="[{ text, to?, disabled? }]"` | [examples.md](./examples.md#sbreadcrumbs) |
 | **SStepper** | `SStepperStep` with `:step`, `:complete` | [examples.md](./examples.md#sstepper) |
+| **SAlert** | Banner/message box. Props: `color` (preset or CSS color), `dense`, `size`, `fixedHeight`, `minHeight`. Content goes in the default slot; renders nothing when the slot is empty. No `title`/`icon`/`variant` props. | — |
+| **STable** | `headers`, `items`, `itemKey`, `loading`, `dense`, `multiSort`, `stickyHeader`, `hidePagination`, `totalItems`, `noDataText`; cell components `STableHeadCell` / `STableBodyCell` / `STablePagination`. Header/item types: `TableHeader`, `TableItem`, `TableSortOrder`. | — |
+| **Form inputs** (`SInput`, `STextarea`, `SSelect`, `SAutocomplete`, `SCheckbox`, `SRadioGroup`, `SSwitch`) | Props, validation and gotchas live in the **sui-form** skill | — |
 | **SToggleButtonGroup / SToggleButton** | Group: `v-model` (array), `multiple`, `mandatory`, `dense`, `bordered`, `variant="inset"`, `selectedColor`, `outlined`, `underlined`, `borderRadius`; Button: uses **index** as primary identifier, `key` as fallback — **no `value` prop** | [examples.md](./examples.md#stogglebuttongroup) |
 
 ---
