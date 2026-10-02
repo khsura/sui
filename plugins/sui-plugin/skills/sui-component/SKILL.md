@@ -93,17 +93,44 @@ Vue passes an undeclared prop through as an HTML attribute — no error, no warn
 
 ---
 
+## Linking: `to` for a route, `href` for a URL
+
+`SButton`, `SCard` and `SListItem` all take both, and the one you pass decides
+what is rendered:
+
+| Prop | Renders | For |
+|------|---------|-----|
+| `to` | `router-link` | an internal route |
+| `href` | `<a>` | an external URL (`target` and `rel` go with it) |
+| neither | `div`, or `tag` | not a link |
+
+```vue
+<SListItem :to="{ name: 'settings' }">Settings</SListItem>
+<SButton href="https://example.com/docs" target="_blank" rel="noopener">Docs</SButton>
+<SCard :to="`/funds/${fund.id}`">…</SCard>   <!-- the whole card is the link -->
+```
+
+**Pass one, never both.** They are alternatives, not a pair.
+
+**Why this matters:** a real link is what gives you command-click into a new
+tab, middle-click, "copy link address", the destination in the status bar, and
+link semantics for assistive technology. Navigating from a click handler
+instead — `@click="navigateTo(...)"` — renders a `div` and gives you none of
+them, even though the click itself works.
+
+---
+
 ## Component index
 
 | Component | Notes | Examples |
 |-----------|--------|----------|
 | **SButton** | `color`, `variant` (fab\|text\|icon only — `outlined` is NOT a valid variant), `size`, `loading`, `block`, `rounded`, `disabled`, `href`, `to`. Use `color` prop for visual differentiation, not `outlined`. | [examples.md](./examples.md#sbutton) |
-| **SCard** | `SCardTitle`, `SCardSubtitle`, `SCardText`, `SCardActions`; use `SSpacer` in actions for right-align | [examples.md](./examples.md#scard) |
+| **SCard** | `SCardTitle`, `SCardSubtitle`, `SCardText`, `SCardActions`; use `SSpacer` in actions for right-align. Also `to` / `href` — the whole card becomes a link (see **Linking** below) | [examples.md](./examples.md#scard) |
 | **SDialog** | `v-model`, `#activator`, `location` (bottom sheet), `fullscreen`, `persistent`, `scrollable`, `width`/`maxWidth`. **No `title` prop.** **ALWAYS wrap dialog content in `SCard` or `SSheet`** — SDialog has no background color, so unwrapped content appears transparent/broken. | [examples.md](./examples.md#sdialog) |
 | **SMenu** | `#activator` + `SList` / `SListItem` | [examples.md](./examples.md#smenu) |
 | **STooltip** | `text` prop, `#activator` | [examples.md](./examples.md#stooltip) |
 | **SSnackbar** | `v-model`, `timeout`, `#action` slot | [examples.md](./examples.md#ssnackbar) |
-| **SList** | `SListItem`, `SListItemIcon`, `SListItemContent`, `SListItemTitle`, `SListItemSubtitle`, `SListItemAction`; `link`, `:to` | [examples.md](./examples.md#slist) |
+| **SList** | `SListItem`, `SListItemIcon`, `SListItemContent`, `SListItemTitle`, `SListItemSubtitle`, `SListItemAction`; `link`, `to` / `href` (see **Linking** below) | [examples.md](./examples.md#slist) |
 | **STabs + SWindow** | `v-model` ties tab value to `SWindowItem value` | [examples.md](./examples.md#stabs--swindow) |
 | **SExpansionPanels** | `v-model` = `number[]` (open panel indexes) | [examples.md](./examples.md#sexpansionpanels) |
 | **SChip / SBadge** | `SChip`: `closable`, `@click:close`; `SBadge`: wraps content, `content` badge text | [examples.md](./examples.md#schip--sbadge) |
