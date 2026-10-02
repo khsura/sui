@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.11.1](https://github.com/khsura/sui/compare/root-v1.11.0...root-v1.11.1) (2026-10-02)
+
+
+### Bug Fixes
+
+* **app:** `to` rendered an anchor with no href ([c517a82](https://github.com/khsura/sui/commit/c517a82a43ae2c207c2325e979fdb29fce426504))
+* **app:** `to` rendered an anchor with no href ([cba8529](https://github.com/khsura/sui/commit/cba8529cb1907abfb57af316796185a5146fd81b))
+
 ## [1.11.0](https://github.com/khsura/sui/compare/root-v1.10.0...root-v1.11.0) (2026-09-24)
 
 

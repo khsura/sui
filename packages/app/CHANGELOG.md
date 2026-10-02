@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.13.1](https://github.com/khsura/sui/compare/sui-v1.13.0...sui-v1.13.1) (2026-10-02)
+
+
+### Bug Fixes
+
+* **app:** `to` rendered an anchor with no href ([c517a82](https://github.com/khsura/sui/commit/c517a82a43ae2c207c2325e979fdb29fce426504))
+* **app:** `to` rendered an anchor with no href ([cba8529](https://github.com/khsura/sui/commit/cba8529cb1907abfb57af316796185a5146fd81b))
+
 ## [1.13.0](https://github.com/khsura/sui/compare/sui-v1.12.0...sui-v1.13.0) (2026-09-24)
 
 
