@@ -5,8 +5,7 @@
     :class="classList"
     :type="getButtonType(type)"
     :style="styleList"
-    :href="href"
-    :to="to"
+    v-bind="linkAttrs"
     @click="click"
   >
     <SProgressCircular v-if="loading" indeterminate :size="progressSize"></SProgressCircular>
@@ -60,7 +59,7 @@ const { classListColor, styleListColor } = useColorService(props, {
 const { classListTextColor, styleListTextColor } = useTextColorService(props)
 const { classListSize, styleListSize, isPresetSize } = useSizeService(props, { block: 'button' })
 const { classListBorder, styleListBorder } = useBorderService(props, { block: 'button' })
-const { tag: tagName, isLink } = useLinkService(props)
+const { tag: tagName, isLink, linkAttrs } = useLinkService(props)
 const bottomNavigationProps = inject(ProviderPropsName.bottomNavigation, null)
 
 const { toggleGroupItem, isSelected } =

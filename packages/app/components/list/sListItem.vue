@@ -1,5 +1,5 @@
 <template>
-  <Component :is="tagName" :class="classList" :href="href" :to="to" @click="$emit('click', $event)">
+  <Component :is="tagName" :class="classList" v-bind="linkAttrs" @click="$emit('click', $event)">
     <slot></slot>
   </Component>
 </template>
@@ -19,7 +19,7 @@ const listProps = inject(ProviderPropsName.listProps, null)
 provide(ProviderPropsName.listItemProps, props)
 
 const { classListDisabled } = useDisabledService(props)
-const { isLink, tag: tagName } = useLinkService(props)
+const { isLink, tag: tagName, linkAttrs } = useLinkService(props)
 
 const classList = computed(() => {
   return {
