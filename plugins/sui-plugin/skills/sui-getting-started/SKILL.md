@@ -307,7 +307,7 @@ All support `#activator="{ on, attrs }"` slot.
 | `SListItemContent`  | Content wrapper                                                |
 | `SListItemAction`   | Action slot                                                    |
 | `SListItemGroup`    | Grouped list items                                             |
-| `STable`            | Data table (`headers`, `items`, `loading`, `sortable`)         |
+| `STable`            | Data table (`headers`, `items`, `loading`, `sortable`, `groupBy`, `foldable` + `v-model:folded`) |
 | `STableHeadCell`    | Table header cell                                              |
 | `STableBodyCell`    | Table body cell                                                |
 | `STablePagination`  | Pagination control                                             |

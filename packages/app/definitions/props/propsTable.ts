@@ -29,6 +29,7 @@ export interface PropsTableBodyCell<T extends TableItem = TableItem, CellKey ext
 export type PropsTable<T extends TableItem = TableItem, C extends string = keyof TableItem> = {
   dense?: boolean | undefined
   expanded?: T[] | undefined
+  foldable?: boolean | undefined
   groupBy?: string | string[] | undefined
   headers: TableHeader[]
   hideHeader?: boolean | undefined

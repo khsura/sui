@@ -139,7 +139,7 @@ them, even though the click itself works.
 | **SBreadcrumbs** | `:items="[{ text, to?, disabled? }]"` | [examples.md](./examples.md#sbreadcrumbs) |
 | **SStepper** | `SStepperStep` with `:step`, `:complete` | [examples.md](./examples.md#sstepper) |
 | **SAlert** | Banner/message box. Props: `color` (preset or CSS color), `dense`, `size`, `fixedHeight`, `minHeight`. Content goes in the default slot; renders nothing when the slot is empty. No `title`/`icon`/`variant` props. | — |
-| **STable** | `headers`, `items`, `itemKey`, `loading`, `dense`, `multiSort`, `stickyHeader`, `hidePagination`, `totalItems`, `noDataText`; cell components `STableHeadCell` / `STableBodyCell` / `STablePagination`. Header/item types: `TableHeader`, `TableItem`, `TableSortOrder`. | — |
+| **STable** | `headers`, `items`, `itemKey`, `loading`, `dense`, `multiSort`, `stickyHeader`, `hidePagination`, `totalItems`, `noDataText`; grouping: `groupBy`, `foldable` + `v-model:folded` (`string[]` of collapsed group names, or `true` = all folded initially), `#group` slot gets `{ group, items, isFolded, toggleFold }`; cell components `STableHeadCell` / `STableBodyCell` / `STablePagination`. Header/item types: `TableHeader`, `TableItem`, `TableSortOrder`. | — |
 | **Form inputs** (`SInput`, `STextarea`, `SSelect`, `SAutocomplete`, `SCheckbox`, `SRadioGroup`, `SSwitch`) | Props, validation and gotchas live in the **sui-form** skill | — |
 | **SToggleButtonGroup / SToggleButton** | Group: `v-model` (array), `multiple`, `mandatory`, `dense`, `bordered`, `variant="inset"`, `selectedColor`, `outlined`, `underlined`, `borderRadius`; Button: uses **index** as primary identifier, `key` as fallback — **no `value` prop** | [examples.md](./examples.md#stogglebuttongroup) |
 
