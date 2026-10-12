@@ -1,5 +1,5 @@
 import { action } from 'storybook/actions'
-import { expect } from 'storybook/test'
+import { expect, userEvent } from 'storybook/test'
 import type { Meta } from '@storybook/vue3-vite'
 import { ref, defineComponent, onMounted } from 'vue'
 import { faker, wait } from '@khsura/shared'
@@ -324,5 +324,80 @@ export const NoData = createStoryObj<typeof STable>({
     const slotCell = canvasElement.querySelector('[data-testid="noData-slot"] .s_table__noData')
 
     await expect(slotCell).toHaveTextContent('Nothing here yet')
+  },
+})
+
+export const FoldableGroups = createStoryObj<typeof STable>({
+  args: {
+    outlined: true,
+    hidePagination: true,
+  },
+  render: (args) => {
+    return {
+      components: {
+        STable,
+      },
+      setup: () => {
+        const headers = [
+          { text: 'Name', value: 'name' },
+          { text: 'Role', value: 'role' },
+        ]
+
+        const items = [
+          { name: 'Bat', role: 'admin' },
+          { name: 'Dorj', role: 'admin' },
+          { name: 'Saraa', role: 'user' },
+        ]
+
+        // `true` folds every group initially; it becomes a `string[]` once a group is toggled.
+        const folded = ref<boolean | string[]>(true)
+
+        return { args, headers, items, folded }
+      },
+      template: /* html */ `
+        <div>
+          <STable
+            v-bind="args"
+            v-model:folded="folded"
+            :headers="headers"
+            :items="items"
+            item-key="name"
+            group-by="role"
+            foldable
+          >
+            <template #group="{ group, items: groupItems, isFolded }">
+              <strong>{{ group }}</strong> ({{ groupItems.length }}) — {{ isFolded ? 'folded' : 'open' }}
+            </template>
+          </STable>
+          <p class="s_text--caption" style="margin-top: 16px;">
+            folded: <code data-testid="folded-state">{{ JSON.stringify(folded) }}</code>
+          </p>
+        </div>
+      `,
+    }
+  },
+  play: async ({ canvasElement }) => {
+    // updateTable is debounced on mount, give the table a tick to render.
+    await wait(50)
+
+    const table = canvasElement.querySelector('.s_table')
+    const foldedState = canvasElement.querySelector('[data-testid="folded-state"]')
+
+    await expect(table).not.toHaveTextContent('Bat')
+    await expect(table).not.toHaveTextContent('Saraa')
+    await expect(foldedState).toHaveTextContent('true')
+
+    const [adminGroupRow] = canvasElement.querySelectorAll<HTMLElement>('.s_table__groupRow--foldable')
+
+    await userEvent.click(adminGroupRow)
+
+    await expect(table).toHaveTextContent('Bat')
+    await expect(table).not.toHaveTextContent('Saraa')
+    await expect(foldedState).toHaveTextContent('["user"]')
+
+    await userEvent.click(adminGroupRow)
+
+    await expect(table).not.toHaveTextContent('Bat')
+    await expect(foldedState).toHaveTextContent('["user","admin"]')
   },
 })

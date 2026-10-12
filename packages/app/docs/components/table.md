@@ -23,6 +23,8 @@ Full-featured data table with sorting, selection, expansion, grouping, sticky co
 | `stickyHeader` | `boolean` | `false` | Fix header on scroll |
 | `multiSort` | `boolean` | `false` | Allow sorting by multiple columns |
 | `groupBy` | `string \| string[]` | `undefined` | Group rows by column key(s) |
+| `foldable` | `boolean` | `false` | Group rows can be collapsed by clicking the group header |
+| `folded` | `boolean \| string[]` | `[]` | Collapsed group names; `true` folds every group (use with `v-model:folded`) |
 | `selected` | `T[]` | `undefined` | Selected rows (use with `v-model:selected`) |
 | `expanded` | `T[]` | `undefined` | Expanded rows (use with `v-model:expanded`) |
 | `singleSelect` | `boolean` | `false` | Allow only one row selected at a time |
@@ -61,6 +63,7 @@ type TableHeader = {
 - `v-model:selected` — `T[]` of selected rows
 - `v-model:expanded` — `T[]` of expanded rows
 - `v-model:itemsPerPage` — `number` for pagination
+- `v-model:folded` — `boolean | string[]` of collapsed group names (`true` = all folded)
 
 ## Events
 
@@ -77,7 +80,7 @@ type TableHeader = {
 | `itemHeader` | Custom row header (pinned above a row) |
 | `itemFooter` | Custom row footer (pinned below a row) |
 | `expanded` | Expanded row content — receives `{ item }` |
-| `group` | Group header row — receives `{ group }` |
+| `group` | Group header row — receives `{ group, items, isFolded, toggleFold }` |
 | `itemsPerPageLabel` | Custom pagination label |
 | `noData` | Empty-state content shown when `items` is empty (and not `loading`) |
 
@@ -154,6 +157,8 @@ const selected = ref([])
 
   <!-- Grouped -->
   <STable :headers="headers" :items="items" group-by="role" />
+  <!-- Foldable groups, all collapsed initially -->
+  <STable :headers="headers" :items="items" group-by="role" foldable :folded="true" />
 
   <!-- Multi-sort -->
   <STable :headers="headers" :items="items" multi-sort />

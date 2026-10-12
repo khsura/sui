@@ -39,14 +39,32 @@
         <tbody class="s_table__body">
           <template v-for="{ name: group, items: groupItems } in groupedItems">
             <!-- Table Item - Rows Group -->
-            <tr v-if="groupBy" :key="`row-group-${group}`">
+            <tr
+              v-if="groupBy"
+              :key="`row-group-${group}`"
+              :class="{ 's_table__groupRow--foldable': foldable }"
+              @click="foldable && toggleFolded(group)"
+            >
               <td :colspan="totalItemColumns" class="s_table__group">
-                <slot name="group" :items="groupItems" :group="group">{{ group }}</slot>
+                <SIcon
+                  v-if="foldable"
+                  class="s_table__groupFoldIcon"
+                  :icon="getIsFolded(group) ? 'mdi-chevron-right' : 'mdi-chevron-down'"
+                  size="small"
+                ></SIcon>
+                <slot
+                  name="group"
+                  :items="groupItems"
+                  :group="group"
+                  :is-folded="getIsFolded(group)"
+                  :toggle-fold="() => toggleFolded(group)"
+                  >{{ group }}</slot
+                >
               </td>
             </tr>
 
             <!-- Table Item - Row Header -->
-            <template v-for="(rowItems, row) in groupItems" :key="`row-${group}-${row}`">
+            <template v-for="(rowItems, row) in getIsFolded(group) ? [] : groupItems" :key="`row-${group}-${row}`">
               <tr
                 v-if="itemHeader && rowItems[itemHeader]"
                 class="s_table__row"
@@ -197,6 +215,7 @@
 <script setup lang="ts" generic="T extends TableItem">
 import { useDebounceFn } from '@vueuse/core'
 import { computed, watch, onMounted, useTemplateRef, getCurrentInstance } from 'vue'
+import SIcon from '../sIcon.vue'
 import SProgressLinear from '../progress/sProgressLinear.vue'
 import STableHeadCell from './sTableHeadCell.vue'
 import STableBodyCell from './sTableBodyCell.vue'
@@ -222,11 +241,15 @@ const rawProps = withDefaults(defineProps<PropsTable<T>>(), {
   stickyLeftColumnsStart: 0,
   stickyLeftColumnsSize: 0,
   shadowExpandedContent: false,
+  foldable: false,
 })
 
 const props = useComponentDefaultsService<PropsTable<T>>('STable', rawProps)
 const emit = defineEmits<EmitsTable<T>>()
 const itemsPerPage = defineModel<number>('itemsPerPage')
+// Names of the collapsed groups, or `true` to start with every group collapsed.
+// Works uncontrolled when `v-model:folded` is not bound.
+const folded = defineModel<boolean | string[]>('folded', { default: () => [] })
 const { classListBorder, styleListBorder } = useBorderService(props, { block: 'table' })
 const headerElements = useTemplateRef('headerElements')
 const tableWrapperElement = useTemplateRef('tableWrapperElement')
@@ -279,6 +302,27 @@ const shouldHidePagination = computed(() => {
 
   return false
 })
+
+// Every group name across all pages, so expanding one group out of `folded: true` keeps the rest folded.
+const allGroupNames = computed(() => {
+  const groupBy = typeof props.groupBy === 'string' ? [props.groupBy] : (props.groupBy ?? [])
+
+  return [...new Set(props.items.map((item) => groupBy.map((key) => item[key]).join(' ')))]
+})
+
+const foldedGroupNames = computed(() => {
+  if (folded.value === true) return allGroupNames.value
+
+  return folded.value || []
+})
+
+const getIsFolded = (group: string) => props.foldable && foldedGroupNames.value.includes(group)
+
+const toggleFolded = (group: string) => {
+  folded.value = foldedGroupNames.value.includes(group)
+    ? foldedGroupNames.value.filter((name) => name !== group)
+    : [...foldedGroupNames.value, group]
+}
 
 const getExpandedClass = () => {
   return getCleanSetObject({
@@ -365,6 +409,16 @@ defineExpose({
 
   &__group {
     padding: calc($s_spacer * 2);
+  }
+
+  &__groupRow--foldable {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  &__groupFoldIcon {
+    margin-right: $s_spacer;
+    vertical-align: middle;
   }
 
   &__noData {
