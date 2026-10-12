@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.14.0](https://github.com/khsura/sui/compare/sui-v1.13.1...sui-v1.14.0) (2026-10-12)
+
+
+### Features
+
+* **app:** foldable STable groups with v-model:folded ([4a75954](https://github.com/khsura/sui/commit/4a75954abff257e6441434a19a0ef8441512acfd))
+* **app:** foldable STable groups with v-model:folded ([c9b6d2d](https://github.com/khsura/sui/commit/c9b6d2d1074d0c426522937de9660a4bbdcfff18))
+
 ## [1.13.1](https://github.com/khsura/sui/compare/sui-v1.13.0...sui-v1.13.1) (2026-10-02)
 
 
