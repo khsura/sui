@@ -335,10 +335,11 @@ All support `#activator="{ on, attrs }"` slot.
 
 | Component     | v-model  | Description                                      |
 | ------------- | -------- | ------------------------------------------------ |
-| `SDatePicker` | `string` | `type: 'date' \| 'month'`, `min`, `max`, `range` |
+| `SDatePicker` | `string` | `type: 'date' \| 'month' \| 'year'`, `min`, `max` |
+| `SDatePickerInput` | `string` | Text input with picker popup; `carousel` adds prev/next step buttons |
 | `SCalendar`   | —        | `v-model:focus` = focused date string, `events`  |
 
-DatePicker format: `'YYYY-MM-DD'` (date) or `'YYYY-MM'` (month).
+DatePicker format: `'YYYY-MM-DD'` (date), `'YYYY-MM'` (month) or `'YYYY'` (year).
 Import `datePickerModelFormats` for the exact format strings.
 
 ### Input / Upload

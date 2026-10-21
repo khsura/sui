@@ -5,7 +5,10 @@ import { type DatePickerItemEmits } from '@/app/types'
 import dayjs from '@/app/vendors/dayjs'
 
 export const useDatePickerItemMonthService = (props: PropsDatePickerItem, emit: DatePickerItemEmits) => {
-  const { today, dateObject, selected, updateDate, min, max } = useDatePickerItemCoreService(props, emit)
+  const { today, dateObject, selected, updateDate, min, max, getItemButtonProps } = useDatePickerItemCoreService(
+    props,
+    emit,
+  )
 
   const months = computed(() => {
     const { year, day } = dateObject.value
@@ -22,7 +25,7 @@ export const useDatePickerItemMonthService = (props: PropsDatePickerItem, emit: 
         isCurrent: todayDate.isSame({ year, month, day }, 'month'),
         isDisabled: !dayjs({ year, month, day }).isBetween(minDate, maxDate, 'month', '[]'),
         select: async () => {
-          await updateDate({ year, month, day })
+          await updateDate({ year, month })
         },
       }
     })
@@ -30,5 +33,6 @@ export const useDatePickerItemMonthService = (props: PropsDatePickerItem, emit: 
 
   return {
     months,
+    getItemButtonProps,
   }
 }

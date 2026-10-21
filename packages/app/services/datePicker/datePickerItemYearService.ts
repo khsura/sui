@@ -5,7 +5,10 @@ import { type DatePickerItemEmits } from '@/app/types'
 import dayjs from '@/app/vendors/dayjs'
 
 export const useDatePickerItemYearService = (props: PropsDatePickerItem, emit: DatePickerItemEmits) => {
-  const { today, selected, updateDate, min, max, dateObject } = useDatePickerItemCoreService(props, emit)
+  const { today, selected, updateDate, min, max, dateObject, getItemButtonProps } = useDatePickerItemCoreService(
+    props,
+    emit,
+  )
 
   const years = computed(() => {
     const minDate = min.value
@@ -43,5 +46,6 @@ export const useDatePickerItemYearService = (props: PropsDatePickerItem, emit: D
 
   return {
     years,
+    getItemButtonProps,
   }
 }

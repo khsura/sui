@@ -6,4 +6,10 @@ export interface DatePickerItemEmits {
 export type DatePickerSelectTypeType = 'year' | 'month' | 'date'
 export type DatePickerSwitchType = 'year' | 'month'
 
-export type DatePickerTypeType = 'month' | 'date'
+export type DatePickerTypeType = 'month' | 'date' | 'year'
+
+/** Unit used to shift a date value by one step (dayjs `add` unit). */
+export type DatePickerStepUnit = 'day' | 'month' | 'year'
+
+/** Unit used to compare a date value against the `min`/`max` bounds (dayjs `isBefore`/`isAfter` unit). */
+export type DatePickerCompareUnit = 'date' | 'month' | 'year'

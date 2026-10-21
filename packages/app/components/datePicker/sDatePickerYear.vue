@@ -3,18 +3,14 @@
     <SButton
       v-for="year in years"
       :key="year.value"
+      v-bind="getItemButtonProps(year.isSelected)"
       block
-      variant="text"
       tile
       size="large"
       :disabled="year.isDisabled"
       :class="{
         's_datePickerYear__year--current': year.isCurrent,
         's_datePickerYear__year--selected': year.isSelected,
-        ...(year.isSelected ? classListColor : {}),
-      }"
-      :style="{
-        ...(year.isSelected ? styleListColor : {}),
       }"
       @click="year.select()"
     >
@@ -26,12 +22,7 @@
 import { nextTick, onMounted, ref } from 'vue'
 import SButton from '@/app/components/sButton.vue'
 import type { PropsDatePickerItem } from '@/app/definitions'
-import {
-  useComponentDefaultsService,
-  useColorService,
-  useDatePickerItemYearService,
-  useScrollService,
-} from '@/app/services'
+import { useComponentDefaultsService, useDatePickerItemYearService, useScrollService } from '@/app/services'
 
 const datePickerYear = ref<HTMLElement | null>(null)
 const rawProps = defineProps<PropsDatePickerItem>()
@@ -43,20 +34,13 @@ const emit = defineEmits<{
   (event: 'update:selected', value: string): void
 }>()
 
-const { years } = useDatePickerItemYearService(props, emit)
+const { years, getItemButtonProps } = useDatePickerItemYearService(props, emit)
 const { smoothElementScroll } = useScrollService()
-
-const { classListColor, styleListColor } = useColorService(props, {
-  isText: true,
-})
 
 onMounted(async () => {
   await nextTick()
   smoothElementScroll(datePickerYear.value, {
-    top:
-      (datePickerYear.value?.querySelector<HTMLElement>('.s_datePickerYear__year--selected')?.offsetTop ?? 0) -
-      (props.height ?? 0) / 2 +
-      24,
+    top: (datePickerYear.value?.querySelector<HTMLElement>('.s_datePickerYear__year--selected')?.offsetTop ?? 0) - 24,
   })
 })
 </script>
@@ -70,7 +54,6 @@ onMounted(async () => {
     &--selected {
       font-size: 1.1rem;
       font-weight: 700;
-      color: s_getPresetColor('info');
     }
   }
 }

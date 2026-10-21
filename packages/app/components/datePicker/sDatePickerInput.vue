@@ -1,24 +1,46 @@
 <template>
   <div class="s_datePickerInput" :class="classList">
-    <label v-if="label" v-show="!hideDetails" :for="inputId" class="s_datePickerInput__label">{{ label }}</label>
-    <div ref="activatorElement" class="s_datePickerInput__field" :class="fieldClasses">
-      <input
-        :id="inputId"
-        class="s_datePickerInput__input"
-        :value="inputText"
-        :placeholder="placeholder ?? inputFormat"
-        :disabled="disabled ?? undefined"
-        :readonly="readonly ?? undefined"
-        @input="onInput"
-        @focus="onFocus"
-        @blur="onBlur"
-        @keydown.enter.prevent="commitInput"
-      />
-      <span class="s_datePickerInput__suffix" @mousedown.prevent @click="toggleMenu">
-        <SIcon icon="mdi-calendar" />
-      </span>
+    <SButton
+      v-if="carousel"
+      variant="icon"
+      class="s_datePickerInput__carouselButton"
+      :aria-label="carouselPrevAriaLabel"
+      :disabled="!canStepPrev"
+      @click="onStepPrev"
+    >
+      <SIcon :icon="carouselPrevIcon" />
+    </SButton>
+    <div class="s_datePickerInput__content">
+      <label v-if="label" v-show="!hideDetails" :for="inputId" class="s_datePickerInput__label">{{ label }}</label>
+      <div ref="activatorElement" class="s_datePickerInput__field" :class="fieldClasses">
+        <input
+          :id="inputId"
+          class="s_datePickerInput__input"
+          :value="inputText"
+          :placeholder="placeholder ?? inputFormat"
+          :disabled="disabled ?? undefined"
+          :readonly="readonly ?? undefined"
+          @input="onInput"
+          @focus="onFocus"
+          @blur="onBlur"
+          @keydown.enter.prevent="commitInput"
+        />
+        <span class="s_datePickerInput__suffix" @mousedown.prevent @click="toggleMenu">
+          <SIcon icon="mdi-calendar" />
+        </span>
+      </div>
+      <SFormInputError v-if="!hideDetails && !hideError" :errors="errors" />
     </div>
-    <SFormInputError v-if="!hideDetails && !hideError" :errors="errors" />
+    <SButton
+      v-if="carousel"
+      variant="icon"
+      class="s_datePickerInput__carouselButton"
+      :aria-label="carouselNextAriaLabel"
+      :disabled="!canStepNext"
+      @click="onStepNext"
+    >
+      <SIcon :icon="carouselNextIcon" />
+    </SButton>
 
     <SOverlay v-slot="{ attrs }" :value="menuModel">
       <div
@@ -55,9 +77,16 @@ import SDatePicker from './sDatePicker.vue'
 import SFormInputError from '@/app/components/form/common/sFormInputError.vue'
 import SIcon from '@/app/components/sIcon.vue'
 import SOverlay from '@/app/components/sOverlay.vue'
+import SButton from '@/app/components/sButton.vue'
 import type { PropsDatePickerInput, PropsMenu } from '@/app/definitions'
-import { datePickerDisplayFormat, datePickerModelFormats } from '@/app/configs'
-import { useComponentDefaultsService, useFormInputService, useMenuService } from '@/app/services'
+import { datePickerDisplayFormat } from '@/app/configs'
+import { convertDatePickerValue } from '@/app/repositories'
+import {
+  useComponentDefaultsService,
+  useDatePickerInputService,
+  useFormInputService,
+  useMenuService,
+} from '@/app/services'
 import type { EmitFormInput } from '@/app/types'
 import dayjs from '@/app/vendors/dayjs'
 
@@ -67,6 +96,10 @@ const rawProps = withDefaults(defineProps<PropsDatePickerInput>(), {
   dateFormat: datePickerDisplayFormat.date,
   monthFormat: datePickerDisplayFormat.month,
   yearFormat: datePickerDisplayFormat.year,
+  carouselPrevIcon: 'mdi-chevron-left',
+  carouselNextIcon: 'mdi-chevron-right',
+  carouselPrevAriaLabel: 'Previous',
+  carouselNextAriaLabel: 'Next',
 })
 
 const props = useComponentDefaultsService('SDatePickerInput', rawProps)
@@ -78,6 +111,7 @@ const inputId = computed(() => props.id ?? uniqueId)
 const activatorElement = useTemplateRef('activatorElement')
 const contentElement = useTemplateRef('contentElement')
 const { errors, updateFormInput } = useFormInputService<string | null>(props, emit, model)
+const { inputFormat, canStepPrev, canStepNext, stepPrev, stepNext } = useDatePickerInputService(props, model)
 
 const { contentClasses, contentStyles, updateLocation } = useMenuService(
   { ...props, location: 'bottom' } as unknown as PropsMenu,
@@ -91,14 +125,15 @@ const closeMenu = () => {
 
 onClickOutside(contentElement, closeMenu, { ignore: [activatorElement] })
 
-const inputFormat = computed(() => datePickerModelFormats[props.type])
 const localText = ref(model.value ?? '')
 const isEditing = ref(false)
 
 watch(
   () => model.value,
   (val) => {
-    if (!isEditing.value) localText.value = val ?? ''
+    if (!isEditing.value) {
+      localText.value = val ?? ''
+    }
   },
   { immediate: true },
 )
@@ -171,6 +206,33 @@ watch(menuModel, async () => {
     updateLocation()
   }
 })
+
+const applyStep = async (value: string | undefined) => {
+  if (value === undefined) {
+    return
+  }
+
+  model.value = value
+  localText.value = value
+  await updateFormInput(value)
+}
+
+const onStepPrev = async () => {
+  await applyStep(stepPrev())
+}
+
+const onStepNext = async () => {
+  await applyStep(stepNext())
+}
+
+watch(
+  () => props.type,
+  () => {
+    const value = model.value
+
+    model.value = value ? convertDatePickerValue(value, props.type) : null
+  },
+)
 </script>
 <style lang="scss">
 $s_datePickerInput--fontSizes: (
@@ -182,8 +244,20 @@ $s_datePickerInput--fontSizes: (
 );
 
 .s_datePickerInput {
-  display: block;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  align-items: center;
   width: 100%;
+
+  &__content {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  &__carouselButton {
+    flex: 0 0 auto;
+  }
 
   &__label {
     @include s_typography('caption');
@@ -255,6 +329,7 @@ $s_datePickerInput--fontSizes: (
   &__suffix {
     display: flex;
     align-items: center;
+    height: stretch;
     padding: 0 calc($s_spacer * 2);
     cursor: pointer;
     user-select: none;

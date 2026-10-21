@@ -223,9 +223,19 @@ Key props: `color`, `variant` (`fab|text|icon`), `size`, `loading`, `block`, `ro
 
 ```vue
 <SDatePicker v-model="date" type="date" />
-<!-- v-model is a string: 'YYYY-MM-DD' for date, 'YYYY-MM' for month -->
+<!-- v-model is a string: 'YYYY-MM-DD' for date, 'YYYY-MM' for month, 'YYYY' for year -->
 
 <SDatePicker v-model="month" type="month" />
+
+<SDatePicker v-model="year" type="year" />
+```
+
+`SDatePickerInput` is the text input variant. Add `carousel` to render prev/next
+buttons that step the value by one unit (day / month / year):
+
+```vue
+<SDatePickerInput v-model="date" label="Date" />
+<SDatePickerInput v-model="date" label="Date" carousel />
 ```
 
 ---

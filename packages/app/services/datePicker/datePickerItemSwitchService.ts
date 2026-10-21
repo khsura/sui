@@ -38,7 +38,7 @@ export const useDatePickerItemSwitchService = (props: PropsDatePickerItemSwitch,
     await addDateTemporary(1, type)
   }
 
-  const prev = async (type: DatePickerSwitchType | undefined) => {
+  const prev = async (type?: DatePickerSwitchType | undefined) => {
     await addDateTemporary(-1, type)
   }
 
@@ -50,28 +50,23 @@ export const useDatePickerItemSwitchService = (props: PropsDatePickerItemSwitch,
     return date.value.format(getDatePickerSwitchFormat(props.selectedType))
   })
 
-  const canGoNext = computed(() => {
-    if (props.selectedType === DatePickerSelectType.date) {
-      return date.value.add(1, 'month').startOf('month').isAfter(max.value, 'date')
+  /** The period the switch navigates through, `month` on the day view and `year` on the month view. */
+  const switchUnit = computed(() => switchType.value)
+
+  const isNextDisabled = computed(() => {
+    if (!switchUnit.value) {
+      return false
     }
 
-    if (props.selectedType === DatePickerSelectType.month) {
-      return date.value.add(1, 'year').startOf('year').isAfter(max.value, 'year')
-    }
-
-    return false
+    return date.value.add(1, switchUnit.value).startOf(switchUnit.value).isAfter(max.value, switchUnit.value)
   })
 
-  const canGoPrev = computed(() => {
-    if (props.selectedType === DatePickerSelectType.date) {
-      return date.value.subtract(1, 'month').endOf('month').isBefore(min.value, 'date')
+  const isPrevDisabled = computed(() => {
+    if (!switchUnit.value) {
+      return false
     }
 
-    if (props.selectedType === DatePickerSelectType.month) {
-      return date.value.subtract(1, 'year').endOf('year').isBefore(min.value, 'year')
-    }
-
-    return false
+    return date.value.subtract(1, switchUnit.value).endOf(switchUnit.value).isBefore(min.value, switchUnit.value)
   })
 
   return {
@@ -80,7 +75,7 @@ export const useDatePickerItemSwitchService = (props: PropsDatePickerItemSwitch,
     switchType,
     switchTitle,
     updateSelectedType,
-    canGoNext,
-    canGoPrev,
+    isNextDisabled,
+    isPrevDisabled,
   }
 }

@@ -10,16 +10,12 @@
       }"
     >
       <SButton
-        variant="text"
+        v-bind="getItemButtonProps(month.isSelected)"
         class="s_datePickerMonth__button"
         block
         :disabled="month.isDisabled"
         :class="{
           's_datePickerMonth__button--current': month.isCurrent,
-          ...(month.isSelected ? classListColor : {}),
-        }"
-        :style="{
-          ...(month.isSelected ? styleListColor : {}),
         }"
         @click="month.select()"
       >
@@ -32,7 +28,7 @@
 import { SColumn, SRow } from '@/app/components/grids'
 import SButton from '@/app/components/sButton.vue'
 import type { PropsDatePickerItem } from '@/app/definitions'
-import { useColorService, useDatePickerItemMonthService } from '@/app/services'
+import { useDatePickerItemMonthService } from '@/app/services'
 
 const props = defineProps<PropsDatePickerItem>()
 
@@ -42,8 +38,7 @@ const emit = defineEmits<{
   (event: 'update:selected', value: string): void
 }>()
 
-const { months } = useDatePickerItemMonthService(props, emit)
-const { classListColor, styleListColor } = useColorService(props, { isText: true })
+const { months, getItemButtonProps } = useDatePickerItemMonthService(props, emit)
 </script>
 <style lang="scss">
 .s_datePickerMonth {

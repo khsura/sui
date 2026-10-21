@@ -1,33 +1,29 @@
-import { type ModelRef, computed, ref } from 'vue'
-import { datePickerItemHeightDefault, datePickerItemHeightDense } from '@/app/constants'
+import { type Ref, ref, watch } from 'vue'
 import { type PropsDatePicker } from '@/app/definitions'
-import { getNumericCssAttribute } from '@/app/lib'
 import { getDatePickerFormat } from '@/app/repositories'
 import { type DatePickerSelectTypeType } from '@/app/types'
 import dayjs from '@/app/vendors/dayjs'
 
-export const useDatePickerService = (props: PropsDatePicker, model: ModelRef<string | null | undefined>) => {
+export const useDatePickerService = (props: PropsDatePicker, model: Ref<string | null | undefined>) => {
   const selectedType = ref<DatePickerSelectTypeType>(props.type)
 
-  const selectedDate = computed(() => {
-    return dayjs(model.value)
-  })
+  const formatValue = (value: string | null | undefined) => {
+    return dayjs(value ?? undefined).format(getDatePickerFormat(props.type))
+  }
 
-  const selectedDateTemporary = ref(selectedDate.value.format(getDatePickerFormat(props.type)))
+  /** The date currently being browsed, it can differ from the committed selection. */
+  const selectedDateTemporary = ref(formatValue(model.value))
 
-  const datePickerItemHeight = computed(() => {
-    return props.dense ? datePickerItemHeightDense : datePickerItemHeightDefault
-  })
-
-  const datePickerItemHeightCssAttribute = computed(() => {
-    return getNumericCssAttribute(datePickerItemHeight.value)
+  /**
+   * Keeps the browsed date aligned with the committed value.
+   * Browsing through the periods only changes the temporary date, so it is not affected by this.
+   */
+  watch(model, (value) => {
+    selectedDateTemporary.value = formatValue(value)
   })
 
   return {
     selectedType,
-    selectedDate,
     selectedDateTemporary,
-    datePickerItemHeight,
-    datePickerItemHeightCssAttribute,
   }
 }

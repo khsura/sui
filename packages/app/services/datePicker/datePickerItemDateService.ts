@@ -4,7 +4,10 @@ import { type PropsDatePickerItem } from '@/app/definitions'
 import { type DatePickerItemEmits } from '@/app/types'
 
 export const useDatePickerItemDateService = (props: PropsDatePickerItem, emit: DatePickerItemEmits) => {
-  const { date, today, selected, dateFormat, updateDate, min, max } = useDatePickerItemCoreService(props, emit)
+  const { date, today, selected, dateFormat, updateDate, min, max, getItemButtonProps } = useDatePickerItemCoreService(
+    props,
+    emit,
+  )
 
   const startDateOfMonth = computed(() => {
     const startOfMonth = date.value.startOf('month')
@@ -68,5 +71,6 @@ export const useDatePickerItemDateService = (props: PropsDatePickerItem, emit: D
 
   return {
     dates,
+    getItemButtonProps,
   }
 }
