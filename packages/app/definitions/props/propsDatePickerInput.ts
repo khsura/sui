@@ -8,6 +8,8 @@ export type PropsDatePickerInput = {
   placeholder?: string | null
   simple?: boolean | null
   tile?: boolean
+  /** Stretches the field to the width of its container. */
+  block?: boolean
   /** Renders prev/next buttons that step the model value by one period. */
   carousel?: boolean
   carouselPrevIcon?: MaterialDesignIcon

@@ -97,6 +97,7 @@ const rawProps = withDefaults(defineProps<PropsDatePickerInput>(), {
   dateFormat: datePickerDisplayFormat.date,
   monthFormat: datePickerDisplayFormat.month,
   yearFormat: datePickerDisplayFormat.year,
+  block: true,
   carouselPrevIcon: 'mdi-chevron-left',
   carouselNextIcon: 'mdi-chevron-right',
   carouselPrevAriaLabel: 'Previous',
@@ -148,6 +149,7 @@ const classList = computed(() => ({
   's_datePickerInput--dense': props.dense,
   's_datePickerInput--simple': props.simple,
   's_datePickerInput--tile': props.tile,
+  's_datePickerInput--block': props.block,
   [`s_datePickerInput--size__${props.size}`]: props.size,
 }))
 
@@ -272,7 +274,9 @@ $s_datePickerInput--fontSizes: (
   flex-wrap: nowrap;
   gap: 4px;
   align-items: center;
-  width: 100%;
+  width: max-content;
+  // The field must never render narrower than the value needs.
+  min-width: min-content;
 
   &__content {
     flex: 1 1 auto;
@@ -417,6 +421,10 @@ $s_datePickerInput--fontSizes: (
     .s_datePickerInput__field {
       border-radius: 0;
     }
+  }
+
+  &--block {
+    width: 100%;
   }
 
   &--disabled {

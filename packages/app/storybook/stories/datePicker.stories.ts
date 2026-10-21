@@ -93,6 +93,7 @@ const datePickerInputArgs: Partial<PropsDatePickerInput> = {
   dense: false,
   simple: false,
   tile: false,
+  block: true,
   carousel: false,
   size: null,
   min: dayjs().subtract(50, 'years').startOf('year').format(datePickerModelFormats.date),
@@ -110,6 +111,11 @@ export const DatePickerInput = createStoryObj<Meta>({
       options: Object.values(DatePickerType),
     },
     carousel: {
+      control: {
+        type: 'boolean',
+      },
+    },
+    block: {
       control: {
         type: 'boolean',
       },

@@ -134,6 +134,7 @@ Text input with a date picker popup. Optionally renders prev/next **carousel** b
 | `placeholder` | `string` | `undefined` | Input placeholder, defaults to the model format |
 | `simple` | `boolean` | `false` | Borderless input |
 | `tile` | `boolean` | `false` | Square corners |
+| `block` | `boolean` | `true` | Stretch the field to the width of its container |
 | `carousel` | `boolean` | `false` | Render prev/next buttons that step the value |
 | `carouselPrevIcon` | `string` | `'mdi-chevron-left'` | Icon of the previous button |
 | `carouselNextIcon` | `string` | `'mdi-chevron-right'` | Icon of the next button |
@@ -179,4 +180,5 @@ const date = ref(dayjs().format(datePickerModelFormats.date))
 - The buttons are disabled at the `min`/`max` bounds and when the input is `disabled` or `readonly`.
 - The model value is always kept in the format of the current `type`. Switching `type` converts the value, so `2026-10-21` becomes `2026-10` for `type="month"` and `2026` for `type="year"`.
 - The input reserves the width the value needs, so the last characters are never cut off. The width follows the `size` prop, like `SInput`.
+- `block` decides whether the field stretches to the width of its container (`true`, the default) or hugs the value (`false`). Either way the field never renders narrower than the value.
 - The font size never goes below `16px` (`mini` and `small` are the same as `default`), a smaller font size makes the browser zoom in on focus.

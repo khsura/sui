@@ -112,4 +112,16 @@ describe('SDatePickerInput', () => {
 
     expect(input.attributes('size')).toBe('7')
   })
+
+  test('stretches to the width of the container by default', () => {
+    const wrapper = getWrapper()
+
+    expect(wrapper.find('.s_datePickerInput').classes()).toContain('s_datePickerInput--block')
+  })
+
+  test('does not stretch when the block prop is disabled', () => {
+    const wrapper = getWrapper({ block: false })
+
+    expect(wrapper.find('.s_datePickerInput').classes()).not.toContain('s_datePickerInput--block')
+  })
 })
