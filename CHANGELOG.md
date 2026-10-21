@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.13.0](https://github.com/khsura/sui/compare/root-v1.12.0...root-v1.13.0) (2026-10-21)
+
+
+### Features
+
+* **app:** block prop for the datepicker input ([3d9f15f](https://github.com/khsura/sui/commit/3d9f15facb0bf595eeb3b5fbd40afdec39fb6ce2))
+* **app:** sdatepicker year type and carousel buttons ([86c06db](https://github.com/khsura/sui/commit/86c06dbe6936f4ec51505eed3f08d37143b69789))
+* **app:** sdatepicker year type and carousel buttons ([e84218d](https://github.com/khsura/sui/commit/e84218df51998af48654c46a779a01af75d8533c))
+
+
+### Bug Fixes
+
+* **app:** datepicker input font size and value width ([c0a071f](https://github.com/khsura/sui/commit/c0a071f688486e4a89836117b020ccdfb9ecc97e))
+* **app:** keep the datepicker input value in the format of its type ([1e52f5d](https://github.com/khsura/sui/commit/1e52f5dda4abd7887bc81774b6ed119097f8c15c))
+
 ## [1.12.0](https://github.com/khsura/sui/compare/root-v1.11.1...root-v1.12.0) (2026-10-12)
 
 
