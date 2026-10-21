@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { CssColor, cssColorToHex } from '@/app/constants'
 
 export const getCssColor = (color: string) => {
-  const parsed = z.nativeEnum(CssColor).safeParse(color.toLowerCase())
+  const parsed = z.enum(CssColor).safeParse(color.toLowerCase())
 
   return parsed.success ? parsed.data : undefined
 }

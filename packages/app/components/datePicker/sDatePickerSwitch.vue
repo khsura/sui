@@ -6,8 +6,10 @@
       tile
       variant="icon"
       :aria-label="prevAriaLabel"
-      :size="dense ? 'default' : 'extra'"
-      :disabled="canGoPrev"
+      class="s_datePickerSwitch__navButton"
+      :disabled="isPrevDisabled"
+      color="none"
+      :color-threshold="colorThreshold"
       @click="prev(switchType)"
     >
       <SIcon :icon="prevIcon"></SIcon>
@@ -18,6 +20,7 @@
       v-if="switchType"
       class="s_datePickerSwitch__middleButton"
       tile
+      color="none"
       variant="text"
       :size="dense ? 'default' : 'extra'"
       @click="() => updateSelectedType(switchType)"
@@ -30,9 +33,11 @@
       v-if="switchType"
       tile
       variant="icon"
+      color="none"
+      class="s_datePickerSwitch__navButton"
+      :color-threshold="colorThreshold"
       :aria-label="nextAriaLabel"
-      :size="dense ? 'default' : 'extra'"
-      :disabled="canGoNext"
+      :disabled="isNextDisabled"
       @click="next(switchType)"
     >
       <SIcon :icon="nextIcon"></SIcon>
@@ -56,7 +61,7 @@ const emit = defineEmits<{
   (event: 'update:selected', value: string): void
 }>()
 
-const { updateSelectedType, next, prev, switchTitle, switchType, canGoNext, canGoPrev } =
+const { updateSelectedType, next, prev, switchTitle, switchType, isNextDisabled, isPrevDisabled } =
   useDatePickerItemSwitchService(props, emit)
 </script>
 <style lang="scss" scoped>
@@ -64,6 +69,10 @@ const { updateSelectedType, next, prev, switchTitle, switchType, canGoNext, canG
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  &__navButton {
+    margin: 0 4px;
+  }
 
   &__middleButton {
     flex: 1 0 auto;

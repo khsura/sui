@@ -68,7 +68,7 @@ This directory contains per-component documentation optimized for Claude AI codi
 ### Date & Time
 | File | Components |
 |------|-----------|
-| [date-picker.md](./date-picker.md) | `SDatePicker`, `datePickerModelFormats` |
+| [date-picker.md](./date-picker.md) | `SDatePicker`, `SDatePickerInput`, `datePickerModelFormats` |
 | [calendar.md](./calendar.md) | `SCalendar` |
 
 ### Layout
@@ -128,7 +128,7 @@ Always bind **both** `v-on="on"` and `v-bind="attrs"`.
 | `STabs` | `string \| number` (active tab) |
 | `SExpansionPanels` | `number[]` (open panel indexes) |
 | `SCarousel`, `SWindow`, `SSlideGroup`, `SToggleButtonGroup` | item value or `any[]` |
-| `SDatePicker` | `string` (`'YYYY-MM-DD'` or `'YYYY-MM'`) |
+| `SDatePicker`, `SDatePickerInput` | `string` (`'YYYY-MM-DD'`, `'YYYY-MM'` or `'YYYY'`) |
 | `SNavigationDrawer` | `boolean` |
 | `SCalendar` | `v-model:focus` — `string` (focused date) |
 

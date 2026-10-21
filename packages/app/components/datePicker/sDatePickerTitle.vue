@@ -5,6 +5,7 @@
         block
         class="s_datePickerTitle__year"
         :disabled="disabled"
+        color="none"
         :readonly="readonly || selectedType === DatePickerSelectType.year"
         variant="text"
         tile
@@ -18,6 +19,7 @@
       <SButton
         block
         class="s_datePickerTitle__text"
+        color="none"
         :disabled="disabled"
         :readonly="readonly || isLastSelectType"
         variant="text"

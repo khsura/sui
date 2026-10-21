@@ -29,6 +29,8 @@
       :max="max"
       :min="min"
       :dense="dense"
+      :color="color"
+      :color-threshold="colorThreshold"
     ></SDatePickerSwitch>
 
     <Component
@@ -39,8 +41,8 @@
       class="s_datePicker__item"
       :today="today"
       :color="color"
+      :color-threshold="colorThreshold"
       :type="type"
-      :height="datePickerItemHeight"
       :max="max"
       :min="min"
       :dense="dense"
@@ -48,7 +50,7 @@
   </SCard>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import SDatePickerDate from './sDatePickerDate.vue'
 import SDatePickerMonth from './sDatePickerMonth.vue'
 import SDatePickerSwitch from './sDatePickerSwitch.vue'
@@ -56,7 +58,7 @@ import SDatePickerTitle from './sDatePickerTitle.vue'
 import SDatePickerYear from './sDatePickerYear.vue'
 import { SCard } from '@/app/components/cards'
 import type { PropsDatePicker } from '@/app/definitions'
-import { getDatePickerFormat } from '@/app/repositories'
+import { convertDatePickerValue, getDatePickerFormat } from '@/app/repositories'
 import { useComponentDefaultsService, useDatePickerService, useMeasurableStylesService } from '@/app/services'
 import dayjs from '@/app/vendors/dayjs'
 import { datePickerDisplayFormat } from '@/app/configs'
@@ -72,25 +74,27 @@ const rawProps = withDefaults(defineProps<PropsDatePicker>(), {
 const props = useComponentDefaultsService('SDatePicker', rawProps)
 
 const emit = defineEmits<{
-  (event: 'update:modelValue', value: string): void
   (event: 'change'): void
 }>()
 
 const { measurableStyles } = useMeasurableStylesService(props)
+const model = defineModel<string | null>()
 
-const selectedDateFormatted = defineModel<string>({
-  get: (value) => {
-    return dayjs(value).format(getDatePickerFormat(props.type))
+const getFormattedValue = (value?: string | null) => {
+  return dayjs(value ?? undefined).format(getDatePickerFormat(props.type))
+}
+
+const selectedDateFormatted = computed({
+  get: () => {
+    return getFormattedValue(model.value)
   },
-  set: (value) => {
+  set: (value: string) => {
     emit('change')
-
-    return value
+    model.value = value
   },
 })
 
-const { selectedType, selectedDateTemporary, datePickerItemHeight, datePickerItemHeightCssAttribute } =
-  useDatePickerService(props, selectedDateFormatted)
+const { selectedType, selectedDateTemporary } = useDatePickerService(props, model)
 
 const datePickerComponent = computed(() => {
   if (selectedType.value === 'year') {
@@ -103,14 +107,21 @@ const datePickerComponent = computed(() => {
 
   return SDatePickerDate
 })
+
+watch(
+  () => props.type,
+  () => {
+    if (model.value) {
+      model.value = convertDatePickerValue(model.value, props.type)
+    }
+  },
+)
 </script>
 
 <style lang="scss">
-.s_datePicker {
-  &__item {
-    position: relative;
-    height: v-bind(datePickerItemHeightCssAttribute);
-    overflow-y: auto;
-  }
+.s_datePicker__item {
+  position: relative;
+  max-height: 280px;
+  overflow-y: auto;
 }
 </style>

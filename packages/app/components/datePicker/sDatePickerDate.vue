@@ -10,7 +10,7 @@
       </div>
       <div v-for="(date, i) in dates" :key="i" class="s_datePickerDate__day">
         <SButton
-          variant="text"
+          v-bind="getItemButtonProps(date.isSelected)"
           rounded
           :outlined="date.isCurrent && !date.isSelected"
           :class="{
@@ -18,10 +18,6 @@
             's_datePickerDate__button--disabled': !date.isCurrentMonth || date.isDisabled,
             's_datePickerDate__button--selected': date.isSelected,
             's_datePickerDate__button--today': date.isCurrent,
-            ...(date?.isSelected ? classListColor : {}),
-          }"
-          :style="{
-            ...(date?.isSelected ? styleListColor : {}),
           }"
           @click="date.select()"
         >
@@ -34,7 +30,7 @@
 <script setup lang="ts">
 import SButton from '@/app/components/sButton.vue'
 import type { PropsDatePickerItem } from '@/app/definitions'
-import { useColorService, useDatePickerItemDateService } from '@/app/services'
+import { useDatePickerItemDateService } from '@/app/services'
 import dayjs from '@/app/vendors/dayjs'
 
 const props = defineProps<PropsDatePickerItem>()
@@ -45,8 +41,7 @@ const emit = defineEmits<{
   (event: 'update:selected', value: string): void
 }>()
 
-const { dates } = useDatePickerItemDateService(props, emit)
-const { classListColor, styleListColor } = useColorService(props, { isText: true })
+const { dates, getItemButtonProps } = useDatePickerItemDateService(props, emit)
 </script>
 <style lang="scss">
 .s_datePickerDate {

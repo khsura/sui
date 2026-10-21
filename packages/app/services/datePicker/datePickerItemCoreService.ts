@@ -41,11 +41,27 @@ export const useDatePickerItemCoreService = (props: PropsDatePickerItem, emit: D
   })
 
   const getFixedSelectorType = (value: DatePickerSelectTypeType) => {
+    if (props.type === DatePickerType.year) {
+      return DatePickerSelectType.year
+    }
+
     if (value === DatePickerSelectType.date && props.type === DatePickerType.month) {
       return DatePickerSelectType.month
     }
 
     return value
+  }
+
+  /**
+   * Resolves the button props of a selectable item.
+   * A selected item is rendered as a filled button in the given color, an unselected one as a text button.
+   */
+  const getItemButtonProps = (isSelected: boolean) => {
+    return {
+      variant: isSelected ? undefined : ('text' as const),
+      color: isSelected ? props.color : undefined,
+      colorThreshold: isSelected ? props.colorThreshold : undefined,
+    }
   }
 
   const getNextSelectorType = (value: DatePickerSelectTypeType | undefined) => {
@@ -58,6 +74,7 @@ export const useDatePickerItemCoreService = (props: PropsDatePickerItem, emit: D
 
   const isLastSelectType = computed(() => {
     return (
+      (props.type === DatePickerType.year && props.selectedType === DatePickerSelectType.year) ||
       (props.type === DatePickerType.month && props.selectedType === DatePickerSelectType.month) ||
       (props.type === DatePickerType.date && props.selectedType === DatePickerSelectType.date)
     )
@@ -68,8 +85,11 @@ export const useDatePickerItemCoreService = (props: PropsDatePickerItem, emit: D
     { onlyDateUpdate = false }: { onlyDateUpdate?: boolean } = { onlyDateUpdate: false },
   ) => {
     const year = value.year ?? date.value.year()
-    const month = value.month ?? date.value.month() + 1
-    const day = props.type === 'month' ? 1 : (value.day ?? date.value.date())
+    const month = props.type === DatePickerType.year ? 0 : (value.month ?? date.value.month())
+
+    const day =
+      props.type === DatePickerType.year || props.type === DatePickerType.month ? 1 : (value.day ?? date.value.date())
+
     const isValidDate = dayjs(`${year}-${month + 1}-${day}`, 'YYYY-M-D', true).isValid()
     const dateToSet = dayjs({ year, month, day: isValidDate ? day : 1 }).format(dateFormat.value)
 
@@ -105,5 +125,6 @@ export const useDatePickerItemCoreService = (props: PropsDatePickerItem, emit: D
     updateDate,
     isLastSelectType,
     updateSelectedType,
+    getItemButtonProps,
   }
 }
