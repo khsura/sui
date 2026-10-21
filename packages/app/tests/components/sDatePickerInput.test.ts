@@ -99,10 +99,17 @@ describe('SDatePickerInput', () => {
     expect(wrapper.find<HTMLInputElement>('.s_datePickerInput__input').element.value).toBe('2026-10')
   })
 
-  test('sets a minimum width that fits the value of the current type', () => {
+  test('reserves the width of the value in the input', () => {
     const wrapper = getWrapper({ type: 'date' })
-    const style = wrapper.find('.s_datePickerInput').attributes('style')
+    const input = wrapper.find<HTMLInputElement>('.s_datePickerInput__input')
 
-    expect(style).toContain('--s-datePickerInput--min-width: 10ch')
+    expect(input.attributes('size')).toBe('10')
+  })
+
+  test('reserves the width of the value in the input for the month type', () => {
+    const wrapper = getWrapper({ type: 'month' })
+    const input = wrapper.find<HTMLInputElement>('.s_datePickerInput__input')
+
+    expect(input.attributes('size')).toBe('7')
   })
 })

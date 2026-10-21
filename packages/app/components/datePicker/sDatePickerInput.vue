@@ -1,5 +1,5 @@
 <template>
-  <div class="s_datePickerInput" :class="classList" :style="styleList">
+  <div class="s_datePickerInput" :class="classList">
     <SButton
       v-if="carousel"
       variant="icon"
@@ -16,6 +16,7 @@
         <input
           :id="inputId"
           class="s_datePickerInput__input"
+          :size="inputSize"
           :value="inputText"
           :placeholder="placeholder ?? inputFormat"
           :disabled="disabled ?? undefined"
@@ -150,12 +151,8 @@ const classList = computed(() => ({
   [`s_datePickerInput--size__${props.size}`]: props.size,
 }))
 
-/** Keeps the value readable, the input must fit the format of the current type. */
-const styleList = computed(() => {
-  return {
-    '--s-datePickerInput--min-width': `${inputFormat.value.length}ch`,
-  }
-})
+/** Number of characters the value of the current type needs. */
+const inputSize = computed(() => inputFormat.value.length)
 
 /**
  * Keeps the committed value in the format of the current type.
@@ -261,9 +258,10 @@ watch(
 )
 </script>
 <style lang="scss">
+// The font size never goes below 16px, a smaller one makes the browser zoom in on focus.
 $s_datePickerInput--fontSizes: (
-  'mini': 0.875rem,
-  'small': 0.875rem,
+  'mini': 1rem,
+  'small': 1rem,
   'default': 1rem,
   'large': 1.25rem,
   'extra': 1.5rem,
@@ -278,6 +276,8 @@ $s_datePickerInput--fontSizes: (
 
   &__content {
     flex: 1 1 auto;
+    // The field must never shrink below the width the value needs.
+    min-width: min-content;
   }
 
   &__carouselButton {
@@ -331,9 +331,10 @@ $s_datePickerInput--fontSizes: (
   }
 
   &__input {
-    flex: 1;
-    width: 100%;
-    min-width: var(--s-datePickerInput--min-width, 0);
+    flex: 1 1 auto;
+    width: auto;
+    // The `size` attribute reserves the width of the value, it follows the font size.
+    min-width: auto;
     padding: calc($s_spacer * 2) calc($s_spacer * 4);
     font-size: 1rem;
     line-height: inherit;

@@ -178,3 +178,5 @@ const date = ref(dayjs().format(datePickerModelFormats.date))
 - The carousel buttons step the value by one unit — one day for `type="date"`, one month for `type="month"`, one year for `type="year"`.
 - The buttons are disabled at the `min`/`max` bounds and when the input is `disabled` or `readonly`.
 - The model value is always kept in the format of the current `type`. Switching `type` converts the value, so `2026-10-21` becomes `2026-10` for `type="month"` and `2026` for `type="year"`.
+- The input reserves the width the value needs, so the last characters are never cut off. The width follows the `size` prop, like `SInput`.
+- The font size never goes below `16px` (`mini` and `small` are the same as `default`), a smaller font size makes the browser zoom in on focus.
