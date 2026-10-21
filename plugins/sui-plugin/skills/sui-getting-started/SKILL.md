@@ -340,6 +340,7 @@ All support `#activator="{ on, attrs }"` slot.
 | `SCalendar`   | —        | `v-model:focus` = focused date string, `events`  |
 
 DatePicker format: `'YYYY-MM-DD'` (date), `'YYYY-MM'` (month) or `'YYYY'` (year).
+The model always follows the format of `type` — changing `type` converts the value.
 Import `datePickerModelFormats` for the exact format strings.
 
 ### Input / Upload

@@ -1,5 +1,5 @@
 <template>
-  <div class="s_datePickerInput" :class="classList">
+  <div class="s_datePickerInput" :class="classList" :style="styleList">
     <SButton
       v-if="carousel"
       variant="icon"
@@ -127,9 +127,11 @@ onClickOutside(contentElement, closeMenu, { ignore: [activatorElement] })
 
 const localText = ref(model.value ?? '')
 const isEditing = ref(false)
+/** The committed value expressed in the format of the current type. */
+const formattedValue = computed(() => convertDatePickerValue(model.value, props.type))
 
 watch(
-  () => model.value,
+  formattedValue,
   (val) => {
     if (!isEditing.value) {
       localText.value = val ?? ''
@@ -138,7 +140,7 @@ watch(
   { immediate: true },
 )
 
-const inputText = computed(() => (isEditing.value ? localText.value : (model.value ?? '')))
+const inputText = computed(() => (isEditing.value ? localText.value : (formattedValue.value ?? '')))
 
 const classList = computed(() => ({
   's_datePickerInput--disabled': props.disabled,
@@ -147,6 +149,31 @@ const classList = computed(() => ({
   's_datePickerInput--tile': props.tile,
   [`s_datePickerInput--size__${props.size}`]: props.size,
 }))
+
+/** Keeps the value readable, the input must fit the format of the current type. */
+const styleList = computed(() => {
+  return {
+    '--s-datePickerInput--min-width': `${inputFormat.value.length}ch`,
+  }
+})
+
+/**
+ * Keeps the committed value in the format of the current type.
+ * A date value of `2026-10-21` becomes `2026-10` for the month type and `2026` for the year type.
+ */
+const syncModelWithType = () => {
+  const value = model.value
+
+  if (!value) {
+    return
+  }
+
+  const converted = convertDatePickerValue(value, props.type)
+
+  if (converted !== value) {
+    model.value = converted
+  }
+}
 
 const fieldClasses = computed(() => ({
   's_datePickerInput__field--focus': isEditing.value,
@@ -228,10 +255,9 @@ const onStepNext = async () => {
 watch(
   () => props.type,
   () => {
-    const value = model.value
-
-    model.value = value ? convertDatePickerValue(value, props.type) : null
+    syncModelWithType()
   },
+  { immediate: true },
 )
 </script>
 <style lang="scss">
@@ -252,7 +278,6 @@ $s_datePickerInput--fontSizes: (
 
   &__content {
     flex: 1 1 auto;
-    min-width: 0;
   }
 
   &__carouselButton {
@@ -308,6 +333,7 @@ $s_datePickerInput--fontSizes: (
   &__input {
     flex: 1;
     width: 100%;
+    min-width: var(--s-datePickerInput--min-width, 0);
     padding: calc($s_spacer * 2) calc($s_spacer * 4);
     font-size: 1rem;
     line-height: inherit;

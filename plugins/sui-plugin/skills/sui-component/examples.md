@@ -238,6 +238,9 @@ buttons that step the value by one unit (day / month / year):
 <SDatePickerInput v-model="date" label="Date" carousel />
 ```
 
+The model value always follows the format of `type` — changing `type` converts it
+(`2026-10-21` → `2026-10` for `month`, `2026` for `year`).
+
 ---
 
 ## SBreadcrumbs

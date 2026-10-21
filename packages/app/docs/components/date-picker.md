@@ -112,7 +112,7 @@ const maxDate = dayjs().endOf('year').format(datePickerModelFormats.date)
 
 ## Notes
 
-- Model value format is always `'YYYY-MM-DD'` for `type="date"`, `'YYYY-MM'` for `type="month"` and `'YYYY'` for `type="year"`.
+- Model value format is always `'YYYY-MM-DD'` for `type="date"`, `'YYYY-MM'` for `type="month"` and `'YYYY'` for `type="year"`. Changing `type` converts the value to the new format.
 - Import `datePickerModelFormats` to use the exact format strings for `dayjs().format(...)`.
 - The picker is inline — wrap in `SMenu` or `SDialog` for a popup date picker.
 - `min` and `max` use the same `'YYYY-MM-DD'` format regardless of `type`.
@@ -177,3 +177,4 @@ const date = ref(dayjs().format(datePickerModelFormats.date))
 
 - The carousel buttons step the value by one unit — one day for `type="date"`, one month for `type="month"`, one year for `type="year"`.
 - The buttons are disabled at the `min`/`max` bounds and when the input is `disabled` or `readonly`.
+- The model value is always kept in the format of the current `type`. Switching `type` converts the value, so `2026-10-21` becomes `2026-10` for `type="month"` and `2026` for `type="year"`.

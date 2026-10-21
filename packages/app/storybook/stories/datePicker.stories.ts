@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import { ref } from 'vue'
 import { DatePickerType, SDatePicker, SDatePickerInput, datePickerModelFormats } from '@/app/index'
 import { type PropsDatePickerInput } from '@/app/definitions'
+import { type DatePickerTypeType } from '@/app/types'
 import { argTypesColor, argTypesSizePreset } from '@/app/storybook/argTypes'
 import { createStoryObj } from '@/app/storybook/helpers'
 
@@ -32,7 +33,8 @@ export const DatePicker = createStoryObj<typeof SDatePicker>({
         SDatePicker,
       },
       setup() {
-        const date = ref(dayjs().format('YYYY-MM-DD'))
+        const type = (args.type as DatePickerTypeType) ?? 'date'
+        const date = ref(dayjs().format(datePickerModelFormats[type]))
 
         return { args, date }
       },
@@ -57,7 +59,8 @@ export const DatePicker = createStoryObj<typeof SDatePicker>({
 const renderDatePickerInput = (args: Record<string, unknown>) => ({
   components: { SDatePickerInput },
   setup() {
-    const date = ref<string | null>(dayjs().format('YYYY-MM-DD'))
+    const type = (args.type as DatePickerTypeType) ?? 'date'
+    const date = ref<string | null>(dayjs().format(datePickerModelFormats[type]))
 
     return { args, date }
   },

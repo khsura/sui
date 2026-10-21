@@ -24,6 +24,7 @@ const getWrapper = (props: Partial<PropsDatePickerInput> = {}, modelValue: strin
   return mount(
     defineComponent({
       components: { SDatePickerInput },
+      props: Object.keys(defaultProps) as (keyof PropsDatePickerInput)[],
       setup: () => {
         const model = ref<string | null>(modelValue)
 
@@ -75,5 +76,33 @@ describe('SDatePickerInput', () => {
 
     expect(prevButton.attributes('disabled')).toBeDefined()
     expect(nextButton.attributes('disabled')).toBeDefined()
+  })
+
+  test('converts the model value to the format of the current type', () => {
+    const wrapper = getWrapper({ type: 'month' })
+
+    expect(wrapper.vm.model).toBe('2026-10')
+  })
+
+  test('converts the model value when the type changes', async () => {
+    const wrapper = getWrapper({ type: 'date' })
+
+    expect(wrapper.vm.model).toBe('2026-10-21')
+
+    await wrapper.setProps({ type: 'year' })
+    expect(wrapper.vm.model).toBe('2026')
+  })
+
+  test('shows the value in the format of the current type', () => {
+    const wrapper = getWrapper({ type: 'month' })
+
+    expect(wrapper.find<HTMLInputElement>('.s_datePickerInput__input').element.value).toBe('2026-10')
+  })
+
+  test('sets a minimum width that fits the value of the current type', () => {
+    const wrapper = getWrapper({ type: 'date' })
+    const style = wrapper.find('.s_datePickerInput').attributes('style')
+
+    expect(style).toContain('--s-datePickerInput--min-width: 10ch')
   })
 })
