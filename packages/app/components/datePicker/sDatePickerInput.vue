@@ -17,6 +17,7 @@
           :id="inputId"
           class="s_datePickerInput__input"
           :size="inputSize"
+          :style="inputStyles"
           :value="inputText"
           :placeholder="placeholder ?? inputFormat"
           :disabled="disabled ?? undefined"
@@ -157,6 +158,12 @@ const classList = computed(() => ({
 
 /** Number of characters the value of the current type needs. */
 const inputSize = computed(() => inputFormat.value.length)
+/**
+ * The value's own width, in characters of the input's font. The `size`
+ * attribute alone is not enough: iOS Safari let the field shrink below it and
+ * cut the last digit off.
+ */
+const inputStyles = computed(() => ({ minWidth: `${inputSize.value}ch` }))
 
 /**
  * Keeps the committed value in the format of the current type.
@@ -337,9 +344,10 @@ $s_datePickerInput--fontSizes: (
   }
 
   &__input {
-    flex: 1 1 auto;
+    box-sizing: content-box;
+    flex: 1 0 auto;
     width: auto;
-    // The `size` attribute reserves the width of the value, it follows the font size.
+    // `inputStyles` sets the content's minimum width; the padding sits outside it.
     min-width: auto;
     padding: calc($s_spacer * 2) calc($s_spacer * 4);
     font-size: 1rem;
@@ -362,7 +370,10 @@ $s_datePickerInput--fontSizes: (
   &__suffix {
     display: flex;
     align-items: center;
-    height: stretch;
+
+    // The field's height through the flex line, not `height: stretch`: iOS
+    // Safari resolved that against the page and drew the field screen-tall.
+    align-self: stretch;
     padding: 0 calc($s_spacer * 2);
     cursor: pointer;
     user-select: none;
