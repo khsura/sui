@@ -93,7 +93,7 @@ const datePickerInputArgs: Partial<PropsDatePickerInput> = {
   dense: false,
   simple: false,
   tile: false,
-  block: true,
+  block: false,
   carousel: false,
   size: null,
   min: dayjs().subtract(50, 'years').startOf('year').format(datePickerModelFormats.date),

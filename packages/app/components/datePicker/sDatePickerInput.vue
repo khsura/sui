@@ -1,5 +1,5 @@
 <template>
-  <div class="s_datePickerInput" :class="classList">
+  <div class="s_datePickerInput" :class="classList" :style="measurableStyles">
     <SButton
       v-if="carousel"
       variant="icon"
@@ -86,6 +86,7 @@ import {
   useComponentDefaultsService,
   useDatePickerInputService,
   useFormInputService,
+  useMeasurableStylesService,
   useMenuService,
 } from '@/app/services'
 import type { EmitFormInput } from '@/app/types'
@@ -97,7 +98,6 @@ const rawProps = withDefaults(defineProps<PropsDatePickerInput>(), {
   dateFormat: datePickerDisplayFormat.date,
   monthFormat: datePickerDisplayFormat.month,
   yearFormat: datePickerDisplayFormat.year,
-  block: true,
   carouselPrevIcon: 'mdi-chevron-left',
   carouselNextIcon: 'mdi-chevron-right',
   carouselPrevAriaLabel: 'Previous',
@@ -113,6 +113,8 @@ const inputId = computed(() => props.id ?? uniqueId)
 const activatorElement = useTemplateRef('activatorElement')
 const contentElement = useTemplateRef('contentElement')
 const { errors, updateFormInput } = useFormInputService<string | null>(props, emit, model)
+/** Sizes the field itself, the picker it opens keeps its own width. */
+const { measurableStyles } = useMeasurableStylesService(props)
 const { inputFormat, canStepPrev, canStepNext, stepPrev, stepNext } = useDatePickerInputService(props, model)
 
 const { contentClasses, contentStyles, updateLocation } = useMenuService(
