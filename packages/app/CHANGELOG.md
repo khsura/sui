@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.15.1](https://github.com/khsura/sui/compare/sui-v1.15.0...sui-v1.15.1) (2026-10-22)
+
+
+### Bug Fixes
+
+* **app:** the datepicker input hugs its value unless block is set, and takes a width ([76a2493](https://github.com/khsura/sui/commit/76a249370f02a3c4497a11b34aaba0347c1e34ea))
+* **app:** the datepicker input hugs its value unless block is set, and takes a width ([cea6990](https://github.com/khsura/sui/commit/cea69901723b005894c153dc942bb188dcb12356))
+
 ## [1.15.0](https://github.com/khsura/sui/compare/sui-v1.14.0...sui-v1.15.0) (2026-10-21)
 
 
