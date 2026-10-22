@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.13.2](https://github.com/khsura/sui/compare/root-v1.13.1...root-v1.13.2) (2026-10-22)
+
+
+### Bug Fixes
+
+* **app:** the datepicker input keeps its height and its value's width in iOS Safari ([87be1fd](https://github.com/khsura/sui/commit/87be1fd85e27486f80c2bdf0b9053eafe6f6f951))
+* **app:** the datepicker input keeps its height and its value's width in iOS Safari ([1e3e8a4](https://github.com/khsura/sui/commit/1e3e8a43539bbc3c3ec52ce94ce86b5621d3f517))
+
 ## [1.13.1](https://github.com/khsura/sui/compare/root-v1.13.0...root-v1.13.1) (2026-10-22)
 
 
