@@ -14,6 +14,8 @@ const defaultProps: PropsDatePickerInput = {
   simple: null,
   tile: false,
   carousel: false,
+  block: undefined,
+  maxWidth: undefined,
   disabled: false,
   readonly: false,
   max: '2026-12-31',
@@ -113,15 +115,21 @@ describe('SDatePickerInput', () => {
     expect(input.attributes('size')).toBe('7')
   })
 
-  test('stretches to the width of the container by default', () => {
+  test('keeps the width of its value by default', () => {
     const wrapper = getWrapper()
+
+    expect(wrapper.find('.s_datePickerInput').classes()).not.toContain('s_datePickerInput--block')
+  })
+
+  test('stretches to the width of the container when the block prop is set', () => {
+    const wrapper = getWrapper({ block: true })
 
     expect(wrapper.find('.s_datePickerInput').classes()).toContain('s_datePickerInput--block')
   })
 
-  test('does not stretch when the block prop is disabled', () => {
-    const wrapper = getWrapper({ block: false })
+  test('applies the measurable styles to the field', () => {
+    const wrapper = getWrapper({ block: true, maxWidth: 280 })
 
-    expect(wrapper.find('.s_datePickerInput').classes()).not.toContain('s_datePickerInput--block')
+    expect(wrapper.find<HTMLElement>('.s_datePickerInput').element.style.maxWidth).toBe('280px')
   })
 })
