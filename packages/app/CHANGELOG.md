@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.15.3](https://github.com/khsura/sui/compare/sui-v1.15.2...sui-v1.15.3) (2026-10-24)
+
+
+### Bug Fixes
+
+* **app:** the datepicker year list follows yearFormat instead of always saying 年 ([9f30f9f](https://github.com/khsura/sui/commit/9f30f9fea7f4bf888cefd01ece2225c0e58b1f7a))
+* **app:** the datepicker year list follows yearFormat instead of always saying 年 ([131cbd3](https://github.com/khsura/sui/commit/131cbd3f1262c2fd4033c2a1df659a3951744873)), closes [#124](https://github.com/khsura/sui/issues/124)
+
 ## [1.15.2](https://github.com/khsura/sui/compare/sui-v1.15.1...sui-v1.15.2) (2026-10-22)
 
 
