@@ -135,7 +135,7 @@ them, even though the click itself works.
 | **SExpansionPanels** | `v-model` = `number[]` (open panel indexes) | [examples.md](./examples.md#sexpansionpanels) |
 | **SChip / SBadge** | `SChip`: `closable`, `@click:close`; `SBadge`: wraps content, `content` badge text | [examples.md](./examples.md#schip--sbadge) |
 | **SProgressLinear / SProgressCircular** | `model-value`, `indeterminate`, `color`, `size` (circular) | [examples.md](./examples.md#sprogresslinear--sprogresscircular) |
-| **SDatePicker** | `v-model` string: `YYYY-MM-DD` (date), `YYYY-MM` (month) or `YYYY` (year); `type="date"` \| `"month"` \| `"year"`. `SDatePickerInput` adds `carousel` for prev/next step buttons | [examples.md](./examples.md#sdatepicker) |
+| **SDatePicker** | `v-model` string: `YYYY-MM-DD` (date), `YYYY-MM` (month) or `YYYY` (year); `type="date"` \| `"month"` \| `"year"`. `SDatePickerInput` adds `carousel` for prev/next step buttons. `year-format` (dayjs, default `'YYYY'`) labels the year list, title and switch, e.g. `'YYYY年'` or `'YYYY [он]'` | [examples.md](./examples.md#sdatepicker) |
 | **SBreadcrumbs** | `:items="[{ text, to?, disabled? }]"` | [examples.md](./examples.md#sbreadcrumbs) |
 | **SStepper** | `SStepperStep` with `:step`, `:complete` | [examples.md](./examples.md#sstepper) |
 | **SAlert** | Banner/message box. Props: `color` (preset or CSS color), `dense`, `size`, `fixedHeight`, `minHeight`. Content goes in the default slot; renders nothing when the slot is empty. No `title`/`icon`/`variant` props. | — |

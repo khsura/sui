@@ -1,10 +1,14 @@
 import { mount, type VueWrapper } from '@vue/test-utils'
 import { SDatePicker } from '@/app/components'
 
-const getWrapper = (type: 'month' | 'year', modelValue: string) => {
+const getWrapper = (type: 'month' | 'year', modelValue: string, yearFormat?: string) => {
   return mount(SDatePicker, {
-    props: { type, modelValue, today: '2026-10-22', min: '2021-01-01', max: '2026-12-31', hideTitle: true },
+    props: { type, modelValue, today: '2026-10-22', min: '2021-01-01', max: '2026-12-31', hideTitle: true, yearFormat },
   })
+}
+
+const yearListTitles = (wrapper: VueWrapper) => {
+  return wrapper.findAll('.s_datePickerYear .s_button').map((button) => button.text())
 }
 
 const lastEmittedValue = (wrapper: VueWrapper) => {
@@ -30,5 +34,21 @@ describe('SDatePicker', () => {
     await year2024?.trigger('click')
 
     expect(lastEmittedValue(wrapper)).toEqual(['2024'])
+  })
+
+  test('lists the years as plain numbers by default', () => {
+    const wrapper = getWrapper('year', '2026')
+
+    expect(yearListTitles(wrapper)).toEqual(['2026', '2025', '2024', '2023', '2022', '2021'])
+  })
+
+  test.each([
+    ['YYYY [он]', '2026 он'],
+    ['YYYY年', '2026年'],
+    ['YYYY', '2026'],
+  ])('lists the years in the yearFormat %s', (yearFormat, expectedTitle) => {
+    const wrapper = getWrapper('year', '2026', yearFormat)
+
+    expect(yearListTitles(wrapper)[0]).toBe(expectedTitle)
   })
 })

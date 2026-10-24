@@ -1,5 +1,6 @@
 import { computed } from 'vue'
 import { useDatePickerItemCoreService } from './datePickerItemCoreService'
+import { datePickerDisplayFormat } from '@/app/configs'
 import { type PropsDatePickerItem } from '@/app/definitions'
 import { type DatePickerItemEmits } from '@/app/types'
 import dayjs from '@/app/vendors/dayjs'
@@ -18,6 +19,7 @@ export const useDatePickerItemYearService = (props: PropsDatePickerItem, emit: D
     const selectedDate = selected.value.clone()
     const todayDate = today.value.clone()
     const { month, day } = dateObject.value
+    const yearFormat = props.yearFormat ?? datePickerDisplayFormat.year
 
     return Array(endYear - startYear + 1)
       .fill(0)
@@ -33,7 +35,7 @@ export const useDatePickerItemYearService = (props: PropsDatePickerItem, emit: D
 
         return {
           value: year,
-          title: `${year}年`,
+          title: dayjs({ year, month: 0, day: 1 }).format(yearFormat),
           isSelected: selectedDate.isSame({ year }, 'year'),
           isCurrent: todayDate.isSame({ year }, 'year'),
           isDisabled: !dayjs({ year, month, day }).isBetween(minDate, maxDate, 'year', '[]'),

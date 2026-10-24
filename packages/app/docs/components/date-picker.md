@@ -10,9 +10,9 @@ Inline date, month or year picker with navigation and min/max constraints.
 |------|------|---------|-------------|
 | `type` | `'date' \| 'month' \| 'year'` | **required** | Picker mode — full date, month-only or year-only |
 | `hideTitle` | `boolean` | `false` | Hide the selected date title area |
-| `dateFormat` | `string` | `undefined` | Display format for the date title (e.g. `'DD MMM YYYY'`) |
-| `monthFormat` | `string` | `undefined` | Display format for month labels |
-| `yearFormat` | `string` | `undefined` | Display format for year labels |
+| `dateFormat` | `string` | `'MMM D'` | Display format for the date title (e.g. `'DD MMM YYYY'`) |
+| `monthFormat` | `string` | `'MMMM'` | Display format for month labels |
+| `yearFormat` | `string` | `'YYYY'` | dayjs format for the year in the title, the switch and every item of the year list (e.g. `'YYYY年'`, `'YYYY [он]'`) |
 | `today` | `string` | `undefined` | Highlight this date as "today" (`'YYYY-MM-DD'`) |
 | `min` | `string` | `undefined` | Minimum selectable date (`'YYYY-MM-DD'`) |
 | `max` | `string` | `undefined` | Maximum selectable date (`'YYYY-MM-DD'`) |
@@ -116,6 +116,7 @@ const maxDate = dayjs().endOf('year').format(datePickerModelFormats.date)
 - Import `datePickerModelFormats` to use the exact format strings for `dayjs().format(...)`.
 - The picker is inline — wrap in `SMenu` or `SDialog` for a popup date picker.
 - `min` and `max` use the same `'YYYY-MM-DD'` format regardless of `type`.
+- The year list has no language of its own: it shows each year in `yearFormat`, plain `2026` by default. Pass the suffix your locale needs, e.g. `year-format="YYYY年"` for Japanese or `year-format="YYYY [он]"` for Mongolian (square brackets escape literal text in dayjs). Before 1.15.3 the list ignored `yearFormat` and always showed `2026年`.
 
 ---
 
