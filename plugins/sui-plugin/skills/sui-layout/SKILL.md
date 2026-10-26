@@ -19,6 +19,7 @@ Then generate a complete Vue SFC using these rules:
 - Do not add Vuetify's `app` prop to `SAppBar`/`SMain`/`SFooter` — it doesn't exist; `SLayout` handles placement
 - `SAppBar for="app"` — top bar (use `#prepend` for hamburger, `#append` for right-side actions)
 - `SNavigationDrawer for="app" v-model="drawer"` — sidebar
+- Right-side panel (AI chat, details, inspector): a second `SNavigationDrawer for="app" location="right" persistent resizable v-model:width="panelWidth"`. A left and a right drawer share one layout and `SMain` makes room for both. `persistent` keeps it open when the user clicks in the content; `resizable` adds a drag handle (desktop only, clamped by `minWidth`/`maxWidth`, defaults 200/720)
 - `SMain for="app"` — wraps all page content
 - `SFooter for="app"` — optional bottom bar
 - `SBottomNavigation for="app" v-model="activeNav"` — mobile-only bottom tabs

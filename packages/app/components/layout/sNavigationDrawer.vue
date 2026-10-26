@@ -14,6 +14,18 @@
       <slot name="prepend" class="s_navigationDrawer__prepend"></slot>
       <div class="s_navigationDrawer__content"><slot :on="on"></slot></div>
       <slot name="append" class="s_navigationDrawer__append"></slot>
+      <div
+        v-if="isResizable"
+        class="s_navigationDrawer__resizeHandle"
+        role="separator"
+        aria-orientation="vertical"
+        tabindex="0"
+        :aria-valuenow="resizedWidth"
+        :aria-valuemin="resizeMinWidth"
+        :aria-valuemax="resizeMaxWidth"
+        @pointerdown="startResize"
+        @keydown="resizeByKeyboard"
+      ></div>
     </component>
   </SOverlay>
 </template>
@@ -22,6 +34,7 @@ import { type Ref, computed, ref, getCurrentInstance, watch, onBeforeMount, onBe
 import { onClickOutside } from '@vueuse/core'
 import SOverlay from '@/app/components/sOverlay.vue'
 import { ProviderPropsName } from '@/app/configs'
+import { navigationDrawerDefaultWidth } from '@/app/constants'
 import { getNumericCssAttribute } from '@/app/lib'
 import {
   useComponentDefaultsService,
@@ -35,6 +48,7 @@ import {
   useScrollableService,
   useTouchService,
   useNavigationDrawerService,
+  useNavigationDrawerResizeService,
 } from '@/app/services'
 import { type TouchWrapper } from '@/app/types'
 import type { PropsNavigationDrawer } from '@/app/definitions'
@@ -46,6 +60,7 @@ const { isBottom, isRight, computedLocation } = useLocationService(props)
 const emit = defineEmits<{
   (event: 'transitionend', value: Event): void
   (event: 'update:miniVariant', value: boolean): void
+  (event: 'update:width', value: number): void
 }>()
 
 const navigationDrawer: Ref<HTMLElement | null> = ref(null)
@@ -119,6 +134,11 @@ const { touchstart, touchend, touchmove } = useTouchService({
 })
 
 const { bindResizer, unbindResizer } = useResizeService(() => {
+  // a persistent drawer keeps the user's open/closed choice; the isMobile watcher still closes it on mobile
+  if (props.persistent) {
+    return
+  }
+
   model.value = !isMobile.value
 })
 
@@ -175,10 +195,29 @@ const computedTop = computed(() => {
   return layoutApp.value.appBarHeight + top
 })
 
-const computedWidth = computed(() => {
-  const width = Number(isMiniVariant.value ? props.miniVariantWidth : props.width)
+const isResizable = computed(() => {
+  return Boolean(props.resizable && model.value) && !isMobile.value && !isBottom.value && !isMiniVariant.value
+})
 
-  return Number.isNaN(width) ? 256 : width
+const {
+  width: resizedWidth,
+  minWidth: resizeMinWidth,
+  maxWidth: resizeMaxWidth,
+  isResizing,
+  startResize,
+  resizeByKeyboard,
+} = useNavigationDrawerResizeService(props, navigationDrawer, isRight, isResizable, (width) => {
+  emit('update:width', width)
+})
+
+const computedWidth = computed(() => {
+  if (!isMiniVariant.value) {
+    return resizedWidth.value
+  }
+
+  const miniVariantWidth = Number(props.miniVariantWidth)
+
+  return Number.isNaN(miniVariantWidth) ? navigationDrawerDefaultWidth : miniVariantWidth
 })
 
 const computedTransform = computed((): number => {
@@ -223,6 +262,8 @@ const classes = computed(() => {
     's_navigationDrawer--customMiniVariant': Number(props.miniVariantWidth) !== 56,
     's_navigationDrawer--openOnHover': props.expandOnHover,
     's_navigationDrawer--right': isRight.value,
+    's_navigationDrawer--resizable': isResizable.value,
+    's_navigationDrawer--resizing': isResizing.value,
   }
 })
 
@@ -261,6 +302,10 @@ const transitionName = computed(() => {
 onClickOutside(
   navigationDrawer,
   () => {
+    if (props.persistent && !isMobile.value) {
+      return
+    }
+
     model.value = false
   },
   {
@@ -332,6 +377,10 @@ watch(isMobile, (value, previous) => {
     return
   }
 
+  if (props.persistent && !value) {
+    return
+  }
+
   model.value = !value
 })
 
@@ -347,19 +396,19 @@ const appHorizontalShiftWidth = computed(() => {
   return computedWidth.value
 })
 
-const appLeftShiftWidth = computed(() => {
-  return isRight.value ? 0 : appHorizontalShiftWidth.value
-})
-
-const appRightShiftWidth = computed(() => {
-  return isRight.value ? appHorizontalShiftWidth.value : 0
-})
+// each drawer owns only its own side, so a left and a right drawer can share one layout
+const layoutSide = computed(() => (isRight.value ? 'right' : 'left'))
 
 watch(
-  [appLeftShiftWidth, appRightShiftWidth],
-  ([left, right]) => {
-    layoutApp.value.left = left
-    layoutApp.value.right = right
+  [layoutSide, appHorizontalShiftWidth],
+  ([side, shiftWidth], previousValues) => {
+    const previousSide = previousValues?.[0]
+
+    if (previousSide && previousSide !== side) {
+      layoutApp.value[previousSide] = 0
+    }
+
+    layoutApp.value[side] = shiftWidth
   },
   {
     immediate: true,
@@ -379,8 +428,7 @@ onBeforeMount(() => {
 
 onBeforeUnmount(() => {
   unbindResizer()
-  layoutApp.value.left = 0
-  layoutApp.value.right = 0
+  layoutApp.value[layoutSide.value] = 0
 })
 </script>
 
@@ -517,6 +565,36 @@ $s_navigationDrawerOverlayTransitionAnimations: (
   &--right {
     right: 0;
     left: auto;
+  }
+
+  &--resizing {
+    transition: none;
+  }
+
+  .s_navigationDrawer__resizeHandle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    width: 6px;
+    touch-action: none;
+    cursor: col-resize;
+    outline: none;
+
+    &:hover,
+    &:focus-visible {
+      background-color: s_getAppColor('border');
+    }
+  }
+
+  &--resizing .s_navigationDrawer__resizeHandle {
+    background-color: s_getAppColor('border');
+  }
+
+  &--right .s_navigationDrawer__resizeHandle {
+    right: auto;
+    left: 0;
   }
 
   &--mobile {
