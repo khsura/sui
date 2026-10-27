@@ -12,6 +12,10 @@ export type PropsNavigationDrawer = {
   forceMobile?: boolean
   hideOverlay?: boolean
   touchless?: boolean
+  persistent?: boolean
+  resizable?: boolean
+  minWidth?: number
+  maxWidth?: number
   height?: string | number | null
   width?: string | number
 } & PropsLayout &

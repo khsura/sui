@@ -204,3 +204,77 @@ export const Layout = createStoryObj<StoryComponent>({
     })
   },
 })
+
+export const WithSidePanel = createStoryObj<StoryComponent>({
+  args: {
+    name: 'sidePanel',
+    persistent: true,
+    resizable: true,
+    minWidth: 320,
+    maxWidth: 640,
+  },
+  // TODO: Sura - fix any type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  render: (args: any) => {
+    return defineComponent({
+      components: {
+        SAppBar,
+        SAppBarTitle,
+        SNavigationDrawer,
+        SButton,
+        SIcon,
+        SLayout,
+        SMain,
+        SList,
+        SListItem,
+        SListItemIcon,
+        SListItemContent,
+      },
+      setup() {
+        const isNavOpen = ref(true)
+        const isChatOpen = ref(true)
+        const chatWidth = ref(400)
+
+        return {
+          isNavOpen,
+          isChatOpen,
+          chatWidth,
+          args,
+        }
+      },
+      template: `
+        <SLayout :name="args.name" :height="480">
+          <SAppBar :for="args.name">
+            <SButton icon @click="isNavOpen = !isNavOpen"><SIcon icon="mdi-menu"></SIcon></SButton>
+            <SAppBarTitle>surakh.com</SAppBarTitle>
+            <SButton icon @click="isChatOpen = !isChatOpen"><SIcon icon="mdi-chat-outline"></SIcon></SButton>
+          </SAppBar>
+          <SNavigationDrawer v-model="isNavOpen" :for="args.name" elevation="1" persistent>
+            <SList>
+              <SListItem link>
+                <SListItemIcon><SIcon icon="mdi-home"></SIcon></SListItemIcon>
+                <SListItemContent>Home</SListItemContent>
+              </SListItem>
+            </SList>
+          </SNavigationDrawer>
+          <SNavigationDrawer
+            v-model="isChatOpen"
+            v-model:width="chatWidth"
+            :for="args.name"
+            location="right"
+            elevation="1"
+            :persistent="args.persistent"
+            :resizable="args.resizable"
+            :min-width="args.minWidth"
+            :max-width="args.maxWidth"
+          >
+            <div class="s_pa__4">AI chat panel ({{ chatWidth }}px)</div>
+          </SNavigationDrawer>
+          <SMain :for="args.name" class="s_px__2">
+            Main content stays clickable while the chat panel is open.
+          </SMain>
+        </SLayout>
+      `,
+    })
+  },
+})

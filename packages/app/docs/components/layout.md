@@ -112,9 +112,45 @@ Side drawer/sidebar.
 | `location` | `string` | `'left'` | Side: `'left'` or `'right'` |
 | `position` | `'fixed' \| 'absolute'` | `'fixed'` | CSS position |
 | `elevation` | `0–24` | `undefined` | Shadow |
-| `width` | `string \| number` | `undefined` | Drawer width |
+| `persistent` | `boolean` | `false` | Desktop: ignore outside clicks and window resizes, so only `v-model` opens/closes it. Still closes when switching to mobile |
+| `resizable` | `boolean` | `false` | Show a drag handle on the inner edge (desktop only, not in mini mode). Arrow keys resize when the handle is focused |
+| `minWidth` | `number` | `200` | Smallest width when resizing (px) |
+| `maxWidth` | `number` | `720` | Largest width when resizing (px) |
+| `width` | `string \| number` | `256` | Drawer width (px). Use `v-model:width` with `resizable` to keep the dragged width |
 | `height` | `string \| number` | `undefined` | Drawer height |
 | `tag` | `'nav' \| 'div' \| 'section'` | `'nav'` | Root element |
+
+### Events
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `update:width` | `number` | Fired when a resize ends (pointer release or arrow key) |
+
+### Two drawers (navigation + side panel)
+
+A left and a right drawer can share one layout; `SMain` makes room for both. A typical AI chat side panel:
+
+```vue
+<SLayout name="app">
+  <SAppBar for="app" />
+  <SNavigationDrawer for="app" v-model="isNavOpen" />
+  <SNavigationDrawer
+    for="app"
+    v-model="isChatOpen"
+    v-model:width="chatWidth"
+    location="right"
+    persistent
+    resizable
+    :min-width="320"
+    :max-width="640"
+  >
+    <!-- chat panel -->
+  </SNavigationDrawer>
+  <SMain for="app" />
+</SLayout>
+```
+
+On mobile both drawers slide in over the content, as before.
 
 ---
 

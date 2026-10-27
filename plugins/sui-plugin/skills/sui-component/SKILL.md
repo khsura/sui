@@ -81,7 +81,7 @@ Vue passes an undeclared prop through as an HTML attribute — no error, no warn
 
 ## SNavigationDrawer — app-shell only
 
-`SNavigationDrawer` may only be used at the **app shell level** (layout files). There is exactly one drawer per app.
+`SNavigationDrawer` may only be used at the **app shell level** (layout files). An app has at most one drawer per side: a left navigation drawer, plus optionally a right side panel (`location="right" persistent resizable`, e.g. an AI chat) that stays beside the content on every page.
 
 **Do NOT use `SNavigationDrawer` inside feature components.** For feature-level slide-in panels, use `SDialog` instead:
 
