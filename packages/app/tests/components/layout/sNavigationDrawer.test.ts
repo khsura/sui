@@ -13,15 +13,17 @@ const TwoDrawerLayout = defineComponent({
   setup() {
     const isNavOpen = ref(true)
     const isChatOpen = ref(true)
+    const hasNav = ref(true)
     const hasChat = ref(true)
+    const chatLocation = ref<'left' | 'right'>('right')
 
-    return { isNavOpen, isChatOpen, hasChat, layoutName, navWidth, chatWidth }
+    return { isNavOpen, isChatOpen, hasNav, hasChat, chatLocation, layoutName, navWidth, chatWidth }
   },
   template: `
     <SApp>
     <SLayout :name="layoutName">
-      <SNavigationDrawer :for="layoutName" v-model="isNavOpen" :width="navWidth" />
-      <SNavigationDrawer v-if="hasChat" :for="layoutName" v-model="isChatOpen" location="right" persistent :width="chatWidth" />
+      <SNavigationDrawer v-if="hasNav" :for="layoutName" v-model="isNavOpen" :width="navWidth" />
+      <SNavigationDrawer v-if="hasChat" :for="layoutName" v-model="isChatOpen" :location="chatLocation" persistent :width="chatWidth" />
       <SMain :for="layoutName">content</SMain>
     </SLayout>
     </SApp>
@@ -73,6 +75,74 @@ describe('SNavigationDrawer', () => {
     const mainStyle = wrapper.find('.s_main').attributes('style')
 
     expect(mainStyle).toContain(`margin-left: ${navWidth}px`)
+    expect(mainStyle).toContain('margin-right: 0px')
+  })
+
+  test('a drawer added by v-if after mount offsets SMain', async () => {
+    const wrapper = mount(TwoDrawerLayout, { attachTo: document.body })
+
+    wrapper.vm.hasChat = false
+    await nextTick()
+    wrapper.vm.hasChat = true
+    await nextTick()
+
+    const mainStyle = wrapper.find('.s_main').attributes('style')
+
+    expect(mainStyle).toContain(`margin-left: ${navWidth}px`)
+    expect(mainStyle).toContain(`margin-right: ${chatWidth}px`)
+    expect(mainStyle).toContain(`width: calc(100% - ${navWidth + chatWidth}px)`)
+  })
+
+  test('toggling both drawers with v-if many times leaves no stale offset', async () => {
+    const wrapper = mount(TwoDrawerLayout, { attachTo: document.body })
+    const toggleCount = 3
+
+    for (let toggle = 0; toggle < toggleCount; toggle++) {
+      wrapper.vm.hasNav = false
+      wrapper.vm.hasChat = false
+      await nextTick()
+
+      const emptyStyle = wrapper.find('.s_main').attributes('style')
+
+      expect(emptyStyle).toContain('margin-left: 0px')
+      expect(emptyStyle).toContain('margin-right: 0px')
+
+      wrapper.vm.hasNav = true
+      wrapper.vm.hasChat = true
+      await nextTick()
+
+      const fullStyle = wrapper.find('.s_main').attributes('style')
+
+      expect(fullStyle).toContain(`margin-left: ${navWidth}px`)
+      expect(fullStyle).toContain(`margin-right: ${chatWidth}px`)
+    }
+  })
+
+  test('removing a drawer while it is closed keeps the layout at zero', async () => {
+    const wrapper = mount(TwoDrawerLayout, { attachTo: document.body })
+
+    wrapper.vm.isChatOpen = false
+    await nextTick()
+    wrapper.vm.hasChat = false
+    await nextTick()
+    wrapper.vm.hasChat = true
+    await nextTick()
+
+    expect(wrapper.vm.isChatOpen).toBe(false)
+    expect(wrapper.find('.s_main').attributes('style')).toContain('margin-right: 0px')
+  })
+
+  test('moving a drawer to the other side clears the side it left', async () => {
+    const wrapper = mount(TwoDrawerLayout, { attachTo: document.body })
+
+    wrapper.vm.hasNav = false
+    await nextTick()
+    wrapper.vm.chatLocation = 'left'
+    await nextTick()
+
+    const mainStyle = wrapper.find('.s_main').attributes('style')
+
+    expect(mainStyle).toContain(`margin-left: ${chatWidth}px`)
     expect(mainStyle).toContain('margin-right: 0px')
   })
 
