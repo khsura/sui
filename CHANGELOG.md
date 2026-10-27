@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.14.0](https://github.com/khsura/sui/compare/root-v1.13.3...root-v1.14.0) (2026-10-27)
+
+
+### Features
+
+* **app:** resizable and persistent navigation drawers, and left and right drawers share a layout ([cd6667a](https://github.com/khsura/sui/commit/cd6667add6d7f2d47c68cc958566bec4ceafa192))
+* **app:** resizable and persistent navigation drawers, and left and right drawers share a layout ([4fcddc4](https://github.com/khsura/sui/commit/4fcddc43a994e52d73fa97a2f0ba443205b44ba4))
+
 ## [1.13.3](https://github.com/khsura/sui/compare/root-v1.13.2...root-v1.13.3) (2026-10-24)
 
 
