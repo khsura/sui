@@ -243,13 +243,13 @@ export const WithSidePanel = createStoryObj<StoryComponent>({
         }
       },
       template: `
-        <SLayout :name="args.name">
+        <SLayout :name="args.name" :height="480">
           <SAppBar :for="args.name">
             <SButton icon @click="isNavOpen = !isNavOpen"><SIcon icon="mdi-menu"></SIcon></SButton>
             <SAppBarTitle>surakh.com</SAppBarTitle>
             <SButton icon @click="isChatOpen = !isChatOpen"><SIcon icon="mdi-chat-outline"></SIcon></SButton>
           </SAppBar>
-          <SNavigationDrawer v-model="isNavOpen" :for="args.name" elevation="1">
+          <SNavigationDrawer v-model="isNavOpen" :for="args.name" elevation="1" persistent>
             <SList>
               <SListItem link>
                 <SListItemIcon><SIcon icon="mdi-home"></SIcon></SListItemIcon>
