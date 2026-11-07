@@ -113,7 +113,9 @@ $s_checkbox--size: 24px;
     top: 0;
     left: 0;
     display: inline-flex;
-    align-items: center;
+    // The box and its tick are pinned to the first line. Centred, the box
+    // followed a wrapping label down while the tick stayed at the top.
+    align-items: flex-start;
     min-height: $s_checkbox--size;
     padding-left: $s_checkbox--size;
     margin: 0;
@@ -123,11 +125,14 @@ $s_checkbox--size: 24px;
 
     &Text {
       padding-left: 8px;
+      // The box's height, so a one-line label sits centred on it as before.
+      line-height: $s_checkbox--size;
     }
   }
 
   &__label::before {
     position: absolute;
+    top: 0;
     left: 0;
     display: block;
     width: $s_checkbox--size;
@@ -232,6 +237,7 @@ $s_checkbox--size: 24px;
 
       &Text {
         padding-left: 10px;
+        line-height: $s_checkbox--size__large;
       }
     }
 

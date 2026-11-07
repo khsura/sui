@@ -66,7 +66,8 @@ const toggle = () => {
 <style lang="scss">
 .s_switch {
   display: inline-flex;
-  align-items: center;
+  // A label that wraps grows downward from the button's line, not around it.
+  align-items: flex-start;
 
   &__input {
     display: none;
@@ -76,6 +77,9 @@ const toggle = () => {
     @include s_borderRadius('pill');
     position: relative;
     display: inline-block;
+    // Never squeezed by a label that wraps: a flex item shrinks by default,
+    // and a two-line label took the button from 40px down to 30px.
+    flex-shrink: 0;
     width: 40px;
     max-width: 100%;
     height: 24px;
@@ -107,6 +111,8 @@ const toggle = () => {
 
   &__label {
     margin-left: calc($s_spacer * 3);
+    // The button's height, so a one-line label sits centred on it as before.
+    line-height: 24px;
     cursor: pointer;
   }
 }
