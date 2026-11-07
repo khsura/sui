@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.14.1](https://github.com/khsura/sui/compare/root-v1.14.0...root-v1.14.1) (2026-11-07)
+
+
+### Bug Fixes
+
+* switch and checkbox keep their shape when the label wraps ([9cc548d](https://github.com/khsura/sui/commit/9cc548d74986f4ededa0b3b9a212c0bf23b93b04))
+* switch and checkbox keep their shape when the label wraps ([6f9b4d0](https://github.com/khsura/sui/commit/6f9b4d043f8ec99763c26fb013c7f8b99e7fb320))
+
 ## [1.14.0](https://github.com/khsura/sui/compare/root-v1.13.3...root-v1.14.0) (2026-10-27)
 
 
