@@ -181,3 +181,33 @@ describe('SAutocomplete - allowUnlisted', () => {
     })
   })
 })
+
+describe('SAutocomplete - label', () => {
+  test('draws the label above the field and ties it to the input', () => {
+    const { wrapper, input } = setup({ label: 'Employee' })
+    const label = wrapper.find('.s_autocomplete__label')
+
+    expect(label.text()).toBe('Employee')
+    expect(input.attributes('id')).toBeTruthy()
+    expect(label.attributes('for')).toBe(input.attributes('id'))
+  })
+
+  test('uses the given id for the input and the label', () => {
+    const { wrapper, input } = setup({ label: 'Employee', id: 'employee-picker' })
+
+    expect(input.attributes('id')).toBe('employee-picker')
+    expect(wrapper.find('.s_autocomplete__label').attributes('for')).toBe('employee-picker')
+  })
+
+  test('draws no label when none is given', () => {
+    const { wrapper } = setup()
+
+    expect(wrapper.find('.s_autocomplete__label').exists()).toBe(false)
+  })
+
+  test('hides the label under hideDetails, as SSelect does', () => {
+    const { wrapper } = setup({ label: 'Employee', hideDetails: true })
+
+    expect(wrapper.find('.s_autocomplete__label').attributes('style')).toContain('display: none')
+  })
+})

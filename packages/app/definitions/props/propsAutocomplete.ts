@@ -6,6 +6,14 @@ export type PropsAutocomplete<T extends boolean = false> = {
   // Model value
   modelValue?: AutocompleteModelType<T>
 
+  // Label, as SSelect and SInput draw theirs
+  /** @description A label above the field, tied to its input. */
+  label?: string | null
+  /** @description The input's id; one is generated when absent, so the label can point at it. */
+  id?: string
+  /** @description Hides the label, as `hideDetails` does on SSelect. */
+  hideDetails?: boolean
+
   // Items and filtering
   items?: SelectItem[] | string[]
   filter?: (item: SelectItem, queryText: string) => boolean
