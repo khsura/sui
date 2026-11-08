@@ -104,8 +104,10 @@ $s_checkbox--size: 24px;
     display: block;
   }
 
+  // Hidden from sight only: it stays in the accessibility tree and the Tab
+  // order, and `__container` (position: relative) keeps it in place.
   &__input {
-    display: none;
+    @include s_visuallyHidden();
   }
 
   &__label {
@@ -216,6 +218,12 @@ $s_checkbox--size: 24px;
     .s_checkbox__label {
       cursor: default;
     }
+  }
+
+  // Keyboard focus only, so a mouse click does not leave a ring behind
+  &__input:focus-visible + &__label::before {
+    outline: 2px solid s_getPresetColor('info');
+    outline-offset: 2px;
   }
 
   &:not(&--disabled, &--readonly):hover &__label::before {

@@ -1,6 +1,7 @@
 <template>
   <div :class="classList" :style="styleListBorder">
-    <button :class="classListButton" @click="updateValue" :type="getButtonType(type)">
+    <!-- tabindex -1: the radio input is the Tab stop; its click bubbles here -->
+    <button :class="classListButton" @click="updateValue" :type="getButtonType(type)" tabindex="-1">
       <input
         :id="computedId"
         type="radio"
@@ -12,7 +13,9 @@
       />
       <span :class="classListRadio">
         <slot name="label" :attrs="{ class: classListLabel }">
-          <label v-if="label" v-show="!groupProps?.hideDetails" :for="id" :class="classListLabel">{{ label }}</label>
+          <label v-if="label" v-show="!groupProps?.hideDetails" :for="computedId" :class="classListLabel">{{
+            label
+          }}</label>
         </slot>
       </span>
     </button>
@@ -157,8 +160,10 @@ const updateValue = async () => {
     }
   }
 
+  // Hidden from sight only: it stays in the accessibility tree and is the
+  // radio's single Tab stop. `__button` (position: relative) keeps it in place.
   &__input {
-    display: none;
+    @include s_visuallyHidden();
   }
 
   &__radio {
@@ -204,6 +209,12 @@ const updateValue = async () => {
     position: relative;
     pointer-events: none;
     cursor: inherit;
+  }
+
+  // Keyboard focus only, so a mouse click does not leave a ring behind
+  &__input:focus-visible + &__radio::before {
+    outline: 2px solid s_getPresetColor('info');
+    outline-offset: 2px;
   }
 }
 </style>

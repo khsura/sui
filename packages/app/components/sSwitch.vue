@@ -1,6 +1,15 @@
 <template>
   <div class="s_switch" :class="switchClasses">
-    <input :id="id" v-model="modelValue" type="checkbox" class="s_switch__input" />
+    <input
+      :id="inputId"
+      v-model="modelValue"
+      type="checkbox"
+      role="switch"
+      class="s_switch__input"
+      :disabled="props.disabled ?? false"
+      :aria-readonly="props.readonly || undefined"
+      @click="preventReadonlyToggle"
+    />
     <div
       :key="`${modelValue}`"
       class="s_switch__button"
@@ -8,13 +17,13 @@
       :class="switchButtonClasses"
       @click="toggle"
     ></div>
-    <label v-if="label || $slots.label" class="s_switch__label" :for="id" :class="switchLabelClasses">
+    <label v-if="label || $slots.label" class="s_switch__label" :for="inputId" :class="switchLabelClasses">
       <slot name="label">{{ label }}</slot>
     </label>
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useId } from 'vue'
 import { CssColor } from '@/app/constants'
 import type { PropsSwitch } from '@/app/definitions'
 import { useColorService, useComponentDefaultsService, useDisabledService } from '@/app/services'
@@ -24,6 +33,8 @@ const props = useComponentDefaultsService('SSwitch', rawProps)
 const modelValue = defineModel<boolean>()
 const { classListDisabled, classListTextDisabled } = useDisabledService(props)
 const { colorVariable } = useColorService(props)
+const innerId = useId()
+const inputId = computed(() => props.id ?? innerId)
 
 const switchClasses = computed(() => {
   return {
@@ -61,16 +72,26 @@ const switchLabelClasses = computed(() => {
 const toggle = () => {
   modelValue.value = !modelValue.value
 }
+
+// A readonly switch looks interactive to the keyboard, so cancel the native toggle
+const preventReadonlyToggle = (event: MouseEvent) => {
+  if (props.readonly) {
+    event.preventDefault()
+  }
+}
 </script>
 
 <style lang="scss">
 .s_switch {
+  position: relative;
   display: inline-flex;
   // A label that wraps grows downward from the button's line, not around it.
   align-items: flex-start;
 
+  // Hidden from sight only: it stays in the accessibility tree and the Tab
+  // order. `position: relative` above keeps it in place, so focus never scrolls.
   &__input {
-    display: none;
+    @include s_visuallyHidden();
   }
 
   &__button {
@@ -114,6 +135,12 @@ const toggle = () => {
     // The button's height, so a one-line label sits centred on it as before.
     line-height: 24px;
     cursor: pointer;
+  }
+
+  // Keyboard focus only, so a mouse click does not leave a ring behind
+  &__input:focus-visible + &__button {
+    outline: 2px solid s_getPresetColor('info');
+    outline-offset: 2px;
   }
 }
 </style>
