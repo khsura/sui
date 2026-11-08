@@ -34,7 +34,11 @@ import { type Ref, computed, ref, getCurrentInstance, watch, onBeforeMount, onBe
 import { onClickOutside } from '@vueuse/core'
 import SOverlay from '@/app/components/sOverlay.vue'
 import { ProviderPropsName } from '@/app/configs'
-import { navigationDrawerDefaultWidth } from '@/app/constants'
+import {
+  navigationDrawerDefaultWidth,
+  navigationDrawerEdgeSwipeZone,
+  navigationDrawerSwipeMinDistance,
+} from '@/app/constants'
 import { getNumericCssAttribute } from '@/app/lib'
 import {
   useComponentDefaultsService,
@@ -83,7 +87,7 @@ const swipeLeft = (e: TouchWrapper) => {
 
   calculateTouchArea()
 
-  if (Math.abs(e.touchendX - e.touchstartX) < 100) {
+  if (Math.abs(e.touchendX - e.touchstartX) < navigationDrawerSwipeMinDistance) {
     return
   }
 
@@ -105,7 +109,7 @@ const swipeRight = (e: TouchWrapper) => {
 
   calculateTouchArea()
 
-  if (Math.abs(e.touchendX - e.touchstartX) < 100) {
+  if (Math.abs(e.touchendX - e.touchstartX) < navigationDrawerSwipeMinDistance) {
     return
   }
 
@@ -422,12 +426,62 @@ const on = {
   mouseleave,
 }
 
+/**
+ * Opening a closed mobile drawer by swiping in from its edge.
+ *
+ * The drawer's own touch listeners cannot do it: closed, the drawer is off
+ * screen, so a swipe on the page never reaches it — only swipe-to-close ever
+ * fired. While it is closed, the document listens instead, for a horizontal
+ * swipe that starts within `navigationDrawerEdgeSwipeZone` of the drawer's
+ * edge of the viewport and travels `navigationDrawerSwipeMinDistance`. The
+ * zone is narrow so a table scrolling sideways keeps its swipe.
+ */
+const openFromEdge = (e: TouchWrapper, fromRight: boolean) => {
+  if (model.value || isRight.value !== fromRight) {
+    return
+  }
+
+  if (Math.abs(e.touchendX - e.touchstartX) < navigationDrawerSwipeMinDistance) {
+    return
+  }
+
+  const viewportWidth = document.documentElement.clientWidth
+
+  const startsAtEdge = fromRight
+    ? e.touchstartX >= viewportWidth - navigationDrawerEdgeSwipeZone
+    : e.touchstartX <= navigationDrawerEdgeSwipeZone
+
+  if (startsAtEdge) {
+    model.value = true
+  }
+}
+
+const edgeTouch = useTouchService({
+  left: (e) => openFromEdge(e, true),
+  right: (e) => openFromEdge(e, false),
+})
+
+const listensForEdgeSwipe = computed(() => !props.touchless && isMobile.value && !model.value)
+
+const bindEdgeSwipe = () => {
+  document.addEventListener('touchstart', edgeTouch.touchstart, { passive: true })
+  document.addEventListener('touchend', edgeTouch.touchend, { passive: true })
+}
+
+const unbindEdgeSwipe = () => {
+  document.removeEventListener('touchstart', edgeTouch.touchstart)
+  document.removeEventListener('touchend', edgeTouch.touchend)
+}
+
 onBeforeMount(() => {
   bindResizer()
+
+  watch(listensForEdgeSwipe, (listens) => (listens ? bindEdgeSwipe() : unbindEdgeSwipe()), { immediate: true })
 })
 
 onBeforeUnmount(() => {
   unbindResizer()
+  unbindEdgeSwipe()
   layoutApp.value[layoutSide.value] = 0
 })
 </script>
