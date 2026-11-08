@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.17.0](https://github.com/khsura/sui/compare/sui-v1.16.2...sui-v1.17.0) (2026-11-08)
+
+
+### Features
+
+* **autocomplete:** label prop, and the field as tall as SSelect ([46cbeae](https://github.com/khsura/sui/commit/46cbeaeec6721c6978c97ed071fdf86a82816af0))
+* **autocomplete:** label prop, and the field as tall as SSelect ([3b245f3](https://github.com/khsura/sui/commit/3b245f393bdcf50ec853a6d69a5d9611cb90a20c))
+
 ## [1.16.2](https://github.com/khsura/sui/compare/sui-v1.16.1...sui-v1.16.2) (2026-11-08)
 
 

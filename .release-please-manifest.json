@@ -1,5 +1,5 @@
 {
-  ".": "1.14.2",
-  "packages/app": "1.16.2",
+  ".": "1.15.0",
+  "packages/app": "1.17.0",
   "packages/shared": "1.2.2"
 }
