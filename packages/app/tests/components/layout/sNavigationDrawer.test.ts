@@ -197,3 +197,107 @@ describe('SNavigationDrawer', () => {
     expect(wrapper.emitted('update:width')?.[0]?.[0]).toBeGreaterThan(chatWidth)
   })
 })
+
+/**
+ * A closed mobile drawer opens on a swipe in from its own edge. The drawer's
+ * own listeners can't see it — it is off screen while closed — so the
+ * document listens until it opens.
+ */
+describe('SNavigationDrawer - edge swipe', () => {
+  const phoneWidth = 390
+
+  const EdgeLayout = defineComponent({
+    components: { SApp, SLayout, SMain, SNavigationDrawer },
+    props: { touchless: { type: Boolean, default: false }, forceMobile: { type: Boolean, default: true } },
+    setup() {
+      return { isOpen: ref(false), layoutName, navWidth }
+    },
+    template: `
+      <SApp>
+      <SLayout :name="layoutName">
+        <SNavigationDrawer :for="layoutName" v-model="isOpen" location="right" :width="navWidth" :force-mobile="forceMobile" :touchless="touchless" />
+        <SMain :for="layoutName">content</SMain>
+      </SLayout>
+      </SApp>
+    `,
+  })
+
+  const touch = (type: 'touchstart' | 'touchend', clientX: number) => {
+    const event = new Event(type, { bubbles: true })
+
+    Object.defineProperty(event, 'changedTouches', { value: [{ clientX, clientY: 300 }] })
+    document.body.dispatchEvent(event)
+  }
+
+  const swipe = async (fromX: number, toX: number) => {
+    touch('touchstart', fromX)
+    touch('touchend', toX)
+    await nextTick()
+  }
+
+  beforeEach(() => {
+    const overlaysContainer = document.createElement('div')
+
+    overlaysContainer.id = overlaysContainerId
+    document.body.appendChild(overlaysContainer)
+    Object.defineProperty(document.documentElement, 'clientWidth', { value: phoneWidth, configurable: true })
+    // A mobile drawer that opens blocks background scrolling and stores the
+    // scroll offset; happy-dom reports none, which reads back as NaN.
+    Object.defineProperty(window, 'scrollX', { value: 0, configurable: true })
+    Object.defineProperty(window, 'scrollY', { value: 0, configurable: true })
+  })
+
+  afterEach(() => {
+    document.body.innerHTML = ''
+    document.documentElement.removeAttribute('style')
+  })
+
+  test('a swipe left from the right edge opens a closed right drawer', async () => {
+    const wrapper = mount(EdgeLayout, { attachTo: document.body })
+
+    await nextTick()
+    await swipe(phoneWidth - 8, 200)
+
+    expect(wrapper.vm.isOpen).toBe(true)
+  })
+
+  test('a swipe that starts away from the edge leaves it closed, so a sideways scroll keeps its swipe', async () => {
+    const wrapper = mount(EdgeLayout, { attachTo: document.body })
+
+    await nextTick()
+    await swipe(200, 20)
+
+    expect(wrapper.vm.isOpen).toBe(false)
+  })
+
+  test('a short swipe from the edge leaves it closed', async () => {
+    const wrapper = mount(EdgeLayout, { attachTo: document.body })
+
+    await nextTick()
+    await swipe(phoneWidth - 8, phoneWidth - 60)
+
+    expect(wrapper.vm.isOpen).toBe(false)
+  })
+
+  test('a touchless drawer does not open on a swipe', async () => {
+    const wrapper = mount(EdgeLayout, { attachTo: document.body, props: { touchless: true } })
+
+    await nextTick()
+    await swipe(phoneWidth - 8, 200)
+
+    expect(wrapper.vm.isOpen).toBe(false)
+  })
+
+  test('a desktop drawer does not listen for the swipe', async () => {
+    window.innerWidth = 1280
+
+    const wrapper = mount(EdgeLayout, { attachTo: document.body, props: { forceMobile: false } })
+
+    await nextTick()
+    wrapper.vm.isOpen = false
+    await nextTick()
+    await swipe(phoneWidth - 8, 200)
+
+    expect(wrapper.vm.isOpen).toBe(false)
+  })
+})
