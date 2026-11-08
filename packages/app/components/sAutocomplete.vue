@@ -1,5 +1,6 @@
 <template>
   <div class="s_autocomplete">
+    <label v-if="label" v-show="!hideDetails" :for="inputId" class="s_autocomplete__label">{{ label }}</label>
     <div ref="activatorElement" class="s_autocomplete__inputField">
       <div class="s_autocomplete__inputFieldContent" :class="{ 's_autocomplete__inputFieldContent--focus': isFocused }">
         <template v-if="Array.isArray(model) && model.length > 0">
@@ -47,6 +48,7 @@
           class="s_autocomplete__inputContainer"
         >
           <input
+            :id="inputId"
             class="s_autocomplete__input"
             :placeholder="placeholder"
             v-model="queryText"
@@ -110,7 +112,7 @@
   </div>
 </template>
 <script lang="ts" setup generic="T extends boolean = false">
-import { watch, useTemplateRef } from 'vue'
+import { computed, useId, useTemplateRef, watch } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
 import { getSelectItem } from '../helpers'
 import type { AutocompleteEmitEvents, AutocompleteModelType, AutocompleteModelTypeBase } from '../types/autocomplete'
@@ -138,6 +140,9 @@ const emit = defineEmits<AutocompleteEmitEvents>()
 const activatorElement = useTemplateRef('activatorElement')
 const contentElement = useTemplateRef('contentElement')
 const inputElement = useTemplateRef('inputElement')
+const innerId = useId()
+/** The input's id, so a `label` can point at it — the caller's, or a generated one. */
+const inputId = computed(() => props.id ?? innerId)
 
 const {
   queryText,
@@ -199,6 +204,15 @@ watch(
 .s_autocomplete {
   position: relative;
 
+  // The label SSelect draws (`.s_select__label`), so an autocomplete beside a
+  // select or an input reads as the same kind of field.
+  &__label {
+    @include s_typography('caption');
+    display: block;
+    padding: $s_spacer calc($s_spacer * 4);
+    color: s_getAppColor('secondaryText');
+  }
+
   &__inputFieldContent {
     @include s_borderRadius();
     position: relative;
@@ -209,6 +223,10 @@ watch(
     align-items: center;
     width: 100%;
     max-width: 100%;
+
+    // As tall as SSelect's activator (the default button size, 36px), so an
+    // autocomplete in a row of selects and inputs lines up with them.
+    min-height: calc($s_spacer * 9);
     padding: $s_spacer;
     font-family: $s_inputFontFamily;
     line-height: 1.1;
