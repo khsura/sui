@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.15.1](https://github.com/khsura/sui/compare/root-v1.15.0...root-v1.15.1) (2026-11-08)
+
+
+### Bug Fixes
+
+* **navigation-drawer:** a swipe in from the edge opens a closed mobile drawer ([02ff4fe](https://github.com/khsura/sui/commit/02ff4fef7e025203e3db5523b6851b343827a88c))
+* **navigation-drawer:** a swipe in from the edge opens a closed mobile drawer ([19265ba](https://github.com/khsura/sui/commit/19265bac62e3de1a8d12a3d26e34fc7e678811d8))
+
 ## [1.15.0](https://github.com/khsura/sui/compare/root-v1.14.2...root-v1.15.0) (2026-11-08)
 
 
