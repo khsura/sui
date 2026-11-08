@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.16.2](https://github.com/khsura/sui/compare/sui-v1.16.1...sui-v1.16.2) (2026-11-08)
+
+
+### Bug Fixes
+
+* checkbox, radio and switch inputs reachable by keyboard and screen readers ([a5bf60a](https://github.com/khsura/sui/commit/a5bf60aac8b9a778f1c2f70f40abc653903976e2))
+* checkbox, radio and switch inputs reachable by keyboard and screen readers ([f0ac0fc](https://github.com/khsura/sui/commit/f0ac0fccd7a4823d2444a76ab93f1901b8b37513))
+
 ## [1.16.1](https://github.com/khsura/sui/compare/sui-v1.16.0...sui-v1.16.1) (2026-11-07)
 
 
