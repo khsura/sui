@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.18.0](https://github.com/khsura/sui/compare/sui-v1.17.1...sui-v1.18.0) (2026-11-12)
+
+
+### Features
+
+* **window:** export SWindow and SWindowItem; respect initial v-model ([#143](https://github.com/khsura/sui/issues/143)) ([eaef586](https://github.com/khsura/sui/commit/eaef586957d3dd7e55647ffcd950381a39f2cb26))
+
+
+### Bug Fixes
+
+* **date-picker:** default to today ±5 years when min/max are unset ([#141](https://github.com/khsura/sui/issues/141)) ([caaf82e](https://github.com/khsura/sui/commit/caaf82e9fbb8eb7f558f5367ab3c5fb6f3b7b35f))
+* **window:** bind color styles with :style, not :styles ([#145](https://github.com/khsura/sui/issues/145)) ([e202171](https://github.com/khsura/sui/commit/e2021715a62022d67aa8f7b5fe358cbc1fe80725))
+
 ## [1.17.1](https://github.com/khsura/sui/compare/sui-v1.17.0...sui-v1.17.1) (2026-11-08)
 
 
