@@ -1,6 +1,6 @@
 # SBreadcrumbs
 
-**Import:** `import { SBreadcrumbs } from '@khsura/sui'`
+**Import:** `import { SBreadcrumbs, type BreadcrumbsItem } from '@khsura/sui'`
 
 Navigation trail showing the current page's location in a hierarchy.
 
@@ -8,28 +8,30 @@ Navigation trail showing the current page's location in a hierarchy.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `items` | `BreadcrumbsItem[]` | `[]` | Array of breadcrumb entries |
-| `divider` | `string` | `'/'` | Separator character between items |
+| `items` | `BreadcrumbsItem[]` | `undefined` | Array of breadcrumb entries |
+| `divider` | `string` | `'/'` | Separator text between items |
 | `large` | `boolean` | `false` | Larger text size |
-| `color` | `string` | `undefined` | Link color |
-| `colorThreshold` | `number` | `undefined` | Auto text contrast threshold |
+| `color` | `string \| null` | `undefined` | Text color of the enabled (link) items |
 
 ### BreadcrumbsItem shape
 
 ```typescript
-type BreadcrumbsItem = {
-  text: string        // Display label
-  to?: RouteLocationRaw   // Router link destination
-  href?: string       // External link href
-  disabled?: boolean  // Grayed out (current page)
+interface BreadcrumbsItem {
+  text: string | number    // Display label
+  to?: RouteLocationRaw    // Renders a router-link
+  href?: string            // Renders an <a>
+  disabled?: boolean       // Renders a plain <span>, grayed out
+  link?: boolean           // Declared on the type, not used by the component
 }
 ```
+
+Each item renders as `router-link` if `to` is set, else `<a>` if `href` is set, else `<span>`. A disabled item is always a `<span>`.
 
 ## Slots
 
 | Slot | Description |
 |------|-------------|
-| `custom-divider` | Custom divider element |
+| `custom-divider` | Replaces the divider text |
 
 ## Events
 
@@ -42,7 +44,7 @@ None.
 <SBreadcrumbs :items="[
   { text: 'Home', to: '/' },
   { text: 'Products', to: '/products' },
-  { text: 'Item', disabled: true },
+  { text: 'Item' },
 ]" />
 
 <!-- Custom divider character -->
@@ -55,8 +57,8 @@ None.
   </template>
 </SBreadcrumbs>
 
-<!-- Large size -->
-<SBreadcrumbs :items="breadcrumbs" large />
+<!-- Large size, colored links -->
+<SBreadcrumbs :items="breadcrumbs" large color="primary" />
 ```
 
 ```typescript
@@ -67,3 +69,9 @@ const breadcrumbs = computed(() => [
   { text: user.value.name, disabled: true },
 ])
 ```
+
+## Notes
+
+- The **last item is disabled automatically** (current page) unless you set `disabled: false` on it explicitly.
+- Disabled items ignore `color`.
+- `to` wins over `href` when both are set; `to` requires vue-router in the app.

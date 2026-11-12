@@ -9,27 +9,28 @@ A versatile button component supporting multiple variants, sizes, colors, and li
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `color` | `string` | `undefined` | Background color — preset names (`primary`, `secondary`, `error`, etc.) or any CSS color |
-| `variant` | `'fab' \| 'text' \| 'icon' \| null` | `null` | Visual variant. `fab` = floating action button, `text` = no background, `icon` = circular icon button |
+| `variant` | `'fab' \| 'text' \| 'icon' \| null` | `undefined` | Visual variant. `fab` = floating action button, `text` = no background, `icon` = circular icon button. No other values exist |
 | `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `undefined` | Preset size |
 | `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | HTML button type |
-| `loading` | `boolean` | `false` | Show loading spinner (disables button while loading) |
+| `loading` | `boolean` | `false` | Replaces the content with a spinner and disables the button |
 | `block` | `boolean` | `false` | Full-width button |
-| `rounded` | `boolean` | `false` | Rounded corners (pill shape) |
+| `rounded` | `boolean` | `false` | Pill shape (ignored for `variant="icon"`) |
 | `disabled` | `boolean` | `false` | Disable interactions |
-| `elevation` | `0–24 \| ''` | `undefined` | Box shadow depth |
-| `outlined` | `boolean` | `false` | Outlined/border style (transparent background) |
+| `elevation` | `0–24 \| '' \| null` | `undefined` | Box shadow depth |
+| `outlined` | `boolean` | `false` | Outlined/border style, text-colored (transparent background) |
 | `underlined` | `boolean` | `false` | Underlined text style |
-| `borderRadius` | `'tile' \| 'rounded' \| number \| string` | `undefined` | Custom border radius |
-| `href` | `string \| null` | `null` | Renders as `<a>` tag with this href |
-| `to` | `RouteLocationRaw \| null` | `null` | Vue Router link destination |
-| `target` | `'_blank' \| '_self' \| '_parent' \| '_top'` | `undefined` | Link target (when using `href`) |
-| `rel` | `string \| null` | `undefined` | Link rel attribute |
-| `tag` | `'button' \| 'a'` | `'button'` | Override root element tag |
+| `borderRadius` | `'tile' \| 'rounded' \| number \| string` | `undefined` | Custom border radius (`8`, `'8px'`, `'1rem'`, ...) |
+| `href` | `string \| null` | `undefined` | Renders as `<a>` tag with this href |
+| `to` | `RouteLocationRaw \| null` | `undefined` | Renders a `router-link` (needs vue-router). Wins over `href` if both are set |
+| `target` | `'_blank' \| '_self' \| '_parent' \| '_top'` | `undefined` | Link target (only applied with `href`) |
+| `rel` | `string \| null` | `undefined` | Link rel attribute (only applied with `href`) |
+| `tag` | `'button' \| 'a'` | `'button'` | Root element tag when neither `href` nor `to` is set |
+| `theme` | `AppThemeType` | `undefined` | Theme override |
 | `width` / `height` | `string \| number` | `undefined` | Explicit dimensions |
 | `minWidth` / `maxWidth` | `string \| number` | `undefined` | Min/max width constraints |
 | `minHeight` / `maxHeight` | `string \| number` | `undefined` | Min/max height constraints |
-| `value` | `any` | `undefined` | Used when inside `SBottomNavigation` group |
-| `colorThreshold` | `number` | `undefined` | Threshold for auto text color contrast |
+| `value` | `string \| number \| boolean` | `undefined` | Selection value when used inside `SBottomNavigation` |
+| `colorThreshold` | `number` | `undefined` | Luminance threshold for automatic light/dark text |
 
 ## Events
 
@@ -41,7 +42,7 @@ A versatile button component supporting multiple variants, sizes, colors, and li
 
 | Slot | Description |
 |------|-------------|
-| `default` | Button label / content |
+| `default` | Button label / content (hidden while `loading`) |
 
 ## Usage
 
@@ -74,7 +75,7 @@ A versatile button component supporting multiple variants, sizes, colors, and li
 <SButton block color="primary">Full Width</SButton>
 
 <!-- Link -->
-<SButton href="https://example.com" target="_blank">External Link</SButton>
+<SButton href="https://example.com" target="_blank" rel="noopener">External Link</SButton>
 
 <!-- Router link -->
 <SButton :to="{ name: 'home' }">Home</SButton>
@@ -88,7 +89,9 @@ A versatile button component supporting multiple variants, sizes, colors, and li
 
 ## Notes
 
-- When `href` or `to` is provided, the root element is automatically rendered as `<a>` regardless of the `tag` prop.
+- When `to` is provided the root renders as `router-link`; when `href` is provided it renders as `<a>` — regardless of the `tag` prop. Pass one of them, not both.
+- There is no `icon` prop — nest `<SIcon icon="..." />` inside. `SIcon` renders nothing unless the app loads `@mdi/font`.
+- `outlined` is a boolean prop, not a `variant` value.
 - Inside `SBottomNavigation`, the button participates in group selection via the `value` prop.
 - Inside `SToolbar`, the button automatically inherits dark/light styling from the toolbar color.
 - `loading` implicitly disables the button — no need to also set `disabled`.

@@ -25,15 +25,16 @@ v-scroll="{ handler, options }"
 
 ### Argument
 
-Pass a CSS selector string as the argument to listen on a specific scrollable container:
+Pass a CSS selector as a dynamic argument to listen on a specific scrollable container. The selector is resolved with `document.querySelector` once, when the directive mounts — the target must already exist then (otherwise no listener is attached):
 
 ```html
-v-scroll:['.my-container']="onScroll"
+<!-- script: const containerSelector = '.my-container' -->
+v-scroll:[containerSelector]="onScroll"
 ```
 
 ### Value
 
-Either a plain handler function or an options object:
+A plain handler function, an `EventListenerObject` (`{ handleEvent }`, optionally with `options`), or an options object. A string value is not supported (it throws):
 
 ```typescript
 // Plain function
@@ -47,12 +48,24 @@ v-scroll="{ handler: (event) => void, options: AddEventListenerOptions }"
 
 ```vue
 <script setup lang="ts">
-const onWindowScroll = (event: Event) => {
-  console.log('scrollY:', window.scrollY)
+import { ref } from 'vue'
+
+const windowScrollY = ref(0)
+const panelScrollTop = ref(0)
+const sidebarSelector = '.sidebar'
+
+const onWindowScroll = () => {
+  windowScrollY.value = window.scrollY
 }
 
 const onSelfScroll = (event: Event) => {
-  console.log('element scrollTop:', (event.target as HTMLElement).scrollTop)
+  if (event.target instanceof HTMLElement) {
+    panelScrollTop.value = event.target.scrollTop
+  }
+}
+
+const onScroll = () => {
+  // react to the sidebar's scroll
 }
 </script>
 
@@ -70,8 +83,8 @@ const onSelfScroll = (event: Event) => {
     Scrollable content
   </div>
 
-  <!-- Listen on a specific container by CSS selector -->
-  <div v-scroll="'.sidebar'" @scroll="onScroll">...</div>
+  <!-- Listen on a specific container by CSS selector (it must exist when this mounts) -->
+  <div v-scroll:[sidebarSelector]="onScroll">...</div>
 
   <!-- With passive option (better performance for scroll-tracking) -->
   <div v-scroll="{ handler: onScroll, options: { passive: true } }">...</div>
@@ -81,7 +94,7 @@ const onSelfScroll = (event: Event) => {
 ### Notes
 
 - The listener is automatically removed on component unmount.
-- Uses `passive: true` by default for performance.
+- Uses `passive: true` when no `options` are given.
 - When using `.self`, the element must have `overflow: auto` or `overflow: scroll` and a fixed height.
 
 ---
@@ -145,36 +158,38 @@ const onResize = () => {
 
 ## useScroll composable (Smooth Scroll)
 
-Not a directive, but commonly used alongside scroll behavior. Provides smooth scroll helpers.
+Not a directive, but commonly used alongside scroll behavior. Provides scroll helpers. It returns functions only — there are no reactive `scrollX` / `scrollY` values (read `window.scrollY` in a `v-scroll` handler instead).
 
 ```typescript
 import { useScroll } from '@khsura/sui'
 
-const { smoothScrollTo, scrollIntoView, scrollX, scrollY } = useScroll()
+const { smoothScrollTo, scrollIntoView, smoothElementScroll, hasScrollFeature } = useScroll()
 ```
 
 ### Methods
 
 | Method | Signature | Description |
 |--------|-----------|-------------|
-| `smoothScrollTo` | `(selector: string, options?: ScrollIntoViewOptions) => void` | Smooth-scrolls to a CSS selector target |
-| `scrollIntoView` | `(selector: string, options?: ScrollIntoViewOptions) => void` | Calls `element.scrollIntoView()` with options |
+| `smoothScrollTo` | `(el: HTMLElement \| string \| null, options?: { offsetTop?: number }) => void` | Smooth-scrolls the window so the target (element or CSS selector) reaches the top, minus `offsetTop` px |
+| `scrollIntoView` | `(el: HTMLElement \| string \| null, options?: ScrollToOptions) => void` | Calls `element.scrollIntoView(options)` on the element or CSS selector target. Does nothing when `hasScrollFeature()` is false |
+| `smoothElementScroll` | `(element: HTMLElement \| null, options?: ScrollToOptions) => void` | Scrolls a scrollable element to `options.top` / `options.left` (animated polyfill on Safari) |
+| `hasScrollFeature` | `() => boolean` | Whether the browser supports CSS `scroll-behavior` |
 
 ### Usage
 
 ```vue
 <script setup lang="ts">
-import { useScroll } from '@khsura/sui'
+import { SButton, useScroll } from '@khsura/sui'
 
 const { smoothScrollTo, scrollIntoView } = useScroll()
 </script>
 
 <template>
   <nav>
-    <SButton @click="smoothScrollTo('#section-1', { behavior: 'smooth' })">
+    <SButton @click="smoothScrollTo('#section-1', { offsetTop: 64 })">
       Go to Section 1
     </SButton>
-    <SButton @click="scrollIntoView('#section-2', { behavior: 'smooth', block: 'start' })">
+    <SButton @click="scrollIntoView('#section-2', { behavior: 'smooth' })">
       Go to Section 2
     </SButton>
   </nav>

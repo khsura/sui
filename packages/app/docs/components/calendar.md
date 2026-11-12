@@ -3,26 +3,28 @@
 **Import:** `import { SCalendar } from '@khsura/sui'`
 **Types:** `import type { CalendarEvent, CalendarDate, CalendarComponent } from '@khsura/sui'`
 
-Full-featured calendar with month and week views, events, and navigation.
+Calendar with month and week views, events, and navigation. (`SCalendarMonthly` / `SCalendarWeekly` are internal and not exported.)
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `type` | `'month' \| 'week'` | `'month'` | Calendar view |
-| `focus` | `string` | `''` | Focused date in `'YYYY-MM-DD'` format (use `v-model:focus`) |
-| `events` | `CalendarEvent[]` | `[]` | Events to display |
+| `type` | `'month' \| 'week'` | `'month'` | Calendar view. Set it once — `prev`/`next`/`title` keep the type from mount (see Notes) |
+| `focus` | `string` | today | Focused date in `'YYYY-MM-DD'` format (use `v-model:focus`). Invalid/empty → today |
+| `events` | `CalendarEvent[]` | `undefined` | Events to display |
 | `eventColor` | `(event: CalendarEvent) => string` | `undefined` | Function returning the color for each event |
-| `color` | `string` | `undefined` | Primary color (today highlight, etc.) |
-| `tag` | `string` | `'div'` | Root HTML element |
-| `hideHeader` | `boolean` | `false` | Hide day-of-week header row |
-| `showWeek` | `boolean` | `false` | Show week numbers in month view |
-| `longWeekdays` | `boolean` | `false` | Full weekday names instead of abbreviated |
-| `showMonthOnFirst` | `boolean` | `false` | Show month name on first day of month (month view) |
-| `shortMonths` | `boolean` | `false` | Abbreviated month names |
-| `minWeeks` | `number` | `undefined` | Minimum rows to display (month view) |
-| `eventOverlapMode` | `'stacked' \| 'column'` | `'stacked'` | How overlapping events are displayed (week view) |
-| `allDayRows` | `number` | `undefined` | Number of all-day event rows (week view) |
+| `color` | `string` | `undefined` | Highlight color |
+| `tag` | `string` | — | Typed but ignored (root is always a `div`) |
+| `hideHeader` | `boolean` | `false` | *Week view:* hide the weekday header |
+| `showWeek` | `boolean` | `false` | *Week view:* show week numbers |
+| `longWeekdays` | `boolean` | `false` | *Week view:* full weekday names instead of abbreviated |
+| `showMonthOnFirst` | `boolean` | `false` | *Week view:* show month name on the first day of the month |
+| `shortMonths` | `boolean` | `false` | *Week view:* abbreviated month names |
+| `minWeeks` | `number` | `1` | *Week view:* minimum weeks rendered |
+| `eventOverlapMode` | `'stacked' \| 'column'` | `'column'` | *Week view:* how overlapping timed events are displayed |
+| `allDayRows` | `number` | `7` | *Week view:* number of all-day event rows |
+
+The week-view props are only passed to the week view; they have no effect when `type="month"`.
 
 ## Model
 
@@ -32,29 +34,49 @@ Full-featured calendar with month and week views, events, and navigation.
 
 | Event | Payload | Description |
 |-------|---------|-------------|
-| `change` | `{ start: CalendarDate, end: CalendarDate }` | Visible date range changed (use to load events) |
-| `click:date` | `CalendarDate` | A date cell was clicked |
-| `click:event` | `CalendarEvent` | An event was clicked |
-| `click:time` | `CalendarDate` | A time slot was clicked (week view) |
+| `update:focus` | `string` | Focused date changed |
+| `change` | `{ start: CalendarDate, end: CalendarDate }` | Focus changed (navigation or date click); range of the new month/week. Not emitted on mount |
+| `click:date` | `{ date: CalendarDate, events: CalendarEvent[] }` | A date cell was clicked (focus also moves there) |
+| `click:event` | `{ date: CalendarDate, event: CalendarEvent }` | An event was clicked |
+| `click:time` | `{ date: CalendarDate, events: CalendarEvent[] }` | A time slot was clicked (week view) |
+
+## Slots
+
+| Slot | Scoped data | Description |
+|------|-------------|-------------|
+| `event` | `{ event }` | Month view only — custom event content. `event` also carries `isStartDate`, `isEndDate`, `isWeekStart`, `isWeekEnd` |
 
 ## Component Methods (via template ref)
 
 ```typescript
 // Access via ref="calendar"
-calendar.value?.prev()   // Navigate to previous month/week
-calendar.value?.next()   // Navigate to next month/week
-calendar.value?.title    // Current period title (e.g. "February 2026")
+calendar.value?.prev(n?)  // Navigate back n months/weeks (default 1)
+calendar.value?.next(n?)  // Navigate forward n months/weeks (default 1)
+calendar.value?.title     // Current period title, e.g. '2026年3月' (fixed Japanese format)
 ```
+
+`CalendarComponent` types only the props — `prev`/`next`/`title` are not on it.
 
 ## CalendarEvent shape
 
 ```typescript
-type CalendarEvent = {
-  name: string       // Event display name
-  start: Date        // Start datetime
-  end: Date          // End datetime
-  color?: string     // Event color
-  timed?: boolean    // false = all-day event, true = timed event
+interface CalendarEvent {
+  name: string          // Event display name
+  start: Date | string  // Start datetime
+  end?: Date | string   // End datetime
+  color: string         // Event color (required)
+  timed: boolean        // false = all-day event, true = timed event (required)
+  [key: string]: any
+}
+```
+
+## CalendarDate shape
+
+```typescript
+interface CalendarDate {
+  date: string; time: string
+  year: number; month: number; day: number; hour: number; minute: number; weekday: number
+  past: boolean; present: boolean; future: boolean
 }
 ```
 
@@ -62,15 +84,16 @@ type CalendarEvent = {
 
 ```vue
 <script setup lang="ts">
-import type { CalendarComponent, CalendarDate, CalendarEvent } from '@khsura/sui'
+import { ref } from 'vue'
 import dayjs from 'dayjs'
+import type { CalendarDate, CalendarEvent } from '@khsura/sui'
 
-const calendar = ref<CalendarComponent | null>(null)
+const calendar = ref()
 const focus = ref(dayjs().format('YYYY-MM-DD'))
 const type = ref<'month' | 'week'>('month')
 const events = ref<CalendarEvent[]>([])
 
-// Load events when date range changes
+// Load events when the visible range changes (`change` does not fire on mount — load the first range yourself)
 const onRangeChange = async ({ start, end }: { start: CalendarDate; end: CalendarDate }) => {
   events.value = await api.fetchEvents(start.date, end.date)
 }
@@ -78,7 +101,7 @@ const onRangeChange = async ({ start, end }: { start: CalendarDate; end: Calenda
 
 <template>
   <!-- Navigation toolbar -->
-  <SToolbar>
+  <div class="s_display__flex s_align__center">
     <SButton variant="icon" @click="calendar?.prev()">
       <SIcon icon="mdi-chevron-left" />
     </SButton>
@@ -87,22 +110,21 @@ const onRangeChange = async ({ start, end }: { start: CalendarDate; end: Calenda
       <SIcon icon="mdi-chevron-right" />
     </SButton>
     <SSpacer />
-    <SToggleButtonGroup v-model="type" mandatory>
-      <SToggleButton value="month">Month</SToggleButton>
-      <SToggleButton value="week">Week</SToggleButton>
-    </SToggleButtonGroup>
-  </SToolbar>
+    <SButton @click="type = 'month'">Month</SButton>
+    <SButton @click="type = 'week'">Week</SButton>
+  </div>
 
-  <!-- Calendar -->
+  <!-- Calendar: re-mount on type change so prev/next/title follow the new type -->
   <SCalendar
+    :key="type"
     ref="calendar"
     v-model:focus="focus"
     :type="type"
     :events="events"
     :event-color="event => event.color ?? 'primary'"
     @change="onRangeChange"
-    @click:date="date => console.log('date clicked', date)"
-    @click:event="event => console.log('event clicked', event)"
+    @click:date="({ date, events }) => openDay(date, events)"
+    @click:event="({ event }) => openEvent(event)"
   />
 </template>
 ```
@@ -133,7 +155,9 @@ const onRangeChange = async ({ start, end }: { start: CalendarDate; end: Calenda
 
 ## Notes
 
-- Use `@change` to load events dynamically whenever the user navigates — it fires with the new visible date range.
+- Use `@change` to load events whenever the user navigates — it fires with the new visible date range. It does not fire on first render.
+- Click payloads are objects: `click:date` / `click:time` → `{ date, events }`, `click:event` → `{ date, event }`.
+- `prev`/`next`/`title` capture `type` when the calendar mounts. To switch views, re-mount with `:key="type"`.
 - Access navigation methods (`prev()`, `next()`, `title`) via a template ref on `SCalendar`.
 - `timed: false` renders events as full-day banners; `timed: true` shows them with time blocks (in week view).
 - `v-model:focus` controls which date the calendar is centered on — update it programmatically to jump to a date.

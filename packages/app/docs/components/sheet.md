@@ -9,8 +9,9 @@ A styled surface/container component. Similar to a card but without built-in str
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `color` | `string` | `undefined` | Background color — preset name or CSS color |
-| `elevation` | `0–24` | `undefined` | Box shadow depth |
-| `outlined` | `boolean` | `false` | Border instead of elevation |
+| `theme` | `'light' \| 'dark'` | `undefined` | Force light/dark text styling |
+| `elevation` | `0–24` | `undefined` (no shadow) | Box shadow depth |
+| `outlined` | `boolean` | `false` | Border |
 | `underlined` | `boolean` | `false` | Bottom border only |
 | `borderRadius` | `'tile' \| 'rounded' \| number \| string` | `undefined` | Custom border radius |
 | `tag` | `string` | `'div'` | Root HTML element |
@@ -61,5 +62,7 @@ None.
 
 ## Notes
 
-- `SSheet` is the base surface primitive — `SCard` builds on top of it with structured slots (title, text, actions).
+- `SSheet` and `SCard` are separate components; `SCard` is not built on `SSheet`. Use `SCard` when you need title/text/actions structure or a link (`href`/`to`).
 - Use `SSheet` when you need a plain colored/elevated container without the card structure.
+- `SSheet` has no padding — add it yourself (e.g. the `s_pa__4` utility class).
+- `SSheet` has no `href`/`to`.

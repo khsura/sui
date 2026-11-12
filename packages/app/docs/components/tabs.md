@@ -2,7 +2,7 @@
 
 **Import:** `import { STabs, STab } from '@khsura/sui'`
 
-Tab navigation bar with configurable appearance and responsive column support.
+Single-select tab strip, built on `SToggleButtonGroup`. It renders only the tab buttons — render the panels yourself (e.g. `v-show` / `v-if` on the model).
 
 ---
 
@@ -14,18 +14,26 @@ Tab strip container.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `modelValue` | `string \| number` | **required** | Currently active tab value |
+| `modelValue` | `string \| number` | **required** | Active tab's `tab` value |
 | `dense` | `boolean` | `false` | Compact tab height |
-| `bordered` | `boolean` | `false` | Bottom border on the tab strip |
-| `selectedTabColor` | `string` | `'primary'` | Active tab indicator color |
+| `bordered` | `boolean` | `false` | Border around the strip and between tabs |
+| `selectedTabColor` | `string` | `'primary'` | Background color of the active tab button |
 | `shrink` | `boolean` | `false` | Shrink tabs to content width (no stretch) |
-| `outlined` | `boolean` | `false` | Outlined tab style |
-| `underlined` | `boolean` | `false` | Underlined active indicator |
-| `borderRadius` | `'tile' \| 'rounded' \| number \| string` | `undefined` | Tab border radius |
+| `outlined` | `boolean \| null` | `undefined` | Outlined border on the strip |
+| `underlined` | `boolean \| null` | `undefined` | Underlined border style on the strip (not an active-tab indicator) |
+| `borderRadius` | `'tile' \| 'rounded' \| number \| string \| null` | `undefined` | Strip border radius |
+
+Exactly one tab is always active (single-select, mandatory).
 
 ### Model
 
 `v-model` / `v-model:modelValue` — the active tab's value.
+
+### Events
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `update:modelValue` | `string \| number` | Active tab changed |
 
 ### Slots
 
@@ -45,8 +53,9 @@ Individual tab item.
 |------|------|---------|-------------|
 | `tab` | `string \| number` | **required** | Value identifying this tab (matched against `STabs` model) |
 | `disabled` | `boolean` | `false` | Disable this tab |
-| `cols` | `number \| string` | `undefined` | Grid column span (1–12) |
-| `sm` / `md` / `lg` / `xl` | `number \| string` | `undefined` | Responsive column breakpoints |
+| `cols` / `sm` / `md` / `lg` | `1–12 \| 'auto' \| 'grow'` (or string form) | `undefined` | Grid column width per breakpoint (there is no `xl`) |
+| `order` | `number` | `undefined` | Flex order |
+| `alignSelf` | CSS `align-self` value | `undefined` | Self alignment |
 
 ### Slots
 
@@ -60,7 +69,10 @@ Individual tab item.
 
 ```vue
 <script setup lang="ts">
+import { ref } from 'vue'
+
 const activeTab = ref(0)
+const activeSection = ref('overview')
 </script>
 
 <template>
@@ -108,4 +120,4 @@ const activeTab = ref(0)
 
 - `modelValue` must match one of the `tab` prop values of the child `STab` components.
 - Use `v-show` (not `v-if`) for tab panels to preserve state when switching tabs.
-- The `cols` / `sm` / `md` etc. props on `STab` use the grid system to control tab width at different breakpoints.
+- The `cols` / `sm` / `md` / `lg` props on `STab` use the grid system to control tab width at different breakpoints.

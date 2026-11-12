@@ -2,28 +2,29 @@
 
 **Import:** `import { SSnackbar } from '@khsura/sui'`
 
-Brief, non-blocking notification message shown at the top or bottom of the screen.
+Brief, non-blocking notification message fixed to the bottom (default) or top of the screen. Offsets itself above an `SBottomNavigation` / below an `SAppBar` from the layout. There is **no `color` prop** — colors come from the theme's `snackbar` color.
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `timeout` | `number \| null` | `null` | Auto-dismiss delay in milliseconds. `null` = stay until manually closed |
-| `location` | `'bottom' \| 'top' \| null` | `'bottom'` | Screen position |
-| `multiLine` | `boolean \| null` | `false` | Allow message to wrap to multiple lines |
-| `outlined` | `boolean` | `false` | Outlined border style |
-| `underlined` | `boolean` | `false` | Underlined style |
-| `borderRadius` | `'tile' \| 'rounded' \| number \| string` | `undefined` | Border radius |
+| `timeout` | `number \| null` | `undefined` | Auto-dismiss delay in milliseconds. Unset/`0`/`null` = stays until `v-model` is set to `false` |
+| `location` | `'bottom' \| 'top' \| null` | `undefined` (bottom) | Screen edge |
+| `multiLine` | `boolean \| null` | `false` | Wrap long text instead of truncating it with an ellipsis |
+| `disabled` | `boolean` | `false` | Passed to the activator via `attrs` |
+| `outlined` | `boolean` | `false` | Declared in the type but **ignored** |
+| `underlined` | `boolean` | `false` | Declared in the type but **ignored** |
+| `borderRadius` | `'tile' \| 'rounded' \| number \| string` | `undefined` | Declared in the type but **ignored** |
 
 ## Model
 
-`v-model` — `boolean` controlling visibility.
+`v-model` — `boolean` controlling visibility. The timeout restarts each time it becomes `true`.
 
 ## Slots
 
 | Slot | Scoped data | Description |
 |------|-------------|-------------|
-| `activator` | `{ on, attrs }` | Optional trigger element |
+| `activator` | `{ on, attrs }` | Optional trigger element; bind both `v-on="on"` and `v-bind="attrs"` |
 | `default` | — | Notification message |
 | `action` | — | Action button(s) shown alongside the message |
 
@@ -73,6 +74,9 @@ None (state managed via `v-model`).
 
 ## Notes
 
-- `timeout="null"` keeps the snackbar visible until `v-model` is set to `false`.
+- Without `timeout` the snackbar stays visible until `v-model` is set to `false` — provide a close action in `#action`.
+- Single-line by default: long text is cut with an ellipsis — use `multi-line`.
+- No `color` prop; `outlined`, `underlined` and `borderRadius` are not applied.
+- The app must be wrapped in `<SApp>` (the snackbar teleports into its overlay container).
 - A `timeout` of `4000`–`6000` ms is recommended for most use cases.
 - For error messages, prefer no auto-dismiss so users can read the full message.

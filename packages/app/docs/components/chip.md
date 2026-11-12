@@ -8,30 +8,31 @@ Small pill-shaped element for tags, filters, or selections. Supports closable, l
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `color` | `string` | `undefined` | Background color — preset name or CSS color |
+| `color` | `string` | `undefined` | Background color — preset name or CSS color (text color with `outlined`/`underlined`) |
 | `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `undefined` | Preset size |
 | `label` | `boolean` | `false` | Square (label) style instead of pill shape |
 | `closable` | `boolean` | `false` | Show a close/dismiss button |
-| `link` | `boolean` | `false` | Make chip clickable with hover effects |
-| `disabled` | `boolean` | `false` | Disable interactions |
-| `outlined` | `boolean` | `false` | Outlined style (transparent background) |
-| `underlined` | `boolean` | `false` | Underlined style |
+| `link` | `boolean` | `false` | Clickable styling with hover effects; required for `click` to be emitted |
+| `disabled` | `boolean` | `false` | Disabled styling |
+| `outlined` | `boolean \| null` | `undefined` | Outlined style (transparent background) |
+| `underlined` | `boolean \| null` | `undefined` | Underlined style |
 | `borderRadius` | `'tile' \| 'rounded' \| number \| string` | `undefined` | Custom border radius |
 | `colorThreshold` | `number` | `undefined` | Auto text contrast threshold |
+| `theme` | `AppThemeType` | `undefined` | Per-component theme override |
 
 ## Events
 
 | Event | Payload | Description |
 |-------|---------|-------------|
-| `close` | — | Emitted when the close button is clicked |
-| `click` | `Event` | Emitted when chip is clicked (requires `link` prop) |
+| `close` | — | Emitted when the close icon is clicked (or `on.close()` is called from the `close` slot) |
+| `click` | `Event` | Emitted when the chip is clicked — **only when `link` is set** |
 
 ## Slots
 
-| Slot | Description |
-|------|-------------|
-| `default` | Chip label text |
-| `close` | Custom close icon (replaces default ✕ icon) |
+| Slot | Scoped data | Description |
+|------|-------------|-------------|
+| `default` | — | Chip label text |
+| `close` | `{ on: { close } }` | Replaces the whole close icon, including its click handler. Only rendered when `closable` |
 
 ## Usage
 
@@ -51,8 +52,8 @@ Small pill-shaped element for tags, filters, or selections. Supports closable, l
 <!-- Closable with custom close icon -->
 <SChip closable @close="remove">
   Tag
-  <template #close>
-    <SIcon icon="mdi-close-circle" size="small" />
+  <template #close="{ on }">
+    <SIcon icon="mdi-close-circle" @click.stop="on.close" />
   </template>
 </SChip>
 
@@ -76,5 +77,8 @@ Small pill-shaped element for tags, filters, or selections. Supports closable, l
 
 ## Notes
 
-- The `close` slot receives no scoped data; use it to render a custom icon inside the close button area.
+- The `close` slot replaces the built-in close icon *and* its click handler — call `on.close` yourself or `close` is never emitted.
+- Without `link`, `click` is never emitted.
+- The chip root stops click propagation, so a parent's click handler does not fire when a chip is clicked.
+- There is no `icon` prop — nest an `SIcon` in the default slot. The default close icon is an `SIcon` and needs `@mdi/font` loaded by the app.
 - `closable` and `link` can be combined — the chip is both clickable and dismissible.

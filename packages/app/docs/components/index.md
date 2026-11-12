@@ -46,14 +46,14 @@ This directory contains per-component documentation optimized for Claude AI codi
 ### Forms
 | File | Components |
 |------|-----------|
-| [form.md](./form.md) | `SForm`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch` |
+| [form.md](./form.md) | `SForm`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` |
 | [autocomplete.md](./autocomplete.md) | `SAutocomplete` |
 
 ### Data Display
 | File | Components |
 |------|-----------|
 | [list.md](./list.md) | `SList`, `SListItem`, `SListItemTitle`, `SListItemSubtitle`, `SListItemIcon`, `SListItemAction`, `SListItemContent`, `SListItemGroup` |
-| [table.md](./table.md) | `STable`, `STableBodyCell`, `STableHeadCell`, `STablePagination` |
+| [table.md](./table.md) | `STable`, `STableBodyCell`, `STableHeadCell` |
 | [progress.md](./progress.md) | `SProgressLinear`, `SProgressCircular` |
 
 ### Content Panels
@@ -89,7 +89,7 @@ This directory contains per-component documentation optimized for Claude AI codi
 
 | Prop | Type | Description |
 |------|------|-------------|
-| `color` | `string` | Background/primary color — preset (`'primary'`, `'secondary'`, `'error'`, `'success'`, `'warning'`) or CSS color |
+| `color` | `string` | Background/primary color — preset (`'primary'`, `'secondary'`, `'error'`, `'warning'`, `'info'`, `'success'`, `'important'`) or CSS color |
 | `elevation` | `0–24` | Box shadow depth |
 | `disabled` | `boolean` | Disable interaction |
 | `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | Preset size (buttons, icons, chips) |
@@ -104,9 +104,9 @@ This directory contains per-component documentation optimized for Claude AI codi
 | `to` | `RouteLocationRaw` | Vue Router link |
 | `colorThreshold` | `number` | Auto text contrast threshold against `color` |
 
-### Activator Pattern (Dialog, Menu, Tooltip, Snackbar)
+### Activator Pattern (Dialog, Menu, Snackbar)
 
-Components with popup behavior use the `#activator` slot:
+These components pass `{ on, attrs }` to their `#activator` slot:
 
 ```vue
 <SMenu>
@@ -119,15 +119,20 @@ Components with popup behavior use the `#activator` slot:
 
 Always bind **both** `v-on="on"` and `v-bind="attrs"`.
 
+`STooltip`'s `#activator` slot passes no `on` / `attrs` — the tooltip wraps the slot content and handles hover itself.
+
 ### v-model Patterns
 
 | Component | v-model type |
 |-----------|-------------|
 | `SDialog`, `SMenu`, `STooltip`, `SSnackbar` | `boolean` |
 | `SInput`, `STextarea`, `SSelect`, `SAutocomplete`, `SSwitch`, `SCheckbox` | value type |
-| `STabs` | `string \| number` (active tab) |
-| `SExpansionPanels` | `number[]` (open panel indexes) |
-| `SCarousel`, `SWindow`, `SSlideGroup`, `SToggleButtonGroup` | item value or `any[]` |
+| `STabs` | `string \| number` (the active `STab`'s `tab` value) |
+| `SExpansionPanels` | `number[]` (the `index` prop of each open panel) |
+| `SCarousel`, `SWindow` | single item value |
+| `SSlideGroup`, `SToggleButtonGroup` | always an array of item identifiers (`index` or vnode `key`) |
+| `SStepper` | `number` (the active step's `step` value) |
+| `SForm` | `boolean` (`true` when valid); also `v-model:errors`, `v-model:error` |
 | `SDatePicker`, `SDatePickerInput` | `string` (`'YYYY-MM-DD'`, `'YYYY-MM'` or `'YYYY'`) |
 | `SNavigationDrawer` | `boolean` |
 | `SCalendar` | `v-model:focus` — `string` (focused date) |
@@ -135,9 +140,10 @@ Always bind **both** `v-on="on"` and `v-bind="attrs"`.
 ### Preset Color Names
 
 ```
-primary  secondary  error  success  warning
-surface  background  on-surface  on-background
+primary  secondary  error  warning  info  success  important
 ```
+
+App colors `background` and `card` are also exposed.
 
 CSS colors and hex values are also accepted.
 

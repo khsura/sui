@@ -2,21 +2,22 @@
 
 **Import:** `import { SDialog } from '@khsura/sui'`
 
-Modal/dialog overlay. Supports bottom sheets, centered dialogs, and fullscreen modes. Controlled via `v-model`.
+Modal/dialog overlay with a scrim. Centered by default; `location="bottom"` gives a bottom sheet; `fullscreen` fills the viewport. Controlled via `v-model`. Background page scroll is locked while open.
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `persistent` | `boolean` | `false` | Prevent closing by clicking the scrim |
-| `scrollable` | `boolean` | `false` | Allow inner content to scroll independently |
+| `persistent` | `boolean` | `false` | Clicking outside does not close the dialog |
+| `scrollable` | `boolean` | `false` | With an `SCard` child: title/actions stay fixed, `SCardText` scrolls |
 | `fullscreen` | `boolean` | `false` | Full-screen dialog |
-| `borderless` | `boolean` | `false` | Remove border/shadow from dialog container |
-| `scrollableBackground` | `boolean` | `false` | Allow the background to scroll while dialog is open |
-| `closeOnClick` | `boolean` | `true` | Close when the scrim is clicked |
-| `location` | `string` | `undefined` | Dialog position: `'top'`, `'bottom'`, `'left'`, `'right'`, or centered (default) |
+| `borderless` | `boolean` | `false` | Declared, but has no styling (no visible effect) |
+| `scrollableBackground` | `boolean` | `false` | Declared, but has no effect — background scroll is always locked |
+| `closeOnClick` | `boolean` | `false` | Declared, but has no effect — use `persistent` to stop outside clicks closing it |
+| `location` | `string \| string[]` | `undefined` | Only `'bottom'` has an effect (bottom sheet); anything else = centered |
+| `zIndex` | `number` | `undefined` | z-index of the overlay layer |
 | `elevation` | `0–24` | `undefined` | Box shadow depth of dialog container |
-| `disabled` | `boolean` | `false` | Disable opening the dialog |
+| `disabled` | `boolean` | `false` | Passed to the activator via `attrs` (disables the trigger element) |
 | `width` / `height` | `string \| number` | `undefined` | Dialog dimensions |
 | `maxWidth` / `maxHeight` | `string \| number` | `undefined` | Max dimensions |
 | `minWidth` / `minHeight` | `string \| number` | `undefined` | Min dimensions |
@@ -75,13 +76,16 @@ None (state managed via `v-model`).
   </SCard>
 </SDialog>
 
-<!-- Scrollable content -->
+<!-- Scrollable content: title and actions stay fixed, SCardText scrolls -->
 <SDialog v-model="scrollDialog" scrollable :max-width="500">
   <SCard>
     <SCardTitle>Long Content</SCardTitle>
-    <SCardText style="max-height: 300px; overflow-y: auto;">
+    <SCardText>
       <!-- Long content here -->
     </SCardText>
+    <SCardActions>
+      <SButton @click="scrollDialog = false">Close</SButton>
+    </SCardActions>
   </SCard>
 </SDialog>
 
@@ -98,6 +102,9 @@ None (state managed via `v-model`).
 
 ## Notes
 
-- Use `location="bottom"` to create a bottom sheet pattern.
-- `persistent` prevents scrim-click from closing — always provide an explicit close action.
+- Use `location="bottom"` to create a bottom sheet pattern; `'top'`/`'left'`/`'right'` have no effect (the dialog stays centered).
+- `persistent` prevents outside clicks from closing — always provide an explicit close action.
+- The dialog has no background of its own — wrap content in `SCard` or `SSheet`.
+- The app must be wrapped in `<SApp>`: dialogs teleport into the overlay container `SApp` renders.
+- There is no Escape-key handling and no `close` event.
 - Dialogs can be nested (a dialog opened from inside another dialog).
