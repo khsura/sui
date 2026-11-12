@@ -15,7 +15,7 @@ Then generate a complete Vue SFC using these rules:
 
 **Layout rules:**
 - The app root is `<SApp>` (it provides theme colors and the popup container); `SLayout name="app"` goes inside it, at the app-shell level
-- In Nuxt, `SLayout` and `SBottomNavigation` are **not** auto-registered by `@khsura/sui-nuxt` — import them from `@khsura/sui`
+- In Nuxt, `@khsura/sui-nuxt` 1.1.6+ registers `SLayout` and `SBottomNavigation` globally; on older versions import them from `@khsura/sui`
 - All layout children must use `for="app"` to match the layout name. (`name`/`for` can be omitted together — everything then uses the app's default layout name — but never set `name` and leave `for` off: that child will not attach.)
 - Do not add Vuetify's `app` prop to `SAppBar`/`SMain`/`SFooter` — it doesn't exist; `SLayout` handles placement
 - `SAppBar for="app" position="fixed"` — top bar. Everything goes in the **default slot** (it has only `default` and `extension` slots — no `#prepend`/`#append`); order hamburger, title, `SSpacer`, actions. Without `position="fixed"` it scrolls away with the page and `elevate-on-scroll` does nothing

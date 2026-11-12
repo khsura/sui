@@ -133,9 +133,9 @@ The module:
 
 - calls `createSUI(sui options)` for you
 - loads `@khsura/sui/style.css` and `@khsura/sui/style.scss` (you don't import them, but you **do** add `@mdi/font` to `css`)
-- auto-imports `useDisplay`, `useTheme`, `STransition`, and the types `GroupItemValue`, `SInput`, `SSelect`, `SForm`, `TableHeader`, `TableItem`, `MaterialDesignIcon`
+- auto-imports `useDisplay`, `useTheme`, `STransition`, and the types `FormInputModelValueRule`, `GroupItemValue`, `SInput`, `SSelect`, `SForm`, `TableHeader`, `TableItem`, `MaterialDesignIcon`
 - provides `useNuxtApp().$suiFormRules` = `getFormInputModelValueRules(nuxtApp.$i18n)` — this needs `@nuxtjs/i18n` installed, or the rules throw when they try to build a message
-- auto-registers most components, but **not** `SLayout`, `SBottomNavigation`, `SCarousel`, `SCarouselItem`, `SSplitView`, `SSplitViewItem`, `SToolbarItem`, `STableHeadCell`, `STableBodyCell`, `SDroppable` — import these explicitly from `@khsura/sui`
+- registers every component globally (since `@khsura/sui-nuxt` 1.1.6, which requires `@khsura/sui` ^1.18.0). Older versions did **not** register `SLayout`, `SBottomNavigation`, `SCarousel`, `SCarouselItem`, `SSplitView`, `SSplitViewItem`, `SToolbarItem`, `STableHeadCell`, `STableBodyCell`, `SDroppable`, `SWindow`, `SWindowItem` — on those, import them from `@khsura/sui`
 
 You still need `<SApp>` at the root (e.g. in `app.vue` or your layout).
 
