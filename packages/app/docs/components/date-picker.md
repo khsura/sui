@@ -14,8 +14,8 @@ Inline date, month or year picker with navigation and min/max constraints.
 | `monthFormat` | `string` | `'MMMM'` | Display format for month labels |
 | `yearFormat` | `string` | `'YYYY'` | dayjs format for the year in the title, the switch and every item of the year list (e.g. `'YYYY年'`, `'YYYY [он]'`) |
 | `today` | `string` | `undefined` | Highlight this date as "today" (`'YYYY-MM-DD'`) |
-| `min` | `string` | `undefined` | Minimum selectable date (`'YYYY-MM-DD'`) |
-| `max` | `string` | `undefined` | Maximum selectable date (`'YYYY-MM-DD'`) |
+| `min` | `string` | `undefined` | Minimum selectable date (`'YYYY-MM-DD'`). When unset: Jan 1, 5 years before `today` |
+| `max` | `string` | `undefined` | Maximum selectable date (`'YYYY-MM-DD'`). When unset: Dec 31, 5 years after `today` |
 | `disabled` | `boolean` | `false` | Disable all interaction |
 | `readonly` | `boolean` | `false` | Display only, no selection |
 | `dense` | `boolean` | `false` | Compact layout |
@@ -142,7 +142,7 @@ Text input with a date picker popup. Optionally renders prev/next **carousel** b
 | `carouselNextIcon` | `string` | `'mdi-chevron-right'` | Icon of the next button |
 | `carouselPrevAriaLabel` | `string` | `'Previous'` | Accessible label of the previous button |
 | `carouselNextAriaLabel` | `string` | `'Next'` | Accessible label of the next button |
-| `min` / `max` | `string` | `undefined` | Bounds of the selectable value |
+| `min` / `max` | `string` | `undefined` | Bounds of the selectable value. When unset, the picker allows 5 years before and after `today` |
 | `disabled` / `readonly` | `boolean` | `false` | Disable all interaction |
 
 All `SDatePicker` props (`dateFormat`, `monthFormat`, `yearFormat`, `today`, `dense`, `color`, `colorThreshold`, …) are supported as well.

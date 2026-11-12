@@ -1,5 +1,5 @@
 import { computed, nextTick } from 'vue'
-import { DatePickerSelectType, DatePickerType } from '@/app/constants/datePicker'
+import { DatePickerSelectType, DatePickerType, datePickerDefaultRangeYears } from '@/app/constants/datePicker'
 import { type PropsDatePickerItem } from '@/app/definitions'
 import { getDatePickerFormat } from '@/app/repositories/datePicker'
 import { type DatePickerItemEmits, type DatePickerSelectTypeType } from '@/app/types'
@@ -32,12 +32,14 @@ export const useDatePickerItemCoreService = (props: PropsDatePickerItem, emit: D
     return getDatePickerFormat(props.type)
   })
 
+  // A missing bound falls back to a window of datePickerDefaultRangeYears around today,
+  // not to dayjs(undefined) = now, which would disable every other day.
   const max = computed(() => {
-    return dayjs(props.max)
+    return props.max ? dayjs(props.max) : today.value.add(datePickerDefaultRangeYears, 'year').endOf('year')
   })
 
   const min = computed(() => {
-    return dayjs(props.min)
+    return props.min ? dayjs(props.min) : today.value.subtract(datePickerDefaultRangeYears, 'year').startOf('year')
   })
 
   const getFixedSelectorType = (value: DatePickerSelectTypeType) => {
