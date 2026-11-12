@@ -1,0 +1,9 @@
+# Deploys the Storybook docs site only. The library build (lint + test + vite)
+# runs in GitHub Actions; Storybook builds straight from source.
+[build]
+  command = "yarn workspace @khsura/sui run storybook:build"
+  publish = "packages/app/storybook-static"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NETLIFY_DISABLE_FRAMEWORK_DETECTION = "1"
