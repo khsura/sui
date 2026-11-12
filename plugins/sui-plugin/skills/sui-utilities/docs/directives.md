@@ -150,7 +150,7 @@ Not a directive, but commonly used alongside scroll behavior. Provides smooth sc
 ```typescript
 import { useScroll } from '@khsura/sui'
 
-const { smoothScrollTo, scrollIntoView, scrollX, scrollY } = useScroll()
+const { smoothScrollTo, scrollIntoView, smoothElementScroll, hasScrollFeature } = useScroll()
 ```
 
 ### Methods

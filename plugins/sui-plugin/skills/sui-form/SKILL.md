@@ -1,6 +1,6 @@
 ---
 name: sui-form
-description: Build a validated form using SUI form components (SInput, SSelect, SCheckbox, etc.). Use when the user wants to create a form, data entry UI, or needs form validation with @khsura/sui.
+description: Build validated forms in a Vue or Nuxt app with @khsura/sui — SForm, SInput, STextarea, SSelect, SAutocomplete, SCheckbox, SRadioGroup/SRadio, SSwitch, SDatePickerInput. Use when creating a form, login/registration/settings/data-entry UI, adding validation rules (inline or the i18n-backed getFormInputModelValueRules), handling submit with SForm.validate(), async/searchable selects, or fixing a SUI form whose validation, error display or v-model doesn't behave.
 argument-hint: [describe the form fields and purpose]
 ---
 
@@ -21,10 +21,10 @@ Then generate a complete Vue SFC using these rules:
 - Use `SInput` for text/email/password/number — always include `label` and `v-model`
 - Use `STextarea` for multi-line text (add `autogrow` if height should expand — all lowercase, not `auto-grow`)
 - Use `SSelect` for a plain single-value dropdown — `items` must be `SelectItem[]` or `string[]`. Type `SelectItem` from `@khsura/sui` (`text`, `value`, optional `disabled`). **SSelect has no `multiple`, `chips`, `clearable` or `placeholder`** — when you need any of those, use `SAutocomplete`.
-- Use `SAutocomplete` for searchable, clearable or multi-select — same `items` shape, add `multiple chips closable-chips` for multi-select
+- Use `SAutocomplete` for searchable, clearable or multi-select — same `items` shape, add `multiple chips closable-chips` for multi-select. **It has no `rules` and does not register with `SForm`** — check its value yourself in `submit`
 - Use `SCheckbox` for a single boolean — `label` prop, not slot. It has no `value`/`indeterminate`, so build checkbox groups from several boolean models
 - Use `SRadioGroup` with `<SRadio value="..." label="...">` children (slot-based); use `column` for vertical layout
-- Use `SSwitch` for on/off toggles
+- Use `SSwitch` for on/off toggles — it never runs `rules`, shows no error and is not validated by `SForm`
 - Submit: `<SButton type="submit" color="primary" :loading="submitting">Submit</SButton>`
 - `:loading` on `SButton` implicitly disables it — do not also set `:disabled`
 
@@ -32,7 +32,7 @@ Then generate a complete Vue SFC using these rules:
 
 - Return `true` to pass, return an error string to fail. Returning `false` does **not** show an error (non-string results are dropped) — always return a message string
 - Pass arrays to `:rules="[rule1, rule2]"`
-- Rules run on input/change. Inside `SForm` the form runs them; a standalone input (no `SForm`) runs its own rules — note that before the fix in PR #109, standalone inputs silently never ran their rules, so wrap inputs in `SForm` on older versions
+- Rules run when the value changes and on `SForm.validate()`. Setting `dirty` does **not** run them — call `validate()` to show errors on untouched fields
 
 ---
 
@@ -65,13 +65,13 @@ Use them to disable the submit button; `resetValidation()` (exposed) clears ever
 
 | Prop          | Hides the label | Hides the error message | Red error frame       |
 | ------------- | --------------- | ----------------------- | --------------------- |
-| _(neither)_   | no              | no                      | shown (since PR #109) |
+| _(neither)_   | no              | no                      | shown                 |
 | `hideError`   | no              | **yes**                 | shown                 |
 | `hideDetails` | **yes**         | **yes**                 | shown                 |
 
 - Use **`hideError`** when you only want to drop the message line (dense tables, inline filters) but keep the label.
 - Use **`hideDetails`** only when the field should have no label either — it is not a "compact" switch.
-- Since PR #109, the field frame turns red on error even with either flag set (`SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SDatePickerInput`), so users can still see which field is invalid. Don't add your own `:deep()` error border.
+- The field frame turns red on error even with either flag set (`SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SDatePickerInput`), so users can still see which field is invalid. Don't add your own `:deep()` error border.
 
 ---
 
@@ -88,6 +88,9 @@ import { getFormInputModelValueRules } from '@khsura/sui'
 const { t } = useI18n()
 const rules = getFormInputModelValueRules({ t })
 // Then use e.g. rules.required({ target: 'Email' })
+
+// Nuxt with @khsura/sui-nuxt + @nuxtjs/i18n: the same object is prebuilt
+// const rules = useNuxtApp().$suiFormRules
 ```
 
 | Rule            | Options                                                               | Use when                                           |
@@ -133,18 +136,18 @@ const numeric = (v: string) => /^\d+$/.test(v) || 'Must be a number'
 
 Use this to choose the right component and props for each field.
 
-**Common to all form inputs:** `label`, `rules`, `disabled`, `hideDetails`, `hideError`, `error`, `dirty`, `id`
+**Common to the validated inputs** (`SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SDatePickerInput`): `label`, `rules`, `disabled`, `hideDetails`, `hideError`, `error`, `dirty`, `id`. `SAutocomplete` and `SSwitch` don't run rules.
 
 | Component         | v-model            | Key props                                                                                                                                                                                                                                                                                | When to use                               |
 | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
 | **SInput**        | `string \| number` | `label`, `type` (`text` \| `email` \| `password` \| `number` \| `tel` \| `url` \| `search`), `placeholder`, `suffix`, `dense`, `readonly`, `max`/`min`, `maxlength`/`minlength`, `inputmode` (`numeric` \| `decimal` \| `email` \| `tel`), `positive` / `allowDecimal` (numbers), `size` | Single-line text, email, password, number |
 | **STextarea**     | `string`           | `label`, `placeholder`, `rows`, `cols`, `autogrow`, `resize`, `dense`, `tile`, `maxlength`/`minlength`, `readonly`                                                                                                                                                                       | Multi-line text                           |
 | **SSelect**       | `string \| number` | `items`: `SelectItem[]` or `string[]` (type from `@khsura/sui`: `text`, `value`, optional `disabled`). Also `label`, `dense`, `grow`, `text`, `divided`, `color`, `outlined`/`underlined`/`borderRadius`. **No** `multiple`/`chips`/`clearable`/`placeholder`                            | Single-value dropdown                     |
-| **SAutocomplete** | `any` or `any[]`   | Same `items` as SSelect; + `multiple`, `chips`, `closableChips`, `clearable`, `placeholder`, `filter`, `filterMode`, `debounce`, `loading`, `allowUnlisted`, `delimiter`. Events: **`@search-item`** (search text, for async options), **`@create-item`** (with `allowUnlisted`)         | Searchable / multi / async select         |
-| **SCheckbox**     | `boolean`          | `label`, `color`, `size`, `block`, `bordered`, `readonly`                                                                                                                                                                                                                                | Single boolean                            |
+| **SAutocomplete** | `any` or `any[]`   | Same `items` as SSelect; + `multiple`, `chips`, `closableChips`, `clearable`, `placeholder`, `filter`, `filterMode`, `debounce`, `loading`, `allowUnlisted`, `delimiter`. `debounce` defaults to 500 ms. Events: **`@search-item`** (search text, for async options), **`@create-item`** (with `allowUnlisted`). No `rules`; `disabled` does not disable its text field         | Searchable / multi / async select         |
+| **SCheckbox**     | `boolean`          | `label`, `color`, `size` (`'default'` \| `'large'`), `block`, `bordered`, `readonly`                                                                                                                                                                                                                              | Single boolean                            |
 | **SRadioGroup**   | `any`              | Slot content: `<SRadio value="..." label="...">` children (no `items` prop). Props: `column`, `grow`, `color`, `name`                                                                                                                                                                    | Single choice from list                   |
 | **SSwitch**       | `boolean`          | `label`, `color`                                                                                                                                                                                                                                                                         | On/off toggle                             |
-| **SDatePickerInput** | `string`       | `label`, `placeholder`, `type` (`'date'` \| `'month'` \| `'year'`), `min`/`max`, `dense`, `readonly`, `simple`, `tile`, `size`, `block` (off by default; `maxWidth` caps it), `carousel` (prev/next buttons that step the value by one day / month / year)                                                                              | Date, month or year field with a picker popup |
+| **SDatePickerInput** | `string`       | `label`, `placeholder`, `type` (`'date'` \| `'month'` \| `'year'`), `min`/`max`, `dense`, `readonly`, `simple`, `tile`, `size`, `block` (off by default; `maxWidth` caps it), `carousel` (prev/next buttons that step the value by one day / month / year). Without `min`/`max` the selectable range is Jan 1 five years before today to Dec 31 five years after — pass `min` for birth dates                                                                              | Date, month or year field with a picker popup |
 
 **SelectItem** (SSelect, SAutocomplete): from `@khsura/sui` — `{ text: string, value: string | number | null | undefined, disabled?: boolean }` or plain `string`. Use `text` and `value`, not `title` or `label`.
 
@@ -154,7 +157,7 @@ Use this to choose the right component and props for each field.
 
 **Imports:** form components and `getFormInputModelValueRules` from `@khsura/sui`.
 
-For full props, slots, and events per component, see **`docs/components/form.md`**.
+For full props, slots, and events per component, read [form.md](../sui-component/references/form.md), [autocomplete.md](../sui-component/references/autocomplete.md) and [date-picker.md](../sui-component/references/date-picker.md). Prop types ship in `node_modules/@khsura/sui/@types/definitions/props/`.
 
 **Reference template:**
 

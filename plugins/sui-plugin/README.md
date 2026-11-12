@@ -1,6 +1,6 @@
 # sui-plugin
 
-Claude Code plugin that gives Claude expert knowledge of the **`@khsura/sui`** Vue 3 component framework. Install it and Claude can generate idiomatic SUI components, forms, and layouts for you.
+Claude Code plugin that gives Claude expert knowledge of the **`@khsura/sui`** Vue 3 component framework. Install it in an app that uses `@khsura/sui` (Vue or Nuxt) and Claude can set the library up, and generate idiomatic SUI components, forms, and layouts for you.
 
 ## Install
 
@@ -34,15 +34,22 @@ Or add to your project's `.claude/settings.json`:
 
 | Skill | When to use |
 | --- | --- |
-| [`sui-getting-started`](./skills/sui-getting-started/) | Setting up `@khsura/sui` in a new app, configuring `createSUI`, looking up shared props/conventions. |
-| [`sui-component`](./skills/sui-component/) | Using a specific component (`SButton`, `SCard`, `SAutocomplete`, …) — imports, props, slots, events, examples. |
-| [`sui-form`](./skills/sui-form/) | Building validated forms with `SInput`, `SSelect`, `SCheckbox`, etc., including `rules` validation. |
-| [`sui-layout`](./skills/sui-layout/) | Scaffolding app shells with `SLayout`, `SAppBar`, `SNavigationDrawer`, `SMain`, `SFooter`, `SBottomNavigation`. |
-| [`sui-utilities`](./skills/sui-utilities/) | Looking up SUI utility classes (`s_*`), Vue directives, and SCSS helpers / mixins; restyling components without `:deep()`. |
+| [`sui-getting-started`](./skills/sui-getting-started/SKILL.md) | Installing `@khsura/sui` from GitHub Packages, `SApp` + `createSUI`, styles and `@mdi/font`, Nuxt module, theme colors / dark mode, component defaults, vue-i18n, types, common mistakes. |
+| [`sui-component`](./skills/sui-component/SKILL.md) | Using a specific component (`SButton`, `SCard`, `STable`, …) — routes to one per-family reference in `references/` with props, slots, events, examples and gotchas. |
+| [`sui-form`](./skills/sui-form/SKILL.md) | Building validated forms with `SInput`, `SSelect`, `SCheckbox`, etc., including `rules` validation. |
+| [`sui-layout`](./skills/sui-layout/SKILL.md) | Scaffolding app shells with `SLayout`, `SAppBar`, `SNavigationDrawer`, `SMain`, `SFooter`, `SBottomNavigation`. |
+| [`sui-utilities`](./skills/sui-utilities/SKILL.md) | Looking up SUI utility classes (`s_*`), Vue directives, and SCSS helpers / mixins; restyling components without `:deep()`. |
 
 Each skill lives in its own folder with a `SKILL.md` describing when Claude should invoke it.
 
-`skills/sui-utilities/docs/` holds copies of `packages/app/docs/{classes,directives,helpers}.md` so they ship with the plugin — update both when those docs change.
+## Maintenance
+
+The plugin must work in consumer apps, where only the published package (`node_modules/@khsura/sui/dist` and `@types`) exists. Skills must not point at repository-only paths; bundle the content instead.
+
+- `skills/sui-utilities/docs/` holds copies of `packages/app/docs/{classes,directives,helpers}.md`.
+- `skills/sui-component/references/` holds copies of `packages/app/docs/components/*.md`, corrected against the component source and `definitions/props` (plus `alert.md`, written from source).
+
+Update the copy and the original together whenever a component or its docs change, and bump `.claude-plugin/plugin.json` `version`.
 
 Install the plugin rather than copying skill files into a project (`.agents/skills/`, `.claude/skills/`): copies drift out of date as SUI changes.
 
@@ -61,5 +68,6 @@ Skills are maintained alongside the library at [github.com/khsura/sui](https://g
 
 ## Related
 
-- [`@khsura/sui`](../../packages/app) — the UI library this plugin documents
-- [`.claude-plugin/marketplace.json`](../../.claude-plugin/marketplace.json) — the Claude Code marketplace catalog
+- [`@khsura/sui`](https://github.com/khsura/sui/tree/main/packages/app) — the UI library this plugin documents
+- [`@khsura/sui-nuxt`](https://github.com/khsura/sui-nuxt) — the Nuxt module
+- [`marketplace.json`](https://github.com/khsura/sui/blob/main/.claude-plugin/marketplace.json) — the Claude Code marketplace catalog

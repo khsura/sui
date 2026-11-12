@@ -1,6 +1,6 @@
 ---
 name: sui-utilities
-description: Reference for SUI utility classes (s_*), Vue directives (v-scroll, etc.), and SCSS helpers (s_getPresetColor, s_getAppColor, mixins). Use when the user asks about CSS classes, breakpoints, spacing, display, flex, directives, SCSS functions/mixins, or how to restyle a SUI component from @khsura/sui.
+description: Reference for @khsura/sui styling in a Vue or Nuxt app — s_* utility classes (spacing, display, flex, typography, colors, breakpoints), the v-scroll / v-resize directives, and SCSS helpers from @khsura/sui/helpers.scss (s_getPresetColor, s_getAppColor, s_elevation, mixins). Use when writing CSS/SCSS next to SUI components, picking a utility class, theming colors in component styles, using scroll/resize directives, or restyling a SUI component without fragile :deep() overrides.
 argument-hint: [classes | directives | helpers | or a specific topic]
 ---
 
@@ -21,7 +21,8 @@ When the user asks about:
 
 | What | Import | Notes |
 |---|---|---|
-| Utility classes + component styles | `import '@khsura/sui/base.css'` (or `@khsura/sui/style.scss`) | Loaded automatically by the Nuxt module |
+| Utility classes (+ reset, typography) | `import '@khsura/sui/base.css'` (or `@khsura/sui/style.scss`) | Loaded automatically by the Nuxt module |
+| Component styles | `import '@khsura/sui/style.css'` | Also required in plain Vue; loaded by the Nuxt module |
 | SCSS functions / mixins | `@use '@khsura/sui/helpers.scss' as *;` | Emits no CSS; keep the `.scss` extension |
 
 ## Restyling SUI components — try these before `:deep(.s_*)`
@@ -33,5 +34,7 @@ Overriding internal classes (`:deep(.s_input__input)`, `.s_button { … !importa
 3. **Theme colors** — change `themes.light/dark.presetColors` / `appColors` instead of recoloring elements one by one.
 4. **Utility classes** on the component root — spacing, display, typography from [docs/classes.md](docs/classes.md).
 5. Only then a scoped `:deep()` override. Keep it narrow, use `s_getPresetColor` / `s_getAppColor` for colors, never hard-code hex values or use `!important`. Add a comment naming the missing prop so it can become a library feature.
+
+Color helpers read CSS variables set by `<SApp>`, so they only resolve inside it.
 
 Built-in state styling you should not re-implement: focus outlines, disabled colors, and the red error frame on form inputs (shown even with `hideError` / `hideDetails`).
