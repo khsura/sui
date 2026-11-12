@@ -100,9 +100,9 @@ Props: `text`, `color`, `tag`. Slots: `default` (or `text`).
 | `width` | `string \| number` | `256` | Width. Use `v-model:width` with `resizable` |
 | `resizable` | `boolean` | `false` | Drag handle on the inner edge (desktop, not mini). Arrow keys resize by 16px |
 | `minWidth` / `maxWidth` | `number` | `200` / `720` | Resize limits |
-| `height` | `string \| number` | `100vh` (app) / `100%` | Height |
+| `height` | `string \| number` | `100vh` when app-level, else `100%` | Height. App-level = the drawer has `app`, or its `for` is the app's name |
 | `position`, `elevation` | — | — | Shared props |
-| `tag` | `'nav' \| 'div' \| 'section'` | `nav` (app) / `aside` | Root element |
+| `tag` | `'nav' \| 'div' \| 'section'` | `nav` when app-level, else `aside` | Root element |
 | `hideOverlay` | `boolean` | `false` | Declared. The scrim is not rendered in the current version |
 
 **Slots:** `prepend`, `default` (scope `{ on }`: `click`, `transitionend`, `mouseenter`, `mouseleave` handlers), `append`.

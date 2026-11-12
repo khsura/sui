@@ -127,6 +127,6 @@ const slides = [
 
 - `cycle` is `true` by default — pass `:cycle="false"` for a static slider.
 - `height` defaults to `500`.
-- On mount the carousel selects its first slide and emits it, so the initial `v-model` value is replaced by the first slide's `value`.
+- On mount the carousel shows the slide whose `value` matches `v-model`; when the model names no slide, it selects the first slide and emits its `value`.
 - Use the item's own `src` / `object-fit` props instead of nesting an `SImage`; `src` is required (use `:src="null"` for text slides).
 - Swipe gestures are enabled by default (`touch`).

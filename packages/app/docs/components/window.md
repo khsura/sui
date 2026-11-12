@@ -130,7 +130,7 @@ const slides = [
 ## Notes
 
 - `SCarousel` is built on top of `SWindow` — use `SCarousel` for image slideshows and `SWindow` for content/step wizards.
-- On mount the window selects its first item and emits it, so the initial `v-model` value is replaced by the first item's `value`.
+- On mount the window shows the item whose `value` matches `v-model`; when the model names no item, it selects the first item and emits its `value`.
 - `continuous` enables looping navigation; without it the prev/next arrows disappear at the first/last item.
 - `touch` is off by default on `SWindow` (SCarousel turns it on).
 - Use the `prev`/`next` slots to replace the default arrow buttons with custom controls.
