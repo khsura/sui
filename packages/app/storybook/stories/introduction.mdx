@@ -1,15 +1,127 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta } from '@storybook/addon-docs/blocks'
 
 <Meta title="Introduction" />
 
-<style>
-  {`
-    .sample {
-      color: #0071eb;
-    }
-  `}
-</style>
-# S-UI framework  
+# SUI
 
-## Introduction
-`S-UI` is a UI framework using Vue3 and inspired by vuetify
+**`@khsura/sui`** is a Vue 3 + TypeScript component framework: 80 `S`-prefixed components, a named layout system, light and dark themes, form validation, and SCSS utilities.
+
+Every page in this Storybook renders the real components. Use the **Controls** panel to try props, and the **Docs** tab for the props table of each component.
+
+## Install
+
+The package is published to **GitHub Packages**, not npmjs.com. Point the `@khsura` scope at that registry and supply a GitHub token with the `read:packages` scope.
+
+```yaml
+# .yarnrc.yml (Yarn 4)
+npmScopes:
+  khsura:
+    npmRegistryServer: "https://npm.pkg.github.com"
+    npmAlwaysAuth: true
+    npmAuthToken: "${NPM_GITHUB_TOKEN}"
+```
+
+```ini
+# .npmrc (npm / pnpm)
+@khsura:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NPM_GITHUB_TOKEN}
+```
+
+```bash
+yarn add @khsura/sui @mdi/font
+```
+
+Keep the token in an environment variable (`NPM_GITHUB_TOKEN`); never commit it.
+
+## Set up a Vue app
+
+```ts
+// main.ts
+import { createApp } from 'vue'
+import { createSUI } from '@khsura/sui'
+import '@khsura/sui/base.css' // reset, typography, s_* utility classes
+import '@khsura/sui/style.css' // component styles
+import '@mdi/font/css/materialdesignicons.css' // icons for SIcon
+import App from './App.vue'
+
+createApp(App).use(createSUI()).mount('#app')
+```
+
+```vue
+<!-- App.vue -->
+<script setup lang="ts">
+import { SApp, SButton } from '@khsura/sui'
+</script>
+
+<template>
+  <SApp>
+    <SButton color="primary">Save</SButton>
+  </SApp>
+</template>
+```
+
+`SApp` is required at the root. It sets the theme colors and holds the container that dialogs, menus, tooltips and snackbars render into.
+
+## Set up a Nuxt app
+
+```bash
+yarn add @khsura/sui @khsura/sui-nuxt @mdi/font
+```
+
+```ts
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ['@khsura/sui-nuxt'],
+  css: ['@mdi/font/css/materialdesignicons.css'],
+  sui: {
+    // options passed to createSUI(): theme, themes, components
+  },
+})
+```
+
+The module registers the components, loads the SUI styles and calls `createSUI` for you. You still wrap the app in `<SApp>`.
+
+## Theme
+
+```ts
+createSUI({
+  theme: 'light',
+  themes: {
+    light: { presetColors: { primary: '#0071eb' } },
+    dark: { appColors: { background: '#333333' } },
+  },
+})
+```
+
+Switch at runtime with `useTheme()`. Every component takes `color` as a preset (`primary`, `secondary`, `success`, `info`, `warning`, `important`, `error`) or any CSS color.
+
+## Find your way around
+
+| Section | What's there |
+| --- | --- |
+| **Features** | Theme and display (breakpoints) |
+| **Styles & Animations** | Spacing, typography, position and overflow utility classes |
+| **UI Directives** | Smooth scrolling with `v-scroll` |
+| **UI Components** | Every component, with controls and a props table |
+
+## Patterns worth knowing
+
+- **Popups** (`SDialog`, `SMenu`, `SSnackbar`) open from an `#activator="{ on, attrs }"` slot. Bind both: `v-on="on" v-bind="attrs"`.
+- **Layout**: one `SLayout name="app"` with `SAppBar`, `SNavigationDrawer`, `SMain`, `SFooter` bound by `:for="app"`.
+- **Forms**: a rule is `(value) => true | string`; the string is the message shown under the field.
+
+## Build with AI
+
+- **Claude Code plugin** with SUI skills (setup, components, forms, layout):
+
+  ```
+  /plugin marketplace add khsura/sui
+  /plugin install sui-plugin@sui-framework
+  ```
+
+- **Storybook MCP**: in this repository, `yarn storybook` also serves an MCP endpoint at `http://localhost:6006/mcp` that coding agents can use to read and test stories.
+
+## Links
+
+- Source and issues: [github.com/khsura/sui](https://github.com/khsura/sui)
+- Nuxt module: [github.com/khsura/sui-nuxt](https://github.com/khsura/sui-nuxt)

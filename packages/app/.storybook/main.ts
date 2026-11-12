@@ -9,7 +9,7 @@ const getAbsolutePath = (value: string) => {
 }
 
 export default {
-  stories: ['../storybook/stories/**/*.stories.ts'],
+  stories: ['../storybook/stories/**/*.mdx', '../storybook/stories/**/*.stories.@(ts|tsx)'],
   addons: [
     // 'storybook-dark-mode',
     getAbsolutePath('@storybook/addon-links'),
