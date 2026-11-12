@@ -16,7 +16,7 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ['Features', 'Styles & Animations', 'UI Directives', 'UI Components', 'Components'],
+        order: ['Introduction', 'Features', 'Styles & Animations', 'UI Directives', 'UI Components', 'Components'],
       },
     },
     darkMode: {
