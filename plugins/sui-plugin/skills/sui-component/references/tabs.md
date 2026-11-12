@@ -2,7 +2,7 @@
 
 **Import:** `import { STabs, STab } from '@khsura/sui'`
 
-Single-select tab strip, built on the toggle-button group. It renders only the tab buttons. You render the panels yourself, usually with `v-if` / `v-show` on the model. `SWindow` is not public (see [window.md](./window.md)).
+Single-select tab strip, built on the toggle-button group. It renders only the tab buttons. You render the panels yourself, usually with `v-if` / `v-show` on the model. Or pair it with [SWindow](./window.md) for sliding panels.
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsTabs.d.ts`, `propsTab.d.ts`
 
@@ -84,5 +84,5 @@ const active = ref<'overview' | 'api'>('overview')
 |----|----|
 | `<STab value="a">` / `<STab :index="0">` | `<STab tab="a">`. The identifier prop is `tab` |
 | `<STabs>` without `v-model` | `modelValue` is required |
-| Pairing with `SWindow` / `SWindowItem` | Not exported. Use `v-if` / `v-show` on the model |
+| Panels that slide between tabs | Bind the same model to [SWindow](./window.md) with `SWindowItem value` = the `STab tab` |
 | `underlined` to get an active underline | It styles the strip's border. Use `selectedTabColor` for the active state |

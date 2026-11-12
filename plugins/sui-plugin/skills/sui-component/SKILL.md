@@ -50,7 +50,7 @@ All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `
 | `SToggleButtonGroup`, `SToggleButton` | [references/toggle-button-group.md](references/toggle-button-group.md) |
 | `SToolbar`, `SToolbarTitle`, `SToolbarItem` | [references/toolbar.md](references/toolbar.md) |
 | `STooltip` | [references/tooltip.md](references/tooltip.md) |
-| `SWindow`, `SWindowItem` — **not exported**, not importable | [references/window.md](references/window.md) |
+| `SWindow`, `SWindowItem` (exported since `@khsura/sui` 1.18) | [references/window.md](references/window.md) |
 
 ---
 
@@ -61,7 +61,6 @@ All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `
 | `SSkeletonLoader` | `SProgressCircular indeterminate` in a centered div |
 | `STextField` | `SInput` (single line) or `STextarea` (multi-line) |
 | `SCol` | `SColumn` |
-| `SWindow` / `SWindowItem` (exist internally, not exported) | `v-if` / `v-show` on the `STabs` model — see [references/window.md](references/window.md) |
 | `STablePagination` (not exported) | `STable`'s built-in pagination |
 | `SNavigationDrawer` inside a feature component | App shell only — use `<SDialog location="end">` for feature slide-in panels |
 
