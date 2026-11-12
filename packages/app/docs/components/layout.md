@@ -17,34 +17,44 @@ import {
 } from '@khsura/sui'
 ```
 
-SUI uses a named layout system — components are linked together via a shared `name`/`for` prop.
+SUI uses a named layout system — layout parts register with a parent layout, which tracks app-bar height, drawer widths and footer/bottom-navigation height so that `SMain` can offset itself.
 
 ---
 
 ## Layout System Overview
 
 ```
-SLayout (name="app")
-  ├── SAppBar (for="app")
-  ├── SNavigationDrawer (for="app")
-  ├── SMain (for="app")          ← main content area
-  ├── SFooter (for="app")
-  └── SBottomNavigation (for="app")
+SApp
+  └── SLayout                    ← app-level layout (no `name`)
+        ├── SAppBar
+        ├── SNavigationDrawer
+        ├── SMain                ← main content area
+        ├── SFooter
+        └── SBottomNavigation
 ```
 
-Each layout child uses `:for="layoutName"` to register itself with the parent `SLayout`. The layout automatically calculates offsets so content doesn't overlap app bars or navigation drawers.
+- **`SApp`** is the root. It provides the app state and is itself an app-level layout. Wrap the whole app in it (after installing the `createSUI()` plugin). `SLayout` throws if no app state is found.
+- **`SLayout` without `name`** → children **without `for`** join it as the **app-level** layout.
+- **`SLayout name="x"`** → **every** child needs `for="x"`. A child without `for` joins the app-level layout instead, so offsets silently break.
+- **App-level vs nested.** A layout is app-level when its name equals the plugin name (`'sui'` by default, i.e. no `name`) or when it has the `app` prop. A named layout is *nested*:
+  - `SNavigationDrawer` is `position: absolute` inside the layout (not fixed), and `permanent` has no effect.
+  - `SFooter` ignores `position`. `SBottomNavigation` is not fixed unless you set `position="fixed"`.
+  - `SMain` renders `<section>` with `min-height: 100%` instead of `<main>` with `100vh`.
+- Below the `md` breakpoint (or with `forceMobile`), a drawer becomes a mobile drawer: it does not push `SMain`, opens by swiping in from the screen edge, and closes on an outside click.
 
 ---
 
-## SLayout
+## SApp / SLayout
 
-Root layout orchestrator.
+Root layout orchestrators. `SLayout` is a flex column with `position: relative`.
 
 ### Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `name` | `string` | `'sui'` | Layout identifier — all children use `:for` to match this |
+| `name` | `string` | plugin name (`'sui'`) | Layout identifier — children use `for` to match this |
+| `app` | `boolean` | `true` on `SApp`, `false` on `SLayout` | Treat this layout as the app-level layout |
+| `width` / `height` / `minWidth` / `maxWidth` / `minHeight` / `maxHeight` | `string \| number` | `undefined` | `SLayout` only: dimensions |
 
 ### Slots
 
@@ -56,30 +66,35 @@ Root layout orchestrator.
 
 ## SAppBar
 
-Fixed or static top application bar.
+Top application bar, built on `SToolbar`. Renders a `<header>`.
 
 ### Props (extends SToolbar props, plus)
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `for` | `string` | `'sui'` | Layout name to register with |
-| `elevateOnScroll` | `boolean` | `false` | Add shadow when page is scrolled |
+| `for` / `app` | `string` / `boolean` | `undefined` | Layout link (see overview) |
+| `position` | `'fixed' \| 'absolute' \| …` | `undefined` (in flow) | CSS position. Pass `position="fixed"` for a fixed bar — `SMain` adds a top margin only when the bar is `fixed` |
+| `elevateOnScroll` | `boolean` | `false` | Add shadow when the page is scrolled (needs `fixed`/`absolute`) |
 | `hideOnScroll` | `boolean` | `false` | Hide bar on scroll down, show on scroll up |
-| `fixedExtension` | `boolean` | `false` | Keep extension fixed (doesn't collapse) |
-| `position` | `'fixed' \| 'absolute'` | `'fixed'` | CSS position |
-| `color` | `string` | `undefined` | Background color |
+| `scrollTarget` | `string \| HTMLElement` | window | Scroll source |
+| `scrollThreshold` | `number` | `64` | Scroll distance before scroll effects apply |
+| `fixedExtension` | `boolean` | `false` | Keep only the extension visible (fixed) when scrolled |
+| `height` | `number \| string` | `64` | Bar height |
+| `color` | `string` | `'appBar'` | Background color |
 | `elevation` | `0–24` | `undefined` | Shadow depth |
-| `density` | `ToolbarDensityType` | `'default'` | Height: `'default'`, `'comfortable'`, `'compact'` |
-| `extended` | `boolean` | `false` | Enable extension area |
+| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` | Height preset |
+| `extended` | `boolean` | auto (`true` when `#extension` is used) | Show the extension area |
+| `extensionHeight` | `number \| string` | `48` | Extension height |
+| `tag` | `string` | `'header'` | Root element |
 
 ### Slots
 
 | Slot | Description |
 |------|-------------|
-| `default` | App bar content |
-| `prepend` | Left area |
-| `append` | Right area |
+| `default` | App bar content — put everything here and use `SSpacer` to push items apart |
 | `extension` | Extension area below main bar |
+
+`SAppBar` has **no** `prepend` / `append` slots.
 
 ---
 
@@ -87,7 +102,8 @@ Fixed or static top application bar.
 
 Title text inside an app bar.
 
-**Slot:** `default` — title content.
+**Props:** `text` (`string`), `color`, `tag`.
+**Slots:** `default` — title content (or `text`).
 
 ---
 
@@ -99,70 +115,83 @@ Side drawer/sidebar.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `for` | `string` | `'sui'` | Layout name |
-| `modelValue` | `boolean \| null` | `null` | Open/closed state (`v-model`) |
-| `activator` | `string \| HTMLElement` | `undefined` | CSS selector or element that toggles the drawer |
-| `permanent` | `boolean` | `false` | Always visible (ignores model) |
-| `miniVariant` | `boolean` | `false` | Collapsed (icon-only) mode |
-| `miniVariantWidth` | `string \| number` | `undefined` | Width in mini mode |
-| `expandOnHover` | `boolean` | `false` | Expand from mini on hover |
-| `forceMobile` | `boolean` | `false` | Force mobile overlay behavior |
-| `hideOverlay` | `boolean` | `false` | No scrim overlay on mobile |
-| `touchless` | `boolean` | `false` | Disable swipe gestures |
-| `location` | `string` | `'left'` | Side: `'left'` or `'right'` |
-| `position` | `'fixed' \| 'absolute'` | `'fixed'` | CSS position |
+| `for` / `app` | `string` / `boolean` | `undefined` | Layout link (see overview) |
+| `modelValue` | `boolean \| null` | `undefined` | Open/closed state (`v-model`). On resize it auto-opens on desktop and auto-closes on mobile (unless `persistent`) |
+| `activator` | `string \| HTMLElement \| component` | `undefined` | Element excluded from the drawer's click-outside handling. It does **not** toggle the drawer — toggle `v-model` yourself |
+| `permanent` | `boolean` | `false` | Always open on desktop (app-level layout only) |
+| `miniVariant` | `boolean` | `false` | Collapsed (icon-only) mode (`v-model:mini-variant`) |
+| `miniVariantWidth` | `string \| number` | `256` when not numeric | Width in mini mode — set it (e.g. `56`) |
+| `expandOnHover` | `boolean` | `false` | Mini until hovered |
+| `forceMobile` | `boolean` | `false` | Force mobile behavior on desktop |
+| `hideOverlay` | `boolean` | `false` | Declared but has no effect — the drawer never renders a scrim |
+| `touchless` | `boolean` | `false` | Disable swipe gestures and hover handlers |
+| `location` | `string` | `'left'` | Side: `'left'`, `'right'` or `'bottom'`. `'bottom'` always behaves as mobile |
+| `position` | `'fixed' \| 'absolute' \| …` | `undefined` | CSS position |
 | `elevation` | `0–24` | `undefined` | Shadow |
 | `persistent` | `boolean` | `false` | Desktop: ignore outside clicks and window resizes, so only `v-model` opens/closes it. Still closes when switching to mobile |
-| `resizable` | `boolean` | `false` | Show a drag handle on the inner edge (desktop only, not in mini mode). Arrow keys resize when the handle is focused |
+| `resizable` | `boolean` | `false` | Show a drag handle on the inner edge (desktop only, not in mini mode). Arrow keys resize (16px steps) when the handle is focused |
 | `minWidth` | `number` | `200` | Smallest width when resizing (px) |
 | `maxWidth` | `number` | `720` | Largest width when resizing (px) |
 | `width` | `string \| number` | `256` | Drawer width (px). Use `v-model:width` with `resizable` to keep the dragged width |
-| `height` | `string \| number` | `undefined` | Drawer height |
-| `tag` | `'nav' \| 'div' \| 'section'` | `'nav'` | Root element |
+| `height` | `string \| number` | `'100%'` (`'100vh'` with the `app` prop) | Drawer height |
+| `tag` | `'nav' \| 'div' \| 'section'` | `'aside'` (`'nav'` with the `app` prop) | Root element |
+
+### Slots
+
+| Slot | Scoped data | Description |
+|------|-------------|-------------|
+| `prepend` | — | Above the content |
+| `default` | `{ on }` | Drawer content |
+| `append` | — | Below the content |
 
 ### Events
 
 | Event | Payload | Description |
 |-------|---------|-------------|
+| `update:modelValue` | `boolean` | Open state changed |
 | `update:width` | `number` | Fired when a resize ends (pointer release or arrow key) |
+| `update:miniVariant` | `boolean` | Mini state changed |
+| `transitionend` | `Event` | Open/close transition finished |
 
 ### Two drawers (navigation + side panel)
 
-A left and a right drawer can share one layout; `SMain` makes room for both. A typical AI chat side panel:
+A left and a right drawer can share one layout; each offsets its own side of `SMain`. A typical AI chat side panel:
 
 ```vue
-<SLayout name="app">
-  <SAppBar for="app" />
-  <SNavigationDrawer for="app" v-model="isNavOpen" />
-  <SNavigationDrawer
-    for="app"
-    v-model="isChatOpen"
-    v-model:width="chatWidth"
-    location="right"
-    persistent
-    resizable
-    :min-width="320"
-    :max-width="640"
-  >
-    <!-- chat panel -->
-  </SNavigationDrawer>
-  <SMain for="app" />
-</SLayout>
+<SApp>
+  <SLayout>
+    <SAppBar position="fixed" />
+    <SNavigationDrawer v-model="isNavOpen" />
+    <SNavigationDrawer
+      v-model="isChatOpen"
+      v-model:width="chatWidth"
+      location="right"
+      persistent
+      resizable
+      :min-width="320"
+      :max-width="640"
+    >
+      <!-- chat panel -->
+    </SNavigationDrawer>
+    <SMain />
+  </SLayout>
+</SApp>
 ```
 
-On mobile both drawers slide in over the content, as before.
+On mobile both drawers slide in over the content.
 
 ---
 
 ## SMain
 
-Primary content area. Automatically adjusts padding for app bars/drawers.
+Primary content area. Its margins follow the drawers (left/right), a `fixed` app bar (top), and the bottom navigation (app level) or footer (nested).
 
 ### Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `for` | `string` | `'sui'` | Layout name |
+| `for` / `app` | `string` / `boolean` | `undefined` | Layout link (see overview) |
+| `tag` | `string` | `'main'` (app level) / `'section'` | Root element |
 
 ### Slots
 
@@ -174,17 +203,20 @@ Primary content area. Automatically adjusts padding for app bars/drawers.
 
 ## SFooter
 
-Bottom footer bar.
+Bottom footer bar. Its width tracks the drawers.
 
 ### Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `for` | `string` | `'sui'` | Layout name |
-| `position` | `'fixed' \| 'absolute'` | `undefined` | CSS position |
+| `for` / `app` | `string` / `boolean` | `undefined` | Layout link |
+| `position` | `'fixed' \| 'absolute' \| …` | `undefined` | CSS position — applied only in an app-level layout |
+| `inset` | `boolean` | `false` | Inset footer |
+| `padless` | `boolean` | `false` | Remove padding |
 | `color` | `string` | `undefined` | Background color |
 | `elevation` | `0–24` | `undefined` | Shadow |
-| `height` | `string \| number` | `undefined` | Height |
+| `height` / `width` / `min*` / `max*` | `string \| number` | `undefined` | Dimensions |
+| `tag` | `'footer' \| 'div'` | `'footer'` | Root element |
 
 ---
 
@@ -196,15 +228,18 @@ Mobile bottom navigation bar.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `for` | `string` | `'sui'` | Layout name |
-| `activeClass` | `string` | `undefined` | CSS class for active button |
-| `hideOnScroll` | `boolean` | `false` | Hide on scroll down |
+| `for` / `app` | `string` / `boolean` | `undefined` | Layout link |
+| `modelValue` | `string \| number \| boolean` | `undefined` | `value` of the active child `SButton` (`v-model`) |
+| `height` | `string \| number` | `undefined` | **Set it.** Without it the bar collapses and `SMain` gets no bottom offset |
+| `activeClass` | `string` | `undefined` | CSS class for the active button. **There is no active styling without it** |
+| `mandatory` | `boolean` | `false` | Always keep one button selected |
+| `hideOnScroll` | `boolean` | `false` | Hide on scroll down. It also overwrites `v-model` with a boolean — don't combine it with selection |
 | `horizontal` | `boolean` | `false` | Horizontal button layout |
 | `shift` | `boolean` | `false` | Hide labels when inactive |
 | `grow` | `boolean` | `false` | Buttons stretch to fill width |
 | `dense` | `boolean` | `false` | Compact height |
 | `bordered` | `boolean` | `false` | Top border |
-| `modelValue` | `any` | `undefined` | Active button value |
+| `position` | `'fixed' \| 'absolute' \| …` | fixed at app level | Set `position="fixed"` in a nested layout |
 
 ### Slots
 
@@ -216,7 +251,7 @@ Mobile bottom navigation bar.
 
 ## Grid: SContainer / SRow / SColumn
 
-12-column responsive grid.
+12-column responsive grid. The column component is **`SColumn`** — there is no `SCol`.
 
 ### SContainer Props
 
@@ -237,10 +272,11 @@ Mobile bottom navigation bar.
 | `noGutters` | `boolean` | `false` | Remove column gutters |
 | `noOuterGutters` | `boolean` | `false` | Remove outer padding only |
 | `align` | `GridAlignPropertyType` | `undefined` | Cross-axis alignment: `'start'`, `'center'`, `'end'`, `'stretch'`, `'baseline'` |
-| `justify` | `GridJustifyPropertyType` | `undefined` | Main-axis justify: `'start'`, `'center'`, `'end'`, `'space-between'`, `'space-around'` |
+| `justify` | `GridJustifyPropertyType` | `undefined` | Main-axis justify (**camelCase**): `'start'`, `'center'`, `'end'`, `'spaceBetween'`, `'spaceAround'` |
 | `fillHeight` | `boolean` | `false` | Fill parent height |
 | `dense` | `boolean` | `false` | Reduced gutters |
 | `gap` | `number \| string` | `undefined` | Custom gap |
+| `contentClass` / `contentStyle` | class / style | `undefined` | Inner wrapper class / style |
 
 ### SColumn Props
 
@@ -251,15 +287,18 @@ Mobile bottom navigation bar.
 | `md` | `1–12 \| 'auto' \| 'grow'` | `undefined` | Column span at `md` breakpoint |
 | `lg` | `1–12 \| 'auto' \| 'grow'` | `undefined` | Column span at `lg` breakpoint |
 | `order` | `number` | `undefined` | Flexbox order |
-| `alignSelf` | `string` | `undefined` | Individual cross-axis alignment |
+| `alignSelf` | `string` | `undefined` | Individual cross-axis alignment (CSS `align-self` value) |
+| `contentClass` / `contentStyle` | class / style | `undefined` | Inner wrapper class / style |
+
+There is no `xl` prop.
 
 ---
 
 ## SSpacer
 
-Flexible space element (pushes siblings apart in flex containers).
+Flexible space element (`flex-grow: 1`) that pushes siblings apart in flex containers.
 
-No props. No slots (besides `default` which is typically empty).
+No props.
 
 ---
 
@@ -269,55 +308,67 @@ No props. No slots (besides `default` which is typically empty).
 
 ```vue
 <template>
-  <SLayout name="app">
-    <!-- App Bar -->
-    <SAppBar for="app" color="primary" elevate-on-scroll>
-      <template #prepend>
+  <SApp>
+    <SLayout>
+      <!-- App Bar -->
+      <SAppBar position="fixed" elevate-on-scroll>
         <SButton variant="icon" @click="drawer = !drawer">
           <SIcon icon="mdi-menu" />
         </SButton>
-      </template>
-      <SAppBarTitle>My App</SAppBarTitle>
-      <template #append>
+        <SAppBarTitle>My App</SAppBarTitle>
+        <SSpacer />
         <SButton variant="icon">
           <SIcon icon="mdi-account" />
         </SButton>
-      </template>
-    </SAppBar>
+      </SAppBar>
 
-    <!-- Navigation Drawer -->
-    <SNavigationDrawer for="app" v-model="drawer">
-      <SList>
-        <SListItem :to="{ name: 'home' }" link>
-          <SListItemIcon><SIcon icon="mdi-home" /></SListItemIcon>
-          <SListItemContent><SListItemTitle>Home</SListItemTitle></SListItemContent>
-        </SListItem>
-        <SListItem :to="{ name: 'settings' }" link>
-          <SListItemIcon><SIcon icon="mdi-cog" /></SListItemIcon>
-          <SListItemContent><SListItemTitle>Settings</SListItemTitle></SListItemContent>
-        </SListItem>
-      </SList>
-    </SNavigationDrawer>
+      <!-- Navigation Drawer -->
+      <SNavigationDrawer v-model="drawer">
+        <SList>
+          <SListItem :to="{ name: 'home' }" link>
+            <SListItemIcon><SIcon icon="mdi-home" /></SListItemIcon>
+            <SListItemContent><SListItemTitle>Home</SListItemTitle></SListItemContent>
+          </SListItem>
+          <SListItem :to="{ name: 'settings' }" link>
+            <SListItemIcon><SIcon icon="mdi-cog" /></SListItemIcon>
+            <SListItemContent><SListItemTitle>Settings</SListItemTitle></SListItemContent>
+          </SListItem>
+        </SList>
+      </SNavigationDrawer>
 
-    <!-- Main Content -->
-    <SMain for="app">
-      <SContainer>
-        <router-view />
-      </SContainer>
-    </SMain>
+      <!-- Main Content -->
+      <SMain>
+        <SContainer>
+          <router-view />
+        </SContainer>
+      </SMain>
 
-    <!-- Footer -->
-    <SFooter for="app">
-      <SContainer>
-        <span class="s_text--caption">© 2026 My App</span>
-      </SContainer>
-    </SFooter>
-  </SLayout>
+      <!-- Footer -->
+      <SFooter>
+        <SContainer>
+          <span class="s_text--caption">© 2026 My App</span>
+        </SContainer>
+      </SFooter>
+    </SLayout>
+  </SApp>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+
 const drawer = ref(false)
 </script>
+```
+
+### Named (nested) layout
+
+```vue
+<!-- Every child needs for="admin" -->
+<SLayout name="admin">
+  <SAppBar for="admin" position="fixed" />
+  <SNavigationDrawer for="admin" v-model="adminDrawer" />
+  <SMain for="admin">…</SMain>
+</SLayout>
 ```
 
 ### Grid System
@@ -345,6 +396,12 @@ const drawer = ref(false)
   <SColumn :cols="8">Centered</SColumn>
 </SRow>
 
+<!-- Space between (camelCase) -->
+<SRow justify="spaceBetween">
+  <SColumn cols="auto">Left</SColumn>
+  <SColumn cols="auto">Right</SColumn>
+</SRow>
+
 <!-- Push elements apart -->
 <SRow>
   <SColumn cols="auto">Left</SColumn>
@@ -356,45 +413,51 @@ const drawer = ref(false)
 ### Bottom Navigation (mobile)
 
 ```vue
-<SLayout name="mobile">
-  <SMain for="mobile">Content</SMain>
-  <SBottomNavigation for="mobile" v-model="activeNav" grow>
-    <SButton value="home">
-      <SIcon icon="mdi-home" />
-      <span>Home</span>
-    </SButton>
-    <SButton value="search">
-      <SIcon icon="mdi-magnify" />
-      <span>Search</span>
-    </SButton>
-    <SButton value="profile">
-      <SIcon icon="mdi-account" />
-      <span>Profile</span>
-    </SButton>
-  </SBottomNavigation>
-</SLayout>
+<SApp>
+  <SLayout>
+    <SMain>Content</SMain>
+    <SBottomNavigation v-model="activeNav" :height="56" active-class="is-active" grow>
+      <SButton value="home">
+        <SIcon icon="mdi-home" />
+        <span>Home</span>
+      </SButton>
+      <SButton value="search">
+        <SIcon icon="mdi-magnify" />
+        <span>Search</span>
+      </SButton>
+      <SButton value="profile">
+        <SIcon icon="mdi-account" />
+        <span>Profile</span>
+      </SButton>
+    </SBottomNavigation>
+  </SLayout>
+</SApp>
 ```
 
-### App Bar with Activator (toggles drawer)
+`is-active` is your own CSS class — the component adds it to the selected button.
+
+### App Bar button that toggles the drawer
 
 ```vue
-<!-- The activator approach: no v-model needed -->
-<SAppBar for="app">
-  <SButton variant="icon" id="nav-toggle">
+<!-- `activator` does not toggle the drawer: bind v-model and toggle it from the button -->
+<SAppBar position="fixed">
+  <SButton id="nav-toggle" variant="icon" @click="drawer = !drawer">
     <SIcon icon="mdi-menu" />
   </SButton>
   <SAppBarTitle>Title</SAppBarTitle>
 </SAppBar>
 
-<SNavigationDrawer for="app" activator="#nav-toggle">
+<!-- activator only keeps a click on the button from counting as an outside click -->
+<SNavigationDrawer v-model="drawer" activator="#nav-toggle">
   <!-- drawer content -->
 </SNavigationDrawer>
 ```
 
 ## Notes
 
-- All layout children **must** share the same `name`/`for` value for automatic offset calculation to work.
-- `SMain` content padding auto-adjusts when `SAppBar`, `SNavigationDrawer`, or `SFooter` are registered.
+- In a named layout, all children **must** share the same `name`/`for` value for offset calculation to work.
+- `SMain` margins auto-adjust for drawers, a `fixed` `SAppBar`, and the bottom navigation (app level) or footer (nested).
+- `SAppBar` `position` defaults to `undefined` (in flow) — pass `position="fixed"` for a fixed bar.
 - For multiple independent layouts on the same page, use different `name` values.
 - `SColumn cols="auto"` sizes to content width; `cols="grow"` fills remaining space.
-- `SSpacer` is a flex `flex: 1` element — use it inside `SRow` or `SAppBar` to push items apart.
+- `SSpacer` is a `flex-grow: 1` element — use it inside `SRow` or `SAppBar` to push items apart.

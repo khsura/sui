@@ -12,17 +12,19 @@ Horizontal bar progress indicator.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `value` | `number \| string` | `undefined` | Progress value (0–100) |
+| `value` | `number \| string` | `0` | Progress value (0–100) |
 | `indeterminate` | `boolean` | `false` | Animated indeterminate state (unknown progress) |
-| `color` | `string` | `undefined` | Bar color — preset name or CSS color |
-| `backgroundColor` | `string \| null` | `undefined` | Track background color |
+| `color` | `string` | `'info'` | Bar color — preset name or CSS color |
+| `backgroundColor` | `string \| null` | `undefined` | Track background color (falls back to `color`) |
 | `backgroundOpacity` | `string \| number \| null` | `undefined` | Track opacity |
-| `size` | `string \| number \| null` | `undefined` | Bar height |
-| `position` | `'fixed' \| 'absolute'` | `undefined` | CSS position (for page-level loaders) |
+| `size` | `string \| number \| null` | `undefined` | Bar height (number = px) |
+| `position` | `'static' \| 'fixed' \| 'absolute' \| 'relative' \| 'sticky'` | `undefined` | Only `'fixed'` and `'absolute'` add positioning styles (for page-level loaders) |
 
 ### Slots
 
-None.
+| Slot | Description |
+|------|-------------|
+| `default` | Rendered inside the bar container (e.g. a label) |
 
 ### Events
 
@@ -38,12 +40,13 @@ Circular/spinner progress indicator.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `value` | `number` | `undefined` | Progress value (0–100) |
+| `value` | `number` | `0` | Progress value (0–100, clamped) |
 | `indeterminate` | `boolean` | `false` | Animated spinning state |
-| `color` | `string` | `undefined` | Arc color — preset name or CSS color |
-| `size` | `number \| string` | `undefined` | Diameter of the circle |
-| `width` | `number` | `undefined` | Stroke width of the arc |
+| `color` | `string \| null` | `undefined` | Arc color — preset name or CSS color (text color; inherits `currentColor`) |
+| `size` | `number \| string` | `32` | Diameter in px — must be numeric (`'2rem'` breaks) |
+| `width` | `number` | `4` | Stroke width of the arc in px |
 | `rotate` | `number` | `undefined` | Starting angle offset (degrees) |
+| `theme` | `AppThemeType` | `undefined` | Theme override |
 
 ### Slots
 
@@ -100,12 +103,8 @@ None.
 <!-- Small inline spinner -->
 <SProgressCircular indeterminate :size="20" color="primary" />
 
-<!-- Inside a button (loading state) -->
-<!-- Note: SButton has a built-in loading prop, but you can also use this: -->
-<SButton :disabled="isLoading" color="primary">
-  <SProgressCircular v-if="isLoading" indeterminate :size="18" />
-  <span v-else>Save</span>
-</SButton>
+<!-- Loading button: prefer SButton's built-in prop -->
+<SButton :loading="isSaving" color="primary">Save</SButton>
 ```
 
 ## Notes
@@ -113,3 +112,5 @@ None.
 - `SButton` has a built-in `loading` prop that shows a `SProgressCircular` automatically — prefer that over manually composing.
 - `indeterminate` is for unknown progress durations; use `value` (0–100) for known progress.
 - For page-level loading bars (like NProgress), use `SProgressLinear` with `position="fixed"` at the top of the viewport.
+- `SProgressLinear` defaults to `color="info"`, not primary.
+- `SProgressCircular` always reports `aria-valuenow="60"`; set your own `aria-valuenow` if accessibility matters.

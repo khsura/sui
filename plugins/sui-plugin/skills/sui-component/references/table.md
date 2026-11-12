@@ -40,7 +40,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsTable.d.ts`. The 
 | `stickyLeftColumnsStart` | `number` | `0` | Index of the first left-sticky column |
 | `stickyLeftColumnsSize` | `number` | `0` | Number of left-sticky columns (sticking activates on horizontal scroll) |
 | `stickyLeftColumnsOffset` | `number` | `undefined` | Extra columns counted before sticking activates |
-| `stickyRightColumn` | `boolean` | `false` | Stick the last column to the right |
+| `stickyRightColumn` | `boolean` | — | Stick the last column to the right |
 
 ### TableHeader
 

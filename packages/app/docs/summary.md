@@ -54,7 +54,7 @@ Quick reference for all components in the `@khsura/sui` package.
 
 | Component(s) | Import | Doc |
 |---|---|---|
-| `SForm`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch` | `import { SForm, SInput, STextarea, SSelect, SCheckbox, SRadioGroup, SSwitch } from '@khsura/sui'` | [form.md](./components/form.md) |
+| `SForm`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` | `import { SForm, SInput, STextarea, SSelect, SCheckbox, SRadio, SRadioGroup, SSwitch } from '@khsura/sui'` | [form.md](./components/form.md) |
 | `SAutocomplete` | `import { SAutocomplete } from '@khsura/sui'` | [autocomplete.md](./components/autocomplete.md) |
 
 ---
@@ -64,7 +64,7 @@ Quick reference for all components in the `@khsura/sui` package.
 | Component(s) | Import | Doc |
 |---|---|---|
 | `SList`, `SListItem`, `SListItemTitle`, `SListItemSubtitle`, `SListItemIcon`, `SListItemAction`, `SListItemContent`, `SListItemGroup` | `import { SList, SListItem, ... } from '@khsura/sui'` | [list.md](./components/list.md) |
-| `STable`, `STableBodyCell`, `STableHeadCell`, `STablePagination` | `import { STable } from '@khsura/sui'` | [table.md](./components/table.md) |
+| `STable`, `STableBodyCell`, `STableHeadCell` | `import { STable } from '@khsura/sui'` | [table.md](./components/table.md) |
 | `SProgressLinear`, `SProgressCircular` | `import { SProgressLinear, SProgressCircular } from '@khsura/sui'` | [progress.md](./components/progress.md) |
 
 ---
@@ -85,7 +85,7 @@ Quick reference for all components in the `@khsura/sui` package.
 
 | Component(s) | Import | Doc |
 |---|---|---|
-| `SDatePicker`, `datePickerModelFormats` | `import { SDatePicker, datePickerModelFormats } from '@khsura/sui'` | [date-picker.md](./components/date-picker.md) |
+| `SDatePicker`, `SDatePickerInput`, `datePickerModelFormats` | `import { SDatePicker, SDatePickerInput, datePickerModelFormats } from '@khsura/sui'` | [date-picker.md](./components/date-picker.md) |
 | `SCalendar` | `import { SCalendar } from '@khsura/sui'` | [calendar.md](./components/calendar.md) |
 
 ---
@@ -110,7 +110,7 @@ Quick reference for all components in the `@khsura/sui` package.
 
 | Prop | Type | Description |
 |------|------|-------------|
-| `color` | `string` | Background/primary color. Presets: `primary`, `secondary`, `error`, `success`, `warning`, `surface`, `background` |
+| `color` | `string` | Background/primary color. Presets: `primary`, `secondary`, `error`, `warning`, `info`, `success`, `important` (plus app colors `background`, `card`) |
 | `elevation` | `0–24` | Box shadow depth |
 | `disabled` | `boolean` | Disable all interaction |
 | `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | Preset size (buttons, icons, chips) |
@@ -129,7 +129,7 @@ Quick reference for all components in the `@khsura/sui` package.
 
 ## Activator Pattern
 
-Components that open a popup (SDialog, SMenu, STooltip, SSnackbar) support an `#activator` slot:
+SDialog, SMenu and SSnackbar support an `#activator` slot that passes `{ on, attrs }`:
 
 ```vue
 <SMenu>
@@ -142,6 +142,8 @@ Components that open a popup (SDialog, SMenu, STooltip, SSnackbar) support an `#
 
 **Always bind both `v-on="on"` and `v-bind="attrs"`.**
 
+`STooltip` also has an `#activator` slot, but it passes no `on` / `attrs` — the tooltip wraps the slot content and listens for hover itself, so just put the element in the slot.
+
 ---
 
 ## v-model Reference
@@ -151,12 +153,14 @@ Components that open a popup (SDialog, SMenu, STooltip, SSnackbar) support an `#
 | `SDialog`, `SMenu`, `STooltip`, `SSnackbar`, `SNavigationDrawer` | `boolean` |
 | `SInput`, `STextarea`, `SSelect`, `SSwitch`, `SCheckbox` | value type |
 | `SAutocomplete` | value or `value[]` (when `multiple`) |
-| `STabs` | `string \| number` (active tab value) |
-| `SExpansionPanels` | `number[]` (open panel indexes, 0-based) |
-| `SCarousel`, `SWindow`, `SSlideGroup`, `SToggleButtonGroup` | item value or `value[]` |
-| `SDatePicker` | `string` — `'YYYY-MM-DD'` or `'YYYY-MM'` |
+| `STabs` | `string \| number` (the active `STab`'s `tab` value) |
+| `SExpansionPanels` | `number[]` (the `index` prop of each open panel) |
+| `SCarousel`, `SWindow` | single item value |
+| `SSlideGroup`, `SToggleButtonGroup` | always an array of item identifiers (`index` or vnode `key`) |
+| `SDatePicker`, `SDatePickerInput` | `string` — `'YYYY-MM-DD'`, `'YYYY-MM'` or `'YYYY'` |
 | `SCalendar` | `v-model:focus` → `string` (focused date `'YYYY-MM-DD'`) |
-| `SStepper` | `number` (1-based step index) |
+| `SStepper` | `number` (the active step's `step` value) |
+| `SForm` | `boolean` (`true` when valid); also `v-model:errors` (`string[]`) and `v-model:error` (`boolean`) |
 
 ---
 

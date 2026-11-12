@@ -14,15 +14,15 @@ Root container that manages the expanded state.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `modelValue` | `number[]` | `[]` | Indexes of currently expanded panels |
+| `modelValue` | `number[] \| null` | `[]` | `index` values of the currently expanded panels |
 | `multiple` | `boolean` | `false` | Allow multiple panels open simultaneously |
-| `mandatory` | `boolean` | `false` | At least one panel must always be open |
+| `mandatory` | `boolean` | `false` | At least one panel must always be open (opens the first panel if the model is empty) |
 | `expandIcon` | `MaterialDesignIcon` | `'mdi-chevron-down'` | Expand/collapse icon |
 | `expandIconSize` | `SizePropertyType` | `undefined` | Icon size |
 
 ### Model
 
-`v-model` — `number[]` array of open panel indexes.
+`v-model` — `number[]` array holding the `index` prop of each open panel. Emits `update:modelValue`.
 
 ### Slots
 
@@ -36,11 +36,17 @@ Root container that manages the expanded state.
 
 Single collapsible panel.
 
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `index` | `number` | vnode `key`, else an auto-generated id | Panel identity — the value stored in the `v-model` array |
+
 ### Slots
 
-| Slot | Description |
-|------|-------------|
-| `default` | `SExpansionPanelHeader` + `SExpansionPanelContent` |
+| Slot | Scoped data | Description |
+|------|-------------|-------------|
+| `default` | `{ isExpanded }` | `SExpansionPanelHeader` + `SExpansionPanelContent` |
 
 ---
 
@@ -50,9 +56,11 @@ Clickable header row that triggers collapse/expand.
 
 ### Slots
 
-| Slot | Description |
-|------|-------------|
-| `default` | Header label/content |
+| Slot | Scoped data | Description |
+|------|-------------|-------------|
+| `default` | `{ open }` | Header label/content |
+| `actions` | `{ isExpanded }` | Replaces the expand icon |
+| `top` | — | Content above the header row |
 
 ---
 
@@ -62,9 +70,9 @@ Collapsible body content.
 
 ### Slots
 
-| Slot | Description |
-|------|-------------|
-| `default` | Panel body content |
+| Slot | Scoped data | Description |
+|------|-------------|-------------|
+| `default` | `{ isExpanded }` | Panel body content |
 
 ---
 
@@ -72,20 +80,28 @@ Collapsible body content.
 
 ```vue
 <script setup lang="ts">
-const expanded = ref([0]) // First panel open by default
+import { ref } from 'vue'
+import { SExpansionPanels, SExpansionPanel, SExpansionPanelHeader, SExpansionPanelContent, SButton } from '@khsura/sui'
+
+const items = [
+  { title: 'Shipping', body: 'Shipping details' },
+  { title: 'Returns', body: 'Return policy' },
+  { title: 'Warranty', body: 'Warranty terms' },
+]
+const expanded = ref<number[]>([0]) // panel with :index="0" open by default
 </script>
 
 <template>
   <!-- Basic accordion -->
   <SExpansionPanels v-model="expanded">
-    <SExpansionPanel>
+    <SExpansionPanel :index="0">
       <SExpansionPanelHeader>Section 1</SExpansionPanelHeader>
       <SExpansionPanelContent>
         Content for section 1.
       </SExpansionPanelContent>
     </SExpansionPanel>
 
-    <SExpansionPanel>
+    <SExpansionPanel :index="1">
       <SExpansionPanelHeader>Section 2</SExpansionPanelHeader>
       <SExpansionPanelContent>
         Content for section 2.
@@ -95,7 +111,7 @@ const expanded = ref([0]) // First panel open by default
 
   <!-- Allow multiple panels open -->
   <SExpansionPanels v-model="expanded" multiple>
-    <SExpansionPanel v-for="(item, i) in items" :key="i">
+    <SExpansionPanel v-for="(item, i) in items" :key="i" :index="i">
       <SExpansionPanelHeader>{{ item.title }}</SExpansionPanelHeader>
       <SExpansionPanelContent>{{ item.body }}</SExpansionPanelContent>
     </SExpansionPanel>
@@ -103,11 +119,11 @@ const expanded = ref([0]) // First panel open by default
 
   <!-- Always keep one open (mandatory) -->
   <SExpansionPanels v-model="expanded" mandatory>
-    <SExpansionPanel>
+    <SExpansionPanel :index="0">
       <SExpansionPanelHeader>Always one open</SExpansionPanelHeader>
       <SExpansionPanelContent>This stays open if it's the only one.</SExpansionPanelContent>
     </SExpansionPanel>
-    <SExpansionPanel>
+    <SExpansionPanel :index="1">
       <SExpansionPanelHeader>Another panel</SExpansionPanelHeader>
       <SExpansionPanelContent>Content.</SExpansionPanelContent>
     </SExpansionPanel>
@@ -117,13 +133,17 @@ const expanded = ref([0]) // First panel open by default
   <SButton @click="expanded = [0, 1, 2]">Expand All</SButton>
   <SButton @click="expanded = []">Collapse All</SButton>
   <SExpansionPanels v-model="expanded" multiple>
-    <!-- ... -->
+    <SExpansionPanel v-for="(item, i) in items" :key="i" :index="i">
+      <SExpansionPanelHeader>{{ item.title }}</SExpansionPanelHeader>
+      <SExpansionPanelContent>{{ item.body }}</SExpansionPanelContent>
+    </SExpansionPanel>
   </SExpansionPanels>
 </template>
 ```
 
 ## Notes
 
-- `modelValue` contains the **indexes** (0-based) of open panels, not panel identifiers.
+- `modelValue` holds each open panel's `index` prop value, not its DOM position. Without `index` (or a numeric `key`) a panel gets an auto-generated id and a model like `[0]` never matches it — with `v-for`, set `:index="i"`.
+- A `disabled` attribute on a panel has no effect; control open state through `v-model`.
 - `mandatory` + `multiple="false"` ensures exactly one panel is always open (standard accordion behavior).
 - `mandatory` + `multiple="true"` ensures at least one is always open.

@@ -14,14 +14,15 @@ Root list container.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `divided` | `boolean` | `false` | Render dividers between items |
-| `lines` | `number \| null` | `null` | Line-clamp for item text |
-| `outlined` | `boolean` | `false` | Outlined border style |
-| `dense` | `boolean` | `false` | Compact item height |
-| `link` | `boolean` | `false` | Apply hover/active states to all items |
-| `inset` | `boolean` | `false` | Inset dividers (indent from left) |
-| `text` | `boolean` | `false` | Text-only color mode |
-| `color` | `string` | `undefined` | Background color |
+| `divided` | `boolean` | `false` | Render a border between items |
+| `lines` | `number \| null` (1–6) | `undefined` | Line clamp for `SListItemSubtitle` (the subtitle clamps to 2 lines when unset) |
+| `outlined` | `boolean` | `false` | Outlined border style; `color` then sets the text color |
+| `dense` | `boolean` | `false` | Compact list (40px rows, dense title/icon/action) |
+| `link` | `boolean` | `false` | Hover style + pointer cursor on every item |
+| `inset` | `boolean` | `false` | Declared, but has no styling (no visible effect) |
+| `text` | `boolean` | `false` | `color` sets the text color instead of the background |
+| `color` | `string` | `undefined` | Background color (text color with `outlined` / `text`) |
+| `colorThreshold` | `number` | `undefined` | Contrast threshold for custom colors |
 | `tag` | `'ul' \| 'ol' \| 'div'` | `'div'` | Root HTML element |
 
 ### Slots
@@ -40,13 +41,14 @@ Single row in the list.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `lines` | `number \| null` | `null` | Line-clamp override for this item |
-| `selectable` | `boolean` | `false` | Highlight as selected |
-| `link` | `boolean` | `false` | Hover/active styling |
+| `lines` | `number \| null` (1–6) | `undefined` | Subtitle line clamp for this item (overrides the list's `lines`) |
+| `selectable` | `boolean` | `false` | Only sets `cursor: pointer` — it does **not** add selected styling |
+| `link` | `boolean` | `false` | Hover background + pointer (automatic when `href`/`to` is set) |
 | `disabled` | `boolean` | `false` | Disabled state |
-| `href` | `string \| null` | `null` | Render as anchor |
-| `to` | `RouteLocationRaw \| null` | `null` | Vue Router link |
-| `tag` | `'li' \| 'div'` | `'div'` | Root element |
+| `href` | `string` | `undefined` | Render as `<a>` |
+| `to` | `RouteLocationRaw \| null` | `undefined` | Render as `router-link` |
+| `target` / `rel` | `string` | `undefined` | Link attributes |
+| `tag` | `'li' \| 'div'` | `'div'` | Root element (when not a link) |
 
 ### Slots
 
@@ -54,11 +56,17 @@ Single row in the list.
 |------|-------------|
 | `default` | Item content (use sub-components below) |
 
+### Events
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `click` | `Event` | Item clicked |
+
 ---
 
 ## SListItemContent
 
-Wraps the main text area within an item.
+Wraps the title and subtitle. No props. **Must be inside an `SListItem`** (throws otherwise).
 
 **Slot:** `default`
 
@@ -66,7 +74,7 @@ Wraps the main text area within an item.
 
 ## SListItemTitle
 
-Primary text line of an item.
+Primary text line of an item. No props. **Must be inside an `SList`** (throws otherwise).
 
 **Slot:** `default`
 
@@ -74,23 +82,20 @@ Primary text line of an item.
 
 ## SListItemSubtitle
 
-Secondary text line below the title.
+Secondary text line below the title, clamped to 2 lines by default (see `lines`). No props. **Must be inside both an `SList` and an `SListItem`** (throws otherwise).
 
 **Slot:** `default`
 
 ---
 
-## SListItemIcon
+## SListItemIcon / SListItemAction
 
-Icon area (left or right of content).
+Leading icon area and trailing action area (buttons/icons).
 
-**Slot:** `default`
-
----
-
-## SListItemAction
-
-Action area (right side of item, for buttons/icons).
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `alignCenter` | `boolean` | `false` | Vertically center the content |
+| `dense` | `boolean` | `false` | Dense sizing (the parent list's `dense` takes precedence) |
 
 **Slot:** `default`
 
@@ -98,7 +103,18 @@ Action area (right side of item, for buttons/icons).
 
 ## SListItemGroup
 
-Groups list items with optional selection.
+A collapsible sub-list — it expands and collapses; it is **not** a selection group. By default it renders a clickable header row (title, subtitle, chevron); the children render in a nested `SList` that inherits the parent list's props. **Must be inside an `SList`.**
+
+| Prop / Model | Type | Default | Description |
+|--------------|------|---------|-------------|
+| `v-model` | `boolean` | `false` | Expanded state |
+| `title` | `string \| null` | `null` | Header title |
+| `subtitle` | `string \| null` | `null` | Header subtitle |
+
+| Slot | Description |
+|------|-------------|
+| `activator` | Replaces the default header row (no slot props — toggle `v-model` yourself) |
+| `default` | Items shown when expanded |
 
 ---
 
@@ -173,14 +189,23 @@ Groups list items with optional selection.
   </SListItem>
 </SList>
 
-<!-- Router-linked items -->
+<!-- Router-linked items (hover styling is automatic) -->
 <SList>
-  <SListItem :to="{ name: 'dashboard' }" link>
-    <SListItemTitle>Dashboard</SListItemTitle>
+  <SListItem :to="{ name: 'dashboard' }">
+    <SListItemContent><SListItemTitle>Dashboard</SListItemTitle></SListItemContent>
   </SListItem>
-  <SListItem :to="{ name: 'profile' }" link>
-    <SListItemTitle>Profile</SListItemTitle>
+  <SListItem :to="{ name: 'profile' }">
+    <SListItemContent><SListItemTitle>Profile</SListItemTitle></SListItemContent>
   </SListItem>
+</SList>
+
+<!-- Collapsible group -->
+<SList>
+  <SListItemGroup v-model="settingsOpen" title="Settings">
+    <SListItem link @click="openProfile">
+      <SListItemContent><SListItemTitle>Profile</SListItemTitle></SListItemContent>
+    </SListItem>
+  </SListItemGroup>
 </SList>
 ```
 
@@ -188,4 +213,7 @@ Groups list items with optional selection.
 
 - `SList` with `link` prop applies hover styles to all items globally. Set `link` on individual `SListItem`s for selective hover behavior.
 - `SListItemContent` should wrap `SListItemTitle` / `SListItemSubtitle` when using icons or actions alongside text.
+- `SListItemTitle` / `SListItemSubtitle` throw when used outside an `SList` (e.g. directly in a card).
+- `selectable` only changes the cursor — track and style the active item yourself.
+- `SListItemGroup` only expands/collapses; it does not track selection.
 - Inside `SMenu`, wrap content in `SList dense` for standard menu appearance.

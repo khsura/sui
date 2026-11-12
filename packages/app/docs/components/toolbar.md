@@ -2,65 +2,80 @@
 
 **Import:** `import { SToolbar, SToolbarTitle, SToolbarItem } from '@khsura/sui'`
 
-Application bar / toolbar with optional extension area.
+Toolbar / app bar with an optional extension row.
 
 ---
 
 ## SToolbar
 
-Main toolbar container.
+Main toolbar container. The root is a column flexbox: the main row, then the optional extension row.
 
 ### Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `color` | `string` | `undefined` | Background color |
-| `elevation` | `0–24` | `undefined` | Box shadow depth |
-| `density` | `ToolbarDensityType` | `'default'` | Height density: `'default'`, `'comfortable'`, `'compact'` |
-| `extended` | `boolean` | `false` | Enable extension area below toolbar |
-| `extensionHeight` | `number \| string` | `undefined` | Height of extension area |
-| `extensionStyle` | `Record<string, string>` | `undefined` | Inline styles for extension |
-| `extensionClass` | `string \| Record<string, boolean>` | `undefined` | CSS class for extension |
-| `height` | `number \| string` | `undefined` | Override toolbar height |
-| `title` | `string` | `undefined` | Quick title (shorthand for `SToolbarTitle`) |
-| `tag` | `string` | `'header'` | Root HTML element |
-| `outlined` | `boolean` | `false` | Bottom border style |
-| `underlined` | `boolean` | `false` | Underlined style |
-| `borderRadius` | `'tile' \| 'rounded' \| number \| string` | `undefined` | Border radius |
+| `color` | `string` | `undefined` | Background color (preset or CSS). Child `SButton`s and `SToolbarTitle` adapt to it |
 | `colorThreshold` | `number` | `undefined` | Auto text contrast threshold |
+| `elevation` | `0–24` | `undefined` | Box shadow depth |
+| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` (acts as `'default'`) | Reduces the main row by 0 / 8 / 16 px and the extension by 0 / 4 / 8 px |
+| `height` | `number \| string` | `64` | Main row height |
+| `extended` | `boolean` | `false` | Show the extension row |
+| `extensionHeight` | `number \| string` | `48` | Height of extension row |
+| `extensionStyle` | `Record<string, string>` | `undefined` | Inline styles for the extension row |
+| `extensionClass` | `string \| Record<string, boolean>` | `undefined` | CSS class for the extension row |
+| `contentClass` / `contentStyle` | class / style | `undefined` | Class/style for the main content row |
+| `position` | `'static' \| 'fixed' \| 'absolute' \| 'relative' \| 'sticky'` | `undefined` | CSS position |
+| `tag` | `HtmlTagName` | `'div'` | Root HTML element (pass `tag="header"` for semantics) |
+| `outlined` | `boolean \| null` | `undefined` | Outlined border style |
+| `underlined` | `boolean \| null` | `undefined` | Underlined border style |
+| `borderRadius` | `'tile' \| 'rounded' \| number \| string` | `undefined` | Border radius |
+
+`title` is declared on the type but **never rendered** — use `SToolbarTitle`.
 
 ### Slots
 
 | Slot | Description |
 |------|-------------|
-| `default` | Main toolbar content |
-| `prepend` | Left-side content (before title) |
-| `append` | Right-side content (after title) |
-| `extension` | Extension area below main toolbar (requires `extended`) |
+| `default` | Main row content (horizontal flex) |
+| `prepend` | Separate **row above** the main row (not a left-side item) |
+| `append` | Separate **row below** the main row and the extension (not a right-side item) |
+| `extension` | Extension row below the main row (only shown with `extended`) |
+
+### Events
+
+None.
 
 ---
 
 ## SToolbarTitle
 
-Toolbar heading text.
+Toolbar heading text. Its color comes from the parent toolbar. Renders nothing when it has no slot content and no `text`.
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `text` | `string \| null` | `undefined` | Title text (used when no slot is given) |
+| `tag` | `HtmlTagName` | `'div'` | Root HTML element |
 
 ### Slots
 
 | Slot | Description |
 |------|-------------|
-| `default` | Title text |
+| `default` | Title content |
+| `text` | Alternative to the default slot |
 
 ---
 
 ## SToolbarItem
 
-Toolbar action item wrapper.
+Exported, but it has no slot: it renders an empty element and **drops its children**. Place items directly in the toolbar's default slot instead.
 
-### Slots
+### Props
 
-| Slot | Description |
-|------|-------------|
-| `default` | Content (typically `SButton` or `SIcon`) |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `tag` | `HtmlTagName` | `'div'` | Root HTML element |
 
 ---
 
@@ -68,7 +83,10 @@ Toolbar action item wrapper.
 
 ```vue
 <!-- Basic app toolbar -->
-<SToolbar color="primary">
+<SToolbar color="primary" tag="header">
+  <SButton variant="icon" @click="toggleDrawer">
+    <SIcon icon="mdi-menu" />
+  </SButton>
   <SToolbarTitle>My Application</SToolbarTitle>
   <SSpacer />
   <SButton variant="icon">
@@ -79,24 +97,9 @@ Toolbar action item wrapper.
   </SButton>
 </SToolbar>
 
-<!-- With prepend/append slots -->
-<SToolbar color="primary">
-  <template #prepend>
-    <SButton variant="icon" @click="toggleDrawer">
-      <SIcon icon="mdi-menu" />
-    </SButton>
-  </template>
-  <SToolbarTitle>Dashboard</SToolbarTitle>
-  <template #append>
-    <SButton variant="icon">
-      <SIcon icon="mdi-account" />
-    </SButton>
-  </template>
-</SToolbar>
-
 <!-- With extension (e.g., tabs) -->
 <SToolbar color="primary" extended>
-  <SToolbarTitle>Page Title</SToolbarTitle>
+  <SToolbarTitle text="Page Title" />
   <template #extension>
     <STabs v-model="activeTab" style="width: 100%">
       <STab :tab="0">Tab 1</STab>
@@ -126,5 +129,6 @@ Toolbar action item wrapper.
 ## Notes
 
 - Buttons inside `SToolbar` automatically adapt their text color to contrast against the toolbar background.
-- Use `SSpacer` (from layout) to push elements to the right.
-- `extended` + `#extension` slot is the pattern for toolbars with tabs or search bars below the main row.
+- Use `SSpacer` (from layout) to push elements to the right; put left/right items in the default slot, not in `prepend`/`append` (those stack as rows).
+- `extended` + `#extension` slot is the pattern for toolbars with tabs or search bars below the main row — without `extended` the extension row is not rendered.
+- `tag` defaults to `div`, not `header`.

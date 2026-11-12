@@ -2,7 +2,7 @@
 
 **Import:** `import { SWindow, SWindowItem } from '@khsura/sui'`
 
-Slide-based content switcher — foundation for carousels, step wizards, and any sequential content display.
+Slide-based content switcher — the foundation of `SCarousel`, usable directly for step wizards and any sequential content display.
 
 ---
 
@@ -14,30 +14,43 @@ Root container managing the active item.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `modelValue` | `any` | `undefined` | Active item's value |
+| `modelValue` | `string \| number \| boolean \| symbol` | `undefined` | Active item's `value` (use `v-model`) |
 | `nextIcon` | `MaterialDesignIcon` | `'mdi-chevron-right'` | Next navigation icon |
 | `prevIcon` | `MaterialDesignIcon` | `'mdi-chevron-left'` | Previous navigation icon |
 | `hideArrows` | `boolean` | `false` | Hide navigation arrows |
-| `touch` | `boolean \| TouchHandlers` | `true` | Enable swipe gestures |
+| `touch` | `boolean \| TouchHandlers` | `false` | `true` enables swipe left/right; an object supplies custom touch handlers |
 | `noAnimation` | `boolean` | `false` | Disable slide transition |
-| `selectedClass` | `string` | `undefined` | CSS class applied to active item |
+| `selectedClass` | `string` | `undefined` | CSS class applied to the active item |
 | `mandatory` | `boolean` | `false` | Always keep one item selected |
 | `continuous` | `boolean` | `false` | Loop from last to first / first to last |
-| `disabled` | `boolean` | `false` | Disable navigation |
-| `color` | `string` | `undefined` | Navigation controls color |
-| `tag` | `string` | `'div'` | Root HTML element |
+| `disabled` | `boolean` | `false` | Disable the built-in arrow buttons |
+| `color` | `string` | `undefined` | Preset color class on the root |
+| `tag` | `HtmlTagName` | `'div'` | Root HTML element |
 
 ### Model
 
-`v-model` — value of the currently visible item.
+`v-model` — `value` of the currently visible item.
+
+### Events
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `update:modelValue` | item `value` | Active item changed |
 
 ### Slots
 
 | Slot | Scoped data | Description |
 |------|-------------|-------------|
-| `default` | `{ items, selected, select }` | Rendered window items |
-| `prev` | `{ attrs, on }` | Custom previous button |
-| `next` | `{ attrs, on }` | Custom next button |
+| `default` | `{ items, selected, select }` | Window items. `select({ value })` or `select({ index })` activates an item |
+| `prev` | `{ icon, click, disabled }` | Custom previous button (rendered only when moving back is possible) |
+| `next` | `{ icon, click }` | Custom next button (rendered only when moving forward is possible) |
+
+### Exposed methods
+
+| Method | Description |
+|--------|-------------|
+| `goNext()` | Move to the next item |
+| `goPrev()` | Move to the previous item |
 
 ---
 
@@ -49,7 +62,7 @@ Individual slide/panel.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `value` | `any` | `undefined` | Identifier matched against window model |
+| `value` | `string \| number \| boolean` | vnode `key` | Identifier matched against the window model. Falls back to `:key`, then an auto-generated id |
 
 ### Slots
 
@@ -63,6 +76,8 @@ Individual slide/panel.
 
 ```vue
 <script setup lang="ts">
+import { ref } from 'vue'
+
 const active = ref(0)
 const slides = [
   { value: 0, content: 'Step 1: Account Setup' },
@@ -89,17 +104,17 @@ const slides = [
 
   <!-- Custom nav buttons -->
   <SWindow v-model="active">
-    <template #prev="{ attrs, on }">
-      <SButton variant="icon" v-bind="attrs" v-on="on" color="primary">
-        <SIcon icon="mdi-arrow-left" />
+    <template #prev="{ icon, click, disabled }">
+      <SButton variant="icon" color="primary" :disabled="disabled" @click="click">
+        <SIcon :icon="icon" />
       </SButton>
     </template>
     <SWindowItem v-for="n in 5" :key="n" :value="n">
       Content {{ n }}
     </SWindowItem>
-    <template #next="{ attrs, on }">
-      <SButton variant="icon" v-bind="attrs" v-on="on" color="primary">
-        <SIcon icon="mdi-arrow-right" />
+    <template #next="{ icon, click }">
+      <SButton variant="icon" color="primary" @click="click">
+        <SIcon :icon="icon" />
       </SButton>
     </template>
   </SWindow>
@@ -115,6 +130,7 @@ const slides = [
 ## Notes
 
 - `SCarousel` is built on top of `SWindow` — use `SCarousel` for image slideshows and `SWindow` for content/step wizards.
-- `continuous` enables looping navigation; without it, navigation stops at the first/last item.
-- `mandatory` ensures one item is always selected (prevents empty state).
+- On mount the window shows the item whose `value` matches `v-model`; when the model names no item, it selects the first item and emits its `value`.
+- `continuous` enables looping navigation; without it the prev/next arrows disappear at the first/last item.
+- `touch` is off by default on `SWindow` (SCarousel turns it on).
 - Use the `prev`/`next` slots to replace the default arrow buttons with custom controls.

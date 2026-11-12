@@ -2,7 +2,7 @@
 
 **Import:** `import { SStepper, SStepperStep } from '@khsura/sui'`
 
-Step-by-step wizard navigation.
+Step-by-step wizard navigation. It renders the step headers only — render each step's content yourself with `v-if` on the step number.
 
 ---
 
@@ -14,49 +14,51 @@ Root stepper container.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `modelValue` | `number` | `undefined` | Active step number (1-based) |
-| `items` | `StepperItem[]` | `undefined` | Step definitions (alternative to slots) |
+| `modelValue` | `number` | `undefined` | Active step number |
+| `items` | `StepperItem[]` | `[]` | Step definitions — used only when the default slot is empty |
 | `shrink` | `boolean` | `false` | Shrink to content width |
-| `tag` | `string` | `'div'` | Root HTML element |
+
+`tag` exists in the type but is ignored (the root is always a `div`).
 
 ### StepperItem shape
 
 ```typescript
 type StepperItem = {
   step: number       // Step number
-  text: string       // Step label
-  editable?: boolean // Allow going back to this step
+  text?: string      // Step label
+  editable?: boolean // Clicking the step jumps to it
 }
 ```
 
 ### Model
 
-`v-model` — active step number (1-based).
+`v-model` — active step number.
 
 ### Events
 
 | Event | Payload | Description |
 |-------|---------|-------------|
-| `update:modelValue` | `number` | Active step changed |
+| `update:modelValue` | `number` | Emitted only when an `editable` step is clicked; clamped to the lowest/highest registered step |
 
 ### Slots
 
-| Slot | Description |
-|------|-------------|
-| `default` | `SStepperStep` components (when not using `items` prop) |
+| Slot | Scoped data | Description |
+|------|-------------|-------------|
+| `default` | `{ value }` (current step) | `SStepperStep` components (replaces `items` rendering) |
 
 ---
 
 ## SStepperStep
 
-Individual step (used when composing with slots).
+Individual step (used when composing with slots). Must be a child of `SStepper` (throws otherwise). Steps with `step < modelValue` show a checkmark (visited); `step === modelValue` is current.
 
 ### Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `step` | `number` | **required** | Step number |
-| `editable` | `boolean` | `false` | Allow clicking to go back to this step |
+| `editable` | `boolean` | `false` | Clicking the step jumps to it (forward or back) |
+| `disabled` | `boolean` | `false` | Disabled styling only — does not block clicks on an `editable` step |
 
 ### Slots
 
@@ -70,7 +72,13 @@ Individual step (used when composing with slots).
 
 ```vue
 <script setup lang="ts">
+import { ref } from 'vue'
+import { SStepper, SStepperStep, SInput, SButton } from '@khsura/sui'
+
 const currentStep = ref(1)
+const email = ref('')
+const name = ref('')
+const submit = () => { /* ... */ }
 
 const steps = [
   { step: 1, text: 'Account Info' },
@@ -110,6 +118,7 @@ const steps = [
 
 ## Notes
 
-- Steps are 1-based (`modelValue` starts at `1`).
-- `editable` steps allow the user to click back to that step after passing it.
-- Manage step validation before advancing by checking `currentStep` in your click handlers.
+- Step numbers are whatever you pass to `step`; 1-based is a convention, not a rule.
+- The stepper never advances by itself. Only clicks on `editable` steps emit; Next/Back buttons must update the model.
+- `editable` lets the user jump to that step in both directions — it does not restrict clicks to visited steps.
+- Validate in your Next handler before changing the step. `disabled` does not stop an editable step from being clicked.

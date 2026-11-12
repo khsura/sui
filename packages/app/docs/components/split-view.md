@@ -15,12 +15,10 @@ Root split view container.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `vertical` | `boolean` | `false` | Stack panels vertically (top/bottom) instead of horizontally |
-| `height` | `string \| number` | `undefined` | Container height |
-| `width` | `string \| number` | `undefined` | Container width |
-| `maxHeight` | `string \| number` | `undefined` | Max height |
-| `maxWidth` | `string \| number` | `undefined` | Max width |
-| `minHeight` | `string \| number` | `undefined` | Min height |
-| `minWidth` | `string \| number` | `undefined` | Min width |
+| `height` | `string \| number` | `'100%'` | Container height (number = px) |
+| `width` | `string \| number` | `'100%'` | Container width (number = px) |
+
+There are no `min*` / `max*` size props — constrain the size with CSS on a wrapper.
 
 ### Slots
 
@@ -32,7 +30,7 @@ Root split view container.
 
 ## SSplitViewItem
 
-Individual panel inside the split view.
+Individual panel inside the split view. No props. Renders the panel plus a resize handle after it; the last item's handle is hidden.
 
 ### Slots
 
@@ -81,6 +79,7 @@ Individual panel inside the split view.
 
 ## Notes
 
-- Panels are separated by a draggable divider handle that users can resize.
-- Set an explicit `height` (or `width` for vertical) on `SSplitView` for the resize to work correctly.
-- Content inside each `SSplitViewItem` should handle overflow (use `overflow: auto` if needed).
+- Panels are separated by a divider handle that users drag with the mouse (no touch support). Dragging a handle resizes the panel before it.
+- The default `height: '100%'` collapses when the parent has no height — give `SSplitView` or its parent an explicit height.
+- `SSplitViewItem` has two root elements, so `class` / `style` set on it are not applied. Style an inner element instead.
+- Panels already scroll vertically (`overflow-y: auto`); horizontal overflow is up to you.

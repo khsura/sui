@@ -2,19 +2,19 @@
 
 **Import:** `import { SImage } from '@khsura/sui'`
 
-Image component with lazy loading, aspect ratio control, and object-fit support.
+An `<img>` inside a wrapper `<div>`, with aspect ratio control, object-fit support and an overlay slot. The image always uses native lazy loading (`loading="lazy"`).
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `src` | `string \| null` | **required** | Image URL |
-| `alt` | `string` | `undefined` | Alt text for accessibility |
+| `src` | `string \| null` | **required** | Image URL. When falsy, no `<img>` is rendered (the slot still renders) |
+| `alt` | `string \| null` | `''` | Alt text for accessibility |
 | `objectFit` | `'fill' \| 'contain' \| 'cover' \| 'none' \| 'scale-down'` | `undefined` | CSS object-fit value |
-| `aspectRatio` | `number` | `undefined` | Width-to-height ratio (e.g. `16/9`, `1`, `4/3`) |
-| `lazyLoad` | `LazyLoad` | `undefined` | Lazy loading strategy |
-| `width` | `string \| number` | `undefined` | Explicit width |
-| `height` | `string \| number` | `undefined` | Explicit height |
+| `aspectRatio` | `number` | `undefined` | Width-to-height ratio applied to the wrapper (e.g. `16/9`, `1`, `4/3`) |
+| `lazyLoad` | `LazyLoad` (`'lazy' \| 'eager' \| 'auto'`) | `undefined` | Declared but **ignored** — `loading` is always `lazy` |
+| `width` | `string \| number` | `undefined` | Wrapper width (`100%` otherwise) |
+| `height` | `string \| number` | `undefined` | Wrapper height (`100%` otherwise) |
 | `maxWidth` | `string \| number` | `undefined` | Max width constraint |
 | `maxHeight` | `string \| number` | `undefined` | Max height constraint |
 | `minWidth` | `string \| number` | `undefined` | Min width constraint |
@@ -24,7 +24,7 @@ Image component with lazy loading, aspect ratio control, and object-fit support.
 
 | Slot | Description |
 |------|-------------|
-| `default` | Overlay content rendered on top of the image |
+| `default` | Content in an absolutely positioned layer over the image (full width/height) |
 
 ## Events
 
@@ -47,14 +47,13 @@ None.
   <div class="overlay">Caption text</div>
 </SImage>
 
-<!-- Lazy loaded -->
-<SImage src="/large-photo.jpg" lazy-load :aspect-ratio="16/9" />
-
 <!-- Constrained width -->
 <SImage src="/photo.jpg" :max-width="400" object-fit="contain" />
 ```
 
 ## Notes
 
-- Setting `aspect-ratio` creates a responsive placeholder that maintains the ratio before the image loads.
+- Setting `aspect-ratio` sets the CSS `aspect-ratio` of the wrapper, so it keeps the ratio before the image loads.
+- The wrapper defaults to `width: 100%; height: 100%`. In a parent with no height, give it `aspect-ratio` or `height`.
 - `object-fit="cover"` is recommended when using `aspect-ratio` to prevent distortion.
+- Every image is lazy-loaded; `lazyLoad` cannot switch it to eager. Use a plain `<img loading="eager">` for above-the-fold images.

@@ -2,7 +2,7 @@
 
 **Import:** `import { SCard, SCardTitle, SCardSubtitle, SCardText, SCardActions } from '@khsura/sui'`
 
-Elevated surface with structured slots for title, content, and actions.
+A card surface with structured sections for title, content, and actions. `SCard` is its own component (it is not built on `SSheet`) and has **no shadow by default** — set `elevation` for one.
 
 ---
 
@@ -14,56 +14,44 @@ Root card container.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `color` | `string` | `undefined` | Background color |
-| `elevation` | `0–24` | `2` | Box shadow depth |
-| `outlined` | `boolean` | `false` | Border instead of shadow |
+| `color` | `string` | `undefined` | Background color (preset/app color name or CSS color) |
+| `colorThreshold` | `number` | `undefined` | Luminance threshold used to pick light/dark text on a custom color |
+| `theme` | `'light' \| 'dark'` | `undefined` | Force light/dark text styling |
+| `elevation` | `0–24` | `undefined` (no shadow) | Box shadow depth |
+| `outlined` | `boolean` | `false` | Border |
 | `underlined` | `boolean` | `false` | Bottom border only |
 | `borderRadius` | `'tile' \| 'rounded' \| number \| string` | `undefined` | Border radius override |
-| `tag` | `string` | `'div'` | Root HTML element |
-| `href` | `string \| null` | `null` | Render as anchor |
-| `to` | `RouteLocationRaw \| null` | `null` | Vue Router link |
+| `tag` | `string` | `'div'` | Root HTML element (ignored when `href`/`to` is set) |
+| `href` | `string` | `undefined` | Render as `<a>` |
+| `to` | `RouteLocationRaw \| null` | `undefined` | Render as `router-link` |
+| `target` | `'_blank' \| '_self' \| '_parent' \| '_top'` | `undefined` | Link target |
+| `rel` | `string` | `undefined` | Link rel |
 | `width` / `height` | `string \| number` | `undefined` | Dimensions |
 | `maxWidth` / `maxHeight` | `string \| number` | `undefined` | Max dimensions |
 | `minWidth` / `minHeight` | `string \| number` | `undefined` | Min dimensions |
-| `colorThreshold` | `number` | `undefined` | Auto text contrast |
 
 ### Slots
 
 | Slot | Description |
 |------|-------------|
-| `default` | Card content (use `SCardTitle`, `SCardText`, `SCardActions`) |
+| `default` | Card content (use `SCardTitle`, `SCardSubtitle`, `SCardText`, `SCardActions`, `SImage`, …) |
+
+### Events
+
+None declared. Native listeners such as `@click` fall through to the root element.
 
 ---
 
-## SCardTitle
+## SCardTitle / SCardSubtitle / SCardText / SCardActions
 
-Styled heading area for the card.
+Each takes only `tag` (default `'div'`) and a `default` slot.
 
-**Slot:** `default` — title text/content.
-
----
-
-## SCardSubtitle
-
-Secondary heading below the title.
-
-**Slot:** `default` — subtitle text/content.
-
----
-
-## SCardText
-
-Body content area with standard padding.
-
-**Slot:** `default` — any content.
-
----
-
-## SCardActions
-
-Bottom action bar, typically containing buttons.
-
-**Slot:** `default` — buttons and actions.
+| Component | Purpose |
+|-----------|---------|
+| `SCardTitle` | Heading area, padded |
+| `SCardSubtitle` | Secondary line below the title, padded |
+| `SCardText` | Body content area with standard padding |
+| `SCardActions` | Flex row (vertically centered) for buttons. Items are **left-aligned** |
 
 ---
 
@@ -71,12 +59,13 @@ Bottom action bar, typically containing buttons.
 
 ```vue
 <!-- Basic card -->
-<SCard :max-width="400">
+<SCard :max-width="400" :elevation="2">
   <SCardTitle>Card Title</SCardTitle>
   <SCardText>
     This is the card body content. Any content can go here.
   </SCardText>
   <SCardActions>
+    <SSpacer />
     <SButton variant="text">Cancel</SButton>
     <SButton color="primary">Confirm</SButton>
   </SCardActions>
@@ -90,7 +79,7 @@ Bottom action bar, typically containing buttons.
 </SCard>
 
 <!-- Card with image -->
-<SCard :max-width="340">
+<SCard :max-width="340" :elevation="2">
   <SImage src="/photo.jpg" :aspect-ratio="16/9" object-fit="cover" />
   <SCardTitle>Photo Title</SCardTitle>
   <SCardText>Description below the image.</SCardText>
@@ -100,9 +89,9 @@ Bottom action bar, typically containing buttons.
 </SCard>
 
 <!-- Outlined card -->
-<SCard outlined :elevation="0">
+<SCard outlined>
   <SCardTitle>Outlined</SCardTitle>
-  <SCardText>No shadow, just border.</SCardText>
+  <SCardText>No shadow (the default), just a border.</SCardText>
 </SCard>
 
 <!-- Colored card -->
@@ -121,5 +110,6 @@ Bottom action bar, typically containing buttons.
 ## Notes
 
 - Always use `SCardText` to wrap body text — it provides correct padding and typography.
-- `SCardActions` right-aligns buttons by default; use `SSpacer` to push buttons to specific sides.
+- `SCard` has no shadow unless you set `elevation`.
+- `SCardActions` left-aligns its items; put `<SSpacer />` first to push buttons to the right.
 - Setting `to` or `href` makes the entire card clickable as a link.
