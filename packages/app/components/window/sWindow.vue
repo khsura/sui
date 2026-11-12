@@ -117,7 +117,15 @@ const styles = computed(() => {
 })
 
 onMounted(() => {
-  init(true)
+  // Items register after the modelValue watcher first runs, so match the model again here;
+  // fall back to the first item only when the model names no item.
+  if (model.value !== undefined && model.value !== null) {
+    selectItem({ value: model.value })
+  }
+
+  if (selected.value.id === -1) {
+    init(true)
+  }
 })
 
 defineExpose({

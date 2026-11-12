@@ -1,7 +1,7 @@
 {
   "name": "sui-plugin",
   "description": "Skills for building Vue 3 / Nuxt apps with @khsura/sui — setup (GitHub Packages, styles, icons, theming, i18n), per-component references, forms, layouts and utilities",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "author": {
     "name": "Sura Kh",
     "email": "sura0111@gmail.com"
