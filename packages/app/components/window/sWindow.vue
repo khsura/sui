@@ -1,5 +1,5 @@
 <template>
-  <Component :is="tagName" :class="classes" :styles="styles">
+  <Component :is="tagName" :class="classes" :style="styles">
     <div class="s_window__container">
       <slot :items="items" :selected="selected" :select="select"></slot>
     </div>
