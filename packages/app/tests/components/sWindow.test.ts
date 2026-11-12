@@ -36,6 +36,12 @@ describe('SWindow', () => {
     expect(active.value).toBe('details')
   })
 
+  test('applies a CSS color as an inline style on the root', () => {
+    const wrapper = mountWithApp(sui.SWindow, { props: { color: '#1a2b49' } })
+
+    expect(wrapper.find('.s_window').attributes('style')).toContain('background-color')
+  })
+
   test('selects the first item when v-model names no item', async () => {
     const { wrapper, active } = mountWindow(null)
 
