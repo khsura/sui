@@ -12,7 +12,7 @@
     {
       "name": "sui-plugin",
       "source": "./plugins/sui-plugin",
-      "description": "SUI framework skills — components, layout, forms, utilities"
+      "description": "SUI framework skills for consumer apps — setup, per-component references, forms, layout, utilities"
     }
   ]
 }

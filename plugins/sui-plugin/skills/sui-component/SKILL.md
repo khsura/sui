@@ -1,148 +1,134 @@
 ---
 name: sui-component
-description: Look up and use any SUI component from @khsura/sui. Use when the user asks how to use a specific SUI component, needs a code example, or wants to know the props/slots/events for a component.
+description: Look up and use any component from @khsura/sui (SButton, SCard, SDialog, SMenu, STooltip, STable, SList, STabs, SStepper, SCarousel, SExpansionPanels, SDatePicker, SCalendar, SToggleButtonGroup, SSlideGroup, SToolbar, SSplitView, SDroppable, SBadge, SChip, SIcon, SImage, SAlert, SOverlay, …) in a Vue or Nuxt app. Use when writing or fixing template code with an S-prefixed component, choosing props/slots/events, debugging a SUI component that renders wrong or ignores a prop, or styling SUI components with theme colors. Loads one per-family reference file with the verified props table, slots, events, example and gotchas.
 argument-hint: [component name or description of what you need]
 ---
 
 Help the user use this SUI component: $ARGUMENTS
 
-If the component name is unclear, ask. Then provide the correct import, key props, and a working example.
+1. Find the component in the **Reference index** below and read **only** that reference file.
+2. Give the import, the props you use, and a complete working example built from the reference.
+3. If a prop isn't in the reference, check `node_modules/@khsura/sui/@types/definitions/props/props<Component>.d.ts` before using it. Never guess — unknown props are silently ignored.
 
-All imports come from `@khsura/sui`.
-
-## Additional resources
-
-- **Code examples** (all components, full snippets): [examples.md](./examples.md)
-- **Skills docs**: [Extend Claude with skills](https://code.claude.com/docs/en/skills)
+All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `@mdi/font`): **sui-getting-started**.
 
 ---
 
-## Critical pattern: Activator slot
+## Reference index
 
-**SDialog, SMenu, STooltip, SSnackbar** use `#activator`. Always bind **both** `v-on` and `v-bind` on the trigger element:
+| Component(s) | Reference |
+|---|---|
+| `SAlert` | [references/alert.md](references/alert.md) |
+| `SAutocomplete` | [references/autocomplete.md](references/autocomplete.md) |
+| `SBadge` | [references/badge.md](references/badge.md) |
+| `SBreadcrumbs` | [references/breadcrumbs.md](references/breadcrumbs.md) |
+| `SButton` | [references/button.md](references/button.md) |
+| `SCalendar` | [references/calendar.md](references/calendar.md) |
+| `SCard`, `SCardTitle`, `SCardSubtitle`, `SCardText`, `SCardActions` | [references/cards.md](references/cards.md) |
+| `SCarousel`, `SCarouselItem` | [references/carousel.md](references/carousel.md) |
+| `SChip` | [references/chip.md](references/chip.md) |
+| `SDatePicker`, `SDatePickerInput` | [references/date-picker.md](references/date-picker.md) |
+| `SDialog` | [references/dialog.md](references/dialog.md) |
+| `SDivider` | [references/divider.md](references/divider.md) |
+| `SDroppable` | [references/droppable.md](references/droppable.md) |
+| `SExpansionPanels`, `SExpansionPanel`, `SExpansionPanelHeader`, `SExpansionPanelContent` | [references/expansion-panels.md](references/expansion-panels.md) |
+| `SForm`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SRadio`, `SSwitch` | [references/form.md](references/form.md) (and the **sui-form** skill) |
+| `SIcon` | [references/icon.md](references/icon.md) |
+| `SImage` | [references/image.md](references/image.md) |
+| `SApp`, `SLayout`, `SAppBar`, `SNavigationDrawer`, `SMain`, `SFooter`, `SBottomNavigation`, `SContainer`, `SRow`, `SColumn`, `SSpacer` | [references/layout.md](references/layout.md) (and the **sui-layout** skill) |
+| `SList`, `SListItem`, `SListItemIcon`, `SListItemContent`, `SListItemTitle`, `SListItemSubtitle`, `SListItemAction`, `SListItemGroup` | [references/list.md](references/list.md) |
+| `SMenu` | [references/menu.md](references/menu.md) |
+| `SOverlay` | [references/overlay.md](references/overlay.md) |
+| `SProgressLinear`, `SProgressCircular` | [references/progress.md](references/progress.md) |
+| `SSheet` | [references/sheet.md](references/sheet.md) |
+| `SSlideGroup`, `SSlideItem` | [references/slide-group.md](references/slide-group.md) |
+| `SSnackbar` | [references/snackbar.md](references/snackbar.md) |
+| `SSplitView`, `SSplitViewItem` | [references/split-view.md](references/split-view.md) |
+| `SStepper`, `SStepperStep` | [references/stepper.md](references/stepper.md) |
+| `STable`, `STableHeadCell`, `STableBodyCell` | [references/table.md](references/table.md) |
+| `STabs`, `STab` | [references/tabs.md](references/tabs.md) |
+| `SToggleButtonGroup`, `SToggleButton` | [references/toggle-button-group.md](references/toggle-button-group.md) |
+| `SToolbar`, `SToolbarTitle`, `SToolbarItem` | [references/toolbar.md](references/toolbar.md) |
+| `STooltip` | [references/tooltip.md](references/tooltip.md) |
+| `SWindow`, `SWindowItem` — **not exported**, not importable | [references/window.md](references/window.md) |
+
+---
+
+## Components that do NOT exist
+
+| ❌ Name | ✅ Use instead |
+|---|---|
+| `SSkeletonLoader` | `SProgressCircular indeterminate` in a centered div |
+| `STextField` | `SInput` (single line) or `STextarea` (multi-line) |
+| `SCol` | `SColumn` |
+| `SWindow` / `SWindowItem` (exist internally, not exported) | `v-if` / `v-show` on the `STabs` model — see [references/window.md](references/window.md) |
+| `STablePagination` (not exported) | `STable`'s built-in pagination |
+| `SNavigationDrawer` inside a feature component | App shell only — use `<SDialog location="end">` for feature slide-in panels |
+
+---
+
+## Activator slot
+
+**SDialog, SMenu, SSnackbar** — bind **both** `v-on="on"` and `v-bind="attrs"`:
 
 ```vue
-<template #activator="{ on, attrs }">
-  <SButton v-on="on" v-bind="attrs" color="primary">Open</SButton>
-</template>
+<SMenu location="bottom">
+  <template #activator="{ on, attrs }">
+    <SButton v-on="on" v-bind="attrs">Open</SButton>
+  </template>
+  …
+</SMenu>
 ```
 
-Full examples: [examples.md](./examples.md) (Activator, SDialog, SMenu, STooltip).
+**STooltip** passes no slot scope — put the trigger in `#activator` as is; see [references/tooltip.md](references/tooltip.md).
 
----
-
-## Non-existent components — do NOT use
-
-These components do not exist in `@khsura/sui`. Using them will cause a runtime error. Verify every component name against the index below before writing code.
-
-| Name | Status | Correct alternative |
-|------|--------|---------------------|
-| `SSkeletonLoader` | Does NOT exist in `@khsura/sui` | Use `SProgressCircular` with `indeterminate` prop, wrapped in a centered div |
-| `SNavigationDrawer` | App-shell only — never in feature components | Use `SDialog` with `location="end"` for feature-level panels (see below) |
-| `STextField` | Does NOT exist in `@khsura/sui` | Use `STextarea` (multi-line) or `SInput` (single-line) |
-
----
-
-## SCSS color — invalid CSS variables
-
-These CSS custom properties do **NOT** exist in `@khsura/sui`. Using them produces invisible/broken styles.
-
-| ❌ Invalid | ✅ Correct SUI equivalent |
-|---|---|
-| `var(--s-color-on-surface)` | `s_getAppColor('text')` |
-| `rgba(var(--s-color-on-surface), 0.6)` | `color-mix(in srgb, #{s_getAppColor('text')} 60%, transparent)` |
-| `rgb(var(--s-color-primary))` | `s_getPresetColor('primary')` |
-| `rgba(var(--s-color-warning), 0.1)` | `color-mix(in srgb, #{s_getPresetColor('warning')} 10%, transparent)` |
-| `var(--s-color-outline)` | `s_getAppColor('border')` |
-| `var(--s-color-surface-variant)` | `s_getAppColor('hover')` |
-| `var(--s-color-on-primary)` | `s_getPresetColor('primary', true)` |
-| `var(--s-onSurfaceVariant)` | `color-mix(in srgb, #{s_getAppColor('text')} 60%, transparent)` |
-
-**Available `s_getPresetColor` keys:** `primary`, `secondary`, `error`, `warning`, `success`, `info`
-**Available `s_getAppColor` keys:** `text`, `background`, `card`, `border`, `button`, `hover`, `disabled`, `snackbar`, `switch`
-
-Use `color-mix(in srgb, #{fn()} N%, transparent)` for any opacity variant.
+Popups teleport into the container rendered by `<SApp>` — without `SApp` at the app root they never show.
 
 ---
 
 ## Unknown props are silent no-ops
 
-Vue passes an undeclared prop through as an HTML attribute — no error, no warning, nothing happens. Vuetify habits are the usual source. Before using a prop you are not sure about, check its definition in `node_modules/@khsura/sui/@types/definitions/props/props<Component>.d.ts`.
-
 | ❌ Does nothing | ✅ Do this instead |
 |---|---|
-| `<SDialog title="...">` | Put the heading in the content: `<SCard><SCardTitle>...</SCardTitle>...</SCard>` |
-| `<SSelect clearable>` / `chips` / `multiple` / `placeholder` | Use `SAutocomplete`, which has `clearable`, `chips`, `multiple`, `placeholder` |
-| `<SInput persistent-hint hint="...">` | No hint props — render helper text yourself below the input |
+| `<SDialog title="...">` | Heading inside the content: `<SCard><SCardTitle>…</SCardTitle>…</SCard>` |
+| `<SSelect clearable / chips / multiple / placeholder>` | `SAutocomplete` |
+| `<SInput persistent-hint hint="...">` | Render helper text yourself |
 | `app` on `SMain` / `SFooter` / `SAppBar` | Remove it; placement comes from `SLayout` |
-| `<SCheckbox indeterminate>` / `:value` | `SCheckbox` is a single boolean `v-model` only |
-
----
-
-## SNavigationDrawer — app-shell only
-
-`SNavigationDrawer` may only be used at the **app shell level** (layout files). An app has at most one drawer per side: a left navigation drawer, plus optionally a right side panel (`location="right" persistent resizable`, e.g. an AI chat) that stays beside the content on every page.
-
-**Do NOT use `SNavigationDrawer` inside feature components.** For feature-level slide-in panels, use `SDialog` instead:
-
-```vue
-<SDialog v-model="drawerOpen" location="end" :width="480">
-  <!-- panel content -->
-</SDialog>
-```
+| `<SCheckbox indeterminate>` / `:value` | `SCheckbox` is a single boolean `v-model` |
+| `<SToggleButton value="...">` | Buttons are identified by index / `key`; see [references/toggle-button-group.md](references/toggle-button-group.md) |
+| `<SButton variant="outlined">` | `variant` is `fab` \| `text` \| `icon` only; use `outlined` boolean prop or `color` |
 
 ---
 
 ## Linking: `to` for a route, `href` for a URL
 
-`SButton`, `SCard` and `SListItem` all take both, and the one you pass decides
-what is rendered:
+`SButton`, `SCard` and `SListItem` take both; pass **one**, never both.
 
 | Prop | Renders | For |
-|------|---------|-----|
-| `to` | `router-link` | an internal route |
-| `href` | `<a>` | an external URL (`target` and `rel` go with it) |
-| neither | `div`, or `tag` | not a link |
+|---|---|---|
+| `to` | `router-link` | internal route |
+| `href` | `<a>` | external URL (`target`, `rel` go with it) |
+| neither | `div` or `tag` | not a link |
 
-```vue
-<SListItem :to="{ name: 'settings' }">Settings</SListItem>
-<SButton href="https://example.com/docs" target="_blank" rel="noopener">Docs</SButton>
-<SCard :to="`/funds/${fund.id}`">…</SCard>   <!-- the whole card is the link -->
-```
-
-**Pass one, never both.** They are alternatives, not a pair.
-
-**Why this matters:** a real link is what gives you command-click into a new
-tab, middle-click, "copy link address", the destination in the status bar, and
-link semantics for assistive technology. Navigating from a click handler
-instead — `@click="navigateTo(...)"` — renders a `div` and gives you none of
-them, even though the click itself works.
+Navigating from `@click` renders a `div` — no middle-click, "copy link", or link semantics. Prefer `to` / `href`.
 
 ---
 
-## Component index
+## SCSS colors — use the helpers, not invented CSS variables
 
-| Component | Notes | Examples |
-|-----------|--------|----------|
-| **SButton** | `color`, `variant` (fab\|text\|icon only — `outlined` is NOT a valid variant), `size`, `loading`, `block`, `rounded`, `disabled`, `href`, `to`. Use `color` prop for visual differentiation, not `outlined`. | [examples.md](./examples.md#sbutton) |
-| **SCard** | `SCardTitle`, `SCardSubtitle`, `SCardText`, `SCardActions`; use `SSpacer` in actions for right-align. Also `to` / `href` — the whole card becomes a link (see **Linking** below) | [examples.md](./examples.md#scard) |
-| **SDialog** | `v-model`, `#activator`, `location` (bottom sheet), `fullscreen`, `persistent`, `scrollable`, `width`/`maxWidth`. **No `title` prop.** **ALWAYS wrap dialog content in `SCard` or `SSheet`** — SDialog has no background color, so unwrapped content appears transparent/broken. | [examples.md](./examples.md#sdialog) |
-| **SMenu** | `#activator` + `SList` / `SListItem` | [examples.md](./examples.md#smenu) |
-| **STooltip** | `text` prop, `#activator` | [examples.md](./examples.md#stooltip) |
-| **SSnackbar** | `v-model`, `timeout`, `#action` slot | [examples.md](./examples.md#ssnackbar) |
-| **SList** | `SListItem`, `SListItemIcon`, `SListItemContent`, `SListItemTitle`, `SListItemSubtitle`, `SListItemAction`; `link`, `to` / `href` (see **Linking** below) | [examples.md](./examples.md#slist) |
-| **STabs + SWindow** | `v-model` ties tab value to `SWindowItem value` | [examples.md](./examples.md#stabs--swindow) |
-| **SExpansionPanels** | `v-model` = `number[]` (open panel indexes) | [examples.md](./examples.md#sexpansionpanels) |
-| **SChip / SBadge** | `SChip`: `closable`, `@click:close`; `SBadge`: wraps content, `content` badge text | [examples.md](./examples.md#schip--sbadge) |
-| **SProgressLinear / SProgressCircular** | `model-value`, `indeterminate`, `color`, `size` (circular) | [examples.md](./examples.md#sprogresslinear--sprogresscircular) |
-| **SDatePicker** | `v-model` string: `YYYY-MM-DD` (date), `YYYY-MM` (month) or `YYYY` (year); `type="date"` \| `"month"` \| `"year"`. `SDatePickerInput` adds `carousel` for prev/next step buttons. `year-format` (dayjs, default `'YYYY'`) labels the year list, title and switch, e.g. `'YYYY年'` or `'YYYY [он]'` | [examples.md](./examples.md#sdatepicker) |
-| **SBreadcrumbs** | `:items="[{ text, to?, disabled? }]"` | [examples.md](./examples.md#sbreadcrumbs) |
-| **SStepper** | `SStepperStep` with `:step`, `:complete` | [examples.md](./examples.md#sstepper) |
-| **SAlert** | Banner/message box. Props: `color` (preset or CSS color), `dense`, `size`, `fixedHeight`, `minHeight`. Content goes in the default slot; renders nothing when the slot is empty. No `title`/`icon`/`variant` props. | — |
-| **STable** | `headers`, `items`, `itemKey`, `loading`, `dense`, `multiSort`, `stickyHeader`, `hidePagination`, `totalItems`, `noDataText`; grouping: `groupBy`, `foldable` + `v-model:folded` (`string[]` of collapsed group names, or `true` = all folded initially), `#group` slot gets `{ group, items, isFolded, toggleFold }`; cell components `STableHeadCell` / `STableBodyCell` / `STablePagination`. Header/item types: `TableHeader`, `TableItem`, `TableSortOrder`. | — |
-| **Form inputs** (`SInput`, `STextarea`, `SSelect`, `SAutocomplete`, `SCheckbox`, `SRadioGroup`, `SSwitch`) | Props, validation and gotchas live in the **sui-form** skill | — |
-| **SToggleButtonGroup / SToggleButton** | Group: `v-model` (array), `multiple`, `mandatory`, `dense`, `bordered`, `variant="inset"`, `selectedColor`, `outlined`, `underlined`, `borderRadius`; Button: uses **index** as primary identifier, `key` as fallback — **no `value` prop** | [examples.md](./examples.md#stogglebuttongroup) |
+`@use '@khsura/sui/helpers.scss' as *;` then:
 
----
+| ❌ Invalid | ✅ Correct |
+|---|---|
+| `var(--s-color-on-surface)` | `s_getAppColor('text')` |
+| `rgba(var(--s-color-on-surface), 0.6)` | `color-mix(in srgb, #{s_getAppColor('text')} 60%, transparent)` |
+| `rgb(var(--s-color-primary))` (it's a hex, not RGB channels) | `s_getPresetColor('primary')` |
+| `rgba(var(--s-color-warning), 0.1)` | `color-mix(in srgb, #{s_getPresetColor('warning')} 10%, transparent)` |
+| `var(--s-color-outline)` | `s_getAppColor('border')` |
+| `var(--s-color-on-primary)` | `s_getPresetColor('primary', true)` |
+| `var(--s-color-surface-variant)` | `color-mix(in srgb, #{s_getAppColor('text')} 8%, transparent)` |
 
-When answering: use [examples.md](./examples.md) for the exact snippet; give a complete, idiomatic example for the user's use case.
+- **`s_getPresetColor` keys:** `primary`, `secondary`, `success`, `info`, `warning`, `important`, `error` (+ any you add in `createSUI({ themes })`)
+- **`s_getAppColor` keys:** `appBar`, `title`, `text`, `secondaryText`, `anchor`, `background`, `card`, `button`, `switch`, `border`, `disabled`, `snackbar`, `inputPlaceholderShown`, `textErrorHover`
+
+The variables are set on `<SApp>`, so they only resolve inside it. More helpers: **sui-utilities**.

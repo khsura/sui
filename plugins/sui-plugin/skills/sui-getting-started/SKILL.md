@@ -1,101 +1,194 @@
 ---
 name: sui-getting-started
-description: SUI framework getting started for @khsura/sui — installation, setup, app config, predefined i18n, components, patterns, composables, and conventions. Use when setting up the library, configuring the app, or looking up shared props, component lists, or common mistakes.
+description: Set up and configure @khsura/sui in a Vue 3 or Nuxt app. Use when installing @khsura/sui (GitHub Packages registry, .npmrc / .yarnrc.yml, read:packages token, CI auth), wiring createSUI and the SApp root, importing the stylesheets and @mdi/font icons, adding @khsura/sui-nuxt, overriding theme colors or switching dark mode with useTheme, setting app-wide component defaults, setting up vue-i18n for SUI messages and form rules, importing SUI TypeScript types, or looking up shared props, the component list, composables and common mistakes.
 ---
 
-# SUI Framework — Getting Started
+# SUI — Getting Started in a consumer app
 
-This project uses **`@khsura/sui`**, a Vue 3 + TypeScript component library.
-All components are prefixed with `S` (e.g. `SButton`, `SCard`, `SInput`).
+**`@khsura/sui`** is a Vue 3 + TypeScript component library. Every component is prefixed with `S` (`SButton`, `SCard`, `SInput`).
 
 ---
 
-## Installation
+## 1. Install (GitHub Packages, not npmjs.com)
 
-### Vue (standalone)
+`@khsura/sui` is published to **`https://npm.pkg.github.com`**. A plain `yarn add @khsura/sui` / `npm i @khsura/sui` fails (404 / 401) until the `@khsura` scope points at that registry **and** a token is supplied.
+
+**Token:** a GitHub personal access token (classic) with the **`read:packages`** scope. Keep it in an environment variable (`NPM_GITHUB_TOKEN` below) — never commit it.
+
+### Yarn 4 (Berry) — `.yarnrc.yml`
+
+```yaml
+npmScopes:
+  khsura:
+    npmRegistryServer: "https://npm.pkg.github.com"
+    npmAlwaysAuth: true
+    npmAuthToken: "${NPM_GITHUB_TOKEN}"
+
+# optional: read the token from a git-ignored file instead of the shell
+injectEnvironmentFiles:
+  - .env.yarn?
+```
+
+`.env.yarn` (add it to `.gitignore`): `NPM_GITHUB_TOKEN=ghp_xxx`
+
+### npm / pnpm — project `.npmrc`
+
+```ini
+@khsura:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NPM_GITHUB_TOKEN}
+```
+
+The `.npmrc` with the `${...}` placeholder is safe to commit; the token itself is not.
+
+### CI
+
+Expose the token as an env var from a secret — the config files above read it:
+
+```yaml
+# GitHub Actions
+- run: yarn install --immutable   # or npm ci / pnpm install --frozen-lockfile
+  env:
+    NPM_GITHUB_TOKEN: ${{ secrets.NPM_GITHUB_TOKEN }}
+```
+
+Then install:
 
 ```bash
-yarn add @khsura/sui
+yarn add @khsura/sui @mdi/font      # or: npm i / pnpm add
 ```
 
-### Nuxt
-
-```bash
-yarn add @khsura/sui @khsura/sui-nuxt
-```
-
-Then in `nuxt.config.ts`:
-
-```typescript
-export default defineNuxtConfig({
-  modules: ['@khsura/sui-nuxt'],
-  sui: {
-    // optional: AppStateOptions passed to createSUI()
-  },
-})
-```
-
-The Nuxt module:
-
-- Registers all SUI components globally
-- Adds composables: `useDisplay`, `useTheme`, `STransition`
-- Adds type imports: `GroupItemValue`, `SForm`, `SFormInputModelValueRule`, `SInput`, `SSelect`, `TableHeader`, `TableItem`, `MaterialDesignIcon`
-- Injects `suiFormRules` via `getFormInputModelValueRules($i18n)` (use `useNuxtApp().$suiFormRules` in components)
-- Loads `@khsura/sui/style.scss` and `@khsura/sui/style.css`
+`vue`, `vue-i18n` and `dayjs` come in as dependencies of `@khsura/sui`. `@mdi/font` is **not** included — install it yourself (see step 3).
 
 ---
 
-## Setup
-
-### Vue (manual)
+## 2. Register the plugin and wrap the app in `SApp`
 
 ```typescript
 // main.ts
 import { createApp } from 'vue'
 import { createSUI } from '@khsura/sui'
-import '@khsura/sui/base.css'
+import '@khsura/sui/base.css'   // reset, typography, s_* utility classes
+import '@khsura/sui/style.css'  // component styles
+import '@mdi/font/css/materialdesignicons.css' // icons for SIcon / icon props
+import App from './App.vue'
 
-const app = createApp(App)
-app.use(createSUI())
-app.mount('#app')
+createApp(App).use(createSUI()).mount('#app')
 ```
 
-### Imports (Vue; Nuxt auto-imports components)
+```vue
+<!-- App.vue -->
+<template>
+  <SApp>
+    <router-view />
+  </SApp>
+</template>
+
+<script setup lang="ts">
+import { SApp } from '@khsura/sui'
+</script>
+```
+
+**`SApp` is required at the root.** It sets the theme CSS variables (`--s-color-*`, `--s-app-color-*`) that every component's colors read, and renders the container that `SDialog`, `SMenu`, `STooltip`, `SSnackbar`, `SOverlay` and the select popups teleport into. Without it colors are missing and popups don't appear.
+
+`createSUI()` also registers the `v-scroll` and `v-resize` directives.
+
+Import components where you use them (Vue): `import { SButton, SCard } from '@khsura/sui'`.
+
+---
+
+## 3. Styles and icons
+
+| Import | Contains | Needed |
+|---|---|---|
+| `@khsura/sui/base.css` | Reset, typography, `s_*` utility classes | Yes |
+| `@khsura/sui/style.css` | Styles of the components themselves | Yes |
+| `@khsura/sui/style.scss` | SCSS source of `base.css` (alternative to `base.css`) | Optional |
+| `@khsura/sui/helpers.scss` | SCSS functions / mixins only, emits no CSS | For your own SCSS: `@use '@khsura/sui/helpers.scss' as *;` |
+| `@mdi/font/css/materialdesignicons.css` | Material Design Icons font | Yes, if you use any icon |
+
+`SIcon` (and every `icon` / `prependIcon` / `appendIcon` prop) renders an MDI **class name** (`icon="mdi-home"`). Without the `@mdi/font` stylesheet it renders an empty box — no error.
+
+---
+
+## 4. Nuxt — `@khsura/sui-nuxt`
+
+`@khsura/sui-nuxt` is a Nuxt module (Nuxt ≥ 4) published to the **same GitHub Packages registry**, so the registry/token setup above covers it.
+
+```bash
+yarn add @khsura/sui @khsura/sui-nuxt @mdi/font
+```
 
 ```typescript
-import { SButton, SCard, SInput } from '@khsura/sui'
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ['@khsura/sui-nuxt'],
+  css: ['@mdi/font/css/materialdesignicons.css'],
+  sui: {
+    // AppStateOptions passed to createSUI(): theme, themes, display, components
+  },
+})
 ```
 
-### App config (options)
+The module:
 
-Options passed to `createSUI(options)` (or the Nuxt `sui` config) are merged with the default app config. Type: `AppStateOptions`.
+- calls `createSUI(sui options)` for you
+- loads `@khsura/sui/style.css` and `@khsura/sui/style.scss` (you don't import them, but you **do** add `@mdi/font` to `css`)
+- auto-imports `useDisplay`, `useTheme`, `STransition`, and the types `GroupItemValue`, `SInput`, `SSelect`, `SForm`, `TableHeader`, `TableItem`, `MaterialDesignIcon`
+- provides `useNuxtApp().$suiFormRules` = `getFormInputModelValueRules(nuxtApp.$i18n)` — this needs `@nuxtjs/i18n` installed, or the rules throw when they try to build a message
+- auto-registers most components, but **not** `SLayout`, `SBottomNavigation`, `SCarousel`, `SCarouselItem`, `SSplitView`, `SSplitViewItem`, `SToolbarItem`, `STableHeadCell`, `STableBodyCell`, `SDroppable` — import these explicitly from `@khsura/sui`
 
-**Vue:**
+You still need `<SApp>` at the root (e.g. in `app.vue` or your layout).
+
+---
+
+## 5. App options — `createSUI(options)`
+
+Options (type `AppStateOptions`) are deep-merged with the built-in defaults (exported as `defaultAppConfig`), so pass only what you change. In Nuxt put the same object under `sui`.
+
+| Option | Type | Description |
+|---|---|---|
+| `theme` | `'light' \| 'dark'` | Initial theme (default `'light'`) |
+| `themes` | `{ light?: ThemeConfigOptions, dark?: ThemeConfigOptions }` | Per-theme `presetColors` and `appColors` |
+| `display` | `{ thresholds?, scrollBarWidth? }` | Breakpoints and scrollbar width |
+| `components` | `{ [ComponentName]: Record<string, unknown> }` | App-wide default props per component |
+
+### Theme colors
 
 ```typescript
-import { createSUI, defaultAppConfig } from '@khsura/sui'
-
-// Options are merged with default; pass partial overrides or spread defaultAppConfig
-app.use(createSUI({ theme: 'dark' }))
-app.use(createSUI({ ...defaultAppConfig, themes: { light: { presetColors: { primary: '#custom' } } } }))
+app.use(
+  createSUI({
+    themes: {
+      light: { presetColors: { primary: '#6200ee', secondary: '#03dac6' } },
+      dark: {
+        presetColors: { primary: '#bb86fc' },
+        appColors: { background: '#121212', card: '#1e1e1e' },
+      },
+    },
+  }),
+)
 ```
 
-**Options shape:**
+- **`presetColors` keys:** `primary`, `secondary`, `success`, `info`, `warning`, `important`, `error` — usable as `color="..."` on components. Extra keys you add become usable too.
+- **`appColors` keys:** `appBar`, `title`, `text`, `secondaryText`, `anchor`, `background`, `card`, `button`, `switch`, `border`, `disabled`, `snackbar`, `inputPlaceholderShown`, `textErrorHover`.
+- Use **opaque hex** values (`#ffc107`). An alpha hex (`#ffc10799`) looks washed out everywhere; for translucency use `color-mix(in srgb, #{s_getPresetColor('warning')} 60%, transparent)` in SCSS.
 
-| Option    | Type                                                        | Description                              |
-| --------- | ----------------------------------------------------------- | ---------------------------------------- |
-| `theme`   | `'light' \| 'dark'`                                         | Initial theme                            |
-| `display` | `{ thresholds?, scrollBarWidth? }`                          | Breakpoints and scrollbar width          |
-| `themes`  | `{ light?: ThemeConfigOptions, dark?: ThemeConfigOptions }` | Per-theme `appColors` and `presetColors` |
-| `components` | `{ [ComponentName]: Record<string, unknown> }`           | App-wide default props per component     |
+### Dark mode — `useTheme()`
 
-The default config (theme, display thresholds, `appColors`, `presetColors` for light/dark) is defined in `configs/app.ts`. Pass partial options to override; they are merged with these defaults.
+```typescript
+import { useTheme } from '@khsura/sui'
 
-**Theme colors:** use opaque hex values (`#ffc107`) for `presetColors`. An alpha hex such as `#ffc10799` makes that color look washed out everywhere it is used. For a translucent variant, use `color-mix(in srgb, #{s_getPresetColor('warning')} 60%, transparent)` in SCSS instead.
+const { theme, setTheme } = useTheme()   // theme: ComputedRef<'light' | 'dark'>
 
-### Component default props (`components`)
+setTheme('dark')
+setTheme(theme.value === 'dark' ? 'light' : 'dark') // toggle — there is no toggleTheme()
+setTheme(null)                                       // follow the OS setting
+```
 
-Set a prop once for every instance instead of repeating it — and instead of overriding classes with `:deep(.s_*)`:
+Call it inside a component below `app.use(createSUI())`; it throws if the plugin isn't installed.
+
+### Component defaults — `components`
+
+Set a prop once for every instance instead of repeating it (or overriding classes with `:deep(.s_*)`):
 
 ```typescript
 app.use(
@@ -109,49 +202,64 @@ app.use(
 )
 ```
 
-Priority: **explicit prop on the element > `components` default > built-in default**. Keys are the component names (`SButton`, `SInput`, …). In Nuxt, put the same object under `sui.components` in `nuxt.config.ts`. Don't repeat these defaults on individual elements.
-
-### Predefined i18n (form rules)
-
-**`i18nMessages`** is exported from `@khsura/sui` (from `constants/i18n.ts`). It provides message strings for table and form rules in `en`, `ja`, and `mn`. Use it with **`getFormInputModelValueRules(i18n)`** so validation errors use these messages. You can merge `i18nMessages` with your app's i18n and combine the predefined rules with your own.
-
-```typescript
-import { createI18n } from 'vue-i18n'
-import { i18nMessages, getFormInputModelValueRules } from '@khsura/sui'
-
-// Merge SUI messages with your app messages
-const i18n = createI18n({
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: {
-      ...i18nMessages.en,
-      myApp: { greeting: 'Hello' },
-    },
-    ja: {
-      ...i18nMessages.ja,
-      myApp: { greeting: 'こんにちは' },
-    },
-  },
-})
-
-// Rules use the predefined form rule messages (e.g. required, maxLength, numeric)
-const rules = getFormInputModelValueRules(i18n.global)
-// Use rules.required({ target: 'Email' }), rules.integer({ target: 'Age' }), etc.
-```
-
-Shape of `i18nMessages`: `{ [locale]: { table: { itemsPerPage }, formRules: { required, maxLength, length, ... } } }`. Combine with your app's messages per locale as needed.
+Priority: **prop on the element > `components` default > built-in default**. Keys are component names (`SButton`, `SInput`, …).
 
 ---
 
-## Critical Patterns
+## 6. vue-i18n — SUI messages and form rules
 
-### Activator Slot (Dialog, Menu, Tooltip, Snackbar)
+SUI ships messages in **`en`, `mn`, `ja`** for `STable` (`table.itemsPerPage`, `table.noData`) and the predefined form rules (`formRules.*`). `STable` reads them through the global `$t`, so register vue-i18n with the SUI messages merged in. `i18nConfig` (exported) is a ready config: `{ availableLocales: ['en', 'mn', 'ja'], locale: 'en', fallbackLocale: 'en', messages: i18nMessages }`.
 
-Always bind **both** `v-on="on"` and `v-bind="attrs"`:
+```typescript
+import { createI18n } from 'vue-i18n'
+import { i18nConfig, i18nMessages, getFormInputModelValueRules } from '@khsura/sui'
+
+export const i18n = createI18n({
+  ...i18nConfig,
+  locale: 'ja',
+  messages: {
+    en: { ...i18nMessages.en, ...appMessages.en },
+    mn: { ...i18nMessages.mn, ...appMessages.mn },
+    ja: { ...i18nMessages.ja, ...appMessages.ja },
+  },
+})
+
+app.use(i18n)
+
+// Predefined rules with localized messages
+const rules = getFormInputModelValueRules(i18n.global)
+// rules.required({ target: 'Email' }), rules.maxLength({ target: 'Name', maxLength: 50 }), …
+```
+
+Inside a component: `getFormInputModelValueRules(useI18n())`. In Nuxt use `@nuxtjs/i18n` and merge `i18nMessages` into its messages; `useNuxtApp().$suiFormRules` is prebuilt. Rule list: **sui-form**.
+
+---
+
+## 7. TypeScript types
+
+All exported from `@khsura/sui` (`import type { … } from '@khsura/sui'`):
+
+| Type | Use |
+|---|---|
+| `TableHeader`, `TableItem`, `TableSortOrder` | `STable` headers (`{ text, value, … }`) and rows |
+| `SelectItem` | `SSelect` / `SAutocomplete` items (`{ text, value, disabled? }`) |
+| `FormInputModelValueRule` | A validation rule `(value) => true \| string` |
+| `FormComponent`, `InputComponent`, `SelectComponent` | Template-ref types (`ref<FormComponent>()`) |
+| `AppStateOptions`, `ThemeConfigOptions`, `AppThemeType` | `createSUI` options |
+| `MaterialDesignIcon`, `GroupItemValue`, `BreadcrumbsItem`, `CalendarEvent` | Icon names, group values, breadcrumb items, calendar events |
+
+Prop types for every component ship in `node_modules/@khsura/sui/@types/definitions/props/props<Component>.d.ts` — check there before using a prop you're unsure of.
+
+---
+
+## Critical patterns
+
+### Activator slot (SDialog, SMenu, SSnackbar)
+
+Bind **both** `v-on="on"` and `v-bind="attrs"`:
 
 ```vue
-<SMenu>
+<SMenu location="bottom">
   <template #activator="{ on, attrs }">
     <SButton v-on="on" v-bind="attrs">Open</SButton>
   </template>
@@ -159,266 +267,108 @@ Always bind **both** `v-on="on"` and `v-bind="attrs"`:
 </SMenu>
 ```
 
-### Named Layout System
+`STooltip` is different: its activator slot passes **no** scope — put the trigger in `#activator` without `v-on`/`v-bind`; the tooltip's own wrapper handles hover. See the `sui-component` references.
 
-Layout children are linked to `SLayout` via `name`/`for`. Both are optional: when `SLayout` has no `name` and its children have no `for`, they all fall back to the app's default layout name. **Once `SLayout` has a `name`, every child needs the matching `for`** — a child without `for` falls back to the default name and does not attach to `name="app"`.
+### Named layouts
 
-```vue
-<SLayout name="app">
-  <SAppBar for="app" color="primary" />
-  <SNavigationDrawer for="app" v-model="drawer" />
-  <SMain for="app">
-    <SContainer><router-view /></SContainer>
-  </SMain>
-  <SFooter for="app" />
-</SLayout>
-```
+`SLayout name="app"` + children with `for="app"`. Once `SLayout` has a `name`, every child needs the matching `for`. Details: **sui-layout**.
 
-When you do set `for`, it must equal the `SLayout`'s `name`. Vuetify's `app` prop does not exist here — drop it.
-
-### Validation Rules
+### Validation rules
 
 ```typescript
 type FormInputModelValueRule = (value: unknown) => true | string
-// Return true = pass, return string = error message
-
-const rules = {
-  required: (v: unknown) => !!v || 'Required',
-  email: (v: string) => /.+@.+\..+/.test(v) || 'Invalid email',
-  minLength: (n: number) => (v: string) => v.length >= n || `Min ${n} chars`,
-}
+// true = pass, string = error message (false/null show nothing)
 ```
 
 ---
 
-## Shared Props
+## Shared props
 
-Available on most components:
+Available on most components (check the component's reference when unsure):
 
-| Prop                    | Type                                                   | Description                                                                 |
-| ----------------------- | ------------------------------------------------------ | --------------------------------------------------------------------------- |
-| `color`                 | `string`                                               | Preset (`primary`, `secondary`, `error`, `success`, `warning`) or CSS color |
-| `elevation`             | `0–24`                                                 | Box shadow depth                                                            |
-| `size`                  | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | Preset size                                                                 |
-| `outlined`              | `boolean`                                              | Border style, transparent background                                        |
-| `disabled`              | `boolean`                                              | Disable interaction                                                         |
-| `width` / `height`      | `string \| number`                                     | Explicit dimensions                                                         |
-| `maxWidth` / `minWidth` | `string \| number`                                     | Width constraints                                                           |
-| `borderRadius`          | `'tile' \| 'rounded' \| number \| string`              | Border radius                                                               |
-| `tag`                   | `string`                                               | Override root HTML element                                                  |
-| `href`                  | `string`                                               | Render as `<a>`                                                             |
-| `to`                    | `RouteLocationRaw`                                     | Vue Router link                                                             |
+| Prop | Type | Description |
+|---|---|---|
+| `color` | `string` | Preset name (`primary`, `error`, …) or CSS color |
+| `elevation` | `0–24` | Box shadow depth |
+| `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | Preset size |
+| `outlined` / `underlined` / `borderRadius` | `boolean` / `boolean` / `string \| number` | Border styles |
+| `disabled` | `boolean` | Disable interaction |
+| `width` / `height` / `maxWidth` / `minWidth` | `string \| number` | Dimensions |
+| `tag` | `string` | Override root element |
+| `href` / `to` | `string` / `RouteLocationRaw` | Render as `<a>` / `router-link` |
 
 ---
 
 ## Components
 
-### Layout
-
-| Component           | Import        | Description                                               |
-| ------------------- | ------------- | --------------------------------------------------------- |
-| `SLayout`           | `@khsura/sui` | Root layout orchestrator (`name` prop)                    |
-| `SAppBar`           | `@khsura/sui` | Top app bar (`for` prop)                                  |
-| `SAppBarTitle`      | `@khsura/sui` | Title inside app bar                                      |
-| `SNavigationDrawer` | `@khsura/sui` | Side drawer (`for`, `v-model: boolean`)                   |
-| `SMain`             | `@khsura/sui` | Main content area (`for` prop)                            |
-| `SFooter`           | `@khsura/sui` | Bottom footer (`for` prop)                                |
-| `SBottomNavigation` | `@khsura/sui` | Mobile bottom nav (`for`, `v-model: any`)                 |
-| `SContainer`        | `@khsura/sui` | Content container (`fluid`, `narrow`, `wide`)             |
-| `SRow`              | `@khsura/sui` | 12-col grid row (`align`, `justify`, `noGutters`)         |
-| `SColumn`           | `@khsura/sui` | Grid column (`cols`, `sm`, `md`, `lg` — 1–12 or `'auto'`) |
-| `SSpacer`           | `@khsura/sui` | Flex spacer (pushes siblings apart)                       |
-
-### Basic UI
-
-| Component  | Description                                                                  |
-| ---------- | ---------------------------------------------------------------------------- |
-| `SButton`  | Button (`variant: 'fab' \| 'text' \| 'icon'`, `loading`, `block`, `rounded`) |
-| `SIcon`    | Icon (`icon` = MDI icon name, `size`)                                        |
-| `SChip`    | Chip/tag (`color`, `outlined`, `closable`)                                   |
-| `SBadge`   | Badge wrapper (`content`, `color`, `dot`)                                    |
-| `SDivider` | Horizontal or vertical divider                                               |
-| `SImage`   | Image with aspect ratio (`src`, `aspectRatio`, `cover`)                      |
-
-### Cards & Surfaces
-
-| Component       | Description                                         |
-| --------------- | --------------------------------------------------- |
-| `SCard`         | Card container (`elevation`, `outlined`)            |
-| `SCardTitle`    | Card title                                          |
-| `SCardSubtitle` | Card subtitle                                       |
-| `SCardText`     | Card body text                                      |
-| `SCardActions`  | Card action buttons area                            |
-| `SSheet`        | Elevation surface (`color`, `elevation`, `rounded`) |
-| `SOverlay`      | Full-screen overlay (`v-model: boolean`, `opacity`) |
-
-### Forms
-
-All form inputs share: `disabled`, `rules`, `hideDetails`, `hideError`, `error`, `dirty`, `label`.
-
-| Component       | v-model            | Key Props                                                         |
-| --------------- | ------------------ | ----------------------------------------------------------------- |
-| `SForm`         | —                  | `@submit` event                                                   |
-| `SInput`        | `string \| number` | `type`, `placeholder`, `suffix`, `dense`, `readonly`, `autofocus` |
-| `STextarea`     | `string`           | `rows`, `autogrow`, `resize`                                      |
-| `SSelect`       | `string \| number` | `items: [{text, value}]`, `dense`, `grow` — single value only     |
-| `SAutocomplete` | `any \| any[]`     | `items`, `multiple`, `chips`, `clearable`, `debounce`, `@search-item` |
-| `SCheckbox`     | `boolean`          | `label`, `color`, `size`, `bordered`                              |
-| `SRadioGroup`   | `any`              | `<SRadio value label>` children, `column`, `grow`                 |
-| `SSwitch`       | `boolean`          | `label`                                                           |
-
-`SelectItem` shape: `{ text: string, value: string | number | null, disabled?: boolean }` or plain string. See **sui-form** for the full props table and gotchas.
-
-### Navigation
-
-| Component            | Description                                                                                  |
-| -------------------- | -------------------------------------------------------------------------------------------- |
-| `SBreadcrumbs`       | Breadcrumb nav (`items: [{text, to, disabled}]`)                                             |
-| `STabs`              | Tab bar (`v-model: string \| number` = active tab)                                           |
-| `STab`               | Individual tab (`value`)                                                                     |
-| `SToolbar`           | Toolbar container (`color`, `density: 'default' \| 'comfortable' \| 'compact'`)              |
-| `SToolbarTitle`      | Toolbar title                                                                                |
-| `SToolbarItem`       | Toolbar action item                                                                          |
-| `SSlideGroup`        | Horizontal scrolling group (`v-model`)                                                       |
-| `SSlideItem`         | Slide group item                                                                             |
-| `SToggleButtonGroup` | Toggle button group (`v-model` array, `multiple`, `mandatory`)                               |
-| `SToggleButton`      | Toggle button — uses **index** as primary identifier, `key` as fallback; **no `value` prop** |
-
-### Popups & Overlays
-
-| Component   | v-model   | Notes                                                          |
-| ----------- | --------- | -------------------------------------------------------------- |
-| `SDialog`   | `boolean` | `persistent`, `fullscreen`, `location: 'bottom'`, `scrollable` |
-| `SMenu`     | `boolean` | `location`, `origin`                                           |
-| `STooltip`  | `boolean` | `text`, `location`                                             |
-| `SSnackbar` | `boolean` | `text`, `timeout`, `location`                                  |
-
-All support `#activator="{ on, attrs }"` slot.
-
-### Data Display
-
-| Component           | Description                                                    |
-| ------------------- | -------------------------------------------------------------- |
-| `SList`             | List container                                                 |
-| `SListItem`         | List item (`link`, `:to`, `disabled`)                          |
-| `SListItemTitle`    | Item title                                                     |
-| `SListItemSubtitle` | Item subtitle                                                  |
-| `SListItemIcon`     | Icon slot in list item                                         |
-| `SListItemContent`  | Content wrapper                                                |
-| `SListItemAction`   | Action slot                                                    |
-| `SListItemGroup`    | Grouped list items                                             |
-| `STable`            | Data table (`headers`, `items`, `loading`, `sortable`, `groupBy`, `foldable` + `v-model:folded`) |
-| `STableHeadCell`    | Table header cell                                              |
-| `STableBodyCell`    | Table body cell                                                |
-| `STablePagination`  | Pagination control                                             |
-| `SProgressLinear`   | Linear progress bar (`v-model: number`, `indeterminate`)       |
-| `SProgressCircular` | Circular progress (`v-model: number`, `indeterminate`, `size`) |
-
-### Content Panels
-
-| Component                | v-model    | Description                                |
-| ------------------------ | ---------- | ------------------------------------------ |
-| `SExpansionPanels`       | `number[]` | Accordion panels                           |
-| `SExpansionPanel`        | —          | Individual panel                           |
-| `SExpansionPanelHeader`  | —          | Panel header                               |
-| `SExpansionPanelContent` | —          | Panel content                              |
-| `SCarousel`              | `number`   | Image carousel (`cycle`, `interval`)       |
-| `SCarouselItem`          | —          | Carousel slide                             |
-| `SWindow`                | `any`      | Manual slide window                        |
-| `SWindowItem`            | —          | Window slide (`value`)                     |
-| `SStepper`               | `number`   | Multi-step flow                            |
-| `SStepperStep`           | —          | Step item (`step`, `complete`, `editable`) |
-| `SSplitView`             | —          | Resizable split panes                      |
-| `SSplitViewItem`         | —          | Split pane                                 |
-
-### Date & Time
-
-| Component     | v-model  | Description                                      |
-| ------------- | -------- | ------------------------------------------------ |
-| `SDatePicker` | `string` | `type: 'date' \| 'month' \| 'year'`, `min`, `max` |
-| `SDatePickerInput` | `string` | Text input with picker popup; `carousel` adds prev/next step buttons |
-| `SCalendar`   | —        | `v-model:focus` = focused date string, `events`  |
-
-DatePicker format: `'YYYY-MM-DD'` (date), `'YYYY-MM'` (month) or `'YYYY'` (year).
-The model always follows the format of `type` — changing `type` converts the value.
-Import `datePickerModelFormats` for the exact format strings.
-
-### Input / Upload
-
-| Component    | Description                                               |
-| ------------ | --------------------------------------------------------- |
-| `SDroppable` | Drag-and-drop upload zone (`@drop`, `accept`, `multiple`) |
+| Family | Components | Reference |
+|---|---|---|
+| App shell | `SApp`, `SLayout`, `SAppBar`, `SAppBarTitle`, `SNavigationDrawer`, `SMain`, `SFooter`, `SBottomNavigation` | **sui-layout** |
+| Grid | `SContainer`, `SRow`, `SColumn` (there is no `SCol`), `SSpacer` | **sui-layout** |
+| Forms | `SForm`, `SInput`, `STextarea`, `SSelect`, `SAutocomplete`, `SCheckbox`, `SRadioGroup` + `SRadio`, `SSwitch`, `SDatePickerInput` | **sui-form** |
+| Everything else | Buttons, cards, lists, tables, dialogs, menus, tabs, steppers, carousels, date pickers, … | **sui-component** (one reference file per family) |
 
 ---
 
-## Services & Composables
+## Composables
 
 ```typescript
 import { useTheme, useDisplay, useScroll, useClickOutside } from '@khsura/sui'
 
-// Theme
-const { theme, setTheme, toggleTheme } = useTheme()
+const { theme, setTheme } = useTheme()
 
-// Responsive breakpoints
-const { isMobile, isTablet, isDesktop, smAndUp, mdAndUp, lgAndUp } = useDisplay()
+// Breakpoints (refs): xs, sm, md, lg, xl, xxl, smAndUp, smAndDown, mdAndUp, mdAndDown,
+// lgAndUp, lgAndDown, mobile, name, width, height, isTouchDevice
+const { mdAndUp, mobile } = useDisplay()
 
-// Scroll position
-const { scrollX, scrollY, scrollTo } = useScroll()
+// Scroll helpers
+const { smoothScrollTo, scrollIntoView, smoothElementScroll, hasScrollFeature } = useScroll()
 
-// Click outside detection
-const elRef = ref<HTMLElement>()
-useClickOutside(elRef, () => {
-  /* callback */
+// Click outside: register/unregister yourself
+const el = ref<HTMLElement | null>(null)
+const { register, unregister } = useClickOutside().onClick(el, ({ isOutside }) => {
+  if (isOutside) close()
 })
+onMounted(register)
+onBeforeUnmount(unregister)
 ```
 
----
-
-## Directives
-
-```vue
-<div v-scroll="onScroll">...</div>
-<div v-resize="onResize">...</div>
-```
-
-Directives are auto-registered by `createSUI()`.
+Directives (`v-scroll`, `v-resize`) and utility classes: **sui-utilities**.
 
 ---
 
-## Utility Classes
+## Common mistakes
 
-- Spacing: `s_ml__3`, `s_mr__2`, `s_pa__4`, `s_pt__2`
-- Typography: `s_text--h5`, `s_text--body1`, `s_text--caption`
-- Colors: `s_color--primary`, `s_color--error`
-
-The utility classes ship in the base stylesheet: `import '@khsura/sui/base.css'` (or `@khsura/sui/style.scss`), which the Nuxt module loads for you.
-
-`@khsura/sui/helpers.scss` is different: it holds SCSS **functions and mixins** only (`s_getPresetColor`, `s_getAppColor`, `s_elevation`, …) and emits no classes. Use it in component styles with `@use '@khsura/sui/helpers.scss' as *`. See **sui-utilities** for the full class, directive and helper reference.
+| ❌ | ✅ |
+|---|---|
+| `yarn add @khsura/sui` with no registry config → 404/401 | Point `@khsura` at `https://npm.pkg.github.com` and supply a `read:packages` token (step 1) |
+| Token pasted into a committed `.npmrc` / `.yarnrc.yml` | `${NPM_GITHUB_TOKEN}` placeholder + env var / CI secret |
+| Icons render as empty boxes | Load `@mdi/font` — `import '@mdi/font/css/materialdesignicons.css'` (Vue) or `css: ['@mdi/font/css/materialdesignicons.css']` (Nuxt) |
+| Only `style.css` (or only `base.css`) imported | Import both in plain Vue; the Nuxt module loads them |
+| No `<SApp>` root → no colors, dialogs/menus never show | Wrap the app in `<SApp>` |
+| `const { toggleTheme, isMobile } = …` | They don't exist: `setTheme(...)`; `useDisplay().mobile` / `mdAndUp` |
+| Nuxt: `<SLayout>` / `<SCarousel>` "failed to resolve component" | Import them from `@khsura/sui` — the module doesn't auto-register them |
+| Birth-date picker without `min` → years older than 5 years can't be picked | Without `min`/`max`, `SDatePicker` / `SDatePickerInput` allow Jan 1 five years before `today` to Dec 31 five years after — pass `min` / `max` for wider ranges |
+| `SDatePicker` model as a `Date` | A string: `'YYYY-MM-DD'`, `'YYYY-MM'` or `'YYYY'` by `type` |
+| Popup activator binds only `v-on="on"` | Bind `v-on="on"` **and** `v-bind="attrs"` (SDialog, SMenu, SSnackbar) |
+| `SMenu` without `location` opens on top of its button | `location="bottom"` |
+| Named `SLayout` with un-`for`ed children | `for` on every child, or `name`/`for` on none |
+| Items as `{ title, value }` / `{ label, id }` | `{ text, value }` or plain strings |
+| `SSelect multiple / chips / clearable / placeholder` | `SAutocomplete` |
+| Rule returns `false` | Return a message string |
+| `if (!formRef.value.validate()) return` | `validate()` returns `true` when there **are** errors |
+| `hideDetails` to hide just the error | `hideError` (`hideDetails` hides the label too) |
+| Unknown props (`SDialog title`, `persistent-hint`, `app`) | Silently ignored — check `@types/definitions/props` |
+| `:deep(.s_*) { … !important }` | A prop, a `createSUI({ components })` default, or theme colors |
+| `alpha` hex in `presetColors` | Opaque hex + `color-mix()` where you need translucency |
 
 ---
 
-## Common Mistakes to Avoid
+## Related skills
 
-- **Activator**: always bind both `v-on="on"` AND `v-bind="attrs"` — missing either breaks popup behavior
-- **Layout**: set `name`/`for` on all of `SLayout` and its children or on none of them — a named `SLayout` with un-`for`ed children does not connect
-- **SSelect/SAutocomplete items**: must be `{ text, value }` objects or plain strings — not `{ title, value }` or `{ label, id }`
-- **SSelect is single-value**: no `multiple`/`chips`/`clearable`/`placeholder` — use `SAutocomplete`
-- **Validation rules**: return `true` to pass and a `string` to fail — `false`/`null` show no error
-- **`loading` on SButton**: implicitly disables it — don't set `disabled` separately
-- **SForm**: does not auto-validate on mount. `formRef.value.validate()` returns **`true` when there are errors** — `if (formRef.value?.validate()) return`
-- **`hideDetails` hides the label too**: use `hideError` to hide only the error message
-- **Unknown props do nothing silently**: `SDialog title`, `persistent-hint`, `app`, … — check `@types/definitions/props` when unsure
-- **Styling SUI internals**: prefer props and `createSUI({ components })` defaults over `:deep(.s_*)` + `!important`, which break on library updates
-- **SDatePicker**: model value must be a string in the correct format, not a Date object
+Use the installed plugin rather than copying these files into a project (`.claude/skills/`) — copies go stale when SUI updates.
 
----
-
-## Related Skills
-
-Use these skills from the same `sui-plugin` for focused tasks. Prefer the installed plugin over copying these files into a project's `.agents/skills/` or `.claude/skills/` — local copies go stale when SUI updates.
-
-- **sui-getting-started** (this skill) — installation, setup, app config, predefined i18n, component list, patterns
-- **sui-layout** — scaffold an app layout (app bar, drawer, grid)
-- **sui-form** — build a validated form with SUI form components
-- **sui-component** — look up and use a specific SUI component with examples
-- **sui-utilities** — utility classes, directives and SCSS helpers reference
+- **sui-layout** — app shell (app bar, drawer, footer, grid)
+- **sui-form** — validated forms and rules
+- **sui-component** — any component: props, slots, events, examples (per-family references)
+- **sui-utilities** — utility classes, directives, SCSS helpers
