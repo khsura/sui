@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.1](https://github.com/khsura/sui/compare/root-v1.16.0...root-v1.16.1) (2026-11-15)
+
+
+### Bug Fixes
+
+* **navigation-drawer:** an open mobile drawer dims the page behind it ([30e1ca7](https://github.com/khsura/sui/commit/30e1ca7d2d1558421f3286bb6ddfb7c53793116c))
+
 ## [1.16.0](https://github.com/khsura/sui/compare/root-v1.15.1...root-v1.16.0) (2026-11-12)
 
 
