@@ -1,7 +1,11 @@
-import { mount } from '@vue/test-utils'
+import { enableAutoUnmount, mount } from '@vue/test-utils'
 import { defineComponent, nextTick, ref } from 'vue'
 import { SApp, SLayout, SMain, SNavigationDrawer } from '@/app/components'
 import { overlaysContainerId } from '@/app/constants'
+
+// A drawer left mounted keeps reacting to the window — its background-scroll
+// retries then land in a later test as unhandled rejections.
+enableAutoUnmount(afterEach)
 
 const layoutName = 'drawerTest'
 const desktopWidth = 1280
@@ -299,5 +303,73 @@ describe('SNavigationDrawer - edge swipe', () => {
     await swipe(phoneWidth - 8, 200)
 
     expect(wrapper.vm.isOpen).toBe(false)
+  })
+})
+
+describe('SNavigationDrawer - scrim', () => {
+  // The app's own drawer, as onetab mounts it: no `for`, so it is the app layout's.
+  const AppDrawer = defineComponent({
+    components: { SApp, SMain, SNavigationDrawer },
+    props: { forceMobile: { type: Boolean, default: true }, hideOverlay: { type: Boolean, default: false } },
+    setup() {
+      return { isOpen: ref(false), navWidth }
+    },
+    template: `
+      <SApp>
+        <SNavigationDrawer v-model="isOpen" app :width="navWidth" :force-mobile="forceMobile" :hide-overlay="hideOverlay" />
+        <SMain app>content</SMain>
+      </SApp>
+    `,
+  })
+
+  const openDrawer = async (props: Record<string, boolean> = {}) => {
+    const wrapper = mount(AppDrawer, { attachTo: document.body, props })
+
+    await nextTick()
+    wrapper.vm.isOpen = true
+    await nextTick()
+
+    return wrapper
+  }
+
+  beforeEach(() => {
+    const overlaysContainer = document.createElement('div')
+
+    overlaysContainer.id = overlaysContainerId
+    document.body.appendChild(overlaysContainer)
+    Object.defineProperty(window, 'scrollX', { value: 0, configurable: true })
+    Object.defineProperty(window, 'scrollY', { value: 0, configurable: true })
+  })
+
+  afterEach(() => {
+    document.body.innerHTML = ''
+    document.documentElement.removeAttribute('style')
+  })
+
+  test('an open mobile app drawer dims the page behind it, and a tap there closes it', async () => {
+    const wrapper = await openDrawer()
+    const scrim = document.querySelector<HTMLElement>('.s_overlay__scrim')
+
+    expect(scrim).not.toBeNull()
+
+    scrim?.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }))
+    scrim?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await nextTick()
+
+    expect(wrapper.vm.isOpen).toBe(false)
+  })
+
+  test('hideOverlay keeps the page undimmed', async () => {
+    await openDrawer({ hideOverlay: true })
+
+    expect(document.querySelector('.s_overlay__scrim')).toBeNull()
+  })
+
+  test('a desktop drawer draws no scrim', async () => {
+    window.innerWidth = desktopWidth
+
+    await openDrawer({ forceMobile: false })
+
+    expect(document.querySelector('.s_overlay__scrim')).toBeNull()
   })
 })

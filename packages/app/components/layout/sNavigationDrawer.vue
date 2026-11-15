@@ -165,8 +165,10 @@ const isPermanentDesktopApp = computed(() => {
   return props.permanent && isDesktopApp.value && !isBottom.value
 })
 
+// A drawer over the page — a mobile one inside an app — dims what is behind it.
+// It used to require isDesktopApp, which rules out mobile, so no scrim was ever drawn.
 const isOverlay = computed((): boolean => {
-  if (!isDesktopApp.value) {
+  if (!isApp.value) {
     return false
   }
 
