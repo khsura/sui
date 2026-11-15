@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.1](https://github.com/khsura/sui/compare/sui-v1.18.0...sui-v1.18.1) (2026-11-15)
+
+
+### Bug Fixes
+
+* **navigation-drawer:** an open mobile drawer dims the page behind it ([30e1ca7](https://github.com/khsura/sui/commit/30e1ca7d2d1558421f3286bb6ddfb7c53793116c))
+
 ## [1.18.0](https://github.com/khsura/sui/compare/sui-v1.17.1...sui-v1.18.0) (2026-11-12)
 
 
