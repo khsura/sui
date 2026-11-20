@@ -1,3 +1,4 @@
+import { flushPromises } from '@vue/test-utils'
 import { nextTick } from 'vue'
 import { SAutocomplete } from '@/app/components'
 import { mountWithApp } from '@/app/tests/_helpers'
@@ -209,5 +210,78 @@ describe('SAutocomplete - label', () => {
     const { wrapper } = setup({ label: 'Employee', hideDetails: true })
 
     expect(wrapper.find('.s_autocomplete__label').attributes('style')).toContain('display: none')
+  })
+})
+
+describe('SAutocomplete - menu placed above the field', () => {
+  const ROW_HEIGHT = 40
+  const VIEWPORT_HEIGHT = 800
+  const FIELD_TOP = 700
+  const FIELD_HEIGHT = 40
+  const manyItems = Array.from({ length: 12 }, (_, index) => `Fruit ${index}`)
+  const restorers: (() => void)[] = []
+
+  beforeEach(() => {
+    vi.stubGlobal('innerHeight', VIEWPORT_HEIGHT)
+
+    const offsetHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetHeight')
+
+    // jsdom lays nothing out: the list is as tall as its rows.
+    Object.defineProperty(HTMLElement.prototype, 'offsetHeight', {
+      configurable: true,
+      get(this: HTMLElement) {
+        return this.classList.contains('s_autocomplete__list')
+          ? this.querySelectorAll('.s_listItem').length * ROW_HEIGHT
+          : 0
+      },
+    })
+    restorers.push(() => {
+      if (offsetHeight) Object.defineProperty(HTMLElement.prototype, 'offsetHeight', offsetHeight)
+    })
+
+    const rect = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+      top: FIELD_TOP,
+      bottom: FIELD_TOP + FIELD_HEIGHT,
+      left: 0,
+      right: 300,
+      width: 300,
+      height: FIELD_HEIGHT,
+      x: 0,
+      y: FIELD_TOP,
+      toJSON: () => ({}),
+    })
+
+    restorers.push(() => rect.mockRestore())
+  })
+
+  afterEach(() => {
+    restorers.splice(0).forEach((restore) => restore())
+    vi.unstubAllGlobals()
+    document.body.innerHTML = ''
+  })
+
+  const menuBottom = () => {
+    const list = document.querySelector<HTMLElement>('.s_autocomplete__list')
+
+    if (!list) throw new Error('the menu is not open')
+
+    return Number.parseFloat(list.style.top) + list.offsetHeight
+  }
+
+  test('stays on the field as typing shortens the list', async () => {
+    const wrapper = mountWithApp(SAutocomplete, { props: { items: manyItems }, attachTo: document.body })
+    const input = wrapper.find<HTMLInputElement>('.s_autocomplete__input')
+
+    await input.trigger('focus')
+    await flushPromises()
+
+    expect(menuBottom()).toBe(FIELD_TOP)
+
+    // Fruit 1, 10 and 11: still too tall for the room below, so still above.
+    await input.setValue('fruit 1')
+    await flushPromises()
+
+    expect(document.querySelectorAll('.s_autocomplete__list .s_listItem')).toHaveLength(3)
+    expect(menuBottom()).toBe(FIELD_TOP)
   })
 })
