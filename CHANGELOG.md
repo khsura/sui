@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.2](https://github.com/khsura/sui/compare/root-v1.16.1...root-v1.16.2) (2026-11-20)
+
+
+### Bug Fixes
+
+* **autocomplete:** a menu opened above the field stays on it while typing filters the list ([#151](https://github.com/khsura/sui/issues/151)) ([a018fce](https://github.com/khsura/sui/commit/a018fce7e3188f7b96691853eb988badbada6425))
+
 ## [1.16.1](https://github.com/khsura/sui/compare/root-v1.16.0...root-v1.16.1) (2026-11-15)
 
 

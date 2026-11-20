@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.2](https://github.com/khsura/sui/compare/sui-v1.18.1...sui-v1.18.2) (2026-11-20)
+
+
+### Bug Fixes
+
+* **autocomplete:** a menu opened above the field stays on it while typing filters the list ([#151](https://github.com/khsura/sui/issues/151)) ([a018fce](https://github.com/khsura/sui/commit/a018fce7e3188f7b96691853eb988badbada6425))
+
 ## [1.18.1](https://github.com/khsura/sui/compare/sui-v1.18.0...sui-v1.18.1) (2026-11-15)
 
 
