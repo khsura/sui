@@ -1,4 +1,13 @@
-import { computed, nextTick, ref, type ComponentPublicInstance, type EmitFn, type Ref, type ShallowRef } from 'vue'
+import {
+  computed,
+  nextTick,
+  ref,
+  watch,
+  type ComponentPublicInstance,
+  type EmitFn,
+  type Ref,
+  type ShallowRef,
+} from 'vue'
 import {
   isDelimiter,
   getItemFromText,
@@ -280,6 +289,18 @@ export const useAutocompleteService = <T extends boolean = false>(
         return itemText?.toLowerCase().includes(queryTextValue) ?? false
       }) ?? []
     )
+  })
+
+  /*
+   * The menu is placed by its top edge. Opened above the field, a list that
+   * typing shortens would keep that top and float off the field, so the menu
+   * is placed again whenever what it lists changes.
+   */
+  watch([() => filteredItems.value.length, showCreateOption], async () => {
+    if (!isMenuOpen.value) return
+
+    await nextTick()
+    updateLocation()
   })
 
   const getIsSelected = (item: SelectItem | string) => {
