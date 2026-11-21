@@ -5,6 +5,8 @@ interface AppColors {
   textErrorHover: string
   // Error messages under form inputs; must reach 4.5:1 on `background` and `card`.
   textError: string
+  // Keyboard focus ring; must reach 3:1 on `background` and `card`.
+  focusRing: string
   secondaryText: string
   anchor: string
   background: string

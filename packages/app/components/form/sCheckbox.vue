@@ -227,8 +227,7 @@ $s_checkbox--size: 24px;
 
   // Keyboard focus only, so a mouse click does not leave a ring behind
   &__input:focus-visible + &__label::before {
-    outline: 2px solid s_getPresetColor('info');
-    outline-offset: 2px;
+    @include s_focusRing();
   }
 
   &:not(&--disabled, &--readonly):hover &__label::before {

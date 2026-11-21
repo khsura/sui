@@ -139,8 +139,7 @@ const preventReadonlyToggle = (event: MouseEvent) => {
 
   // Keyboard focus only, so a mouse click does not leave a ring behind
   &__input:focus-visible + &__button {
-    outline: 2px solid s_getPresetColor('info');
-    outline-offset: 2px;
+    @include s_focusRing();
   }
 }
 </style>

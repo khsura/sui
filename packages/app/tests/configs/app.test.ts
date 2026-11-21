@@ -1,5 +1,5 @@
 import { defaultAppConfig } from '@/app/configs'
-import { AppTheme, minimumTextContrast } from '@/app/constants'
+import { AppTheme, minimumLargeTextContrast, minimumTextContrast } from '@/app/constants'
 import { getContrastRatio, getReadableTextColor } from '@/app/lib'
 
 const { themes } = defaultAppConfig
@@ -18,5 +18,10 @@ describe.each(Object.values(AppTheme))('default %s theme contrast', (theme) => {
 
   test.each([appColors.background, appColors.card])('form error text on %s reaches 4.5:1', (surface) => {
     expect(getContrastRatio(appColors.textError, surface)).toBeGreaterThanOrEqual(minimumTextContrast)
+  })
+
+  // WCAG 1.4.11: a focus indicator is a UI component and needs 3:1 against what surrounds it.
+  test.each([appColors.background, appColors.card])('focus ring on %s reaches 3:1', (surface) => {
+    expect(getContrastRatio(appColors.focusRing, surface)).toBeGreaterThanOrEqual(minimumLargeTextContrast)
   })
 })

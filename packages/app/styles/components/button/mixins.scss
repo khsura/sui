@@ -47,6 +47,11 @@
     opacity: variables.$s_button--focus__opacity;
   }
 
+  // A visible ring for keyboard focus (the tint above alone is too faint to see)
+  &:focus-visible {
+    @include mixins.s_focusRing();
+  }
+
   // except for touch devices
   @media (hover: hover) {
     &:hover::before {
