@@ -3,5 +3,8 @@
   "version": "1.2.2",
   "scripts": {
     "lint": "yarn g:eslint"
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
   }
 }

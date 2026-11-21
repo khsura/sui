@@ -7,14 +7,15 @@
     "build:style": "yarn g:sass styles/index.scss dist/base.css",
     "build:type": "yarn g:vue-tsc -p tsconfig.build.json && yarn g:tsc-alias -p tsconfig.build.json",
     "build:plugin": "cp -R ../../.claude-plugin . && cp -R ../../plugins/sui-plugin .",
-    "build": "yarn prebuild && yarn build:type && yarn g:vite build && yarn build:style && cp -R styles dist/styles && yarn build:plugin",
+    "build": "yarn prebuild && yarn build:type && yarn g:vite build && yarn build:api && yarn build:style && cp -R styles dist/styles && yarn build:plugin",
     "lint": "yarn g:eslint",
     "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
     "test": "yarn g:vitest run --project unit",
     "test-storybook": "yarn g:vitest --project storybook",
     "release": "yarn g:publish",
     "storybook:dev": "storybook dev --port 6006",
-    "storybook:build": "storybook build"
+    "storybook:build": "storybook build",
+    "build:api": "yarn g:vite-node scripts/apiMetadata/generateApiMetadata.ts"
   },
   "files": [
     "dist",
@@ -65,6 +66,7 @@
     "lodash.merge": "^4.6.2",
     "playwright": "^1.61.1",
     "storybook": "^10.4.6",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.9",
+    "vue-component-meta": "^3.3.6"
   }
 }

@@ -1,0 +1,17 @@
+export const COMPONENTS_DIR = 'components'
+export const BARREL_FILE = 'index.ts'
+export const TS_EXTENSION = '.ts'
+export const CORE_FAMILY = 'core'
+export const STAR_EXPORT_PATTERN = /export \* from '(\.[^']+)'/g
+export const DEFAULT_VUE_EXPORT_PATTERN = /export \{ default as (S\w+) \} from '(\.[^']+\.vue)'/g
+export const SUI_PACKAGE_NAME = '@khsura/sui'
+export const PACKAGE_JSON_FILE = 'package.json'
+export const TSCONFIG_FILE = 'tsconfig.json'
+export const ENUM_SCHEMA_KIND = 'enum'
+export const NULLISH_SCHEMA_MEMBERS = ['undefined', 'null']
+export const QUOTED_LITERAL_PATTERN = /^"(.*)"$/
+export const PRINTER_NEW_LINE_LF = 1
+export const DIST_DIR = 'dist'
+export const API_METADATA_FILE = 'sui-api.json'
+export const JSON_INDENT = 2
+export const EXIT_CODE_FAILURE = 1
