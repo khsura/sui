@@ -1,5 +1,8 @@
 export const overlaysContainerId = 'sAppOverlayContainer'
 
+// Class on <html> that pins the page in place while a modal overlay (SDialog, a mobile SNavigationDrawer) is open.
+export const overlayScrollBlockedClassName = 's_overlay__scrollBlocked'
+
 // Distance (px) SMenu and STooltip keep from the viewport edges when they flip or shift to stay visible.
 export const overlayViewportGutter = 8
 

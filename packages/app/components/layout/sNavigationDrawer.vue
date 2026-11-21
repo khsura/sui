@@ -350,11 +350,11 @@ onClickOutside(
 
 watch(
   [model, isMobile, isPermanentDesktopApp],
-  async () => {
+  () => {
     if (isPermanentDesktopApp.value || !isMobile.value || !model.value) {
-      await enableBackgroundScroll()
+      enableBackgroundScroll()
     } else {
-      await disableBackgroundScroll()
+      disableBackgroundScroll()
     }
   },
   {
