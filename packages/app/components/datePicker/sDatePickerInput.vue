@@ -82,7 +82,7 @@ import SOverlay from '@/app/components/sOverlay.vue'
 import SButton from '@/app/components/sButton.vue'
 import type { PropsDatePickerInput, PropsMenu } from '@/app/definitions'
 import { datePickerDisplayFormat } from '@/app/configs'
-import { datePickerInputExtraWidthCh } from '@/app/constants'
+import { datePickerInputPlaceholderCharWidthEm } from '@/app/constants'
 import { convertDatePickerValue } from '@/app/repositories'
 import {
   useComponentDefaultsService,
@@ -161,12 +161,17 @@ const classList = computed(() => ({
 
 /** Number of characters the value of the current type needs. */
 const inputSize = computed(() => inputFormat.value.length)
+
+/** Room for the placeholder (the format by default), whose capital letters are wider than digits. */
+const placeholderWidthEm = computed(() =>
+  Math.ceil((props.placeholder ?? inputFormat.value).length * datePickerInputPlaceholderCharWidthEm),
+)
+
 /**
- * The value's own width, in characters of the input's font. The `size`
- * attribute alone is not enough: iOS Safari let the field shrink below it and
- * cut the last digit off.
+ * The value's own width, in characters of the input's font, and at least the placeholder's. The `size`
+ * attribute alone is not enough: iOS Safari let the field shrink below it and cut the last digit off.
  */
-const inputStyles = computed(() => ({ minWidth: `${inputSize.value + datePickerInputExtraWidthCh}ch` }))
+const inputStyles = computed(() => ({ minWidth: `max(${inputSize.value}ch, ${placeholderWidthEm.value}em)` }))
 
 /**
  * Keeps the committed value in the format of the current type.
