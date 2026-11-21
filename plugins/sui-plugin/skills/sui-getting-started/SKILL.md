@@ -29,6 +29,19 @@ Older versions were published to GitHub Packages. If your project still points t
 
 `vue`, `vue-i18n` and `dayjs` come in as dependencies of `@khsura/sui`. `@mdi/font` is **not** included — install it yourself (see step 3).
 
+### Vue version — 3.5.41 or newer
+
+Use **Vue 3.5.41 or newer** in the app. If the app pins or locks `vue` at 3.5.40 or older, upgrade it (`npm i vue@^3.5.41`). Don't add a second copy of Vue.
+
+Vue 3.5.40 and older have a template compiler bug (fixed in vuejs/core#11682). It hits an element in a `v-for` over a constant array that has `:key` and `v-show` and no other dynamic binding: its `v-show` never updates. The usual case is a tab panel per section, and the tabs look broken even though `STabs` updates its `v-model`:
+
+```vue
+<!-- With Vue ≤ 3.5.40 and a `const sections = [...]`, the panels never switch -->
+<section v-for="section in sections" v-show="activeTab === section.key" :key="section.key">
+```
+
+Upgrade Vue. If you can't, render the panels with `SWindow` / `SWindowItem` bound to the same model, or move `:key` to a wrapping `<template v-for="section in sections" :key="section.key">` and keep `v-show` on the element inside it.
+
 ---
 
 ## 2. Register the plugin and wrap the app in `SApp`
@@ -313,6 +326,7 @@ Directives (`v-scroll`, `v-resize`) and utility classes: **sui-utilities**.
 | ❌ | ✅ |
 |---|---|
 | `npm i @khsura/sui` → 404/401 | A leftover `@khsura` scope override still points at GitHub Packages — remove it from `.npmrc` / `.yarnrc.yml` (step 1, *Migrating from GitHub Packages*) |
+| Tab panels (`v-for` + `:key` + `v-show`) never switch although `STabs` updates its model | Vue 3.5.40 or older: upgrade to Vue 3.5.41 or newer (step 1, *Vue version*) |
 | Icons render as empty boxes | Load `@mdi/font` — `import '@mdi/font/css/materialdesignicons.css'` (Vue) or `css: ['@mdi/font/css/materialdesignicons.css']` (Nuxt) |
 | Only `style.css` (or only `base.css`) imported | Import both in plain Vue; the Nuxt module loads them |
 | No `<SApp>` root → no colors, dialogs/menus never show | Wrap the app in `<SApp>` |

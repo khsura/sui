@@ -14,7 +14,7 @@ export default defineConfig({
       { find: /^@khsura\/sui$/, replacement: `${SUI_DIST}/s-ui.js` },
     ],
     // The built library imports these bare; resolve them once, from this app, so there is one Vue.
-    dedupe: ['vue', '@vueuse/core', '@vueuse/components', 'dayjs', 'uuid', 'zod', 'vue-i18n'],
+    dedupe: ['vue', '@vueuse/core', '@vueuse/components', 'dayjs', 'uuid', 'zod', 'vue-i18n', 'vue-router'],
   },
   server: { port: 5199, strictPort: true, fs: { allow: ['/'] } },
 })
