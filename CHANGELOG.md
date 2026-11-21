@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.3](https://github.com/khsura/sui/compare/root-v1.16.2...root-v1.16.3) (2026-11-21)
+
+
+### Bug Fixes
+
+* **autocomplete:** the browser's own suggestion list stays shut, so only the menu opens ([#153](https://github.com/khsura/sui/issues/153)) ([0f7843b](https://github.com/khsura/sui/commit/0f7843bf56ed468ab64d08aacde68708b4766b2d))
+
 ## [1.16.2](https://github.com/khsura/sui/compare/root-v1.16.1...root-v1.16.2) (2026-11-20)
 
 
