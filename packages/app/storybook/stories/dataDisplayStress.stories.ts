@@ -312,11 +312,12 @@ export const TableStates = {
 
     const wrapper = canvasElement.querySelector('.stress-wide-table .s_table__wrapper')
 
-    if (wrapper) {
-      wrapper.scrollTop = wrapper.scrollHeight
-    }
-
     await waitFor(() => {
+      // Scroll the rows to the end on every retry, so the check does not depend on when the styles apply.
+      if (wrapper) {
+        wrapper.scrollTop = wrapper.scrollHeight
+      }
+
       assertNoPageOverflow(canvasElement)
       assertThat(
         !!canvasElement.querySelector('.stress-wide-table .s_tableHeadCell__sorter--sorted'),
@@ -332,7 +333,7 @@ export const TableStates = {
       assertThat(!!wrapper && wrapper.scrollTop > 0, 'the rows do not scroll inside the table')
 
       // The sticky header stays at the top of the scrolled rows.
-      const header = getRect(canvasElement.querySelector('.stress-wide-table .s_table__head'))
+      const header = getRect(canvasElement.querySelector('.stress-wide-table .s_table__head .s_table__row'))
       const wrapperRect = getRect(wrapper)
 
       assertThat(Math.abs(header.top - wrapperRect.top) <= pixelTolerance, 'the sticky header scrolled away')
