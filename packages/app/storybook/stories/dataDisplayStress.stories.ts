@@ -31,6 +31,7 @@ import {
   STabs,
   type TableHeader,
 } from '@/app/index'
+import { assertNoListMarkers } from '@/app/storybook/helpers'
 
 // Stress cases for the data-display components. Each story groups several cases so the visual harness stays fast,
 // and each `play` function checks the geometry, so the stories double as interaction tests.
@@ -440,7 +441,7 @@ const steps = [
   { step: 4, text: 'Review and confirm' },
 ]
 
-// List rows with a long title and subtitle, an icon and two text actions; expansion panels with a long header;
+// List rows (as <ul>/<li>) with a long title and subtitle, an icon and two text actions; expansion panels with a long header;
 // breadcrumbs and a stepper with long labels.
 export const ListsAndPanels = {
   tags: ['visual'],
@@ -468,8 +469,8 @@ export const ListsAndPanels = {
       <div style="display: flex; flex-direction: column; gap: 24px;">
         <SBreadcrumbs :items="breadcrumbs" />
         <SCard outlined>
-          <SList divided class="stress-file-list">
-            <SListItem v-for="file in files" :key="file.name">
+          <SList divided tag="ul" class="stress-file-list">
+            <SListItem v-for="file in files" :key="file.name" tag="li">
               <SListItemIcon align-center><SIcon icon="mdi-file-document-outline" /></SListItemIcon>
               <SListItemContent>
                 <SListItemTitle>{{ file.name }}</SListItemTitle>
@@ -501,6 +502,9 @@ export const ListsAndPanels = {
   play: async ({ canvasElement }) => {
     await waitFor(() => {
       assertNoPageOverflow(canvasElement)
+
+      // The file list renders as <ul>/<li>, the breadcrumbs as <ol>/<li>: none of them shows a list marker.
+      assertNoListMarkers(canvasElement)
 
       // The row text keeps a readable width; when the actions do not fit beside it, they move below it.
       for (const content of canvasElement.querySelectorAll('.stress-file-list .s_listItemContent')) {
