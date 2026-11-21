@@ -34,5 +34,14 @@ jobs:
       - name: Run build
         run: yarn build
 
+      # The app build regenerates the sui-plugin skill API tables from dist/sui-api.json.
+      - name: Check skill API tables are up to date
+        run: |
+          yarn workspace @khsura/sui check:skills
+          git diff --exit-code -- plugins/sui-plugin/skills || {
+            echo "::error::sui-plugin skill API tables are stale. Run 'yarn build:api && yarn sync:skills' in packages/app and commit the result."
+            exit 1
+          }
+
       - name: Run storybook build
         run: yarn storybook:build
