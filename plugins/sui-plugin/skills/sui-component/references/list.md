@@ -177,6 +177,8 @@ None.
 
 Leading icon area and trailing action area. `default` slot.
 
+`SListItemContent` keeps a minimum width of `min(40%, 160px)`. When the icon and the actions leave less room than that (two text buttons on a phone), the list item moves the `SListItemAction` onto its own line below the text, aligned to the right edge, instead of squeezing the title to one letter. (Older versions squeezed it.)
+
 <!-- generated:api:start SListItemIcon -->
 <!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
@@ -319,3 +321,4 @@ A collapsible sub-list. By default it renders a clickable header row (title, sub
 | `<SListItem selectable>` expecting a selected highlight | Manage the active state yourself (e.g. a class), since `selectable` only changes the cursor |
 | `<SListItemGroup>` used for single/multi selection | It only expands and collapses. Track selection yourself |
 | `<SList inset>` | No effect |
+| Shrinking the actions (or the title's font) so two text buttons fit next to a long title on a phone | Not needed: the actions move below the text when it would get narrower than `min(40%, 160px)` |

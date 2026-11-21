@@ -4,6 +4,8 @@
 
 Single-select tab strip, built on `SToggleButtonGroup`. It renders only the tab buttons — render the panels yourself (e.g. `v-show` / `v-if` on the model).
 
+The tabs stay on **one row**. Each tab keeps the width of its label (tabs stretch to fill spare room), and when they do not fit, the row scrolls sideways (touch, trackpad, shift+wheel) with no scrollbar. The selected tab is scrolled into view on mount and whenever the selection changes. Don't wrap `STabs` in `SSlideGroup` or add `overflow-x: auto` yourself. (Older versions wrapped the tabs onto several rows on phones.)
+
 ---
 
 ## STabs

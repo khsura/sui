@@ -78,6 +78,11 @@ Each takes only `tag` (default `'div'`) and a `default` slot.
   <SCardText>Profile details...</SCardText>
 </SCard>
 
+<!-- Centred title: s_textAlign__* classes also set justify-content on the flex title -->
+<SCard>
+  <SCardTitle class="s_textAlign__center">Sign in</SCardTitle>
+</SCard>
+
 <!-- Card with image -->
 <SCard :max-width="340" :elevation="2">
   <SImage src="/photo.jpg" :aspect-ratio="16/9" object-fit="cover" />

@@ -43,9 +43,19 @@ const { isExpanded, toggle } = useExpandableItemService()
 
   @include s_createListItemLink();
 
+  // The header already has the panel's 16px inline padding: drop the list item's own left padding and the
+  // action's right margin, so the header text and chevron line up with the content edges.
   &__main {
     display: flex;
     align-items: center;
+
+    &.s_listItem {
+      padding-left: 0;
+    }
+
+    > .s_listItemAction {
+      margin-right: 0;
+    }
   }
 
   &__top,

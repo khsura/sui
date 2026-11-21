@@ -86,7 +86,7 @@ Each takes only `tag` (default `'div'`) and a `default` slot. No events.
 
 Spacing between adjacent title → subtitle → text is tightened automatically.
 
-`SCardTitle` is a flex row, so `s_textAlign__center` on it has no effect. Centre its content with `s_justify__center` (`s_justify__end` for right).
+`SCardTitle` is a flex row (so it can hold an icon, `SSpacer` and buttons). The `s_textAlign__*` classes, responsive ones included, also set the matching `justify-content` on it, so `class="s_textAlign__center"` centres the title. `s_justify__center` works too. A long title wraps between words; a single word wider than the card is split. (Older versions ignored `s_textAlign__*` on `SCardTitle` and split titles at any letter.)
 
 <!-- generated:api:start SCardTitle -->
 <!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
