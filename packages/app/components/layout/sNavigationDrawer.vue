@@ -1,4 +1,7 @@
 <template>
+  <Transition name="s_transition--appear">
+    <div v-if="isLayoutScrim" class="s_navigationDrawer__scrim"></div>
+  </Transition>
   <SOverlay :disabled="!isOverlay" :scrim="isOverlay" :value="model" :transition="transitionName">
     <component
       :is="elementTag"
@@ -173,6 +176,12 @@ const isOverlay = computed((): boolean => {
   }
 
   return !props.hideOverlay && isMobile.value
+})
+
+// A mobile drawer in a named layout stays inside that layout (position: absolute), so it dims only the layout,
+// with a scrim beside it. A tap there is an outside click, which closes the drawer.
+const isLayoutScrim = computed((): boolean => {
+  return !isApp.value && !props.hideOverlay && isMobile.value && !isBottom.value && Boolean(model.value)
 })
 
 const isMiniVariant = computed(() => {
@@ -537,6 +546,14 @@ $s_navigationDrawerOverlayTransitionAnimations: (
       animation: $animation $s_layoutTransitionDuration reverse;
     }
   }
+}
+
+.s_navigationDrawer__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  background-color: $s_color__black;
+  opacity: 0.5;
 }
 
 .s_navigationDrawer {

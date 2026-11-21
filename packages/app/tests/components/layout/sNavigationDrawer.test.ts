@@ -372,4 +372,64 @@ describe('SNavigationDrawer - scrim', () => {
 
     expect(document.querySelector('.s_overlay__scrim')).toBeNull()
   })
+
+  // The app-shell recipe's drawer: a named layout, so the drawer stays inside it and dims only that layout.
+  const NamedLayoutDrawer = defineComponent({
+    components: { SApp, SLayout, SMain, SNavigationDrawer },
+    props: { forceMobile: { type: Boolean, default: true }, hideOverlay: { type: Boolean, default: false } },
+    setup() {
+      return { isOpen: ref(true), layoutName, navWidth }
+    },
+    template: `
+      <SApp>
+        <SLayout :name="layoutName">
+          <SNavigationDrawer
+            v-model="isOpen"
+            :for="layoutName"
+            :width="navWidth"
+            :force-mobile="forceMobile"
+            :hide-overlay="hideOverlay"
+            persistent
+          />
+          <SMain :for="layoutName">content</SMain>
+        </SLayout>
+      </SApp>
+    `,
+  })
+
+  const mountNamedLayoutDrawer = async (props: Record<string, boolean> = {}) => {
+    const wrapper = mount(NamedLayoutDrawer, { attachTo: document.body, props })
+
+    await nextTick()
+
+    return wrapper
+  }
+
+  test('an open mobile drawer in a named layout dims the layout, and a tap there closes it', async () => {
+    const wrapper = await mountNamedLayoutDrawer()
+    const scrim = wrapper.find('.s_layout .s_navigationDrawer__scrim')
+
+    expect(scrim.exists()).toBe(true)
+
+    scrim.element.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }))
+    scrim.element.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await nextTick()
+
+    expect(wrapper.vm.isOpen).toBe(false)
+    expect(wrapper.find('.s_navigationDrawer__scrim').exists()).toBe(false)
+  })
+
+  test('hideOverlay keeps a named layout undimmed', async () => {
+    const wrapper = await mountNamedLayoutDrawer({ hideOverlay: true })
+
+    expect(wrapper.find('.s_navigationDrawer__scrim').exists()).toBe(false)
+  })
+
+  test('a desktop drawer in a named layout draws no scrim', async () => {
+    window.innerWidth = desktopWidth
+
+    const wrapper = await mountNamedLayoutDrawer({ forceMobile: false })
+
+    expect(wrapper.find('.s_navigationDrawer__scrim').exists()).toBe(false)
+  })
 })
