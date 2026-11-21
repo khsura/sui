@@ -2623,6 +2623,20 @@
       ]
     },
     {
+      "name": "SFormRow",
+      "family": "form",
+      "file": "components/form/sFormRow.vue",
+      "props": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "any",
+          "description": "The fields and buttons of the row."
+        }
+      ],
+      "events": []
+    },
+    {
       "name": "SIcon",
       "family": "core",
       "file": "components/sIcon.vue",

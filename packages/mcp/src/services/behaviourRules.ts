@@ -14,11 +14,13 @@ import {
   FLEX_DISPLAY_STYLE_PATTERN,
   FLEX_ROW_COMPONENTS,
   FORM_COMPONENT,
+  FORM_ROW_COMPONENT,
   HIDE_DETAILS_ATTRIBUTE,
   HIDE_DETAILS_LABEL_COMPONENTS,
   INPUT_TYPE_ATTRIBUTE,
   INPUT_TYPE_NUMBER,
   LABEL_ATTRIBUTE,
+  LABELLED_FIELD_COMPONENTS,
   MIN_BLOCK_BUTTONS_IN_ROW,
   MODEL_NAME_PLACEHOLDER,
   MODEL_PATH_PATTERN,
@@ -27,6 +29,7 @@ import {
   NATIVE_VALIDATING_INPUT_TYPES,
   NO_VALIDATE_ATTRIBUTE,
   RECIPE_ACTIVATOR_OVERLAYS,
+  RECIPE_FILTER_BAR,
   RECIPE_RESPONSIVE_GRID,
   RECIPE_VALIDATED_FORM,
   REGEX_ESCAPE_REPLACEMENT,
@@ -34,6 +37,7 @@ import {
   RULE_BLOCK_BUTTONS_IN_ROW,
   RULE_CARD_TITLE_TEXT_ALIGN,
   RULE_DATE_PICKER_EMPTY_STRING,
+  RULE_FIELD_BUTTON_ROW,
   RULE_HIDE_DETAILS_HIDES_LABEL,
   RULE_NATIVE_VALIDATION_IN_FORM,
   RULE_SNACKBAR_ACTION_CONTRAST,
@@ -234,6 +238,40 @@ export const blockButtonsInRowRule: TemplateRule = {
   },
 }
 
+/** A text field whose label and error line are rendered, so its box sits between them. */
+const isDetailedField = (element: ElementNode): boolean =>
+  isOneOfComponentTags(element.tag, LABELLED_FIELD_COMPONENTS) && !isBooleanPropOn(element, HIDE_DETAILS_ATTRIBUTE)
+
+export const fieldButtonRowRule: TemplateRule = {
+  id: RULE_FIELD_BUTTON_ROW,
+  target: RULE_TARGET_ANY_ELEMENT,
+  check: ({ element }) => {
+    if (isComponentTag(element.tag, FORM_ROW_COMPONENT) || !isFlexRow(element)) {
+      return []
+    }
+
+    const children = childElementsOf(element)
+    const field = children.find(isDetailedField)
+    const button = children.find((child) => isComponentTag(child.tag, BUTTON_COMPONENT))
+
+    if (!field || !button) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(button),
+        rule: RULE_FIELD_BUTTON_ROW,
+        severity: SEVERITY_WARNING,
+        message: `\`${field.tag}\` and an \`SButton\` share a flex row: the field is a label, its box and an error line, so the button lines up with the label instead of the field box.`,
+        fixHint:
+          'Use `<SFormRow>` instead of the flex element (@khsura/sui 1.20.0+); it lines each button up with the field box. On an older version put `hide-details` on the field.',
+        recipe: RECIPE_FILTER_BAR,
+      },
+    ]
+  },
+}
+
 export const cardTitleTextAlignRule: TemplateRule = {
   id: RULE_CARD_TITLE_TEXT_ALIGN,
   fixedIn: SUI_M2_FIXES_VERSION,
@@ -326,6 +364,7 @@ export const behaviourRules: TemplateRule[] = [
   hideDetailsHidesLabelRule,
   snackbarActionContrastRule,
   blockButtonsInRowRule,
+  fieldButtonRowRule,
   cardTitleTextAlignRule,
   datePickerEmptyStringRule,
 ]

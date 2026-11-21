@@ -8,6 +8,7 @@ import {
   RECIPE_ACTIVATOR_OVERLAYS,
   RECIPE_APP_SHELL,
   RECIPE_DATA_TABLE,
+  RECIPE_FILTER_BAR,
   RECIPE_NAMES,
   RECIPE_RESPONSIVE_GRID,
   RECIPE_THEME_SETUP,
@@ -57,6 +58,7 @@ describe('useRecipeCatalogService', () => {
         RECIPE_DATA_TABLE,
         RECIPE_RESPONSIVE_GRID,
         RECIPE_THEME_SETUP,
+        RECIPE_FILTER_BAR,
       ].sort(),
     )
   })

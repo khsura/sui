@@ -90,6 +90,7 @@ import {
   useBorderService,
   useComponentDefaultsService,
   useDisabledService,
+  useFieldLayoutService,
   useFormInputService,
   useListboxNavigationService,
   useMenuService,
@@ -203,9 +204,17 @@ const selectedItem = computed<SelectItem | null>({
   },
 })
 
+const { classListField } = useFieldLayoutService(
+  computed(() => ({
+    hasLabel: !!props.label && !props.hideDetails,
+    hasDetails: !props.hideDetails && !props.hideError,
+  })),
+)
+
 const selectClasses = computed(() => {
   return {
     's_select--grow': props.grow,
+    ...classListField.value,
   }
 })
 

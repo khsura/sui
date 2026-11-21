@@ -90,6 +90,7 @@ import { convertDatePickerValue } from '@/app/repositories'
 import {
   useComponentDefaultsService,
   useDatePickerInputService,
+  useFieldLayoutService,
   useFormInputService,
   useMeasurableStylesService,
   useMenuService,
@@ -168,7 +169,15 @@ watch(
 
 const inputText = computed(() => (isEditing.value ? localText.value : (formattedValue.value ?? '')))
 
+const { classListField } = useFieldLayoutService(
+  computed(() => ({
+    hasLabel: !!props.label && !props.hideDetails,
+    hasDetails: !props.hideDetails && !props.hideError,
+  })),
+)
+
 const classList = computed(() => ({
+  ...classListField.value,
   's_datePickerInput--disabled': props.disabled,
   's_datePickerInput--dense': props.dense,
   's_datePickerInput--simple': props.simple,

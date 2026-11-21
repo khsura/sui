@@ -11,6 +11,7 @@ import {
   SCheckbox,
   SDatePickerInput,
   SForm,
+  SFormRow,
   SIcon,
   SInput,
   SRadio,
@@ -42,6 +43,11 @@ const roles: SelectItem[] = [
   { text: 'Viewer', value: 'viewer' },
 ]
 
+const statuses: SelectItem[] = [
+  { text: 'Open', value: 'open' },
+  { text: 'Closed', value: 'closed' },
+]
+
 const fruits = ['Apple', 'Banana', 'Cherry', 'Grape', 'Kiwi', 'Lemon', 'Mango', 'Orange', 'Peach', 'Pear']
 const sizes = ['mini', 'small', 'default', 'large', 'extra'] as const
 const longError = () => LONG_ERROR
@@ -56,6 +62,7 @@ const stressComponents = {
   SCheckbox,
   SDatePickerInput,
   SForm,
+  SFormRow,
   SIcon,
   SInput,
   SRadio,
@@ -168,6 +175,63 @@ export const TextFieldSizes = {
     }),
 } satisfies StoryObj
 
+// A button and the field box next to it may differ by sub-pixel rounding only.
+const ALIGN_TOLERANCE_PX = 1
+// The least space between two stacked rows of fields and buttons.
+const MIN_ROW_GAP_PX = 8
+const FORM_LAYOUT_ROW_COUNT = 5
+const FIELD_BOX_SELECTOR = '.s_input__field, .s_select__activator, .s_datePickerInput__field'
+const getBoxRect = (field: Element | null) => field?.querySelector(FIELD_BOX_SELECTOR)?.getBoundingClientRect()
+
+/**
+ * Each button in an SFormRow has the same top and bottom as the box of the field before it. When the row wraps
+ * and the button starts a line of its own, it sits as far below the top of its line as the box sits in its field.
+ */
+const expectButtonsAlignedWithFieldBoxes = async (row: Element) => {
+  const rowLabel = row.getAttribute('data-testid') ?? 'row'
+  const buttons = Array.from(row.querySelectorAll(':scope > .s_button'))
+
+  await expect(buttons.length, rowLabel).toBeGreaterThan(0)
+  for (const button of buttons) {
+    const field = button.previousElementSibling
+    const boxRect = getBoxRect(field)
+    const fieldRect = field?.getBoundingClientRect()
+    const buttonRect = button.getBoundingClientRect()
+
+    await expect(boxRect, `${rowLabel}: a field box before the button`).toBeTruthy()
+    if (!boxRect || !fieldRect) {
+      continue
+    }
+
+    const isOnFieldLine = buttonRect.top < fieldRect.bottom
+
+    const expectedTop = isOnFieldLine
+      ? boxRect.top
+      : buttonRect.top - Number.parseFloat(getComputedStyle(button).marginTop) + (boxRect.top - fieldRect.top)
+
+    await expect(Math.abs(buttonRect.top - expectedTop), `${rowLabel}: button top`).toBeLessThanOrEqual(
+      ALIGN_TOLERANCE_PX,
+    )
+    await expect(Math.abs(buttonRect.height - boxRect.height), `${rowLabel}: button height`).toBeLessThanOrEqual(
+      ALIGN_TOLERANCE_PX,
+    )
+  }
+}
+
+/** The lowest painted edge of a row: its field boxes and buttons (labels, error lines and margins excluded). */
+const getRowContentBottom = (row: Element) =>
+  Math.max(...Array.from(row.children).map((child) => (getBoxRect(child) ?? child.getBoundingClientRect()).bottom))
+
+/** Stacked rows never touch: each row starts some space below the boxes and buttons of the row above. */
+const expectRowsSpaced = async (rows: Element[]) => {
+  for (const [index, row] of rows.slice(1).entries()) {
+    const previousRow = rows[index]
+    const gap = row.getBoundingClientRect().top - getRowContentBottom(previousRow)
+
+    await expect(gap, `gap above ${row.getAttribute('data-testid') ?? 'row'}`).toBeGreaterThanOrEqual(MIN_ROW_GAP_PX)
+  }
+}
+
 export const FormLayout = {
   tags: ['visual'],
   render: () =>
@@ -175,8 +239,10 @@ export const FormLayout = {
       components: stressComponents,
       setup: () => ({
         roles,
+        statuses,
         required,
         TEXTAREA_MAX_LENGTH,
+        rowFormRef: useValidatedForm(),
         form: ref({
           name: '',
           email: '',
@@ -187,7 +253,9 @@ export const FormLayout = {
           notify: true,
           accept: false,
           search: '',
+          query: '',
           from: '',
+          status: null,
         }),
       }),
       template: `
@@ -211,23 +279,45 @@ export const FormLayout = {
           </div>
           <div style="flex: 1 1 320px; min-width: 0;">
             <h3>Fields next to a button</h3>
-            <div style="display: flex; gap: 8px; align-items: flex-start;">
-              <SInput v-model="form.search" label="Search" />
-              <SButton color="primary">Search</SButton>
-            </div>
-            <div style="display: flex; gap: 8px; align-items: flex-start;">
-              <SInput v-model="form.search" label="Search without details" hide-details placeholder="Search" />
-              <SButton color="primary">Search</SButton>
-            </div>
-            <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start;">
-              <SDatePickerInput v-model="form.from" label="From" />
-              <SSelect v-model="form.role" label="Role" :items="roles" />
-              <SButton color="primary">Apply</SButton>
-            </div>
+            <SForm ref="rowFormRef" @submit.prevent>
+              <SFormRow data-testid="row-label">
+                <SInput v-model="form.search" label="Search" />
+                <SButton color="primary">Search</SButton>
+              </SFormRow>
+              <SFormRow data-testid="row-no-label">
+                <SInput v-model="form.search" placeholder="Search without a label" aria-label="Search" />
+                <SButton color="primary">Search</SButton>
+              </SFormRow>
+              <SFormRow data-testid="row-error">
+                <SInput v-model="form.query" label="Search with an error" :rules="[required]" />
+                <SButton color="primary">Search</SButton>
+              </SFormRow>
+              <SFormRow data-testid="row-hide-details">
+                <SInput v-model="form.search" label="Search without details" hide-details placeholder="Search" />
+                <SButton color="primary">Search</SButton>
+              </SFormRow>
+              <SFormRow data-testid="row-filter">
+                <SDatePickerInput v-model="form.from" label="From" />
+                <SSelect v-model="form.status" label="Status" :items="statuses" />
+                <SButton color="primary">Apply</SButton>
+              </SFormRow>
+            </SForm>
           </div>
         </div>
       `,
     }),
+  play: async ({ canvasElement }) => {
+    const rows = Array.from(canvasElement.querySelectorAll('.s_formRow'))
+
+    await expect(rows.length).toBe(FORM_LAYOUT_ROW_COUNT)
+    // The error row shows its message once the form has validated on mount.
+    await waitFor(() => expect(canvasElement.querySelector('[data-testid="row-error"] .s_visible')).toBeTruthy())
+    for (const row of rows) {
+      await expectButtonsAlignedWithFieldBoxes(row)
+    }
+
+    await expectRowsSpaced(rows)
+  },
 } satisfies StoryObj
 
 export const ChoiceControls = {
