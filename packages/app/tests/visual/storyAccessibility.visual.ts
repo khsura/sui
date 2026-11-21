@@ -14,7 +14,9 @@ import {
   findBlockingA11yViolations,
   formatA11yViolations,
   getVisualStoryPath,
+  readStoryFailures,
   readTaggedStories,
+  recordStoryFailures,
   serveStoryAssetsOffline,
   visualTest,
   waitForFonts,
@@ -33,9 +35,11 @@ for (const story of auditedStories) {
     await page.setViewportSize({ width: desktopWidth, height: visualViewportHeight })
     await page.clock.setFixedTime(visualFixedTime)
     await serveStoryAssetsOffline(page)
+    await recordStoryFailures(page)
     await page.goto(getVisualStoryPath(story.id, theme), { waitUntil: 'networkidle' })
 
     expect(await waitForStoryRender(page)).toBe(storyRenderFinishedPhase)
+    expect(await readStoryFailures(page)).toEqual([])
     await waitForFonts(page)
 
     // Compared as text so a failure prints one readable line per offending element.

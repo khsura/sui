@@ -22,7 +22,8 @@ To keep the screenshots stable, the harness:
 - emulates `prefers-reduced-motion: reduce`, the UTC time zone and the `en-US` locale
 - freezes `Date` at a fixed instant and seeds faker, so generated story content is the same on every load
 - runs the page offline: the Material Design Icons font comes from the local `@mdi/font` package, and other off-site requests (such as Google Fonts, which SUI styles do not use) are aborted
-- waits until the story render and its `play` function finish, then waits for web fonts
+- waits until the story render and its `play` function finish, then waits for web fonts. A `play` function that throws fails the test with its error, instead of capturing a half-finished story. A render that never finishes fails with the phase it got stuck in.
+- turns off the a11y addon's automatic axe run (the `a11y.manual` global), because the separate audit below covers it
 - allows a small per-pixel colour difference (antialiasing) and fails when more than 0.2% of the pixels differ
 
 The thresholds and the matrix live in `tests/visual/constants/visualMatrix.ts`.
@@ -87,3 +88,20 @@ Review the changed PNG files before you commit them. When you delete or rename a
 `.github/workflows/visual.yaml` runs on every pull request to `main` and to `feature/**` branches. It fails when a screenshot differs from its baseline by more than the threshold, or when a baseline is missing, and it uploads the `visual-diff` artifact with the report and the expected, actual and diff images.
 
 When you upgrade Playwright, change three places together: the exact `@playwright/test` and `playwright` versions in `packages/app/package.json`, and both `image:` tags in the workflow. Then regenerate all the baselines, because a new browser build renders slightly differently.
+
+## Flaky captures
+
+A capture that fails only sometimes is a bug, in a story, in a component or in the harness. Don't re-run it until it passes, and don't raise a timeout to hide it. Find what the capture raced against, then wait for that state.
+
+Reproduce it with repeats, in the same container:
+
+```bash
+yarn test:visual -g "Stress / Drawer Variants @ 1280px" --repeat-each=10
+```
+
+Causes found so far:
+
+- **Chromium closed the drawers in `Layout/Stress · Drawer Variants @ 1280px`.** A page taller than the viewport is captured with `captureBeyondViewport`, and that resizes the window for a moment, to 1×1 first. On that resize the `md` breakpoint flips, and SNavigationDrawer closes its persistent drawers when it goes mobile. By design, it does not reopen them when the width comes back. The capture then showed a stable layout with no drawers, in about one run in three. Growing the viewport to the page's height avoids the resize, but it changes every `100vh` layout, so the harness does not do it. Instead, the story now fits in one 800px viewport at desktop width. Keep any story whose state a resize can drop (a persistent drawer, for example) within one viewport height.
+- **WebKit timed out waiting for the render, mostly in `Layout/Stress · Mobile Drawer Open`.** Storybook reports `finished` only after the a11y addon's automatic axe run (its `afterEach` phase). In WebKit that run took seconds per capture, and it first waited on a stylesheet preload that fails offline. When several Docker runs share the machine, it sometimes went past the 15s budget, in a different theme each time. The harness now turns that run off with the `a11y.manual` global, so the render finishes about a second after the page loads. The axe audit in `storyAccessibility.visual.ts` still covers every story. If you run the harness while other containers are busy, pass `--workers=2`.
+- **A `play` function that threw still produced a screenshot.** In the static build, a throwing `play` ends the render in `finished`, not `errored`. So the run captured a half-played story and reported it as a screenshot difference. The harness now records Storybook's `playFunctionThrewException` (and related) events, and fails with the error message.
+- **WebKit captured a scrolling row mid-scroll.** A `play` function that scrolls must wait for the scroll position itself, not for a component state that is set before the smooth scroll starts.
