@@ -1,0 +1,6 @@
+export { default as ActivatorOverlaysRecipe } from './activator-overlays.vue'
+export { default as AppShellRecipe } from './app-shell.vue'
+export { default as DataTableRecipe } from './data-table.vue'
+export { default as ResponsiveGridRecipe } from './responsive-grid.vue'
+export { default as ThemeSetupRecipe } from './theme-setup.vue'
+export { default as ValidatedFormRecipe } from './validated-form.vue'

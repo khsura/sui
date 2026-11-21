@@ -19,9 +19,11 @@ export default defineConfig({
     ...(isTest ? [] : [checker({ vueTsc: true, typescript: true })]),
   ],
   resolve: {
-    alias: {
-      '@/app': fileURLToPath(new URL('./', import.meta.url)),
-    },
+    alias: [
+      { find: '@/app', replacement: fileURLToPath(new URL('./', import.meta.url)) },
+      // Storybook recipes import from the published name so they stay copy-ready; resolve it to the source.
+      { find: /^@khsura\/sui$/, replacement: fileURLToPath(new URL('./index.ts', import.meta.url)) },
+    ],
   },
   build: {
     target: ['safari11', 'ios11'],
