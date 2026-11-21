@@ -13,9 +13,8 @@
       />
       <span :class="classListRadio">
         <slot name="label" :attrs="{ class: classListLabel }">
-          <label v-if="label" v-show="!groupProps?.hideDetails" :for="computedId" :class="classListLabel">{{
-            label
-          }}</label>
+          <!-- The option's own text: the group's `hideDetails` hides only its error area, not this -->
+          <label v-if="label" :for="computedId" :class="classListLabel">{{ label }}</label>
         </slot>
       </span>
     </button>
