@@ -12,7 +12,8 @@
         :disabled="disabled ?? false"
       />
       <label :for="id ?? innerId" class="s_checkbox__label">
-        <span v-if="label" v-show="!hideDetails" class="s_checkbox__labelText">{{ label }}</span>
+        <!-- The label is the checkbox's own text, so `hideDetails` (which hides the error area) keeps it -->
+        <span v-if="label" class="s_checkbox__labelText">{{ label }}</span>
       </label>
     </div>
     <FormInputError v-if="!hideDetails && !hideError" :errors="errors"></FormInputError>
