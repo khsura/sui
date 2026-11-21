@@ -1,6 +1,6 @@
 <template>
   <section class="s_input" :class="classList">
-    <label v-if="label" v-show="!hideDetails" :for="id" class="s_input__label">{{ label }}</label>
+    <label v-if="label" v-show="!hideDetails" :for="inputId" class="s_input__label">{{ label }}</label>
     <div class="s_input__container">
       <SRow no-gutters class="s_input__main" align="center">
         <div
@@ -12,9 +12,11 @@
           }"
         >
           <input
-            :id="id"
+            :id="inputId"
             v-bind="
               getCleanSetObject({
+                ...ariaAttributesFormInput,
+                'aria-label': ariaLabel ?? (hideDetails ? label : undefined),
                 'aria-labelledby': ariaLabelledby,
                 autocapitalize,
                 autocomplete,
@@ -63,7 +65,12 @@
       <div v-if="$slots.appendOuter" class="s_input__appendOuter"><slot name="appendOuter"></slot></div>
       <div v-else-if="appendOuter" class="s_input__appendOuter">{{ appendOuter }}</div>
     </div>
-    <SFormInputError v-if="!hideDetails && !hideError" :errors="errors" :simple="simple"></SFormInputError>
+    <SFormInputError
+      v-if="!hideDetails && !hideError"
+      :id="errorId"
+      :errors="errors"
+      :simple="simple"
+    ></SFormInputError>
   </section>
 </template>
 <script setup lang="ts" generic="T extends string | number = string | number">
@@ -83,7 +90,11 @@ const emit = defineEmits<EmitFormTextInput<string | number | null>>()
 const slots: Slots = useSlots()
 const inputElement = ref<HTMLElement | null>()
 const model = defineModel<T | null>()
-const { updateFormInput, errors, hasError } = useFormInputService<string | number | null>(props, emit, model)
+
+const { updateFormInput, errors, hasError, inputId, errorId, ariaAttributesFormInput } = useFormInputService<
+  string | number | null
+>(props, emit, model)
+
 const { classListDisabled } = useDisabledService(props)
 // TODO: Sura - make able to use all preset colors
 const { getIsPredefinedPresetColor } = useColorRepository()

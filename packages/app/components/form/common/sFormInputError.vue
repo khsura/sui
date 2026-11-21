@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable vue/no-v-html -->
-  <div :class="classList" v-html="errors[0]"></div>
+  <div :class="classList" aria-live="polite" v-html="errors[0]"></div>
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
