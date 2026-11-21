@@ -5,6 +5,8 @@ import { createStoryObj } from '@/app/storybook/helpers'
 
 const stepper: Meta<typeof SStepper> = {
   title: 'UI Components/Stepper',
+  // axe audits every story of this component in CI (keyboard-driven component without a screenshot)
+  tags: ['a11y'],
 }
 
 export default stepper
