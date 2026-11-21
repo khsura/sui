@@ -78,6 +78,7 @@ export const RULE_SNACKBAR_ACTION_CONTRAST = 'snackbar-action-contrast'
 export const RULE_BLOCK_BUTTONS_IN_ROW = 'block-buttons-in-row'
 export const RULE_CARD_TITLE_TEXT_ALIGN = 'card-title-text-align'
 export const RULE_DATE_PICKER_EMPTY_STRING = 'date-picker-empty-string'
+export const RULE_FIELD_BUTTON_ROW = 'field-button-row'
 
 /**
  * The first `@khsura/sui` release with the M2 hardening fixes (SForm `novalidate`, SCheckbox label with
@@ -97,6 +98,7 @@ export const RECIPE_ACTIVATOR_OVERLAYS = 'activator-overlays'
 export const RECIPE_DATA_TABLE = 'data-table'
 export const RECIPE_RESPONSIVE_GRID = 'responsive-grid'
 export const RECIPE_THEME_SETUP = 'theme-setup'
+export const RECIPE_FILTER_BAR = 'filter-bar'
 
 export const ACTIVATOR_SLOT_NAME = 'activator'
 export const ACTIVATOR_ON_KEY = 'on'
@@ -181,6 +183,10 @@ export const BLOCK_ATTRIBUTE = 'block'
 export const MIN_BLOCK_BUTTONS_IN_ROW = 2
 /** Components whose root is a `display: flex` row. */
 export const FLEX_ROW_COMPONENTS = ['SCardActions']
+/** Text fields that render a label above their box and an error line under it. */
+export const LABELLED_FIELD_COMPONENTS = ['SInput', 'SSelect', 'SDatePickerInput', 'SAutocomplete', 'STextarea']
+/** The row that lines buttons up with the field boxes next to them (since 1.20.0). */
+export const FORM_ROW_COMPONENT = 'SFormRow'
 /** `s_display__flex`, `s_display--md__inlineFlex`: the utility classes that make an element a flex row. */
 export const FLEX_DISPLAY_CLASS_PATTERN = /^s_display(?:--[a-z]+)?__(?:flex|inlineFlex)$/
 export const FLEX_DISPLAY_STYLE_PATTERN = /(?:^|;)\s*display\s*:\s*(?:inline-)?flex\b/

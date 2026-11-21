@@ -5,6 +5,7 @@ import {
   ActivatorOverlaysRecipe,
   AppShellRecipe,
   DataTableRecipe,
+  FilterBarRecipe,
   ResponsiveGridRecipe,
   ThemeSetupRecipe,
   ValidatedFormRecipe,
@@ -80,5 +81,6 @@ export const ActivatorOverlays: StoryObj = {
 }
 
 export const DataTable = recipeStory(DataTableRecipe)
+export const FilterBar = recipeStory(FilterBarRecipe)
 export const ResponsiveGrid = recipeStory(ResponsiveGridRecipe)
 export const ThemeSetup = recipeStory(ThemeSetupRecipe)
