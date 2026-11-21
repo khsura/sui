@@ -12,9 +12,11 @@
         :class="activatorClasses"
         v-on="activatorOn"
       >
-        <slot name="activator" :item="selectedItem" :value="menuModel">
-          {{ displayText }}
-        </slot>
+        <span class="s_select__selection" :class="{ 's_select__selection--placeholder': !selectedItem }">
+          <slot name="activator" :item="selectedItem" :value="menuModel">
+            {{ displayText }}
+          </slot>
+        </span>
         <span class="s_select__spacer"></span>
         <slot name="dropdownIcon" :color="color" :value="menuModel">
           <SIcon icon="mdi-chevron-down" :rotated="menuModel"></SIcon>
@@ -188,8 +190,9 @@ watch(menuModel, async () => {
   }
 })
 
+// The label is already shown above the field, so an empty select shows its placeholder, never the label again.
 const displayText = computed(() => {
-  return selectedItem.value?.text ?? props.label
+  return selectedItem.value?.text ?? props.placeholder ?? ''
 })
 </script>
 
@@ -258,6 +261,10 @@ const displayText = computed(() => {
 
   &__input {
     display: none;
+  }
+
+  &__selection--placeholder {
+    color: s_getAppColor('secondaryText');
   }
 
   &__spacer {
