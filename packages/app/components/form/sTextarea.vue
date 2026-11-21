@@ -73,13 +73,14 @@ const classList = computed(() => {
     's_textarea--tile': props.tile,
     's_textarea--error': hasError.value,
     [`s_textarea--size__${props.size}`]: props.size,
-    ...classListDisabled.value,
   }
 })
 
 const inputClassList = computed(() => {
   return {
     s_textarea__input: true,
+    // On the field only, like SInput: on the root it greyed out the label and error line too.
+    ...classListDisabled.value,
     [`s_textarea__input--${props.inputBackground}`]: !!isPresetInputBackground.value,
     [`s_textarea__inputPlaceholder--${props.placeholderBackground}`]: !!isPresetPlaceholderBackground.value,
     's_textarea--resize__none': !props.resize,
@@ -160,6 +161,10 @@ $inputPadding: calc($s_spacer * 2);
 
     &:focus {
       outline: 2px solid s_getAppColor('text');
+    }
+
+    &.s_disabled {
+      background-color: transparent;
     }
 
     @each $name in $s_presetColorNames {

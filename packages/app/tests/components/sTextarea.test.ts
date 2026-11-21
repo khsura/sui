@@ -42,7 +42,7 @@ describe('STextarea', () => {
     })
 
     expect(wrapper.find('.s_textarea__input').attributes()).toStrictEqual({
-      class: 's_textarea__input s_textarea--resize__none',
+      class: 's_textarea__input s_disabled s_readonly s_textarea--resize__none',
       id: 'textarea',
       name: 'textarea',
       'aria-labelledby': 'label',
