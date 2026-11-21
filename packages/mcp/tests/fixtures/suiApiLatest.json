@@ -1077,6 +1077,77 @@
       ]
     },
     {
+      "name": "STable",
+      "family": "table",
+      "file": "components/table/sTable.vue",
+      "props": [
+        {
+          "name": "dense",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "",
+          "default": "false"
+        },
+        {
+          "name": "headers",
+          "type": "TableHeader<string>[]",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "items",
+          "type": "T[]",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "expanded",
+          "type": "{ item: T; }",
+          "description": "Content of an expanded row."
+        },
+        {
+          "name": "group",
+          "type": "TableGroupSlotProps<T>",
+          "description": "Group row content, rendered when `groupBy` is set."
+        },
+        {
+          "name": "header.<column>",
+          "type": "TableHeaderSlotProps",
+          "description": "Header cell of one column; the key is `header.` followed by the column's `value`.",
+          "pattern": "^header\\..+$"
+        },
+        {
+          "name": "item.<column>",
+          "type": "TableItemSlotProps<T>",
+          "description": "Body cell of one column; the key is `item.` followed by the column's `value`.",
+          "pattern": "^item\\..+$"
+        },
+        {
+          "name": "itemFooter",
+          "type": "TableItemFooterSlotProps<T>",
+          "description": "Full-width row below an item, rendered when `itemFooter` is set and the item has that key."
+        },
+        {
+          "name": "itemHeader",
+          "type": "TableItemHeaderSlotProps<T>",
+          "description": "Full-width row above an item, rendered when `itemHeader` is set and the item has that key."
+        },
+        {
+          "name": "itemsPerPageLabel",
+          "type": "any",
+          "description": "Label of the items-per-page selector in the pagination."
+        },
+        {
+          "name": "noData",
+          "type": "any",
+          "description": "Shown instead of the rows when `items` is empty and not loading."
+        }
+      ],
+      "events": []
+    },
+    {
       "name": "STextarea",
       "family": "form",
       "file": "components/form/sTextarea.vue",

@@ -88,8 +88,12 @@ const formatProps = (props: SuiApiProp[]): string => {
   )
 }
 
+/** A dynamic slot family reads as `item.<column>` plus the regex a concrete name must match. */
+const entryName = (entry: { name: string; pattern?: string }): string =>
+  entry.pattern ? `${inlineCode(entry.name)} (pattern ${inlineCode(entry.pattern)})` : inlineCode(entry.name)
+
 const formatNamedTypes = (
-  entries: { name: string; type: string; description: string }[],
+  entries: { name: string; type: string; description: string; pattern?: string }[],
   typeHeader: string,
 ): string => {
   if (!entries.length) {
@@ -100,7 +104,7 @@ const formatNamedTypes = (
   const headers = withDescription ? ['Name', typeHeader, 'Description'] : ['Name', typeHeader]
 
   const rows = entries.map((entry) => {
-    const row = [inlineCode(entry.name), inlineCode(entry.type)]
+    const row = [entryName(entry), inlineCode(entry.type)]
 
     return withDescription ? [...row, entry.description || EMPTY_CELL] : row
   })

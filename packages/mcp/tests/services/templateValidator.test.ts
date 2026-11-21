@@ -150,17 +150,40 @@ describe('useTemplateValidatorService', () => {
     expect(issues.map((issue) => issue.message)).toEqual(['SButton', 's-input'])
   })
 
-  it('skips the slot check for a component whose slots sui-api.json could not extract', () => {
-    const apiWithoutDialogSlots = {
-      ...fixtureApi,
-      components: fixtureApi.components.map((component) =>
-        component.name === 'SDialog' ? { ...component, slots: [] } : component,
-      ),
-    }
+  it('reports any named slot on a component that has no slots', () => {
+    const [issue] = validate('<SIcon><template #prepend>x</template></SIcon>')
 
-    expect(
-      useTemplateValidatorService(apiWithoutDialogSlots).validate('<SDialog><template #trigger /></SDialog>'),
-    ).toEqual([])
+    expect(issue).toMatchObject({ rule: 'unknown-slot', message: '`SIcon` has no slot `prepend`.' })
+    expect(issue?.fixHint).toContain('has no slots')
+  })
+
+  describe('dynamic slot patterns', () => {
+    it.each([
+      [
+        'item.<column>',
+        '<STable :headers="headers" :items="items"><template #item.name="{ value }">{{ value }}</template></STable>',
+      ],
+      ['header.<column>', '<STable :headers="headers" :items="items"><template #header.name>Name</template></STable>'],
+      [
+        'named slot next to patterns',
+        '<STable :headers="headers" :items="items"><template #noData>-</template></STable>',
+      ],
+    ])('accepts %s', (_, code) => {
+      expect(validate(code)).toEqual([])
+    })
+
+    it('reports a misspelled pattern slot and lists the readable names', () => {
+      const [issue] = validate('<STable :headers="headers" :items="items"><template #itme.name>x</template></STable>')
+
+      expect(issue).toMatchObject({ rule: 'unknown-slot', message: '`STable` has no slot `itme.name`.' })
+      expect(issue?.fixHint).toContain('`item.<column>`')
+    })
+
+    it('requires something after the pattern prefix', () => {
+      expect(rulesOf('<STable :headers="headers" :items="items"><template #item.>x</template></STable>')).toEqual([
+        'unknown-slot',
+      ])
+    })
   })
 
   it('an SFC without a template block has nothing to validate', () => {

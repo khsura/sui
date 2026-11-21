@@ -222,8 +222,35 @@ import STableBodyCell from './sTableBodyCell.vue'
 import STablePagination from './sTablePagination.vue'
 import { getCleanSetObject } from '@/app/lib'
 import { useBorderService, useComponentDefaultsService, useTableService } from '@/app/services'
-import { type TableSortOrder, type TableItem } from '@/app/types'
+import {
+  type TableSortOrder,
+  type TableItem,
+  type TableGroupSlotProps,
+  type TableHeaderSlotProps,
+  type TableItemFooterSlotProps,
+  type TableItemHeaderSlotProps,
+  type TableItemSlotProps,
+} from '@/app/types'
 import type { EmitsTable, PropsTable } from '@/app/definitions'
+
+defineSlots<{
+  /** Header cell of one column; the key is `header.` followed by the column's `value`. */
+  [column: `header.${string}`]: ((props: TableHeaderSlotProps) => void) | undefined
+  /** Body cell of one column; the key is `item.` followed by the column's `value`. */
+  [column: `item.${string}`]: ((props: TableItemSlotProps<T>) => void) | undefined
+  /** Group row content, rendered when `groupBy` is set. */
+  group?: (props: TableGroupSlotProps<T>) => void
+  /** Full-width row above an item, rendered when `itemHeader` is set and the item has that key. */
+  itemHeader?: (props: TableItemHeaderSlotProps<T>) => void
+  /** Full-width row below an item, rendered when `itemFooter` is set and the item has that key. */
+  itemFooter?: (props: TableItemFooterSlotProps<T>) => void
+  /** Content of an expanded row. */
+  expanded?: (props: { item: T }) => void
+  /** Shown instead of the rows when `items` is empty and not loading. */
+  noData?: () => void
+  /** Label of the items-per-page selector in the pagination. */
+  itemsPerPageLabel?: () => void
+}>()
 
 const rawProps = withDefaults(defineProps<PropsTable<T>>(), {
   items: () => [],

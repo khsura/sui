@@ -58,6 +58,15 @@ describe('component tools', () => {
     expect(text).toContain('## Events (1)')
   })
 
+  it('shows dynamic slot families with their pattern', async () => {
+    const client = await connectClient(bundledOnly())
+    const text = responseText(await client.callTool({ name: 'get_component_api', arguments: { name: 'STable' } }))
+
+    expect(text).toContain('## Slots (8)')
+    expect(text).toContain('| `item.<column>` (pattern `^item\\..+$`) | `TableItemSlotProps<T>` |')
+    expect(text).toContain('| `noData` | `any` |')
+  })
+
   it('adds the activator note to activator components', async () => {
     const client = await connectClient(bundledOnly())
     const text = responseText(await client.callTool({ name: 'get_component_api', arguments: { name: 'dialog' } }))

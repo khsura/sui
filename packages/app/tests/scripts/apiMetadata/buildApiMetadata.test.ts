@@ -1,3 +1,4 @@
+import fs from 'node:fs'
 import path from 'node:path'
 import type { SuiApi } from '@khsura/shared/types'
 import packageJson from '../../../package.json'
@@ -6,6 +7,7 @@ import { findPublicComponents } from '../../../scripts/apiMetadata/componentExpo
 
 const appRoot = path.resolve(import.meta.dirname, '../../..')
 const BUILD_TIMEOUT_MS = 300_000
+const SLOT_OUTLET_PATTERN = /<slot\b/
 
 describe('buildApiMetadata', () => {
   let api: SuiApi
@@ -50,7 +52,25 @@ describe('buildApiMetadata', () => {
     expect(byName('SDialog')?.slots.map((slot) => slot.name)).toContain('activator')
   })
 
-  it('matches the snapshot for SButton, SInput, SDialog', () => {
-    expect(['SButton', 'SInput', 'SDialog'].map(byName)).toMatchSnapshot()
+  it('lists slots for every component that renders a <slot>', () => {
+    const missingSlots = api.components.filter(
+      (component) =>
+        component.slots.length === 0 &&
+        SLOT_OUTLET_PATTERN.test(fs.readFileSync(path.join(appRoot, component.file), 'utf8')),
+    )
+
+    expect(missingSlots.map((component) => component.name)).toEqual([])
+  })
+
+  it('emits dynamic STable slots as pattern entries', () => {
+    const slots = byName('STable')?.slots ?? []
+
+    expect(slots.find((slot) => slot.name === 'item.<column>')?.pattern).toBe('^item\\..+$')
+    expect(slots.find((slot) => slot.name === 'header.<column>')?.pattern).toBe('^header\\..+$')
+    expect(slots.map((slot) => slot.name)).toEqual(expect.arrayContaining(['group', 'expanded', 'noData']))
+  })
+
+  it('matches the snapshot for SButton, SInput, SDialog, STable', () => {
+    expect(['SButton', 'SInput', 'SDialog', 'STable'].map(byName)).toMatchSnapshot()
   })
 })
