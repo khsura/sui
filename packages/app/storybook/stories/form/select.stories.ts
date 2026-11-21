@@ -7,6 +7,8 @@ import { argTypesBorder, argTypesLocation } from '@/app/storybook/argTypes'
 
 const select: Meta<typeof SSelect> = {
   title: 'UI Components/Form/Select',
+  // axe audits every story of this component in CI (keyboard-driven component without a screenshot)
+  tags: ['a11y'],
   argTypes: {
     ...argTypesBorder,
     ...argTypesLocation,

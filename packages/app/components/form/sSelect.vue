@@ -1,16 +1,23 @@
 <template>
   <div class="s_select" :class="selectClasses" :style="styleListBorder">
-    <label v-if="label" v-show="!hideDetails" :for="id" class="s_select__label">{{ label }}</label>
-    <select :id="id" :value="modelValue" class="s_select__input" :name="name ?? undefined">
+    <label v-if="label" v-show="!hideDetails" :id="labelId" class="s_select__label" @click="focusActivator">{{
+      label
+    }}</label>
+    <!-- Not rendered (display: none): it only carries `name` and the value for a native form submit -->
+    <select :value="modelValue" class="s_select__input" :name="name ?? undefined" tabindex="-1" aria-hidden="true">
       <option v-for="(item, id) in objectItems" :key="id" :value="getItemValue(item)">{{ getItemText(item) }}</option>
     </select>
     <div ref="activatorElement">
+      <!-- A select-only combobox: focus stays here and the arrow keys move the highlighted option -->
       <div
+        :id="inputId"
         class="s_select__activator"
-        role="button"
-        v-bind="activatorAttrs"
+        role="combobox"
+        aria-haspopup="listbox"
+        v-bind="{ ...activatorAttrs, ...ariaAttributesFormInput, ...comboboxAttrs }"
         :class="activatorClasses"
         v-on="activatorOn"
+        @keydown="onActivatorKeydown"
       >
         <span class="s_select__selection">
           <span class="s_select__selectionText" :class="{ 's_select__selectionText--placeholder': !selectedItem }">
@@ -31,17 +38,33 @@
       </div>
     </div>
 
-    <SFormInputError v-if="!hideDetails && !hideError" :errors="errors"></SFormInputError>
+    <SFormInputError v-if="!hideDetails && !hideError" :id="errorId" :errors="errors"></SFormInputError>
 
     <SOverlay v-slot="{ attrs }" :value="menuModel">
       <OnClickOutside @trigger="onClickOutside">
         <div ref="contentElement" class="s_select__list" :style="contentStyles" :class="contentClasses" v-bind="attrs">
-          <SList link :dense="dense" :color="color" :text="text" :divided="divided">
+          <SList
+            :id="listboxId"
+            role="listbox"
+            :aria-labelledby="label ? labelId : undefined"
+            link
+            :dense="dense"
+            :color="color"
+            :text="text"
+            :divided="divided"
+          >
             <SListItem
-              v-for="(item, id) in objectItems"
-              :key="id"
+              v-for="(item, index) in objectItems"
+              :id="getOptionId(index)"
+              :key="index"
+              role="option"
+              :aria-selected="getIsSelected(item)"
+              :aria-disabled="getIsDisabled(item) || undefined"
               :disabled="getIsDisabled(item)"
-              :class="{ 's_select__listItem--selected': getIsSelected(item) }"
+              :class="{
+                's_select__listItem--selected': getIsSelected(item),
+                's_select__listItem--active': index === activeIndex,
+              }"
               @click="selectItem(item)"
             >
               <SListItemContent>
@@ -57,6 +80,7 @@
 <script setup lang="ts" generic="T extends string | number = string | number">
 import { OnClickOutside } from '@vueuse/components'
 import { computed, watch, nextTick, useTemplateRef } from 'vue'
+import { keyboardKey } from '@/app/constants'
 import SFormInputError from '@/app/components/form/common/sFormInputError.vue'
 import { SList, SListItem, SListItemContent, SListItemSubtitle } from '@/app/components/list'
 import SIcon from '@/app/components/sIcon.vue'
@@ -67,6 +91,7 @@ import {
   useComponentDefaultsService,
   useDisabledService,
   useFormInputService,
+  useListboxNavigationService,
   useMenuService,
 } from '@/app/services'
 import { type SelectItem, type EmitFormInput } from '@/app/types'
@@ -80,7 +105,14 @@ const props = useComponentDefaultsService('SSelect', rawProps)
 const emit = defineEmits<EmitFormInput<T | null>>()
 const { classListBorder, styleListBorder } = useBorderService(props)
 const model = defineModel<T | null>()
-const { errors, hasError, updateFormInput } = useFormInputService<T | null>(props, emit, model)
+
+const { errors, hasError, updateFormInput, inputId, errorId, ariaAttributesFormInput } = useFormInputService<T | null>(
+  props,
+  emit,
+  model,
+)
+
+const labelId = computed(() => `${inputId.value}-label`)
 const menuModel = defineModel<boolean>('menu')
 const { classListDisabled } = useDisabledService(props)
 const activatorElement = useTemplateRef('activatorElement')
@@ -99,6 +131,37 @@ const onClickOutside = () => {
   if (menuModel.value) {
     menuModel.value = false
   }
+}
+
+const {
+  activeIndex,
+  activeOptionId,
+  listboxId,
+  getOptionId,
+  setActiveIndex,
+  resetActiveIndex,
+  moveActive,
+  moveToFirst,
+  moveToLast,
+} = useListboxNavigationService({
+  idPrefix: inputId,
+  getOptionCount: () => objectItems.value.length,
+  getIsOptionDisabled: (index) => getIsDisabled(objectItems.value[index]),
+})
+
+const comboboxAttrs = computed(() => ({
+  tabindex: props.disabled ? -1 : 0,
+  'aria-expanded': !!menuModel.value,
+  'aria-controls': listboxId.value,
+  'aria-labelledby': props.label ? labelId.value : undefined,
+  'aria-label': props.label ? undefined : (props.ariaLabel ?? props.placeholder ?? undefined),
+  'aria-activedescendant': menuModel.value ? activeOptionId.value : undefined,
+  'aria-disabled': props.disabled ? true : undefined,
+  'aria-readonly': props.readonly ? true : undefined,
+}))
+
+const focusActivator = () => {
+  activatorElement.value?.querySelector<HTMLElement>('[role="combobox"]')?.focus()
 }
 
 const objectItems = computed<SelectItem[]>(() => {
@@ -174,6 +237,76 @@ const getIsSelected = (item: SelectItem) => {
   return typeof item === 'string' ? item === model.value : item.value === model.value
 }
 
+// Opens the list with the selected option highlighted (or the first / last enabled one).
+const openList = (fromEnd: boolean) => {
+  const selectedIndex = objectItems.value.findIndex((item) => getIsSelected(item))
+
+  menuModel.value = true
+
+  if (selectedIndex >= 0) {
+    setActiveIndex(selectedIndex)
+  } else if (fromEnd) {
+    moveToLast()
+  } else {
+    moveToFirst()
+  }
+}
+
+const listNavigationKeys: Record<string, () => void> = {
+  [keyboardKey.arrowDown]: () => moveActive(1),
+  [keyboardKey.arrowUp]: () => moveActive(-1),
+  [keyboardKey.home]: moveToFirst,
+  [keyboardKey.end]: moveToLast,
+}
+
+const listOpenKeys: string[] = [keyboardKey.arrowDown, keyboardKey.arrowUp, keyboardKey.enter, keyboardKey.space]
+
+const onActivatorKeydown = (event: KeyboardEvent) => {
+  if (props.disabled || props.readonly) {
+    return
+  }
+
+  if (!menuModel.value) {
+    if (listOpenKeys.includes(event.key)) {
+      event.preventDefault()
+      openList(event.key === keyboardKey.arrowUp)
+    }
+
+    return
+  }
+
+  const navigate = listNavigationKeys[event.key]
+
+  if (navigate) {
+    event.preventDefault()
+    navigate()
+  } else if (event.key === keyboardKey.enter || event.key === keyboardKey.space) {
+    event.preventDefault()
+    const activeItem = objectItems.value[activeIndex.value]
+
+    if (activeItem && !getIsDisabled(activeItem)) {
+      void selectItem(activeItem)
+    } else {
+      menuModel.value = false
+    }
+  } else if (event.key === keyboardKey.escape) {
+    // stop here, so an SDialog around the select stays open
+    event.preventDefault()
+    event.stopPropagation()
+    menuModel.value = false
+  } else if (event.key === keyboardKey.tab) {
+    menuModel.value = false
+  }
+}
+
+// Keep the highlighted option visible while the arrow keys move through a long list.
+watch(activeIndex, async (index) => {
+  await nextTick()
+  const optionElement = contentElement.value?.ownerDocument.getElementById(getOptionId(index))
+
+  optionElement?.scrollIntoView?.({ block: 'nearest' })
+})
+
 const selectItem = async (value: SelectItem | null) => {
   selectedItem.value = value
   menuModel.value = false
@@ -185,6 +318,10 @@ watch([() => props.grow, () => props.disabled, () => props.label], () => {
 })
 
 watch(menuModel, async () => {
+  if (!menuModel.value) {
+    resetActiveIndex()
+  }
+
   if (menuModel.value) {
     await nextTick()
     updateLocation()
@@ -328,6 +465,11 @@ $s_select__fieldHeight: calc(#{$s_select__fontSize} * #{$s_select__lineHeight} +
       .s_listItemSubtitle {
         font-weight: 700;
       }
+    }
+
+    // The option the arrow keys highlight (focus itself stays on the field)
+    &Item--active {
+      @include s_focusRing(-2px);
     }
   }
 
