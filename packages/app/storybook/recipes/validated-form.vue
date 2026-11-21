@@ -15,7 +15,7 @@
         <SSelect v-model="form.role" label="Role" :items="roles" grow :rules="[required]" />
         <SDatePickerInput v-model="form.startDate" label="Start date" type="date" block :rules="[required]" />
         <SCheckbox v-model="form.acceptTerms" label="I accept the terms" :rules="[mustAccept]" />
-        <SButton type="submit" color="primary" block :loading="isSubmitting">Create account</SButton>
+        <SButton type="submit" color="primary" block class="s_mt__2" :loading="isSubmitting"> Create account </SButton>
       </SForm>
       <p v-if="submittedName" class="s_text--body__2 s_mt__3">Account created for {{ submittedName }}.</p>
     </SCardText>

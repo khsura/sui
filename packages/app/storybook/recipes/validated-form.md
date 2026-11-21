@@ -12,4 +12,5 @@ components: SForm, SInput, SSelect, SDatePickerInput, SCheckbox, SButton, SCard,
 - `SDatePickerInput type="date"` writes `'YYYY-MM-DD'`. Start an empty date as `null`; `''` also means no date (before 1.20.0 `''` opened the picker on "Invalid date", so keep `null` if you support older versions). Add `block` to it and `grow` to `SSelect` so they fill the form width like `SInput`.
 - `hide-details` hides a text field's label above the field and its error line; `SCheckbox` keeps its own label. Use `hide-error` to drop just the error line. Before 1.20.0 `hide-details` also hid the `SCheckbox` label (its only text), so use `hide-error` there.
 - `:loading` on the submit `SButton` disables it; do not also bind `:disabled`.
+- Give the submit button `class="s_mt__2"`: a field's error line ends right where the next element starts, so without it the last error message sits on the button.
 - For translated messages use `getFormInputModelValueRules({ t })` from `@khsura/sui` instead of inline rules.

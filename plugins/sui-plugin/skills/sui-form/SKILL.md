@@ -28,7 +28,7 @@ Then generate a complete Vue SFC using these rules:
 - Use `SCheckbox` for a single boolean — `label` prop, not slot. Its error line sits under the box and reserves the same space as under an input, and it keeps an 8px gap above the box (both dropped with `hide-details`). It has no `value`/`indeterminate`, so build checkbox groups from several boolean models
 - Use `SRadioGroup` with `<SRadio value="..." label="...">` children (slot-based); use `column` for vertical layout
 - Use `SSwitch` for on/off toggles — it never runs `rules`, shows no error and is not validated by `SForm`
-- Submit: `<SButton type="submit" color="primary" :loading="submitting">Submit</SButton>`
+- Submit: `<SButton type="submit" color="primary" class="s_mt__2" :loading="submitting">Submit</SButton>` — `s_mt__2` keeps the last field's error message off the button
 - `:loading` on `SButton` implicitly disables it — do not also set `:disabled`
 
 **Validation rules signature:** `(value: unknown) => true | string`
