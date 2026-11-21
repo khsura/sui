@@ -197,6 +197,11 @@ const displayText = computed(() => {
 </script>
 
 <style lang="scss">
+// Matches the SInput field: a 16px font at line-height 1.1, 8px vertical padding and a 1px border.
+$s_select__fontSize: 16px;
+$s_select__lineHeight: 1.1;
+$s_select__fieldHeight: calc(#{$s_select__fontSize} * #{$s_select__lineHeight} + #{$s_spacer * 4} + 2px);
+
 .s_select {
   position: relative;
 
@@ -208,18 +213,25 @@ const displayText = computed(() => {
   }
 
   &__activator {
-    padding: 0 8px;
-    background-color: s_getAppColor('card');
-
     @include s_button();
+    // The same box as an SInput field: 16px text inset by 16px, and the same height and font.
+    justify-content: flex-start;
+    max-width: 100%;
+    height: auto;
+    min-height: $s_select__fieldHeight;
+    padding: 0 calc($s_spacer * 2) 0 calc($s_spacer * 4);
+    font-family: $s_inputFontFamily;
+    font-size: $s_select__fontSize;
+    line-height: $s_select__lineHeight;
+    text-indent: 0;
+    background-color: s_getAppColor('card');
 
     &--empty {
       color: s_getAppColor('textSecondary');
-      background-color: s_getAppColor('inputPlaceholderShown');
     }
 
     &--dense {
-      height: #{map.get($s_button--sizes, 'small')}px;
+      min-height: #{map.get($s_button--sizes, 'small')}px;
     }
 
     // Kept visible even when `hideError` / `hideDetails` hides the message text.
@@ -263,8 +275,17 @@ const displayText = computed(() => {
     display: none;
   }
 
-  &__selection--placeholder {
-    color: s_getAppColor('secondaryText');
+  // A long selection is clipped inside the field instead of widening it.
+  &__selection {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &--placeholder {
+      color: s_getAppColor('secondaryText');
+    }
   }
 
   &__spacer {
