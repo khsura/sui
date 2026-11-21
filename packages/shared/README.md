@@ -19,4 +19,4 @@ const name = faker.person.fullName()
 
 ## Status
 
-Published to GitHub Packages alongside `@khsura/sui`. Primarily for internal use — no external API stability is guaranteed.
+Internal workspace package (`"private": true`, not published). It is bundled into `@khsura/sui-mcp` at build time and used by the other packages' tooling and tests — no external API stability is guaranteed.

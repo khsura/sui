@@ -10,28 +10,15 @@ Every page in this Storybook renders the real components. Use the **Controls** p
 
 ## Install
 
-The package is published to **GitHub Packages**, not npmjs.com. Point the `@khsura` scope at that registry and supply a GitHub token with the `read:packages` scope.
-
-```yaml
-# .yarnrc.yml (Yarn 4)
-npmScopes:
-  khsura:
-    npmRegistryServer: "https://npm.pkg.github.com"
-    npmAlwaysAuth: true
-    npmAuthToken: "${NPM_GITHUB_TOKEN}"
-```
-
-```ini
-# .npmrc (npm / pnpm)
-@khsura:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${NPM_GITHUB_TOKEN}
-```
+The package is published to the public npm registry — no `.npmrc`, registry config or token needed.
 
 ```bash
+npm i @khsura/sui @mdi/font
+# or
 yarn add @khsura/sui @mdi/font
 ```
 
-Keep the token in an environment variable (`NPM_GITHUB_TOKEN`); never commit it.
+**Migrating from GitHub Packages:** older versions were published to GitHub Packages. Remove the `@khsura:registry=...` line (and its `:_authToken=...` line) from your `.npmrc`, or the `npmScopes.khsura` block from `.yarnrc.yml`.
 
 ## Set up a Vue app
 

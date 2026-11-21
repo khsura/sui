@@ -4,6 +4,8 @@ A Vue 3 + TypeScript component framework — batteries included.
 
 > 89 components · 39 composables · layout system · theming · SCSS helpers · Storybook · Vitest
 
+**Docs and live examples:** [Storybook — sui.surakh.com](https://sui.surakh.com/)
+
 ## Features
 
 - **89 components** prefixed with `S` (e.g. `SButton`, `SCard`, `SInput`, `SDialog`, `SAutocomplete`, `SDataTable`). Every component ships with TypeScript prop types in `definitions/`.
@@ -17,42 +19,19 @@ A Vue 3 + TypeScript component framework — batteries included.
 
 ## Installation
 
-This package is published to **GitHub Packages** (not npmjs.com), so you need a GitHub token with `read:packages` scope.
+Published to the public npm registry — no `.npmrc`, registry config or token needed.
 
-### 1. Configure the registry
-
-**For Yarn 4 (Berry)** — add to `.yarnrc.yml`:
-
-```yaml
-npmScopes:
-  khsura:
-    npmAlwaysAuth: true
-    npmAuthToken: "${NPM_GITHUB_TOKEN}"
-    npmRegistryServer: "https://npm.pkg.github.com"
-```
-
-Then expose the token via an env file (e.g. `.env.yarn` listed under `injectEnvironmentFiles`):
-
-```
-NPM_GITHUB_TOKEN=ghp_xxx...
-```
-
-**For npm** — add to `~/.npmrc` (or project `.npmrc`):
-
-```
-@khsura:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${NPM_GITHUB_TOKEN}
-```
-
-### 2. Add the package
+### 1. Add the package
 
 ```bash
-yarn add @khsura/sui
-# or
 npm i @khsura/sui
+# or
+yarn add @khsura/sui
 ```
 
-### 3. Install the plugin
+> **Migrating from GitHub Packages:** older versions were published to GitHub Packages. Remove the `@khsura:registry=...` line (and its `:_authToken=...` line) from your `.npmrc`, or the `npmScopes.khsura` block from `.yarnrc.yml`, so the scope resolves from npm again.
+
+### 2. Install the plugin
 
 ```ts
 // main.ts
@@ -159,7 +138,7 @@ const {
 
 Per-component docs live in [`docs/components/`](./docs/components/). Start with [`index.md`](./docs/components/index.md).
 
-Interactive reference is in Storybook:
+Interactive reference with live examples is in Storybook at **https://sui.surakh.com/**. To run it locally:
 
 ```bash
 yarn workspace @khsura/sui storybook:dev
