@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
-import { visualTag } from '../constants'
+import { storybookA11yManualGlobal, visualTag } from '../constants'
 import { storyIndexSchema } from '../schemas'
 import type { StoryIndexEntry, VisualTheme } from '../types'
 
@@ -18,7 +18,11 @@ export const readTaggedStories = (storybookDir: string, tags: string[]): StoryIn
 export const readVisualStories = (storybookDir: string) => readTaggedStories(storybookDir, [visualTag])
 
 export const getVisualStoryPath = (storyId: string, theme: VisualTheme) => {
-  const query = new URLSearchParams({ id: storyId, viewMode: 'story', globals: `theme:${theme}` })
+  const query = new URLSearchParams({
+    id: storyId,
+    viewMode: 'story',
+    globals: `theme:${theme};${storybookA11yManualGlobal}`,
+  })
 
   return `/iframe.html?${query.toString()}`
 }
