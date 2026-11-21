@@ -1,10 +1,9 @@
-import { enableAutoUnmount, mount } from '@vue/test-utils'
+import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { defineComponent, nextTick, ref } from 'vue'
 import { SApp, SLayout, SMain, SNavigationDrawer } from '@/app/components'
-import { overlaysContainerId } from '@/app/constants'
+import { overlayScrollBlockedClassName, overlaysContainerId } from '@/app/constants'
 
-// A drawer left mounted keeps reacting to the window — its background-scroll
-// retries then land in a later test as unhandled rejections.
+// A drawer left mounted keeps reacting to the window (and can hold the page scroll lock) in a later test.
 enableAutoUnmount(afterEach)
 
 const layoutName = 'drawerTest'
@@ -234,6 +233,90 @@ describe('SNavigationDrawer', () => {
     await wrapper.find('.s_navigationDrawer__resizeHandle').trigger('keydown', { key: 'ArrowRight' })
 
     expect(wrapper.emitted('update:width')?.[0]?.[0]).toBeGreaterThan(chatWidth)
+  })
+})
+
+/**
+ * A mobile drawer pins the page (the html scroll-blocked class) while it is open. Crossing the md breakpoint turns
+ * the drawer mobile and closes it in the same tick; the lock and the unlock used to race, leaving the page pinned
+ * for good, so nothing on it could scroll after a window resize.
+ */
+describe('SNavigationDrawer - background scroll lock', () => {
+  const ScrollLockLayout = defineComponent({
+    components: { SApp, SLayout, SMain, SNavigationDrawer },
+    props: { forceMobile: { type: Boolean, default: false }, hasNav: { type: Boolean, default: true } },
+    setup() {
+      return { isOpen: ref(true), layoutName, navWidth }
+    },
+    template: `
+      <SApp>
+      <SLayout :name="layoutName">
+        <SNavigationDrawer v-if="hasNav" :for="layoutName" v-model="isOpen" :width="navWidth" :force-mobile="forceMobile" />
+        <SMain :for="layoutName">content</SMain>
+      </SLayout>
+      </SApp>
+    `,
+  })
+
+  const isPageLocked = () => document.documentElement.classList.contains(overlayScrollBlockedClassName)
+
+  beforeEach(() => {
+    const overlaysContainer = document.createElement('div')
+
+    overlaysContainer.id = overlaysContainerId
+    document.body.appendChild(overlaysContainer)
+    window.innerWidth = desktopWidth
+    vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined)
+  })
+
+  afterEach(() => {
+    document.body.innerHTML = ''
+    document.documentElement.removeAttribute('style')
+    document.documentElement.classList.remove(overlayScrollBlockedClassName)
+    vi.restoreAllMocks()
+  })
+
+  test('an open desktop drawer that turns mobile closes and leaves the page scrollable', async () => {
+    const wrapper = mount(ScrollLockLayout, { attachTo: document.body })
+
+    await flushPromises()
+    await wrapper.setProps({ forceMobile: true })
+    await flushPromises()
+
+    expect(wrapper.vm.isOpen).toBe(false)
+    expect(isPageLocked()).toBe(false)
+
+    await wrapper.setProps({ forceMobile: false })
+    await flushPromises()
+
+    expect(isPageLocked()).toBe(false)
+  })
+
+  test('opening a mobile drawer locks the page and closing it unlocks', async () => {
+    const wrapper = mount(ScrollLockLayout, { props: { forceMobile: true }, attachTo: document.body })
+
+    await flushPromises()
+    wrapper.vm.isOpen = true
+    await flushPromises()
+
+    expect(isPageLocked()).toBe(true)
+
+    wrapper.vm.isOpen = false
+    await flushPromises()
+
+    expect(isPageLocked()).toBe(false)
+  })
+
+  test('unmounting an open mobile drawer releases the page', async () => {
+    const wrapper = mount(ScrollLockLayout, { props: { forceMobile: true }, attachTo: document.body })
+
+    await flushPromises()
+    wrapper.vm.isOpen = true
+    await flushPromises()
+    await wrapper.setProps({ hasNav: false })
+    await flushPromises()
+
+    expect(isPageLocked()).toBe(false)
   })
 })
 
