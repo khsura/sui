@@ -15,6 +15,8 @@ npx -y @khsura/sui-mcp   # stdio server
 | `list_guides` | The setup guide topics with what each covers. |
 | `get_guide` | One setup guide as markdown: `installation` (Vue and Nuxt, styles, `@mdi/font`), `theming` (theme colors, dark mode), `component-defaults`, `display` (`useDisplay` breakpoints), `i18n`, `common-mistakes`. Unknown topics return an error with the topic list. |
 | `validate_sui_template` | Checks a `.vue` SFC or bare template fragment against the API and the composition rules below. Returns a summary line, then `line:col [rule] message — fix: hint — recipe: name` per issue (the recipe part only when one applies). Issues are a normal result, not a tool error. |
+| `list_recipes` | The tested, copy-ready recipes with when to use each. |
+| `get_recipe` | One recipe: its notes, the full Vue SFC in a ```` ```vue ```` block and the link to its live Storybook story. Names: `app-shell`, `validated-form`, `activator-overlays`, `data-table`, `responsive-grid`, `theme-setup`. Unknown names return an error with the name list. |
 | `ping` | Health check. |
 
 ## Template validator rules
@@ -32,7 +34,7 @@ npx -y @khsura/sui-mcp   # stdio server
 | `icon-button-label` | warning | An SButton whose only content is an SIcon and that has no `aria-label`, `aria-labelledby` or `title`. | `app-shell` |
 | `no-raw-replacement` | warning | Raw `<button>`, `<input>` (not `type="hidden"`), `<select>`, `<textarea>` or `<dialog>`, with the SUI component to use (`<input type="checkbox">` → SCheckbox, `radio` → SRadioGroup). | `validated-form`, `activator-overlays` for `<dialog>` |
 
-Recipe names are stable (`app-shell`, `validated-form`, `activator-overlays`, `data-table`, `responsive-grid`, `theme-setup`); the recipes themselves are published under these names.
+Recipe names are stable (`app-shell`, `validated-form`, `activator-overlays`, `data-table`, `responsive-grid`, `theme-setup`); `get_recipe` serves the recipes under these names.
 
 Future work: a `table-structure` rule (STable column keys and `item.<column>` slot names, per `packages/app/docs/components/table.md`) is waiting on complete STable slot data in `sui-api.json`.
 
@@ -50,6 +52,10 @@ The API rules live in `src/services/templateRules.ts` and the composition rules 
 ## Where the guides come from
 
 `get_guide` serves sections of `plugins/sui-plugin/skills/sui-getting-started/SKILL.md` and `packages/app/docs/` as they are, mapped per topic in `src/configs/guideTopics.ts`. The build copies the mapped files into `dist/guides/`; unbundled (dev, tests) the server reads them from the repo. A renamed heading or a moved file fails the tests and the build, so edit the docs, then the mapping.
+
+## Where the recipes come from
+
+Each recipe is a `.vue` SFC plus a `.md` notes file with front matter (`title`, `whenToUse`, `components`) in `packages/app/storybook/recipes/`. Storybook renders every recipe as a `Recipes/*` story tagged `visual` (https://sui.surakh.com/), and a test runs `validate_sui_template` over all six and expects no errors or warnings. The build copies the files into `dist/recipes/`; unbundled (dev, tests) the server reads them from the repo. To add a recipe, add both files, its name to `RECIPE_NAMES` in `src/constants/recipes.ts` and a story to `packages/app/storybook/stories/recipes.stories.ts`.
 
 ## Which SUI version answers
 
