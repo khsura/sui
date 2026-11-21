@@ -101,6 +101,28 @@ describe('component tools', () => {
     expect(text).toContain('**Layout child:**')
   })
 
+  it.each([
+    ['STextField', 'SUI equivalent: `SInput`'],
+    ['s-avatar', 'planned for M3'],
+  ])('answers %s with the other-library mapping before the close names', async (name, advice) => {
+    const client = await connectClient(bundledOnly())
+    const response = await client.callTool({ name: 'get_component_api', arguments: { name } })
+    const text = responseText(response)
+
+    expect(response.isError).toBe(true)
+    expect(text).toContain('a name from another UI library')
+    expect(text).toContain(advice)
+    expect(text).not.toContain('Did you mean')
+  })
+
+  it('falls back to the close names when the alias target is missing from this version', async () => {
+    const client = await connectClient(bundledOnly())
+    const text = responseText(await client.callTool({ name: 'get_component_api', arguments: { name: 'STabsWindow' } }))
+
+    expect(text).toContain('Did you mean:')
+    expect(text).not.toContain('another UI library')
+  })
+
   it('returns an error with suggestions for an unknown name', async () => {
     const client = await connectClient(bundledOnly())
     const response = await client.callTool({ name: 'get_component_api', arguments: { name: 'SDialg' } })

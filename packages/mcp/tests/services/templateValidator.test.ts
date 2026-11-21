@@ -1,6 +1,6 @@
 import type { TemplateIssue } from '../../src/types'
 import { useTemplateValidatorService } from '../../src/services'
-import { fixtureApi, readTemplateFixture } from '../testTemplates'
+import { fixtureApi, readTemplateFixture, withComponents } from '../testTemplates'
 
 const validate = (code: string): TemplateIssue[] => useTemplateValidatorService(fixtureApi).validate(code)
 const rulesOf = (code: string): string[] => validate(code).map((issue) => issue.rule)
@@ -61,6 +61,41 @@ describe('useTemplateValidatorService', () => {
 
       expect(issue).toMatchObject({ rule: 'unknown-component', line: 1, column: 1 })
       expect(issue.fixHint).toContain('Did you mean `SButton`')
+    })
+
+    describe('names from other UI libraries (the AI eval misses)', () => {
+      const aliasApi = withComponents(fixtureApi, ['SColumn', 'SWindow', 'SWindowItem'])
+
+      const unknownIssue = (code: string): TemplateIssue | undefined =>
+        useTemplateValidatorService(aliasApi)
+          .validate(code)
+          .find((issue) => issue.rule === 'unknown-component')
+
+      it.each([
+        ['<SCol cols="6" />', 'SUI equivalent: `SColumn`'],
+        ['<STextField label="Email" />', 'SUI equivalent: `SInput`'],
+        ['<STabsWindow v-model="tab" />', 'SUI equivalent: `SWindow`'],
+        ['<s-tabs-window-item value="a" />', 'SUI equivalent: `SWindowItem`'],
+        ['<SAvatar />', 'There is no avatar component yet (planned for M3)'],
+      ])('maps %s first', (code, advice) => {
+        const issue = unknownIssue(code)
+
+        expect(issue?.message).toContain('a name from another UI library')
+        expect(issue?.fixHint.startsWith(advice)).toBe(true)
+      })
+
+      it('lists the Levenshtein names after the mapping', () => {
+        const fixHint = unknownIssue('<STextField />')?.fixHint ?? ''
+
+        expect(fixHint).toContain('Other close names')
+        expect(fixHint.indexOf('SInput')).toBeLessThan(fixHint.indexOf('Other close names'))
+      })
+
+      it('accepts the real component once it exists', () => {
+        const api = withComponents(aliasApi, ['SAvatar'])
+
+        expect(useTemplateValidatorService(api).validate('<SAvatar />')).toEqual([])
+      })
     })
 
     it('reports a misspelt kebab-case component', () => {

@@ -81,7 +81,7 @@ The server sends these instructions when a client connects:
 | Tool | What it returns |
 | --- | --- |
 | `list_components` | Every component with its family and a one-line purpose. |
-| `get_component_api` | Props (type, default, required, allowed values), slots and events of one component as markdown. Accepts `SButton`, `s-button` or `button`. Adds the activator-pattern note (SDialog, SMenu, STooltip, SSnackbar) or the layout-child note (SAppBar, SNavigationDrawer, SMain, SFooter, SBottomNavigation). Unknown names return an error with the three closest names. A component that only the bundled (newer) API has returns an error saying the project needs a newer `@khsura/sui`. |
+| `get_component_api` | Props (type, default, required, allowed values), slots and events of one component as markdown. Accepts `SButton`, `s-button` or `button`. Adds the activator-pattern note (SDialog, SMenu, SSnackbar), the STooltip activator note (no slot props to bind), or the layout-child note (SAppBar, SNavigationDrawer, SMain, SFooter, SBottomNavigation). Unknown names return an error with the three closest names; a name from another UI library (`SCol`, `STextField`, `SBtn`, `SDataTable`, `STabsWindow`, `SAvatar`, …) gets its SUI equivalent and a hint first. A component that only the bundled (newer) API has returns an error saying the project needs a newer `@khsura/sui`. |
 | `list_guides` | The setup guide topics with what each covers. |
 | `get_guide` | One setup guide as markdown: `installation` (Vue and Nuxt, styles, `@mdi/font`), `theming` (theme colors, dark mode), `component-defaults`, `display` (`useDisplay` breakpoints), `i18n`, `common-mistakes`. Unknown topics return an error with the topic list. |
 | `validate_sui_template` | Checks a `.vue` SFC or bare template fragment against the API and the composition rules below. Returns a summary line, then `line:col [rule] message — fix: hint — recipe: name` per issue (the recipe part only when one applies). Issues are a normal result, not a tool error. |
@@ -102,7 +102,7 @@ The server sends these instructions when a client connects:
 | Rule | Severity | What it catches | Recipe |
 | --- | --- | --- | --- |
 | `parse-error` | error | Template syntax errors. | — |
-| `unknown-component` | error | An `S*` / `s-*` tag that does not exist, with the closest names. | — |
+| `unknown-component` | error | An `S*` / `s-*` tag that does not exist, with the closest names. A name from another UI library gets its SUI equivalent first (the alias map in `src/constants/componentAliases.ts`); an alias stops applying once that name is a real component in `sui-api.json`. | — |
 | `unknown-prop` | error | Static attributes, `:prop` / `v-bind:prop`, and `v-model` / `v-model:prop` targets the component does not have (kebab and camel case both accepted). | — |
 | `invalid-enum-value` | error | A static value, or a quoted literal binding, outside an enum prop's values. | — |
 | `unknown-slot` | error | `#name` / `v-slot:name` the component does not have. | — |

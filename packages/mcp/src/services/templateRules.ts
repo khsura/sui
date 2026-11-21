@@ -21,7 +21,7 @@ import {
   STRING_LITERAL_EXPRESSION,
 } from '../constants'
 import { levenshteinDistance, toCamelCase } from '../lib'
-import { codeList, isDirective, positionOf, slotDirectives, staticArgument } from '../utils'
+import { codeList, formatComponentAlias, isDirective, positionOf, slotDirectives, staticArgument } from '../utils'
 import { behaviourRules } from './behaviourRules'
 import { compositionRules } from './compositionRules'
 
@@ -79,15 +79,21 @@ export const unknownComponentRule: TemplateRule = {
       return []
     }
 
-    const suggestion = lookup.suggestions.length ? `Did you mean ${codeList(lookup.suggestions)}? ` : ''
+    const suggestion = lookup.suggestions.length
+      ? `${lookup.alias ? 'Other close names' : 'Did you mean'} ${codeList(lookup.suggestions)}? `
+      : ''
+
+    const aliasAdvice = lookup.alias ? `${formatComponentAlias(lookup.alias)} ` : ''
 
     return [
       {
         ...positionOf(element),
         rule: RULE_UNKNOWN_COMPONENT,
         severity: SEVERITY_ERROR,
-        message: `\`${element.tag}\` is not a @khsura/sui component.`,
-        fixHint: `${suggestion}Check the exact names with ${LIST_COMPONENTS_TOOL_NAME}.`,
+        message: lookup.alias
+          ? `\`${element.tag}\` is not a @khsura/sui component (it is a name from another UI library).`
+          : `\`${element.tag}\` is not a @khsura/sui component.`,
+        fixHint: `${aliasAdvice}${suggestion}Check the exact names with ${LIST_COMPONENTS_TOOL_NAME}.`,
       },
     ]
   },
