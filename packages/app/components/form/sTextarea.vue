@@ -152,10 +152,6 @@ $inputPadding: calc($s_spacer * 2);
       outline: 2px solid s_getAppColor('text');
     }
 
-    &:placeholder-shown {
-      background-color: s_getAppColor('inputPlaceholderShown');
-    }
-
     @each $name in $s_presetColorNames {
       &--#{$name} {
         color: s_getPresetColor($name, true);

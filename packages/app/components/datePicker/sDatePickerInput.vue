@@ -357,10 +357,6 @@ $s_datePickerInput--fontSizes: (
     background-color: s_getAppColor('card');
     border: none;
 
-    &:placeholder-shown {
-      background-color: s_getAppColor('inputPlaceholderShown');
-    }
-
     &:disabled {
       cursor: not-allowed;
       background-color: transparent;
@@ -415,10 +411,6 @@ $s_datePickerInput--fontSizes: (
 
     .s_datePickerInput__input {
       background-color: transparent;
-
-      &:placeholder-shown {
-        background-color: transparent;
-      }
     }
 
     .s_datePickerInput__suffix {
