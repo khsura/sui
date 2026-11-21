@@ -6,30 +6,68 @@ Modal with a scrim, controlled by `v-model`. Centered by default; `location="bot
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsDialog.d.ts`
 
-## Props
+<!-- generated:api:start SDialog -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `persistent` | `boolean` | `false` | Clicking outside does not close the dialog |
-| `scrollable` | `boolean` | `false` | With an `SCard` child: title/actions stay fixed, `SCardText` scrolls |
-| `fullscreen` | `boolean` | `false` | Fill the viewport |
-| `location` | `string \| string[]` | `undefined` | Only `'bottom'` has an effect (bottom sheet); anything else = centered |
-| `elevation` | `0–24 \| ''` | `undefined` | Shadow depth (a light shadow is applied by default) |
-| `zIndex` | `number` | `undefined` | z-index of the overlay layer |
-| `disabled` | `boolean` | `false` | Passed to the activator via `attrs` (disables the trigger) |
-| `width` / `height` | `string \| number` | `undefined` | Content dimensions |
-| `maxWidth` / `maxHeight` / `minWidth` / `minHeight` | `string \| number` | `undefined` | Constraints (max-height defaults to 90% when not fullscreen) |
+**SDialog props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
+| `borderless` | `boolean` | — | no | — |
+| `closeOnClick` | `boolean` | — | no | — |
+| `disabled` | `boolean \| null` | — | no | — |
+| `elevation` | `"" \| 0 \| 1 \| 2 \| 22 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 23 \| 24 \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| null` | — | no | — |
+| `fullscreen` | `boolean` | — | no | — |
+| `height` | `string \| number \| null` | — | no | — |
+| `location` | `LocationRaw` | — | no | — |
+| `maxHeight` | `string \| number \| null` | — | no | — |
+| `maxWidth` | `string \| number \| null` | — | no | — |
+| `minHeight` | `string \| number \| null` | — | no | — |
+| `minWidth` | `string \| number \| null` | — | no | — |
+| `modelValue` | `boolean` | — | no | — |
+| `offsetX` | `number \| null` | — | no | — |
+| `offsetY` | `number \| null` | — | no | — |
+| `persistent` | `boolean` | — | no | — |
+| `preventCloseOnClick` | `boolean` | — | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `scrollable` | `boolean` | — | no | — |
+| `scrollableBackground` | `boolean` | — | no | — |
+| `width` | `string \| number \| null` | — | no | — |
+| `zIndex` | `number` | — | no | — |
+
+**SDialog slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `activator` | `{ on: { click: () => void; }; attrs: Partial<PropsRequired<{ disabled: boolean \| null \| undefined; readonly: boolean \| null \| undefined; }>>; }` |
+| `default` | `{}` |
+
+**SDialog events**
+
+| Event | Payload |
+| --- | --- |
+| `update:modelValue` | `[value: boolean \| undefined]` |
+
+<!-- generated:api:end SDialog -->
+
+**SDialog notes**
+
+- `persistent`: Clicking outside does not close the dialog
+- `scrollable`: With an `SCard` child: title/actions stay fixed, `SCardText` scrolls
+- `fullscreen`: Fill the viewport
+- `location`: Only `'bottom'` has an effect (bottom sheet); anything else = centered
+- `elevation`: Shadow depth (a light shadow is applied by default)
+- `zIndex`: z-index of the overlay layer
+- `disabled`: Passed to the activator via `attrs` (disables the trigger)
+- `width` / `height`: Content dimensions
+- `maxWidth` / `maxHeight` / `minWidth` / `minHeight`: Constraints (max-height defaults to 90% when not fullscreen)
+- `activator` (slot): Trigger. Bind **both** `v-on="on"` and `v-bind="attrs"`
+- `default` (slot): Dialog content
 
 ## Model
 
 `v-model: boolean` — open/closed.
-
-## Slots
-
-| Slot | Scoped data | Description |
-|------|-------------|-------------|
-| `activator` | `{ on, attrs }` | Trigger. Bind **both** `v-on="on"` and `v-bind="attrs"` |
-| `default` | — | Dialog content |
 
 ## Events
 

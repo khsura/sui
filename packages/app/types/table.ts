@@ -43,3 +43,55 @@ export interface TableHeader<V extends string | number | symbol = string> {
   colspan?: number
   scope?: 'colgroup' | 'col'
 }
+
+/** A header as STable renders it: the user's header plus the layout fields computed for it. */
+export type TableComputedHeader = TableHeader & {
+  colspan: number
+  rowspan: number
+  isSticky: boolean
+  isSticked: boolean | undefined
+  index: number
+}
+
+/** Props of the dynamic `header.<column>` slot. */
+export interface TableHeaderSlotProps {
+  header: TableComputedHeader
+  isSticked: boolean | undefined
+}
+
+/** Props shared by the row-level slots (`item.<column>`, `itemHeader`, `itemFooter`). */
+export interface TableRowSlotProps<T extends TableItem = TableItem> {
+  item: T
+  value: T[keyof T]
+  row: number
+  group: string
+  expand: () => void
+  select: () => void
+  isSelected: boolean
+  isExpanded: boolean
+}
+
+/** Props of the dynamic `item.<column>` slot. */
+export interface TableItemSlotProps<T extends TableItem = TableItem> extends TableRowSlotProps<T> {
+  header: TableComputedHeader
+  col: number
+  isLeftSticked: boolean
+}
+
+/** Props of the `itemHeader` slot. */
+export interface TableItemHeaderSlotProps<T extends TableItem = TableItem> extends TableRowSlotProps<T> {
+  isLeftStickActive: boolean
+}
+
+/** Props of the `itemFooter` slot. */
+export interface TableItemFooterSlotProps<T extends TableItem = TableItem> extends TableRowSlotProps<T> {
+  isStickActive: boolean
+}
+
+/** Props of the `group` slot (rendered when `groupBy` is set). */
+export interface TableGroupSlotProps<T extends TableItem = TableItem> {
+  items: T[]
+  group: string
+  isFolded: boolean | undefined
+  toggleFold: () => void
+}

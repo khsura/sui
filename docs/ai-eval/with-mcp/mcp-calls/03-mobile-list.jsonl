@@ -1,0 +1,24 @@
+{"time":"2026-11-21T06:22:35.512Z","page":"03-mobile-list","tool":"instructions"}
+{"time":"2026-11-21T06:22:49.812Z","page":"03-mobile-list","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T06:22:51.277Z","page":"03-mobile-list","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T06:22:59.752Z","page":"03-mobile-list","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T06:23:00.651Z","page":"03-mobile-list","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T06:23:33.292Z","page":"03-mobile-list","tool":"get_recipe","args":{"name":"activator-overlays"},"isError":false}
+{"time":"2026-11-21T06:23:35.549Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SList"},"isError":false}
+{"time":"2026-11-21T06:23:36.956Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SListItem"},"isError":false}
+{"time":"2026-11-21T06:23:38.858Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SListItemIcon"},"isError":false}
+{"time":"2026-11-21T06:23:40.955Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SListItemContent"},"isError":false}
+{"time":"2026-11-21T06:23:42.498Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SListItemTitle"},"isError":false}
+{"time":"2026-11-21T06:23:44.415Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SListItemSubtitle"},"isError":false}
+{"time":"2026-11-21T06:23:46.771Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SListItemAction"},"isError":false}
+{"time":"2026-11-21T06:23:48.894Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SMenu"},"isError":false}
+{"time":"2026-11-21T06:23:51.053Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SInput"},"isError":false}
+{"time":"2026-11-21T06:23:52.219Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SButton"},"isError":false}
+{"time":"2026-11-21T06:23:53.353Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SIcon"},"isError":false}
+{"time":"2026-11-21T06:23:54.309Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SApp"},"isError":false}
+{"time":"2026-11-21T06:23:56.623Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SContainer"},"isError":false}
+{"time":"2026-11-21T06:23:58.317Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SImage"},"isError":false}
+{"time":"2026-11-21T06:24:00.005Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SSheet"},"isError":false}
+{"time":"2026-11-21T06:25:18.901Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SSnackbar"},"isError":false}
+{"time":"2026-11-21T06:25:51.940Z","page":"03-mobile-list","tool":"validate_sui_template","args":{"code":"<5766 chars>"},"isError":false}
+{"time":"2026-11-21T06:26:06.096Z","page":"03-mobile-list","tool":"validate_sui_template","args":{"code":"<5709 chars>"},"isError":false}

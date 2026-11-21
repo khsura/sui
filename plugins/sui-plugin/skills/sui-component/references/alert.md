@@ -6,26 +6,42 @@ Simple colored message box (flex row, vertically centered, rounded). It has no i
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsAlert.d.ts`
 
-## Props
+<!-- generated:api:start SAlert -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `color` | `string` | `undefined` | Preset name or CSS color (default background = theme `card` color) |
-| `colorThreshold` | `number` | `undefined` | Luminance threshold for automatic light/dark text |
-| `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `'default'` | Padding, font size and min-height |
-| `dense` | `boolean` | `false` | Smaller padding and min-height |
-| `minHeight` | `number` | computed from `size` | Min height in px |
-| `fixedHeight` | `boolean` | `false` | `height: 100%; overflow: hidden`, and render even when empty (reserves space) |
+**SAlert props**
 
-## Slots
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `color` | `string` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `dense` | `boolean` | — | no | — |
+| `fixedHeight` | `boolean` | — | no | — |
+| `minHeight` | `number` | — | no | — |
+| `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
 
-| Slot | Description |
-|------|-------------|
-| `default` | Alert content. **If empty, nothing is rendered** (unless `fixedHeight`) |
+**SAlert slots**
 
-## Events
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SAlert events**
 
 None.
+
+<!-- generated:api:end SAlert -->
+
+**SAlert notes**
+
+- `color`: Preset name or CSS color (default background = theme `card` color)
+- `colorThreshold`: Luminance threshold for automatic light/dark text
+- `size`: Padding, font size and min-height (default: `'default'`)
+- `dense`: Smaller padding and min-height
+- `minHeight`: Min height in px (default: computed from `size`)
+- `fixedHeight`: `height: 100%; overflow: hidden`, and render even when empty (reserves space)
+- `default` (slot): Alert content. **If empty, nothing is rendered** (unless `fixedHeight`)
 
 ## Usage
 

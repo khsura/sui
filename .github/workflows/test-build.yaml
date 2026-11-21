@@ -22,9 +22,6 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
-      - name: Set token npm github token
-        run: echo NPM_GITHUB_TOKEN=${{ secrets.NPM_GITHUB_TOKEN }} > .env.yarn
-
       - name: Set yarn version
         run: yarn set version self
 
@@ -33,6 +30,15 @@ jobs:
 
       - name: Run build
         run: yarn build
+
+      # The app build regenerates the sui-plugin skill API tables from dist/sui-api.json.
+      - name: Check skill API tables are up to date
+        run: |
+          yarn workspace @khsura/sui check:skills
+          git diff --exit-code -- plugins/sui-plugin/skills || {
+            echo "::error::sui-plugin skill API tables are stale. Run 'yarn build:api && yarn sync:skills' in packages/app and commit the result."
+            exit 1
+          }
 
       - name: Run storybook build
         run: yarn storybook:build

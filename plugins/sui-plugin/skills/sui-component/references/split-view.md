@@ -10,17 +10,37 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsSplitView.d.ts`
 
 ## SSplitView
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `vertical` | `boolean` | `false` | Stack panes top/bottom instead of side by side |
-| `height` | `string \| number` | `'100%'` | Container height (number = px) |
-| `width` | `string \| number` | `'100%'` | Container width (number = px) |
+<!-- generated:api:start SSplitView -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SSplitView props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `height` | `string \| number` | `"100%"` | no | — |
+| `vertical` | `boolean` | — | no | — |
+| `width` | `string \| number` | `"100%"` | no | — |
+
+**SSplitView slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SSplitView events**
+
+None.
+
+<!-- generated:api:end SSplitView -->
+
+**SSplitView notes**
+
+- `vertical`: Stack panes top/bottom instead of side by side
+- `height`: Container height (number = px)
+- `width`: Container width (number = px)
+- `default` (slot): `SSplitViewItem` components
 
 No min/max size props.
-
-| Slot | Description |
-|------|-------------|
-| `default` | `SSplitViewItem` components |
 
 No events.
 
@@ -28,9 +48,28 @@ No events.
 
 No props. Renders the pane plus a resize handle after it. The last item's handle is hidden.
 
-| Slot | Description |
-|------|-------------|
-| `default` | Pane content |
+<!-- generated:api:start SSplitViewItem -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SSplitViewItem props**
+
+None.
+
+**SSplitViewItem slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SSplitViewItem events**
+
+None.
+
+<!-- generated:api:end SSplitViewItem -->
+
+**SSplitViewItem notes**
+
+- `default` (slot): Pane content
 
 ---
 

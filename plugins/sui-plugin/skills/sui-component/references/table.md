@@ -6,41 +6,123 @@ Data table with client-side sorting, selection and expansion state, grouping (op
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsTable.d.ts`. The `TableHeader`, `TableItemClass`, and `TableSortOrder` types are exported from `@khsura/sui`.
 
-## Props
+<!-- generated:api:start STable -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `headers` | `TableHeader[]` | **required** | Column definitions (see below) |
-| `items` | `T[]` | **required** | Row objects |
-| `itemKey` | `string` | first header's `value` | Field used to match **expanded** rows |
-| `dense` | `boolean` | `false` | Compact cells |
-| `loading` | `boolean` | `false` | Indeterminate progress bar. Hides the no-data row |
-| `outlined` / `underlined` | `boolean` | `false` | Border styles |
-| `rounded` / `tile` | `boolean` | `false` | Declared, but **no effect** (the table never reads them) |
-| `hideHeader` | `boolean` | `false` | Hide `<thead>` |
-| `hideVerticalBorders` | `boolean` | `false` | Remove column borders |
-| `hideTopBottomBorders` | `boolean` | `false` | Remove outer top/bottom borders |
-| `hidePagination` | `boolean` | `false` | Hides the pager only when `itemsPerPage` is unset or greater than the total |
-| `stickyHeader` | `boolean` | `false` | Sticky header row (give the table a height limit) |
-| `multiSort` | `boolean` | `false` | Sort by several columns |
-| `groupBy` | `string \| string[]` | `undefined` | Group rows by item field(s). Group name = values joined with a space |
-| `foldable` | `boolean` | `false` | Clicking a group row collapses or expands it |
-| `selected` | `T[]` | `undefined` | Selected rows (`v-model:selected`) |
-| `singleSelect` | `boolean` | `false` | At most one selected row |
-| `expanded` | `T[]` | `undefined` | Expanded rows (`v-model:expanded`) |
-| `singleExpand` | `boolean` | `false` | At most one expanded row |
-| `shadowExpandedContent` | `boolean` | `false` | Inner shadow on expanded content |
-| `totalItems` | `number` | `undefined` | Server-side total. When it is greater than `items.length`, items are **not** sliced per page |
-| `itemsPerPageLabel` | `string` | `'Items per page: '` | Pager label text |
-| `noDataText` | `string` | i18n `table.noData` → `'No data'` | Empty-state text (`#noData` slot overrides it) |
-| `itemClass` / `itemStyle` | `TableItemClass<T>` / `TableItemStyle<T>` | `undefined` | Per-cell class/style (value or `({ item, cellKey, cellType }) => …`) |
-| `itemRowClass` | `TableRowClass<T>` | `undefined` | `<tr>` class (value or `({ item, cellType }) => …`) |
-| `itemHeader` / `itemFooter` | `string` | `''` | Item field. When it is truthy on a row, a full-width row is rendered above/below that row |
-| `itemHeaderClass` / `itemHeaderStyle` / `itemFooterClass` / `itemFooterStyle` | as `itemClass` / `itemStyle` | `undefined` | Styling for those rows |
-| `stickyLeftColumnsStart` | `number` | `0` | Index of the first left-sticky column |
-| `stickyLeftColumnsSize` | `number` | `0` | Number of left-sticky columns (sticking activates on horizontal scroll) |
-| `stickyLeftColumnsOffset` | `number` | `undefined` | Extra columns counted before sticking activates |
-| `stickyRightColumn` | `boolean` | — | Stick the last column to the right |
+**STable props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `dense` | `boolean` | `false` | no | — |
+| `expanded` | `T[]` | — | no | — |
+| `foldable` | `boolean` | `false` | no | — |
+| `folded` | `boolean \| string[]` | `[]` | no | — |
+| `groupBy` | `string \| string[]` | — | no | — |
+| `headers` | `TableHeader<string>[]` | `[]` | yes | — |
+| `hideHeader` | `boolean` | `false` | no | — |
+| `hidePagination` | `boolean` | `false` | no | — |
+| `hideTopBottomBorders` | `boolean` | `false` | no | — |
+| `hideVerticalBorders` | `boolean` | `false` | no | — |
+| `itemClass` | `TableItemClass<T, string>` | — | no | — |
+| `itemFooter` | `string` | `""` | no | — |
+| `itemFooterClass` | `TableItemClass<T, string>` | — | no | — |
+| `itemFooterStyle` | `TableItemStyle<T, string>` | — | no | — |
+| `itemHeader` | `string` | `""` | no | — |
+| `itemHeaderClass` | `TableItemClass<T, string>` | — | no | — |
+| `itemHeaderStyle` | `TableItemStyle<T, string>` | — | no | — |
+| `itemKey` | `string` | — | no | — |
+| `itemRowClass` | `TableRowClass<T>` | — | no | — |
+| `itemStyle` | `TableItemStyle<T, string>` | — | no | — |
+| `items` | `T[]` | `[]` | yes | — |
+| `itemsPerPage` | `number` | — | no | — |
+| `itemsPerPageLabel` | `string` | — | no | — |
+| `loading` | `boolean` | — | no | — |
+| `multiSort` | `boolean` | `false` | no | — |
+| `noDataText` | `string` | — | no | — |
+| `outlined` | `boolean` | `false` | no | — |
+| `rounded` | `boolean` | — | no | — |
+| `selected` | `T[]` | — | no | — |
+| `shadowExpandedContent` | `boolean` | `false` | no | — |
+| `singleExpand` | `boolean` | — | no | — |
+| `singleSelect` | `boolean` | — | no | — |
+| `stickyHeader` | `boolean` | `false` | no | — |
+| `stickyLeftColumnsOffset` | `number` | — | no | — |
+| `stickyLeftColumnsSize` | `number` | `0` | no | — |
+| `stickyLeftColumnsStart` | `number` | `0` | no | — |
+| `stickyRightColumn` | `boolean` | — | no | — |
+| `tile` | `boolean` | — | no | — |
+| `totalItems` | `number` | — | no | — |
+| `underlined` | `boolean` | — | no | — |
+
+**STable slots**
+
+| Slot | Slot props | Description |
+| --- | --- | --- |
+| `expanded` | `{ item: T; }` | Content of an expanded row. |
+| `group` | `TableGroupSlotProps<T>` | Group row content, rendered when `groupBy` is set. |
+| `header.<column>` (pattern `^header\..+$`) | `TableHeaderSlotProps` | Header cell of one column; the key is `header.` followed by the column's `value`. |
+| `item.<column>` (pattern `^item\..+$`) | `TableItemSlotProps<T>` | Body cell of one column; the key is `item.` followed by the column's `value`. |
+| `itemFooter` | `TableItemFooterSlotProps<T>` | Full-width row below an item, rendered when `itemFooter` is set and the item has that key. |
+| `itemHeader` | `TableItemHeaderSlotProps<T>` | Full-width row above an item, rendered when `itemHeader` is set and the item has that key. |
+| `itemsPerPageLabel` | `any` | Label of the items-per-page selector in the pagination. |
+| `noData` | `any` | Shown instead of the rows when `items` is empty and not loading. |
+
+**STable events**
+
+| Event | Payload |
+| --- | --- |
+| `click:row` | `[value: { item: T; expand: () => void; isExpanded: boolean; }]` |
+| `update:expanded` | `[value: T[]]` |
+| `update:folded` | `[value: boolean \| string[]]` |
+| `update:itemsPerPage` | `[value: number \| undefined]` |
+| `update:options` | `[{ pageIndex: number; itemsPerPage: number; sortBy: { key: string; order: TableSortOrder; }[]; }]` |
+| `update:selected` | `[value: T[]]` |
+
+<!-- generated:api:end STable -->
+
+**STable notes**
+
+- `headers`: Column definitions (see below)
+- `items`: Row objects
+- `itemKey`: Field used to match **expanded** rows (default: first header's `value`)
+- `dense`: Compact cells
+- `loading`: Indeterminate progress bar. Hides the no-data row
+- `outlined` / `underlined`: Border styles
+- `rounded` / `tile`: Declared, but **no effect** (the table never reads them)
+- `hideHeader`: Hide `<thead>`
+- `hideVerticalBorders`: Remove column borders
+- `hideTopBottomBorders`: Remove outer top/bottom borders
+- `hidePagination`: Hides the pager only when `itemsPerPage` is unset or greater than the total
+- `stickyHeader`: Sticky header row (give the table a height limit)
+- `multiSort`: Sort by several columns
+- `groupBy`: Group rows by item field(s). Group name = values joined with a space
+- `foldable`: Clicking a group row collapses or expands it
+- `selected`: Selected rows (`v-model:selected`)
+- `singleSelect`: At most one selected row
+- `expanded`: Expanded rows (`v-model:expanded`)
+- `singleExpand`: At most one expanded row
+- `shadowExpandedContent`: Inner shadow on expanded content
+- `totalItems`: Server-side total. When it is greater than `items.length`, items are **not** sliced per page
+- `itemsPerPageLabel`: Pager label text (default: `'Items per page: '`)
+- `noDataText`: Empty-state text (`#noData` slot overrides it) (default: i18n `table.noData` → `'No data'`)
+- `itemClass` / `itemStyle`: Per-cell class/style (value or `({ item, cellKey, cellType }) => …`)
+- `itemRowClass`: `<tr>` class (value or `({ item, cellType }) => …`)
+- `itemHeader` / `itemFooter`: Item field. When it is truthy on a row, a full-width row is rendered above/below that row (default: `''`)
+- `itemHeaderClass` / `itemHeaderStyle` / `itemFooterClass` / `itemFooterStyle`: Styling for those rows
+- `stickyLeftColumnsStart`: Index of the first left-sticky column
+- `stickyLeftColumnsSize`: Number of left-sticky columns (sticking activates on horizontal scroll)
+- `stickyLeftColumnsOffset`: Extra columns counted before sticking activates
+- `stickyRightColumn`: Stick the last column to the right
+- `click:row` (event): A body row was clicked. Rows do **not** expand on their own: call `expand()`
+- `update:options` (event): Emitted when the page or page size changes (not when the sort changes)
+- `update:selected` / `update:expanded` (event): Model updates
+- `item.<value>` (slot): Body cell
+- `header.<value>` (slot): Header cell content
+- `group` (slot): Group row content (default: the group name)
+- `itemHeader` / `itemFooter` (slot): Full-width rows from `itemHeader`/`itemFooter`
+- `expanded` (slot): Content of an expanded row
+- `noData` (slot): Empty state
+- `itemsPerPageLabel` (slot): Pager label
 
 ### TableHeader
 
@@ -71,26 +153,6 @@ interface TableHeader {
 - `v-model:expanded`: `T[]`
 - `v-model:items-per-page`: `number`. **The pager is rendered only when this is set.** Options are 10/25/50/100 plus your value.
 - `v-model:folded`: `boolean | string[]`, the collapsed group names (`true` = all collapsed). Default `[]`. Works without binding.
-
-## Events
-
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `click:row` | `{ item, expand: () => void, isExpanded: boolean }` | A body row was clicked. Rows do **not** expand on their own: call `expand()` |
-| `update:options` | `{ pageIndex, itemsPerPage, sortBy: { key, order }[] }` | Emitted when the page or page size changes (not when the sort changes) |
-| `update:selected` / `update:expanded` | `T[]` | Model updates |
-
-## Slots
-
-| Slot | Props | Description |
-|------|-------|-------------|
-| `item.<value>` | `{ item, value, header, row, col, group, select, expand, isSelected, isExpanded, isLeftSticked }` | Body cell |
-| `header.<value>` | `{ header, isSticked }` | Header cell content |
-| `group` | `{ group, items, isFolded, toggleFold }` | Group row content (default: the group name) |
-| `itemHeader` / `itemFooter` | `{ item, value, row, group, select, expand, isSelected, isExpanded, … }` | Full-width rows from `itemHeader`/`itemFooter` |
-| `expanded` | `{ item }` | Content of an expanded row |
-| `noData` | — | Empty state |
-| `itemsPerPageLabel` | — | Pager label |
 
 ## Usage
 

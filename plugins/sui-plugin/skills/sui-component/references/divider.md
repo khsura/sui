@@ -6,19 +6,28 @@ A thin horizontal or vertical rule. Renders an `<hr role="separator">` with the 
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsDivider.d.ts`
 
-## Props
+<!-- generated:api:start SDivider -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `vertical` | `boolean` | `false` | Render as a vertical divider (stretches to the parent's height) |
+**SDivider props**
 
-## Slots
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `vertical` | `boolean` | — | no | — |
+
+**SDivider slots**
 
 None.
 
-## Events
+**SDivider events**
 
 None.
+
+<!-- generated:api:end SDivider -->
+
+**SDivider notes**
+
+- `vertical`: Render as a vertical divider (stretches to the parent's height)
 
 ## Usage
 

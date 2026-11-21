@@ -10,31 +10,62 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsCard.d.ts`
 
 ## SCard
 
-### Props
+<!-- generated:api:start SCard -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `color` | `string` | `undefined` | Background: preset/app color name or CSS color |
-| `colorThreshold` | `number` | `undefined` | Luminance threshold used to pick light/dark text on a custom color |
-| `theme` | `'light' \| 'dark'` | `undefined` | Force light/dark text styling |
-| `elevation` | `0`–`24` | `undefined` (no shadow) | Shadow depth |
-| `outlined` | `boolean` | `false` | Border |
-| `underlined` | `boolean` | `false` | Bottom border only |
-| `borderRadius` | `'tile' \| 'rounded' \| number \| '<n>px' \| …` | `undefined` | Border radius override |
-| `tag` | `string` | `'div'` | Root element (ignored when `href`/`to` is set) |
-| `href` | `string` | `undefined` | Render as `<a>` |
-| `to` | `RouteLocationRaw` | `undefined` | Render as `router-link` (takes precedence over `href`) |
-| `target` | `'_blank' \| '_self' \| '_parent' \| '_top'` | `undefined` | Link target |
-| `rel` | `string` | `undefined` | Link rel |
-| `width` / `height` | `string \| number` | `undefined` | Dimensions |
-| `maxWidth` / `maxHeight` | `string \| number` | `undefined` | Max dimensions |
-| `minWidth` / `minHeight` | `string \| number` | `undefined` | Min dimensions |
+**SCard props**
 
-### Slots
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `color` | `string` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `elevation` | `"" \| 0 \| 1 \| 2 \| 22 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 23 \| 24 \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| null` | — | no | — |
+| `height` | `string \| number \| null` | — | no | — |
+| `href` | `string \| null` | — | no | — |
+| `maxHeight` | `string \| number \| null` | — | no | — |
+| `maxWidth` | `string \| number \| null` | — | no | — |
+| `minHeight` | `string \| number \| null` | — | no | — |
+| `minWidth` | `string \| number \| null` | — | no | — |
+| `outlined` | `boolean \| null` | — | no | — |
+| `rel` | `string \| null` | — | no | — |
+| `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
+| `target` | `"_blank" \| "_self" \| "_parent" \| "_top"` | — | no | `_blank`, `_parent`, `_self`, `_top` |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+| `to` | `string \| it \| et \| null` | — | no | — |
+| `underlined` | `boolean \| null` | — | no | — |
+| `width` | `string \| number \| null` | — | no | — |
 
-| Slot | Description |
-|------|-------------|
-| `default` | Card content (`SCardTitle`, `SCardSubtitle`, `SCardText`, `SCardActions`, `SImage`, …) |
+**SCard slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SCard events**
+
+None.
+
+<!-- generated:api:end SCard -->
+
+**SCard notes**
+
+- `color`: Background: preset/app color name or CSS color
+- `colorThreshold`: Luminance threshold used to pick light/dark text on a custom color
+- `theme`: Force light/dark text styling
+- `elevation`: Shadow depth (default: `undefined` (no shadow))
+- `outlined`: Border
+- `underlined`: Bottom border only
+- `borderRadius`: Border radius override
+- `tag`: Root element (ignored when `href`/`to` is set) (default: `'div'`)
+- `href`: Render as `<a>`
+- `to`: Render as `router-link` (takes precedence over `href`)
+- `target`: Link target
+- `rel`: Link rel
+- `width` / `height`: Dimensions
+- `maxWidth` / `maxHeight`: Max dimensions
+- `minWidth` / `minHeight`: Min dimensions
+- `default` (slot): Card content (`SCardTitle`, `SCardSubtitle`, `SCardText`, `SCardActions`, `SImage`, …)
 
 ### Events
 
@@ -54,6 +85,92 @@ Each takes only `tag` (default `'div'`) and a `default` slot. No events.
 | `SCardActions` | Flex row with vertical centering for buttons. Items are **left-aligned** |
 
 Spacing between adjacent title → subtitle → text is tightened automatically.
+
+`SCardTitle` is a flex row, so `s_textAlign__center` on it has no effect. Centre its content with `s_justify__center` (`s_justify__end` for right).
+
+<!-- generated:api:start SCardTitle -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SCardTitle props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
+
+**SCardTitle slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SCardTitle events**
+
+None.
+
+<!-- generated:api:end SCardTitle -->
+
+<!-- generated:api:start SCardSubtitle -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SCardSubtitle props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
+
+**SCardSubtitle slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SCardSubtitle events**
+
+None.
+
+<!-- generated:api:end SCardSubtitle -->
+
+<!-- generated:api:start SCardText -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SCardText props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
+
+**SCardText slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SCardText events**
+
+None.
+
+<!-- generated:api:end SCardText -->
+
+<!-- generated:api:start SCardActions -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SCardActions props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
+
+**SCardActions slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SCardActions events**
+
+None.
+
+<!-- generated:api:end SCardActions -->
 
 ---
 

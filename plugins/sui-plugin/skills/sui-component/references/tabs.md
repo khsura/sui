@@ -10,48 +10,93 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsTabs.d.ts`, `prop
 
 ## STabs
 
-### Props
+<!-- generated:api:start STabs -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `modelValue` | `string \| number` | **required** | Active tab's `tab` value (use `v-model`) |
-| `dense` | `boolean` | `false` | Compact tab height |
-| `bordered` | `boolean` | `false` | Bordered strip |
-| `selectedTabColor` | `string` | `'primary'` | Color of the active tab button |
-| `shrink` | `boolean` | `false` | Tabs size to their content instead of stretching |
-| `outlined` | `boolean \| null` | `undefined` | Outlined border on the strip |
-| `underlined` | `boolean \| null` | `undefined` | Bottom-border style on the strip (not an active-tab indicator) |
-| `borderRadius` | `'tile' \| 'rounded' \| number \| string \| null` | `undefined` | Strip border radius |
+**STabs props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `bordered` | `boolean` | — | no | — |
+| `dense` | `boolean` | — | no | — |
+| `modelValue` | `string \| number` | — | yes | — |
+| `outlined` | `boolean \| null` | — | no | — |
+| `selectedTabColor` | `string` | `"primary"` | no | — |
+| `shrink` | `boolean` | — | no | — |
+| `underlined` | `boolean \| null` | — | no | — |
+
+**STabs slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**STabs events**
+
+| Event | Payload |
+| --- | --- |
+| `update:modelValue` | `[value: string \| number]` |
+
+<!-- generated:api:end STabs -->
+
+**STabs notes**
+
+- `modelValue`: Active tab's `tab` value (use `v-model`) (default: **required**)
+- `dense`: Compact tab height
+- `bordered`: Bordered strip
+- `selectedTabColor`: Color of the active tab button
+- `shrink`: Tabs size to their content instead of stretching
+- `outlined`: Outlined border on the strip
+- `underlined`: Bottom-border style on the strip (not an active-tab indicator)
+- `borderRadius`: Strip border radius
+- `default` (slot): `STab` components
+- `update:modelValue` (event): Active tab changed
 
 Always exactly one tab active (mandatory, single-select).
-
-### Slots
-
-| Slot | Description |
-|------|-------------|
-| `default` | `STab` components |
-
-### Events
-
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `update:modelValue` | `string \| number` | Active tab changed |
 
 ---
 
 ## STab
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `tab` | `string \| number` | **required** | Identifier matched against `STabs` model |
-| `disabled` | `boolean` | `false` | Disable this tab |
-| `cols` / `sm` / `md` / `lg` | `1–12 \| 'auto' \| 'grow'` (or string form) | `undefined` | Grid column width per breakpoint (no `xl`) |
-| `order` | `number` | `undefined` | Flex order |
-| `alignSelf` | CSS `align-self` value | `undefined` | Flex alignment |
+<!-- generated:api:start STab -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Slot | Description |
-|------|-------------|
-| `default` | Tab label |
+**STab props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `alignSelf` | `"center" \| "auto" \| "start" \| "normal" \| "end" \| "self-start" \| "self-end" \| "flex-start" \| "flex-end" \| "baseline" \| "first baseline" \| "last baseline" \| "stretch" \| "safe center" \| "unsafe center" \| "inherit" \| "initial" \| null` | — | no | `auto`, `baseline`, `center`, `end`, `first baseline`, `flex-end`, `flex-start`, `inherit`, `initial`, `last baseline`, `normal`, `safe center`, `self-end`, `self-start`, `start`, `stretch`, `unsafe center` |
+| `cols` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
+| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentStyle` | `StyleValue` | — | no | — |
+| `disabled` | `boolean` | — | no | — |
+| `lg` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
+| `md` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
+| `order` | `number \| null` | — | no | — |
+| `sm` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
+| `tab` | `string \| number` | — | yes | — |
+
+**STab slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**STab events**
+
+None.
+
+<!-- generated:api:end STab -->
+
+**STab notes**
+
+- `tab`: Identifier matched against `STabs` model (default: **required**)
+- `disabled`: Disable this tab
+- `cols` / `sm` / `md` / `lg`: Grid column width per breakpoint (no `xl`)
+- `order`: Flex order
+- `alignSelf`: Flex alignment
+- `default` (slot): Tab label
 
 ---
 

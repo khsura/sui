@@ -1,0 +1,15 @@
+02-dashboard-shell/base
+  ⇅ — rgb(197, 197, 197) on 255,255,255 = 1.73
+  Paid — rgb(253, 253, 253) on 76,175,80 = 2.73
+02-dashboard-shell/drawer
+  ⇅ — rgb(197, 197, 197) on 255,255,255 = 1.73
+  Paid — rgb(253, 253, 253) on 76,175,80 = 2.73
+05-card-grid/base
+  New — rgb(253, 253, 253) on 76,175,80 = 2.73
+05-card-grid/added
+  New — rgb(253, 253, 253) on 76,175,80 = 2.73
+09-snackbar/deleted
+  Undo — rgb(0, 113, 235) on 66,66,66 = 2.18
+10-detail-two-column/base
+  ⇅ — rgb(197, 197, 197) on 255,255,255 = 1.73
+  Delivered — rgb(253, 253, 253) on 76,175,80 = 2.73

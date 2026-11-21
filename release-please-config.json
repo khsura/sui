@@ -8,6 +8,9 @@
     },
     "packages/shared": {
       "release-type": "node"
+    },
+    "packages/mcp": {
+      "release-type": "node"
     }
   },
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"

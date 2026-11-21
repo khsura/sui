@@ -6,28 +6,48 @@ An `<img>` inside a wrapper `<div>`. Supports aspect ratio, object-fit, size lim
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsImage.d.ts`
 
-## Props
+<!-- generated:api:start SImage -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `src` | `string \| null` | **required** | Image URL. When it is falsy, no `<img>` is rendered (the slot still renders) |
-| `alt` | `string \| null` | `''` | Alt text |
-| `objectFit` | `'fill' \| 'contain' \| 'cover' \| 'none' \| 'scale-down'` | `undefined` | CSS `object-fit` for the `<img>` |
-| `aspectRatio` | `number` | `undefined` | Width/height ratio applied to the wrapper (e.g. `16/9`, `1`) |
-| `lazyLoad` | `LazyLoad` (`'lazy' \| 'eager' \| 'auto'`) | `undefined` | Declared but **currently ignored**: `loading` is always `lazy` |
-| `width` / `height` | `string \| number` | `undefined` | Wrapper dimensions (the wrapper is `100%` × `100%` otherwise) |
-| `maxWidth` / `maxHeight` | `string \| number` | `undefined` | Max dimensions |
-| `minWidth` / `minHeight` | `string \| number` | `undefined` | Min dimensions |
+**SImage props**
 
-## Slots
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `alt` | `string \| null` | — | no | — |
+| `aspectRatio` | `number \| null` | — | no | — |
+| `height` | `string \| number \| null` | — | no | — |
+| `lazyLoad` | `LazyLoad \| null` | — | no | — |
+| `maxHeight` | `string \| number \| null` | — | no | — |
+| `maxWidth` | `string \| number \| null` | — | no | — |
+| `minHeight` | `string \| number \| null` | — | no | — |
+| `minWidth` | `string \| number \| null` | — | no | — |
+| `objectFit` | `"fill" \| "none" \| "contain" \| "cover" \| "scale-down"` | — | no | `contain`, `cover`, `fill`, `none`, `scale-down` |
+| `src` | `string \| null` | — | yes | — |
+| `width` | `string \| number \| null` | — | no | — |
 
-| Slot | Description |
-|------|-------------|
-| `default` | Content in an absolutely positioned layer over the image (full width/height) |
+**SImage slots**
 
-## Events
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SImage events**
 
 None.
+
+<!-- generated:api:end SImage -->
+
+**SImage notes**
+
+- `src`: Image URL. When it is falsy, no `<img>` is rendered (the slot still renders) (default: **required**)
+- `alt`: Alt text (default: `''`)
+- `objectFit`: CSS `object-fit` for the `<img>`
+- `aspectRatio`: Width/height ratio applied to the wrapper (e.g. `16/9`, `1`)
+- `lazyLoad`: Declared but **currently ignored**: `loading` is always `lazy`
+- `width` / `height`: Wrapper dimensions (the wrapper is `100%` × `100%` otherwise)
+- `maxWidth` / `maxHeight`: Max dimensions
+- `minWidth` / `minHeight`: Min dimensions
+- `default` (slot): Content in an absolutely positioned layer over the image (full width/height)
 
 ## Usage
 
@@ -50,6 +70,7 @@ None.
 
 - The wrapper defaults to `width: 100%; height: 100%`. In a parent with no height, give it `aspect-ratio` or `height`.
 - Use `object-fit="cover"` with `aspect-ratio` to avoid stretching.
+- In a flex column (a card made `display: flex; flex-direction: column` to equalise heights) the `100%` height makes the image shrink, so images in a row end up with different heights. Add `height="auto"` next to `aspect-ratio`, or give the card `height="100%"` instead of making it a flex column.
 
 | ❌ | ✅ |
 |----|----|

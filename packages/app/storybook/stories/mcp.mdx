@@ -1,0 +1,117 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="AI / MCP" />
+
+# SUI MCP
+
+**`@khsura/sui-mcp`** is the [Model Context Protocol](https://modelcontextprotocol.io) server for SUI. It gives your AI assistant the exact component API of the `@khsura/sui` version your project installs, tested recipes, and a template validator, so it stops guessing props from other UI libraries. It runs on your machine over stdio and needs no API key.
+
+## Quick start
+
+From your app's folder, let the CLI detect your editor and configure it:
+
+```bash
+npx -y @khsura/sui-mcp config            # detect clients and write their config
+npx -y @khsura/sui-mcp config --dry-run  # print the planned changes, write nothing
+npx -y @khsura/sui-mcp config --client cursor
+```
+
+The CLI detects Claude Code, Cursor, VS Code and Windsurf. It adds a `sui` server to the existing config file and keeps your other servers. Restart or reload the client afterwards.
+
+## Client setup
+
+To configure a client by hand, use the entry for your client.
+
+### Claude Code
+
+`.mcp.json` in the project root, or run `claude mcp add sui -- npx -y @khsura/sui-mcp`.
+
+```json
+{
+  "mcpServers": {
+    "sui": { "command": "npx", "args": ["-y", "@khsura/sui-mcp"] }
+  }
+}
+```
+
+### Cursor
+
+`.cursor/mcp.json` in the project, or `~/.cursor/mcp.json` for every project.
+
+```json
+{
+  "mcpServers": {
+    "sui": { "command": "npx", "args": ["-y", "@khsura/sui-mcp"] }
+  }
+}
+```
+
+### VS Code
+
+`.vscode/mcp.json`. VS Code uses `servers` and needs `"type": "stdio"`.
+
+```json
+{
+  "servers": {
+    "sui": { "type": "stdio", "command": "npx", "args": ["-y", "@khsura/sui-mcp"] }
+  }
+}
+```
+
+### Windsurf
+
+`~/.codeium/windsurf/mcp_config.json`. The CLI prints this snippet instead of writing outside your project.
+
+```json
+{
+  "mcpServers": {
+    "sui": { "command": "npx", "args": ["-y", "@khsura/sui-mcp"] }
+  }
+}
+```
+
+If your client starts servers outside the project folder, add `"env": { "SUI_PROJECT_ROOT": "/path/to/your/app" }` to the entry.
+
+## What your assistant can do
+
+### Component API
+
+- `list_components`: every component with its family and purpose
+- `get_component_api`: props, slots and events of one component in your installed version. If the component only exists in a newer release, it says to upgrade `@khsura/sui`.
+
+### Setup guides
+
+- `list_guides` / `get_guide`: installation (Vue and Nuxt), theming, component defaults, display breakpoints, i18n, common mistakes
+
+### Recipes
+
+- `list_recipes` / `get_recipe`: tested, copy-ready SFCs for an app shell, a validated form, activator overlays, a data table, a responsive grid and theme setup. Each one is also a story under **Recipes**.
+
+### Template validation
+
+- `validate_sui_template`: checks a `.vue` file or template against the API and SUI's composition rules (activator slots, named layouts, form rules) and returns each issue with a fix
+
+The server also tells the assistant to look up unfamiliar components with `get_component_api`, start from a recipe, and run `validate_sui_template` on every template it writes, fixing every error before it finishes.
+
+## Which version answers
+
+Every response names the `@khsura/sui` version it comes from:
+
+1. **project**: `node_modules/@khsura/sui/dist/sui-api.json` in your app (found from `SUI_PROJECT_ROOT`, else the folder the client starts the server in)
+2. **bundled**: the copy shipped inside `@khsura/sui-mcp`, used when the project has no install
+
+## Try it
+
+- "Add a settings page with a validated form (name, email, notification toggle). Use the SUI MCP and validate the template."
+- "What props does STable take in the SUI version this project installs?"
+- "Build an admin shell with an app bar, a navigation drawer and a footer. Start from the SUI `app-shell` recipe."
+- "Check `src/pages/Orders.vue` with `validate_sui_template` and fix every issue."
+
+## Claude Code plugin
+
+For Claude Code, the SUI plugin adds skills on top of the MCP server:
+
+```
+/plugin marketplace add khsura/sui
+/plugin install sui-plugin@sui-framework
+```

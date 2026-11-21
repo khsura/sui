@@ -3,7 +3,8 @@
   "compilerOptions": {
     "declarationDir": "@types",
     "paths": {
-      "@/app/*": ["./*"]
+      "@/app/*": ["./*"],
+      "@khsura/sui": ["./index.ts"]
     }
   },
   "include": [

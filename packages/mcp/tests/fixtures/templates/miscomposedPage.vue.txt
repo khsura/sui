@@ -1,0 +1,18 @@
+<script setup lang="ts">
+const open = false
+</script>
+
+<template>
+  <SLayout name="admin">
+    <SAppBar>
+      <SButton><SIcon icon="mdi-menu" /></SButton>
+    </SAppBar>
+    <SDialog v-model="open">
+      <template #activator="{ on, attrs }">
+        <SButton v-on="on">Sign up</SButton>
+      </template>
+      <SInput label="Email" :rules="[]" />
+      <textarea />
+    </SDialog>
+  </SLayout>
+</template>

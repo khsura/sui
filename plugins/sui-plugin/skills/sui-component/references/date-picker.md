@@ -6,40 +6,71 @@ Inline date, month or year picker (rendered in an `SCard`) with min/max bounds.
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsDatePicker.d.ts`
 
-## Props
+<!-- generated:api:start SDatePicker -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `type` | `'date' \| 'month' \| 'year'` | `'date'` | Picker mode and model format (typed as required — always pass it) |
-| `min` | `string` | Jan 1, 5 years before `today` | Earliest selectable value (`'YYYY-MM-DD'`, any `type`) |
-| `max` | `string` | Dec 31, 5 years after `today` | Latest selectable value |
-| `today` | `string` | current date | Date highlighted as "today" (`'YYYY-MM-DD'`) |
-| `hideTitle` | `boolean` | `false` | Hide the title area |
-| `dateFormat` | `string` | `'MMM D'` | dayjs format for the date in the title |
-| `monthFormat` | `string` | `'MMMM'` | dayjs format for month labels |
-| `yearFormat` | `string` | `'YYYY'` | dayjs format for years (title, switch, year list), e.g. `'YYYY年'`, `'YYYY [он]'` |
-| `disabled` | `boolean` | `false` | Disables the **title** buttons only (see Gotchas) |
-| `readonly` | `boolean` | `false` | Makes the **title** buttons read-only only |
-| `dense` | `boolean` | `false` | Compact layout |
-| `color` | `string` | `undefined` | Selected-item color |
-| `colorThreshold` | `number` | `undefined` | Light/dark text threshold for the selected color |
-| `theme` | `AppThemeType` | `undefined` | Per-component theme |
-| `width` / `height` / `min*` / `max*` sizes | `string \| number` | `undefined` | Picker size (`minWidth`, `maxHeight`, …) |
+**SDatePicker props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `color` | `string` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `dateFormat` | `string` | `datePickerDisplayFormat.date` | no | — |
+| `dense` | `boolean` | — | no | — |
+| `disabled` | `boolean` | — | no | — |
+| `height` | `string \| number \| null` | — | no | — |
+| `hideTitle` | `boolean` | — | no | — |
+| `max` | `string` | — | no | — |
+| `maxHeight` | `string \| number \| null` | — | no | — |
+| `maxWidth` | `string \| number \| null` | — | no | — |
+| `min` | `string` | — | no | — |
+| `minHeight` | `string \| number \| null` | — | no | — |
+| `minWidth` | `string \| number \| null` | — | no | — |
+| `modelValue` | `string \| null` | — | no | — |
+| `monthFormat` | `string` | `datePickerDisplayFormat.month` | no | — |
+| `readonly` | `boolean` | — | no | — |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+| `today` | `string` | `dayjs().format("YYYY-MM-DD")` | no | — |
+| `type` | `DatePickerTypeType` | `"date"` | yes | `date`, `month`, `year` |
+| `width` | `string \| number \| null` | — | no | — |
+| `yearFormat` | `string` | `datePickerDisplayFormat.year` | no | — |
+
+**SDatePicker slots**
+
+None.
+
+**SDatePicker events**
+
+| Event | Payload |
+| --- | --- |
+| `change` | `[]` |
+| `update:modelValue` | `[value: string \| null \| undefined]` |
+
+<!-- generated:api:end SDatePicker -->
+
+**SDatePicker notes**
+
+- `type`: Picker mode and model format (typed as required — always pass it)
+- `min`: Earliest selectable value (`'YYYY-MM-DD'`, any `type`) (default: Jan 1, 5 years before `today`)
+- `max`: Latest selectable value (default: Dec 31, 5 years after `today`)
+- `today`: Date highlighted as "today" (`'YYYY-MM-DD'`)
+- `hideTitle`: Hide the title area
+- `dateFormat`: dayjs format for the date in the title
+- `monthFormat`: dayjs format for month labels
+- `yearFormat`: dayjs format for years (title, switch, year list), e.g. `'YYYY年'`, `'YYYY [он]'`
+- `disabled`: Disables the **title** buttons only (see Gotchas)
+- `readonly`: Makes the **title** buttons read-only only
+- `dense`: Compact layout
+- `color`: Selected-item color
+- `colorThreshold`: Light/dark text threshold for the selected color
+- `theme`: Per-component theme
+- `width` / `height` / `min*` / `max*` sizes: Picker size (`minWidth`, `maxHeight`, …)
+- `update:modelValue` (event): Value selected
+- `change` (event): Emitted on selection, before the model updates — read the `v-model` ref, not the event
 
 ## Model
 
 `v-model` — `string | null`: `'YYYY-MM-DD'` (`type="date"`), `'YYYY-MM'` (`month`), `'YYYY'` (`year`). Changing `type` converts the current value.
-
-## Events
-
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `update:modelValue` | `string` | Value selected |
-| `change` | — (no payload) | Emitted on selection, before the model updates — read the `v-model` ref, not the event |
-
-## Slots
-
-None.
 
 ## Format constants
 
@@ -85,40 +116,95 @@ Text field (type a value or pick from a popup `SDatePicker`), with optional prev
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsDatePickerInput.d.ts`
 
-## Props
+<!-- generated:api:start SDatePickerInput -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `type` | `'date' \| 'month' \| 'year'` | `'date'` | Picker mode and model format |
-| `label` | `string \| null` | `undefined` | Field label |
-| `placeholder` | `string \| null` | model format | Input placeholder |
-| `min` / `max` | `string` | ±5 years around `today` (picker) | Bounds for the popup and carousel buttons |
-| `rules` | `((value) => true \| string)[]` | `undefined` | Validation rules |
-| `hideDetails` | `boolean` | `undefined` | Hide label and error area |
-| `hideError` | `boolean` | `undefined` | Hide the error message |
-| `id` | `string` | auto | Input id |
-| `disabled` / `readonly` | `boolean \| null` | `undefined` | Native input states; disable carousel buttons |
-| `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `undefined` | Field size (font never below 16px) |
-| `simple` | `boolean \| null` | `undefined` | Borderless field |
-| `tile` | `boolean` | `false` | Square corners |
-| `block` | `boolean` | `false` | Stretch to container width (otherwise hugs the value) |
-| `width` / `maxWidth` / `minWidth` | `string \| number` | `undefined` | Field size; the popup stays 280px wide |
-| `carousel` | `boolean` | `false` | Prev/next buttons stepping one day / month / year |
-| `carouselPrevIcon` / `carouselNextIcon` | `MaterialDesignIcon` | `'mdi-chevron-left'` / `'mdi-chevron-right'` | Button icons |
-| `carouselPrevAriaLabel` / `carouselNextAriaLabel` | `string \| null` | `'Previous'` / `'Next'` | Button labels |
-| `today`, `dateFormat`, `monthFormat`, `yearFormat`, `dense`, `color` | — | as SDatePicker | Forwarded to the popup picker |
+**SDatePickerInput props**
+
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `block` | `boolean` | — | no | — | Stretches the field to the width of its container. |
+| `carousel` | `boolean` | — | no | — | Renders prev/next buttons that step the model value by one period. |
+| `carouselNextAriaLabel` | `string \| null` | `"Next"` | no | — | — |
+| `carouselNextIcon` | `string` | `"mdi-chevron-right"` | no | — | — |
+| `carouselPrevAriaLabel` | `string \| null` | `"Previous"` | no | — | — |
+| `carouselPrevIcon` | `string` | `"mdi-chevron-left"` | no | — | — |
+| `color` | `string` | — | no | — | — |
+| `colorThreshold` | `number` | — | no | — | — |
+| `dateFormat` | `string` | `datePickerDisplayFormat.date` | no | — | — |
+| `dense` | `boolean` | — | no | — | — |
+| `dirty` | `boolean` | — | no | — | — |
+| `disabled` | `boolean` | — | no | — | — |
+| `error` | `boolean` | — | no | — | — |
+| `height` | `string \| number \| null` | — | no | — | — |
+| `hideDetails` | `boolean` | — | no | — | — |
+| `hideError` | `boolean` | — | no | — | — |
+| `hideTitle` | `boolean` | — | no | — | — |
+| `id` | `string` | — | no | — | — |
+| `label` | `string \| null` | — | no | — | — |
+| `max` | `string` | — | no | — | — |
+| `maxHeight` | `string \| number \| null` | — | no | — | — |
+| `maxWidth` | `string \| number \| null` | — | no | — | — |
+| `min` | `string` | — | no | — | — |
+| `minHeight` | `string \| number \| null` | — | no | — | — |
+| `minWidth` | `string \| number \| null` | — | no | — | — |
+| `modelValue` | `string \| null` | — | no | — | — |
+| `monthFormat` | `string` | `datePickerDisplayFormat.month` | no | — | — |
+| `placeholder` | `string \| null` | — | no | — | — |
+| `readonly` | `boolean` | — | no | — | — |
+| `rules` | `FormInputModelValueRule[]` | — | no | — | — |
+| `simple` | `boolean \| null` | — | no | — | — |
+| `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` | — |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` | — |
+| `tile` | `boolean` | — | no | — | — |
+| `today` | `string` | `dayjs().format("YYYY-MM-DD")` | no | — | — |
+| `type` | `DatePickerTypeType` | `"date"` | yes | `date`, `month`, `year` | — |
+| `width` | `string \| number \| null` | — | no | — | — |
+| `yearFormat` | `string` | `datePickerDisplayFormat.year` | no | — | — |
+
+**SDatePickerInput slots**
+
+None.
+
+**SDatePickerInput events**
+
+| Event | Payload |
+| --- | --- |
+| `change` | `[string \| null]` |
+| `update:dirty` | `[boolean]` |
+| `update:error` | `[boolean]` |
+| `update:errors` | `[string[]]` |
+| `update:modelValue` | `[value: string \| null \| undefined]` |
+
+<!-- generated:api:end SDatePickerInput -->
+
+**SDatePickerInput notes**
+
+- `type`: Picker mode and model format
+- `label`: Field label
+- `placeholder`: Input placeholder (default: model format)
+- `min` / `max`: Bounds for the popup and carousel buttons (default: ±5 years around `today` (picker))
+- `rules`: Validation rules
+- `hideDetails`: Hide label and error area
+- `hideError`: Hide the error message
+- `id`: Input id (default: auto)
+- `disabled` / `readonly`: Native input states; disable carousel buttons
+- `size`: Field size (font never below 16px)
+- `simple`: Borderless field
+- `tile`: Square corners
+- `block`: Stretch to container width (otherwise hugs the value)
+- `width` / `maxWidth` / `minWidth`: Field size; the popup stays 280px wide
+- `carousel`: Prev/next buttons stepping one day / month / year
+- `carouselPrevIcon` / `carouselNextIcon`: Button icons (default: `'mdi-chevron-left'` / `'mdi-chevron-right'`)
+- `carouselPrevAriaLabel` / `carouselNextAriaLabel`: Button labels (default: `'Previous'` / `'Next'`)
+- `today`, `dateFormat`, `monthFormat`, `yearFormat`, `dense`, `color`: Forwarded to the popup picker
+- `update:modelValue` (event): Value changed
+- `change` (event): Value committed (typed + Enter/blur, picked, or stepped)
+- `update:error` (event): Validation state
+- `update:errors` (event): Error messages
+- `update:dirty` (event): Dirty state
 
 `hideTitle`, `colorThreshold` and the picker `height` are not forwarded (the popup always hides its title).
-
-## Events
-
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `update:modelValue` | `string \| null` | Value changed |
-| `change` | `string \| null` | Value committed (typed + Enter/blur, picked, or stepped) |
-| `update:error` | `boolean` | Validation state |
-| `update:errors` | `string[]` | Error messages |
-| `update:dirty` | `boolean` | Dirty state |
 
 ## Usage
 

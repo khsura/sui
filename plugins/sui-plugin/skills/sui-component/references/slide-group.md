@@ -10,35 +10,56 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsSlideGroup.d.ts`
 
 ## SSlideGroup
 
-### Props
+<!-- generated:api:start SSlideGroup -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `modelValue` (`v-model`) | `GroupItemValue[] \| null` | `[]` | Selected item identifiers — **always an array**, even for single selection |
-| `multiple` | `boolean` | `false` | Allow several selected items |
-| `mandatory` | `boolean` | `false` | Keep at least one selected (auto-selects the first item when empty) |
-| `scrollable` | `boolean \| null` | `false` | `true` = native swipe/scroll, **no arrows**. `false` = arrows (shown only when items overflow), no manual scrolling |
-| `slideStep` | `number \| null` | `undefined` | Items to move per arrow click (default: one viewport width) |
-| `centerActive` | `boolean` | `false` | Scroll the clicked/selected item to the center |
-| `activeClass` | `string \| null` | `undefined` | Class added to selected items |
-| `contentClass` | `string \| string[] \| Record<string, boolean>` | `undefined` | Class for the inner content row |
-| `contentStyle` | `StyleValue` | `undefined` | Style for the inner content row |
+**SSlideGroup props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `activeClass` | `string \| null` | — | no | — |
+| `centerActive` | `boolean` | — | no | — |
+| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentStyle` | `StyleValue` | — | no | — |
+| `mandatory` | `boolean` | — | no | — |
+| `modelValue` | `GroupItemValue[]` | `[]` | no | — |
+| `multiple` | `boolean` | — | no | — |
+| `scrollable` | `boolean \| null` | — | no | — |
+| `slideStep` | `number \| null` | — | no | — |
+
+**SSlideGroup slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+| `left` | `{ attrs: { disabled: boolean; }; on: { click: () => Promise<void>; }; }` |
+| `right` | `{ attrs: { disabled: boolean; }; on: { click: () => Promise<void>; }; }` |
+
+**SSlideGroup events**
+
+| Event | Payload |
+| --- | --- |
+| `update:modelValue` | `[value: GroupItemValue[]]` |
+
+<!-- generated:api:end SSlideGroup -->
+
+**SSlideGroup notes**
+
+- `modelValue` (`v-model`): Selected item identifiers — **always an array**, even for single selection
+- `multiple`: Allow several selected items
+- `mandatory`: Keep at least one selected (auto-selects the first item when empty)
+- `scrollable`: `true` = native swipe/scroll, **no arrows**. `false` = arrows (shown only when items overflow), no manual scrolling
+- `slideStep`: Items to move per arrow click (default: one viewport width)
+- `centerActive`: Scroll the clicked/selected item to the center
+- `activeClass`: Class added to selected items
+- `contentClass`: Class for the inner content row
+- `contentStyle`: Style for the inner content row
+- `default` (slot): `SSlideItem` components
+- `left` (slot): Custom "previous" button
+- `right` (slot): Custom "next" button
+- `update:modelValue` (event): Selection changed
 
 `GroupItemValue` = `string | number | boolean | symbol`.
-
-### Slots
-
-| Slot | Scoped data | Description |
-|------|-------------|-------------|
-| `default` | — | `SSlideItem` components |
-| `left` | `{ attrs: { disabled }, on: { click } }` | Custom "previous" button |
-| `right` | `{ attrs: { disabled }, on: { click } }` | Custom "next" button |
-
-### Events
-
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `update:modelValue` | `GroupItemValue[]` | Selection changed |
 
 ---
 
@@ -46,21 +67,37 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsSlideGroup.d.ts`
 
 Must be inside `SSlideGroup` (throws otherwise). Clicking the item toggles its selection.
 
-### Props
+<!-- generated:api:start SSlideItem -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `index` | `GroupItemValue \| null` | vnode `key` | Identifier stored in the group's `v-model`. Falls back to the `:key`, then to an auto id |
-| `disabled` | `boolean` | `false` | Dim the item and block clicks |
-| `activeClass` | `string \| null` | `undefined` | Class added when selected |
+**SSlideItem props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `activeClass` | `string \| null` | — | no | — |
+| `disabled` | `boolean` | — | no | — |
+| `index` | `GroupItemValue \| null` | — | no | — |
+
+**SSlideItem slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{ isSelected: boolean; }` |
+
+**SSlideItem events**
+
+None.
+
+<!-- generated:api:end SSlideItem -->
+
+**SSlideItem notes**
+
+- `index`: Identifier stored in the group's `v-model`. Falls back to the `:key`, then to an auto id (default: vnode `key`)
+- `disabled`: Dim the item and block clicks
+- `activeClass`: Class added when selected
+- `default` (slot): Item content
 
 There is **no `value` prop** — use `index` or `:key`.
-
-### Slots
-
-| Slot | Scoped data | Description |
-|------|-------------|-------------|
-| `default` | `{ isSelected }` | Item content |
 
 ---
 

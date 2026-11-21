@@ -6,14 +6,37 @@ Navigation trail showing the current page's location in a hierarchy. Renders a `
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsBreadcrumbs.d.ts`
 
-## Props
+<!-- generated:api:start SBreadcrumbs -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `items` | `BreadcrumbsItem[]` | `undefined` | Breadcrumb entries |
-| `divider` | `string` | `'/'` | Separator text between items |
-| `large` | `boolean` | `false` | Larger text |
-| `color` | `string \| null` | `undefined` | Text color of the enabled (link) items |
+**SBreadcrumbs props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `color` | `string \| null` | — | no | — |
+| `divider` | `string` | `"/"` | no | — |
+| `items` | `BreadcrumbsItem[]` | — | no | — |
+| `large` | `boolean` | — | no | — |
+
+**SBreadcrumbs slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `custom-divider` | `{}` |
+
+**SBreadcrumbs events**
+
+None.
+
+<!-- generated:api:end SBreadcrumbs -->
+
+**SBreadcrumbs notes**
+
+- `items`: Breadcrumb entries
+- `divider`: Separator text between items
+- `large`: Larger text
+- `color`: Text color of the enabled (link) items
+- `custom-divider` (slot): Replaces the divider text
 
 ### BreadcrumbsItem
 
@@ -28,16 +51,6 @@ interface BreadcrumbsItem {
 ```
 
 Each item renders as `router-link` if `to` is set, else `<a>` if `href` is set, else `<span>`. A disabled item is always a `<span>`.
-
-## Slots
-
-| Slot | Scoped data | Description |
-|------|-------------|-------------|
-| `custom-divider` | — | Replaces the divider text |
-
-## Events
-
-None.
 
 ## Usage
 

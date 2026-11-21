@@ -6,32 +6,97 @@ Searchable dropdown input with filtering, multiple selection, chips, free-text e
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsAutocomplete.d.ts`
 
-## Props
+<!-- generated:api:start SAutocomplete -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `modelValue` (`v-model`) | `string \| number \| null` (or an array of them when `multiple`) | `undefined` | Selected item `value`(s) |
-| `items` | `SelectItem[] \| string[]` | `undefined` | Options |
-| `multiple` | `boolean` | `false` | Multi-select; model becomes an array |
-| `chips` | `boolean` | `false` | Show selected items as chips |
-| `closableChips` | `boolean` | `false` | × icon on each selected item (works with or without `chips`) |
-| `allowUnlisted` | `boolean` | `false` | Allow typed values not in `items`; adds an `Add "…"` row and emits `createItem` |
-| `filterMode` | `'start' \| 'contains' \| 'exact' \| 'none'` | `'contains'` | Built-in, case-insensitive filter |
-| `filter` | `(item: SelectItem, queryText: string) => boolean` | `undefined` | Custom filter (overrides `filterMode` unless it is `'none'`) |
-| `debounce` | `number` (ms) | `500` | Delay before `searchItem` is emitted |
-| `delimiter` | `string \| string[] \| RegExp` | `undefined` | Keys that commit the typed text (like Enter) |
-| `loading` | `boolean` | `false` | Show a spinner (hides the clear button) |
-| `clearable` | `boolean` | `false` | Clear button when a value is set |
-| `divided` | `boolean` | `false` | Dividers between list items |
-| `dense` | `boolean` | `false` | Dense list |
-| `label` | `string \| null` | `undefined` | Label above the field |
-| `id` | `string` | auto | Input id (label `for`) |
-| `hideDetails` | `boolean` | `undefined` | Hide the label |
-| `placeholder` | `string` | `undefined` | Input placeholder |
-| `autocomplete` | `'on' \| 'off'` | `undefined` | Native `autocomplete` attribute |
-| `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `undefined` | Preset size |
-| `location` | `LocationRaw` | `'bottom'` | Dropdown position (flips automatically) |
-| `offsetX` / `offsetY` | `number \| null` | `undefined` | Dropdown offset |
+**SAutocomplete props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
+| `allowUnlisted` | `boolean` | — | no | — |
+| `autocomplete` | `string` | `"off"` | no | — |
+| `chips` | `boolean` | — | no | — |
+| `clearable` | `boolean` | — | no | — |
+| `closableChips` | `boolean` | — | no | — |
+| `closeOnClick` | `boolean` | — | no | — |
+| `closeOnContentClick` | `boolean` | — | no | — |
+| `closeOnScroll` | `boolean` | — | no | — |
+| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentStyle` | `StyleValue` | — | no | — |
+| `debounce` | `number` | `500` | no | — |
+| `delimiter` | `string \| RegExp \| string[]` | — | no | — |
+| `dense` | `boolean` | — | no | — |
+| `disabled` | `boolean \| null` | — | no | — |
+| `divided` | `boolean` | — | no | — |
+| `filter` | `((item: SelectItem, queryText: string) => boolean)` | — | no | — |
+| `filterMode` | `"start" \| "contains" \| "exact" \| "none"` | `"contains"` | no | `contains`, `exact`, `none`, `start` |
+| `height` | `string \| number \| null` | — | no | — |
+| `hideDetails` | `boolean` | — | no | — |
+| `id` | `string` | — | no | — |
+| `items` | `string[] \| SelectItem[]` | — | no | — |
+| `label` | `string \| null` | — | no | — |
+| `loading` | `boolean` | — | no | — |
+| `location` | `LocationRaw` | `"bottom"` | no | — |
+| `maxHeight` | `string \| number \| null` | — | no | — |
+| `maxWidth` | `string \| number \| null` | — | no | — |
+| `minHeight` | `string \| number \| null` | — | no | — |
+| `minWidth` | `string \| number \| null` | — | no | — |
+| `modelValue` | `(AutocompleteModelType<T> & (AutocompleteModelType<T> \| null))` | — | no | — |
+| `multiple` | `T` | — | no | — |
+| `name` | `string` | — | no | — |
+| `offsetX` | `number \| null` | — | no | — |
+| `offsetY` | `number \| null` | — | no | — |
+| `onUpdateSearchInput` | `((value: string) => void)` | — | no | — |
+| `placeholder` | `string` | — | no | — |
+| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
+| `preventCloseOnClick` | `boolean` | — | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `screenPadding` | `number \| null` | — | no | — |
+| `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` |
+| `width` | `string \| number \| null` | — | no | — |
+
+**SAutocomplete slots**
+
+None.
+
+**SAutocomplete events**
+
+| Event | Payload |
+| --- | --- |
+| `createItem` | `[SelectItem]` |
+| `searchItem` | `[string]` |
+| `update:modelValue` | `[value: AutocompleteModelType<T> \| null \| undefined]` |
+
+<!-- generated:api:end SAutocomplete -->
+
+**SAutocomplete notes**
+
+- `modelValue` (`v-model`): Selected item `value`(s)
+- `items`: Options
+- `multiple`: Multi-select; model becomes an array (default: `false`)
+- `chips`: Show selected items as chips
+- `closableChips`: × icon on each selected item (works with or without `chips`)
+- `allowUnlisted`: Allow typed values not in `items`; adds an `Add "…"` row and emits `createItem`
+- `filterMode`: Built-in, case-insensitive filter
+- `filter`: Custom filter (overrides `filterMode` unless it is `'none'`)
+- `debounce`: Delay before `searchItem` is emitted
+- `delimiter`: Keys that commit the typed text (like Enter)
+- `loading`: Show a spinner (hides the clear button)
+- `clearable`: Clear button when a value is set
+- `divided`: Dividers between list items
+- `dense`: Dense list
+- `label`: Label above the field
+- `id`: Input id (label `for`) (default: auto)
+- `hideDetails`: Hide the label
+- `placeholder`: Input placeholder
+- `autocomplete`: Native `autocomplete` attribute
+- `size`: Preset size
+- `location`: Dropdown position (flips automatically)
+- `offsetX` / `offsetY`: Dropdown offset
+- `update:modelValue` (event): Selection changed
+- `searchItem` (`@search-item`) (event): Current query, `debounce` ms after the last keydown — use for async search
+- `createItem` (`@create-item`) (event): An unlisted value was added (`allowUnlisted`)
 
 `name` and `disabled` are typed but have no effect (see Gotchas). There is **no `rules` prop**.
 
@@ -43,14 +108,6 @@ interface SelectItem {
 }
 // string[] items use the string as both text and value
 ```
-
-## Events
-
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `update:modelValue` | value or value[] | Selection changed |
-| `searchItem` (`@search-item`) | `string` | Current query, `debounce` ms after the last keydown — use for async search |
-| `createItem` (`@create-item`) | `SelectItem` | An unlisted value was added (`allowUnlisted`) |
 
 ## Usage
 

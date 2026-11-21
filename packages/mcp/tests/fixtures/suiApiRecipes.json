@@ -1,0 +1,5054 @@
+{
+  "package": "@khsura/sui",
+  "version": "1.18.3",
+  "generatedAt": "2026-11-21T00:00:00.000Z",
+  "components": [
+    {
+      "name": "SApp",
+      "family": "layout",
+      "file": "components/layout/sApp.vue",
+      "props": [
+        {
+          "name": "app",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "true",
+          "description": ""
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SAppBar",
+      "family": "layout",
+      "file": "components/layout/sAppBar.vue",
+      "props": [
+        {
+          "name": "app",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "borderRadius",
+          "type": "number | \"tile\" | \"rounded\" | `${number}em` | `${number}px` | `${number}rem` | `${number}%` | `${number}vh` | `${number}vw` | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"appBar\"",
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "contentClass",
+          "type": "string | string[] | Record<string, boolean> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "contentStyle",
+          "type": "StyleValue",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "density",
+          "type": "ToolbarDensityType | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "comfortable",
+            "compact",
+            "default"
+          ]
+        },
+        {
+          "name": "elevateOnScroll",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "elevation",
+          "type": "\"\" | 0 | 1 | 2 | 22 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 23 | 24 | \"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"10\" | \"11\" | \"12\" | \"13\" | \"14\" | \"15\" | \"16\" | \"17\" | \"18\" | \"19\" | \"20\" | \"21\" | \"22\" | \"23\" | \"24\" | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "extended",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "extensionClass",
+          "type": "string | Record<string, boolean | undefined> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "extensionHeight",
+          "type": "string | number | undefined",
+          "required": false,
+          "default": "defaultToolbarExtensionHeight",
+          "description": ""
+        },
+        {
+          "name": "extensionStyle",
+          "type": "Record<string, string> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "fixedExtension",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "for",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "default": "defaultToolbarContentHeight",
+          "description": ""
+        },
+        {
+          "name": "hideOnScroll",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "outlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "position",
+          "type": "Position",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "absolute",
+            "fixed",
+            "relative",
+            "static",
+            "sticky"
+          ]
+        },
+        {
+          "name": "scrollBehavior",
+          "type": "\"auto\" | \"smooth\" | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "auto",
+            "smooth"
+          ]
+        },
+        {
+          "name": "scrollTarget",
+          "type": "string | HTMLElement | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "scrollThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "default": "defaultToolbarContentHeight",
+          "description": ""
+        },
+        {
+          "name": "tag",
+          "type": "HtmlTagName | null | undefined",
+          "required": false,
+          "default": "\"header\"",
+          "description": "",
+          "enumValues": [
+            "a",
+            "abbr",
+            "acronym",
+            "address",
+            "applet",
+            "area",
+            "article",
+            "aside",
+            "audio",
+            "b",
+            "base",
+            "basefont",
+            "bdi",
+            "bdo",
+            "big",
+            "blockquote",
+            "body",
+            "br",
+            "button",
+            "canvas",
+            "caption",
+            "center",
+            "cite",
+            "code",
+            "col",
+            "colgroup",
+            "data",
+            "datalist",
+            "dd",
+            "del",
+            "details",
+            "dfn",
+            "dialog",
+            "dir",
+            "div",
+            "dl",
+            "dt",
+            "em",
+            "embed",
+            "fieldset",
+            "figcaption",
+            "figure",
+            "font",
+            "footer",
+            "form",
+            "frame",
+            "frameset",
+            "h1",
+            "h1> to <h6",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "head",
+            "header",
+            "hr",
+            "html",
+            "i",
+            "iframe",
+            "img",
+            "input",
+            "ins",
+            "kbd",
+            "label",
+            "legend",
+            "li",
+            "link",
+            "main",
+            "map",
+            "mark",
+            "meta",
+            "meter",
+            "nav",
+            "noframes",
+            "noscript",
+            "object",
+            "ol",
+            "optgroup",
+            "option",
+            "output",
+            "p",
+            "param",
+            "picture",
+            "pre",
+            "progress",
+            "q",
+            "rp",
+            "rt",
+            "ruby",
+            "s",
+            "samp",
+            "script",
+            "section",
+            "select",
+            "small",
+            "source",
+            "span",
+            "strike",
+            "strong",
+            "style",
+            "sub",
+            "summary",
+            "sup",
+            "svg",
+            "table",
+            "tbody",
+            "td",
+            "template",
+            "textarea",
+            "tfoot",
+            "th",
+            "thead",
+            "time",
+            "title",
+            "tr",
+            "track",
+            "tt",
+            "u",
+            "ul",
+            "var",
+            "video",
+            "wbr"
+          ]
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        },
+        {
+          "name": "title",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "underlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "extension",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SAppBarTitle",
+      "family": "layout",
+      "file": "components/layout/sAppBarTitle.vue",
+      "props": [
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "tag",
+          "type": "HtmlTagName | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "a",
+            "abbr",
+            "acronym",
+            "address",
+            "applet",
+            "area",
+            "article",
+            "aside",
+            "audio",
+            "b",
+            "base",
+            "basefont",
+            "bdi",
+            "bdo",
+            "big",
+            "blockquote",
+            "body",
+            "br",
+            "button",
+            "canvas",
+            "caption",
+            "center",
+            "cite",
+            "code",
+            "col",
+            "colgroup",
+            "data",
+            "datalist",
+            "dd",
+            "del",
+            "details",
+            "dfn",
+            "dialog",
+            "dir",
+            "div",
+            "dl",
+            "dt",
+            "em",
+            "embed",
+            "fieldset",
+            "figcaption",
+            "figure",
+            "font",
+            "footer",
+            "form",
+            "frame",
+            "frameset",
+            "h1",
+            "h1> to <h6",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "head",
+            "header",
+            "hr",
+            "html",
+            "i",
+            "iframe",
+            "img",
+            "input",
+            "ins",
+            "kbd",
+            "label",
+            "legend",
+            "li",
+            "link",
+            "main",
+            "map",
+            "mark",
+            "meta",
+            "meter",
+            "nav",
+            "noframes",
+            "noscript",
+            "object",
+            "ol",
+            "optgroup",
+            "option",
+            "output",
+            "p",
+            "param",
+            "picture",
+            "pre",
+            "progress",
+            "q",
+            "rp",
+            "rt",
+            "ruby",
+            "s",
+            "samp",
+            "script",
+            "section",
+            "select",
+            "small",
+            "source",
+            "span",
+            "strike",
+            "strong",
+            "style",
+            "sub",
+            "summary",
+            "sup",
+            "svg",
+            "table",
+            "tbody",
+            "td",
+            "template",
+            "textarea",
+            "tfoot",
+            "th",
+            "thead",
+            "time",
+            "title",
+            "tr",
+            "track",
+            "tt",
+            "u",
+            "ul",
+            "var",
+            "video",
+            "wbr"
+          ]
+        },
+        {
+          "name": "text",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "text",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SButton",
+      "family": "core",
+      "file": "components/sButton.vue",
+      "props": [
+        {
+          "name": "activeClass",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "block",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "borderRadius",
+          "type": "number | \"tile\" | \"rounded\" | `${number}em` | `${number}px` | `${number}rem` | `${number}%` | `${number}vh` | `${number}vw` | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "elevation",
+          "type": "\"\" | 0 | 1 | 2 | 22 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 23 | 24 | \"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"10\" | \"11\" | \"12\" | \"13\" | \"14\" | \"15\" | \"16\" | \"17\" | \"18\" | \"19\" | \"20\" | \"21\" | \"22\" | \"23\" | \"24\" | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "href",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "loading",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "outlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "rel",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "rounded",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "selected",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "size",
+          "type": "SizePropertyType",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "default",
+            "extra",
+            "large",
+            "mini",
+            "small"
+          ]
+        },
+        {
+          "name": "tag",
+          "type": "\"a\" | \"button\" | null | undefined",
+          "required": false,
+          "default": "\"button\"",
+          "description": "",
+          "enumValues": [
+            "a",
+            "button"
+          ]
+        },
+        {
+          "name": "target",
+          "type": "\"_blank\" | \"_self\" | \"_parent\" | \"_top\" | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "_blank",
+            "_parent",
+            "_self",
+            "_top"
+          ]
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        },
+        {
+          "name": "to",
+          "type": "string | it | et | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "type",
+          "type": "ButtonTypeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "button",
+            "reset",
+            "submit"
+          ]
+        },
+        {
+          "name": "underlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "value",
+          "type": "string | number | boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "variant",
+          "type": "\"text\" | \"icon\" | \"fab\" | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "fab",
+            "icon",
+            "text"
+          ]
+        },
+        {
+          "name": "width",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "click",
+          "type": "[value: Event]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SCard",
+      "family": "cards",
+      "file": "components/cards/sCard.vue",
+      "props": [
+        {
+          "name": "borderRadius",
+          "type": "number | \"tile\" | \"rounded\" | `${number}em` | `${number}px` | `${number}rem` | `${number}%` | `${number}vh` | `${number}vw` | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "elevation",
+          "type": "\"\" | 0 | 1 | 2 | 22 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 23 | 24 | \"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"10\" | \"11\" | \"12\" | \"13\" | \"14\" | \"15\" | \"16\" | \"17\" | \"18\" | \"19\" | \"20\" | \"21\" | \"22\" | \"23\" | \"24\" | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "href",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "outlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "rel",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "tag",
+          "type": "HtmlTagName | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "a",
+            "abbr",
+            "acronym",
+            "address",
+            "applet",
+            "area",
+            "article",
+            "aside",
+            "audio",
+            "b",
+            "base",
+            "basefont",
+            "bdi",
+            "bdo",
+            "big",
+            "blockquote",
+            "body",
+            "br",
+            "button",
+            "canvas",
+            "caption",
+            "center",
+            "cite",
+            "code",
+            "col",
+            "colgroup",
+            "data",
+            "datalist",
+            "dd",
+            "del",
+            "details",
+            "dfn",
+            "dialog",
+            "dir",
+            "div",
+            "dl",
+            "dt",
+            "em",
+            "embed",
+            "fieldset",
+            "figcaption",
+            "figure",
+            "font",
+            "footer",
+            "form",
+            "frame",
+            "frameset",
+            "h1",
+            "h1> to <h6",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "head",
+            "header",
+            "hr",
+            "html",
+            "i",
+            "iframe",
+            "img",
+            "input",
+            "ins",
+            "kbd",
+            "label",
+            "legend",
+            "li",
+            "link",
+            "main",
+            "map",
+            "mark",
+            "meta",
+            "meter",
+            "nav",
+            "noframes",
+            "noscript",
+            "object",
+            "ol",
+            "optgroup",
+            "option",
+            "output",
+            "p",
+            "param",
+            "picture",
+            "pre",
+            "progress",
+            "q",
+            "rp",
+            "rt",
+            "ruby",
+            "s",
+            "samp",
+            "script",
+            "section",
+            "select",
+            "small",
+            "source",
+            "span",
+            "strike",
+            "strong",
+            "style",
+            "sub",
+            "summary",
+            "sup",
+            "svg",
+            "table",
+            "tbody",
+            "td",
+            "template",
+            "textarea",
+            "tfoot",
+            "th",
+            "thead",
+            "time",
+            "title",
+            "tr",
+            "track",
+            "tt",
+            "u",
+            "ul",
+            "var",
+            "video",
+            "wbr"
+          ]
+        },
+        {
+          "name": "target",
+          "type": "\"_blank\" | \"_self\" | \"_parent\" | \"_top\" | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "_blank",
+            "_parent",
+            "_self",
+            "_top"
+          ]
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        },
+        {
+          "name": "to",
+          "type": "string | it | et | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "underlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "width",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SCardActions",
+      "family": "cards",
+      "file": "components/cards/sCardActions.vue",
+      "props": [
+        {
+          "name": "tag",
+          "type": "HtmlTagName | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "a",
+            "abbr",
+            "acronym",
+            "address",
+            "applet",
+            "area",
+            "article",
+            "aside",
+            "audio",
+            "b",
+            "base",
+            "basefont",
+            "bdi",
+            "bdo",
+            "big",
+            "blockquote",
+            "body",
+            "br",
+            "button",
+            "canvas",
+            "caption",
+            "center",
+            "cite",
+            "code",
+            "col",
+            "colgroup",
+            "data",
+            "datalist",
+            "dd",
+            "del",
+            "details",
+            "dfn",
+            "dialog",
+            "dir",
+            "div",
+            "dl",
+            "dt",
+            "em",
+            "embed",
+            "fieldset",
+            "figcaption",
+            "figure",
+            "font",
+            "footer",
+            "form",
+            "frame",
+            "frameset",
+            "h1",
+            "h1> to <h6",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "head",
+            "header",
+            "hr",
+            "html",
+            "i",
+            "iframe",
+            "img",
+            "input",
+            "ins",
+            "kbd",
+            "label",
+            "legend",
+            "li",
+            "link",
+            "main",
+            "map",
+            "mark",
+            "meta",
+            "meter",
+            "nav",
+            "noframes",
+            "noscript",
+            "object",
+            "ol",
+            "optgroup",
+            "option",
+            "output",
+            "p",
+            "param",
+            "picture",
+            "pre",
+            "progress",
+            "q",
+            "rp",
+            "rt",
+            "ruby",
+            "s",
+            "samp",
+            "script",
+            "section",
+            "select",
+            "small",
+            "source",
+            "span",
+            "strike",
+            "strong",
+            "style",
+            "sub",
+            "summary",
+            "sup",
+            "svg",
+            "table",
+            "tbody",
+            "td",
+            "template",
+            "textarea",
+            "tfoot",
+            "th",
+            "thead",
+            "time",
+            "title",
+            "tr",
+            "track",
+            "tt",
+            "u",
+            "ul",
+            "var",
+            "video",
+            "wbr"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SCardText",
+      "family": "cards",
+      "file": "components/cards/sCardText.vue",
+      "props": [
+        {
+          "name": "tag",
+          "type": "HtmlTagName | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "a",
+            "abbr",
+            "acronym",
+            "address",
+            "applet",
+            "area",
+            "article",
+            "aside",
+            "audio",
+            "b",
+            "base",
+            "basefont",
+            "bdi",
+            "bdo",
+            "big",
+            "blockquote",
+            "body",
+            "br",
+            "button",
+            "canvas",
+            "caption",
+            "center",
+            "cite",
+            "code",
+            "col",
+            "colgroup",
+            "data",
+            "datalist",
+            "dd",
+            "del",
+            "details",
+            "dfn",
+            "dialog",
+            "dir",
+            "div",
+            "dl",
+            "dt",
+            "em",
+            "embed",
+            "fieldset",
+            "figcaption",
+            "figure",
+            "font",
+            "footer",
+            "form",
+            "frame",
+            "frameset",
+            "h1",
+            "h1> to <h6",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "head",
+            "header",
+            "hr",
+            "html",
+            "i",
+            "iframe",
+            "img",
+            "input",
+            "ins",
+            "kbd",
+            "label",
+            "legend",
+            "li",
+            "link",
+            "main",
+            "map",
+            "mark",
+            "meta",
+            "meter",
+            "nav",
+            "noframes",
+            "noscript",
+            "object",
+            "ol",
+            "optgroup",
+            "option",
+            "output",
+            "p",
+            "param",
+            "picture",
+            "pre",
+            "progress",
+            "q",
+            "rp",
+            "rt",
+            "ruby",
+            "s",
+            "samp",
+            "script",
+            "section",
+            "select",
+            "small",
+            "source",
+            "span",
+            "strike",
+            "strong",
+            "style",
+            "sub",
+            "summary",
+            "sup",
+            "svg",
+            "table",
+            "tbody",
+            "td",
+            "template",
+            "textarea",
+            "tfoot",
+            "th",
+            "thead",
+            "time",
+            "title",
+            "tr",
+            "track",
+            "tt",
+            "u",
+            "ul",
+            "var",
+            "video",
+            "wbr"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SCardTitle",
+      "family": "cards",
+      "file": "components/cards/sCardTitle.vue",
+      "props": [
+        {
+          "name": "tag",
+          "type": "HtmlTagName | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "a",
+            "abbr",
+            "acronym",
+            "address",
+            "applet",
+            "area",
+            "article",
+            "aside",
+            "audio",
+            "b",
+            "base",
+            "basefont",
+            "bdi",
+            "bdo",
+            "big",
+            "blockquote",
+            "body",
+            "br",
+            "button",
+            "canvas",
+            "caption",
+            "center",
+            "cite",
+            "code",
+            "col",
+            "colgroup",
+            "data",
+            "datalist",
+            "dd",
+            "del",
+            "details",
+            "dfn",
+            "dialog",
+            "dir",
+            "div",
+            "dl",
+            "dt",
+            "em",
+            "embed",
+            "fieldset",
+            "figcaption",
+            "figure",
+            "font",
+            "footer",
+            "form",
+            "frame",
+            "frameset",
+            "h1",
+            "h1> to <h6",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "head",
+            "header",
+            "hr",
+            "html",
+            "i",
+            "iframe",
+            "img",
+            "input",
+            "ins",
+            "kbd",
+            "label",
+            "legend",
+            "li",
+            "link",
+            "main",
+            "map",
+            "mark",
+            "meta",
+            "meter",
+            "nav",
+            "noframes",
+            "noscript",
+            "object",
+            "ol",
+            "optgroup",
+            "option",
+            "output",
+            "p",
+            "param",
+            "picture",
+            "pre",
+            "progress",
+            "q",
+            "rp",
+            "rt",
+            "ruby",
+            "s",
+            "samp",
+            "script",
+            "section",
+            "select",
+            "small",
+            "source",
+            "span",
+            "strike",
+            "strong",
+            "style",
+            "sub",
+            "summary",
+            "sup",
+            "svg",
+            "table",
+            "tbody",
+            "td",
+            "template",
+            "textarea",
+            "tfoot",
+            "th",
+            "thead",
+            "time",
+            "title",
+            "tr",
+            "track",
+            "tt",
+            "u",
+            "ul",
+            "var",
+            "video",
+            "wbr"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SCheckbox",
+      "family": "form",
+      "file": "components/form/sCheckbox.vue",
+      "props": [
+        {
+          "name": "block",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "bordered",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "PresetColor | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "dirty",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "error",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideDetails",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideError",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "id",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "rules",
+          "type": "FormInputModelValueRule[] | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"large\" | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "default",
+            "large"
+          ]
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "change",
+          "type": "[value: boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:dirty",
+          "type": "[value: boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:error",
+          "type": "[value: boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:errors",
+          "type": "[value: string[]]",
+          "description": ""
+        },
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SChip",
+      "family": "core",
+      "file": "components/sChip.vue",
+      "props": [
+        {
+          "name": "borderRadius",
+          "type": "number | \"tile\" | \"rounded\" | `${number}em` | `${number}px` | `${number}rem` | `${number}%` | `${number}vh` | `${number}vw` | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "closable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "label",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "link",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "outlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "size",
+          "type": "SizePropertyType",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "default",
+            "extra",
+            "large",
+            "mini",
+            "small"
+          ]
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        },
+        {
+          "name": "underlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "close",
+          "type": "{ on: { close: () => void; }; }",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "any",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "click",
+          "type": "[_: Event]",
+          "description": ""
+        },
+        {
+          "name": "close",
+          "type": "[]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SColumn",
+      "family": "grids",
+      "file": "components/grids/sColumn.vue",
+      "props": [
+        {
+          "name": "alignSelf",
+          "type": "\"center\" | \"auto\" | \"start\" | \"normal\" | \"end\" | \"self-start\" | \"self-end\" | \"flex-start\" | \"flex-end\" | \"baseline\" | \"first baseline\" | \"last baseline\" | \"stretch\" | \"safe center\" | \"unsafe center\" | \"inherit\" | \"initial\" | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "auto",
+            "baseline",
+            "center",
+            "end",
+            "first baseline",
+            "flex-end",
+            "flex-start",
+            "inherit",
+            "initial",
+            "last baseline",
+            "normal",
+            "safe center",
+            "self-end",
+            "self-start",
+            "start",
+            "stretch",
+            "unsafe center"
+          ]
+        },
+        {
+          "name": "cols",
+          "type": "\"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"10\" | \"11\" | \"12\" | ColumnNumber | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "contentClass",
+          "type": "string | string[] | Record<string, boolean> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "contentStyle",
+          "type": "StyleValue",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "lg",
+          "type": "\"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"10\" | \"11\" | \"12\" | ColumnNumber | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "md",
+          "type": "\"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"10\" | \"11\" | \"12\" | ColumnNumber | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "order",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "sm",
+          "type": "\"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"10\" | \"11\" | \"12\" | ColumnNumber | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SContainer",
+      "family": "grids",
+      "file": "components/grids/sContainer.vue",
+      "props": [
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "fill",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "fluid",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "narrow",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "padless",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "tag",
+          "type": "HtmlTagName | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "a",
+            "abbr",
+            "acronym",
+            "address",
+            "applet",
+            "area",
+            "article",
+            "aside",
+            "audio",
+            "b",
+            "base",
+            "basefont",
+            "bdi",
+            "bdo",
+            "big",
+            "blockquote",
+            "body",
+            "br",
+            "button",
+            "canvas",
+            "caption",
+            "center",
+            "cite",
+            "code",
+            "col",
+            "colgroup",
+            "data",
+            "datalist",
+            "dd",
+            "del",
+            "details",
+            "dfn",
+            "dialog",
+            "dir",
+            "div",
+            "dl",
+            "dt",
+            "em",
+            "embed",
+            "fieldset",
+            "figcaption",
+            "figure",
+            "font",
+            "footer",
+            "form",
+            "frame",
+            "frameset",
+            "h1",
+            "h1> to <h6",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "head",
+            "header",
+            "hr",
+            "html",
+            "i",
+            "iframe",
+            "img",
+            "input",
+            "ins",
+            "kbd",
+            "label",
+            "legend",
+            "li",
+            "link",
+            "main",
+            "map",
+            "mark",
+            "meta",
+            "meter",
+            "nav",
+            "noframes",
+            "noscript",
+            "object",
+            "ol",
+            "optgroup",
+            "option",
+            "output",
+            "p",
+            "param",
+            "picture",
+            "pre",
+            "progress",
+            "q",
+            "rp",
+            "rt",
+            "ruby",
+            "s",
+            "samp",
+            "script",
+            "section",
+            "select",
+            "small",
+            "source",
+            "span",
+            "strike",
+            "strong",
+            "style",
+            "sub",
+            "summary",
+            "sup",
+            "svg",
+            "table",
+            "tbody",
+            "td",
+            "template",
+            "textarea",
+            "tfoot",
+            "th",
+            "thead",
+            "time",
+            "title",
+            "tr",
+            "track",
+            "tt",
+            "u",
+            "ul",
+            "var",
+            "video",
+            "wbr"
+          ]
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        },
+        {
+          "name": "wide",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SDatePickerInput",
+      "family": "datePicker",
+      "file": "components/datePicker/sDatePickerInput.vue",
+      "props": [
+        {
+          "name": "block",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Stretches the field to the width of its container."
+        },
+        {
+          "name": "carousel",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Renders prev/next buttons that step the model value by one period."
+        },
+        {
+          "name": "carouselNextAriaLabel",
+          "type": "string | null | undefined",
+          "required": false,
+          "default": "\"Next\"",
+          "description": ""
+        },
+        {
+          "name": "carouselNextIcon",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"mdi-chevron-right\"",
+          "description": ""
+        },
+        {
+          "name": "carouselPrevAriaLabel",
+          "type": "string | null | undefined",
+          "required": false,
+          "default": "\"Previous\"",
+          "description": ""
+        },
+        {
+          "name": "carouselPrevIcon",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"mdi-chevron-left\"",
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "dateFormat",
+          "type": "string | undefined",
+          "required": false,
+          "default": "datePickerDisplayFormat.date",
+          "description": ""
+        },
+        {
+          "name": "dense",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "dirty",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "error",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideDetails",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideError",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideTitle",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "id",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "label",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "max",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "min",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "monthFormat",
+          "type": "string | undefined",
+          "required": false,
+          "default": "datePickerDisplayFormat.month",
+          "description": ""
+        },
+        {
+          "name": "placeholder",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "rules",
+          "type": "FormInputModelValueRule[] | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "simple",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "size",
+          "type": "SizePropertyType",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "default",
+            "extra",
+            "large",
+            "mini",
+            "small"
+          ]
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        },
+        {
+          "name": "tile",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "today",
+          "type": "string | undefined",
+          "required": false,
+          "default": "dayjs().format(\"YYYY-MM-DD\")",
+          "description": ""
+        },
+        {
+          "name": "type",
+          "type": "DatePickerTypeType",
+          "required": true,
+          "default": "\"date\"",
+          "description": "",
+          "enumValues": [
+            "date",
+            "month",
+            "year"
+          ]
+        },
+        {
+          "name": "width",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "yearFormat",
+          "type": "string | undefined",
+          "required": false,
+          "default": "datePickerDisplayFormat.year",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "change",
+          "type": "[string | null]",
+          "description": ""
+        },
+        {
+          "name": "update:dirty",
+          "type": "[boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:error",
+          "type": "[boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:errors",
+          "type": "[string[]]",
+          "description": ""
+        },
+        {
+          "name": "update:modelValue",
+          "type": "[value: string | null | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SDialog",
+      "family": "core",
+      "file": "components/sDialog.vue",
+      "props": [
+        {
+          "name": "activator",
+          "type": "string | HTMLElement | ComponentPublicInstance | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "borderless",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "closeOnClick",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "elevation",
+          "type": "\"\" | 0 | 1 | 2 | 22 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 23 | 24 | \"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"10\" | \"11\" | \"12\" | \"13\" | \"14\" | \"15\" | \"16\" | \"17\" | \"18\" | \"19\" | \"20\" | \"21\" | \"22\" | \"23\" | \"24\" | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "fullscreen",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "location",
+          "type": "LocationRaw",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "offsetX",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "offsetY",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "persistent",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "preventCloseOnClick",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "scrollable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "scrollableBackground",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "width",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "zIndex",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "activator",
+          "type": "{ on: { click: () => void; }; attrs: Partial<PropsRequired<{ disabled: boolean | null | undefined; readonly: boolean | null | undefined; }>>; }",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SFooter",
+      "family": "layout",
+      "file": "components/layout/sFooter.vue",
+      "props": [
+        {
+          "name": "app",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "elevation",
+          "type": "\"\" | 0 | 1 | 2 | 22 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 23 | 24 | \"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"10\" | \"11\" | \"12\" | \"13\" | \"14\" | \"15\" | \"16\" | \"17\" | \"18\" | \"19\" | \"20\" | \"21\" | \"22\" | \"23\" | \"24\" | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "for",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "inset",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": ""
+        },
+        {
+          "name": "maxHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "padless",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": ""
+        },
+        {
+          "name": "position",
+          "type": "Position",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "absolute",
+            "fixed",
+            "relative",
+            "static",
+            "sticky"
+          ]
+        },
+        {
+          "name": "tag",
+          "type": "\"div\" | \"footer\" | null | undefined",
+          "required": false,
+          "default": "\"footer\"",
+          "description": "",
+          "enumValues": [
+            "div",
+            "footer"
+          ]
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        },
+        {
+          "name": "width",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SForm",
+      "family": "form",
+      "file": "components/form/sForm.vue",
+      "props": [
+        {
+          "name": "error",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "errors",
+          "type": "string[] | undefined",
+          "required": false,
+          "default": "[]",
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "submit",
+          "type": "[Event]",
+          "description": ""
+        },
+        {
+          "name": "update:error",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        },
+        {
+          "name": "update:errors",
+          "type": "[value: string[]]",
+          "description": ""
+        },
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SIcon",
+      "family": "core",
+      "file": "components/sIcon.vue",
+      "props": [
+        {
+          "name": "color",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "extra",
+          "type": "string[] | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "rotated",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "size",
+          "type": "SizePropertyUnionType",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "spin",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": []
+    },
+    {
+      "name": "SImage",
+      "family": "core",
+      "file": "components/sImage.vue",
+      "props": [
+        {
+          "name": "alt",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "aspectRatio",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "lazyLoad",
+          "type": "LazyLoad | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "objectFit",
+          "type": "\"fill\" | \"none\" | \"contain\" | \"cover\" | \"scale-down\" | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "contain",
+            "cover",
+            "fill",
+            "none",
+            "scale-down"
+          ]
+        },
+        {
+          "name": "src",
+          "type": "string | null | undefined",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "width",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SInput",
+      "family": "form",
+      "file": "components/form/sInput.vue",
+      "props": [
+        {
+          "name": "allowDecimal",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "appendOuter",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "ariaLabelledby",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "autocapitalize",
+          "type": "\"on\" | \"off\" | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "off",
+            "on"
+          ]
+        },
+        {
+          "name": "autocomplete",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "autofocus",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "dense",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "dirty",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "error",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideDetails",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideError",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "id",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "inputBackground",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "inputmode",
+          "type": "InputModeTypeText | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "decimal",
+            "email",
+            "none",
+            "numeric",
+            "search",
+            "tel",
+            "text",
+            "url"
+          ]
+        },
+        {
+          "name": "isPasteDisabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "label",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "max",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxlength",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "min",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minlength",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "T | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "pattern",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "placeholder",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "placeholderBackground",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "positive",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "rules",
+          "type": "FormInputModelValueRule[] | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "simple",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "size",
+          "type": "SizePropertyType",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "default",
+            "extra",
+            "large",
+            "mini",
+            "small"
+          ]
+        },
+        {
+          "name": "spellcheck",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "suffix",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "textRight",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "tile",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "type",
+          "type": "InputTypeText | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "date",
+            "datetime-local",
+            "email",
+            "number",
+            "password",
+            "search",
+            "tel",
+            "text",
+            "time",
+            "url",
+            "week"
+          ]
+        },
+        {
+          "name": "usePreviousValueWhenExceeded",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "appendOuter",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "suffix",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "autocomplete",
+          "type": "[HTMLInputElement | null]",
+          "description": ""
+        },
+        {
+          "name": "blur",
+          "type": "[Event]",
+          "description": ""
+        },
+        {
+          "name": "change",
+          "type": "[string | number | null]",
+          "description": ""
+        },
+        {
+          "name": "focus",
+          "type": "[Event]",
+          "description": ""
+        },
+        {
+          "name": "input",
+          "type": "[Event]",
+          "description": ""
+        },
+        {
+          "name": "keydown",
+          "type": "[KeyboardEvent]",
+          "description": ""
+        },
+        {
+          "name": "paste",
+          "type": "[ClipboardEvent]",
+          "description": ""
+        },
+        {
+          "name": "update:dirty",
+          "type": "[boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:error",
+          "type": "[boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:errors",
+          "type": "[string[]]",
+          "description": ""
+        },
+        {
+          "name": "update:modelValue",
+          "type": "[value: T | null | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SLayout",
+      "family": "layout",
+      "file": "components/layout/sLayout.vue",
+      "props": [
+        {
+          "name": "app",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "width",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SList",
+      "family": "list",
+      "file": "components/list/sList.vue",
+      "props": [
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "dense",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "divided",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "inset",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "lines",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "link",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "outlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "tag",
+          "type": "\"div\" | \"ol\" | \"ul\" | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "div",
+            "ol",
+            "ul"
+          ]
+        },
+        {
+          "name": "text",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SListItem",
+      "family": "list",
+      "file": "components/list/sListItem.vue",
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "href",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "lines",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "link",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "rel",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "selectable",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "tag",
+          "type": "\"div\" | \"li\" | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "div",
+            "li"
+          ]
+        },
+        {
+          "name": "target",
+          "type": "\"_blank\" | \"_self\" | \"_parent\" | \"_top\" | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "_blank",
+            "_parent",
+            "_self",
+            "_top"
+          ]
+        },
+        {
+          "name": "to",
+          "type": "string | it | et | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "click",
+          "type": "[value: Event]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SListItemContent",
+      "family": "list",
+      "file": "components/list/sListItemContent.vue",
+      "props": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SListItemIcon",
+      "family": "list",
+      "file": "components/list/sListItemIcon.vue",
+      "props": [
+        {
+          "name": "alignCenter",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "dense",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SListItemTitle",
+      "family": "list",
+      "file": "components/list/sListItemTitle.vue",
+      "props": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SMain",
+      "family": "layout",
+      "file": "components/layout/sMain.vue",
+      "props": [
+        {
+          "name": "app",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "for",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "tag",
+          "type": "HtmlTagName | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "a",
+            "abbr",
+            "acronym",
+            "address",
+            "applet",
+            "area",
+            "article",
+            "aside",
+            "audio",
+            "b",
+            "base",
+            "basefont",
+            "bdi",
+            "bdo",
+            "big",
+            "blockquote",
+            "body",
+            "br",
+            "button",
+            "canvas",
+            "caption",
+            "center",
+            "cite",
+            "code",
+            "col",
+            "colgroup",
+            "data",
+            "datalist",
+            "dd",
+            "del",
+            "details",
+            "dfn",
+            "dialog",
+            "dir",
+            "div",
+            "dl",
+            "dt",
+            "em",
+            "embed",
+            "fieldset",
+            "figcaption",
+            "figure",
+            "font",
+            "footer",
+            "form",
+            "frame",
+            "frameset",
+            "h1",
+            "h1> to <h6",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "head",
+            "header",
+            "hr",
+            "html",
+            "i",
+            "iframe",
+            "img",
+            "input",
+            "ins",
+            "kbd",
+            "label",
+            "legend",
+            "li",
+            "link",
+            "main",
+            "map",
+            "mark",
+            "meta",
+            "meter",
+            "nav",
+            "noframes",
+            "noscript",
+            "object",
+            "ol",
+            "optgroup",
+            "option",
+            "output",
+            "p",
+            "param",
+            "picture",
+            "pre",
+            "progress",
+            "q",
+            "rp",
+            "rt",
+            "ruby",
+            "s",
+            "samp",
+            "script",
+            "section",
+            "select",
+            "small",
+            "source",
+            "span",
+            "strike",
+            "strong",
+            "style",
+            "sub",
+            "summary",
+            "sup",
+            "svg",
+            "table",
+            "tbody",
+            "td",
+            "template",
+            "textarea",
+            "tfoot",
+            "th",
+            "thead",
+            "time",
+            "title",
+            "tr",
+            "track",
+            "tt",
+            "u",
+            "ul",
+            "var",
+            "video",
+            "wbr"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SMenu",
+      "family": "core",
+      "file": "components/sMenu.vue",
+      "props": [
+        {
+          "name": "activator",
+          "type": "string | HTMLElement | ComponentPublicInstance | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "closeOnClick",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "closeOnContentClick",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "closeOnScroll",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "contentClass",
+          "type": "string | string[] | Record<string, boolean> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "contentStyle",
+          "type": "StyleValue",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "location",
+          "type": "LocationRaw",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "offsetX",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "offsetY",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "position",
+          "type": "Position",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "absolute",
+            "fixed",
+            "relative",
+            "static",
+            "sticky"
+          ]
+        },
+        {
+          "name": "preventCloseOnClick",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "screenPadding",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "width",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "activator",
+          "type": "{ on: { click: () => void; }; attrs: Partial<PropsRequired<{ disabled: boolean | null | undefined; readonly: boolean | null | undefined; }>>; }",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "close",
+          "type": "[]",
+          "description": ""
+        },
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SNavigationDrawer",
+      "family": "layout",
+      "file": "components/layout/sNavigationDrawer.vue",
+      "props": [
+        {
+          "name": "activator",
+          "type": "string | HTMLElement | ComponentPublicInstance | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "app",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "elevation",
+          "type": "\"\" | 0 | 1 | 2 | 22 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 23 | 24 | \"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"10\" | \"11\" | \"12\" | \"13\" | \"14\" | \"15\" | \"16\" | \"17\" | \"18\" | \"19\" | \"20\" | \"21\" | \"22\" | \"23\" | \"24\" | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "expandOnHover",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "for",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "forceMobile",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideOverlay",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "location",
+          "type": "LocationRaw",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxWidth",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minWidth",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "miniVariant",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "miniVariantWidth",
+          "type": "string | number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "offsetX",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "offsetY",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "permanent",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "persistent",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "position",
+          "type": "Position",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "absolute",
+            "fixed",
+            "relative",
+            "static",
+            "sticky"
+          ]
+        },
+        {
+          "name": "resizable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "tag",
+          "type": "\"div\" | \"nav\" | \"section\" | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "div",
+            "nav",
+            "section"
+          ]
+        },
+        {
+          "name": "touchless",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "width",
+          "type": "string | number | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "append",
+          "type": "{ class: string; }",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{ on: { click: () => void; transitionend: (e: Event) => void; mouseenter: () => void; mouseleave: () => void; }; }",
+          "description": ""
+        },
+        {
+          "name": "prepend",
+          "type": "{ class: string; }",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "transitionend",
+          "type": "[value: Event]",
+          "description": ""
+        },
+        {
+          "name": "update:miniVariant",
+          "type": "[value: boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        },
+        {
+          "name": "update:width",
+          "type": "[value: number]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SRow",
+      "family": "grids",
+      "file": "components/grids/sRow.vue",
+      "props": [
+        {
+          "name": "align",
+          "type": "GridAlignPropertyType | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "baseline",
+            "center",
+            "end",
+            "start",
+            "stretch"
+          ]
+        },
+        {
+          "name": "contentClass",
+          "type": "string | string[] | Record<string, boolean> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "contentStyle",
+          "type": "StyleValue",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "dense",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "fillHeight",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "gap",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "justify",
+          "type": "GridJustifyPropertyType | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "center",
+            "end",
+            "spaceAround",
+            "spaceBetween",
+            "start"
+          ]
+        },
+        {
+          "name": "noGutters",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "noOuterGutters",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SSelect",
+      "family": "form",
+      "file": "components/form/sSelect.vue",
+      "props": [
+        {
+          "name": "activator",
+          "type": "string | HTMLElement | ComponentPublicInstance | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "borderRadius",
+          "type": "number | \"tile\" | \"rounded\" | `${number}em` | `${number}px` | `${number}rem` | `${number}%` | `${number}vh` | `${number}vw` | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "closeOnClick",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "closeOnContentClick",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "closeOnScroll",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "contentClass",
+          "type": "string | string[] | Record<string, boolean> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "contentStyle",
+          "type": "StyleValue",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "dense",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "dirty",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "divided",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "error",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "grow",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideDetails",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideError",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "id",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "items",
+          "type": "(string | SelectItem | null | undefined)[] | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "label",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "location",
+          "type": "LocationRaw",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "menu",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "T | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "name",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "offsetX",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "offsetY",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "outlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "position",
+          "type": "Position",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "absolute",
+            "fixed",
+            "relative",
+            "static",
+            "sticky"
+          ]
+        },
+        {
+          "name": "preventCloseOnClick",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "rules",
+          "type": "FormInputModelValueRule[] | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "screenPadding",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "text",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        },
+        {
+          "name": "underlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "width",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "activator",
+          "type": "{ item: SelectItem | null; value: boolean | undefined; }",
+          "description": ""
+        },
+        {
+          "name": "dropdownIcon",
+          "type": "{ color: string | undefined; value: boolean | undefined; }",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "change",
+          "type": "[T | null]",
+          "description": ""
+        },
+        {
+          "name": "update:dirty",
+          "type": "[boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:error",
+          "type": "[boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:errors",
+          "type": "[string[]]",
+          "description": ""
+        },
+        {
+          "name": "update:menu",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        },
+        {
+          "name": "update:modelValue",
+          "type": "[value: T | null | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SSnackbar",
+      "family": "core",
+      "file": "components/sSnackbar.vue",
+      "props": [
+        {
+          "name": "activator",
+          "type": "string | HTMLElement | ComponentPublicInstance | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "borderRadius",
+          "type": "number | \"tile\" | \"rounded\" | `${number}em` | `${number}px` | `${number}rem` | `${number}%` | `${number}vh` | `${number}vw` | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "location",
+          "type": "\"top\" | \"bottom\" | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "bottom",
+            "top"
+          ]
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "multiLine",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "outlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "preventCloseOnClick",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "timeout",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "underlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "action",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "activator",
+          "type": "{ on: { click: () => void; }; attrs: Partial<PropsRequired<{ disabled: boolean | null | undefined; readonly: boolean | null | undefined; }>>; }",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SSpacer",
+      "family": "grids",
+      "file": "components/grids/sSpacer.vue",
+      "props": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SSwitch",
+      "family": "core",
+      "file": "components/sSwitch.vue",
+      "props": [
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "dirty",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "error",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideDetails",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideError",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "id",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "label",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "rules",
+          "type": "FormInputModelValueRule[] | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "label",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "STable",
+      "family": "table",
+      "file": "components/table/sTable.vue",
+      "props": [
+        {
+          "name": "dense",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": ""
+        },
+        {
+          "name": "expanded",
+          "type": "T[] | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "foldable",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": ""
+        },
+        {
+          "name": "folded",
+          "type": "boolean | string[] | undefined",
+          "required": false,
+          "default": "[]",
+          "description": ""
+        },
+        {
+          "name": "groupBy",
+          "type": "string | string[] | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "headers",
+          "type": "TableHeader<string>[]",
+          "required": true,
+          "default": "[]",
+          "description": ""
+        },
+        {
+          "name": "hideHeader",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": ""
+        },
+        {
+          "name": "hidePagination",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": ""
+        },
+        {
+          "name": "hideTopBottomBorders",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": ""
+        },
+        {
+          "name": "hideVerticalBorders",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": ""
+        },
+        {
+          "name": "itemClass",
+          "type": "TableItemClass<T, string> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "itemFooter",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"\"",
+          "description": ""
+        },
+        {
+          "name": "itemFooterClass",
+          "type": "TableItemClass<T, string> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "itemFooterStyle",
+          "type": "TableItemStyle<T, string> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "itemHeader",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"\"",
+          "description": ""
+        },
+        {
+          "name": "itemHeaderClass",
+          "type": "TableItemClass<T, string> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "itemHeaderStyle",
+          "type": "TableItemStyle<T, string> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "itemKey",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "itemRowClass",
+          "type": "TableRowClass<T> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "itemStyle",
+          "type": "TableItemStyle<T, string> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "items",
+          "type": "T[]",
+          "required": true,
+          "default": "[]",
+          "description": ""
+        },
+        {
+          "name": "itemsPerPage",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "itemsPerPageLabel",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "loading",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "multiSort",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": ""
+        },
+        {
+          "name": "noDataText",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "outlined",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": ""
+        },
+        {
+          "name": "rounded",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "selected",
+          "type": "T[] | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "shadowExpandedContent",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": ""
+        },
+        {
+          "name": "singleExpand",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "singleSelect",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "stickyHeader",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": ""
+        },
+        {
+          "name": "stickyLeftColumnsOffset",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "stickyLeftColumnsSize",
+          "type": "number | undefined",
+          "required": false,
+          "default": "0",
+          "description": ""
+        },
+        {
+          "name": "stickyLeftColumnsStart",
+          "type": "number | undefined",
+          "required": false,
+          "default": "0",
+          "description": ""
+        },
+        {
+          "name": "stickyRightColumn",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "tile",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "totalItems",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "underlined",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "expanded",
+          "type": "{ item: T; }",
+          "description": "Content of an expanded row."
+        },
+        {
+          "name": "group",
+          "type": "TableGroupSlotProps<T>",
+          "description": "Group row content, rendered when `groupBy` is set."
+        },
+        {
+          "name": "header.<column>",
+          "type": "TableHeaderSlotProps",
+          "description": "Header cell of one column; the key is `header.` followed by the column's `value`.",
+          "pattern": "^header\\..+$"
+        },
+        {
+          "name": "item.<column>",
+          "type": "TableItemSlotProps<T>",
+          "description": "Body cell of one column; the key is `item.` followed by the column's `value`.",
+          "pattern": "^item\\..+$"
+        },
+        {
+          "name": "itemFooter",
+          "type": "TableItemFooterSlotProps<T>",
+          "description": "Full-width row below an item, rendered when `itemFooter` is set and the item has that key."
+        },
+        {
+          "name": "itemHeader",
+          "type": "TableItemHeaderSlotProps<T>",
+          "description": "Full-width row above an item, rendered when `itemHeader` is set and the item has that key."
+        },
+        {
+          "name": "itemsPerPageLabel",
+          "type": "any",
+          "description": "Label of the items-per-page selector in the pagination."
+        },
+        {
+          "name": "noData",
+          "type": "any",
+          "description": "Shown instead of the rows when `items` is empty and not loading."
+        }
+      ],
+      "events": [
+        {
+          "name": "click:row",
+          "type": "[value: { item: T; expand: () => void; isExpanded: boolean; }]",
+          "description": ""
+        },
+        {
+          "name": "update:expanded",
+          "type": "[value: T[]]",
+          "description": ""
+        },
+        {
+          "name": "update:folded",
+          "type": "[value: boolean | string[]]",
+          "description": ""
+        },
+        {
+          "name": "update:itemsPerPage",
+          "type": "[value: number | undefined]",
+          "description": ""
+        },
+        {
+          "name": "update:options",
+          "type": "[{ pageIndex: number; itemsPerPage: number; sortBy: { key: string; order: TableSortOrder; }[]; }]",
+          "description": ""
+        },
+        {
+          "name": "update:selected",
+          "type": "[value: T[]]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "STooltip",
+      "family": "core",
+      "file": "components/sTooltip.vue",
+      "props": [
+        {
+          "name": "activator",
+          "type": "string | HTMLElement | ComponentPublicInstance | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "closeOnClick",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "closeOnContentClick",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "closeOnScroll",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "contentClass",
+          "type": "string | string[] | Record<string, boolean> | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "contentStyle",
+          "type": "StyleValue",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "location",
+          "type": "LocationRaw",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "offsetX",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "offsetY",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "opacity",
+          "type": "string | number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "position",
+          "type": "Position",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "absolute",
+            "fixed",
+            "relative",
+            "static",
+            "sticky"
+          ]
+        },
+        {
+          "name": "preventCloseOnClick",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "screenPadding",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        },
+        {
+          "name": "width",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "activator",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        }
+      ]
+    }
+  ]
+}

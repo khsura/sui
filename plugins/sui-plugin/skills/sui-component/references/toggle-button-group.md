@@ -10,35 +10,57 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsToggleButtonGroup
 
 ## SToggleButtonGroup
 
-### Props
+<!-- generated:api:start SToggleButtonGroup -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `modelValue` (`v-model`) | `GroupItemValue[] \| null` | `[]` | Selected button identifiers — **always an array**, even for single selection |
-| `multiple` | `boolean` | `false` | Allow several selected buttons |
-| `mandatory` | `boolean` | `false` | Keep one selected (auto-selects the first button when empty) |
-| `selectedColor` | `string` | `'primary'` | Color of the selected button |
-| `variant` | `'underlined' \| 'inset' \| null` | `undefined` | `underlined` = underline the selected button; `inset` = segmented/pill look |
-| `dense` | `boolean` | `false` | Compact (small-size) buttons |
-| `bordered` | `boolean` | `false` | Border around the group and between buttons (ignored with `inset`) |
-| `shrink` | `boolean` | `false` | Buttons size to content instead of stretching |
-| `outlined` | `boolean \| null` | `undefined` | Outlined group border |
-| `underlined` | `boolean \| null` | `undefined` | Underlined group border |
-| `borderRadius` | `'tile' \| 'rounded' \| number \| '<n>px' \| ...` | `undefined` | Group corner radius |
+**SToggleButtonGroup props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `bordered` | `boolean` | — | no | — |
+| `dense` | `boolean` | — | no | — |
+| `mandatory` | `boolean` | — | no | — |
+| `modelValue` | `(GroupItemValue[] & T[]) \| null` | `[]` | no | — |
+| `multiple` | `boolean` | — | no | — |
+| `nowrap` | `boolean` | — | no | — |
+| `outlined` | `boolean \| null` | — | no | — |
+| `selectedColor` | `string` | `"primary"` | no | — |
+| `shrink` | `boolean` | — | no | — |
+| `underlined` | `boolean \| null` | — | no | — |
+| `variant` | `"underlined" \| "inset" \| null` | — | no | `inset`, `underlined` |
+
+**SToggleButtonGroup slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SToggleButtonGroup events**
+
+| Event | Payload |
+| --- | --- |
+| `update:modelValue` | `[value: T[] \| null]` |
+
+<!-- generated:api:end SToggleButtonGroup -->
+
+**SToggleButtonGroup notes**
+
+- `modelValue` (`v-model`): Selected button identifiers — **always an array**, even for single selection
+- `multiple`: Allow several selected buttons
+- `mandatory`: Keep one selected (auto-selects the first button when empty)
+- `selectedColor`: Color of the selected button
+- `variant`: `underlined` = underline the selected button; `inset` = segmented/pill look
+- `dense`: Compact (small-size) buttons
+- `bordered`: Border around the group and between buttons (ignored with `inset`)
+- `shrink`: Buttons size to content instead of stretching
+- `outlined`: Outlined group border
+- `underlined`: Underlined group border
+- `borderRadius`: Group corner radius
+- `default` (slot): `SToggleButton` components
+- `update:modelValue` (event): Selection changed
 
 `GroupItemValue` = `string | number | boolean | symbol`. (`nowrap` is typed but has no effect.)
-
-### Slots
-
-| Slot | Description |
-|------|-------------|
-| `default` | `SToggleButton` components |
-
-### Events
-
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `update:modelValue` | `GroupItemValue[]` | Selection changed |
 
 ---
 
@@ -46,23 +68,47 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsToggleButtonGroup
 
 Must be inside `SToggleButtonGroup` (throws otherwise).
 
-### Props
+<!-- generated:api:start SToggleButton -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `index` | `GroupItemValue \| null` | vnode `key` | Identifier stored in the group's `v-model`. Falls back to `:key`, then an auto id |
-| `disabled` | `boolean` | `false` | Disable this button |
-| `cols` / `sm` / `md` / `lg` | `1–12 \| 'auto' \| 'grow'` | `undefined` | Grid column width of the button |
-| `order` | `number` | `undefined` | Flex order |
-| `alignSelf` | CSS `align-self` value | `undefined` | Alignment |
+**SToggleButton props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `activeClass` | `string \| null` | — | no | — |
+| `alignSelf` | `"center" \| "auto" \| "start" \| "normal" \| "end" \| "self-start" \| "self-end" \| "flex-start" \| "flex-end" \| "baseline" \| "first baseline" \| "last baseline" \| "stretch" \| "safe center" \| "unsafe center" \| "inherit" \| "initial" \| null` | — | no | `auto`, `baseline`, `center`, `end`, `first baseline`, `flex-end`, `flex-start`, `inherit`, `initial`, `last baseline`, `normal`, `safe center`, `self-end`, `self-start`, `start`, `stretch`, `unsafe center` |
+| `cols` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
+| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentStyle` | `StyleValue` | — | no | — |
+| `disabled` | `boolean` | — | no | — |
+| `index` | `GroupItemValue \| null` | — | no | — |
+| `lg` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
+| `md` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
+| `order` | `number \| null` | — | no | — |
+| `sm` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
+
+**SToggleButton slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SToggleButton events**
+
+None.
+
+<!-- generated:api:end SToggleButton -->
+
+**SToggleButton notes**
+
+- `index`: Identifier stored in the group's `v-model`. Falls back to `:key`, then an auto id (default: vnode `key`)
+- `disabled`: Disable this button
+- `cols` / `sm` / `md` / `lg`: Grid column width of the button
+- `order`: Flex order
+- `alignSelf`: Alignment
+- `default` (slot): Button content
 
 There is **no `value` prop** — use `index` or `:key`.
-
-### Slots
-
-| Slot | Description |
-|------|-------------|
-| `default` | Button content |
 
 ---
 
