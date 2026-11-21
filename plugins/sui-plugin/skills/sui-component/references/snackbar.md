@@ -81,7 +81,7 @@ None — use `v-model`.
 ## Gotchas
 
 - No `color` prop — colors come from the theme's `snackbar` color.
-- The snackbar is dark (`#424242`) in both themes. A `variant="text"` (or `variant="icon"`) action **without** `color` takes the snackbar's light text colour, so the simplest readable action is `<SButton variant="text">Undo</SButton>`. A `variant="text"` action in `primary`, `secondary`, `success`, `info` or `error` is below 4.5:1 on it (`primary` is 2.18:1); omit `color`, or use `color="warning"` or a light CSS colour such as `color="#ffffff"`.
+- The snackbar is dark (`#424242`) in both themes. A `variant="text"` (or `variant="icon"`) action **without** `color` takes the snackbar's light text colour, so the simplest readable action is `<SButton variant="text">Undo</SButton>`. A `variant="text"` action in `primary`, `secondary`, `success`, `info` or `error` is below 4.5:1 on it (`primary` is 2.18:1); omit `color`, or use `color="warning"` or a light CSS colour such as `color="#ffffff"`. Before 1.20.0 an action without `color` kept the page's dark text colour (about 1.3:1), so set a light colour there.
 - One snackbar per location: two open at the same `location` overlap. Show one at a time (or one `top`, one bottom); a queue component for stacking is planned.
 - `outlined`, `underlined` and `borderRadius` appear in the prop types but are not applied.
 - Without `timeout`, provide a close action in `#action`.

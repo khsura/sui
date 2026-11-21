@@ -1,5 +1,5 @@
 import type { ElementNode } from '@vue/compiler-dom'
-import type { TemplateRule } from '../types'
+import type { TemplateIssue, TemplateRule } from '../types'
 import {
   BLOCK_ATTRIBUTE,
   BUTTON_COMPONENT,
@@ -41,14 +41,18 @@ import {
   SEVERITY_WARNING,
   SNACKBAR_ACTION_SLOT_NAME,
   SNACKBAR_COMPONENT,
-  SNACKBAR_READABLE_ACTION_COLOR,
+  SNACKBAR_LIGHT_ACTION_COLOR_HINT,
+  SNACKBAR_UNCOLOURED_ACTION_VARIANTS,
   SNACKBAR_UNREADABLE_PRESET_COLORS,
   STYLE_ATTRIBUTE,
+  SUI_M2_FIXES_VERSION,
+  TEXT_COLOR_CLASS_PREFIX,
   TEXT_ALIGN_CLASS_PATTERN,
   TEXT_ALIGN_JUSTIFY_CLASSES,
   TEXT_BUTTON_VARIANT,
   VARIANT_ATTRIBUTE,
 } from '../constants'
+import { isVersionAtLeast } from '../lib'
 import {
   childElementsOf,
   descendantElementsOf,
@@ -67,6 +71,7 @@ import {
 
 export const nativeValidationInFormRule: TemplateRule = {
   id: RULE_NATIVE_VALIDATION_IN_FORM,
+  fixedIn: SUI_M2_FIXES_VERSION,
   check: ({ element, ancestors }) => {
     const typeAttribute = findAttribute(element, INPUT_TYPE_ATTRIBUTE)
     const inputType = typeAttribute?.staticValue?.toLowerCase()
@@ -98,6 +103,7 @@ export const nativeValidationInFormRule: TemplateRule = {
 
 export const hideDetailsHidesLabelRule: TemplateRule = {
   id: RULE_HIDE_DETAILS_HIDES_LABEL,
+  fixedIn: SUI_M2_FIXES_VERSION,
   check: ({ element }) => {
     const hideDetails = findPropAttribute(element, HIDE_DETAILS_ATTRIBUTE)
 
@@ -123,41 +129,74 @@ export const hideDetailsHidesLabelRule: TemplateRule = {
   },
 }
 
-const isUnreadableSnackbarAction = (button: ElementNode): boolean => {
+const isUnreadablePresetAction = (button: ElementNode): boolean => {
   const color = findAttribute(button, COLOR_ATTRIBUTE)?.staticValue
   const variant = findAttribute(button, VARIANT_ATTRIBUTE)?.staticValue
 
+  return variant === TEXT_BUTTON_VARIANT && color !== undefined && SNACKBAR_UNREADABLE_PRESET_COLORS.includes(color)
+}
+
+/** A text or icon action with no colour at all: dark page text on the dark snackbar before the M2 fix. */
+const isUncolouredAction = (button: ElementNode): boolean => {
+  const variant = findAttribute(button, VARIANT_ATTRIBUTE)?.staticValue
+
   return (
-    isComponentTag(button.tag, BUTTON_COMPONENT) &&
-    variant === TEXT_BUTTON_VARIANT &&
-    color !== undefined &&
-    SNACKBAR_UNREADABLE_PRESET_COLORS.includes(color)
+    variant !== undefined &&
+    SNACKBAR_UNCOLOURED_ACTION_VARIANTS.includes(variant) &&
+    !findAttribute(button, COLOR_ATTRIBUTE) &&
+    !staticClassNames(button).some((name) => name.startsWith(TEXT_COLOR_CLASS_PREFIX))
   )
 }
 
+const snackbarActionIssue = (button: ElementNode, hasUncolouredFix: boolean): TemplateIssue | undefined => {
+  const base: Omit<TemplateIssue, 'message' | 'fixHint'> = {
+    ...positionOf(button),
+    rule: RULE_SNACKBAR_ACTION_CONTRAST,
+    severity: SEVERITY_WARNING,
+    recipe: RECIPE_ACTIVATOR_OVERLAYS,
+  }
+
+  if (isUnreadablePresetAction(button)) {
+    const color = findAttribute(button, COLOR_ATTRIBUTE)?.staticValue ?? ''
+
+    return {
+      ...base,
+      message: `A \`color="${color}"\` text button in the \`SSnackbar\` action is below 4.5:1 on the dark snackbar background, so the action is hard to read.`,
+      fixHint: hasUncolouredFix
+        ? `Remove \`color\` (an action without a colour uses the snackbar text colour), or use a light colour: ${SNACKBAR_LIGHT_ACTION_COLOR_HINT}.`
+        : `Use a light colour: ${SNACKBAR_LIGHT_ACTION_COLOR_HINT}.`,
+    }
+  }
+
+  if (!hasUncolouredFix && isUncolouredAction(button)) {
+    return {
+      ...base,
+      message: `Before @khsura/sui ${SUI_M2_FIXES_VERSION}, a text or icon button without \`color\` in the \`SSnackbar\` action keeps the page's dark text colour (about 1.3:1 on the dark snackbar), so the action is hard to read.`,
+      fixHint: `Set a light colour: ${SNACKBAR_LIGHT_ACTION_COLOR_HINT}, or upgrade to ${SUI_M2_FIXES_VERSION} or later.`,
+    }
+  }
+
+  return undefined
+}
+
+/**
+ * Explicit low-contrast preset colours always warn. An action with no colour warns only before
+ * `SUI_M2_FIXES_VERSION`, which gives it the snackbar's light text colour.
+ */
 export const snackbarActionContrastRule: TemplateRule = {
   id: RULE_SNACKBAR_ACTION_CONTRAST,
-  check: ({ element }) => {
+  check: ({ element, apiVersion }) => {
     if (!isComponentTag(element.tag, SNACKBAR_COMPONENT)) {
       return []
     }
 
+    const hasUncolouredFix = isVersionAtLeast(apiVersion, SUI_M2_FIXES_VERSION)
+
     return slotFills(element)
       .filter((fill) => staticArgument(fill.directive.arg) === SNACKBAR_ACTION_SLOT_NAME)
       .flatMap((fill) => descendantElementsOf(fill.owner))
-      .filter(isUnreadableSnackbarAction)
-      .map((button) => {
-        const color = findAttribute(button, COLOR_ATTRIBUTE)?.staticValue ?? ''
-
-        return {
-          ...positionOf(button),
-          rule: RULE_SNACKBAR_ACTION_CONTRAST,
-          severity: SEVERITY_WARNING,
-          message: `A \`color="${color}"\` text button in the \`SSnackbar\` action is below 4.5:1 on the dark snackbar background, so the action is hard to read.`,
-          fixHint: `Remove \`color\` (an action without a colour uses the snackbar text colour), or use a light colour: \`color="${SNACKBAR_READABLE_ACTION_COLOR}"\` or a CSS colour such as \`color="#ffffff"\`.`,
-          recipe: RECIPE_ACTIVATOR_OVERLAYS,
-        }
-      })
+      .filter((descendant) => isComponentTag(descendant.tag, BUTTON_COMPONENT))
+      .flatMap((button) => snackbarActionIssue(button, hasUncolouredFix) ?? [])
   },
 }
 
@@ -197,6 +236,7 @@ export const blockButtonsInRowRule: TemplateRule = {
 
 export const cardTitleTextAlignRule: TemplateRule = {
   id: RULE_CARD_TITLE_TEXT_ALIGN,
+  fixedIn: SUI_M2_FIXES_VERSION,
   check: ({ element }) => {
     if (!isComponentTag(element.tag, CARD_TITLE_COMPONENT)) {
       return []
@@ -246,6 +286,7 @@ const startsAsEmptyString = (modelPath: string, scriptSource: string): boolean =
 
 export const datePickerEmptyStringRule: TemplateRule = {
   id: RULE_DATE_PICKER_EMPTY_STRING,
+  fixedIn: SUI_M2_FIXES_VERSION,
   check: ({ element, scriptSource }) => {
     const binding = isOneOfComponentTags(element.tag, DATE_PICKER_EMPTY_STRING_COMPONENTS)
       ? modelBinding(element)
