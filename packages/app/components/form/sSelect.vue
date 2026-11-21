@@ -125,6 +125,8 @@ const { activatorOn, updateLocation, activatorAttrs, contentClasses, contentStyl
     activatorElement,
     contentElement,
   },
+  // Flip or shift the list so it stays inside the viewport, also at the bottom and right edges.
+  { keepInViewport: true },
 )
 
 const onClickOutside = () => {

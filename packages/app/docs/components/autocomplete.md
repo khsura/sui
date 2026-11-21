@@ -137,3 +137,4 @@ const searchUsers = async (query: string) => {
 - For async filtering, set `filter-mode="none"` to disable built-in filtering and handle it server-side via `@search-item`. `update:search-input` is never emitted.
 - In single mode, typed text that doesn't match an item and is then blurred **clears** the value (unless `allowUnlisted`).
 - `disabled` does not disable the text field, and `name` is ignored.
+- The list opens on the side of the field with more room (capping its height to fit) and stays 8px inside the viewport, shifting left near the right edge. Opened above the field, it stays on the field while typing shortens the list.

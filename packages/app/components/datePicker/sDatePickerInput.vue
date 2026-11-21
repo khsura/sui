@@ -130,8 +130,9 @@ const { contentClasses, contentStyles, updateLocation } = useMenuService(
   { ...props, location: 'bottom' } as unknown as PropsMenu,
   menuModel,
   { activatorElement, contentElement },
-  // Near the bottom of the viewport the picker opens above the field instead of covering it.
-  { autoFlip: true },
+  // Near the bottom of the viewport the picker flips above the field, and near the right edge it shifts left,
+  // so it stays inside the viewport. The calendar keeps its full height: it is shifted, never clipped.
+  { keepInViewport: true },
 )
 
 const closeMenu = () => {
