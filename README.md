@@ -79,6 +79,8 @@ yarn build
 
 Release is automated by **release-please**: merges to `main` that contain conventional commits (`feat:`, `fix:`, etc.) open a release PR; merging that PR publishes `@khsura/sui` and `@khsura/sui-mcp` to the public npm registry through **npm Trusted Publishing** (GitHub OIDC, configured on npmjs.com for `khsura/sui` + `release-please.yaml`), so no npm token or secret is involved and provenance is attached automatically.
 
+Before merging a **minor** release PR, run the [real-iOS release checklist](docs/release/ios-checklist.md) (about 15 minutes on an iPhone against the deployed Storybook) and record the result on the PR. Playwright's WebKit does not reproduce focus zoom, the on-screen keyboard or safe-area insets.
+
 Manual beta releases can be cut with:
 
 ```bash
