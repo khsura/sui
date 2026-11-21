@@ -4,7 +4,15 @@
       <slot name="activator" :on="activatorOn" :attrs="activatorAttrs"></slot>
     </div>
     <SOverlay v-slot="{ attrs }" scrim :value="model" :z-index="zIndex" :transition="transitionName">
-      <div v-bind="attrs" :class="contentClasses" :style="contentStyles" ref="dialogRef">
+      <div
+        v-bind="attrs"
+        ref="dialogRef"
+        role="dialog"
+        aria-modal="true"
+        tabindex="-1"
+        :class="contentClasses"
+        :style="contentStyles"
+      >
         <slot></slot>
       </div>
     </SOverlay>
@@ -15,7 +23,13 @@ import { watch, useTemplateRef, provide } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import SOverlay from '@/app/components/sOverlay.vue'
 import type { PropsDialog } from '@/app/definitions'
-import { useBackgroundScrollService, useComponentDefaultsService, useDialogService } from '@/app/services'
+import {
+  useActivatorElementService,
+  useBackgroundScrollService,
+  useComponentDefaultsService,
+  useDialogService,
+  useOverlayFocusService,
+} from '@/app/services'
 import { ProviderPropsName } from '@/app/configs'
 
 const rawProps = defineProps<PropsDialog>()
@@ -36,6 +50,14 @@ const {
 
 const { enableBackgroundScroll, disableBackgroundScroll } = useBackgroundScrollService()
 const dialogRef = useTemplateRef('dialogRef')
+const { computedActivatorElement } = useActivatorElementService(props, activatorElement)
+
+// Modal: focus moves into the dialog and Tab stays inside; Esc closes it unless persistent; focus returns.
+useOverlayFocusService(
+  model,
+  { activator: computedActivatorElement, content: dialogRef },
+  { canCloseOnEscape: () => !props.persistent, trapFocus: true },
+)
 
 onClickOutside(dialogRef, localOnClickOutside, {
   ignore: ['.s_menu__content', '.s_tooltip__content', '.s_select__list', '.s_snackbar__wrapper'],
