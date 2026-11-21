@@ -11,15 +11,19 @@ about 15 minutes. Patch releases need it only when they touch a component listed
 
 - **Device:** a real iPhone with the current iOS and Safari. A notched / Dynamic Island model is best, because it has
   safe-area insets. BrowserStack Live (real iOS device) is acceptable when no iPhone is at hand.
-- **Target:** the Storybook built from the release branch.
-  - Released docs: <https://sui.surakh.com/>
-  - Before merge: the PR's Storybook deploy preview if one is posted on the PR. Otherwise build it from the branch and
-    open it from the phone on the same network: `yarn workspace @khsura/sui storybook:dev --host 0.0.0.0`, then
-    `http://<your-mac-ip>:6006/`.
+- **Target (primary): the Netlify deploy preview of the PR that is being released.** Netlify builds the Storybook for
+  every PR at `https://deploy-preview-<PR number>--sui-surakh-com.netlify.app/` (for example PR #163 →
+  <https://deploy-preview-163--sui-surakh-com.netlify.app/>). To find it, open the PR's **Checks** list (or the
+  checks box at the bottom of the conversation), find `netlify/sui-surakh-com/deploy-preview` and click **Details**.
+  For a milestone release, use the preview of the milestone PR into `main`. It has every story in this list.
+- **Released docs:** <https://sui.surakh.com/> only shows what is already on `main`.
+- **Fallback (no preview):** run Storybook from the branch and open it from the phone on the same network:
+  `yarn workspace @khsura/sui storybook:dev --host 0.0.0.0`, then `http://<your-mac-ip>:6006/`.
 - **Open stories full-page.** The links below use `iframe.html?id=<story-id>`, which shows one story without the
-  Storybook sidebar, so the page behaves like a real app. Replace the origin when you test a preview.
-- Stories under **UI Components/Form/Stress** and **UI Components/Layout/Stress** ship with the M2 hardening work. If a
-  link 404s on the released docs, test it on the preview instead.
+  Storybook sidebar, so the page behaves like a real app. They point at `https://sui.surakh.com/`: replace that origin
+  with the deploy preview origin (keep the `/iframe.html?id=…` part).
+- Stories under **UI Components/Form/Stress** and **UI Components/Layout/Stress** are not on the released docs until
+  the M2 hardening work ships, so test them on the deploy preview.
 - Test in **portrait** unless a step says otherwise. Use **Settings > Safari > Clear History and Website Data** first if
   a previous run left the page zoomed.
 - Copy this list into the release PR as a comment and tick it there. Any unchecked item blocks the release: open a
