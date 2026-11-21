@@ -46,7 +46,12 @@ export type PropsAutocomplete<T extends boolean = false> = {
   placeholder?: string
   name?: string
   delimiter?: string | string[] | RegExp
-  autocomplete?: 'on' | 'off' | undefined
+  /**
+   * @description The native input's `autocomplete` attribute. Defaults to `'off'`: the
+   * field draws its own menu, and the browser's form-history list would open on top of it.
+   * Pass any token (`'on'`, `'name'`, …) to let the browser suggest again.
+   */
+  autocomplete?: string
 
   // Events
   onUpdateSearchInput?: (value: string) => void

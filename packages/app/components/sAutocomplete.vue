@@ -132,6 +132,8 @@ const rawProps = withDefaults(defineProps<PropsAutocomplete<T>>(), {
   location: 'bottom',
   filterMode: 'contains',
   debounce: 500,
+  // The field draws its own menu; the browser's form-history list would open on top of it.
+  autocomplete: 'off',
 })
 
 const props = useComponentDefaultsService('SAutocomplete', rawProps)
