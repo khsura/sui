@@ -40,9 +40,17 @@ export const recordStoryFailures = async (page: Page) => {
             return
           }
 
+          // An error's first message line is the assertion; the rest is often a DOM dump from `waitFor`.
+          const describePayload = (payload: unknown) => {
+            const message =
+              typeof payload === 'object' && payload !== null ? Reflect.get(payload, 'message') : undefined
+
+            return typeof message === 'string' ? message.split('\n')[0] : JSON.stringify(payload)?.slice(0, maxLength)
+          }
+
           for (const eventName of failureEvents) {
             subscribe.call(value, eventName, (payload: unknown) => {
-              failures.push(`${eventName}: ${JSON.stringify(payload)?.slice(0, maxLength)}`)
+              failures.push(`${eventName}: ${describePayload(payload)}`)
             })
           }
         },
