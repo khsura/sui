@@ -445,6 +445,7 @@ const onSearch = async (query: string) => {
 - `hideDetails` prevents the label above a field and the error area from rendering — use only when you're handling errors externally. `SCheckbox` and `SRadio` keep their labels.
 - `SForm` does NOT validate on mount and does NOT prevent submit; use `@submit.prevent` and call `validate()` on the form ref. `if (!formRef.value.validate()) submit()` — it returns `true` when there are errors.
 - `SSelect` validates when its menu opens, so a required error can appear on first open.
+- The `SSelect`, `SAutocomplete` and `SDatePickerInput` dropdowns stay inside the viewport with an 8px gutter: they flip to the other side of the field or shift (left near the right edge), like `SMenu`. Fields at the bottom or right edge of the screen need no workaround.
 - For number inputs, combine `type="number"` with `inputmode="numeric"` for best mobile UX (`inputmode="decimal"` together with `allowDecimal`).
 
 ## Accessibility

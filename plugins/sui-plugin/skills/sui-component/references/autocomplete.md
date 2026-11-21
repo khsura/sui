@@ -168,3 +168,4 @@ const searchUsers = async (query: string) => {
 - Single mode, no chips: the selected item's text is shown in the input itself.
 - Selected items keep their labels when `items` is replaced (async results), so chips don't go blank.
 - Toggling `multiple` at runtime drops a single value when switching back to single mode.
+- The list opens on the roomier side of the field and stays 8px inside the viewport (shifted left near the right edge); no placement workaround needed.

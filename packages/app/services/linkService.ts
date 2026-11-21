@@ -1,13 +1,26 @@
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
+import { useRouterLinkService } from './routerLinkService'
 import { type PropsLink, type PropsTag } from '@/app/definitions'
+import { getLinkLocationHref } from '@/app/lib'
 
+/**
+ * `to` renders a `router-link` when the app has vue-router, and degrades to a
+ * plain `<a href>` when it does not, so `@khsura/sui` never needs vue-router
+ * installed. See `useRouterLinkService`.
+ */
 export const useLinkService = (props: PropsLink & PropsTag) => {
+  const { hasRouterLink, warnIfNoRouter } = useRouterLinkService()
+
+  if (!hasRouterLink) {
+    watch(() => props.to, warnIfNoRouter, { immediate: true })
+  }
+
   const tag = computed(() => {
-    if (props.to) {
+    if (props.to && hasRouterLink) {
       return 'router-link'
     }
 
-    if (props.href) {
+    if (props.to || props.href) {
       return 'a'
     }
 
@@ -41,6 +54,10 @@ export const useLinkService = (props: PropsLink & PropsTag) => {
   const linkAttrs = computed(() => {
     if (tag.value === 'router-link') {
       return { to: props.to }
+    }
+
+    if (tag.value === 'a' && props.to) {
+      return { href: getLinkLocationHref(props.to) ?? props.href ?? undefined }
     }
 
     if (tag.value === 'a') {

@@ -44,6 +44,7 @@ const classList = computed(() => {
   min-height: 48px;
   padding: 0 0 0 calc($s_spacer * 2);
   text-decoration: none;
+  list-style: none;
   transition: background-color 0.2s ease-in-out;
 
   &--selectable {
