@@ -21,6 +21,7 @@ import {
   SSpacer,
   STooltip,
 } from '@/app/index'
+import { assertNoListMarkers } from '@/app/storybook/helpers'
 
 // Stress cases for the overlay components. Each story groups several cases so the visual harness stays fast,
 // and each `play` function opens the overlays and checks the geometry, so the stories double as interaction tests.
@@ -41,7 +42,13 @@ const wrappedTooltipMinHeight = 30
 const dialogMaxWidth = 420
 // Sub-pixel rounding allowed in the geometry checks.
 const pixelTolerance = 1
-const menuItemLabels = ['Call', 'Edit contact', 'Delete']
+
+// Each item has a real icon: a dot-shaped icon (mdi-circle-small) reads as a list bullet in the screenshots.
+const menuItems = [
+  { label: 'Call', icon: 'mdi-phone' },
+  { label: 'Edit contact', icon: 'mdi-pencil' },
+  { label: 'Delete', icon: 'mdi-delete' },
+]
 
 const longTooltipText =
   'Archiving moves the project out of the active list. Collaborators keep read access, and you can restore it from Settings at any time.'
@@ -74,9 +81,9 @@ const overlayComponents = {
 
 const menuListTemplate = /* html */ `
   <SList dense>
-    <SListItem v-for="label in menuItemLabels" :key="label" link>
-      <SListItemIcon align-center><SIcon icon="mdi-circle-small" /></SListItemIcon>
-      <SListItemContent><SListItemTitle>{{ label }}</SListItemTitle></SListItemContent>
+    <SListItem v-for="item in menuItems" :key="item.label" link>
+      <SListItemIcon align-center><SIcon :icon="item.icon" /></SListItemIcon>
+      <SListItemContent><SListItemTitle>{{ item.label }}</SListItemTitle></SListItemContent>
     </SListItem>
   </SList>
 `
@@ -150,7 +157,7 @@ export const MenuPlacement = {
         rowMenu.value = true
       })
 
-      return { corners, cornerMenus, rowMenu, menuItemLabels }
+      return { corners, cornerMenus, rowMenu, menuItems }
     },
     template: /* html */ `
       <div class="stress-stage" style="position: fixed; inset: 0;">
@@ -209,6 +216,7 @@ export const MenuPlacement = {
         assertInsideViewport(content)
         assertNotOverlapping(content, activator)
         assertTextNotClipped(content)
+        assertNoListMarkers(content)
       })
     })
   },
@@ -219,7 +227,7 @@ export const MenuInScrollContainer = {
   render: () => ({
     components: overlayComponents,
     setup() {
-      return { menuItemLabels }
+      return { menuItems }
     },
     template: /* html */ `
       <div class="stress-scroller" style="height: 240px; overflow: auto; margin: 16px; border: 1px solid currentColor;">
@@ -266,7 +274,7 @@ export const MenuKeyboard = {
   render: () => ({
     components: overlayComponents,
     setup() {
-      return { menuItemLabels }
+      return { menuItems }
     },
     template: /* html */ `
       <div style="padding: 16px;">
@@ -302,7 +310,7 @@ export const DialogWithMenu = {
   render: () => ({
     components: overlayComponents,
     setup() {
-      return { dialogMaxWidth, menuItemLabels }
+      return { dialogMaxWidth, menuItems }
     },
     template: /* html */ `
       <div style="padding: 16px;">
