@@ -94,6 +94,13 @@ detected statically: `block` siblings in a row, `hide-details` on `SCheckbox`, `
   emits a block and works. Adding any other attribute (e.g. a `class`) makes it work. This is
   excluded from the counts. It needs a separate check, because consumer apps on the same toolchain
   would see it.
+- **Resolved (M2-09):** the cause is the Vue 3.5.39 template compiler, not Vite, plugin-vue or SUI.
+  `compiler-sfc` 3.5.39 called with the SFC's binding metadata emits the same code. `sections` is a
+  `const`, so the `v-for` becomes a `STABLE_FRAGMENT`. `:key` makes the compiler plan a block and
+  skip `NEED_PATCH`, and then the stable `v-for` turns the block back into a plain vnode. The vnode
+  ends up with no patch flag, so `v-show` is never patched. A `class` doesn't help (after-M1 page
+  08 has one); text interpolation in the element does. Fixed upstream in Vue 3.5.41
+  (vuejs/core#11682). The harness now pins Vue 3.5.46, and page 08's tabs switch.
 
 ## Limitations
 
