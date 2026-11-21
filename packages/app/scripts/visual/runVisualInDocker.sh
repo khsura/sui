@@ -28,13 +28,16 @@ if ! command -v docker > /dev/null; then
 fi
 
 # node_modules and the yarn install state live in a Docker volume, so the Linux install never
-# overwrites the host's own node_modules.
+# overwrites the host's own node_modules. Set SUI_VISUAL_NODE_MODULES_VOLUME to give a second checkout
+# (a git worktree) its own volume, so two runs never install into the same one at once.
+node_modules_volume="${SUI_VISUAL_NODE_MODULES_VOLUME:-sui-visual-node-modules}"
+
 docker run --rm --init --ipc=host \
   -e CI=1 \
   -e HUSKY=0 \
   -e YARN_INSTALL_STATE_PATH=/work/node_modules/.yarn-install-state.gz \
   -v "$repo_dir:/work" \
-  -v sui-visual-node-modules:/work/node_modules \
+  -v "$node_modules_volume:/work/node_modules" \
   -w /work \
   "$image" \
   bash -c 'set -euo pipefail
