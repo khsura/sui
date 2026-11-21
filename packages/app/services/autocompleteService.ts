@@ -54,7 +54,9 @@ export const useAutocompleteService = <T extends boolean = false>(
       activatorElement: templateRefs.activatorElement,
       contentElement: templateRefs.contentElement,
     },
-    { autoFlip: true },
+    // autoFlip opens the list on the roomier side and caps its height; keepInViewport then keeps it 8px inside
+    // the viewport edges (shifting it left near the right edge).
+    { autoFlip: true, keepInViewport: true },
   )
 
   const getChangeModelValueType = <V extends boolean = boolean>(
