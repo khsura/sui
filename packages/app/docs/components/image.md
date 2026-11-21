@@ -8,10 +8,10 @@ An `<img>` inside a wrapper `<div>`, with aspect ratio control, object-fit suppo
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `src` | `string \| null` | **required** | Image URL. When falsy, no `<img>` is rendered (the slot still renders) |
+| `src` | `string \| null` | **required** | Image URL. When falsy, no `<img>` is rendered (the slot still renders) and the wrapper shows a neutral placeholder background |
 | `alt` | `string \| null` | `''` | Alt text for accessibility |
 | `objectFit` | `'fill' \| 'contain' \| 'cover' \| 'none' \| 'scale-down'` | `undefined` | CSS object-fit value |
-| `aspectRatio` | `number` | `undefined` | Width-to-height ratio applied to the wrapper (e.g. `16/9`, `1`, `4/3`) |
+| `aspectRatio` | `number` | `undefined` | Width-to-height ratio applied to the wrapper (e.g. `16/9`, `1`, `4/3`). Without `height`, the wrapper uses `height: auto`, so the ratio holds in a flex-column card too |
 | `lazyLoad` | `LazyLoad` (`'lazy' \| 'eager' \| 'auto'`) | `undefined` | Declared but **ignored** — `loading` is always `lazy` |
 | `width` | `string \| number` | `undefined` | Wrapper width (`100%` otherwise) |
 | `height` | `string \| number` | `undefined` | Wrapper height (`100%` otherwise) |

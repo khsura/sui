@@ -161,8 +161,9 @@ const sortIcon = computed(() => {
   color: s_getAppColor('disabled');
   background-color: transparent;
 
+  // The app text colour: the info preset was a dark blue arrow on the dark theme's card (about 2.6:1).
   &--sorted {
-    color: s_getPresetColor('info');
+    color: s_getAppColor('text');
   }
 }
 </style>

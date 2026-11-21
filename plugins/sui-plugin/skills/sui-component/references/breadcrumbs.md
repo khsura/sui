@@ -78,3 +78,4 @@ Each item renders as `router-link` if `to` is set, else `<a>` if `href` is set, 
 - Disabled items ignore `color`.
 - Pass `to` or `href` per item, not both — `to` wins.
 - `to` requires vue-router in the app.
+- The first crumb starts at the content edge (no list indent), so it lines up with the cards below. Older versions inherited a 1.5em `<ol>` indent; don't add a negative margin.

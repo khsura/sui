@@ -11,7 +11,8 @@ Data table with client-side sorting, selection and expansion state, grouping (op
 | `headers` | `TableHeader[]` | **required** | Column definitions |
 | `items` | `T[]` | **required** | Row data array |
 | `dense` | `boolean` | `false` | Compact cells |
-| `loading` | `boolean` | `false` | Indeterminate progress bar; hides the no-data row |
+| `loading` | `boolean` | `false` | Indeterminate progress bar; hides the no-data row. While `items` is empty it shows a loading row instead |
+| `loadingText` | `string` | `undefined` | Loading-row text. Falls back to i18n `table.loading`, then `'Loading…'`. Overridden by the `#loadingData` slot |
 | `outlined` | `boolean` | `false` | Outlined border style |
 | `underlined` | `boolean` | `false` | Bottom border only |
 | `rounded` | `boolean` | `undefined` | Declared but not read by the table (no effect) |
@@ -20,7 +21,7 @@ Data table with client-side sorting, selection and expansion state, grouping (op
 | `hideVerticalBorders` | `boolean` | `false` | Remove column borders |
 | `hideTopBottomBorders` | `boolean` | `false` | Remove outer top/bottom borders |
 | `hidePagination` | `boolean` | `false` | Hide the pager, but only when `itemsPerPage` is unset or greater than the total |
-| `stickyHeader` | `boolean` | `false` | Fix header on scroll (give the table a height limit) |
+| `stickyHeader` | `boolean` | `false` | Fix header on scroll. Give `STable` a height limit (`style="max-height: 400px"`): the rows scroll inside it and the pagination stays visible |
 | `multiSort` | `boolean` | `false` | Allow sorting by multiple columns |
 | `groupBy` | `string \| string[]` | `undefined` | Group rows by item field(s); the group name is the values joined with a space |
 | `foldable` | `boolean` | `false` | Group rows can be collapsed by clicking the group header |
@@ -96,6 +97,7 @@ interface TableHeader {
 | `group` | Group header row — receives `{ group, items, isFolded, toggleFold }` |
 | `itemsPerPageLabel` | Custom pagination label |
 | `noData` | Empty-state content shown when `items` is empty (and not `loading`) |
+| `loadingData` | Loading-row content shown while `loading` is set and `items` is empty |
 
 ## Usage
 

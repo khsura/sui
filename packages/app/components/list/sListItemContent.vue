@@ -23,11 +23,15 @@ const classList = computed(() => {
 
 <style lang="scss">
 $s_listItemContentChildrenMarginBottom: calc($s_spacer / 2) !default;
+// The narrowest the text may get next to icons and actions. Below it the list item (flex-wrap: wrap) moves the
+// actions onto their own line instead of squeezing the title to one letter.
+$s_listItemContentMinWidth: min(40%, 160px) !default;
 
 .s_listItemContent {
   display: flex;
   flex: 1 1;
   flex-wrap: wrap;
+  min-width: $s_listItemContentMinWidth;
   align-items: center;
   align-self: stretch;
   padding: $s_listItem__content--padding 0;
