@@ -45,6 +45,10 @@ const loadBundled = (bundledPath: string, warning?: string): ResolvedSuiApi => {
   return { api: readSuiApi(bundledPath), source: API_SOURCE_BUNDLED, path: bundledPath, warning }
 }
 
+/** Loads only the copy bundled with sui-mcp (the latest release at build time). */
+export const resolveBundledSuiApi = ({ bundledPath = bundledSuiApiPath }: ResolveSuiApiOptions = {}): ResolvedSuiApi =>
+  loadBundled(bundledPath)
+
 /**
  * Resolves sui-api.json: the project's installed `@khsura/sui` (walking up from
  * `SUI_PROJECT_ROOT`, else the cwd), falling back to the copy bundled with sui-mcp.

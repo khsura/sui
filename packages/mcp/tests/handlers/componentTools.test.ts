@@ -49,6 +49,17 @@ describe('component tools', () => {
     expect(text).not.toContain('SAppBar')
   })
 
+  it('get_component_api says a component needs a newer @khsura/sui when only the bundled API has it', async () => {
+    const project = makeProject({ fixturePath: olderFixturePath })
+    const client = await connectClient({ env: { SUI_PROJECT_ROOT: project.root }, bundledPath: latestFixturePath })
+    const response = await client.callTool({ name: 'get_component_api', arguments: { name: 'SAppBar' } })
+    const text = responseText(response)
+
+    expect(response.isError).toBe(true)
+    expect(text).toContain('`SAppBar` is not in @khsura/sui 1.10.0 installed in this project')
+    expect(text).toContain('It exists in @khsura/sui 1.18.3, so it needs a newer @khsura/sui.')
+  })
+
   it('get_component_api renders props with defaults as code and enum values', async () => {
     const client = await connectClient(bundledOnly())
     const text = responseText(await client.callTool({ name: 'get_component_api', arguments: { name: 's-button' } }))

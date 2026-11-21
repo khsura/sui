@@ -27,4 +27,14 @@ describe('createSuiMcpServer', () => {
 
     expect(response.content).toEqual([{ type: 'text', text: 'pong 0.1.0' }])
   })
+
+  it('sends server instructions that point the AI at the API, recipes and the validator', async () => {
+    const client = await connectClient()
+    const instructions = client.getInstructions() ?? ''
+
+    expect(instructions).toContain('get_component_api')
+    expect(instructions).toContain('get_recipe')
+    expect(instructions).toContain('ALWAYS run `validate_sui_template`')
+    expect(instructions).toContain('`installation`')
+  })
 })
