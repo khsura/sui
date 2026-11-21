@@ -28,13 +28,15 @@ const styles = computed(() => {
   const marginTop = isFixedPosition ? layoutApp.value.appBarHeight + layoutApp.value.offsetTop : 0
   const marginBottom = isApp.value ? layoutApp.value.bottomNavigationHeight : layoutApp.value.footerHeight
   const offsetTop = getNumericCssAttribute(marginTop)
+  // An app bar that is not fixed sits in the flow above SMain, so it takes its height from the page too.
+  const spaceAbove = isFixedPosition ? marginTop : layoutApp.value.appBarHeight
 
   return {
     marginTop: offsetTop,
     marginLeft: getNumericCssAttribute(layoutApp.value.left),
     marginRight: getNumericCssAttribute(layoutApp.value.right),
     width: `calc(100% - ${getNumericCssAttribute(widthToSubtract)})`,
-    minHeight: `calc(${isApp.value ? '100vh' : '100%'} - ${getNumericCssAttribute(marginTop + marginBottom)})`,
+    minHeight: `calc(${isApp.value ? '100vh' : '100%'} - ${getNumericCssAttribute(spaceAbove + marginBottom)})`,
   }
 })
 </script>
