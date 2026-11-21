@@ -1,0 +1,419 @@
+{
+  "package": "@khsura/sui",
+  "version": "1.18.3",
+  "generatedAt": "2026-11-21T00:00:00.000Z",
+  "components": [
+    {
+      "name": "SAppBar",
+      "family": "layout",
+      "file": "components/layout/sAppBar.vue",
+      "props": [
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"appBar\"",
+          "description": ""
+        },
+        {
+          "name": "density",
+          "type": "ToolbarDensityType | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "comfortable",
+            "compact",
+            "default"
+          ]
+        },
+        {
+          "name": "extensionHeight",
+          "type": "string | number | undefined",
+          "required": false,
+          "default": "defaultToolbarExtensionHeight",
+          "description": ""
+        },
+        {
+          "name": "for",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "default": "defaultToolbarContentHeight",
+          "description": ""
+        },
+        {
+          "name": "position",
+          "type": "Position",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "absolute",
+            "fixed",
+            "relative",
+            "static",
+            "sticky"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "extension",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SButton",
+      "family": "core",
+      "file": "components/sButton.vue",
+      "props": [
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "size",
+          "type": "SizePropertyType",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "default",
+            "extra",
+            "large",
+            "mini",
+            "small"
+          ]
+        },
+        {
+          "name": "tag",
+          "type": "\"a\" | \"button\" | null | undefined",
+          "required": false,
+          "default": "\"button\"",
+          "description": "",
+          "enumValues": [
+            "a",
+            "button"
+          ]
+        },
+        {
+          "name": "target",
+          "type": "\"_blank\" | \"_self\" | \"_parent\" | \"_top\" | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "_blank",
+            "_parent",
+            "_self",
+            "_top"
+          ]
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "click",
+          "type": "[value: Event]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SDialog",
+      "family": "core",
+      "file": "components/sDialog.vue",
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "activator",
+          "type": "{ on: { click: () => void; }; attrs: Partial<PropsRequired<{ disabled: boolean | null | undefined; readonly: boolean | null | undefined; }>>; }",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SLayout",
+      "family": "layout",
+      "file": "components/layout/sLayout.vue",
+      "props": [
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SMenu",
+      "family": "core",
+      "file": "components/sMenu.vue",
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "position",
+          "type": "Position",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "absolute",
+            "fixed",
+            "relative",
+            "static",
+            "sticky"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "activator",
+          "type": "{ on: { click: () => void; }; attrs: Partial<PropsRequired<{ disabled: boolean | null | undefined; readonly: boolean | null | undefined; }>>; }",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "close",
+          "type": "[]",
+          "description": ""
+        },
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SSelect",
+      "family": "form",
+      "file": "components/form/sSelect.vue",
+      "props": [
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "T | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "name",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "position",
+          "type": "Position",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "absolute",
+            "fixed",
+            "relative",
+            "static",
+            "sticky"
+          ]
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "activator",
+          "type": "{ item: SelectItem | null; value: boolean | undefined; }",
+          "description": ""
+        },
+        {
+          "name": "dropdownIcon",
+          "type": "{ color: string | undefined; value: boolean | undefined; }",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "change",
+          "type": "[T | null]",
+          "description": ""
+        },
+        {
+          "name": "update:dirty",
+          "type": "[boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:error",
+          "type": "[boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:errors",
+          "type": "[string[]]",
+          "description": ""
+        },
+        {
+          "name": "update:menu",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        },
+        {
+          "name": "update:modelValue",
+          "type": "[value: T | null | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SSwitch",
+      "family": "core",
+      "file": "components/sSwitch.vue",
+      "props": [
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "label",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        }
+      ]
+    }
+  ]
+}

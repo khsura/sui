@@ -19,5 +19,10 @@
   },
   "devDependencies": {
     "@khsura/shared": "workspace:^"
+  },
+  "nx": {
+    "implicitDependencies": [
+      "@khsura/sui"
+    ]
   }
 }

@@ -1,0 +1,145 @@
+{
+  "package": "@khsura/sui",
+  "version": "1.10.0",
+  "generatedAt": "2026-01-15T00:00:00.000Z",
+  "components": [
+    {
+      "name": "SButton",
+      "family": "core",
+      "file": "components/sButton.vue",
+      "props": [
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "size",
+          "type": "SizePropertyType",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "default",
+            "extra",
+            "large",
+            "mini",
+            "small"
+          ]
+        },
+        {
+          "name": "tag",
+          "type": "\"a\" | \"button\" | null | undefined",
+          "required": false,
+          "default": "\"button\"",
+          "description": "",
+          "enumValues": [
+            "a",
+            "button"
+          ]
+        },
+        {
+          "name": "target",
+          "type": "\"_blank\" | \"_self\" | \"_parent\" | \"_top\" | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "_blank",
+            "_parent",
+            "_self",
+            "_top"
+          ]
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "click",
+          "type": "[value: Event]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SDialog",
+      "family": "core",
+      "file": "components/sDialog.vue",
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "activator",
+          "type": "{ on: { click: () => void; }; attrs: Partial<PropsRequired<{ disabled: boolean | null | undefined; readonly: boolean | null | undefined; }>>; }",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SLayout",
+      "family": "layout",
+      "file": "components/layout/sLayout.vue",
+      "props": [
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    }
+  ]
+}
