@@ -2,7 +2,7 @@
   <SCard :max-width="560" class="s_mx__auto">
     <SCardTitle>Create account</SCardTitle>
     <SCardText>
-      <SForm ref="formRef" @submit.prevent="submit">
+      <SForm ref="formRef" v-model:error="hasErrors" @submit.prevent="submit">
         <SInput v-model="form.name" label="Full name" :rules="[required]" />
         <SInput
           v-model="form.email"
@@ -15,7 +15,16 @@
         <SSelect v-model="form.role" label="Role" :items="roles" grow :rules="[required]" />
         <SDatePickerInput v-model="form.startDate" label="Start date" type="date" block :rules="[required]" />
         <SCheckbox v-model="form.acceptTerms" label="I accept the terms" :rules="[mustAccept]" />
-        <SButton type="submit" color="primary" block class="s_mt__2" :loading="isSubmitting"> Create account </SButton>
+        <SButton
+          type="submit"
+          color="primary"
+          block
+          class="s_mt__2"
+          :loading="isSubmitting"
+          :disabled="submitAttempted && hasErrors"
+        >
+          Create account
+        </SButton>
       </SForm>
       <p v-if="submittedName" class="s_text--body__2 s_mt__3">Account created for {{ submittedName }}.</p>
     </SCardText>
@@ -59,14 +68,18 @@ const email = (value: unknown) => (typeof value === 'string' && EMAIL_PATTERN.te
 const mustAccept = (value: unknown) => value === true || 'You must accept the terms'
 const formRef = ref<InstanceType<typeof SForm> | null>(null)
 const isSubmitting = ref(false)
+// Kept in sync by SForm (v-model:error): true while any field shows an error.
+const hasErrors = ref(false)
+// The button stays enabled until the first submit, so a user can always try and see why it fails.
+const submitAttempted = ref(false)
 const submittedName = ref('')
 const form = ref<AccountForm>({ name: '', email: '', role: null, startDate: null, acceptTerms: false })
 
 const submit = async () => {
-  // validate() returns true when the form HAS errors.
-  const hasErrors = formRef.value?.validate()
+  submitAttempted.value = true
 
-  if (hasErrors) {
+  // validate() returns true when the form HAS errors.
+  if (formRef.value?.validate()) {
     return
   }
 

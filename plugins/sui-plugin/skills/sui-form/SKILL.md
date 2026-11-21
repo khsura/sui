@@ -29,7 +29,7 @@ Then generate a complete Vue SFC using these rules:
 - Use `SRadioGroup` with `<SRadio value="..." label="...">` children (slot-based); use `column` for vertical layout
 - Use `SSwitch` for on/off toggles — it never runs `rules`, shows no error and is not validated by `SForm`
 - Submit: `<SButton type="submit" color="primary" class="s_mt__2" :loading="submitting">Submit</SButton>` — `s_mt__2` keeps the last field's error message off the button
-- `:loading` on `SButton` implicitly disables it — do not also set `:disabled`
+- `:loading` on `SButton` implicitly disables it — do not also bind `:disabled` to the submitting flag
 
 **Validation rules signature:** `(value: unknown) => true | string`
 
@@ -60,7 +60,7 @@ if (hasErrors) return
 - `v-model:error="hasError"` — `true` while any input has an error
 - `v-model:errors="messages"` — all current error strings
 
-Use them to disable the submit button; `resetValidation()` (exposed) clears every input's errors.
+Use `v-model:error` to disable the submit button **only after a failed submit**: set `submitAttempted = true` in `submit` and bind `:disabled="submitAttempted && hasError"`; it re-enables as soon as every rule passes. Never disable it from page load (a disabled button gives no reason and cannot be focused), and keep the inline errors so users see why. `resetValidation()` (exposed) clears every input's errors.
 
 ---
 
