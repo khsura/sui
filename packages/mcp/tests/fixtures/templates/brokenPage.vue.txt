@@ -1,0 +1,13 @@
+<script setup lang="ts">
+const open = false
+</script>
+
+<template>
+  <div>
+    <SButon size="small">Typo</SButon>
+    <SButton size="big" colour="red">Bad</SButton>
+    <SDialog v-model="open">
+      <template #trigger>Nope</template>
+    </SDialog>
+  </div>
+</template>

@@ -1,3 +1,5 @@
 export * from './componentCatalog'
 export * from './resolveSuiApi'
 export * from './guideCatalog'
+export * from './templateRules'
+export * from './templateValidator'

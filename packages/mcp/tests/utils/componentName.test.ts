@@ -1,4 +1,4 @@
-import { candidateComponentKeys, humanizeComponentName, toComponentKey } from '../../src/utils'
+import { candidateComponentKeys, humanizeComponentName, isSuiComponentTag, toComponentKey } from '../../src/utils'
 
 describe('componentName', () => {
   it('builds a separator-free lowercase key', () => {
@@ -11,5 +11,18 @@ describe('componentName', () => {
 
   it('humanizes component names', () => {
     expect(humanizeComponentName('SNavigationDrawer')).toBe('Navigation drawer')
+  })
+})
+
+describe('isSuiComponentTag', () => {
+  it.each([
+    ['SButton', true],
+    ['s-button', true],
+    ['select', false],
+    ['section', false],
+    ['Spinner', false],
+    ['RouterLink', false],
+  ])('%s → %s', (tag, expected) => {
+    expect(isSuiComponentTag(tag)).toBe(expected)
   })
 })
