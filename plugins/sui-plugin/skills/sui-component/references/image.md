@@ -68,9 +68,10 @@ None.
 
 ## Gotchas
 
-- The wrapper defaults to `width: 100%; height: 100%`. In a parent with no height, give it `aspect-ratio` or `height`.
+- The wrapper defaults to `width: 100%; height: 100%` (`height: auto` when `aspect-ratio` is set). In a parent with no height, give it `aspect-ratio` or `height`.
 - Use `object-fit="cover"` with `aspect-ratio` to avoid stretching.
-- In a flex column (a card made `display: flex; flex-direction: column` to equalise heights) the `100%` height makes the image shrink, so images in a row end up with different heights. Add `height="auto"` next to `aspect-ratio`, or give the card `height="100%"` instead of making it a flex column.
+- With `aspect-ratio` and no `height`, the wrapper uses `height: auto`, so the ratio sets its height even in a flex-column card (an equal-height grid). Older versions kept `height: 100%` there and the images in one row got different heights; on those, add `height="auto"`.
+- Without a `src` the wrapper shows a neutral placeholder (the app background colour) instead of a blank gap, so a card with a missing image keeps its shape.
 
 | ❌ | ✅ |
 |----|----|

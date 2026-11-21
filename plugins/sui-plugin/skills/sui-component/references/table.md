@@ -37,6 +37,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsTable.d.ts`. The 
 | `itemsPerPage` | `number` | — | no | — |
 | `itemsPerPageLabel` | `string` | — | no | — |
 | `loading` | `boolean` | — | no | — |
+| `loadingText` | `string` | — | no | — |
 | `multiSort` | `boolean` | `false` | no | — |
 | `noDataText` | `string` | — | no | — |
 | `outlined` | `boolean` | `false` | no | — |
@@ -65,6 +66,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsTable.d.ts`. The 
 | `itemFooter` | `TableItemFooterSlotProps<T>` | Full-width row below an item, rendered when `itemFooter` is set and the item has that key. |
 | `itemHeader` | `TableItemHeaderSlotProps<T>` | Full-width row above an item, rendered when `itemHeader` is set and the item has that key. |
 | `itemsPerPageLabel` | `any` | Label of the items-per-page selector in the pagination. |
+| `loadingData` | `any` | Shown instead of the rows while `loading` is set and `items` is still empty. |
 | `noData` | `any` | Shown instead of the rows when `items` is empty and not loading. |
 
 **STable events**
@@ -86,14 +88,15 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsTable.d.ts`. The 
 - `items`: Row objects
 - `itemKey`: Field used to match **expanded** rows (default: first header's `value`)
 - `dense`: Compact cells
-- `loading`: Indeterminate progress bar. Hides the no-data row
+- `loading`: Indeterminate progress bar. Hides the no-data row; while `items` is still empty it shows a full-width loading row instead
+- `loadingText`: Text of that loading row (`#loadingData` slot overrides it) (default: i18n `table.loading` → `'Loading…'`)
 - `outlined` / `underlined`: Border styles
 - `rounded` / `tile`: Declared, but **no effect** (the table never reads them)
 - `hideHeader`: Hide `<thead>`
 - `hideVerticalBorders`: Remove column borders
 - `hideTopBottomBorders`: Remove outer top/bottom borders
 - `hidePagination`: Hides the pager only when `itemsPerPage` is unset or greater than the total
-- `stickyHeader`: Sticky header row (give the table a height limit)
+- `stickyHeader`: Sticky header row. Give the table a height limit (`style="max-height: 400px"` or a `height`): the rows scroll inside the table, the header sticks and the pagination stays visible below
 - `multiSort`: Sort by several columns
 - `groupBy`: Group rows by item field(s). Group name = values joined with a space
 - `foldable`: Clicking a group row collapses or expands it
@@ -122,6 +125,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsTable.d.ts`. The 
 - `itemHeader` / `itemFooter` (slot): Full-width rows from `itemHeader`/`itemFooter`
 - `expanded` (slot): Content of an expanded row
 - `noData` (slot): Empty state
+- `loadingData` (slot): Loading row, shown while `loading` is set and `items` is empty
 - `itemsPerPageLabel` (slot): Pager label
 
 ### TableHeader
@@ -211,3 +215,5 @@ const perPage = ref(10)
 | Waiting for `update:options` to fetch on sort change | It fires only for page/page-size changes. Sorting is always client-side |
 | Rebuilding item objects and expecting `selected` to persist | Selection matches by **object identity** (`itemKey` applies only to expansion) |
 | Buttons inside a row also trigger `click:row` | Use `@click.stop` |
+| Using `STable` without importing it (registered globally with `app.component` and no `GlobalComponents` types) and expecting typed `#item.<value>` slots | The slot `item` is typed from `items` only when the template knows the component type: import `STable` from `@khsura/sui` in the SFC (Nuxt's generated component types also work). Otherwise `item` is `any` |
+| Wrapping `STable` in a fixed-height `div` to get a sticky header | Put the height limit on `STable` itself. Older versions clipped the rows and the pagination instead of scrolling them |

@@ -81,7 +81,7 @@ None.
 
 ## SExpansionPanelHeader
 
-Clickable row that toggles its panel.
+Clickable row that toggles its panel. Its text starts at the same 16px inset as `SExpansionPanelContent`, and the chevron sits 16px from the right edge, so header and content line up without extra padding classes. (Older versions indented the header text 8px more than the content.)
 
 <!-- generated:api:start SExpansionPanelHeader -->
 <!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->

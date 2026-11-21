@@ -68,6 +68,8 @@ Single row in the list.
 
 Wraps the title and subtitle. No props. **Must be inside an `SListItem`** (throws otherwise).
 
+`SListItemContent` keeps a minimum width of `min(40%, 160px)`. When the icon and the actions leave less room than that (two text buttons on a phone), the list item moves the `SListItemAction` onto its own line below the text, aligned to the right edge, instead of squeezing the title to one letter. (Older versions squeezed it.)
+
 **Slot:** `default`
 
 ---
