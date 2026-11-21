@@ -55,7 +55,7 @@ const { activatorAttrs, activatorOn, updateLocation, computedActivatorElement, c
       activatorElement,
       contentElement,
     },
-    { noContentMinWidth: true, offset: 8, alignMiddle: true },
+    { noContentMinWidth: true, offset: 8, alignMiddle: true, keepInViewport: true },
   )
 
 const { classListColor, styleListColor } = useColorService(props)
@@ -108,17 +108,23 @@ watch(model, async (value) => {
 </script>
 
 <style lang="scss" scoped>
+// A long tooltip wraps at this width instead of running on one ellipsized line.
+$kTooltipMaxWidth: 320px;
+
 .s_tooltip {
   &__content {
     @include s_menuContent();
     @include s_typography('caption');
     @include s_borderRadius();
     width: max-content;
+    max-width: min($kTooltipMaxWidth, calc(100vw - #{$s_spacer * 4}));
     height: max-content;
     padding: 4px;
     contain: content;
     color: $s_color__light;
     text-align: center;
+    overflow-wrap: anywhere;
+    white-space: normal;
     background-color: rgba($s_color__black, 0.5);
     backdrop-filter: blur(10px);
     animation: enlarge 200ms normal forwards running ease-in-out;

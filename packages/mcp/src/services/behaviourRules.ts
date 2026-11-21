@@ -154,7 +154,7 @@ export const snackbarActionContrastRule: TemplateRule = {
           rule: RULE_SNACKBAR_ACTION_CONTRAST,
           severity: SEVERITY_WARNING,
           message: `A \`color="${color}"\` text button in the \`SSnackbar\` action is below 4.5:1 on the dark snackbar background, so the action is hard to read.`,
-          fixHint: `Use a light colour: \`color="${SNACKBAR_READABLE_ACTION_COLOR}"\` or a CSS colour such as \`color="#ffffff"\`.`,
+          fixHint: `Remove \`color\` (an action without a colour uses the snackbar text colour), or use a light colour: \`color="${SNACKBAR_READABLE_ACTION_COLOR}"\` or a CSS colour such as \`color="#ffffff"\`.`,
           recipe: RECIPE_ACTIVATOR_OVERLAYS,
         }
       })

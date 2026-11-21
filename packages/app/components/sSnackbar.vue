@@ -131,5 +131,13 @@ watch(model, () => {
   &__action {
     padding-right: 8px;
   }
+
+  // A text or icon action without a `color` takes the snackbar's own text colour. Otherwise it kept the
+  // page text colour, dark grey on the dark snackbar (about 1.3:1). An explicit preset colour still wins.
+  &__wrapper &__action .s_button--text:not([class*='s_textColor__']),
+  &__wrapper &__action .s_button--icon:not([class*='s_textColor__']) {
+    color: inherit;
+    fill: currentcolor;
+  }
 }
 </style>

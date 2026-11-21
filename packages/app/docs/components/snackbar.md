@@ -77,6 +77,8 @@ None (state managed via `v-model`).
 - Without `timeout` the snackbar stays visible until `v-model` is set to `false` — provide a close action in `#action`.
 - Single-line by default: long text is cut with an ellipsis — use `multi-line`.
 - No `color` prop; `outlined`, `underlined` and `borderRadius` are not applied.
+- A `variant="text"` (or `variant="icon"`) action without `color` takes the snackbar's light text colour, so it is readable on the dark snackbar. Preset colours such as `primary` are below 4.5:1 there; omit `color` or use `color="warning"`.
+- One snackbar per location: two open at the same `location` overlap. Show one at a time; a queue component for stacking is planned.
 - The app must be wrapped in `<SApp>` (the snackbar teleports into its overlay container).
 - A `timeout` of `4000`–`6000` ms is recommended for most use cases.
 - For error messages, prefer no auto-dismiss so users can read the full message.

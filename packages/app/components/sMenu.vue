@@ -21,11 +21,17 @@
 </template>
 <script setup lang="ts">
 import { OnClickOutside } from '@vueuse/components'
+import { useEventListener } from '@vueuse/core'
 import { computed, watch, nextTick, useTemplateRef } from 'vue'
 import SOverlay from '@/app/components/sOverlay.vue'
 import { getWindow } from '@/app/lib/browser'
 import type { PropsMenu } from '@/app/definitions'
-import { useComponentDefaultsService, useMeasurableStylesService, useMenuService } from '@/app/services'
+import {
+  useComponentDefaultsService,
+  useMeasurableStylesService,
+  useMenuService,
+  useOverlayFocusService,
+} from '@/app/services'
 import { type EmitMenu } from '@/app/types'
 
 const rawProps = defineProps<PropsMenu>()
@@ -36,10 +42,22 @@ const { measurableStyles } = useMeasurableStylesService(props)
 const activatorElement = useTemplateRef('activatorElement')
 const contentElement = useTemplateRef('contentElement')
 
-const { activatorOn, activatorAttrs, contentClasses, contentStyles, updateLocation } = useMenuService(props, model, {
-  activatorElement,
-  contentElement,
-})
+const { activatorOn, activatorAttrs, contentClasses, contentStyles, updateLocation, computedActivatorElement } =
+  useMenuService(props, model, { activatorElement, contentElement }, { keepInViewport: true })
+
+// Esc closes the menu and focus goes back to the activator.
+useOverlayFocusService(
+  model,
+  { activator: computedActivatorElement, content: contentElement },
+  { canCloseOnEscape: () => true, trapFocus: false },
+)
+
+// While open, follow the activator when any scroll container scrolls (capture) or the window resizes.
+const openMenuWindow = computed(() => (model.value ? getWindow() : null))
+const repositionListenerOptions = { capture: true, passive: true }
+
+useEventListener(openMenuWindow, 'scroll', () => updateLocation(), repositionListenerOptions)
+useEventListener(openMenuWindow, 'resize', () => updateLocation(), repositionListenerOptions)
 
 const computedContentStyles = computed(() => {
   return {
@@ -89,8 +107,17 @@ watch(
     @include s_elevation(2);
     @include s_borderRadius();
 
+    // Size to the items: with `min-content` a list whose titles can ellipsize shrank to the icon column,
+    // cutting "Edit" to "E…". The mixin's `max-width` still caps it.
+    width: max-content;
+
     > .s_list {
       padding: 0;
+
+      // List items have no right padding, so in a menu the longest title touched the menu edge.
+      > .s_listItem {
+        padding-right: calc($s_spacer * 4);
+      }
     }
   }
 }
