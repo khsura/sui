@@ -96,6 +96,11 @@ watch(
 
     > .s_list {
       padding: 0;
+
+      // List items have no right padding, so in a menu the longest title touched the menu edge.
+      > .s_listItem {
+        padding-right: calc($s_spacer * 4);
+      }
     }
   }
 }
