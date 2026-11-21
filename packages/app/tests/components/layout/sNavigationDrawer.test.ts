@@ -174,6 +174,36 @@ describe('SNavigationDrawer', () => {
     expect(wrapper.vm.isChatOpen).toBe(false)
   })
 
+  test('a drawer whose model starts false opens itself on desktop at mount', async () => {
+    const wrapper = mount(SNavigationDrawer, { props: { modelValue: false }, attachTo: document.body })
+
+    await nextTick()
+
+    expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([true])
+  })
+
+  test('a drawer whose model starts true closes itself on mobile at mount', async () => {
+    const wrapper = mount(SNavigationDrawer, {
+      props: { modelValue: true, forceMobile: true },
+      attachTo: document.body,
+    })
+
+    await nextTick()
+
+    expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([false])
+  })
+
+  test('a persistent drawer keeps its starting state at mount', async () => {
+    const wrapper = mount(SNavigationDrawer, {
+      props: { modelValue: false, persistent: true },
+      attachTo: document.body,
+    })
+
+    await nextTick()
+
+    expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+  })
+
   test('a resizable drawer renders a separator handle', async () => {
     const wrapper = mount(SNavigationDrawer, {
       props: { modelValue: true, resizable: true, width: chatWidth },
