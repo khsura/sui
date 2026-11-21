@@ -7,6 +7,8 @@ import {
   LAYOUT_CHILD_COMPONENTS,
   LAYOUT_CHILD_NOTE,
   LIST_COMPONENTS_TOOL_NAME,
+  SLOTLESS_ACTIVATOR_NOTE,
+  SLOTLESS_ACTIVATOR_NOTE_COMPONENTS,
 } from '../constants'
 import { inlineCode, markdownTable } from '../lib'
 
@@ -47,6 +49,10 @@ const componentNotes = (name: string): string[] => {
 
   if (ACTIVATOR_COMPONENTS.some((activatorName) => activatorName === name)) {
     notes.push(ACTIVATOR_NOTE)
+  }
+
+  if (SLOTLESS_ACTIVATOR_NOTE_COMPONENTS.some((tooltipName) => tooltipName === name)) {
+    notes.push(SLOTLESS_ACTIVATOR_NOTE)
   }
 
   if (LAYOUT_CHILD_COMPONENTS.some((layoutChildName) => layoutChildName === name)) {
