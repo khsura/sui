@@ -109,3 +109,4 @@ None (state managed via `v-model`).
 - Keyboard and screen readers are handled: the content has `role="dialog"` and `aria-modal="true"`, focus moves into the dialog on open, Tab stays inside it, Esc closes it (not when `persistent`), and focus returns to the activator on close. Esc with a menu open inside the dialog closes only the menu. There is no `close` event — watch `v-model`.
 - `width`, `maxWidth` and `maxHeight` are capped at the viewport, so `:max-width="420"` still leaves a 12px gutter on a 375px phone.
 - Dialogs can be nested (a dialog opened from inside another dialog).
+- A `fullscreen` dialog pads by the iPhone safe-area insets on all sides (notch, home indicator, landscape sides) and fills them with the card colour; a `fullscreen` bottom sheet pads only the bottom. This needs `viewport-fit=cover` in the viewport meta; without a safe area the padding is `0px`.
