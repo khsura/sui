@@ -8,7 +8,8 @@ export const useDatePickerService = (props: PropsDatePicker, model: Ref<string |
   const selectedType = ref<DatePickerSelectTypeType>(props.type)
 
   const formatValue = (value: string | null | undefined) => {
-    return dayjs(value ?? undefined).format(getDatePickerFormat(props.type))
+    // An empty string means no date, like null: dayjs("") is an invalid date.
+    return dayjs(value === '' ? undefined : (value ?? undefined)).format(getDatePickerFormat(props.type))
   }
 
   /** The date currently being browsed, it can differ from the committed selection. */

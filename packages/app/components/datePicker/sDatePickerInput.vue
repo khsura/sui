@@ -53,7 +53,7 @@
         v-bind="attrs"
       >
         <SDatePicker
-          :model-value="model ?? undefined"
+          :model-value="model || undefined"
           :type="type"
           :color="color"
           :min="min"
