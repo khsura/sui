@@ -1,0 +1,11 @@
+@use 'sass:map';
+@use '../../variables';
+
+// Height of the label above a text field box (SInput, SSelect, SDatePickerInput, SAutocomplete, STextarea):
+// one line of the 'caption' typography plus the label's vertical padding.
+$s_field__labelHeight: calc(
+  #{map.get(map.get(variables.$s_headings, 'caption'), 'line-height')} + #{variables.$s_spacer * 2}
+) !default;
+
+// Minimum height of the reserved details (error) line under a field box.
+$s_formInputError__minHeight: variables.$s_spacer * 7 !default;

@@ -81,7 +81,13 @@ import { SColumn, SRow } from '@/app/components/grids'
 import { getNumericValue, getCleanSetObject } from '@/app/lib'
 import type { PropsInput } from '@/app/definitions'
 import { useColorRepository } from '@/app/repositories/colorRepository'
-import { useComponentDefaultsService, useDisabledService, useFormInputService, useSizeService } from '@/app/services'
+import {
+  useComponentDefaultsService,
+  useDisabledService,
+  useFieldLayoutService,
+  useFormInputService,
+  useSizeService,
+} from '@/app/services'
 import { type EmitFormTextInput } from '@/app/types'
 
 const rawProps = defineProps<PropsInput>()
@@ -103,8 +109,16 @@ const isPresetPlaceholderBackground = computed(() => getIsPredefinedPresetColor(
 const { classListSize } = useSizeService(props, { block: 'input__input' })
 const isFocused = ref(false)
 
+const { classListField } = useFieldLayoutService(
+  computed(() => ({
+    hasLabel: !!props.label && !props.hideDetails,
+    hasDetails: !props.hideDetails && !props.hideError,
+  })),
+)
+
 const classList = computed(() => {
   return {
+    ...classListField.value,
     's_input--simple': props.simple,
     's_input--focus': isFocused.value,
     's_input--disabled': props.disabled,
