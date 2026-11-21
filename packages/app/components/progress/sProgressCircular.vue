@@ -1,9 +1,10 @@
 <template>
   <div
     role="progressbar"
+    :aria-label="ariaLabel"
     aria-valuemin="0"
     aria-valuemax="100"
-    aria-valuenow="60"
+    :aria-valuenow="indeterminate ? undefined : value"
     :class="classList"
     :style="styleList"
   >
@@ -43,6 +44,7 @@ const rawProps = withDefaults(defineProps<PropsProgressCircular>(), {
   size: 32,
   width: 4,
   value: 0,
+  ariaLabel: 'Loading',
 })
 
 const props = useComponentDefaultsService('SProgressCircular', rawProps)
