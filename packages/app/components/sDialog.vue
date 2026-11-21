@@ -104,6 +104,7 @@ $kDialogViewportHeight: 90%;
     position: fixed;
     top: calc(50% - $kDialogMargin);
     left: calc(50% - $kDialogMargin);
+
     // The size props arrive as CSS variables and are capped here, so a `max-width` wider than the screen
     // still leaves a gutter on a phone.
     width: min(var(--s-dialog-width, 100%), $kDialogViewportWidth);
