@@ -26,7 +26,12 @@ import { computed, watch, nextTick, useTemplateRef } from 'vue'
 import SOverlay from '@/app/components/sOverlay.vue'
 import { getWindow } from '@/app/lib/browser'
 import type { PropsMenu } from '@/app/definitions'
-import { useComponentDefaultsService, useMeasurableStylesService, useMenuService } from '@/app/services'
+import {
+  useComponentDefaultsService,
+  useMeasurableStylesService,
+  useMenuService,
+  useOverlayFocusService,
+} from '@/app/services'
 import { type EmitMenu } from '@/app/types'
 
 const rawProps = defineProps<PropsMenu>()
@@ -37,11 +42,14 @@ const { measurableStyles } = useMeasurableStylesService(props)
 const activatorElement = useTemplateRef('activatorElement')
 const contentElement = useTemplateRef('contentElement')
 
-const { activatorOn, activatorAttrs, contentClasses, contentStyles, updateLocation } = useMenuService(
-  props,
+const { activatorOn, activatorAttrs, contentClasses, contentStyles, updateLocation, computedActivatorElement } =
+  useMenuService(props, model, { activatorElement, contentElement }, { keepInViewport: true })
+
+// Esc closes the menu and focus goes back to the activator.
+useOverlayFocusService(
   model,
-  { activatorElement, contentElement },
-  { keepInViewport: true },
+  { activator: computedActivatorElement, content: contentElement },
+  { canCloseOnEscape: () => true, trapFocus: false },
 )
 
 // While open, follow the activator when any scroll container scrolls (capture) or the window resizes.
