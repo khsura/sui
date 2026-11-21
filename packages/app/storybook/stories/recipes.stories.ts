@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import { expect, waitFor } from 'storybook/test'
 import type { Component } from 'vue'
-import { waitFor } from 'storybook/test'
 import {
   ActivatorOverlaysRecipe,
   AppShellRecipe,
@@ -82,3 +82,51 @@ export const ActivatorOverlays: StoryObj = {
 export const DataTable = recipeStory(DataTableRecipe)
 export const ResponsiveGrid = recipeStory(ResponsiveGridRecipe)
 export const ThemeSetup = recipeStory(ThemeSetupRecipe)
+
+// Smallest gap (px) between the text box of a field's error message (line height included) and the next control.
+// Without spacing it is about 7.5px (the text visibly touches the control); with it, about 15.5px.
+const MIN_ERROR_GAP = 12
+
+/** Bottom of the text itself (not of the error line's box, which reserves room below it). */
+const getTextBottom = (element: Element | null) => {
+  if (!element) {
+    throw new Error('error message not found')
+  }
+
+  const textRange = document.createRange()
+
+  textRange.selectNodeContents(element)
+
+  return textRange.getBoundingClientRect().bottom
+}
+
+const getTop = (element: Element | null) => {
+  if (!element) {
+    throw new Error('control not found')
+  }
+
+  return element.getBoundingClientRect().top
+}
+
+// The validated form after an empty submit: every error shows, none touches the control below it, and the submit
+// button is disabled until the errors are fixed.
+export const ValidatedFormSubmitted: StoryObj = {
+  ...recipeStory(ValidatedFormRecipe),
+  play: async ({ canvasElement, userEvent }) => {
+    const submitButton = canvasElement.querySelector<HTMLButtonElement>('button[type="submit"]')
+
+    await expect(submitButton).toBeEnabled()
+    if (submitButton) {
+      await userEvent.click(submitButton)
+    }
+
+    await waitFor(() => expect(submitButton).toBeDisabled())
+
+    const dateError = canvasElement.querySelector('.s_datePickerInput .s_formInputError.s_visible')
+    const checkboxError = canvasElement.querySelector('.s_checkbox .s_formInputError.s_visible')
+    const checkboxBox = canvasElement.querySelector('.s_checkbox__container')
+
+    await expect(getTop(checkboxBox) - getTextBottom(dateError)).toBeGreaterThanOrEqual(MIN_ERROR_GAP)
+    await expect(getTop(submitButton) - getTextBottom(checkboxError)).toBeGreaterThanOrEqual(MIN_ERROR_GAP)
+  },
+}
