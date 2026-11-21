@@ -88,6 +88,9 @@ watch(
     @include s_menuContent();
     @include s_elevation(2);
     @include s_borderRadius();
+    // Size to the items: with `min-content` a list whose titles can ellipsize shrank to the icon column,
+    // cutting "Edit" to "E…". The mixin's `max-width` still caps it.
+    width: max-content;
 
     > .s_list {
       padding: 0;
