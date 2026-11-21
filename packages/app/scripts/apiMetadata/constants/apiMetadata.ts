@@ -11,3 +11,7 @@ export const ENUM_SCHEMA_KIND = 'enum'
 export const NULLISH_SCHEMA_MEMBERS = ['undefined', 'null']
 export const QUOTED_LITERAL_PATTERN = /^"(.*)"$/
 export const PRINTER_NEW_LINE_LF = 1
+export const DIST_DIR = 'dist'
+export const API_METADATA_FILE = 'sui-api.json'
+export const JSON_INDENT = 2
+export const EXIT_CODE_FAILURE = 1
