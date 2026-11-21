@@ -12,9 +12,18 @@
         :class="activatorClasses"
         v-on="activatorOn"
       >
-        <slot name="activator" :item="selectedItem" :value="menuModel">
-          {{ displayText }}
-        </slot>
+        <span class="s_select__selection">
+          <span class="s_select__selectionText" :class="{ 's_select__selectionText--placeholder': !selectedItem }">
+            <slot name="activator" :item="selectedItem" :value="menuModel">
+              {{ displayText }}
+            </slot>
+          </span>
+          <!-- Invisible copies of every option, so the field is as wide as its longest option, like a native select -->
+          <span v-for="(item, index) in objectItems" :key="index" class="s_select__sizer" aria-hidden="true">{{
+            getItemText(item)
+          }}</span>
+          <span v-if="placeholder" class="s_select__sizer" aria-hidden="true">{{ placeholder }}</span>
+        </span>
         <span class="s_select__spacer"></span>
         <slot name="dropdownIcon" :color="color" :value="menuModel">
           <SIcon icon="mdi-chevron-down" :rotated="menuModel"></SIcon>
@@ -62,7 +71,11 @@ import {
 } from '@/app/services'
 import { type SelectItem, type EmitFormInput } from '@/app/types'
 
-const rawProps = defineProps<PropsSelect>()
+// Outlined by default, so a select matches the SInput and SDatePickerInput fields next to it.
+const rawProps = withDefaults(defineProps<PropsSelect>(), {
+  outlined: true,
+})
+
 const props = useComponentDefaultsService('SSelect', rawProps)
 const emit = defineEmits<EmitFormInput<T | null>>()
 const { classListBorder, styleListBorder } = useBorderService(props)
@@ -184,12 +197,18 @@ watch(menuModel, async () => {
   }
 })
 
+// The label is already shown above the field, so an empty select shows its placeholder, never the label again.
 const displayText = computed(() => {
-  return selectedItem.value?.text ?? props.label
+  return selectedItem.value?.text ?? props.placeholder ?? ''
 })
 </script>
 
 <style lang="scss">
+// Matches the SInput field: a 16px font at line-height 1.1, 8px vertical padding and a 1px border.
+$s_select__fontSize: 16px;
+$s_select__lineHeight: 1.1;
+$s_select__fieldHeight: calc(#{$s_select__fontSize} * #{$s_select__lineHeight} + #{$s_spacer * 4} + 2px);
+
 .s_select {
   position: relative;
 
@@ -201,18 +220,25 @@ const displayText = computed(() => {
   }
 
   &__activator {
-    padding: 0 8px;
-    background-color: s_getAppColor('card');
-
     @include s_button();
+    // The same box as an SInput field: 16px text inset by 16px, and the same height and font.
+    justify-content: flex-start;
+    max-width: 100%;
+    height: auto;
+    min-height: $s_select__fieldHeight;
+    padding: 0 calc($s_spacer * 2) 0 calc($s_spacer * 4);
+    font-family: $s_inputFontFamily;
+    font-size: $s_select__fontSize;
+    line-height: $s_select__lineHeight;
+    text-indent: 0;
+    background-color: s_getAppColor('card');
 
     &--empty {
       color: s_getAppColor('textSecondary');
-      background-color: s_getAppColor('inputPlaceholderShown');
     }
 
     &--dense {
-      height: #{map.get($s_button--sizes, 'small')}px;
+      min-height: #{map.get($s_button--sizes, 'small')}px;
     }
 
     // Kept visible even when `hideError` / `hideDetails` hides the message text.
@@ -254,6 +280,34 @@ const displayText = computed(() => {
 
   &__input {
     display: none;
+  }
+
+  // The selected text and the invisible option copies share one grid cell, so
+  // the field fits its longest option. A long text is clipped inside the field
+  // instead of widening it.
+  &__selection {
+    display: grid;
+    flex: 0 1 auto;
+    grid-template-columns: minmax(0, max-content);
+    min-width: 0;
+  }
+
+  &__selectionText,
+  &__sizer {
+    grid-area: 1 / 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__selectionText--placeholder {
+    color: s_getAppColor('secondaryText');
+  }
+
+  &__sizer {
+    height: 0;
+    visibility: hidden;
   }
 
   &__spacer {

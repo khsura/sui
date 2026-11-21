@@ -91,7 +91,7 @@ None.
 - `hideDetails`: Hide the label
 - `placeholder`: Input placeholder
 - `autocomplete`: Native `autocomplete` attribute
-- `size`: Preset size
+- `size`: Input font size, as on `SInput` (`large` 1.25rem, `extra` 1.5rem, never below 16px)
 - `location`: Dropdown position (flips automatically)
 - `offsetX` / `offsetY`: Dropdown offset
 - `update:modelValue` (event): Selection changed

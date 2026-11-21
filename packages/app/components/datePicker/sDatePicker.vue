@@ -84,7 +84,8 @@ const { measurableStyles } = useMeasurableStylesService(props)
 const model = defineModel<string | null>()
 
 const getFormattedValue = (value?: string | null) => {
-  return dayjs(value ?? undefined).format(getDatePickerFormat(props.type))
+  // An empty string means no date, like null: dayjs("") is an invalid date.
+  return dayjs(value === '' ? undefined : (value ?? undefined)).format(getDatePickerFormat(props.type))
 }
 
 const selectedDateFormatted = computed({

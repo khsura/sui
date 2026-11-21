@@ -1,5 +1,5 @@
 <template>
-  <div class="s_autocomplete">
+  <div class="s_autocomplete" :class="{ [`s_autocomplete--size__${size}`]: !!size }">
     <label v-if="label" v-show="!hideDetails" :for="inputId" class="s_autocomplete__label">{{ label }}</label>
     <div ref="activatorElement" class="s_autocomplete__inputField">
       <div class="s_autocomplete__inputFieldContent" :class="{ 's_autocomplete__inputFieldContent--focus': isFocused }">
@@ -203,8 +203,26 @@ watch(
 </script>
 
 <style lang="scss">
+// The SInput metrics: a 16px font at line-height 1.1, 8px vertical padding and a 1px border.
+$s_autocomplete__fontSize: 16px;
+$s_autocomplete__fieldHeight: calc(#{$s_autocomplete__fontSize} * 1.1 + #{$s_spacer * 4} + 2px);
+// The SInput size presets. None goes below 16px, a smaller one makes iOS zoom in on focus.
+$s_autocomplete--fontSizes: (
+  'mini': 1rem,
+  'small': 1rem,
+  'default': 1rem,
+  'large': 1.25rem,
+  'extra': 1.5rem,
+);
+
 .s_autocomplete {
   position: relative;
+
+  @each $key, $size in $s_autocomplete--fontSizes {
+    &--size__#{$key} .s_autocomplete__input {
+      font-size: $size;
+    }
+  }
 
   // The label SSelect draws (`.s_select__label`), so an autocomplete beside a
   // select or an input reads as the same kind of field.
@@ -226,10 +244,10 @@ watch(
     width: 100%;
     max-width: 100%;
 
-    // As tall as SSelect's activator (the default button size, 36px), so an
+    // As tall as an SInput field, with the text inset by the same 16px, so an
     // autocomplete in a row of selects and inputs lines up with them.
-    min-height: calc($s_spacer * 9);
-    padding: $s_spacer;
+    min-height: $s_autocomplete__fieldHeight;
+    padding: $s_spacer calc($s_spacer * 2) $s_spacer calc($s_spacer * 4);
     font-family: $s_inputFontFamily;
     line-height: 1.1;
     background-color: s_getAppColor('card');
@@ -274,7 +292,7 @@ watch(
     width: 100%;
     min-width: 100px;
     height: 100%;
-    font-size: 1rem;
+    font-size: $s_autocomplete__fontSize;
     color: s_getAppColor('card', true);
     outline: none;
     background-color: transparent;

@@ -26,7 +26,7 @@ Inline date, month or year picker with navigation and min/max constraints.
 
 ## Model
 
-`v-model` — selected date string in `'YYYY-MM-DD'` format (for `type="date"`), `'YYYY-MM'` (for `type="month"`) or `'YYYY'` (for `type="year"`).
+`v-model` — selected date string in `'YYYY-MM-DD'` format (for `type="date"`), `'YYYY-MM'` (for `type="month"`) or `'YYYY'` (for `type="year"`). An empty string `''` means no date, like `null`.
 
 ## Events
 
@@ -142,7 +142,7 @@ Text input with a date picker popup. Optionally renders prev/next **carousel** b
 
 ## Model
 
-`v-model` — the date string in the format of `type` (`'YYYY-MM-DD'`, `'YYYY-MM'` or `'YYYY'`).
+`v-model` — the date string in the format of `type` (`'YYYY-MM-DD'`, `'YYYY-MM'` or `'YYYY'`). `''` and `null` both mean no date. Near the bottom of the viewport the picker opens above the field. A long label or error message wraps at the field width instead of widening the field.
 
 ## Events
 

@@ -42,7 +42,7 @@ describe('STextarea', () => {
     })
 
     expect(wrapper.find('.s_textarea__input').attributes()).toStrictEqual({
-      class: 's_textarea__input s_textarea--resize__none',
+      class: 's_textarea__input s_disabled s_readonly s_textarea--resize__none',
       id: 'textarea',
       name: 'textarea',
       'aria-labelledby': 'label',
@@ -72,5 +72,25 @@ describe('STextarea', () => {
 
     expect(wrapper.classes()).toContain('s_textarea--error')
     expect(wrapper.find('.s_formInputError').exists()).toBe(false)
+  })
+
+  test('shows the counter on the error line, right under the field', () => {
+    const wrapper = mountWithApp(STextarea, {
+      props: { id: 'bio', modelValue: 'Hello', maxlength: 200, counter: true },
+    })
+
+    const details = wrapper.find('.s_textarea__details')
+
+    expect(details.find('.s_formInputError').exists()).toBe(true)
+    expect(details.find('.s_textarea__counter').text()).toBe('5 / 200')
+  })
+
+  test('counts the characters without a maxlength, and keeps the counter with hideError', () => {
+    const wrapper = mountWithApp(STextarea, {
+      props: { id: 'bio', modelValue: 'Hello', counter: true, hideError: true },
+    })
+
+    expect(wrapper.find('.s_formInputError').exists()).toBe(false)
+    expect(wrapper.find('.s_textarea__counter').text()).toBe('5')
   })
 })
