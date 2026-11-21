@@ -23,7 +23,7 @@ describe('SSelect', () => {
     })
 
     expect(wrapper.find('.s_select__label').text()).toBe('Role')
-    expect(wrapper.find('.s_select__selection').text()).toBe('')
+    expect(wrapper.find('.s_select__selectionText').text()).toBe('')
   })
 
   test('shows the placeholder while nothing is selected, and the selected text otherwise', () => {
@@ -31,9 +31,20 @@ describe('SSelect', () => {
     const empty = mountWithApp(SSelect, { props })
     const selected = mountWithApp(SSelect, { props: { ...props, modelValue: 'editor' } })
 
-    expect(empty.find('.s_select__selection').text()).toBe('Choose a role')
-    expect(empty.find('.s_select__selection').classes()).toContain('s_select__selection--placeholder')
-    expect(selected.find('.s_select__selection').text()).toBe('editor')
-    expect(selected.find('.s_select__selection').classes()).not.toContain('s_select__selection--placeholder')
+    expect(empty.find('.s_select__selectionText').text()).toBe('Choose a role')
+    expect(empty.find('.s_select__selectionText').classes()).toContain('s_select__selectionText--placeholder')
+    expect(selected.find('.s_select__selectionText').text()).toBe('editor')
+    expect(selected.find('.s_select__selectionText').classes()).not.toContain('s_select__selectionText--placeholder')
+  })
+
+  test('sizes an empty field to its longest option with hidden copies of the options', () => {
+    const wrapper = mountWithApp(SSelect, {
+      props: { id: 'role', placeholder: 'Choose', items: ['Admin', { text: 'Editor', value: 'editor' }] },
+    })
+
+    const sizers = wrapper.findAll('.s_select__sizer')
+
+    expect(sizers.map((sizer) => sizer.text())).toEqual(['Admin', 'Editor', 'Choose'])
+    expect(sizers.every((sizer) => sizer.attributes('aria-hidden') === 'true')).toBe(true)
   })
 })

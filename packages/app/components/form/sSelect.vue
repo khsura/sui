@@ -12,10 +12,17 @@
         :class="activatorClasses"
         v-on="activatorOn"
       >
-        <span class="s_select__selection" :class="{ 's_select__selection--placeholder': !selectedItem }">
-          <slot name="activator" :item="selectedItem" :value="menuModel">
-            {{ displayText }}
-          </slot>
+        <span class="s_select__selection">
+          <span class="s_select__selectionText" :class="{ 's_select__selectionText--placeholder': !selectedItem }">
+            <slot name="activator" :item="selectedItem" :value="menuModel">
+              {{ displayText }}
+            </slot>
+          </span>
+          <!-- Invisible copies of every option, so the field is as wide as its longest option, like a native select -->
+          <span v-for="(item, index) in objectItems" :key="index" class="s_select__sizer" aria-hidden="true">{{
+            getItemText(item)
+          }}</span>
+          <span v-if="placeholder" class="s_select__sizer" aria-hidden="true">{{ placeholder }}</span>
         </span>
         <span class="s_select__spacer"></span>
         <slot name="dropdownIcon" :color="color" :value="menuModel">
@@ -275,17 +282,32 @@ $s_select__fieldHeight: calc(#{$s_select__fontSize} * #{$s_select__lineHeight} +
     display: none;
   }
 
-  // A long selection is clipped inside the field instead of widening it.
+  // The selected text and the invisible option copies share one grid cell, so
+  // the field fits its longest option. A long text is clipped inside the field
+  // instead of widening it.
   &__selection {
+    display: grid;
     flex: 0 1 auto;
+    grid-template-columns: minmax(0, max-content);
+    min-width: 0;
+  }
+
+  &__selectionText,
+  &__sizer {
+    grid-area: 1 / 1;
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
 
-    &--placeholder {
-      color: s_getAppColor('secondaryText');
-    }
+  &__selectionText--placeholder {
+    color: s_getAppColor('secondaryText');
+  }
+
+  &__sizer {
+    height: 0;
+    visibility: hidden;
   }
 
   &__spacer {
