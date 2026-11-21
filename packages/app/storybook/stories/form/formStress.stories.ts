@@ -337,3 +337,185 @@ export const DatePickerNearBottom = {
     await waitFor(() => expect(document.querySelector('.s_datePickerInput__picker')).toBeVisible())
   },
 } satisfies StoryObj
+
+// Distance (px) a dropdown must keep from the viewport edges, matching the library gutter (`overlayViewportGutter`).
+const VIEWPORT_GUTTER = 8
+// Sub-pixel rounding allowed in the geometry checks.
+const PIXEL_TOLERANCE = 1
+// Largest gap (px) between a dropdown and its field: anything more means the dropdown floated away.
+const MAX_FIELD_GAP = 16
+// Narrow enough that every dropdown below is wider than its field, so near the right edge it has to shift left.
+const EDGE_FIELD_WIDTH = 160
+const EDGE_FILTER_TEXT = 'an'
+const edgeFruits = [...fruits, 'Dragon fruit with a very long name that is wider than the field']
+const edgeCorners = ['top-right', 'bottom-right'] as const
+
+type EdgeCorner = (typeof edgeCorners)[number]
+
+// The fields sit against the right edge, one at the top and one in the bottom-right corner of the viewport.
+const edgeStageTemplate = (field: string) => `
+  <div style="position: fixed; inset: 0;">
+    <div
+      v-for="(corner, index) in corners"
+      :key="corner"
+      :class="'stress-edge--' + corner"
+      style="position: absolute; right: 0; width: ${EDGE_FIELD_WIDTH}px;"
+      :style="corner === 'top-right' ? { top: '0' } : { bottom: '0' }"
+    >
+      ${field}
+    </div>
+  </div>
+`
+
+const getRect = (element: Element | null) => {
+  if (!element) {
+    throw new Error('dropdown element not found')
+  }
+
+  return element.getBoundingClientRect()
+}
+
+// Plain throwing checks: they run inside `waitFor` callbacks, which retry until no error is thrown.
+const assertThat = (condition: boolean, message: string) => {
+  if (!condition) {
+    throw new Error(message)
+  }
+}
+
+const assertInsideViewport = (element: Element | null) => {
+  const rect = getRect(element)
+  const minimum = VIEWPORT_GUTTER - PIXEL_TOLERANCE
+
+  const isInside =
+    rect.left >= minimum &&
+    rect.top >= minimum &&
+    rect.right <= window.innerWidth - minimum &&
+    rect.bottom <= window.innerHeight - minimum
+
+  assertThat(isInside, `dropdown ${JSON.stringify(rect)} is not ${VIEWPORT_GUTTER}px inside the viewport`)
+}
+
+/** The dropdown sits right above or right below its field, without covering it. */
+const assertAttachedToField = (dropdown: Element | null, field: Element | null) => {
+  const dropdownRect = getRect(dropdown)
+  const fieldRect = getRect(field)
+  const gapAbove = fieldRect.top - dropdownRect.bottom
+  const gapBelow = dropdownRect.top - fieldRect.bottom
+  const isAbove = gapAbove >= -PIXEL_TOLERANCE && gapAbove <= MAX_FIELD_GAP
+  const isBelow = gapBelow >= -PIXEL_TOLERANCE && gapBelow <= MAX_FIELD_GAP
+
+  assertThat(isAbove || isBelow, `dropdown ${JSON.stringify(dropdownRect)} is not attached to its field`)
+}
+
+/** The only open dropdown matching `selector` (a closed one is removed or hidden). */
+const getOpenDropdown = (selector: string) => {
+  const openDropdowns = [...document.querySelectorAll<HTMLElement>(selector)].filter(
+    (element) => element.offsetParent !== null,
+  )
+
+  assertThat(openDropdowns.length === 1, `expected one open ${selector}, found ${openDropdowns.length}`)
+
+  return openDropdowns[0] ?? null
+}
+
+const getEdgeElement = (canvasElement: HTMLElement, corner: EdgeCorner, selector: string) =>
+  canvasElement.querySelector(`.stress-edge--${corner} ${selector}`)
+
+// A select against the right edge, at the top and in the bottom-right corner: the list stays inside the viewport.
+export const SelectAtEdges = {
+  tags: ['visual'],
+  render: () =>
+    defineComponent({
+      components: stressComponents,
+      setup: () => ({ roles, roleValues: ref(['admin', 'admin']), corners: edgeCorners }),
+      template: edgeStageTemplate(
+        `<SSelect v-model="roleValues[index]" :items="roles" :aria-label="'Role ' + corner" grow hide-details />`,
+      ),
+    }),
+  play: async ({ canvasElement, userEvent }) => {
+    for (const corner of edgeCorners) {
+      const activator = getEdgeElement(canvasElement, corner, '.s_select__activator')
+
+      await expect(activator).toBeInTheDocument()
+      if (activator) {
+        await userEvent.click(activator)
+      }
+
+      await waitFor(() => assertInsideViewport(getOpenDropdown('.s_select__list')))
+    }
+  },
+} satisfies StoryObj
+
+// An autocomplete against the right edge: its list stays inside the viewport, and in the bottom-right corner the
+// list opened above the field stays on the field while typing filters it.
+export const AutocompleteAtEdges = {
+  tags: ['visual'],
+  render: () =>
+    defineComponent({
+      components: stressComponents,
+      setup: () => ({ edgeFruits, fruitValues: ref([null, null]), corners: edgeCorners }),
+      template: edgeStageTemplate(
+        `<SAutocomplete v-model="fruitValues[index]" :items="edgeFruits" :aria-label="'Fruit ' + corner" hide-details />`,
+      ),
+    }),
+  play: async ({ canvasElement, userEvent }) => {
+    const expectListOnField = (corner: EdgeCorner) =>
+      waitFor(() => {
+        const list = getOpenDropdown('.s_autocomplete__list')
+
+        assertInsideViewport(list)
+        assertAttachedToField(list, getEdgeElement(canvasElement, corner, '.s_autocomplete__inputField'))
+      })
+
+    for (const corner of edgeCorners) {
+      const input = getEdgeElement(canvasElement, corner, 'input')
+
+      await expect(input).toBeInTheDocument()
+      if (input) {
+        await userEvent.click(input)
+      }
+
+      await expectListOnField(corner)
+    }
+
+    const bottomInput = getEdgeElement(canvasElement, 'bottom-right', 'input')
+
+    if (bottomInput) {
+      await userEvent.type(bottomInput, EDGE_FILTER_TEXT)
+    }
+
+    await expectListOnField('bottom-right')
+  },
+} satisfies StoryObj
+
+// A date picker against the right edge: the calendar stays inside the viewport, flipping above the field in the
+// bottom-right corner instead of covering it.
+export const DatePickerAtEdges = {
+  tags: ['visual'],
+  render: () =>
+    defineComponent({
+      components: stressComponents,
+      setup: () => ({ dateValues: ref(['2026-01-15', '2026-01-15']), corners: edgeCorners }),
+      template: edgeStageTemplate(
+        // With hide-details the label is not drawn, it names the input instead.
+        `<SDatePickerInput v-model="dateValues[index]" :label="'Date ' + corner" hide-details />`,
+      ),
+    }),
+  play: async ({ canvasElement, userEvent }) => {
+    for (const corner of edgeCorners) {
+      const suffix = getEdgeElement(canvasElement, corner, '.s_datePickerInput__suffix')
+
+      await expect(suffix).toBeInTheDocument()
+      if (suffix) {
+        await userEvent.click(suffix)
+      }
+
+      await waitFor(() => {
+        const picker = getOpenDropdown('.s_datePickerInput__picker')
+
+        assertInsideViewport(picker)
+        assertAttachedToField(picker, getEdgeElement(canvasElement, corner, '.s_datePickerInput__field'))
+      })
+    }
+  },
+} satisfies StoryObj
