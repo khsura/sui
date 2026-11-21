@@ -1,0 +1,16 @@
+{"time":"2026-11-21T06:22:36.791Z","page":"01-settings","tool":"instructions"}
+{"time":"2026-11-21T06:22:51.940Z","page":"01-settings","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T06:22:57.901Z","page":"01-settings","tool":"get_recipe","args":{"name":"validated-form"},"isError":false}
+{"time":"2026-11-21T06:22:58.439Z","page":"01-settings","tool":"get_recipe","args":{"name":"activator-overlays"},"isError":false}
+{"time":"2026-11-21T06:23:09.836Z","page":"01-settings","tool":"get_recipe","args":{"name":"validated-form"},"isError":false}
+{"time":"2026-11-21T06:23:11.537Z","page":"01-settings","tool":"get_recipe","args":{"name":"activator-overlays"},"isError":false}
+{"time":"2026-11-21T06:23:38.954Z","page":"01-settings","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T06:23:41.061Z","page":"01-settings","tool":"get_component_api","args":{"name":"STextarea"},"isError":false}
+{"time":"2026-11-21T06:23:43.022Z","page":"01-settings","tool":"get_component_api","args":{"name":"SSwitch"},"isError":false}
+{"time":"2026-11-21T06:23:44.818Z","page":"01-settings","tool":"get_component_api","args":{"name":"SApp"},"isError":false}
+{"time":"2026-11-21T06:23:47.010Z","page":"01-settings","tool":"get_component_api","args":{"name":"SInput"},"isError":false}
+{"time":"2026-11-21T06:23:48.946Z","page":"01-settings","tool":"get_component_api","args":{"name":"SSelect"},"isError":false}
+{"time":"2026-11-21T06:23:50.954Z","page":"01-settings","tool":"get_component_api","args":{"name":"SDialog"},"isError":false}
+{"time":"2026-11-21T06:23:52.184Z","page":"01-settings","tool":"get_component_api","args":{"name":"SButton"},"isError":false}
+{"time":"2026-11-21T06:23:53.446Z","page":"01-settings","tool":"get_component_api","args":{"name":"SForm"},"isError":false}
+{"time":"2026-11-21T06:24:51.776Z","page":"01-settings","tool":"validate_sui_template","args":{"code":"<4330 chars>"},"isError":false}

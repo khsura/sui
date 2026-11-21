@@ -546,7 +546,7 @@ const submit = () => {
 <template>
   <SForm ref="formRef" v-model="valid" @submit.prevent="submit">
     <SInput v-model="model.name" label="Name" :rules="[required]" />
-    <SInput v-model="model.email" label="Email" type="email" :rules="[required, v => /.+@.+/.test(String(v)) || 'Invalid email']" />
+    <SInput v-model="model.email" label="Email" type="text" inputmode="email" autocomplete="email" :rules="[required, v => /.+@.+/.test(String(v)) || 'Invalid email']" />
     <SSelect
       v-model="model.country"
       label="Country"

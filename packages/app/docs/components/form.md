@@ -352,7 +352,9 @@ const submit = () => {
     <SInput
       v-model="form.email"
       label="Email"
-      type="email"
+      type="text"
+      inputmode="email"
+      autocomplete="email"
       :rules="[rules.required, rules.email]"
     />
 

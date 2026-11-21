@@ -1,7 +1,16 @@
 import type { AttributeNode, DirectiveNode, ElementNode, ExpressionNode } from '@vue/compiler-dom'
 import { NodeTypes } from '@vue/compiler-dom'
 import type { TemplateAttribute, TemplateIssue, TemplateSlotFill } from '../types'
-import { DIRECTIVE_BIND, DIRECTIVE_SLOT, STRING_LITERAL_EXPRESSION, TEMPLATE_TAG } from '../constants'
+import {
+  CLASS_ATTRIBUTE,
+  DIRECTIVE_BIND,
+  DIRECTIVE_SLOT,
+  FALSE_LITERAL,
+  STRING_LITERAL_EXPRESSION,
+  TEMPLATE_TAG,
+  WHITESPACE_PATTERN,
+} from '../constants'
+import { toCamelCase } from '../lib'
 import { toComponentKey } from './componentName'
 
 type IssueAt = Pick<TemplateIssue, 'line' | 'column'>
@@ -76,3 +85,38 @@ export const slotFills = (element: ElementNode): TemplateSlotFill[] => {
 
 export const slotDirectives = (element: ElementNode): DirectiveNode[] =>
   slotFills(element).map((fill) => fill.directive)
+
+/** Every element below `element`, depth first. */
+export const descendantElementsOf = (element: ElementNode): ElementNode[] =>
+  childElementsOf(element).flatMap((child) => [child, ...descendantElementsOf(child)])
+
+/** A prop written in either case style: `hide-details`, `hideDetails`, `:hide-details`. */
+export const findPropAttribute = (element: ElementNode, kebabName: string): TemplateAttribute | undefined =>
+  findAttribute(element, kebabName) ?? findAttribute(element, toCamelCase(kebabName))
+
+/** A boolean prop that is set and not statically `false` (`block`, `:block="true"`, `:block="isWide"`). */
+export const isBooleanPropOn = (element: ElementNode, kebabName: string): boolean => {
+  const attribute = findPropAttribute(element, kebabName)
+
+  if (!attribute) {
+    return false
+  }
+
+  return !isDirective(attribute.node) || expressionSource(attribute.node) !== FALSE_LITERAL
+}
+
+/** The static `class` tokens of `element` (a plain `class` or a string-literal `:class`); bound classes are unknown. */
+export const staticClassNames = (element: ElementNode): string[] =>
+  element.props
+    .flatMap((prop) => {
+      if (!isDirective(prop)) {
+        return prop.name === CLASS_ATTRIBUTE ? [prop.value?.content ?? ''] : []
+      }
+
+      const isClassBinding = prop.name === DIRECTIVE_BIND && staticArgument(prop.arg) === CLASS_ATTRIBUTE
+      const literal = isClassBinding ? STRING_LITERAL_EXPRESSION.exec(expressionSource(prop) ?? '') : null
+
+      return literal ? [literal[2]] : []
+    })
+    .flatMap((value) => value.split(WHITESPACE_PATTERN))
+    .filter(Boolean)

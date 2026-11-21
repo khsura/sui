@@ -75,7 +75,7 @@ Use them to disable the submit button; `resetValidation()` (exposed) clears ever
 `SCheckbox` and `SRadio` labels are the control's own text, not a label above a field: `hideDetails` keeps them and only removes the error area.
 
 - Use **`hideError`** when you only want to drop the message line (dense tables, inline filters) but keep the label.
-- Use **`hideDetails`** only when the field should have no label either — it is not a "compact" switch.
+- Use **`hideDetails`** only when the field should have no label either — it is not a "compact" switch. On `SCheckbox` the label is the only text, so `hideDetails` leaves a bare box ("Remember me" disappears); use `hideError` there.
 - The field frame turns red on error even with either flag set (`SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SDatePickerInput`), so users can still see which field is invalid. Don't add your own `:deep()` error border.
 
 ---
@@ -152,7 +152,7 @@ Use this to choose the right component and props for each field.
 | **SCheckbox**     | `boolean`          | `label`, `color`, `size` (`'default'` \| `'large'`), `block`, `bordered`, `readonly`                                                                                                                                                                                                                              | Single boolean                            |
 | **SRadioGroup**   | `any`              | Slot content: `<SRadio value="..." label="...">` children (no `items` prop). Props: `column`, `grow`, `color`, `name`                                                                                                                                                                    | Single choice from list                   |
 | **SSwitch**       | `boolean`          | `label`, `color`                                                                                                                                                                                                                                                                         | On/off toggle                             |
-| **SDatePickerInput** | `string`       | `label`, `placeholder`, `type` (`'date'` \| `'month'` \| `'year'`), `min`/`max`, `dense`, `readonly`, `simple`, `tile`, `size`, `block` (off by default; `maxWidth` caps it), `carousel` (prev/next buttons that step the value by one day / month / year). Without `min`/`max` the selectable range is Jan 1 five years before today to Dec 31 five years after — pass `min` for birth dates                                                                              | Date, month or year field with a picker popup |
+| **SDatePickerInput** | `string \| null` | `label`, `placeholder`, `type` (`'date'` \| `'month'` \| `'year'`), `min`/`max`, `dense`, `readonly`, `simple`, `tile`, `size`, `block` (off by default; `maxWidth` caps it), `carousel` (prev/next buttons that step the value by one day / month / year). Without `min`/`max` the selectable range is Jan 1 five years before today to Dec 31 five years after — pass `min` for birth dates                                                                              | Date, month or year field with a picker popup |
 
 **SelectItem** (SSelect, SAutocomplete): from `@khsura/sui` — `{ text: string, value: string | number | null | undefined, disabled?: boolean }` or plain `string`. Use `text` and `value`, not `title` or `label`.
 
@@ -174,7 +174,7 @@ For full props, slots, and events per component, read [form.md](../sui-component
       <SForm ref="formRef" @submit.prevent="submit">
         <SInput v-model="form.name" label="Full Name" :rules="[required]" />
 
-        <SInput v-model="form.email" label="Email" type="email" :rules="[required, email]" />
+        <SInput v-model="form.email" label="Email" type="text" inputmode="email" autocomplete="email" :rules="[required, email]" />
 
         <SInput v-model="form.password" label="Password" type="password" :rules="[required, minLength(8)]" />
 

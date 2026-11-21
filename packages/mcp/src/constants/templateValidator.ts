@@ -61,6 +61,7 @@ export const FALLTHROUGH_ATTRIBUTES = [
   'placeholder',
   'alt',
   'src',
+  'novalidate',
 ]
 
 /** A bound expression that is just a string literal (`:size="'small'"`), so its value is still known statically. */
@@ -71,6 +72,12 @@ export const RULE_LAYOUT_FOR = 'layout-for'
 export const RULE_FORM_RULES_OUTSIDE_FORM = 'form-rules-outside-form'
 export const RULE_ICON_BUTTON_LABEL = 'icon-button-label'
 export const RULE_NO_RAW_REPLACEMENT = 'no-raw-replacement'
+export const RULE_NATIVE_VALIDATION_IN_FORM = 'native-validation-in-form'
+export const RULE_HIDE_DETAILS_HIDES_LABEL = 'hide-details-hides-label'
+export const RULE_SNACKBAR_ACTION_CONTRAST = 'snackbar-action-contrast'
+export const RULE_BLOCK_BUTTONS_IN_ROW = 'block-buttons-in-row'
+export const RULE_CARD_TITLE_TEXT_ALIGN = 'card-title-text-align'
+export const RULE_DATE_PICKER_EMPTY_STRING = 'date-picker-empty-string'
 
 /** Which elements the engine hands a rule: SUI components only (the default) or every element. */
 export const RULE_TARGET_SUI_COMPONENT = 'sui-component'
@@ -137,6 +144,69 @@ export const CLOSING_BRACKETS = '}])'
 export const ENTRY_SEPARATOR = ','
 export const RENAME_SEPARATOR = ':'
 export const DEFAULT_SEPARATOR = '='
+
+/** `<input type>` values the browser validates on submit, showing its own bubble on top of SUI's error text. */
+export const INPUT_TYPE_NUMBER = 'number'
+export const NATIVE_VALIDATING_INPUT_TYPES = ['email', 'url', 'number']
+/** On SForm it reaches the rendered `<form>` and turns the browser's own validation off. */
+export const NO_VALIDATE_ATTRIBUTE = 'novalidate'
+
+export const HIDE_DETAILS_ATTRIBUTE = 'hide-details'
+export const LABEL_ATTRIBUTE = 'label'
+/** Inputs whose only visible text is the `label` prop, which `hide-details` hides as well. */
+export const HIDE_DETAILS_LABEL_COMPONENTS = ['SCheckbox']
+
+export const SNACKBAR_COMPONENT = 'SSnackbar'
+export const SNACKBAR_ACTION_SLOT_NAME = 'action'
+export const COLOR_ATTRIBUTE = 'color'
+export const VARIANT_ATTRIBUTE = 'variant'
+export const TEXT_BUTTON_VARIANT = 'text'
+/** Preset colours below 4.5:1 as text on the default `#424242` snackbar (primary is 2.18:1). */
+export const SNACKBAR_UNREADABLE_PRESET_COLORS = ['primary', 'secondary', 'success', 'info', 'error']
+export const SNACKBAR_READABLE_ACTION_COLOR = 'warning'
+
+export const BLOCK_ATTRIBUTE = 'block'
+export const MIN_BLOCK_BUTTONS_IN_ROW = 2
+/** Components whose root is a `display: flex` row. */
+export const FLEX_ROW_COMPONENTS = ['SCardActions']
+/** `s_display__flex`, `s_display--md__inlineFlex`: the utility classes that make an element a flex row. */
+export const FLEX_DISPLAY_CLASS_PATTERN = /^s_display(?:--[a-z]+)?__(?:flex|inlineFlex)$/
+export const FLEX_DISPLAY_STYLE_PATTERN = /(?:^|;)\s*display\s*:\s*(?:inline-)?flex\b/
+export const CLASS_ATTRIBUTE = 'class'
+export const STYLE_ATTRIBUTE = 'style'
+export const FALSE_LITERAL = 'false'
+
+export const CARD_TITLE_COMPONENT = 'SCardTitle'
+/** `s_textAlign__center`, `s_textAlign--md__center`. */
+export const TEXT_ALIGN_CLASS_PATTERN = /^s_textAlign(?:--[a-z]+)?__([a-z]+)$/
+/** The `justify` utility for each text-align value, which does centre a flex container's content. */
+export const TEXT_ALIGN_JUSTIFY_CLASSES = new Map([
+  ['left', 's_justify__start'],
+  ['start', 's_justify__start'],
+  ['center', 's_justify__center'],
+  ['right', 's_justify__end'],
+  ['end', 's_justify__end'],
+])
+
+export const DATE_PICKER_EMPTY_STRING_COMPONENTS = ['SDatePickerInput']
+export const MODEL_VALUE_ATTRIBUTE = 'model-value'
+/** `''` or `""` as a whole expression. */
+export const EMPTY_STRING_EXPRESSION = /^\s*(['"])\1\s*$/
+/** A dotted model path (`draft.from`, `startDate`) whose last segment can be looked up in the script. */
+export const MODEL_PATH_PATTERN = /^\s*[A-Za-z_$][\w$]*(?:\??\.[A-Za-z_$][\w$]*)*\s*$/
+export const MODEL_PATH_SEPARATOR = /\??\./
+export const REGEX_SPECIAL_CHARACTERS = /[$]/g
+export const REGEX_ESCAPE_REPLACEMENT = '\\$&'
+/** Placeholder in the script patterns below, replaced by the model's last path segment. */
+export const MODEL_NAME_PLACEHOLDER = '__name__'
+/** `from: ''` in an object literal, or `startDate = ref('')` / `ref<string>("")`. */
+export const EMPTY_STRING_INITIAL_PATTERNS = [
+  `(?:^|[^\\w$.])${MODEL_NAME_PLACEHOLDER}\\s*:\\s*(['"])\\1`,
+  `(?:^|[^\\w$.])${MODEL_NAME_PLACEHOLDER}\\s*=\\s*(?:ref|shallowRef)\\s*(?:<[^>]*>)?\\s*\\(\\s*(['"])\\1\\s*\\)`,
+]
+
+/** Joins an SFC's `<script>` and `<script setup>` contents into one searchable source. */
+export const SCRIPT_BLOCK_SEPARATOR = '\n'
 
 export const DIALOG_TAG = 'dialog'
 export const ACTIVATOR_BINDING_FIX =

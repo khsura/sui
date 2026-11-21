@@ -41,7 +41,7 @@ export const useTemplateValidatorService = (api: SuiApi, rules: TemplateRule[] =
   const catalog = useComponentCatalogService(api)
 
   const validate = (code: string): TemplateIssue[] => {
-    const { root, errors } = parseVueTemplate(code)
+    const { root, errors, scriptSource } = parseVueTemplate(code)
     const elements = root ? placedElements(root) : []
 
     const ruleIssues = elements.flatMap(({ element, ancestors }) => {
@@ -51,7 +51,7 @@ export const useTemplateValidatorService = (api: SuiApi, rules: TemplateRule[] =
         return []
       }
 
-      const context = { element, ancestors, lookup: catalog.findComponent(element.tag), api }
+      const context = { element, ancestors, lookup: catalog.findComponent(element.tag), api, scriptSource }
 
       return applicableRules.flatMap((rule) => rule.check(context))
     })
