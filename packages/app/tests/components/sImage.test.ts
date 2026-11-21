@@ -21,4 +21,11 @@ describe('SImage', () => {
 
     expect(wrapper.classes('s_image--aspectRatio')).toBe(false)
   })
+
+  test('shows a placeholder when the src is missing', () => {
+    const wrapper = getSImage({ src: '', aspectRatio })
+
+    expect(wrapper.classes('s_image--empty')).toBe(true)
+    expect(wrapper.find('img').exists()).toBe(false)
+  })
 })
