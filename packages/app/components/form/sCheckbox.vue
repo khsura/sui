@@ -89,8 +89,12 @@ $s_checkbox--size__large: 32px;
 $s_checkbox--size: 24px;
 
 .s_checkbox {
+  // The error line sits under the box, as under every other field, so it no
+  // longer squeezes the label from the side and the checkbox keeps the same
+  // space below it as the inputs above it.
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
 
   &__container {
     position: relative;
