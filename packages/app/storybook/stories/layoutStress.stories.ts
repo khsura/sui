@@ -4,6 +4,7 @@ import {
   type TableHeader,
   SAppBar,
   SAppBarTitle,
+  SBottomNavigation,
   SButton,
   SContainer,
   SFooter,
@@ -58,6 +59,7 @@ const tableItems = Array.from({ length: TABLE_ROW_COUNT }, (_, rowIndex) =>
 const layoutComponents = {
   SAppBar,
   SAppBarTitle,
+  SBottomNavigation,
   SButton,
   SContainer,
   SFooter,
@@ -206,6 +208,63 @@ export const DrawerVariants = {
             <SFooter for="stressResize"><SContainer><span class="s_text--caption">Footer</span></SContainer></SFooter>
           </SLayout>
         </div>
+      `,
+    }),
+} satisfies StoryObj
+
+/**
+ * A page shorter than the viewport, rendered straight inside SApp (no Storybook SMain around it): the app
+ * background and the named layout's drawer reach the bottom of the viewport. This is the AI eval dashboard's
+ * shape: a named layout with no height.
+ */
+export const ShortPage = {
+  tags: ['visual'],
+  parameters: {
+    appDecorator: { main: false },
+  },
+  render: () =>
+    defineComponent({
+      components: layoutComponents,
+      setup: () => ({ isDrawerOpen: ref(false), navItems: navItems.slice(0, navIcons.length) }),
+      template: `
+        <SLayout name="stressShort">
+          <SAppBar for="stressShort" position="fixed">
+            <SButton variant="icon" aria-label="Toggle navigation" @click="isDrawerOpen = !isDrawerOpen">
+              <SIcon icon="mdi-menu" />
+            </SButton>
+            <SAppBarTitle>Short page</SAppBarTitle>
+          </SAppBar>
+          <SNavigationDrawer v-model="isDrawerOpen" for="stressShort">${navListTemplate}</SNavigationDrawer>
+          <SMain for="stressShort">
+            <SContainer><p>One line of content.</p></SContainer>
+          </SMain>
+        </SLayout>
+      `,
+    }),
+} satisfies StoryObj
+
+/** A short app-level page with a bottom navigation, straight inside SApp: the navigation sits at the viewport bottom. */
+export const ShortPageBottomNavigation = {
+  tags: ['visual'],
+  parameters: {
+    appDecorator: { main: false },
+  },
+  render: () =>
+    defineComponent({
+      components: layoutComponents,
+      setup: () => ({ currentTab: ref('recent') }),
+      template: `
+        <SLayout>
+          <SAppBar position="fixed"><SAppBarTitle>Bottom navigation</SAppBarTitle></SAppBar>
+          <SMain>
+            <SContainer><p>One line of content.</p></SContainer>
+          </SMain>
+          <SBottomNavigation v-model="currentTab">
+            <SButton value="recent"><SIcon icon="mdi-history" /><span>Recent</span></SButton>
+            <SButton value="favorites"><SIcon icon="mdi-heart" /><span>Favorites</span></SButton>
+            <SButton value="nearby"><SIcon icon="mdi-map-marker" /><span>Nearby</span></SButton>
+          </SBottomNavigation>
+        </SLayout>
       `,
     }),
 } satisfies StoryObj

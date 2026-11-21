@@ -19,13 +19,21 @@ const { styles } = useAppService(props)
 <style lang="scss">
 .s_app {
   display: flex;
+  flex: 1 1 auto;
   flex-flow: column;
-  flex-wrap: 1 1 auto;
+
+  // fill the viewport, so a short page keeps the app background (and a layout's drawer) down to the bottom
+  min-height: 100vh;
   font-family: $s_fontFamily;
   line-height: $s_lineHeight;
   color: s_getAppColor('text');
   background-color: s_getAppColor('background');
   fill: s_getAppColor('text');
+
+  // the dynamic viewport height leaves out the mobile browser bars that 100vh counts
+  @supports (min-height: 100dvh) {
+    min-height: 100dvh;
+  }
 
   ::-ms-clear,
   ::-ms-reveal {

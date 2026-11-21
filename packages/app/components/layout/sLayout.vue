@@ -19,7 +19,9 @@ useLayoutProviderService(props, appState)
 .s_layout {
   position: relative;
   display: flex;
+
+  // a layout directly in SApp grows to the viewport height with it
+  flex: 1 0 auto;
   flex-flow: column;
-  flex-wrap: 1 1 auto;
 }
 </style>
