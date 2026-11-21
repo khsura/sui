@@ -673,3 +673,57 @@ export const DatePickerInFormCard = {
     })
   },
 } satisfies StoryObj
+
+// Width (px) of the narrow column: narrower than a date field with its value and calendar button.
+const NARROW_BOX_WIDTH = 160
+const NARROW_BOX_COUNT = 4
+
+// Each field in a 160px column: it shrinks into the column (as SInput does) instead of overflowing it, the value
+// truncates with an ellipsis and the calendar button stays visible.
+export const FieldsInNarrowBox = {
+  tags: ['visual'],
+  render: () =>
+    defineComponent({
+      components: stressComponents,
+      setup: () => ({
+        roles,
+        fruits,
+        values: ref({ input: LONG_VALUE, date: '2026-01-15', role: 'editor', fruit: 'Mango' }),
+      }),
+      template: `
+        <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+          <div class="stress-narrow" style="width: ${NARROW_BOX_WIDTH}px;">
+            <SInput v-model="values.input" label="Input" />
+          </div>
+          <div class="stress-narrow" data-testid="narrow-date" style="width: ${NARROW_BOX_WIDTH}px;">
+            <SDatePickerInput v-model="values.date" label="Date" />
+          </div>
+          <div class="stress-narrow" style="width: ${NARROW_BOX_WIDTH}px;">
+            <SSelect v-model="values.role" label="Role" :items="roles" />
+          </div>
+          <div class="stress-narrow" style="width: ${NARROW_BOX_WIDTH}px;">
+            <SAutocomplete v-model="values.fruit" label="Fruit" :items="fruits" />
+          </div>
+        </div>
+      `,
+    }),
+  play: async ({ canvasElement }) => {
+    const boxes = Array.from(canvasElement.querySelectorAll<HTMLElement>('.stress-narrow'))
+
+    await expect(boxes.length).toBe(NARROW_BOX_COUNT)
+    for (const box of boxes) {
+      await expect(box.scrollWidth, 'nothing overflows the 160px column').toBeLessThanOrEqual(box.clientWidth)
+    }
+
+    const dateBox = canvasElement.querySelector<HTMLElement>('[data-testid="narrow-date"]')
+    const dateField = dateBox?.querySelector('.s_datePickerInput')
+    const calendarButton = dateBox?.querySelector('.s_datePickerInput__suffix')
+    const dateInput = dateBox?.querySelector('.s_datePickerInput__input')
+
+    await expect(dateField?.getBoundingClientRect().width).toBeLessThanOrEqual(NARROW_BOX_WIDTH)
+    await expect(calendarButton?.getBoundingClientRect().right).toBeLessThanOrEqual(
+      (dateBox?.getBoundingClientRect().right ?? 0) + PIXEL_TOLERANCE,
+    )
+    await expect(dateInput && getComputedStyle(dateInput).textOverflow).toBe('ellipsis')
+  },
+} satisfies StoryObj
