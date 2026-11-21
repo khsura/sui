@@ -353,13 +353,14 @@ const edgeCorners = ['top-right', 'bottom-right'] as const
 type EdgeCorner = (typeof edgeCorners)[number]
 
 // The fields sit against the right edge, one at the top and one in the bottom-right corner of the viewport.
-const edgeStageTemplate = (field: string) => `
+// `fieldWidth` is the width of each field's box (`auto` keeps the field's own width).
+const edgeStageTemplate = (field: string, fieldWidth = `${EDGE_FIELD_WIDTH}px`) => `
   <div style="position: fixed; inset: 0;">
     <div
       v-for="(corner, index) in corners"
       :key="corner"
       :class="'stress-edge--' + corner"
-      style="position: absolute; right: 0; width: ${EDGE_FIELD_WIDTH}px;"
+      style="position: absolute; right: 0; width: ${fieldWidth};"
       :style="corner === 'top-right' ? { top: '0' } : { bottom: '0' }"
     >
       ${field}
@@ -499,6 +500,8 @@ export const DatePickerAtEdges = {
       template: edgeStageTemplate(
         // With hide-details the label is not drawn, it names the input instead.
         `<SDatePickerInput v-model="dateValues[index]" :label="'Date ' + corner" hide-details />`,
+        // The field keeps its own width (narrower than the calendar), so it is not squeezed past the edge.
+        'auto',
       ),
     }),
   play: async ({ canvasElement, userEvent }) => {
