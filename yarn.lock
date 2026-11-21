@@ -2547,6 +2547,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@khsura/sui@workspace:packages/app"
   dependencies:
+    "@mdi/font": "npm:6.5.95"
     "@playwright/test": "npm:1.61.1"
     "@storybook/addon-a11y": "npm:^10.4.6"
     "@storybook/addon-docs": "npm:^10.4.6"
@@ -2573,6 +2574,13 @@ __metadata:
     zod: "npm:^4.4.3"
   languageName: unknown
   linkType: soft
+
+"@mdi/font@npm:6.5.95":
+  version: 6.5.95
+  resolution: "@mdi/font@npm:6.5.95"
+  checksum: 10/80ad94ab584705b53eb234361478f2c1501d95cc23855f9952b686daf749525a5132a059fd44790da14e7687ccc1b034ce8598b0761c99ff6f16d996a6aef49b
+  languageName: node
+  linkType: hard
 
 "@mdx-js/react@npm:^3.0.0":
   version: 3.0.1

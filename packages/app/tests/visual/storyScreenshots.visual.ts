@@ -7,7 +7,14 @@ import {
   visualViewportHeight,
   visualViewportWidths,
 } from './constants'
-import { getVisualStoryPath, readVisualStories, visualTest, waitForFonts, waitForStoryRender } from './lib'
+import {
+  getVisualStoryPath,
+  readVisualStories,
+  serveStoryAssetsOffline,
+  visualTest,
+  waitForFonts,
+  waitForStoryRender,
+} from './lib'
 
 const storybookDir = fileURLToPath(new URL(`../../${visualStorybookDir}`, import.meta.url))
 const visualStories = readVisualStories(storybookDir)
@@ -21,6 +28,7 @@ for (const story of visualStories) {
     visualTest(`${story.title} / ${story.name} @ ${width}px`, async ({ page, theme }) => {
       await page.setViewportSize({ width, height: visualViewportHeight })
       await page.clock.setFixedTime(visualFixedTime)
+      await serveStoryAssetsOffline(page)
       await page.goto(getVisualStoryPath(story.id, theme), { waitUntil: 'networkidle' })
 
       expect(await waitForStoryRender(page)).toBe(storyRenderFinishedPhase)

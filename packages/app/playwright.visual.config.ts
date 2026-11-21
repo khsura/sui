@@ -4,7 +4,9 @@ import {
   visualMaxDiffPixelRatio,
   visualPixelThreshold,
   visualServerPort,
+  visualScreenshotTimeoutMs,
   visualServerTimeoutMs,
+  visualServerUrl,
   visualStorybookDir,
   visualTestTimeoutMs,
   visualThemes,
@@ -29,6 +31,7 @@ export default defineConfig<VisualOptions>({
   retries: 0,
   reporter: [['list'], ['html', { outputFolder: './.visual/report', open: 'never' }]],
   expect: {
+    timeout: visualScreenshotTimeoutMs,
     toHaveScreenshot: {
       animations: 'disabled',
       caret: 'hide',
@@ -39,7 +42,7 @@ export default defineConfig<VisualOptions>({
     },
   },
   use: {
-    baseURL: `http://127.0.0.1:${visualServerPort}`,
+    baseURL: visualServerUrl,
     viewport: { width: desktopWidth, height: visualViewportHeight },
     deviceScaleFactor: 1,
     locale: 'en-US',
@@ -55,7 +58,7 @@ export default defineConfig<VisualOptions>({
   ),
   webServer: {
     command: `yarn http-server ${visualStorybookDir} --port ${visualServerPort} --silent`,
-    url: `http://127.0.0.1:${visualServerPort}/index.json`,
+    url: `${visualServerUrl}/index.json`,
     reuseExistingServer: false,
     timeout: visualServerTimeoutMs,
   },

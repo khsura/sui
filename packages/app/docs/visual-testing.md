@@ -21,6 +21,7 @@ To keep the screenshots stable, the harness:
 - disables CSS animations and transitions, and hides the text caret
 - emulates `prefers-reduced-motion: reduce`, the UTC time zone and the `en-US` locale
 - freezes `Date` at a fixed instant and seeds faker, so generated story content is the same on every load
+- runs the page offline: the Material Design Icons font comes from the local `@mdi/font` package, and other off-site requests (such as Google Fonts, which SUI styles do not use) are aborted
 - waits until the story render and its `play` function finish, then waits for web fonts
 - allows a small per-pixel colour difference (antialiasing) and fails when more than 0.2% of the pixels differ
 

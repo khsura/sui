@@ -28,4 +28,7 @@ install-state.gz
 .cursor
 
 **/.DS_STORE
-**/debug-storybook.log**/.visual
+**/debug-storybook.log
+
+# Visual regression report and diff images (packages/app/docs/visual-testing.md)
+**/.visual
