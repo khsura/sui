@@ -41,6 +41,8 @@ export default defineConfig({
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.
+      // `vue-router` stays external so an accidental import can never bundle a second router copy, but
+      // nothing may import it: it is not a dependency (ESLint forbids it; `yarn test:consumer` checks dist).
       external: ['vue', '@vueuse/components', '@vueuse/core', 'dayjs', 'vue', 'vue-i18n', 'zod', 'vue-router', 'uuid'],
     },
   },

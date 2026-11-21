@@ -1,0 +1,11 @@
+{
+  "name": "sui-consumer-smoke",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "vue": "^3.5.41"
+  },
+  "devDependencies": {
+    "vite": "^8.1.3"
+  }
+}

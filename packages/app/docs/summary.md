@@ -122,7 +122,7 @@ Quick reference for all components in the `@khsura/sui` package.
 | `minWidth` / `minHeight` | `string \| number` | Min dimensions |
 | `tag` | `string` | Override root HTML element |
 | `href` | `string \| null` | Render as `<a>` tag with href |
-| `to` | `RouteLocationRaw` | Vue Router link destination |
+| `to` | `LinkLocation` | Internal route: a `router-link` with vue-router, else a plain `<a href>` |
 | `colorThreshold` | `number` | Auto text-color contrast threshold against `color` |
 
 ---
