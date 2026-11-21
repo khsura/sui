@@ -132,7 +132,9 @@ const { contentClasses, contentStyles, updateLocation } = useMenuService(
   { activatorElement, contentElement },
   // Near the bottom of the viewport the picker flips above the field, and near the right edge it shifts left,
   // so it stays inside the viewport. The calendar keeps its full height: it is shifted, never clipped.
-  { keepInViewport: true },
+  // The popup hugs the fixed-width calendar instead of stretching to the field: the popup box has no
+  // background of its own, so under a wide (`block`) field its right-hand strip was transparent.
+  { keepInViewport: true, noContentMinWidth: true },
 )
 
 const closeMenu = () => {
