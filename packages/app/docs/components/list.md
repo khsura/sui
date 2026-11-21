@@ -46,7 +46,7 @@ Single row in the list.
 | `link` | `boolean` | `false` | Hover background + pointer (automatic when `href`/`to` is set) |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `href` | `string` | `undefined` | Render as `<a>` |
-| `to` | `RouteLocationRaw \| null` | `undefined` | Render as `router-link` |
+| `to` | `LinkLocation \| null` | `undefined` | Render as `router-link` (plain `<a href>` without vue-router) |
 | `target` / `rel` | `string` | `undefined` | Link attributes |
 | `tag` | `'li' \| 'div'` | `'div'` | Root element (when not a link) |
 

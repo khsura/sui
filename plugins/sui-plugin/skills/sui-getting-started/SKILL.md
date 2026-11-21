@@ -27,11 +27,11 @@ Older versions were published to GitHub Packages. If your project still points t
 - `.yarnrc.yml` (Yarn 4): delete the `npmScopes.khsura` block (`npmRegistryServer`, `npmAlwaysAuth`, `npmAuthToken`).
 - CI: the GitHub token secret your install step used for SUI is no longer needed.
 
-`vue`, `vue-i18n` and `dayjs` come in as dependencies of `@khsura/sui`. `@mdi/font` is **not** included — install it yourself (see step 3).
+`vue` is a **peer dependency** (`^3.5.41`): the app provides it. `vue-i18n` and `dayjs` come in as dependencies of `@khsura/sui`. `@mdi/font` is **not** included — install it yourself (see step 3). `vue-router` is **optional**: with it, `to` props render a `router-link`; without it, they render a plain `<a href>`.
 
 ### Vue version — 3.5.41 or newer
 
-Use **Vue 3.5.41 or newer** in the app. If the app pins or locks `vue` at 3.5.40 or older, upgrade it (`npm i vue@^3.5.41`). Don't add a second copy of Vue.
+Use **Vue 3.5.41 or newer** in the app — it is the peer range, so npm reports a peer conflict on an older Vue. If the app pins or locks `vue` at 3.5.40 or older, upgrade it (`npm i vue@^3.5.41`). Don't add a second copy of Vue.
 
 Vue 3.5.40 and older have a template compiler bug (fixed in vuejs/core#11682). It hits an element in a `v-for` over a constant array that has `:key` and `v-show` and no other dynamic binding: its `v-show` never updates. The usual case is a tab panel per section, and the tabs look broken even though `STabs` updates its `v-model`:
 
@@ -279,7 +279,7 @@ Available on most components (check the component's reference when unsure):
 | `disabled` | `boolean` | Disable interaction |
 | `width` / `height` / `maxWidth` / `minWidth` | `string \| number` | Dimensions |
 | `tag` | `string` | Override root element |
-| `href` / `to` | `string` / `RouteLocationRaw` | Render as `<a>` / `router-link` |
+| `href` / `to` | `string` / `LinkLocation` | Render as `<a>` / `router-link` (`to` falls back to `<a href>` without vue-router) |
 
 ---
 

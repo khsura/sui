@@ -21,7 +21,7 @@ A versatile button component supporting multiple variants, sizes, colors, and li
 | `underlined` | `boolean` | `false` | Underlined text style |
 | `borderRadius` | `'tile' \| 'rounded' \| number \| string` | `undefined` | Custom border radius (`8`, `'8px'`, `'1rem'`, ...) |
 | `href` | `string \| null` | `undefined` | Renders as `<a>` tag with this href |
-| `to` | `RouteLocationRaw \| null` | `undefined` | Renders a `router-link` (needs vue-router). Wins over `href` if both are set |
+| `to` | `LinkLocation \| null` | `undefined` | Internal route. Renders a `router-link` when the app uses vue-router, else a plain `<a href>`. Wins over `href` if both are set |
 | `target` | `'_blank' \| '_self' \| '_parent' \| '_top'` | `undefined` | Link target (only applied with `href`) |
 | `rel` | `string \| null` | `undefined` | Link rel attribute (only applied with `href`) |
 | `tag` | `'button' \| 'a'` | `'button'` | Root element tag when neither `href` nor `to` is set |
@@ -90,6 +90,7 @@ A versatile button component supporting multiple variants, sizes, colors, and li
 ## Notes
 
 - When `to` is provided the root renders as `router-link`; when `href` is provided it renders as `<a>` — regardless of the `tag` prop. Pass one of them, not both.
+- vue-router is optional. Without it (no `app.use(router)`), `to` renders a plain `<a href>` and Vue logs a dev warning; a path string or `{ path }` keeps its URL, a route given by `name` gets no `href`.
 - There is no `icon` prop — nest `<SIcon icon="..." />` inside. `SIcon` renders nothing unless the app loads `@mdi/font`.
 - `outlined` is a boolean prop, not a `variant` value.
 - Inside `SBottomNavigation`, the button participates in group selection via the `value` prop.

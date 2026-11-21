@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+      - "feature/**"
 env:
   HUSKY: 0
 
@@ -39,6 +40,10 @@ jobs:
             echo "::error::sui-plugin skill API tables are stale. Run 'yarn build:api && yarn sync:skills' in packages/app and commit the result."
             exit 1
           }
+
+      # Installs the packed tarball into a minimal Vite app outside the workspace, without and with vue-router.
+      - name: Consumer smoke test
+        run: yarn workspace @khsura/sui test:consumer
 
       - name: Run storybook build
         run: yarn storybook:build
