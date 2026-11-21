@@ -52,6 +52,8 @@ watch(model, async (value) => {
 
 <style lang="scss">
 $kDialogMargin: $s_spacer * 6;
+$kDialogViewportWidth: calc(100% - $kDialogMargin);
+$kDialogViewportHeight: 90%;
 
 @keyframes s-animation-dialog-bottom {
   0% {
@@ -80,8 +82,11 @@ $kDialogMargin: $s_spacer * 6;
     position: fixed;
     top: calc(50% - $kDialogMargin);
     left: calc(50% - $kDialogMargin);
-    width: 100%;
-    max-width: calc(100% - $kDialogMargin);
+    // The size props arrive as CSS variables and are capped here, so a `max-width` wider than the screen
+    // still leaves a gutter on a phone.
+    width: min(var(--s-dialog-width, 100%), $kDialogViewportWidth);
+    max-width: min(var(--s-dialog-max-width, 100%), $kDialogViewportWidth);
+    height: var(--s-dialog-height, auto);
     margin: $kDialogMargin;
     overflow-y: auto;
     pointer-events: auto;
@@ -90,11 +95,12 @@ $kDialogMargin: $s_spacer * 6;
     &--bottom {
       top: unset;
       bottom: 0;
-      width: 100%;
+      width: var(--s-dialog-width, 100%);
+      max-width: var(--s-dialog-max-width, $kDialogViewportWidth);
       transform: translate(-50%, 0%);
 
       @include s_breakpointUp('sm') {
-        width: max-content;
+        width: var(--s-dialog-width, max-content);
         min-width: 600px;
       }
 
@@ -154,7 +160,7 @@ $kDialogMargin: $s_spacer * 6;
     }
 
     &:not(.s_dialog__content--fullscreen) {
-      max-height: 90%;
+      max-height: min(var(--s-dialog-max-height, 100%), $kDialogViewportHeight);
     }
 
     > * {
