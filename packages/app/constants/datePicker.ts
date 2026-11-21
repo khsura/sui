@@ -16,4 +16,4 @@ export const datePickerWidth = '100%'
  * Extra width, in `ch`, that SDatePickerInput reserves beyond one `ch` per character of its format.
  * `ch` is the width of a digit, and the format placeholder (`YYYY-MM-DD`) is wider than the digits it stands for.
  */
-export const datePickerInputExtraWidthCh = 1
+export const datePickerInputExtraWidthCh = 2
