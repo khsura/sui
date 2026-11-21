@@ -16,9 +16,9 @@ export const summarizeTemplateIssues = (issues: TemplateIssue[]): string => {
   return `${countLabel(errorCount, 'error')}, ${countLabel(warningCount, 'warning')}.`
 }
 
-/** `6:14 [invalid-enum-value] … — fix: …` */
+/** `6:14 [invalid-enum-value] … — fix: …`, plus ` — recipe: <name>` when a recipe shows the pattern. */
 export const formatTemplateIssue = (issue: TemplateIssue): string =>
-  `${issue.line}:${issue.column} [${issue.rule}] ${issue.message} — fix: ${issue.fixHint}`
+  `${issue.line}:${issue.column} [${issue.rule}] ${issue.message} — fix: ${issue.fixHint}${issue.recipe ? ` — recipe: \`${issue.recipe}\`` : ''}`
 
 export const formatTemplateValidation = (resolved: ResolvedSuiApi, issues: TemplateIssue[]): string =>
   [
