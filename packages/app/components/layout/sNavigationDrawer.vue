@@ -15,7 +15,9 @@
       @mouseleave="touchless ? null : mouseleave"
     >
       <slot name="prepend" class="s_navigationDrawer__prepend"></slot>
-      <div class="s_navigationDrawer__content"><slot :on="on"></slot></div>
+      <div ref="drawerContentElement" class="s_navigationDrawer__content" :tabindex="scrollableTabindex">
+        <slot :on="on"></slot>
+      </div>
       <slot name="append" class="s_navigationDrawer__append"></slot>
       <div
         v-if="isResizable"
@@ -43,6 +45,7 @@ import {
   onBeforeUnmount,
   onMounted,
   provide,
+  useTemplateRef,
 } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import SOverlay from '@/app/components/sOverlay.vue'
@@ -62,6 +65,7 @@ import {
   useLocationService,
   usePositionService,
   useResizeService,
+  useScrollableFocusService,
   useScrollableService,
   useTouchService,
   useNavigationDrawerService,
@@ -72,6 +76,9 @@ import type { PropsNavigationDrawer } from '@/app/definitions'
 
 const rawProps = defineProps<PropsNavigationDrawer>()
 const props = useComponentDefaultsService('SNavigationDrawer', rawProps)
+const drawerContentElement = useTemplateRef<HTMLElement>('drawerContentElement')
+// A drawer whose items overflow becomes a Tab stop, so its content can be scrolled from the keyboard.
+const { scrollableTabindex } = useScrollableFocusService(drawerContentElement)
 const { isBottom, isRight, computedLocation } = useLocationService(props)
 
 const emit = defineEmits<{
@@ -594,6 +601,10 @@ $s_navigationDrawerOverlayTransitionAnimations: (
   .s_navigationDrawer__content {
     height: 100%;
     overflow: hidden auto;
+
+    &:focus-visible {
+      @include s_focusRing(-2px);
+    }
   }
 
   .s_navigationDrawer__image {
