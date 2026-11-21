@@ -34,7 +34,7 @@ const classList = computed(() => {
   visibility: hidden;
   min-height: calc($s_spacer * 7);
   padding: $s_spacer calc($s_spacer * 4);
-  color: s_getPresetColor('error');
+  color: s_getAppColor('textError');
   opacity: 0;
   transition:
     visibility 1s,

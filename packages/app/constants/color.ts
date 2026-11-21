@@ -166,7 +166,30 @@ export enum CssColor {
   yellowgreen = 'yellowgreen', // '#9acd32'
 }
 
+// Exported for apps: the former automatic default for the `colorThreshold` prop (YIQ brightness, 0-100).
+// Components now pick text by WCAG contrast unless `colorThreshold` is set; pass this to restore the old rule.
 export const colorThreshold = 55
+
+// WCAG 2.x relative luminance: sRGB channel linearisation and the channel weights.
+export const srgbChannelMax = 255
+export const srgbLinearThreshold = 0.03928
+export const srgbLinearDivisor = 12.92
+export const srgbGammaOffset = 0.055
+export const srgbGammaDivisor = 1.055
+export const srgbGamma = 2.4
+export const luminanceWeightRed = 0.2126
+export const luminanceWeightGreen = 0.7152
+export const luminanceWeightBlue = 0.0722
+// Flare term added to both luminances in the WCAG contrast ratio.
+export const contrastFlare = 0.05
+
+// WCAG AA minimum contrast ratios: body text, and large text or UI components.
+export const minimumTextContrast = 4.5
+export const minimumLargeTextContrast = 3
+
+// The extremes the automatic text colour is chosen between when no theme text colours are given.
+export const lightestTextColor = '#ffffff'
+export const darkestTextColor = '#000000'
 
 export const cssColorToHex = {
   [CssColor.aliceblue]: '#F0F8FF',
