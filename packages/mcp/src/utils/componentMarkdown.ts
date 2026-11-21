@@ -141,3 +141,17 @@ export const formatUnknownComponent = (resolved: ResolvedSuiApi, query: string, 
 
   return [formatSourceHeader(resolved), '', `Unknown component ${inlineCode(query)}. ${hint}`].join('\n')
 }
+
+/** The project install predates `componentName`; the bundled (newer) API has it. */
+export const formatComponentNeedsUpgrade = (
+  resolved: ResolvedSuiApi,
+  bundled: ResolvedSuiApi,
+  componentName: string,
+): string =>
+  [
+    formatSourceHeader(resolved),
+    '',
+    `${inlineCode(componentName)} is not in ${resolved.api.package} ${resolved.api.version} installed in this project. It exists in ${bundled.api.package} ${bundled.api.version}, so it needs a newer @khsura/sui.`,
+    '',
+    `Upgrade first (for example \`yarn up @khsura/sui\` or \`npm install @khsura/sui@latest\`), or build the UI from components this version has (call ${inlineCode(LIST_COMPONENTS_TOOL_NAME)}).`,
+  ].join('\n')

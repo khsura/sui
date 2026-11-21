@@ -1,23 +1,101 @@
 # @khsura/sui-mcp
 
-Model Context Protocol server for [`@khsura/sui`](../app). It gives AI assistants (Claude Code, Cursor, VS Code, …) version-accurate SUI component APIs, tested recipes and a template validator, so generated UI matches the framework instead of guessing.
+Model Context Protocol server for [`@khsura/sui`](https://www.npmjs.com/package/@khsura/sui). It gives AI assistants (Claude Code, Cursor, VS Code, Windsurf, …) version-accurate SUI component APIs, tested recipes and a template validator, so generated UI matches the framework instead of guessing. It runs locally over stdio and needs no API key. Component docs and live examples: [sui.surakh.com](https://sui.surakh.com/).
+
+## Quick start
+
+From your app's folder, let the CLI detect your client and write its config:
 
 ```bash
-npx -y @khsura/sui-mcp   # stdio server
+npx -y @khsura/sui-mcp config            # detect clients and write their config
+npx -y @khsura/sui-mcp config --dry-run  # print the planned changes, write nothing
 ```
+
+| Option | Effect |
+| --- | --- |
+| `--client <id>` | Configure only `claude-code`, `cursor`, `vscode` or `windsurf`. Repeat it for several. |
+| `--dry-run` | Print each file and its new contents without writing. |
+| `--project <dir>` | Configure another folder instead of the current one. |
+
+Detection looks for `.mcp.json`, `.claude/` or `CLAUDE.md` (Claude Code), `.cursor/` (Cursor), `.vscode/` (VS Code) and `.windsurf/` or `~/.codeium/windsurf/` (Windsurf). When none exists it writes Claude Code's `.mcp.json`. The CLI adds a `sui` server to the existing file and keeps every other server; an existing `sui` entry keeps its extra fields such as `env`. A file that is not valid JSON stops the command with its path, and nothing is written. Windsurf only reads a user-level file, so the CLI prints the snippet for `~/.codeium/windsurf/mcp_config.json` instead of writing outside the project.
+
+Restart or reload the client afterwards so it starts the server.
+
+## Client setup
+
+To configure a client by hand, add one of these entries.
+
+**Claude Code**: `.mcp.json` in the project root, or run `claude mcp add sui -- npx -y @khsura/sui-mcp`.
+
+```json
+{
+  "mcpServers": {
+    "sui": { "command": "npx", "args": ["-y", "@khsura/sui-mcp"] }
+  }
+}
+```
+
+**Cursor**: `.cursor/mcp.json` in the project (or `~/.cursor/mcp.json` for every project).
+
+```json
+{
+  "mcpServers": {
+    "sui": { "command": "npx", "args": ["-y", "@khsura/sui-mcp"] }
+  }
+}
+```
+
+**VS Code**: `.vscode/mcp.json`. VS Code uses `servers` and needs `"type": "stdio"`.
+
+```json
+{
+  "servers": {
+    "sui": { "type": "stdio", "command": "npx", "args": ["-y", "@khsura/sui-mcp"] }
+  }
+}
+```
+
+**Windsurf**: `~/.codeium/windsurf/mcp_config.json`.
+
+```json
+{
+  "mcpServers": {
+    "sui": { "command": "npx", "args": ["-y", "@khsura/sui-mcp"] }
+  }
+}
+```
+
+If your client starts servers outside the project folder, add `"env": { "SUI_PROJECT_ROOT": "/path/to/your/app" }` to the entry so the server finds your installed `@khsura/sui` (see [Which SUI version answers](#which-sui-version-answers)).
+
+## What the server tells the AI
+
+The server sends these instructions when a client connects:
+
+- Setting up SUI: call `get_guide` with topic `installation` first.
+- Before using an SUI component it has not checked, call `get_component_api`. `list_components` lists every component.
+- For common patterns, start from a tested recipe (`list_recipes`, `get_recipe`).
+- Always run `validate_sui_template` on every generated or changed template and fix every error before finishing.
 
 ## Tools
 
 | Tool | What it returns |
 | --- | --- |
 | `list_components` | Every component with its family and a one-line purpose. |
-| `get_component_api` | Props (type, default, required, allowed values), slots and events of one component as markdown. Accepts `SButton`, `s-button` or `button`. Adds the activator-pattern note (SDialog, SMenu, STooltip, SSnackbar) or the layout-child note (SAppBar, SNavigationDrawer, SMain, SFooter, SBottomNavigation). Unknown names return an error with the three closest names. |
+| `get_component_api` | Props (type, default, required, allowed values), slots and events of one component as markdown. Accepts `SButton`, `s-button` or `button`. Adds the activator-pattern note (SDialog, SMenu, STooltip, SSnackbar) or the layout-child note (SAppBar, SNavigationDrawer, SMain, SFooter, SBottomNavigation). Unknown names return an error with the three closest names. A component that only the bundled (newer) API has returns an error saying the project needs a newer `@khsura/sui`. |
 | `list_guides` | The setup guide topics with what each covers. |
 | `get_guide` | One setup guide as markdown: `installation` (Vue and Nuxt, styles, `@mdi/font`), `theming` (theme colors, dark mode), `component-defaults`, `display` (`useDisplay` breakpoints), `i18n`, `common-mistakes`. Unknown topics return an error with the topic list. |
 | `validate_sui_template` | Checks a `.vue` SFC or bare template fragment against the API and the composition rules below. Returns a summary line, then `line:col [rule] message — fix: hint — recipe: name` per issue (the recipe part only when one applies). Issues are a normal result, not a tool error. |
 | `list_recipes` | The tested, copy-ready recipes with when to use each. |
 | `get_recipe` | One recipe: its notes, the full Vue SFC in a ```` ```vue ```` block and the link to its live Storybook story. Names: `app-shell`, `validated-form`, `activator-overlays`, `data-table`, `responsive-grid`, `theme-setup`. Unknown names return an error with the name list. |
 | `ping` | Health check. |
+
+## Example prompts
+
+- "Add a settings page with a validated form (name, email, notification toggle). Use the SUI MCP and validate the template."
+- "What props does STable take in the SUI version this project installs?"
+- "Build an admin shell with an app bar, a navigation drawer and a footer. Start from the SUI `app-shell` recipe."
+- "Set up @khsura/sui in this Nuxt app."
+- "Check `src/pages/Orders.vue` with `validate_sui_template` and fix every issue."
 
 ## Template validator rules
 

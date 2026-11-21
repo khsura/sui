@@ -32,11 +32,32 @@ Or add to your project's `.claude/settings.json`:
 }
 ```
 
+## Pair it with the SUI MCP server
+
+The skills teach Claude how SUI works; [`@khsura/sui-mcp`](../../packages/mcp/README.md) gives any AI client (Claude Code, Cursor, VS Code, Windsurf) the exact component API of the `@khsura/sui` version your project installs, tested recipes, and a template validator. Set it up from your app's folder:
+
+```bash
+npx -y @khsura/sui-mcp config            # detects your client and writes its MCP config
+npx -y @khsura/sui-mcp config --dry-run  # show the planned changes first
+```
+
+For Claude Code this adds a `sui` server to the project's `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "sui": { "command": "npx", "args": ["-y", "@khsura/sui-mcp"] }
+  }
+}
+```
+
+With both installed, Claude checks `get_component_api` before using an unfamiliar component, starts from `get_recipe` for common patterns, and runs `validate_sui_template` on the templates it writes. Per-client snippets: the [MCP README](../../packages/mcp/README.md) and the **AI / MCP** page in [Storybook](https://sui.surakh.com/).
+
 ## Skills
 
 | Skill | When to use |
 | --- | --- |
-| [`sui-getting-started`](./skills/sui-getting-started/SKILL.md) | Installing `@khsura/sui` from npm (and migrating off GitHub Packages), `SApp` + `createSUI`, styles and `@mdi/font`, Nuxt module, theme colors / dark mode, component defaults, vue-i18n, types, common mistakes. |
+| [`sui-getting-started`](./skills/sui-getting-started/SKILL.md) | Installing `@khsura/sui` from npm (and migrating off GitHub Packages), setting up the SUI MCP server, `SApp` + `createSUI`, styles and `@mdi/font`, Nuxt module, theme colors / dark mode, component defaults, vue-i18n, types, common mistakes. |
 | [`sui-component`](./skills/sui-component/SKILL.md) | Using a specific component (`SButton`, `SCard`, `STable`, …) — routes to one per-family reference in `references/` with props, slots, events, examples and gotchas. |
 | [`sui-form`](./skills/sui-form/SKILL.md) | Building validated forms with `SInput`, `SSelect`, `SCheckbox`, etc., including `rules` validation. |
 | [`sui-layout`](./skills/sui-layout/SKILL.md) | Scaffolding app shells with `SLayout`, `SAppBar`, `SNavigationDrawer`, `SMain`, `SFooter`, `SBottomNavigation`. |

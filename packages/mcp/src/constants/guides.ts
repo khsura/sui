@@ -7,6 +7,7 @@ export const GUIDE_TOPICS = [
   'common-mistakes',
 ] as const
 
+export const INSTALLATION_GUIDE_TOPIC = 'installation'
 export const GUIDES_DIRNAME = 'guides'
 export const GUIDE_TEXT_ENCODING = 'utf8'
 export const MIN_GUIDE_TOPIC_LENGTH = 1

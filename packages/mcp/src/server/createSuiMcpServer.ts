@@ -1,6 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import type { GuideSourceOptions, RecipeSourceOptions, ResolveSuiApiOptions } from '../types'
-import { serverInfo } from '../configs'
+import { serverInfo, serverInstructions } from '../configs'
 import {
   registerGetComponentApiTool,
   registerGetGuideTool,
@@ -11,7 +11,7 @@ import {
   registerPingTool,
   registerValidateSuiTemplateTool,
 } from '../handlers'
-import { resolveSuiApi } from '../services'
+import { resolveBundledSuiApi, resolveSuiApi } from '../services'
 
 /**
  * `apiSourceOptions` overrides where sui-api.json is looked up (tests inject env, cwd and a bundled path);
@@ -23,12 +23,13 @@ export const createSuiMcpServer = (
   guideSourceOptions: GuideSourceOptions = {},
   recipeSourceOptions: RecipeSourceOptions = {},
 ): McpServer => {
-  const server = new McpServer(serverInfo)
+  const server = new McpServer(serverInfo, { instructions: serverInstructions })
   const loadSuiApi = () => resolveSuiApi(apiSourceOptions)
+  const loadBundledSuiApi = () => resolveBundledSuiApi(apiSourceOptions)
 
   registerPingTool(server)
   registerListComponentsTool(server, loadSuiApi)
-  registerGetComponentApiTool(server, loadSuiApi)
+  registerGetComponentApiTool(server, loadSuiApi, loadBundledSuiApi)
   registerListGuidesTool(server, guideSourceOptions)
   registerGetGuideTool(server, guideSourceOptions)
   registerValidateSuiTemplateTool(server, loadSuiApi)
