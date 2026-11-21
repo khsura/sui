@@ -22,9 +22,6 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
-      - name: Set token npm github token
-        run: echo NPM_GITHUB_TOKEN=${{ secrets.NPM_GITHUB_TOKEN }} > .env.yarn
-
       - name: Set yarn version
         run: yarn set version self
 
