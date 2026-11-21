@@ -68,7 +68,7 @@ None — use `v-model`.
 <SSnackbar v-model="offline" location="top">
   Connection lost.
   <template #action>
-    <SButton variant="text" color="primary" @click="retry">Retry</SButton>
+    <SButton variant="text" color="warning" @click="retry">Retry</SButton>
     <SButton variant="icon" @click="offline = false"><SIcon icon="mdi-close" /></SButton>
   </template>
 </SSnackbar>
@@ -81,6 +81,7 @@ None — use `v-model`.
 ## Gotchas
 
 - No `color` prop — colors come from the theme's `snackbar` color.
+- The snackbar is dark (`#424242`) in both themes. A `variant="text"` action in `primary`, `secondary`, `success`, `info` or `error` is below 4.5:1 on it (`primary` is 2.18:1); use `color="warning"` or a light CSS colour such as `color="#ffffff"`.
 - `outlined`, `underlined` and `borderRadius` appear in the prop types but are not applied.
 - Without `timeout`, provide a close action in `#action`.
 - Single-line by default: long text is cut with an ellipsis — use `multi-line`.
