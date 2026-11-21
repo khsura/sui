@@ -41,10 +41,15 @@ describe('SNavigationDrawer', () => {
     overlaysContainer.id = overlaysContainerId
     document.body.appendChild(overlaysContainer)
     window.innerWidth = desktopWidth
+    // A drawer that closes itself on mobile at mount restores background scrolling from the stored scroll
+    // offset; happy-dom reports none, which reads back as NaN.
+    Object.defineProperty(window, 'scrollX', { value: 0, configurable: true })
+    Object.defineProperty(window, 'scrollY', { value: 0, configurable: true })
   })
 
   afterEach(() => {
     document.body.innerHTML = ''
+    document.documentElement.removeAttribute('style')
   })
 
   test('a left and a right drawer both offset SMain', async () => {
