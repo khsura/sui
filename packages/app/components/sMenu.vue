@@ -21,6 +21,7 @@
 </template>
 <script setup lang="ts">
 import { OnClickOutside } from '@vueuse/components'
+import { useEventListener } from '@vueuse/core'
 import { computed, watch, nextTick, useTemplateRef } from 'vue'
 import SOverlay from '@/app/components/sOverlay.vue'
 import { getWindow } from '@/app/lib/browser'
@@ -42,6 +43,13 @@ const { activatorOn, activatorAttrs, contentClasses, contentStyles, updateLocati
   { activatorElement, contentElement },
   { keepInViewport: true },
 )
+
+// While open, follow the activator when any scroll container scrolls (capture) or the window resizes.
+const openMenuWindow = computed(() => (model.value ? getWindow() : null))
+const repositionListenerOptions = { capture: true, passive: true }
+
+useEventListener(openMenuWindow, 'scroll', () => updateLocation(), repositionListenerOptions)
+useEventListener(openMenuWindow, 'resize', () => updateLocation(), repositionListenerOptions)
 
 const computedContentStyles = computed(() => {
   return {
