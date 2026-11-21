@@ -258,7 +258,7 @@ Searchable select with filtering, multiple selection and chips. Full reference: 
 
 ## SCheckbox
 
-Boolean checkbox input. Its error message sits under the box and reserves the same line as under the other fields. `hideDetails` removes only that error area: the label is the checkbox's own text and always shows.
+Boolean checkbox input. Its error message sits under the box and reserves the same line as under the other fields. While that error line is shown it also keeps an 8px gap above the box, as a text field's label does, so the error of the field above never touches it. `hideDetails` removes only that error area (and the gap): the label is the checkbox's own text and always shows.
 
 ### Props (extends common form props)
 

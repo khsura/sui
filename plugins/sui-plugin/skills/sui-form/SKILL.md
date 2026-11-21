@@ -25,11 +25,11 @@ Then generate a complete Vue SFC using these rules:
 - Use `STextarea` for multi-line text (add `autogrow` if height should expand — all lowercase, not `auto-grow`). For a character count use its `counter` prop (with `maxlength`: `12 / 200`), never a `<p>` after the field — that lands below the reserved error line, far from the field
 - Use `SSelect` for a plain single-value dropdown — `items` must be `SelectItem[]` or `string[]`. Type `SelectItem` from `@khsura/sui` (`text`, `value`, optional `disabled`). It is outlined like `SInput` by default, never repeats its `label` inside the field (use `placeholder` for an empty-state hint) and is as wide as its longest option — add `grow` for full width. **SSelect has no `multiple`, `chips` or `clearable`** — when you need any of those, use `SAutocomplete`.
 - Use `SAutocomplete` for searchable, clearable or multi-select — same `items` shape, add `multiple chips closable-chips` for multi-select. **It has no `rules` and does not register with `SForm`** — check its value yourself in `submit`
-- Use `SCheckbox` for a single boolean — `label` prop, not slot. Its error line sits under the box and reserves the same space as under an input. It has no `value`/`indeterminate`, so build checkbox groups from several boolean models
+- Use `SCheckbox` for a single boolean — `label` prop, not slot. Its error line sits under the box and reserves the same space as under an input, and it keeps an 8px gap above the box (both dropped with `hide-details`). It has no `value`/`indeterminate`, so build checkbox groups from several boolean models
 - Use `SRadioGroup` with `<SRadio value="..." label="...">` children (slot-based); use `column` for vertical layout
 - Use `SSwitch` for on/off toggles — it never runs `rules`, shows no error and is not validated by `SForm`
-- Submit: `<SButton type="submit" color="primary" :loading="submitting">Submit</SButton>`
-- `:loading` on `SButton` implicitly disables it — do not also set `:disabled`
+- Submit: `<SButton type="submit" color="primary" class="s_mt__2" :loading="submitting">Submit</SButton>` — `s_mt__2` keeps the last field's error message off the button
+- `:loading` on `SButton` implicitly disables it — do not also bind `:disabled` to the submitting flag
 
 **Validation rules signature:** `(value: unknown) => true | string`
 
@@ -60,7 +60,7 @@ if (hasErrors) return
 - `v-model:error="hasError"` — `true` while any input has an error
 - `v-model:errors="messages"` — all current error strings
 
-Use them to disable the submit button; `resetValidation()` (exposed) clears every input's errors.
+Use `v-model:error` to disable the submit button **only after a failed submit**: set `submitAttempted = true` in `submit` and bind `:disabled="submitAttempted && hasError"`; it re-enables as soon as every rule passes. Never disable it from page load (a disabled button gives no reason and cannot be focused), and keep the inline errors so users see why. `resetValidation()` (exposed) clears every input's errors.
 
 ---
 

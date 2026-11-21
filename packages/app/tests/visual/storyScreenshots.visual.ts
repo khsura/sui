@@ -9,7 +9,9 @@ import {
 } from './constants'
 import {
   getVisualStoryPath,
+  readStoryFailures,
   readVisualStories,
+  recordStoryFailures,
   serveStoryAssetsOffline,
   visualTest,
   waitForFonts,
@@ -29,9 +31,11 @@ for (const story of visualStories) {
       await page.setViewportSize({ width, height: visualViewportHeight })
       await page.clock.setFixedTime(visualFixedTime)
       await serveStoryAssetsOffline(page)
+      await recordStoryFailures(page)
       await page.goto(getVisualStoryPath(story.id, theme), { waitUntil: 'networkidle' })
 
       expect(await waitForStoryRender(page)).toBe(storyRenderFinishedPhase)
+      expect(await readStoryFailures(page)).toEqual([])
       await waitForFonts(page)
 
       await expect(page).toHaveScreenshot(`${story.id}--${width}.png`, { fullPage: true })
