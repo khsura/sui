@@ -24,6 +24,8 @@ export const visualFixedTime = '2026-01-01T09:00:00.000Z'
 
 // Story render (including its play function) must finish within this time.
 export const visualStoryRenderTimeoutMs = 15_000
+// How often the harness checks whether the story render has finished.
+export const visualStoryRenderPollingMs = 100
 
 // Storybook's `__STORYBOOK_PREVIEW__.currentRender.phase` values that end a render.
 export const storyRenderFinishedPhase = 'finished'

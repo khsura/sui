@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { expect, waitFor } from 'storybook/test'
 import type { Component } from 'vue'
+import { waitFor } from 'storybook/test'
 import {
   ActivatorOverlaysRecipe,
   AppShellRecipe,
@@ -22,6 +23,12 @@ const recipes: Meta = {
 
 export default recipes
 
+// Space a menu keeps between its longest item title and its right edge (the SListItem padding inside SMenu).
+const menuItemEndPadding = 16
+// Sub-pixel rounding allowed in the size checks.
+const pixelTolerance = 1
+const sortOptionCount = 3
+
 const recipeStory = (recipe: Component): StoryObj => ({
   render: () => ({
     components: { recipe },
@@ -31,7 +38,48 @@ const recipeStory = (recipe: Component): StoryObj => ({
 
 export const AppShell = recipeStory(AppShellRecipe)
 export const ValidatedForm = recipeStory(ValidatedFormRecipe)
-export const ActivatorOverlays = recipeStory(ActivatorOverlaysRecipe)
+
+// The sort menu is opened, so the screenshot covers the menu items: "Last modified" must not touch the menu edge.
+export const ActivatorOverlays: StoryObj = {
+  ...recipeStory(ActivatorOverlaysRecipe),
+  play: async ({ canvasElement, userEvent }) => {
+    const ownerDocument = canvasElement.ownerDocument
+
+    const sortButton = [...canvasElement.querySelectorAll('button')].find((button) =>
+      /sort by/i.test(button.textContent ?? ''),
+    )
+
+    if (!sortButton) {
+      throw new Error('the "Sort by" button is missing')
+    }
+
+    await userEvent.click(sortButton)
+
+    // Layout sizes (padding, scroll width), not bounding boxes, so the menu's open transition does not skew them.
+    await waitFor(() => {
+      const items = [...ownerDocument.querySelectorAll<HTMLElement>('.s_menu__content .s_listItem')]
+
+      // Plain throws: `waitFor` retries until the callback stops throwing.
+      if (items.length !== sortOptionCount) {
+        throw new Error('the sort menu did not open')
+      }
+
+      for (const item of items) {
+        const label = item.textContent?.trim() ?? ''
+        const endPadding = parseFloat(getComputedStyle(item).paddingRight)
+
+        if (endPadding < menuItemEndPadding - pixelTolerance) {
+          throw new Error(`"${label}" has ${endPadding}px right padding, so it touches the menu edge`)
+        }
+
+        if (item.scrollWidth > item.clientWidth + pixelTolerance) {
+          throw new Error(`"${label}" overflows into its right padding`)
+        }
+      }
+    })
+  },
+}
+
 export const DataTable = recipeStory(DataTableRecipe)
 export const ResponsiveGrid = recipeStory(ResponsiveGridRecipe)
 export const ThemeSetup = recipeStory(ThemeSetupRecipe)
