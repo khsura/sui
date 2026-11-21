@@ -2,6 +2,8 @@
 
 Claude Code plugin that gives Claude expert knowledge of the **`@khsura/sui`** Vue 3 component framework. Install it in an app that uses `@khsura/sui` (Vue or Nuxt) and Claude can set the library up, and generate idiomatic SUI components, forms, and layouts for you.
 
+The library itself installs from the public npm registry (`npm i @khsura/sui` / `yarn add @khsura/sui`). Component docs and live examples: [Storybook — sui.surakh.com](https://sui.surakh.com/).
+
 ## Install
 
 ```
@@ -34,7 +36,7 @@ Or add to your project's `.claude/settings.json`:
 
 | Skill | When to use |
 | --- | --- |
-| [`sui-getting-started`](./skills/sui-getting-started/SKILL.md) | Installing `@khsura/sui` from GitHub Packages, `SApp` + `createSUI`, styles and `@mdi/font`, Nuxt module, theme colors / dark mode, component defaults, vue-i18n, types, common mistakes. |
+| [`sui-getting-started`](./skills/sui-getting-started/SKILL.md) | Installing `@khsura/sui` from npm (and migrating off GitHub Packages), `SApp` + `createSUI`, styles and `@mdi/font`, Nuxt module, theme colors / dark mode, component defaults, vue-i18n, types, common mistakes. |
 | [`sui-component`](./skills/sui-component/SKILL.md) | Using a specific component (`SButton`, `SCard`, `STable`, …) — routes to one per-family reference in `references/` with props, slots, events, examples and gotchas. |
 | [`sui-form`](./skills/sui-form/SKILL.md) | Building validated forms with `SInput`, `SSelect`, `SCheckbox`, etc., including `rules` validation. |
 | [`sui-layout`](./skills/sui-layout/SKILL.md) | Scaffolding app shells with `SLayout`, `SAppBar`, `SNavigationDrawer`, `SMain`, `SFooter`, `SBottomNavigation`. |

@@ -1,6 +1,6 @@
 ---
 name: sui-getting-started
-description: Set up and configure @khsura/sui in a Vue 3 or Nuxt app. Use when installing @khsura/sui (GitHub Packages registry, .npmrc / .yarnrc.yml, read:packages token, CI auth), wiring createSUI and the SApp root, importing the stylesheets and @mdi/font icons, adding @khsura/sui-nuxt, overriding theme colors or switching dark mode with useTheme, setting app-wide component defaults, setting up vue-i18n for SUI messages and form rules, importing SUI TypeScript types, or looking up shared props, the component list, composables and common mistakes.
+description: Set up and configure @khsura/sui in a Vue 3 or Nuxt app. Use when installing @khsura/sui (public npm, migrating off the old GitHub Packages registry), wiring createSUI and the SApp root, importing the stylesheets and @mdi/font icons, adding @khsura/sui-nuxt, overriding theme colors or switching dark mode with useTheme, setting app-wide component defaults, setting up vue-i18n for SUI messages and form rules, importing SUI TypeScript types, or looking up shared props, the component list, composables and common mistakes.
 ---
 
 # SUI — Getting Started in a consumer app
@@ -9,53 +9,23 @@ description: Set up and configure @khsura/sui in a Vue 3 or Nuxt app. Use when i
 
 ---
 
-## 1. Install (GitHub Packages, not npmjs.com)
+## 1. Install (public npm)
 
-`@khsura/sui` is published to **`https://npm.pkg.github.com`**. A plain `yarn add @khsura/sui` / `npm i @khsura/sui` fails (404 / 401) until the `@khsura` scope points at that registry **and** a token is supplied.
-
-**Token:** a GitHub personal access token (classic) with the **`read:packages`** scope. Keep it in an environment variable (`NPM_GITHUB_TOKEN` below) — never commit it.
-
-### Yarn 4 (Berry) — `.yarnrc.yml`
-
-```yaml
-npmScopes:
-  khsura:
-    npmRegistryServer: "https://npm.pkg.github.com"
-    npmAlwaysAuth: true
-    npmAuthToken: "${NPM_GITHUB_TOKEN}"
-
-# optional: read the token from a git-ignored file instead of the shell
-injectEnvironmentFiles:
-  - .env.yarn?
-```
-
-`.env.yarn` (add it to `.gitignore`): `NPM_GITHUB_TOKEN=ghp_xxx`
-
-### npm / pnpm — project `.npmrc`
-
-```ini
-@khsura:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${NPM_GITHUB_TOKEN}
-```
-
-The `.npmrc` with the `${...}` placeholder is safe to commit; the token itself is not.
-
-### CI
-
-Expose the token as an env var from a secret — the config files above read it:
-
-```yaml
-# GitHub Actions
-- run: yarn install --immutable   # or npm ci / pnpm install --frozen-lockfile
-  env:
-    NPM_GITHUB_TOKEN: ${{ secrets.NPM_GITHUB_TOKEN }}
-```
-
-Then install:
+`@khsura/sui` is published to the **public npm registry** — no registry config, `.npmrc` or token needed:
 
 ```bash
-yarn add @khsura/sui @mdi/font      # or: npm i / pnpm add
+npm i @khsura/sui @mdi/font      # or: yarn add / pnpm add
 ```
+
+Component docs and live examples: **Storybook at https://sui.surakh.com/**
+
+### Migrating from GitHub Packages
+
+Older versions were published to GitHub Packages. If your project still points the `@khsura` scope there, remove that config, or installs keep hitting the old registry (404 / 401 for new versions):
+
+- `.npmrc` (npm / pnpm): delete the `@khsura:registry=...` line that points at GitHub Packages, and its matching `:_authToken=...` line.
+- `.yarnrc.yml` (Yarn 4): delete the `npmScopes.khsura` block (`npmRegistryServer`, `npmAlwaysAuth`, `npmAuthToken`).
+- CI: the GitHub token secret your install step used for SUI is no longer needed.
 
 `vue`, `vue-i18n` and `dayjs` come in as dependencies of `@khsura/sui`. `@mdi/font` is **not** included — install it yourself (see step 3).
 
@@ -112,7 +82,7 @@ Import components where you use them (Vue): `import { SButton, SCard } from '@kh
 
 ## 4. Nuxt — `@khsura/sui-nuxt`
 
-`@khsura/sui-nuxt` is a Nuxt module (Nuxt ≥ 4) published to the **same GitHub Packages registry**, so the registry/token setup above covers it.
+`@khsura/sui-nuxt` is a Nuxt module (Nuxt ≥ 4) under the same `@khsura` scope; install it the same way.
 
 ```bash
 yarn add @khsura/sui @khsura/sui-nuxt @mdi/font
@@ -341,8 +311,7 @@ Directives (`v-scroll`, `v-resize`) and utility classes: **sui-utilities**.
 
 | ❌ | ✅ |
 |---|---|
-| `yarn add @khsura/sui` with no registry config → 404/401 | Point `@khsura` at `https://npm.pkg.github.com` and supply a `read:packages` token (step 1) |
-| Token pasted into a committed `.npmrc` / `.yarnrc.yml` | `${NPM_GITHUB_TOKEN}` placeholder + env var / CI secret |
+| `npm i @khsura/sui` → 404/401 | A leftover `@khsura` scope override still points at GitHub Packages — remove it from `.npmrc` / `.yarnrc.yml` (step 1, *Migrating from GitHub Packages*) |
 | Icons render as empty boxes | Load `@mdi/font` — `import '@mdi/font/css/materialdesignicons.css'` (Vue) or `css: ['@mdi/font/css/materialdesignicons.css']` (Nuxt) |
 | Only `style.css` (or only `base.css`) imported | Import both in plain Vue; the Nuxt module loads them |
 | No `<SApp>` root → no colors, dialogs/menus never show | Wrap the app in `<SApp>` |

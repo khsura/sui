@@ -1,5 +1,5 @@
 import type { GuideDefinition, GuideTopic } from '../types'
-import { GETTING_STARTED_SKILL_PATH, PUBLIC_NPM_NOTE, UTILITY_CLASSES_DOC_PATH } from '../constants'
+import { GETTING_STARTED_SKILL_PATH, UTILITY_CLASSES_DOC_PATH } from '../constants'
 
 export const guideDefinitions: Record<GuideTopic, GuideDefinition> = {
   installation: {
@@ -7,9 +7,8 @@ export const guideDefinitions: Record<GuideTopic, GuideDefinition> = {
     title: 'Installation (Vue and Nuxt)',
     summary:
       'Install @khsura/sui, register createSUI and SApp, import the stylesheets and @mdi/font, add @khsura/sui-nuxt.',
-    note: PUBLIC_NPM_NOTE,
     sections: [
-      { file: GETTING_STARTED_SKILL_PATH, heading: '1. Install (GitHub Packages, not npmjs.com)' },
+      { file: GETTING_STARTED_SKILL_PATH, heading: '1. Install (public npm)' },
       { file: GETTING_STARTED_SKILL_PATH, heading: '2. Register the plugin and wrap the app in `SApp`' },
       { file: GETTING_STARTED_SKILL_PATH, heading: '3. Styles and icons' },
       { file: GETTING_STARTED_SKILL_PATH, heading: '4. Nuxt — `@khsura/sui-nuxt`' },

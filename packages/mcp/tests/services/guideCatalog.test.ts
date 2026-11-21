@@ -1,7 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { repoGuidesRoot } from '../../src/configs'
-import { GETTING_STARTED_SKILL_PATH, GUIDE_TOPICS, LIVE_EXAMPLES_LINE } from '../../src/constants'
+import { GETTING_STARTED_SKILL_PATH, GUIDE_TOPICS, LIVE_EXAMPLES_LINE, LIVE_EXAMPLES_URL } from '../../src/constants'
 import { readGuideSection, resolveGuideSourceRoot, useGuideCatalogService } from '../../src/services'
 import { makeTempDir } from '../testProject'
 
@@ -27,11 +27,15 @@ describe('useGuideCatalogService', () => {
     expect(guideText(topic).endsWith(LIVE_EXAMPLES_LINE)).toBe(true)
   })
 
-  it('installation carries the current docs verbatim plus the public npm note', () => {
+  it('installation carries the current docs verbatim with the public npm install', () => {
     const text = guideText('installation')
 
-    expect(text).toContain('public npm publishing is coming')
-    expect(text).toContain('`npm i @khsura/sui`')
+    expect(text).toContain('## 1. Install (public npm)')
+    expect(text).toContain('npm i @khsura/sui')
+    expect(text).toContain('### Migrating from GitHub Packages')
+    expect(text).toContain(LIVE_EXAMPLES_URL)
+    expect(text).not.toContain('NPM_GITHUB_TOKEN')
+    expect(text).not.toContain('read:packages')
     expect(text).toContain('## 4. Nuxt — `@khsura/sui-nuxt`')
     expect(text).toContain('@mdi/font/css/materialdesignicons.css')
     expect(text).not.toContain('## 5. App options')

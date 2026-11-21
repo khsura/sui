@@ -1,17 +1,28 @@
 {
   "name": "@khsura/sui-mcp",
   "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khsura/sui.git",
+    "directory": "packages/mcp"
+  },
+  "homepage": "https://sui.surakh.com/",
   "description": "Model Context Protocol server for the @khsura/sui Vue 3 component framework",
   "type": "module",
   "bin": "./dist/index.js",
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "yarn g:vite build",
     "lint": "yarn g:eslint",
     "test": "yarn g:vitest run",
-    "typecheck": "yarn g:vue-tsc --noEmit"
+    "typecheck": "yarn g:vue-tsc --noEmit",
+    "release": "yarn g:publish"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.2",

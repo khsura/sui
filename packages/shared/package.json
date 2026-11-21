@@ -1,5 +1,6 @@
 {
   "name": "@khsura/shared",
+  "private": true,
   "version": "1.2.2",
   "scripts": {
     "lint": "yarn g:eslint"

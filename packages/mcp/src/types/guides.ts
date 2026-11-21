@@ -16,8 +16,6 @@ export interface GuideDefinition {
   topic: GuideTopic
   title: string
   summary: string
-  /** Markdown placed above the sourced text. */
-  note?: string
   sections: readonly GuideSourceSection[]
 }
 
