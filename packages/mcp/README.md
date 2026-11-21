@@ -12,7 +12,13 @@ npx -y @khsura/sui-mcp   # stdio server
 | --- | --- |
 | `list_components` | Every component with its family and a one-line purpose. |
 | `get_component_api` | Props (type, default, required, allowed values), slots and events of one component as markdown. Accepts `SButton`, `s-button` or `button`. Adds the activator-pattern note (SDialog, SMenu, STooltip, SSnackbar) or the layout-child note (SAppBar, SNavigationDrawer, SMain, SFooter, SBottomNavigation). Unknown names return an error with the three closest names. |
+| `list_guides` | The setup guide topics with what each covers. |
+| `get_guide` | One setup guide as markdown: `installation` (Vue and Nuxt, styles, `@mdi/font`), `theming` (theme colors, dark mode), `component-defaults`, `display` (`useDisplay` breakpoints), `i18n`, `common-mistakes`. Unknown topics return an error with the topic list. |
 | `ping` | Health check. |
+
+## Where the guides come from
+
+`get_guide` serves sections of `plugins/sui-plugin/skills/sui-getting-started/SKILL.md` and `packages/app/docs/` as they are, mapped per topic in `src/configs/guideTopics.ts`. The build copies the mapped files into `dist/guides/`; unbundled (dev, tests) the server reads them from the repo. A renamed heading or a moved file fails the tests and the build, so edit the docs, then the mapping.
 
 ## Which SUI version answers
 
