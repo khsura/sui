@@ -54,7 +54,7 @@ Quick reference for all components in the `@khsura/sui` package.
 
 | Component(s) | Import | Doc |
 |---|---|---|
-| `SForm`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` | `import { SForm, SInput, STextarea, SSelect, SCheckbox, SRadio, SRadioGroup, SSwitch } from '@khsura/sui'` | [form.md](./components/form.md) |
+| `SForm`, `SFormRow`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` | `import { SForm, SFormRow, SInput, STextarea, SSelect, SCheckbox, SRadio, SRadioGroup, SSwitch } from '@khsura/sui'` | [form.md](./components/form.md) |
 | `SAutocomplete` | `import { SAutocomplete } from '@khsura/sui'` | [autocomplete.md](./components/autocomplete.md) |
 
 ---

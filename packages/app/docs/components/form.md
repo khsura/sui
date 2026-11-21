@@ -1,6 +1,6 @@
 # Form Components
 
-**Import:** `import { SForm, SInput, STextarea, SSelect, SAutocomplete, SCheckbox, SRadio, SRadioGroup, SSwitch, SFormInputError } from '@khsura/sui'`
+**Import:** `import { SForm, SFormRow, SInput, STextarea, SSelect, SAutocomplete, SCheckbox, SRadio, SRadioGroup, SSwitch, SFormInputError } from '@khsura/sui'`
 
 **Types:** `import type { FormComponent, SelectItem, FormInputModelValueRule } from '@khsura/sui'`
 
@@ -25,7 +25,7 @@
 
 The text fields (`SInput`, `STextarea`, `SSelect`, `SAutocomplete`, `SDatePickerInput`) share one look: a 1px outlined box on the card background (also while empty), a 16px font (never smaller, so iOS does not zoom on focus) and the same height. The label sits above the field, inset 16px so it lines up with the value text inside the field, not with the field edge.
 
-Under every validated field one line is reserved for its error message, so fields don't jump when errors appear and a form keeps an even rhythm. In an action row (a field next to a button), set `hide-details` or `hide-error` on the field so the button lines up with the field rather than its label.
+Under every validated field one line is reserved for its error message, so fields don't jump when errors appear and a form keeps an even rhythm. For an action row (a field next to a button: a search bar, a filter bar), put the fields and buttons in an [`SFormRow`](#sformrow): each button lines up with the field box, not with the label above it or the error line under it. Do not build that row from a plain flex `<div>`: there the button lines up with the label.
 
 Shared events: `update:error` (`boolean`), `update:errors` (`string[]`), `update:dirty` (`boolean`).
 
@@ -70,6 +70,34 @@ Renders a native `<form novalidate>` and coordinates validation across child inp
 
 - `validate(): boolean` — runs every registered input's rules. **Returns `true` when there ARE errors.**
 - `resetValidation()` — clears every input's validation state.
+
+## SFormRow
+
+*Since 1.20.0.* A wrapping row of text fields (`SInput`, `SSelect`, `SDatePickerInput`, `SAutocomplete`, `STextarea`) and the buttons that act on them. Each button's top and bottom match the field box next to it, with or without a label, while an error shows, and when the row wraps on a phone. Stacked fields outside an `SFormRow` are unchanged.
+
+- No props. `SInput`, `STextarea`, `SAutocomplete`, a `grow` `SSelect` and a `block` `SDatePickerInput` share the free width; `SSelect` and `SDatePickerInput` otherwise keep their own width (as wide as their value), buttons keep theirs, and the row wraps when they don't fit.
+- Once any field in the row shows a `label`, the buttons and unlabelled fields start one label height lower, at the top of the field boxes.
+- Each field keeps its reserved error line; a button reserves the same space, so wrapped lines and the next row keep their gap. A row whose fields all use `hide-details` adds that gap below itself.
+- Aligns the default (outlined) fields and default-size buttons. A `simple` field's label is shorter, so do not mix it into an `SFormRow`.
+- Before 1.20.0 there is no `SFormRow`: put `hide-details` on the field in a flex row so its label and error line are not rendered.
+
+| Slot | Description |
+|------|-------------|
+| `default` | The fields and buttons of the row |
+
+```vue
+<SForm ref="formRef" @submit.prevent="search">
+  <SFormRow>
+    <SInput v-model="query" label="Search" :rules="[required]" />
+    <SButton type="submit" color="primary">Search</SButton>
+  </SFormRow>
+  <SFormRow>
+    <SDatePickerInput v-model="from" label="From" />
+    <SSelect v-model="status" label="Status" :items="statuses" />
+    <SButton color="primary" @click="apply">Apply</SButton>
+  </SFormRow>
+</SForm>
+```
 
 ---
 
@@ -252,7 +280,7 @@ There is no `value` or `indeterminate` prop, and no array/group model.
 
 ## SRadio / SRadioGroup
 
-Radio button group. Options are `SRadio` children — there is no `items` prop. A long option label wraps inside the group width. `hideDetails` on the group removes only its error area; the option labels always show.
+Radio button group. Options are `SRadio` children — there is no `items` prop. A long option label wraps inside the group width. `hideDetails` on the group removes only its error area; the option labels always show. Options have no background of their own, in light and dark themes (before 1.20.0 every option of a group with no value yet sat on a grey chip).
 
 ### SRadioGroup Props (extends common form props)
 
