@@ -66,6 +66,14 @@ describe('component tools', () => {
     expect(text).toContain('v-bind="attrs"')
   })
 
+  it('tells STooltip users not to bind slot props on its activator', async () => {
+    const client = await connectClient(bundledOnly())
+    const text = responseText(await client.callTool({ name: 'get_component_api', arguments: { name: 'tooltip' } }))
+
+    expect(text).toContain('**Activator:**')
+    expect(text).not.toContain('**Activator pattern:**')
+  })
+
   it('adds the layout-child note to layout children', async () => {
     const client = await connectClient(bundledOnly())
     const text = responseText(await client.callTool({ name: 'get_component_api', arguments: { name: 'SAppBar' } }))

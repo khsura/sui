@@ -1,5 +1,5 @@
 import type { SuiApiComponent } from '@khsura/shared/types'
-import type { AttributeNode, DirectiveNode, ElementNode, ExpressionNode } from '@vue/compiler-dom'
+import type { AttributeNode, DirectiveNode, ElementNode } from '@vue/compiler-dom'
 import { NodeTypes } from '@vue/compiler-dom'
 import type { TemplateIssue, TemplatePropBinding, TemplateRule } from '../types'
 import {
@@ -7,7 +7,6 @@ import {
   DEFAULT_SLOT_NAME,
   DIRECTIVE_BIND,
   DIRECTIVE_MODEL,
-  DIRECTIVE_SLOT,
   FALLTHROUGH_ATTRIBUTE_PREFIXES,
   FALLTHROUGH_ATTRIBUTES,
   LIST_COMPONENTS_TOOL_NAME,
@@ -20,24 +19,10 @@ import {
   RULE_UNKNOWN_SLOT,
   SEVERITY_ERROR,
   STRING_LITERAL_EXPRESSION,
-  TEMPLATE_TAG,
 } from '../constants'
 import { levenshteinDistance, toCamelCase } from '../lib'
-
-type IssueAt = Pick<TemplateIssue, 'line' | 'column'>
-
-const positionOf = (node: { loc: { start: { line: number; column: number } } }): IssueAt => ({
-  line: node.loc.start.line,
-  column: node.loc.start.column,
-})
-
-const codeList = (names: string[]): string => names.map((name) => `\`${name}\``).join(', ')
-
-/** The argument of a directive when it is a static name (`:size`, `#header`); `undefined` for none or `[dynamic]`. */
-const staticArgument = (argument: ExpressionNode | undefined): string | undefined =>
-  argument?.type === NodeTypes.SIMPLE_EXPRESSION && argument.isStatic ? argument.content : undefined
-
-const isDirective = (prop: AttributeNode | DirectiveNode): prop is DirectiveNode => prop.type === NodeTypes.DIRECTIVE
+import { codeList, isDirective, positionOf, slotDirectives, staticArgument } from '../utils'
+import { compositionRules } from './compositionRules'
 
 const findProp = (component: SuiApiComponent, attributeName: string) => {
   const camelName = toCamelCase(attributeName)
@@ -195,17 +180,6 @@ export const invalidEnumValueRule: TemplateRule = {
   },
 }
 
-/** `v-slot` / `#name` directives that fill a slot of `element`: on the element itself or on its direct `<template>` children. */
-const slotDirectives = (element: ElementNode): DirectiveNode[] => {
-  const templateChildren = element.children.filter(
-    (child): child is ElementNode => child.type === NodeTypes.ELEMENT && child.tag === TEMPLATE_TAG,
-  )
-
-  return [element, ...templateChildren].flatMap((node) =>
-    node.props.filter(isDirective).filter((directive) => directive.name === DIRECTIVE_SLOT),
-  )
-}
-
 export const unknownSlotRule: TemplateRule = {
   id: RULE_UNKNOWN_SLOT,
   check: ({ element, lookup }) => {
@@ -237,10 +211,11 @@ export const unknownSlotRule: TemplateRule = {
   },
 }
 
-/** The rules this validator runs, in order. Composition rules can be appended without touching the engine. */
+/** The rules this validator runs, in order: API checks first, then the composition rules. */
 export const templateRules: TemplateRule[] = [
   unknownComponentRule,
   unknownPropRule,
   invalidEnumValueRule,
   unknownSlotRule,
+  ...compositionRules,
 ]

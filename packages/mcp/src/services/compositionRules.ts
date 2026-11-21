@@ -1,0 +1,308 @@
+import type { ElementNode } from '@vue/compiler-dom'
+import { NodeTypes } from '@vue/compiler-dom'
+import type { TemplateIssue, TemplateRule, TemplateSlotFill } from '../types'
+import {
+  ACCESSIBLE_LABEL_ATTRIBUTES,
+  ACTIVATOR_ATTRS_KEY,
+  ACTIVATOR_BINDING_FIX,
+  ACTIVATOR_ON_KEY,
+  ACTIVATOR_SLOT_NAME,
+  BUTTON_COMPONENT,
+  DIALOG_TAG,
+  DIRECTIVE_BIND,
+  DIRECTIVE_ON,
+  FORM_COMPONENT,
+  ICON_COMPONENT,
+  INPUT_TAG,
+  INPUT_TYPE_ATTRIBUTE,
+  LAYOUT_APP_ATTRIBUTE,
+  LAYOUT_CHILD_COMPONENTS,
+  LAYOUT_COMPONENT,
+  LAYOUT_FOR_ATTRIBUTE,
+  LAYOUT_NAME_ATTRIBUTE,
+  NON_VISUAL_INPUT_TYPES,
+  RAW_INPUT_TYPE_REPLACEMENTS,
+  RAW_TAG_REPLACEMENTS,
+  RECIPE_ACTIVATOR_OVERLAYS,
+  RECIPE_APP_SHELL,
+  RECIPE_VALIDATED_FORM,
+  RULE_ACTIVATOR_BINDING,
+  RULE_FORM_RULES_OUTSIDE_FORM,
+  RULE_ICON_BUTTON_LABEL,
+  RULE_LAYOUT_FOR,
+  RULE_NO_RAW_REPLACEMENT,
+  RULE_TARGET_ANY_ELEMENT,
+  RULES_ATTRIBUTE,
+  SEVERITY_ERROR,
+  SEVERITY_WARNING,
+  SLOT_PROP_ACTIVATOR_COMPONENTS,
+  SLOTLESS_ACTIVATOR_COMPONENTS,
+  WHITESPACE_PATTERN,
+} from '../constants'
+import { slotPropAccessor } from '../lib'
+import {
+  childElementsOf,
+  expressionSource,
+  findAttribute,
+  hasObjectSpread,
+  isComponentTag,
+  isDirective,
+  isOneOfComponentTags,
+  positionOf,
+  slotFills,
+  staticArgument,
+} from '../utils'
+
+type IssueBase = Pick<TemplateIssue, 'rule' | 'severity' | 'recipe'>
+
+const compactExpression = (source: string): string => source.replaceAll(WHITESPACE_PATTERN, '')
+
+/** Values of the argument-less `v-on="…"` or `v-bind="…"` directives on `element`, whitespace removed. */
+const objectBindings = (element: ElementNode, directiveName: string): string[] =>
+  element.props
+    .filter(isDirective)
+    .filter((directive) => directive.name === directiveName && !directive.arg)
+    .flatMap((directive) => {
+      const source = expressionSource(directive)
+
+      return source ? [compactExpression(source)] : []
+    })
+
+const isActivatorFill = (fill: TemplateSlotFill): boolean => staticArgument(fill.directive.arg) === ACTIVATOR_SLOT_NAME
+
+const missingActivatorBindings = (fill: TemplateSlotFill, componentTag: string): TemplateIssue[] => {
+  const pattern = expressionSource(fill.directive)
+  const base: IssueBase = { rule: RULE_ACTIVATOR_BINDING, severity: SEVERITY_ERROR, recipe: RECIPE_ACTIVATOR_OVERLAYS }
+
+  if (!pattern) {
+    return [
+      {
+        ...positionOf(fill.directive),
+        ...base,
+        message: `The \`${componentTag}\` activator slot ignores its \`{ on, attrs }\` slot props, so clicking it cannot open the overlay.`,
+        fixHint: ACTIVATOR_BINDING_FIX,
+      },
+    ]
+  }
+
+  const onExpression = slotPropAccessor(pattern, ACTIVATOR_ON_KEY)
+  const attrsExpression = slotPropAccessor(pattern, ACTIVATOR_ATTRS_KEY)
+  const roots = childElementsOf(fill.owner)
+
+  const bindsOn = (root: ElementNode): boolean =>
+    onExpression !== undefined && objectBindings(root, DIRECTIVE_ON).includes(compactExpression(onExpression))
+
+  const bindsAttrs = (root: ElementNode): boolean =>
+    attrsExpression !== undefined && objectBindings(root, DIRECTIVE_BIND).includes(compactExpression(attrsExpression))
+
+  const activatorRoot = roots.find((root) => bindsOn(root) || bindsAttrs(root)) ?? roots.at(0)
+
+  const missing = [
+    ...(activatorRoot && bindsOn(activatorRoot) ? [] : [`v-on="${onExpression ?? ACTIVATOR_ON_KEY}"`]),
+    ...(activatorRoot && bindsAttrs(activatorRoot) ? [] : [`v-bind="${attrsExpression ?? ACTIVATOR_ATTRS_KEY}"`]),
+  ]
+
+  if (!missing.length) {
+    return []
+  }
+
+  const notExposed = onExpression === undefined || attrsExpression === undefined
+
+  return [
+    {
+      ...positionOf(activatorRoot ?? fill.directive),
+      ...base,
+      message: `The \`${componentTag}\` activator element is missing ${missing.map((binding) => `\`${binding}\``).join(' and ')}; with only one of the pair the overlay does not open or stays out of sync.`,
+      fixHint: notExposed
+        ? `The slot pattern \`${pattern}\` does not expose both \`on\` and \`attrs\`. ${ACTIVATOR_BINDING_FIX}`
+        : `Bind ${missing.map((binding) => `\`${binding}\``).join(' and ')} on the same root element as the other binding.`,
+    },
+  ]
+}
+
+const tooltipSlotPropsIssue = (fill: TemplateSlotFill, componentTag: string): TemplateIssue[] =>
+  expressionSource(fill.directive)
+    ? [
+        {
+          ...positionOf(fill.directive),
+          rule: RULE_ACTIVATOR_BINDING,
+          severity: SEVERITY_WARNING,
+          message: `\`${componentTag}\` passes no activator slot props, so \`on\` / \`attrs\` are undefined here.`,
+          fixHint: `Write \`<template #activator>\` without slot props and do not bind \`v-on\` / \`v-bind\`: ${componentTag} wraps the activator in its own element that listens for hover and click.`,
+          recipe: RECIPE_ACTIVATOR_OVERLAYS,
+        },
+      ]
+    : []
+
+export const activatorBindingRule: TemplateRule = {
+  id: RULE_ACTIVATOR_BINDING,
+  check: ({ element }) => {
+    const activatorFills = slotFills(element).filter(isActivatorFill)
+
+    if (isOneOfComponentTags(element.tag, SLOT_PROP_ACTIVATOR_COMPONENTS)) {
+      return activatorFills.flatMap((fill) => missingActivatorBindings(fill, element.tag))
+    }
+
+    if (isOneOfComponentTags(element.tag, SLOTLESS_ACTIVATOR_COMPONENTS)) {
+      return activatorFills.flatMap((fill) => tooltipSlotPropsIssue(fill, element.tag))
+    }
+
+    return []
+  },
+}
+
+export const layoutForRule: TemplateRule = {
+  id: RULE_LAYOUT_FOR,
+  check: ({ element, ancestors }) => {
+    if (!isOneOfComponentTags(element.tag, LAYOUT_CHILD_COMPONENTS) || findAttribute(element, LAYOUT_APP_ATTRIBUTE)) {
+      return []
+    }
+
+    const forAttribute = findAttribute(element, LAYOUT_FOR_ATTRIBUTE)
+
+    const layoutNames = ancestors
+      .filter((ancestor) => isComponentTag(ancestor.tag, LAYOUT_COMPONENT))
+      .map((layout) => findAttribute(layout, LAYOUT_NAME_ATTRIBUTE))
+
+    // No enclosing SLayout here (it lives in a parent file), or a name or `for` known only at runtime: nothing to compare.
+    if (!layoutNames.length || forAttribute?.isBound || layoutNames.some((name) => name?.isBound)) {
+      return []
+    }
+
+    const nearestName = layoutNames.at(-1)?.staticValue
+    const base: IssueBase = { rule: RULE_LAYOUT_FOR, severity: SEVERITY_ERROR, recipe: RECIPE_APP_SHELL }
+
+    if (!forAttribute) {
+      return nearestName
+        ? [
+            {
+              ...positionOf(element),
+              ...base,
+              message: `\`${element.tag}\` has no \`for\`, so it joins the app-level layout instead of \`SLayout name="${nearestName}"\` and the layout offsets break.`,
+              fixHint: `Add \`for="${nearestName}"\`.`,
+            },
+          ]
+        : []
+    }
+
+    const forValue = forAttribute.staticValue ?? ''
+    const staticNames = layoutNames.flatMap((name) => (name?.staticValue ? [name.staticValue] : []))
+
+    if (staticNames.includes(forValue)) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(forAttribute.node),
+        ...base,
+        message: `\`for="${forValue}"\` on \`${element.tag}\` matches no enclosing \`SLayout name\`, so it is not placed in the layout.`,
+        fixHint: nearestName
+          ? `Use \`for="${nearestName}"\`.`
+          : `Remove \`for\` to join the enclosing app-level layout, or give that SLayout \`name="${forValue}"\`.`,
+      },
+    ]
+  },
+}
+
+export const formRulesOutsideFormRule: TemplateRule = {
+  id: RULE_FORM_RULES_OUTSIDE_FORM,
+  check: ({ element, ancestors }) => {
+    const rulesAttribute = findAttribute(element, RULES_ATTRIBUTE)
+
+    if (!rulesAttribute || ancestors.some((ancestor) => isComponentTag(ancestor.tag, FORM_COMPONENT))) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(rulesAttribute.node),
+        rule: RULE_FORM_RULES_OUTSIDE_FORM,
+        severity: SEVERITY_WARNING,
+        message: `\`${element.tag}\` has \`rules\` but no enclosing \`SForm\`; rules only run when the value changes, so an untouched field passes on submit.`,
+        fixHint: 'Wrap the inputs in `<SForm ref="form">` and call `form.validate()` before submitting.',
+        recipe: RECIPE_VALIDATED_FORM,
+      },
+    ]
+  },
+}
+
+const isBlankText = (node: ElementNode['children'][number]): boolean =>
+  node.type === NodeTypes.COMMENT || (node.type === NodeTypes.TEXT && !node.content.trim())
+
+const hasAccessibleLabel = (element: ElementNode): boolean =>
+  ACCESSIBLE_LABEL_ATTRIBUTES.some((name) => findAttribute(element, name)) || hasObjectSpread(element)
+
+export const iconButtonLabelRule: TemplateRule = {
+  id: RULE_ICON_BUTTON_LABEL,
+  check: ({ element }) => {
+    if (!isComponentTag(element.tag, BUTTON_COMPONENT) || hasAccessibleLabel(element)) {
+      return []
+    }
+
+    const content = element.children.filter((child) => !isBlankText(child))
+    const [onlyChild] = content
+
+    const isIconOnly =
+      content.length === 1 && onlyChild.type === NodeTypes.ELEMENT && isComponentTag(onlyChild.tag, ICON_COMPONENT)
+
+    return isIconOnly
+      ? [
+          {
+            ...positionOf(element),
+            rule: RULE_ICON_BUTTON_LABEL,
+            severity: SEVERITY_WARNING,
+            message: `This \`${element.tag}\` shows only an \`SIcon\`, so screen readers announce it without a name.`,
+            fixHint: 'Add `aria-label="…"` (or `title`) describing the action.',
+            recipe: RECIPE_APP_SHELL,
+          },
+        ]
+      : []
+  },
+}
+
+const rawReplacement = (element: ElementNode): string | undefined => {
+  if (element.tag !== INPUT_TAG) {
+    return RAW_TAG_REPLACEMENTS.get(element.tag)
+  }
+
+  const inputType = findAttribute(element, INPUT_TYPE_ATTRIBUTE)?.staticValue?.toLowerCase()
+
+  if (inputType && NON_VISUAL_INPUT_TYPES.includes(inputType)) {
+    return undefined
+  }
+
+  return (inputType ? RAW_INPUT_TYPE_REPLACEMENTS.get(inputType) : undefined) ?? RAW_TAG_REPLACEMENTS.get(INPUT_TAG)
+}
+
+export const noRawReplacementRule: TemplateRule = {
+  id: RULE_NO_RAW_REPLACEMENT,
+  target: RULE_TARGET_ANY_ELEMENT,
+  check: ({ element }) => {
+    const replacement = rawReplacement(element)
+
+    if (!replacement) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(element),
+        rule: RULE_NO_RAW_REPLACEMENT,
+        severity: SEVERITY_WARNING,
+        message: `Raw \`<${element.tag}>\` bypasses SUI theming, sizing and validation.`,
+        fixHint: `Use \`${replacement}\` instead.`,
+        recipe: element.tag === DIALOG_TAG ? RECIPE_ACTIVATOR_OVERLAYS : RECIPE_VALIDATED_FORM,
+      },
+    ]
+  },
+}
+
+/** Rules about how components fit together, beyond what one component's API says. */
+export const compositionRules: TemplateRule[] = [
+  activatorBindingRule,
+  layoutForRule,
+  formRulesOutsideFormRule,
+  iconButtonLabelRule,
+  noRawReplacementRule,
+]

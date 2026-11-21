@@ -2,14 +2,27 @@ import type { SuiApi } from '@khsura/shared/types'
 import type { ElementNode, ParentNode } from '@vue/compiler-dom'
 import { NodeTypes } from '@vue/compiler-dom'
 import type { TemplateIssue, TemplateParseError, TemplateRule } from '../types'
-import { RULE_PARSE_ERROR, SEVERITY_ERROR } from '../constants'
+import { RULE_PARSE_ERROR, RULE_TARGET_ANY_ELEMENT, SEVERITY_ERROR } from '../constants'
 import { parseVueTemplate } from '../lib'
 import { isSuiComponentTag } from '../utils'
 import { useComponentCatalogService } from './componentCatalog'
 import { templateRules } from './templateRules'
 
-const childElements = (parent: ParentNode): ElementNode[] =>
-  parent.children.flatMap((child) => (child.type === NodeTypes.ELEMENT ? [child, ...childElements(child)] : []))
+interface PlacedElement {
+  element: ElementNode
+  ancestors: ElementNode[]
+}
+
+/** Every element under `parent`, depth first, with its enclosing elements (outermost first). */
+const placedElements = (parent: ParentNode, ancestors: ElementNode[] = []): PlacedElement[] =>
+  parent.children.flatMap((child) =>
+    child.type === NodeTypes.ELEMENT
+      ? [{ element: child, ancestors }, ...placedElements(child, [...ancestors, child])]
+      : [],
+  )
+
+const appliesTo = (rule: TemplateRule, tag: string): boolean =>
+  rule.target === RULE_TARGET_ANY_ELEMENT || isSuiComponentTag(tag)
 
 const parseErrorIssue = (error: TemplateParseError): TemplateIssue => ({
   line: error.line,
@@ -29,15 +42,19 @@ export const useTemplateValidatorService = (api: SuiApi, rules: TemplateRule[] =
 
   const validate = (code: string): TemplateIssue[] => {
     const { root, errors } = parseVueTemplate(code)
-    const elements = root ? childElements(root) : []
+    const elements = root ? placedElements(root) : []
 
-    const ruleIssues = elements
-      .filter((element) => isSuiComponentTag(element.tag))
-      .flatMap((element) => {
-        const context = { element, lookup: catalog.findComponent(element.tag), api }
+    const ruleIssues = elements.flatMap(({ element, ancestors }) => {
+      const applicableRules = rules.filter((rule) => appliesTo(rule, element.tag))
 
-        return rules.flatMap((rule) => rule.check(context))
-      })
+      if (!applicableRules.length) {
+        return []
+      }
+
+      const context = { element, ancestors, lookup: catalog.findComponent(element.tag), api }
+
+      return applicableRules.flatMap((rule) => rule.check(context))
+    })
 
     return [...errors.map(parseErrorIssue), ...ruleIssues].sort(byPosition)
   }

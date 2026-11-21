@@ -14,7 +14,9 @@ const email = ref('')
       <template #activator="{ on, attrs }">
         <s-button v-bind="attrs" :block="true" v-on="on">Details</s-button>
       </template>
-      <SInput v-model="email" label="Email" type="email" placeholder="you@example.com" :rules="[]" />
+      <SForm>
+        <SInput v-model="email" label="Email" type="email" placeholder="you@example.com" :rules="[]" />
+      </SForm>
     </SDialog>
   </SLayout>
 </template>
