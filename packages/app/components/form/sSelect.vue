@@ -68,7 +68,9 @@
               @click="selectItem(item)"
             >
               <SListItemContent>
-                <SListItemSubtitle class="s_select__item">{{ getItemText(item) }}</SListItemSubtitle>
+                <SListItemSubtitle class="s_select__item" :title="getItemText(item)">
+                  {{ getItemText(item) }}
+                </SListItemSubtitle>
               </SListItemContent>
             </SListItem>
           </SList>
@@ -369,6 +371,7 @@ $s_select__fieldHeight: calc(#{$s_select__fontSize} * #{$s_select__lineHeight} +
 
   &__activator {
     @include s_button();
+
     // The same box as an SInput field: 16px text inset by 16px, and the same height and font.
     justify-content: flex-start;
     max-width: 100%;
@@ -484,8 +487,14 @@ $s_select__fieldHeight: calc(#{$s_select__fontSize} * #{$s_select__lineHeight} +
     }
   }
 
+  // A long option stays on one line and ends in an ellipsis (as in SAutocomplete) instead of the
+  // two-line clamp of SListItemSubtitle; its `title` shows the full text.
   &__item {
+    display: block;
     padding: 0 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     cursor: pointer;
   }
 }

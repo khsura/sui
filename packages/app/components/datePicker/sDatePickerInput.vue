@@ -196,9 +196,12 @@ const placeholderWidthEm = computed(() =>
 
 /**
  * The value's own width, in characters of the input's font, and at least the placeholder's. The `size`
- * attribute alone is not enough: iOS Safari let the field shrink below it and cut the last digit off.
+ * attribute alone is not enough: iOS Safari sized the field below it and cut the last digit off. It is the
+ * preferred width, not a minimum: in a narrower container the input shrinks and the value ends in an ellipsis.
  */
-const inputStyles = computed(() => ({ minWidth: `max(${inputSize.value}ch, ${placeholderWidthEm.value}em)` }))
+const inputStyles = computed(() => ({
+  '--s-date-picker-input-value-width': `max(${inputSize.value}ch, ${placeholderWidthEm.value}em)`,
+}))
 
 /**
  * Keeps the committed value in the format of the current type.
@@ -318,14 +321,16 @@ $s_datePickerInput--fontSizes: (
   flex-wrap: nowrap;
   gap: 4px;
   align-items: center;
+
+  // As wide as the value needs, but never wider than the container: in a narrow
+  // column the field shrinks (like SInput) and the value ends in an ellipsis.
   width: max-content;
-  // The field must never render narrower than the value needs.
-  min-width: min-content;
+  min-width: 0;
+  max-width: 100%;
 
   &__content {
     flex: 1 1 auto;
-    // The field must never shrink below the width the value needs.
-    min-width: min-content;
+    min-width: 0;
   }
 
   &__carouselButton {
@@ -387,11 +392,15 @@ $s_datePickerInput--fontSizes: (
 
   &__input {
     box-sizing: content-box;
-    flex: 1 0 auto;
-    width: auto;
-    // `inputStyles` sets the content's minimum width; the padding sits outside it.
-    min-width: auto;
+    flex: 1 1 auto;
+
+    // `inputStyles` sets the content's width; the padding sits outside it.
+    /* stylelint-disable-next-line custom-property-pattern -- component-local property, set by `inputStyles` */
+    width: var(--s-date-picker-input-value-width, auto);
+    min-width: 0;
     padding: calc($s_spacer * 2) calc($s_spacer * 4);
+    text-overflow: ellipsis;
+
     // The SInput font size, so both fields are the same height.
     font-size: 16px;
     line-height: inherit;
@@ -408,6 +417,9 @@ $s_datePickerInput--fontSizes: (
 
   &__suffix {
     display: flex;
+
+    // The calendar button keeps its size when the field shrinks.
+    flex: 0 0 auto;
     align-items: center;
 
     // The field's height through the flex line, not `height: stretch`: iOS

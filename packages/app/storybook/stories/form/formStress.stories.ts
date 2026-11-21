@@ -673,3 +673,123 @@ export const DatePickerInFormCard = {
     })
   },
 } satisfies StoryObj
+
+// Width (px) of the narrow column: narrower than a date field with its value and calendar button.
+const NARROW_BOX_WIDTH = 160
+const NARROW_BOX_COUNT = 4
+
+// Each field in a 160px column: it shrinks into the column (as SInput does) instead of overflowing it, the value
+// truncates with an ellipsis and the calendar button stays visible.
+export const FieldsInNarrowBox = {
+  tags: ['visual'],
+  render: () =>
+    defineComponent({
+      components: stressComponents,
+      setup: () => ({
+        roles,
+        fruits,
+        values: ref({ input: LONG_VALUE, date: '2026-01-15', role: 'editor', fruit: 'Mango' }),
+      }),
+      template: `
+        <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+          <div class="stress-narrow" style="width: ${NARROW_BOX_WIDTH}px;">
+            <SInput v-model="values.input" label="Input" />
+          </div>
+          <div class="stress-narrow" data-testid="narrow-date" style="width: ${NARROW_BOX_WIDTH}px;">
+            <SDatePickerInput v-model="values.date" label="Date" />
+          </div>
+          <div class="stress-narrow" style="width: ${NARROW_BOX_WIDTH}px;">
+            <SSelect v-model="values.role" label="Role" :items="roles" />
+          </div>
+          <div class="stress-narrow" style="width: ${NARROW_BOX_WIDTH}px;">
+            <SAutocomplete v-model="values.fruit" label="Fruit" :items="fruits" />
+          </div>
+        </div>
+      `,
+    }),
+  play: async ({ canvasElement }) => {
+    const boxes = Array.from(canvasElement.querySelectorAll<HTMLElement>('.stress-narrow'))
+
+    await expect(boxes.length).toBe(NARROW_BOX_COUNT)
+    for (const box of boxes) {
+      await expect(box.scrollWidth, 'nothing overflows the 160px column').toBeLessThanOrEqual(box.clientWidth)
+    }
+
+    const dateBox = canvasElement.querySelector<HTMLElement>('[data-testid="narrow-date"]')
+    const dateField = dateBox?.querySelector('.s_datePickerInput')
+    const calendarButton = dateBox?.querySelector('.s_datePickerInput__suffix')
+    const dateInput = dateBox?.querySelector('.s_datePickerInput__input')
+
+    await expect(dateField?.getBoundingClientRect().width).toBeLessThanOrEqual(NARROW_BOX_WIDTH)
+    await expect(calendarButton?.getBoundingClientRect().right).toBeLessThanOrEqual(
+      (dateBox?.getBoundingClientRect().right ?? 0) + PIXEL_TOLERANCE,
+    )
+    await expect(dateInput && getComputedStyle(dateInput).textOverflow).toBe('ellipsis')
+  },
+} satisfies StoryObj
+
+// Longer than 90vw at 1280px, so the option is truncated at every width.
+const LONG_OPTION_TEXT =
+  'An option with a very long name that keeps going and going, far wider than the dropdown list can ever be, ' +
+  'so it must be cut off with an ellipsis instead of being clipped mid-glyph at the edge of the list'
+
+const longOptionItems: SelectItem[] = [
+  { text: 'Short option', value: 'short' },
+  { text: LONG_OPTION_TEXT, value: 'long' },
+]
+
+/** The long option shows one line ending in an ellipsis, and its full text in a `title` tooltip. */
+const assertLongOptionTruncated = (selector: string) => {
+  const option = [...document.querySelectorAll<HTMLElement>(selector)].find(
+    (element) => element.title === LONG_OPTION_TEXT,
+  )
+
+  assertThat(Boolean(option), `no ${selector} with the full text in its title`)
+  if (!option) {
+    return
+  }
+
+  assertThat(getComputedStyle(option).textOverflow === 'ellipsis', `${selector} has no text-overflow: ellipsis`)
+  assertThat(option.scrollWidth > option.clientWidth, `${selector} is not truncated`)
+  assertInsideViewport(option)
+}
+
+export const SelectLongOption = {
+  tags: ['visual'],
+  render: () =>
+    defineComponent({
+      components: stressComponents,
+      setup: () => ({ longOptionItems, value: ref('short') }),
+      template: `<SSelect v-model="value" label="Option" :items="longOptionItems" hide-details />`,
+    }),
+  play: async ({ canvasElement, userEvent }) => {
+    const activator = canvasElement.querySelector('.s_select__activator')
+
+    await expect(activator).toBeInTheDocument()
+    if (activator) {
+      await userEvent.click(activator)
+    }
+
+    await waitFor(() => assertLongOptionTruncated('.s_select__list .s_select__item'))
+  },
+} satisfies StoryObj
+
+export const AutocompleteLongOption = {
+  tags: ['visual'],
+  render: () =>
+    defineComponent({
+      components: stressComponents,
+      setup: () => ({ longOptionItems, value: ref(null) }),
+      template: `<SAutocomplete v-model="value" label="Option" :items="longOptionItems" hide-details />`,
+    }),
+  play: async ({ canvasElement, userEvent }) => {
+    const input = canvasElement.querySelector('input')
+
+    await expect(input).toBeInTheDocument()
+    if (input) {
+      await userEvent.click(input)
+    }
+
+    await waitFor(() => assertLongOptionTruncated('.s_autocomplete__list .s_autocomplete__itemText'))
+  },
+} satisfies StoryObj

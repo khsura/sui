@@ -113,7 +113,9 @@
                 <SCheckbox :model-value="getIsSelected(item)" hide-details></SCheckbox>
               </SListItemIcon>
               <SListItemContent>
-                {{ getItemText(item) }}
+                <span class="s_autocomplete__itemText" :title="getItemText(item) ?? undefined">{{
+                  getItemText(item)
+                }}</span>
               </SListItemContent>
               <span></span>
             </SListItem>
@@ -324,6 +326,7 @@ watch(
 // The SInput metrics: a 16px font at line-height 1.1, 8px vertical padding and a 1px border.
 $s_autocomplete__fontSize: 16px;
 $s_autocomplete__fieldHeight: calc(#{$s_autocomplete__fontSize} * 1.1 + #{$s_spacer * 4} + 2px);
+
 // The SInput size presets. None goes below 16px, a smaller one makes iOS zoom in on focus.
 $s_autocomplete--fontSizes: (
   'mini': 1rem,
@@ -425,6 +428,13 @@ $s_autocomplete--fontSizes: (
     // width: 100%;
     max-height: 80vh;
     overflow-y: auto;
+  }
+
+  // A long option stays on one line and ends in an ellipsis; its `title` shows the full text.
+  &__itemText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   // The option the arrow keys highlight (focus itself stays in the input)
