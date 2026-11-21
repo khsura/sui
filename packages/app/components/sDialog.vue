@@ -63,11 +63,11 @@ onClickOutside(dialogRef, localOnClickOutside, {
   ignore: ['.s_menu__content', '.s_tooltip__content', '.s_select__list', '.s_snackbar__wrapper'],
 })
 
-watch(model, async (value) => {
+watch(model, (value) => {
   if (value) {
-    await disableBackgroundScroll()
+    disableBackgroundScroll()
   } else {
-    await enableBackgroundScroll()
+    enableBackgroundScroll()
   }
 })
 </script>

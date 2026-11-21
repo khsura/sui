@@ -5,6 +5,7 @@ import {
   storyFailureMaxLength,
   storyFailuresGlobal,
   storyRenderTerminalPhases,
+  visualStoryRenderPollingMs,
   visualStoryRenderTimeoutMs,
 } from '../constants'
 
@@ -66,6 +67,9 @@ export const waitForStoryRender = async (page: Page): Promise<unknown> => {
   try {
     const phaseHandle = await page.waitForFunction(readRenderPhase, storyRenderTerminalPhases, {
       timeout: visualStoryRenderTimeoutMs,
+      // Poll on a timer, not on requestAnimationFrame: WebKit can stop running rAF callbacks after a play function
+      // opens an overlay, so the default rAF polling never saw the finished phase.
+      polling: visualStoryRenderPollingMs,
     })
 
     return await phaseHandle.jsonValue()

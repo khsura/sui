@@ -158,5 +158,5 @@ const activeFilters = ref<string[]>([])
 | `#default="{ isSelected, select }"` + `@click="select"` | Only `isSelected` exists; the item itself toggles on click |
 | `scrollable` to get arrows | Arrows appear when `scrollable` is **off** and items overflow |
 
-- The `right` slot's `attrs.disabled` mirrors the *previous* button's state — compute your own disabled state for a custom "next" button if needed.
+- Each slot's `attrs.disabled` is `true` only at that arrow's own edge, so `v-bind="attrs"` is enough for a custom arrow. Before 1.20.0 the `right` slot's `attrs.disabled` mirrored the *previous* button's state; there, compute your own disabled state for a custom "next" button.
 - `disabled` on an item blocks clicks via CSS (`pointer-events: none`) and dims it.

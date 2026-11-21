@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { cssVariables } from '@/app/constants'
+import { cssVariables, overlayScrollBlockedClassName } from '@/app/constants'
 
 export const getDocument = () => {
   return typeof document !== 'undefined' ? document : null
@@ -64,7 +64,7 @@ export const getViewportLocation = () => {
     return null
   }
 
-  const isWithinOverlay = html.classList.contains('s_overlay__scrollBlocked')
+  const isWithinOverlay = html.classList.contains(overlayScrollBlockedClassName)
 
   const scrollXProperty = z.coerce
     .number()

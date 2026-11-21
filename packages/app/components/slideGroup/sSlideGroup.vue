@@ -105,9 +105,7 @@ $slideGroupButtonSize: #{map-deep-get($s_button--sizes, 'default')}px;
     margin: 0 auto;
     overflow-x: hidden;
     scrollbar-width: none; // hide scrollbar for firefox
-    -ms-overflow-style: none;
-
-    hidescrollbarforfirefox-ms-overflow-style // hide scrollbar for IE and Edge
+    -ms-overflow-style: none; // hide scrollbar for IE and Edge
 
     &::-webkit-scrollbar {
       display: none; // hide scrollbar for Chrome, Safari and Opera
