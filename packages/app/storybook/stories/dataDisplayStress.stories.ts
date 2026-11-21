@@ -106,6 +106,12 @@ const assertNoPageOverflow = (canvasElement: HTMLElement) => {
   assertThat(root.scrollWidth <= root.clientWidth + pixelTolerance, 'the page scrolls horizontally')
 }
 
+const getTitlePadding = (element: Element) => {
+  const style = getComputedStyle(element)
+
+  return Number.parseFloat(style.paddingLeft) + Number.parseFloat(style.paddingRight)
+}
+
 // The rectangle of an element's text, not of its box.
 const getTextRect = (element: Element | null) => {
   if (!element) {
@@ -205,10 +211,13 @@ export const CardGrid = {
 
         range.setStart(textNode, start)
         range.setEnd(textNode, start + firstWord.length)
-        const lineCount = new Set([...range.getClientRects()].map((rect) => Math.round(rect.top))).size
-        const titleRect = getRect(title)
+        const wordRects = [...range.getClientRects()]
+        const lineCount = new Set(wordRects.map((rect) => Math.round(rect.top))).size
+        const wordWidth = wordRects.reduce((total, rect) => total + rect.width, 0)
+        // A word wider than the title's content box may (and must) be split.
+        const isWiderThanTitle = wordWidth > title.clientWidth - getTitlePadding(title)
 
-        assertThat(lineCount === 1 || firstWord.length * 8 > titleRect.width, `"${firstWord}" is broken mid-word`)
+        assertThat(lineCount === 1 || isWiderThanTitle, `"${firstWord}" is broken mid-word`)
         assertThat(title.scrollWidth <= title.clientWidth + pixelTolerance, `"${firstWord}" overflows its card`)
       }
 
