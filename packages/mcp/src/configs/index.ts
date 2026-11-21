@@ -1,2 +1,4 @@
 export * from './bundledApi'
+export * from './guideSources'
+export * from './guideTopics'
 export * from './serverInfo'

@@ -1,4 +1,6 @@
 export * from './getComponentApi'
+export * from './getGuide'
 export * from './listComponents'
+export * from './listGuides'
 export * from './ping'
 export * from './toolResult'
