@@ -15,3 +15,7 @@ export const DIST_DIR = 'dist'
 export const API_METADATA_FILE = 'sui-api.json'
 export const JSON_INDENT = 2
 export const EXIT_CODE_FAILURE = 1
+export const DEFINE_SLOTS_CALLEE = 'defineSlots'
+export const PATTERN_SLOT_WILDCARD = '.+'
+export const REGEX_SPECIAL_CHARACTERS = /[.*+?^${}()|[\]\\]/g
+export const SFC_SCRIPT_FILENAME = 'script.ts'

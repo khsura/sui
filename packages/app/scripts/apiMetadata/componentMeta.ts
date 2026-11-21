@@ -1,7 +1,9 @@
+import fs from 'node:fs'
 import path from 'node:path'
 import type { SuiApiComponent, SuiApiProp } from '@khsura/shared/types'
 import type { PropertyMeta, PropertyMetaSchema } from 'vue-component-meta'
 import { ENUM_SCHEMA_KIND, NULLISH_SCHEMA_MEMBERS, QUOTED_LITERAL_PATTERN } from './constants'
+import { extractPatternSlots } from './slotPatterns'
 import type { ComponentExport, ComponentMetaChecker } from './types'
 
 const byName = <T extends { name: string }>(left: T, right: T) => (left.name < right.name ? -1 : 1)
@@ -46,7 +48,9 @@ export const extractComponentMeta = (
   appRoot: string,
   entry: ComponentExport,
 ): SuiApiComponent => {
-  const meta = checker.getComponentMeta(path.join(appRoot, entry.file))
+  const componentFile = path.join(appRoot, entry.file)
+  const meta = checker.getComponentMeta(componentFile)
+  const namedSlots = meta.slots.map(({ name, type, description }) => ({ name, type, description }))
 
   return {
     ...entry,
@@ -54,7 +58,7 @@ export const extractComponentMeta = (
       .filter((prop) => !prop.global)
       .map(toProp)
       .sort(byName),
-    slots: meta.slots.map(({ name, type, description }) => ({ name, type, description })).sort(byName),
+    slots: [...namedSlots, ...extractPatternSlots(fs.readFileSync(componentFile, 'utf8'))].sort(byName),
     events: meta.events.map(({ name, type, description }) => ({ name, type, description })).sort(byName),
   }
 }

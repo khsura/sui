@@ -13,6 +13,8 @@ export const suiApiSlotSchema = z.object({
   name: z.string(),
   type: z.string(),
   description: z.string(),
+  /** Regex source for a dynamic slot family (e.g. `^item\\..+$` for `item.<column>`); `name` is then a readable label. */
+  pattern: z.string().optional(),
 })
 
 export const suiApiEventSchema = z.object({
