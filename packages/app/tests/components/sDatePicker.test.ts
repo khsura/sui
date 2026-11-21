@@ -51,4 +51,13 @@ describe('SDatePicker', () => {
 
     expect(yearListTitles(wrapper)[0]).toBe(expectedTitle)
   })
+
+  test('treats an empty string model as no date, like null', () => {
+    const props = { type: 'date', today: '2026-10-22', min: '2021-01-01', max: '2026-12-31', hideTitle: true } as const
+    const empty = mount(SDatePicker, { props: { ...props, modelValue: '' } })
+    const unset = mount(SDatePicker, { props: { ...props, modelValue: null } })
+
+    expect(empty.text()).not.toMatch(/Invalid date|NaN/)
+    expect(empty.text()).toBe(unset.text())
+  })
 })

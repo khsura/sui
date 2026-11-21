@@ -118,7 +118,7 @@ describe('SDatePickerInput', () => {
   test('holds the width of its value in characters, not only through the size attribute', () => {
     const wrapper = getWrapper({ type: 'month' })
 
-    expect(wrapper.find<HTMLInputElement>('.s_datePickerInput__input').element.style.minWidth).toBe('7ch')
+    expect(wrapper.find<HTMLInputElement>('.s_datePickerInput__input').element.style.minWidth).toBe('max(7ch, 5em)')
   })
 
   test('keeps the width of its value by default', () => {
