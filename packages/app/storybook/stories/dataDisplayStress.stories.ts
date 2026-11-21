@@ -351,22 +351,35 @@ export const TableStates = {
 } satisfies StoryObj
 
 // More tabs than fit, with long labels. At 375px the tabs stay on one row and scroll sideways.
+const tabsTemplate = /* html */ `
+  <div style="display: flex; flex-direction: column; gap: 24px;">
+    <STabs v-model="activeTab" class="stress-many-tabs" underlined>
+      <STab v-for="(label, index) in tabLabels" :key="label" :tab="index">{{ label }}</STab>
+    </STabs>
+    <STabs v-model="denseTab" class="stress-two-tabs" bordered dense>
+      <STab :tab="0">Account settings and preferences</STab>
+      <STab :tab="1">Billing</STab>
+    </STabs>
+  </div>
+`
+
+// The selected tab is fully inside the scrolling row of tabs.
+const assertSelectedTabInView = (canvasElement: HTMLElement) => {
+  const tabs = getRect(canvasElement.querySelector('.stress-many-tabs'))
+  const selected = getRect(canvasElement.querySelector('.stress-many-tabs .s_toggleButton--selected'))
+
+  assertThat(
+    selected.left >= tabs.left - pixelTolerance && selected.right <= tabs.right + pixelTolerance,
+    'the selected tab is out of view',
+  )
+}
+
 export const TabsOverflow = {
   tags: ['visual'],
   render: () => ({
     components: { STab, STabs },
-    setup: () => ({ tabLabels, activeTab: ref(5), denseTab: ref(0) }),
-    template: /* html */ `
-      <div style="display: flex; flex-direction: column; gap: 24px;">
-        <STabs v-model="activeTab" class="stress-many-tabs" underlined>
-          <STab v-for="(label, index) in tabLabels" :key="label" :tab="index">{{ label }}</STab>
-        </STabs>
-        <STabs v-model="denseTab" class="stress-two-tabs" bordered dense>
-          <STab :tab="0">Account settings and preferences</STab>
-          <STab :tab="1">Billing</STab>
-        </STabs>
-      </div>
-    `,
+    setup: () => ({ tabLabels, activeTab: ref(0), denseTab: ref(0) }),
+    template: tabsTemplate,
   }),
   play: async ({ canvasElement }) => {
     await waitFor(() => {
@@ -382,15 +395,29 @@ export const TabsOverflow = {
         }
       }
 
-      // The selected tab is scrolled into view.
-      const tabs = getRect(canvasElement.querySelector('.stress-many-tabs'))
-      const selected = getRect(canvasElement.querySelector('.stress-many-tabs .s_toggleButton--selected'))
-
-      assertThat(
-        selected.left >= tabs.left - pixelTolerance && selected.right <= tabs.right + pixelTolerance,
-        'the selected tab is out of view',
-      )
+      assertSelectedTabInView(canvasElement)
     })
+  },
+} satisfies StoryObj
+
+// A selected tab past the right edge is scrolled into view. Not a visual story: Chromium's full-page capture
+// re-lays the page out and clamps the scroll position of inner scrollers, so the screenshot would not show it.
+export const TabsSelectedOutOfView = {
+  render: () => ({
+    components: { STab, STabs },
+    setup: () => ({ tabLabels, activeTab: ref(tabLabels.length - 2), denseTab: ref(1) }),
+    template: tabsTemplate,
+  }),
+  play: async ({ canvasElement }) => {
+    await waitFor(() => assertSelectedTabInView(canvasElement))
+
+    const firstTab = canvasElement.querySelector<HTMLElement>('.stress-many-tabs .s_toggleButton__button')
+
+    if (firstTab) {
+      await userEvent.click(firstTab)
+    }
+
+    await waitFor(() => assertSelectedTabInView(canvasElement))
   },
 } satisfies StoryObj
 
