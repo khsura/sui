@@ -1,5 +1,5 @@
 <template>
-  <section :class="classList" :style="styleListBorder">
+  <section :class="classList" :style="styleListBorder" role="group">
     <div class="s_toggleButtonGroup__content">
       <slot></slot>
     </div>

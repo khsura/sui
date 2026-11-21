@@ -5,6 +5,8 @@ import { createStoryObj } from '@/app/storybook/helpers'
 
 const tab: Meta<PropsTabs> = {
   title: 'UI Components/Tabs',
+  // axe audits every story of this component in CI (keyboard-driven component without a screenshot)
+  tags: ['a11y'],
   argTypes: {
     selectedTabColor: {
       control: {

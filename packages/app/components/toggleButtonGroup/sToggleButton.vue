@@ -7,6 +7,7 @@
       :underlined="groupProps.variant === 'underlined' && isSelected"
       tile
       :disabled="disabled"
+      v-bind="ariaAttributes"
       @click="toggleGroupItem()"
     >
       <slot></slot>
@@ -24,10 +25,25 @@ const props = defineProps<PropsToggleButton>()
 const { classListColumn } = useColumnService(props, { classPrefix: 'toggleButton' })
 const { toggleGroupItem, isSelected } = useGroupItemService(props)
 const groupProps = inject(ProviderPropsName.toggleButtonGroupProps)
+// Set when the group is an STabs: the button is then a tab, otherwise a toggle (pressed) button
+const tabsProps = inject(ProviderPropsName.tabsProps, null)
 
 if (!groupProps) {
   throw new Error('ToggleButtonGroup props not found')
 }
+
+const ariaAttributes = computed(() => {
+  if (tabsProps) {
+    return {
+      role: 'tab',
+      'aria-selected': isSelected.value,
+      // roving tabindex: only the selected tab is a Tab stop, the arrow keys reach the others
+      tabindex: isSelected.value ? 0 : -1,
+    }
+  }
+
+  return { 'aria-pressed': isSelected.value }
+})
 
 const classes = computed(() => {
   return {
