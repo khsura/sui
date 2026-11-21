@@ -184,6 +184,6 @@ const month = ref<string | null>(null)
 - The buttons are disabled at the `min`/`max` bounds and when the input is `disabled` or `readonly`.
 - The model value is always kept in the format of the current `type`. Switching `type` converts the value, so `2026-10-21` becomes `2026-10` for `type="month"` and `2026` for `type="year"`.
 - The input reserves the width the value needs, so the last characters are never cut off. The width follows the `size` prop, like `SInput`.
-- `block` decides whether the field stretches to the width of its container (`true`) or hugs the value (`false`, the default). `maxWidth` caps a block field. Either way the field never renders narrower than the value.
+- `block` decides whether the field stretches to the width of its container (`true`) or hugs the value (`false`, the default). `maxWidth` caps a block field. Either way the field is never wider than its container: in a narrow column (say 160px) it shrinks like `SInput`, the calendar button stays visible and the value ends in an ellipsis.
 - The font size never goes below `16px` (`mini` and `small` are the same as `default`), a smaller font size makes the browser zoom in on focus.
 - Typed text must match the model format exactly (`YYYY-MM-DD` etc.) and is only format-checked — add a `rules` entry if typed values must respect `min`/`max`.

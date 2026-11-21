@@ -193,7 +193,7 @@ None.
 - `size`: Field size (font never below 16px)
 - `simple`: Borderless field
 - `tile`: Square corners
-- `block`: Stretch to container width (otherwise hugs the value)
+- `block`: Stretch to container width (otherwise hugs the value). Never wider than its container: in a narrow column it shrinks like `SInput`, keeps the calendar button and ends the value in an ellipsis
 - `width` / `maxWidth` / `minWidth`: Field size; the popup stays 280px wide
 - `carousel`: Prev/next buttons stepping one day / month / year
 - `carouselPrevIcon` / `carouselNextIcon`: Button icons (default: `'mdi-chevron-left'` / `'mdi-chevron-right'`)

@@ -138,3 +138,4 @@ const searchUsers = async (query: string) => {
 - In single mode, typed text that doesn't match an item and is then blurred **clears** the value (unless `allowUnlisted`).
 - `disabled` does not disable the text field, and `name` is ignored.
 - The list opens on the side of the field with more room (capping its height to fit) and stays 8px inside the viewport, shifting left near the right edge. Opened above the field, it stays on the field while typing shortens the list.
+- A long option stays on one line and ends in an ellipsis, with its full text in a `title` tooltip (as in `SSelect`).
