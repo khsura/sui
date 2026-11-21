@@ -24,7 +24,8 @@ Then generate a complete Vue SFC using these rules:
 - `SMain for="app"` — wraps all page content
 - `SFooter for="app"` — optional bottom bar
 - `SBottomNavigation for="app" v-model="activeNav" :height="56" active-class="…"` — mobile bottom tabs. Set `height` (it collapses without one) and `active-class` (there is no active styling otherwise)
-- Below the `md` breakpoint the drawer becomes a mobile overlay; toggle it with `v-model`
+- The drawer opens itself on desktop and closes itself below the `md` breakpoint, at mount and on resize (unless `persistent`). On mobile it is an overlay with a scrim: toggle it with `v-model`; a tap on the scrim closes it
+- `SApp` already fills the viewport height (`100dvh`) and `SAppBar` already insets its content from the edges — don't add a `min-height: 100vh` wrapper or app bar padding
 - Keep one app-level `SLayout`. A nested/secondary `SLayout` does not offset its `SMain` for a drawer and `permanent` has no effect there — use the grid or `SSplitView` inside pages instead
 - `SDivider` in a flex column collapses to zero width (it's an `<hr>` with auto margins) — give it `width: 100%` / `align-self: stretch`
 - Use `SSpacer` inside `SAppBar` to push items right
