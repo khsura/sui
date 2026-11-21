@@ -3,9 +3,7 @@ import { GET_GUIDE_TOOL_NAME, GUIDE_SECTION_SEPARATOR, LIVE_EXAMPLES_LINE } from
 import { inlineCode, markdownTable } from '../lib'
 
 export const formatGuide = (definition: GuideDefinition, sectionMarkdown: readonly string[]): string =>
-  [`# ${definition.title}`, ...(definition.note ? [definition.note] : []), ...sectionMarkdown, LIVE_EXAMPLES_LINE].join(
-    GUIDE_SECTION_SEPARATOR,
-  )
+  [`# ${definition.title}`, ...sectionMarkdown, LIVE_EXAMPLES_LINE].join(GUIDE_SECTION_SEPARATOR)
 
 export const formatGuideList = (definitions: readonly GuideDefinition[]): string =>
   [

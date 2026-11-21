@@ -18,8 +18,6 @@ export const UTILITY_CLASSES_DOC_PATH = 'packages/app/docs/classes.md'
 
 export const LIVE_EXAMPLES_URL = 'https://sui.surakh.com/'
 export const LIVE_EXAMPLES_LINE = `Live examples: ${LIVE_EXAMPLES_URL}`
-export const PUBLIC_NPM_NOTE =
-  '> **Note:** public npm publishing is coming. Once it lands, install with plain `npm i @khsura/sui` and the registry/token setup below is no longer needed.'
 
 export const MARKDOWN_HEADING_PATTERN = /^(#{1,6})\s+(\S.*?)\s*$/
 export const MARKDOWN_FENCE_PATTERN = /^\s*(?:`{3,}|~{3,})/
