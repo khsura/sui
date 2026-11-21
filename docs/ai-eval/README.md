@@ -124,6 +124,13 @@ How the harness works (`src/main.js`):
   component.
 - If the page's template has its own `<SApp>`, the page is mounted as the root. Otherwise the
   harness wraps it in `SApp`, like the `App.vue` in the getting-started skill.
+- Keep `vue` at **3.5.41 or newer**. The baseline and after-M1 runs pinned 3.5.39, whose template
+  compiler has a bug (fixed upstream in 3.5.41, vuejs/core#11682): when an element in a `v-for`
+  over a constant array has `:key` and `v-show` and no other dynamic binding, it gets no patch flag,
+  so its `v-show` never updates. That is why page 08's tabs "didn't switch". SUI wasn't involved:
+  the same template without SUI fails on 3.5.39 and works on 3.5.41.
+- `vue-router` is listed because the built `s-ui.js` imports it, although `@khsura/sui` doesn't
+  declare it as a dependency. Without it, Vite can't resolve the import and no page mounts.
 
 `screenshot.mjs` does the following:
 
