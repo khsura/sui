@@ -1,4 +1,7 @@
 <template>
+  <Transition name="s_transition--appear">
+    <div v-if="isLayoutScrim" class="s_navigationDrawer__scrim"></div>
+  </Transition>
   <SOverlay :disabled="!isOverlay" :scrim="isOverlay" :value="model" :transition="transitionName">
     <component
       :is="elementTag"
@@ -30,7 +33,17 @@
   </SOverlay>
 </template>
 <script setup lang="ts">
-import { type Ref, computed, ref, getCurrentInstance, watch, onBeforeMount, onBeforeUnmount, provide } from 'vue'
+import {
+  type Ref,
+  computed,
+  ref,
+  getCurrentInstance,
+  watch,
+  onBeforeMount,
+  onBeforeUnmount,
+  onMounted,
+  provide,
+} from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import SOverlay from '@/app/components/sOverlay.vue'
 import { ProviderPropsName } from '@/app/configs'
@@ -137,14 +150,17 @@ const { touchstart, touchend, touchmove } = useTouchService({
   right: swipeRight,
 })
 
-const { bindResizer, unbindResizer } = useResizeService(() => {
-  // a persistent drawer keeps the user's open/closed choice; the isMobile watcher still closes it on mobile
+// Open beside the content on desktop and closed on mobile, on mount and on every window resize.
+// A persistent drawer keeps the user's open/closed choice; the isMobile watcher still closes it on mobile.
+const openForDisplay = () => {
   if (props.persistent) {
     return
   }
 
   model.value = !isMobile.value
-})
+}
+
+const { bindResizer, unbindResizer } = useResizeService(openForDisplay)
 
 provide(ProviderPropsName.navigationDrawerProps, props)
 
@@ -173,6 +189,12 @@ const isOverlay = computed((): boolean => {
   }
 
   return !props.hideOverlay && isMobile.value
+})
+
+// A mobile drawer in a named layout stays inside that layout (position: absolute), so it dims only the layout,
+// with a scrim beside it. A tap there is an outside click, which closes the drawer.
+const isLayoutScrim = computed((): boolean => {
+  return !isApp.value && !props.hideOverlay && isMobile.value && !isBottom.value && Boolean(model.value)
 })
 
 const isMiniVariant = computed(() => {
@@ -481,6 +503,13 @@ onBeforeMount(() => {
   watch(listensForEdgeSwipe, (listens) => (listens ? bindEdgeSwipe() : unbindEdgeSwipe()), { immediate: true })
 })
 
+// The docs promise a drawer that opens itself on desktop; without this it only did so after the first resize.
+onMounted(() => {
+  if (!isBottom.value) {
+    openForDisplay()
+  }
+})
+
 onBeforeUnmount(() => {
   unbindResizer()
   unbindEdgeSwipe()
@@ -537,6 +566,14 @@ $s_navigationDrawerOverlayTransitionAnimations: (
       animation: $animation $s_layoutTransitionDuration reverse;
     }
   }
+}
+
+.s_navigationDrawer__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  background-color: $s_color__black;
+  opacity: 0.5;
 }
 
 .s_navigationDrawer {

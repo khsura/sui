@@ -41,10 +41,15 @@ describe('SNavigationDrawer', () => {
     overlaysContainer.id = overlaysContainerId
     document.body.appendChild(overlaysContainer)
     window.innerWidth = desktopWidth
+    // A drawer that closes itself on mobile at mount restores background scrolling from the stored scroll
+    // offset; happy-dom reports none, which reads back as NaN.
+    Object.defineProperty(window, 'scrollX', { value: 0, configurable: true })
+    Object.defineProperty(window, 'scrollY', { value: 0, configurable: true })
   })
 
   afterEach(() => {
     document.body.innerHTML = ''
+    document.documentElement.removeAttribute('style')
   })
 
   test('a left and a right drawer both offset SMain', async () => {
@@ -172,6 +177,36 @@ describe('SNavigationDrawer', () => {
     await nextTick()
 
     expect(wrapper.vm.isChatOpen).toBe(false)
+  })
+
+  test('a drawer whose model starts false opens itself on desktop at mount', async () => {
+    const wrapper = mount(SNavigationDrawer, { props: { modelValue: false }, attachTo: document.body })
+
+    await nextTick()
+
+    expect(wrapper.emitted('update:modelValue')?.slice(-1)[0]).toEqual([true])
+  })
+
+  test('a drawer whose model starts true closes itself on mobile at mount', async () => {
+    const wrapper = mount(SNavigationDrawer, {
+      props: { modelValue: true, forceMobile: true },
+      attachTo: document.body,
+    })
+
+    await nextTick()
+
+    expect(wrapper.emitted('update:modelValue')?.slice(-1)[0]).toEqual([false])
+  })
+
+  test('a persistent drawer keeps its starting state at mount', async () => {
+    const wrapper = mount(SNavigationDrawer, {
+      props: { modelValue: false, persistent: true },
+      attachTo: document.body,
+    })
+
+    await nextTick()
+
+    expect(wrapper.emitted('update:modelValue')).toBeUndefined()
   })
 
   test('a resizable drawer renders a separator handle', async () => {
@@ -371,5 +406,65 @@ describe('SNavigationDrawer - scrim', () => {
     await openDrawer({ forceMobile: false })
 
     expect(document.querySelector('.s_overlay__scrim')).toBeNull()
+  })
+
+  // The app-shell recipe's drawer: a named layout, so the drawer stays inside it and dims only that layout.
+  const NamedLayoutDrawer = defineComponent({
+    components: { SApp, SLayout, SMain, SNavigationDrawer },
+    props: { forceMobile: { type: Boolean, default: true }, hideOverlay: { type: Boolean, default: false } },
+    setup() {
+      return { isOpen: ref(true), layoutName, navWidth }
+    },
+    template: `
+      <SApp>
+        <SLayout :name="layoutName">
+          <SNavigationDrawer
+            v-model="isOpen"
+            :for="layoutName"
+            :width="navWidth"
+            :force-mobile="forceMobile"
+            :hide-overlay="hideOverlay"
+            persistent
+          />
+          <SMain :for="layoutName">content</SMain>
+        </SLayout>
+      </SApp>
+    `,
+  })
+
+  const mountNamedLayoutDrawer = async (props: Record<string, boolean> = {}) => {
+    const wrapper = mount(NamedLayoutDrawer, { attachTo: document.body, props })
+
+    await nextTick()
+
+    return wrapper
+  }
+
+  test('an open mobile drawer in a named layout dims the layout, and a tap there closes it', async () => {
+    const wrapper = await mountNamedLayoutDrawer()
+    const scrim = wrapper.find('.s_layout .s_navigationDrawer__scrim')
+
+    expect(scrim.exists()).toBe(true)
+
+    scrim.element.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }))
+    scrim.element.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await nextTick()
+
+    expect(wrapper.vm.isOpen).toBe(false)
+    expect(wrapper.find('.s_navigationDrawer__scrim').exists()).toBe(false)
+  })
+
+  test('hideOverlay keeps a named layout undimmed', async () => {
+    const wrapper = await mountNamedLayoutDrawer({ hideOverlay: true })
+
+    expect(wrapper.find('.s_navigationDrawer__scrim').exists()).toBe(false)
+  })
+
+  test('a desktop drawer in a named layout draws no scrim', async () => {
+    window.innerWidth = desktopWidth
+
+    const wrapper = await mountNamedLayoutDrawer({ forceMobile: false })
+
+    expect(wrapper.find('.s_navigationDrawer__scrim').exists()).toBe(false)
   })
 })
