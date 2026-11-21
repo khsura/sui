@@ -179,7 +179,7 @@ describe('SNavigationDrawer', () => {
 
     await nextTick()
 
-    expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([true])
+    expect(wrapper.emitted('update:modelValue')?.slice(-1)[0]).toEqual([true])
   })
 
   test('a drawer whose model starts true closes itself on mobile at mount', async () => {
@@ -190,7 +190,7 @@ describe('SNavigationDrawer', () => {
 
     await nextTick()
 
-    expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([false])
+    expect(wrapper.emitted('update:modelValue')?.slice(-1)[0]).toEqual([false])
   })
 
   test('a persistent drawer keeps its starting state at mount', async () => {
