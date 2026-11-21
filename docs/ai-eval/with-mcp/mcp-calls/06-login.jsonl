@@ -1,0 +1,19 @@
+{"time":"2026-11-21T06:22:36.010Z","page":"06-login","tool":"instructions"}
+{"time":"2026-11-21T06:22:48.873Z","page":"06-login","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T06:22:50.190Z","page":"06-login","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T06:22:56.841Z","page":"06-login","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T06:23:06.744Z","page":"06-login","tool":"get_recipe","args":{"name":"validated-form"},"isError":false}
+{"time":"2026-11-21T06:23:08.239Z","page":"06-login","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T06:23:53.070Z","page":"06-login","tool":"get_component_api","args":{"name":"SInput"},"isError":false}
+{"time":"2026-11-21T06:23:54.594Z","page":"06-login","tool":"get_component_api","args":{"name":"SButton"},"isError":false}
+{"time":"2026-11-21T06:23:56.895Z","page":"06-login","tool":"get_component_api","args":{"name":"SCard"},"isError":false}
+{"time":"2026-11-21T06:23:58.157Z","page":"06-login","tool":"get_component_api","args":{"name":"SCheckbox"},"isError":false}
+{"time":"2026-11-21T06:23:59.869Z","page":"06-login","tool":"get_component_api","args":{"name":"SForm"},"isError":false}
+{"time":"2026-11-21T06:24:01.895Z","page":"06-login","tool":"get_component_api","args":{"name":"SApp"},"isError":false}
+{"time":"2026-11-21T06:24:04.088Z","page":"06-login","tool":"get_component_api","args":{"name":"SContainer"},"isError":false}
+{"time":"2026-11-21T06:24:05.462Z","page":"06-login","tool":"get_component_api","args":{"name":"SIcon"},"isError":false}
+{"time":"2026-11-21T06:25:50.624Z","page":"06-login","tool":"get_component_api","args":{"name":"SCardTitle"},"isError":false}
+{"time":"2026-11-21T06:25:52.124Z","page":"06-login","tool":"get_component_api","args":{"name":"SCardSubtitle"},"isError":false}
+{"time":"2026-11-21T06:25:54.467Z","page":"06-login","tool":"get_component_api","args":{"name":"SCardText"},"isError":false}
+{"time":"2026-11-21T06:25:56.069Z","page":"06-login","tool":"validate_sui_template","args":{"code":"<3699 chars>"},"isError":false}
+{"time":"2026-11-21T06:26:05.866Z","page":"06-login","tool":"validate_sui_template","args":{"code":"<3683 chars>"},"isError":false}

@@ -4,7 +4,14 @@
     <SCardText>
       <SForm ref="formRef" @submit.prevent="submit">
         <SInput v-model="form.name" label="Full name" :rules="[required]" />
-        <SInput v-model="form.email" label="Email" type="email" autocomplete="email" :rules="[required, email]" />
+        <SInput
+          v-model="form.email"
+          label="Email"
+          type="text"
+          inputmode="email"
+          autocomplete="email"
+          :rules="[required, email]"
+        />
         <SSelect v-model="form.role" label="Role" :items="roles" grow :rules="[required]" />
         <SDatePickerInput v-model="form.startDate" label="Start date" type="date" block :rules="[required]" />
         <SCheckbox v-model="form.acceptTerms" label="I accept the terms" :rules="[mustAccept]" />
@@ -34,7 +41,7 @@ interface AccountForm {
   name: string
   email: string
   role: string | null
-  startDate: string
+  startDate: string | null
   acceptTerms: boolean
 }
 
@@ -53,7 +60,7 @@ const mustAccept = (value: unknown) => value === true || 'You must accept the te
 const formRef = ref<InstanceType<typeof SForm> | null>(null)
 const isSubmitting = ref(false)
 const submittedName = ref('')
-const form = ref<AccountForm>({ name: '', email: '', role: null, startDate: '', acceptTerms: false })
+const form = ref<AccountForm>({ name: '', email: '', role: null, startDate: null, acceptTerms: false })
 
 const submit = async () => {
   // validate() returns true when the form HAS errors.

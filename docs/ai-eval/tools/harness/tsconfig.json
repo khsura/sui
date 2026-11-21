@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "jsx": "preserve",
+    "paths": { "@khsura/sui": ["./sui-types/index.d.ts"] },
+    "types": []
+  },
+  "include": ["pages/*/Page.vue", "env.d.ts"]
+}

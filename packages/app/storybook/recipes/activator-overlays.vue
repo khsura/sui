@@ -38,7 +38,7 @@
     <SSnackbar v-model="isSnackbarOpen" :timeout="SNACKBAR_TIMEOUT_MS">
       Project deleted.
       <template #action>
-        <SButton variant="text" color="primary" @click="isSnackbarOpen = false">Close</SButton>
+        <SButton variant="text" color="warning" @click="isSnackbarOpen = false">Close</SButton>
       </template>
     </SSnackbar>
   </SRow>

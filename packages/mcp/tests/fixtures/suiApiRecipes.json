@@ -2678,6 +2678,94 @@
       "events": []
     },
     {
+      "name": "SImage",
+      "family": "core",
+      "file": "components/sImage.vue",
+      "props": [
+        {
+          "name": "alt",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "aspectRatio",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "lazyLoad",
+          "type": "LazyLoad | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minHeight",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minWidth",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "objectFit",
+          "type": "\"fill\" | \"none\" | \"contain\" | \"cover\" | \"scale-down\" | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "contain",
+            "cover",
+            "fill",
+            "none",
+            "scale-down"
+          ]
+        },
+        {
+          "name": "src",
+          "type": "string | null | undefined",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "width",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
       "name": "SInput",
       "family": "form",
       "file": "components/form/sInput.vue",
