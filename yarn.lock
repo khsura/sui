@@ -2547,6 +2547,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@khsura/sui@workspace:packages/app"
   dependencies:
+    "@mdi/font": "npm:6.5.95"
+    "@playwright/test": "npm:1.61.1"
     "@storybook/addon-a11y": "npm:^10.4.6"
     "@storybook/addon-docs": "npm:^10.4.6"
     "@storybook/addon-links": "npm:^10.4.6"
@@ -2562,7 +2564,7 @@ __metadata:
     eslint-plugin-storybook: "npm:10.4.6"
     http-server: "npm:^14.1.1"
     lodash.merge: "npm:^4.6.2"
-    playwright: "npm:^1.61.1"
+    playwright: "npm:1.61.1"
     storybook: "npm:^10.4.6"
     uuid: "npm:^14.0.1"
     vitest: "npm:^4.1.9"
@@ -2572,6 +2574,13 @@ __metadata:
     zod: "npm:^4.4.3"
   languageName: unknown
   linkType: soft
+
+"@mdi/font@npm:6.5.95":
+  version: 6.5.95
+  resolution: "@mdi/font@npm:6.5.95"
+  checksum: 10/80ad94ab584705b53eb234361478f2c1501d95cc23855f9952b686daf749525a5132a059fd44790da14e7687ccc1b034ce8598b0761c99ff6f16d996a6aef49b
+  languageName: node
+  linkType: hard
 
 "@mdx-js/react@npm:^3.0.0":
   version: 3.0.1
@@ -3458,6 +3467,17 @@ __metadata:
   version: 0.3.6
   resolution: "@pkgr/core@npm:0.3.6"
   checksum: 10/29082aa13d36f13fc41cdc64cb1feb36b630de0d6ebde84e2ff68e3d7a7f1dce4462cca91f76176c46e50bbca6b1e7f1fd9cf907af12d5d70da83bc981ca4ccf
+  languageName: node
+  linkType: hard
+
+"@playwright/test@npm:1.61.1":
+  version: 1.61.1
+  resolution: "@playwright/test@npm:1.61.1"
+  dependencies:
+    playwright: "npm:1.61.1"
+  bin:
+    playwright: cli.js
+  checksum: 10/08915357031e1bc273a19bb428fb7e51031ca44f25750832e389bcd69c399f6a243f5f832e7832d46153b57b1305f1f5f5dd63f3a3261f928f61e464c6b3c64e
   languageName: node
   linkType: hard
 
@@ -11121,7 +11141,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:^1.61.1":
+"playwright@npm:1.61.1":
   version: 1.61.1
   resolution: "playwright@npm:1.61.1"
   dependencies:

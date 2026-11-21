@@ -18,6 +18,9 @@
     "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
     "test": "yarn g:vitest run --project unit",
     "test-storybook": "yarn g:vitest --project storybook",
+    "test:visual": "bash scripts/visual/runVisualInDocker.sh",
+    "test:visual:update": "bash scripts/visual/runVisualInDocker.sh --update",
+    "test:visual:container": "storybook build --quiet && playwright test -c playwright.visual.config.ts",
     "release": "yarn g:publish",
     "storybook:dev": "storybook dev --port 6006",
     "storybook:build": "storybook build",
@@ -64,6 +67,8 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@mdi/font": "6.5.95",
+    "@playwright/test": "1.61.1",
     "@storybook/addon-a11y": "^10.4.6",
     "@storybook/addon-docs": "^10.4.6",
     "@storybook/addon-links": "^10.4.6",
@@ -76,7 +81,7 @@
     "eslint-plugin-storybook": "10.4.6",
     "http-server": "^14.1.1",
     "lodash.merge": "^4.6.2",
-    "playwright": "^1.61.1",
+    "playwright": "1.61.1",
     "storybook": "^10.4.6",
     "vitest": "^4.1.9",
     "vue-component-meta": "^3.3.6"
