@@ -77,7 +77,7 @@ yarn test
 yarn build
 ```
 
-Release is automated by **release-please**: merges to `main` that contain conventional commits (`feat:`, `fix:`, etc.) open a release PR; merging that PR publishes `@khsura/sui` and `@khsura/sui-mcp` to the public npm registry (with provenance) using the `NPM_TOKEN` repository secret.
+Release is automated by **release-please**: merges to `main` that contain conventional commits (`feat:`, `fix:`, etc.) open a release PR; merging that PR publishes `@khsura/sui` and `@khsura/sui-mcp` to the public npm registry through **npm Trusted Publishing** (GitHub OIDC, configured on npmjs.com for `khsura/sui` + `release-please.yaml`), so no npm token or secret is involved and provenance is attached automatically.
 
 Manual beta releases can be cut with:
 
