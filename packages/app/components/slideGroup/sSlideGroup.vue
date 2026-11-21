@@ -2,7 +2,13 @@
   <section class="s_slideGroup">
     <div v-if="isNavigatorVisible" class="s_slideGroup__navigator">
       <slot name="left" :attrs="{ disabled: !canGoPrevious }" :on="{ click: prev }">
-        <SButton variant="icon" class="s_slideGroup__button" :disabled="!canGoPrevious" @click="prev()">
+        <SButton
+          variant="icon"
+          class="s_slideGroup__button"
+          :aria-label="prevAriaLabel"
+          :disabled="!canGoPrevious"
+          @click="prev()"
+        >
           <SIcon icon="mdi-chevron-left"></SIcon>
         </SButton>
       </slot>
@@ -15,8 +21,14 @@
     </div>
 
     <div v-if="isNavigatorVisible" class="s_slideGroup__navigator">
-      <slot name="right" :attrs="{ disabled: !canGoPrevious }" :on="{ click: next }">
-        <SButton variant="icon" class="s_slideGroup__button" :disabled="!canGoNext" @click="next()">
+      <slot name="right" :attrs="{ disabled: !canGoNext }" :on="{ click: next }">
+        <SButton
+          variant="icon"
+          class="s_slideGroup__button"
+          :aria-label="nextAriaLabel"
+          :disabled="!canGoNext"
+          @click="next()"
+        >
           <SIcon icon="mdi-chevron-right"></SIcon>
         </SButton>
       </slot>
@@ -33,7 +45,12 @@ import { useSlideGroupService } from '@/app/services'
 import { type GroupItemValue } from '@/app/types'
 
 const isReady = ref(false)
-const props = defineProps<PropsSlideGroup>()
+
+const props = withDefaults(defineProps<PropsSlideGroup>(), {
+  prevAriaLabel: 'Previous',
+  nextAriaLabel: 'Next',
+})
+
 const model = defineModel<GroupItemValue[]>({ default: () => [], required: false })
 const elementViewport = useTemplateRef('elementViewport')
 
