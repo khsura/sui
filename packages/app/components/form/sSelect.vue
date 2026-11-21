@@ -62,7 +62,11 @@ import {
 } from '@/app/services'
 import { type SelectItem, type EmitFormInput } from '@/app/types'
 
-const rawProps = defineProps<PropsSelect>()
+// Outlined by default, so a select matches the SInput and SDatePickerInput fields next to it.
+const rawProps = withDefaults(defineProps<PropsSelect>(), {
+  outlined: true,
+})
+
 const props = useComponentDefaultsService('SSelect', rawProps)
 const emit = defineEmits<EmitFormInput<T | null>>()
 const { classListBorder, styleListBorder } = useBorderService(props)
