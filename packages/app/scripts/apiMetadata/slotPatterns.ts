@@ -80,7 +80,7 @@ export const extractPatternSlots = (sfcSource: string): SuiApiSlot[] => {
   const sourceFile = ts.createSourceFile(SFC_SCRIPT_FILENAME, scriptSetup.content, ts.ScriptTarget.Latest, true)
   const slotsType = findDefineSlotsType(sourceFile)
 
-  return (slotsType?.members ?? [])
-    .filter(ts.isIndexSignatureDeclaration)
-    .flatMap((member) => toPatternSlot(member, sourceFile) ?? [])
+  return (slotsType?.members ?? []).flatMap((member) =>
+    ts.isIndexSignatureDeclaration(member) ? (toPatternSlot(member, sourceFile) ?? []) : [],
+  )
 }
