@@ -58,9 +58,10 @@ const { styles } = useAppService(props)
       fill: $textColorValue;
     }
 
+    // the preset's readable variant: 4.5:1 on the app background and cards in either theme
     .s_textColor__#{$colorName}:not(.s_disabled) {
-      color: $colorValue;
-      fill: $colorValue;
+      color: var(--s-color-#{$colorName}--readable, #{$colorValue});
+      fill: var(--s-color-#{$colorName}--readable, #{$colorValue});
     }
   }
 

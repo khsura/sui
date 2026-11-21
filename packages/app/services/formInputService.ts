@@ -92,9 +92,21 @@ export const useFormInputService = <T extends FormInputModelValue = FormInputMod
     return hasError.value
   }
 
+  // The error message element's id: the control points at it with `aria-describedby` while an error shows.
+  const errorId = computed(() => `${inputId.value}-error`)
+
+  // ARIA state for the focusable control, so assistive tech announces the invalid state and reads the message.
+  const ariaAttributesFormInput = computed(() => ({
+    'aria-invalid': hasError.value || undefined,
+    'aria-describedby': hasError.value ? errorId.value : undefined,
+  }))
+
   return {
     updateFormInput,
     errors,
     hasError,
+    inputId,
+    errorId,
+    ariaAttributesFormInput,
   }
 }

@@ -8,6 +8,7 @@
           divided
           outlined
           hide-details
+          aria-label="Items per page"
           v-model="itemsPerPage"
           :disabled="loading"
         ></SSelect>
@@ -17,16 +18,21 @@
         {{ itemsCount }}</span
       >
       <div class="s_tablePagination__actions">
-        <SButton variant="icon" @click="pageIndex = 0" :disabled="!canGoToFirst || loading">
+        <SButton variant="icon" aria-label="First page" @click="pageIndex = 0" :disabled="!canGoToFirst || loading">
           <SIcon icon="mdi-chevron-double-left"></SIcon>
         </SButton>
-        <SButton variant="icon" @click="pageIndex--" :disabled="!canGoToFirst || loading">
+        <SButton variant="icon" aria-label="Previous page" @click="pageIndex--" :disabled="!canGoToFirst || loading">
           <SIcon icon="mdi-chevron-left" />
         </SButton>
-        <SButton variant="icon" @click="pageIndex++" :disabled="!canGoToLast || loading">
+        <SButton variant="icon" aria-label="Next page" @click="pageIndex++" :disabled="!canGoToLast || loading">
           <SIcon icon="mdi-chevron-right" />
         </SButton>
-        <SButton variant="icon" @click="pageIndex = lastPageIndex" :disabled="!canGoToLast || loading">
+        <SButton
+          variant="icon"
+          aria-label="Last page"
+          @click="pageIndex = lastPageIndex"
+          :disabled="!canGoToLast || loading"
+        >
           <SIcon icon="mdi-chevron-double-right"></SIcon>
         </SButton>
       </div>

@@ -7,4 +7,6 @@ export type PropsProgressCircular = PropsTextColor &
     rotate?: number
     width?: number
     value?: number
+    /** Accessible name of the progress bar. Defaults to `'Loading'`; name what is loading when you can. */
+    ariaLabel?: string
   }

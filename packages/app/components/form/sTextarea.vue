@@ -1,11 +1,13 @@
 <template>
   <section class="s_textarea" :class="classList">
-    <label v-if="label" v-show="!hideDetails" :for="id" class="s_textarea__label">{{ label }}</label>
+    <label v-if="label" v-show="!hideDetails" :for="inputId" class="s_textarea__label">{{ label }}</label>
     <textarea
-      :id="id"
+      :id="inputId"
       ref="textareaElement"
       v-bind="
         getCleanSetObject({
+          ...ariaAttributesFormInput,
+          'aria-label': ariaLabel ?? (hideDetails ? label : undefined),
           'aria-labelledby': ariaLabelledby,
           autocapitalize,
           autocomplete,
@@ -29,7 +31,13 @@
       @blur="(event) => onEvent('blur', event)"
     />
     <div v-if="!hideDetails && (!hideError || counter)" class="s_textarea__details">
-      <kFormInputError v-if="!hideError" class="s_textarea__error" :errors="errors" :simple="simple"></kFormInputError>
+      <kFormInputError
+        v-if="!hideError"
+        :id="errorId"
+        class="s_textarea__error"
+        :errors="errors"
+        :simple="simple"
+      ></kFormInputError>
       <span v-if="counter" class="s_textarea__counter">{{ counterText }}</span>
     </div>
   </section>
@@ -58,7 +66,12 @@ const model = defineModel<string>({
   default: '',
 })
 
-const { updateFormInput, errors, hasError } = useFormInputService<string>(props, emit, model)
+const { updateFormInput, errors, hasError, inputId, errorId, ariaAttributesFormInput } = useFormInputService<string>(
+  props,
+  emit,
+  model,
+)
+
 const { classListDisabled } = useDisabledService(props)
 // TODO - Sura: make able to use all preset colors
 const { getIsPredefinedPresetColor } = useColorRepository()

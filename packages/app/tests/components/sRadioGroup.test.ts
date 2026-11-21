@@ -19,10 +19,11 @@ describe('SRadioGroup', () => {
       }),
     )
 
-    await wrapper.find('button').trigger('click')
+    await wrapper.find('input').trigger('click')
     await flushPromises()
 
     expect(wrapper.find('.s_radioGroup').classes()).toContain('s_radioGroup--error')
+    expect(wrapper.find('.s_radioGroup').attributes('aria-invalid')).toBe('true')
     expect(wrapper.find('.s_formInputError').exists()).toBe(false)
   })
 

@@ -5,6 +5,7 @@
       class="s_table__wrapper"
       :class="{ 's_table__wrapper--outlined': outlined, 's_table__wrapper--noTopBottomBorders': hideTopBottomBorders }"
       :style="styleListBorder"
+      :tabindex="scrollableTabindex"
       @scroll="onHorizontalScroll()"
     >
       <!-- Table -->
@@ -228,7 +229,12 @@ import STableHeadCell from './sTableHeadCell.vue'
 import STableBodyCell from './sTableBodyCell.vue'
 import STablePagination from './sTablePagination.vue'
 import { getCleanSetObject } from '@/app/lib'
-import { useBorderService, useComponentDefaultsService, useTableService } from '@/app/services'
+import {
+  useBorderService,
+  useComponentDefaultsService,
+  useScrollableFocusService,
+  useTableService,
+} from '@/app/services'
 import {
   type TableSortOrder,
   type TableItem,
@@ -289,6 +295,8 @@ const folded = defineModel<boolean | string[]>('folded', { default: () => [] })
 const { classListBorder, styleListBorder } = useBorderService(props, { block: 'table' })
 const headerElements = useTemplateRef('headerElements')
 const tableWrapperElement = useTemplateRef('tableWrapperElement')
+// A scrolling table is a Tab stop, so keyboard users can scroll it with the arrow keys.
+const { scrollableTabindex } = useScrollableFocusService(tableWrapperElement)
 
 const {
   isMounted,
@@ -425,6 +433,10 @@ defineExpose({
     // https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-overflow-scrolling
     -webkit-overflow-scrolling: touch;
 
+    &:focus-visible {
+      @include s_focusRing(-2px);
+    }
+
     &--outlined {
       &.s_table__wrapper--noTopBottomBorders {
         border-right: 1px solid s_getAppColor('border');
@@ -467,7 +479,8 @@ defineExpose({
 
   &__noData {
     padding: calc($s_spacer * 6) calc($s_spacer * 4);
-    color: s_getAppColor('disabled');
+    // secondaryText, not disabled: the message must stay readable (4.5:1)
+    color: s_getAppColor('secondaryText');
     text-align: center;
   }
 

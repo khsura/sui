@@ -1,5 +1,12 @@
 @use '../tools';
 
+// Keyboard focus indicator: a 2px ring in the theme's `focusRing` colour, which reaches 3:1 on the app
+// background and cards in light and dark. Use it under :focus-visible so a mouse click leaves no ring.
+@mixin s_focusRing($offset: 2px) {
+  outline: 2px solid tools.s_getAppColor('focusRing');
+  outline-offset: $offset;
+}
+
 @mixin s_disabled($isText: false) {
   color: tools.s_getAppColor('text');
   pointer-events: none;

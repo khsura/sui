@@ -44,7 +44,7 @@ export const ButtonIcon = {
       setup() {
         return { args }
       },
-      template: `<SButton class="s_ma__3" v-bind="args" :icon="!!args.icon">
+      template: `<SButton class="s_ma__3" v-bind="args" :icon="!!args.icon" aria-label="Like">
         <SIcon :icon="args.icon"></SIcon>
       </SButton>`,
     })

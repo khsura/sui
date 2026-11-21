@@ -2,6 +2,7 @@ import { computed } from 'vue'
 import { useDatePickerItemCoreService } from './datePickerItemCoreService'
 import { type PropsDatePickerItem } from '@/app/definitions'
 import { type DatePickerItemEmits } from '@/app/types'
+import { datePickerDayAriaLabelFormat } from '@/app/constants'
 
 export const useDatePickerItemDateService = (props: PropsDatePickerItem, emit: DatePickerItemEmits) => {
   const { date, today, selected, dateFormat, updateDate, min, max, getItemButtonProps } = useDatePickerItemCoreService(
@@ -34,6 +35,8 @@ export const useDatePickerItemDateService = (props: PropsDatePickerItem, emit: D
         isSelected: boolean
         isCurrentMonth: boolean
         title: string
+        // Full date for screen readers, since the button shows only the day number
+        label: string
         isDisabled: boolean
         select: () => void
       }>((_, i) => {
@@ -45,6 +48,7 @@ export const useDatePickerItemDateService = (props: PropsDatePickerItem, emit: D
             isDisabled: true,
             value: '',
             title: '',
+            label: '',
             select: () => undefined,
           }
         }
@@ -60,6 +64,7 @@ export const useDatePickerItemDateService = (props: PropsDatePickerItem, emit: D
           isDisabled: !isValid,
           value: target.format(dateFormat.value),
           title: day.toString(),
+          label: target.format(datePickerDayAriaLabelFormat),
           select: async () => {
             if (isValid) {
               await updateDate({ year, month, day })

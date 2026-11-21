@@ -125,7 +125,8 @@ $kTooltipMaxWidth: 320px;
     text-align: center;
     overflow-wrap: anywhere;
     white-space: normal;
-    background-color: rgba($s_color__black, 0.5);
+    // dark enough for 4.5:1 light text even over a white page
+    background-color: rgba($s_color__black, 0.75);
     backdrop-filter: blur(10px);
     animation: enlarge 200ms normal forwards running ease-in-out;
 

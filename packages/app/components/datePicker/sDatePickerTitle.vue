@@ -69,6 +69,8 @@ const styles = computed(() => {
 </script>
 
 <style lang="scss">
+$s_datePickerTitle__yearMinHeight: 24px;
+
 .s_datePickerTitle {
   padding-top: 8px;
 
@@ -78,6 +80,11 @@ const styles = computed(() => {
     padding-right: 16px !important;
     padding-left: 16px !important;
     color: unset;
+  }
+
+  // WCAG 2.5.8: a target is at least 24px tall (a mini button is 20px)
+  &__year {
+    min-height: $s_datePickerTitle__yearMinHeight;
   }
 
   &__text {

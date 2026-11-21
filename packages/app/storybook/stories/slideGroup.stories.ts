@@ -98,6 +98,8 @@ const banners = [
 
 const slideGroup: Meta<typeof SSlideGroup> = {
   title: 'UI Components/SlideGroup',
+  // axe audits every story of this component in CI (keyboard-driven component without a screenshot)
+  tags: ['a11y'],
   argTypes: {
     scrollable: {
       type: 'boolean',
@@ -147,6 +149,7 @@ export const SlideGroup = createStoryObj<typeof SSlideGroup>({
               :href="item.url"
               target="_blank"
               rel="noopener noreferrer"
+              :aria-label="'Banner ' + (index + 1)"
             >
               <SImage
                 :src="item.banner"
@@ -168,6 +171,7 @@ export const SlideGroup = createStoryObj<typeof SSlideGroup>({
               :href="item.url"
               target="_blank"
               rel="noopener noreferrer"
+              :aria-label="'Banner ' + (index + 1)"
             >
               <SImage
                 :src="item.banner"
@@ -256,6 +260,7 @@ export const SlideGroupWithFewItems = createStoryObj<typeof SSlideGroup>({
               :href="item.url"
               target="_blank"
               rel="noopener noreferrer"
+              :aria-label="'Banner ' + (index + 1)"
             >
               <SImage
                 :src="item.banner"

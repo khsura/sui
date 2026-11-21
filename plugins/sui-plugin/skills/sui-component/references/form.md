@@ -90,6 +90,7 @@ Exposed: `validate(): boolean` — **returns `true` when there ARE errors**; `re
 | --- | --- | --- | --- | --- |
 | `allowDecimal` | `boolean \| null` | — | no | — |
 | `appendOuter` | `string \| null` | — | no | — |
+| `ariaLabel` | `string` | — | no | — |
 | `ariaLabelledby` | `string` | — | no | — |
 | `autocapitalize` | `"on" \| "off" \| null` | — | no | `off`, `on` |
 | `autocomplete` | `string \| null` | — | no | — |
@@ -182,6 +183,7 @@ Props: `label`, `placeholder`, `rows` (default `2`), `cols` (default `20`), **`a
 
 | Prop | Type | Default | Required | Values | Description |
 | --- | --- | --- | --- | --- | --- |
+| `ariaLabel` | `string` | — | no | — | — |
 | `ariaLabelledby` | `string` | — | no | — | — |
 | `autocapitalize` | `"on" \| "off"` | — | no | `off`, `on` | — |
 | `autocomplete` | `string` | — | no | — | — |
@@ -247,6 +249,7 @@ Single-value dropdown (no `multiple`, `chips`, `clearable` or `placeholder` — 
 | Prop | Type | Default | Required | Values | Description |
 | --- | --- | --- | --- | --- | --- |
 | `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — | — |
+| `ariaLabel` | `string \| null` | — | no | — | Accessible name when there is no visible `label` (otherwise the label names the field). |
 | `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — | — |
 | `closeOnClick` | `boolean` | — | no | — | — |
 | `closeOnContentClick` | `boolean` | — | no | — | — |
@@ -430,20 +433,21 @@ Options are **`SRadio` children** — there is no `items` prop. Long option labe
 
 **SRadio props**
 
-| Prop | Type | Default | Required | Values |
-| --- | --- | --- | --- | --- |
-| `activeClass` | `string \| null` | — | no | — |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
-| `disabled` | `boolean \| null` | — | no | — |
-| `id` | `string` | — | no | — |
-| `label` | `string \| null` | — | no | — |
-| `name` | `string \| null` | — | no | — |
-| `outlined` | `boolean \| null` | — | no | — |
-| `readonly` | `boolean \| null` | — | no | — |
-| `selected` | `boolean` | — | no | — |
-| `type` | `ButtonTypeType` | — | no | `button`, `reset`, `submit` |
-| `underlined` | `boolean \| null` | — | no | — |
-| `value` | `string \| number \| boolean` | — | no | — |
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `activeClass` | `string \| null` | — | no | — | — |
+| `ariaLabel` | `string \| null` | — | no | — | Accessible name for a radio without a visible `label` (for example an icon-only option). |
+| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — | — |
+| `disabled` | `boolean \| null` | — | no | — | — |
+| `id` | `string` | — | no | — | — |
+| `label` | `string \| null` | — | no | — | — |
+| `name` | `string \| null` | — | no | — | — |
+| `outlined` | `boolean \| null` | — | no | — | — |
+| `readonly` | `boolean \| null` | — | no | — | — |
+| `selected` | `boolean` | — | no | — | — |
+| `type` | `ButtonTypeType` | — | no | `button`, `reset`, `submit` | — |
+| `underlined` | `boolean \| null` | — | no | — | — |
+| `value` | `string \| number \| boolean` | — | no | — | — |
 
 **SRadio slots**
 

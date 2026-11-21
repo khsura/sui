@@ -20,6 +20,9 @@ Searchable dropdown input with filtering, multiple selection, chips, free-text e
 | `placeholder` | `string` | `undefined` | Input placeholder text |
 | `loading` | `boolean` | `false` | Show loading indicator (async search) |
 | `clearable` | `boolean` | `false` | Show clear button when a value is set |
+| `ariaLabel` | `string \| null` | `undefined` | Accessible name when there is no visible `label` |
+| `clearAriaLabel` | `string` | `'Clear'` | Accessible name of the clear button |
+| `loadingAriaLabel` | `string` | `'Loading'` | Accessible name of the loading spinner |
 | `divided` | `boolean` | `false` | Dividers between dropdown items |
 | `dense` | `boolean` | `false` | Dense list |
 | `filterMode` | `'start' \| 'contains' \| 'exact' \| 'none'` | `'contains'` | Built-in, case-insensitive filter behavior |

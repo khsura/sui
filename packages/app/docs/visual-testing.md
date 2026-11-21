@@ -44,6 +44,10 @@ yarn test:visual --project=chromium-light -g "Button"
 
 When a test fails, open the HTML report in `.visual/report/index.html`. The expected, actual and diff images are in `.visual/results/`.
 
+The same run also audits each `visual` story (and each `a11y` story) with axe, once per theme in Chromium; see [a11y.md](./a11y.md). Run only the audit with `yarn test:visual -g "a11y:"`.
+
+Working from a second checkout, such as a git worktree? Give it its own `node_modules` volume, so two runs never install into the same one: `SUI_VISUAL_NODE_MODULES_VOLUME=sui-visual-node-modules-mybranch yarn test:visual`. Delete it afterwards with `docker volume rm sui-visual-node-modules-mybranch`.
+
 ## Tag a story as visual
 
 Add `visual` to the story's `tags`. Write the story as a plain object literal: Storybook reads tags with a static parser, and it cannot see tags inside a call such as `createStoryObj({...})`.

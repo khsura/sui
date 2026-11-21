@@ -7,6 +7,8 @@ import { createStoryObj } from '@/app/storybook/helpers'
 
 const toggleButtonGroup: Meta<PropsToggleButtonGroup> = {
   title: 'UI Components/Toggle Button Group',
+  // axe audits every story of this component in CI (keyboard-driven component without a screenshot)
+  tags: ['a11y'],
   argTypes: argTypesToggleButtonGroup,
   args: {
     outlined: false,

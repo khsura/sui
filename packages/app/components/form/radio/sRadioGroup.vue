@@ -1,13 +1,13 @@
 <template>
-  <div class="s_radioGroup" :class="radioGroupClasses">
+  <div class="s_radioGroup" :class="radioGroupClasses" role="radiogroup" v-bind="ariaAttributesFormInput">
     <div class="s_radioGroup__content"><slot></slot></div>
-    <SFormInputError v-if="!hideDetails && !hideError" :errors="errors"></SFormInputError>
+    <SFormInputError v-if="!hideDetails && !hideError" :id="errorId" :errors="errors"></SFormInputError>
   </div>
 </template>
 <script setup lang="ts">
-import { computed, provide } from 'vue'
+import { computed, provide, useId } from 'vue'
 import { SFormInputError } from '@/app/components/form/common'
-import { ProviderPropsName } from '@/app/configs'
+import { ProviderName, ProviderPropsName } from '@/app/configs'
 import { type PropsRadioGroup } from '@/app/definitions'
 import { useComponentDefaultsService, useFormInputService, useSingleGroupService } from '@/app/services'
 import { type GroupItemValue } from '@/app/types'
@@ -31,11 +31,21 @@ const model = defineModel<GroupItemValue>({
   },
 })
 
-const { errors, hasError, updateFormInput } = useFormInputService<GroupItemValue>(props, emit, model)
+const { errors, hasError, updateFormInput, errorId, ariaAttributesFormInput } = useFormInputService<GroupItemValue>(
+  props,
+  emit,
+  model,
+)
+
+const generatedName = useId()
 
 useSingleGroupService(props, model)
 
 provide(ProviderPropsName.radioGroupProps, props)
+provide(
+  ProviderName.radioGroupName,
+  computed(() => props.name ?? generatedName),
+)
 
 const radioGroupClasses = computed(() => {
   return {

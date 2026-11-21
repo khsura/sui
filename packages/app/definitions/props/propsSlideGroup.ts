@@ -9,5 +9,9 @@ export type PropsSlideGroup = {
   activeClass?: string | null | undefined
   slideStep?: number | null | undefined
   scrollable?: boolean | null | undefined
+  /** Accessible name of the previous arrow button. Defaults to `'Previous'`. */
+  prevAriaLabel?: string
+  /** Accessible name of the next arrow button. Defaults to `'Next'`. */
+  nextAriaLabel?: string
 } & PropsGroup &
   PropsContent

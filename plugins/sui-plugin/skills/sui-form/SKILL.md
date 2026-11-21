@@ -76,6 +76,8 @@ Use them to disable the submit button; `resetValidation()` (exposed) clears ever
 
 - Use **`hideError`** when you only want to drop the message line (dense tables, inline filters) but keep the label.
 - Use **`hideDetails`** only when the field should have no label either — it is not a "compact" switch. On `SCheckbox` the label is the only text, so `hideDetails` leaves a bare box ("Remember me" disappears); use `hideError` there.
+- With `hideDetails` the hidden label still names the field (it becomes the control's `aria-label`). A field with no `label` at all needs `aria-label` (`ariaLabel` on SInput, STextarea, SSelect, SAutocomplete; on each SRadio without a `label`).
+- Labels, ids and errors are wired for you: an `id` is generated when you don't pass one, and an invalid field gets `aria-invalid` and `aria-describedby` pointing at its error message. Don't add your own `<label for>` or `aria-describedby`.
 - The field frame turns red on error even with either flag set (`SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SDatePickerInput`), so users can still see which field is invalid. Don't add your own `:deep()` error border.
 
 ---

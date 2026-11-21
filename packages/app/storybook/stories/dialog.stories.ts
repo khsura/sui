@@ -172,7 +172,7 @@ export const Dialog = createStoryObj<typeof SDialog>({
               <SCardTitle>
                 {{ title }}
                 <SSpacer></SSpacer>
-                <SButton variant="icon" size="mini" @click="dialog = false">
+                <SButton variant="icon" size="mini" aria-label="Close" @click="dialog = false">
                   <SIcon icon="mdi-close"></SIcon>
                 </SButton>
               </SCardTitle>
@@ -237,7 +237,7 @@ export const DialogWithNoActivator = createStoryObj<typeof SDialog>({
             <SCard>
               <SCardTitle>
                 ${faker.commerce.product()}
-                <SButton variant="icon" size="mini" @click="dialog = false">
+                <SButton variant="icon" size="mini" aria-label="Close" @click="dialog = false">
                   <SIcon icon="mdi-close"></SIcon>
                 </SButton>
               </SCardTitle>
@@ -303,7 +303,7 @@ export const DoubleDialog = createStoryObj<typeof SDialog>({
           <SCard>
             <SCardTitle>
               Hello Dialog 1
-              <SButton variant="icon" size="mini" @click="closeDialog1">
+              <SButton variant="icon" size="mini" aria-label="Close" @click="closeDialog1">
                 <SIcon icon="mdi-close"></SIcon>
               </SButton>
             </SCardTitle>
@@ -323,7 +323,7 @@ export const DoubleDialog = createStoryObj<typeof SDialog>({
           <SCard>
             <SCardTitle>
               Hello Dialog 2
-              <SButton variant="icon" size="mini" @click="closeDialog2">
+              <SButton variant="icon" size="mini" aria-label="Close" @click="closeDialog2">
                 <SIcon icon="mdi-close"></SIcon>
               </SButton>
             </SCardTitle>

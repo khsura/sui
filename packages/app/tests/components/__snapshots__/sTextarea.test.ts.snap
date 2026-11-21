@@ -17,7 +17,9 @@ exports[`STextarea > renders correctly 1`] = `
     
     <!-- eslint-disable vue/no-v-html -->
     <div
+      aria-live="polite"
       class="s_formInputError s_textarea__error"
+      id="textarea-error"
     />
     
     <!--v-if-->

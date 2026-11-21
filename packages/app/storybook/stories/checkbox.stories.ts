@@ -7,6 +7,8 @@ import { createStoryObj, getSlot } from '@/app/storybook/helpers'
 
 const checkbox: Meta<typeof SCheckbox> = {
   title: 'UI Components/Form/Checkbox',
+  // axe audits every story of this component in CI (keyboard-driven component without a screenshot)
+  tags: ['a11y'],
   component: SCheckbox,
   argTypes: {
     size: {

@@ -446,3 +446,9 @@ const onSearch = async (query: string) => {
 - `SForm` does NOT validate on mount and does NOT prevent submit; use `@submit.prevent` and call `validate()` on the form ref. `if (!formRef.value.validate()) submit()` — it returns `true` when there are errors.
 - `SSelect` validates when its menu opens, so a required error can appear on first open.
 - For number inputs, combine `type="number"` with `inputmode="numeric"` for best mobile UX (`inputmode="decimal"` together with `allowDecimal`).
+
+## Accessibility
+
+- Every field ties its `label` to the control and generates an `id` when none is passed. With `hideDetails` the hidden label becomes the control's `aria-label`; a field without any label takes `ariaLabel` (SInput, STextarea, SSelect, SAutocomplete) or, per radio, `aria-label` on SRadio.
+- An invalid field gets `aria-invalid="true"` and `aria-describedby` pointing at its error message (a polite live region). SRadioGroup is a `role="radiogroup"` and carries both on the group.
+- SSelect is a select-only combobox: Enter, Space, Down or Up opens it; Down/Up/Home/End move the highlighted option; Enter or Space picks; Esc closes. See `docs/a11y.md` for the keyboard checklist.

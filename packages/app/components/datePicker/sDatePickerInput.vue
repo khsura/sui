@@ -22,16 +22,19 @@
           :placeholder="placeholder ?? inputFormat"
           :disabled="disabled ?? undefined"
           :readonly="readonly ?? undefined"
+          :aria-label="hideDetails ? (label ?? undefined) : undefined"
+          v-bind="ariaAttributesFormInput"
           @input="onInput"
           @focus="onFocus"
           @blur="onBlur"
           @keydown.enter.prevent="commitInput"
+          @keydown.esc="onEscape"
         />
         <span class="s_datePickerInput__suffix" @mousedown.prevent @click="toggleMenu">
           <SIcon icon="mdi-calendar" />
         </span>
       </div>
-      <SFormInputError v-if="!hideDetails && !hideError" :errors="errors" />
+      <SFormInputError v-if="!hideDetails && !hideError" :id="errorId" :errors="errors" />
     </div>
     <SButton
       v-if="carousel"
@@ -73,7 +76,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, nextTick, ref, useId, useTemplateRef, watch } from 'vue'
+import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import SDatePicker from './sDatePicker.vue'
 import SFormInputError from '@/app/components/form/common/sFormInputError.vue'
@@ -110,11 +113,15 @@ const props = useComponentDefaultsService('SDatePickerInput', rawProps)
 const emit = defineEmits<EmitFormInput<string | null>>()
 const model = defineModel<string | null>()
 const menuModel = ref(false)
-const uniqueId = useId()
-const inputId = computed(() => props.id ?? uniqueId)
 const activatorElement = useTemplateRef('activatorElement')
 const contentElement = useTemplateRef('contentElement')
-const { errors, updateFormInput } = useFormInputService<string | null>(props, emit, model)
+
+const { errors, updateFormInput, inputId, errorId, ariaAttributesFormInput } = useFormInputService<string | null>(
+  props,
+  emit,
+  model,
+)
+
 /** Sizes the field itself, the picker it opens keeps its own width. */
 const { measurableStyles } = useMeasurableStylesService(props)
 const { inputFormat, canStepPrev, canStepNext, stepPrev, stepNext } = useDatePickerInputService(props, model)
@@ -129,6 +136,14 @@ const { contentClasses, contentStyles, updateLocation } = useMenuService(
 
 const closeMenu = () => {
   menuModel.value = false
+}
+
+// Esc closes an open calendar without leaving the field (and without closing an SDialog around it).
+const onEscape = (event: KeyboardEvent) => {
+  if (menuModel.value) {
+    event.stopPropagation()
+    closeMenu()
+  }
 }
 
 onClickOutside(contentElement, closeMenu, { ignore: [activatorElement] })

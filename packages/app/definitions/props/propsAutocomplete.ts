@@ -13,6 +13,12 @@ export type PropsAutocomplete<T extends boolean = false> = {
   id?: string
   /** @description Hides the label, as `hideDetails` does on SSelect. */
   hideDetails?: boolean
+  /** @description Accessible name when there is no visible `label`; a hidden label is used otherwise. */
+  ariaLabel?: string | null
+  /** @description Accessible name of the clear button. Defaults to `'Clear'`. */
+  clearAriaLabel?: string
+  /** @description Accessible name of the loading spinner. Defaults to `'Loading'`. */
+  loadingAriaLabel?: string
 
   // Items and filtering
   items?: SelectItem[] | string[]
