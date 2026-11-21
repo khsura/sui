@@ -183,18 +183,23 @@ export const invalidEnumValueRule: TemplateRule = {
 export const unknownSlotRule: TemplateRule = {
   id: RULE_UNKNOWN_SLOT,
   check: ({ element, lookup }) => {
-    // An empty slot list means sui-api.json could not extract the slots (e.g. STable's dynamic
-    // `item.<column>` slots), not that the component has none, so there is nothing to check against.
-    if (!lookup.found || !lookup.component.slots.length) {
+    // sui-api.json lists every slot (dynamic families such as STable `item.<column>` carry a
+    // `pattern`), so an empty list means the component has no slots and any slot is an error.
+    if (!lookup.found) {
       return []
     }
 
-    const slotNames = lookup.component.slots.map((slot) => slot.name)
+    const { slots } = lookup.component
+    const slotNames = slots.map((slot) => slot.name)
+    const slotPatterns = slots.flatMap((slot) => (slot.pattern ? [new RegExp(slot.pattern)] : []))
+
+    const isKnownSlot = (slotName: string) =>
+      slotNames.includes(slotName) || slotPatterns.some((pattern) => pattern.test(slotName))
 
     return slotDirectives(element).flatMap((directive) => {
       const slotName = directive.arg ? staticArgument(directive.arg) : DEFAULT_SLOT_NAME
 
-      if (slotName === undefined || slotNames.includes(slotName)) {
+      if (slotName === undefined || isKnownSlot(slotName)) {
         return []
       }
 
@@ -204,7 +209,9 @@ export const unknownSlotRule: TemplateRule = {
           rule: RULE_UNKNOWN_SLOT,
           severity: SEVERITY_ERROR,
           message: `\`${lookup.component.name}\` has no slot \`${slotName}\`.`,
-          fixHint: `Use one of: ${codeList(slotNames)}.`,
+          fixHint: slotNames.length
+            ? `Use one of: ${codeList(slotNames)}.`
+            : `\`${lookup.component.name}\` has no slots; put the content elsewhere.`,
         },
       ]
     })
