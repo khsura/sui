@@ -1,4 +1,4 @@
-import { COMPONENT_PREFIX } from '../constants'
+import { COMPONENT_PREFIX, SUI_KEBAB_TAG_PATTERN, SUI_PASCAL_TAG_PATTERN } from '../constants'
 
 const NAME_SEPARATORS = /[\s_-]/g
 
@@ -23,3 +23,7 @@ export const humanizeComponentName = (name: string): string => {
 
   return sentence.charAt(0).toUpperCase() + sentence.slice(1)
 }
+
+/** True for tags the validator treats as SUI components: `SButton` or `s-button`. Native tags such as `select` never match. */
+export const isSuiComponentTag = (tag: string): boolean =>
+  SUI_PASCAL_TAG_PATTERN.test(tag) || SUI_KEBAB_TAG_PATTERN.test(tag)

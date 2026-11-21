@@ -1,3 +1,5 @@
 export * from './levenshtein'
 export * from './markdownTable'
 export * from './markdownSection'
+export * from './camelCase'
+export * from './parseVueTemplate'

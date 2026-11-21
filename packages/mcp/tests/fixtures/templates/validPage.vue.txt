@@ -1,0 +1,20 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const open = ref(false)
+const email = ref('')
+</script>
+
+<template>
+  <SLayout name="app">
+    <SAppBar for="app" density="compact" position="sticky">
+      <SButton size="small" color="primary" @click="open = true">Open</SButton>
+    </SAppBar>
+    <SDialog v-model="open">
+      <template #activator="{ on, attrs }">
+        <s-button v-bind="attrs" :block="true" v-on="on">Details</s-button>
+      </template>
+      <SInput v-model="email" label="Email" type="email" placeholder="you@example.com" :rules="[]" />
+    </SDialog>
+  </SLayout>
+</template>

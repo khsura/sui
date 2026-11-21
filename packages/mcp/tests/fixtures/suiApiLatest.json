@@ -80,6 +80,13 @@
       "file": "components/sButton.vue",
       "props": [
         {
+          "name": "block",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": "Stretch to the full width of the container."
+        },
+        {
           "name": "color",
           "type": "string | undefined",
           "required": false,
@@ -187,6 +194,95 @@
         {
           "name": "update:modelValue",
           "type": "[value: boolean | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "SInput",
+      "family": "form",
+      "file": "components/form/sInput.vue",
+      "props": [
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "string | number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "rules",
+          "type": "InputRule[] | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "size",
+          "type": "SizeType | undefined",
+          "required": false,
+          "default": "\"default\"",
+          "description": "",
+          "enumValues": [
+            "default",
+            "extra",
+            "large",
+            "mini",
+            "small"
+          ]
+        },
+        {
+          "name": "type",
+          "type": "InputType | undefined",
+          "required": false,
+          "default": "\"text\"",
+          "description": "",
+          "enumValues": [
+            "date",
+            "datetime-local",
+            "email",
+            "number",
+            "password",
+            "search",
+            "tel",
+            "text",
+            "time",
+            "url",
+            "week"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "appendOuter",
+          "type": "any",
+          "description": ""
+        },
+        {
+          "name": "suffix",
+          "type": "any",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "update:dirty",
+          "type": "[value: boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:modelValue",
+          "type": "[value: string | number | null]",
           "description": ""
         }
       ]
