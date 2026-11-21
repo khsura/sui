@@ -1,0 +1,26 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const open = ref(false)
+const email = ref('')
+const required = (value: unknown) => Boolean(value) || 'Required'
+</script>
+
+<template>
+  <SLayout name="admin">
+    <SAppBar for="admin" position="fixed">
+      <SButton aria-label="Open menu"><SIcon icon="mdi-menu" /></SButton>
+    </SAppBar>
+    <SMain for="admin">
+      <SDialog v-model="open">
+        <template #activator="{ on, attrs }">
+          <SButton v-on="on" v-bind="attrs">Sign up</SButton>
+        </template>
+        <SForm>
+          <SInput v-model="email" label="Email" :rules="[required]" />
+          <input type="hidden" name="source" value="dialog" />
+        </SForm>
+      </SDialog>
+    </SMain>
+  </SLayout>
+</template>

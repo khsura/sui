@@ -27,13 +27,10 @@ describe('useTemplateValidatorService', () => {
       ],
       [
         'v-slot long form and default slot',
-        '<SDialog><template v-slot:activator>a</template><template #default>b</template></SDialog>',
+        '<SDialog><template v-slot:activator="{ on, attrs }"><a v-on="on" v-bind="attrs">a</a></template><template #default>b</template></SDialog>',
       ],
       ['dynamic slot name is skipped', '<SDialog><template #[slotName]>x</template></SDialog>'],
-      [
-        'native tags starting with s are ignored',
-        '<section><select><option>a</option></select><span /><slot /></section>',
-      ],
+      ['native tags starting with s are ignored', '<section><span /><slot /><strong /></section>'],
       ['non-SUI components are ignored', '<RouterLink to="/" fancy="yes" />'],
       ['enum value from a quoted literal binding', `<SButton :size="'large'" />`],
       ['structural directives are ignored', '<SButton v-if="ok" v-for="item in items" v-show="visible" />'],
@@ -114,7 +111,9 @@ describe('useTemplateValidatorService', () => {
 
     it('finds components nested inside native elements and slots', () => {
       expect(
-        rulesOf('<div><SDialog><template #activator><p><SButton size="tiny" /></p></template></SDialog></div>'),
+        rulesOf(
+          '<div><SDialog><template #activator="{ on, attrs }"><p v-on="on" v-bind="attrs"><SButton size="tiny" /></p></template></SDialog></div>',
+        ),
       ).toEqual(['invalid-enum-value'])
     })
   })
