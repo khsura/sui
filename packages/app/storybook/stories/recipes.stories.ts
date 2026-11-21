@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { expect, waitFor } from 'storybook/test'
 import type { Component } from 'vue'
-import { waitFor } from 'storybook/test'
 import {
   ActivatorOverlaysRecipe,
   AppShellRecipe,
