@@ -28,4 +28,4 @@ install-state.gz
 .cursor
 
 **/.DS_STORE
-**/debug-storybook.log
+**/debug-storybook.log**/.visual

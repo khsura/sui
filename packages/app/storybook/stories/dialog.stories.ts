@@ -1,7 +1,7 @@
 import { faker, wait } from '@khsura/shared'
-import type { Meta } from '@storybook/vue3-vite'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { defineComponent, ref } from 'vue'
-import { expect } from 'storybook/test'
+import { expect, waitFor } from 'storybook/test'
 import {
   SMenu,
   SButton,
@@ -184,6 +184,24 @@ export const Dialog = createStoryObj<typeof SDialog>({
     })
   },
 })
+
+// The Dialog story opened through its activator, so the visual regression harness screenshots the open dialog.
+// A plain object literal, so Storybook's static indexer reads the `visual` tag (docs/visual-testing.md).
+export const DialogOpen = {
+  ...Dialog,
+  tags: ['visual'],
+  play: async ({ canvasElement, userEvent }) => {
+    const activator = canvasElement.querySelector('.s_button')
+
+    await expect(activator).toBeInTheDocument()
+
+    if (!activator) return
+
+    await userEvent.click(activator)
+
+    await waitFor(() => expect(canvasElement.querySelector('.s_dialog__content')).toBeVisible())
+  },
+} satisfies StoryObj<typeof SDialog>
 
 export const DialogWithNoActivator = createStoryObj<typeof SDialog>({
   args: {

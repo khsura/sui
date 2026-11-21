@@ -1,5 +1,5 @@
 import { faker } from '@khsura/shared'
-import type { ComponentPropsAndSlots, Meta } from '@storybook/vue3-vite'
+import type { ComponentPropsAndSlots, Meta, StoryObj } from '@storybook/vue3-vite'
 import { defineComponent } from 'vue'
 import { SButton, SIcon } from '@/app/index'
 import type { MaterialDesignIcon } from '@/app/index'
@@ -15,7 +15,10 @@ const button: Meta<typeof SButton> = {
 
 export default button
 
-export const Button = createStoryObj<typeof SButton>({
+// Stories tagged `visual` are plain object literals: Storybook's static indexer only reads tags from those.
+// They are screenshotted by the visual regression harness (docs/visual-testing.md).
+export const Button = {
+  tags: ['visual'],
   render: (args) =>
     defineComponent({
       components: { SButton },
@@ -27,9 +30,10 @@ export const Button = createStoryObj<typeof SButton>({
       `,
     }),
   args: argsButton(),
-})
+} satisfies StoryObj<typeof SButton>
 
-export const ButtonIcon = createStoryObj<typeof SButton | { icon: MaterialDesignIcon }>({
+export const ButtonIcon = {
+  tags: ['visual'],
   argTypes: {
     icon: argTypesIcon.icon,
   },
@@ -45,7 +49,7 @@ export const ButtonIcon = createStoryObj<typeof SButton | { icon: MaterialDesign
       </SButton>`,
     })
   },
-})
+} satisfies StoryObj<typeof SButton | { icon: MaterialDesignIcon }>
 
 export const ButtonLink = createStoryObj<typeof SButton>({
   ...Button,
