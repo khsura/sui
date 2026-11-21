@@ -7,7 +7,7 @@
     "build:style": "yarn g:sass styles/index.scss dist/base.css",
     "build:type": "yarn g:vue-tsc -p tsconfig.build.json && yarn g:tsc-alias -p tsconfig.build.json",
     "build:plugin": "cp -R ../../.claude-plugin . && cp -R ../../plugins/sui-plugin .",
-    "build": "yarn prebuild && yarn build:type && yarn g:vite build && yarn build:api && yarn build:style && cp -R styles dist/styles && yarn build:plugin",
+    "build": "yarn prebuild && yarn build:type && yarn g:vite build && yarn build:api && yarn sync:skills && yarn build:style && cp -R styles dist/styles && yarn build:plugin",
     "lint": "yarn g:eslint",
     "stylelint": "yarn g:stylelint ./**/*.{vue,css,scss}",
     "test": "yarn g:vitest run --project unit",
@@ -15,7 +15,9 @@
     "release": "yarn g:publish",
     "storybook:dev": "storybook dev --port 6006",
     "storybook:build": "storybook build",
-    "build:api": "yarn g:vite-node scripts/apiMetadata/generateApiMetadata.ts"
+    "build:api": "yarn g:vite-node scripts/apiMetadata/generateApiMetadata.ts",
+    "sync:skills": "yarn g:vite-node scripts/apiMetadata/syncSkillTables.ts",
+    "check:skills": "yarn g:vite-node scripts/apiMetadata/syncSkillTables.ts --check"
   },
   "files": [
     "dist",

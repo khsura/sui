@@ -44,13 +44,63 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/props<AppBar|Navigatio
 
 ## SApp / SLayout
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `name` | `string` | plugin name (`'sui'`) | Layout name. Children link with `for` |
-| `app` | `boolean` | `true` on SApp, `false` on SLayout | Treat as the app-level layout |
-| `width` / `height` / `min*` / `max*` | `string \| number` | — | SLayout only: dimensions |
+<!-- generated:api:start SLayout -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SLayout props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `app` | `boolean` | — | no | — |
+| `height` | `string \| number \| null` | — | no | — |
+| `maxHeight` | `string \| number \| null` | — | no | — |
+| `maxWidth` | `string \| number \| null` | — | no | — |
+| `minHeight` | `string \| number \| null` | — | no | — |
+| `minWidth` | `string \| number \| null` | — | no | — |
+| `name` | `string` | — | no | — |
+| `width` | `string \| number \| null` | — | no | — |
+
+**SLayout slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SLayout events**
+
+None.
+
+<!-- generated:api:end SLayout -->
+
+**SLayout notes**
+
+- `name`: Layout name. Children link with `for` (default: plugin name (`'sui'`))
+- `app`: Treat as the app-level layout (default: `true` on SApp, `false` on SLayout)
+- `width` / `height` / `min*` / `max*`: SLayout only: dimensions
 
 Slot: `default`. SLayout is a flex column, `position: relative`.
+
+<!-- generated:api:start SApp -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SApp props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `app` | `boolean` | `true` | no | — |
+| `name` | `string` | — | no | — |
+
+**SApp slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SApp events**
+
+None.
+
+<!-- generated:api:end SApp -->
 
 ---
 
@@ -58,21 +108,68 @@ Slot: `default`. SLayout is a flex column, `position: relative`.
 
 Built on SToolbar. It renders a `<header>`.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `for` / `app` | `string` / `boolean` | — | Layout link (see above) |
-| `position` | `'fixed' \| 'absolute' \| 'static' \| 'relative' \| 'sticky'` | `undefined` (in flow) | `SMain` adds a top margin only when `fixed` |
-| `elevateOnScroll` | `boolean` | `false` | Shadow after scrolling (needs `fixed`/`absolute`) |
-| `hideOnScroll` | `boolean` | `false` | Hide on scroll down, show on scroll up |
-| `scrollTarget` / `scrollThreshold` | `string \| HTMLElement` / `number` | window / `64` | Scroll source and threshold |
-| `height` | `number \| string` | `64` | Bar height |
-| `density` | `'default' \| 'comfortable' \| 'compact'` | — | Height preset |
-| `extended` | `boolean` | auto (`true` when `#extension` is used) | Show the extension row |
-| `extensionHeight` | `number \| string` | `48` | Extension height |
-| `fixedExtension` | `boolean` | `false` | Keep only the extension visible (fixed) |
-| `title` | `string` | — | Title text |
-| `color` | `string` | `'appBar'` | Background |
-| `elevation`, `outlined`, `underlined`, `borderRadius`, `tag` | — | `tag: 'header'` | Shared props |
+<!-- generated:api:start SAppBar -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SAppBar props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `app` | `boolean` | — | no | — |
+| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `color` | `string` | `"appBar"` | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentStyle` | `StyleValue` | — | no | — |
+| `density` | `ToolbarDensityType \| null` | — | no | `comfortable`, `compact`, `default` |
+| `elevateOnScroll` | `boolean` | — | no | — |
+| `elevation` | `"" \| 0 \| 1 \| 2 \| 22 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 23 \| 24 \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| null` | — | no | — |
+| `extended` | `boolean \| null` | — | no | — |
+| `extensionClass` | `string \| Record<string, boolean \| undefined>` | — | no | — |
+| `extensionHeight` | `string \| number` | `defaultToolbarExtensionHeight` | no | — |
+| `extensionStyle` | `Record<string, string>` | — | no | — |
+| `fixedExtension` | `boolean` | — | no | — |
+| `for` | `string` | — | no | — |
+| `height` | `string \| number \| null` | `defaultToolbarContentHeight` | no | — |
+| `hideOnScroll` | `boolean` | — | no | — |
+| `outlined` | `boolean \| null` | — | no | — |
+| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
+| `scrollBehavior` | `"auto" \| "smooth"` | — | no | `auto`, `smooth` |
+| `scrollTarget` | `string \| HTMLElement` | — | no | — |
+| `scrollThreshold` | `number` | `defaultToolbarContentHeight` | no | — |
+| `tag` | `HtmlTagName \| null` | `"header"` | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+| `title` | `string \| null` | — | no | — |
+| `underlined` | `boolean \| null` | — | no | — |
+
+**SAppBar slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+| `extension` | `{}` |
+
+**SAppBar events**
+
+None.
+
+<!-- generated:api:end SAppBar -->
+
+**SAppBar notes**
+
+- `for` / `app`: Layout link (see above)
+- `position`: `SMain` adds a top margin only when `fixed` (default: `undefined` (in flow))
+- `elevateOnScroll`: Shadow after scrolling (needs `fixed`/`absolute`)
+- `hideOnScroll`: Hide on scroll down, show on scroll up
+- `scrollTarget` / `scrollThreshold`: Scroll source and threshold (default: window / `64`)
+- `height`: Bar height
+- `density`: Height preset
+- `extended`: Show the extension row (default: auto (`true` when `#extension` is used))
+- `extensionHeight`: Extension height
+- `fixedExtension`: Keep only the extension visible (fixed)
+- `title`: Title text
+- `color`: Background
+- `elevation`, `outlined`, `underlined`, `borderRadius`, `tag`: Shared props (default: `tag: 'header'`)
 
 **Slots:** `default`, `extension`. SAppBar does **not** forward `prepend`/`append`, so put everything in `default` and use `SSpacer`.
 
@@ -80,30 +177,106 @@ Built on SToolbar. It renders a `<header>`.
 
 Props: `text`, `color`, `tag`. Slots: `default` (or `text`).
 
+<!-- generated:api:start SAppBarTitle -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SAppBarTitle props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `color` | `string` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
+| `text` | `string \| null` | — | no | — |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+
+**SAppBarTitle slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+| `text` | `{}` |
+
+**SAppBarTitle events**
+
+None.
+
+<!-- generated:api:end SAppBarTitle -->
+
 ---
 
 ## SNavigationDrawer
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `for` / `app` | `string` / `boolean` | — | Layout link |
-| `v-model` | `boolean` | closed until first resize check | Open state. On desktop it auto-opens and on mobile it auto-closes (unless `persistent`) |
-| `location` | `'left' \| 'right' \| 'bottom'` | `'left'` | Side. `bottom` is always mobile-style |
-| `permanent` | `boolean` | `false` | Always open on desktop (**app-level layout only**) |
-| `persistent` | `boolean` | `false` | Desktop: ignore outside clicks and resizes |
-| `miniVariant` | `boolean` | `false` | Collapsed width (`v-model:mini-variant`) |
-| `miniVariantWidth` | `string \| number` | `256` when not numeric | Mini width (set it, e.g. `56`) |
-| `expandOnHover` | `boolean` | `false` | Mini until hovered |
-| `forceMobile` | `boolean` | `false` | Use mobile behaviour on desktop |
-| `touchless` | `boolean` | `false` | Disable swipe and hover handlers |
-| `activator` | `string \| HTMLElement \| component` | — | Only **excluded from click-outside**. It does **not** toggle the drawer |
-| `width` | `string \| number` | `256` | Width. Use `v-model:width` with `resizable` |
-| `resizable` | `boolean` | `false` | Drag handle on the inner edge (desktop, not mini). Arrow keys resize by 16px |
-| `minWidth` / `maxWidth` | `number` | `200` / `720` | Resize limits |
-| `height` | `string \| number` | `100vh` when app-level, else `100%` | Height. App-level = the drawer has `app`, or its `for` is the app's name |
-| `position`, `elevation` | — | — | Shared props |
-| `tag` | `'nav' \| 'div' \| 'section'` | `nav` when app-level, else `aside` | Root element |
-| `hideOverlay` | `boolean` | `false` | Declared. The scrim is not rendered in the current version |
+<!-- generated:api:start SNavigationDrawer -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SNavigationDrawer props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
+| `app` | `boolean` | — | no | — |
+| `elevation` | `"" \| 0 \| 1 \| 2 \| 22 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 23 \| 24 \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| null` | — | no | — |
+| `expandOnHover` | `boolean` | — | no | — |
+| `for` | `string` | — | no | — |
+| `forceMobile` | `boolean` | — | no | — |
+| `height` | `string \| number \| null` | — | no | — |
+| `hideOverlay` | `boolean` | — | no | — |
+| `location` | `LocationRaw` | — | no | — |
+| `maxWidth` | `number` | — | no | — |
+| `minWidth` | `number` | — | no | — |
+| `miniVariant` | `boolean` | — | no | — |
+| `miniVariantWidth` | `string \| number` | — | no | — |
+| `modelValue` | `boolean` | — | no | — |
+| `offsetX` | `number \| null` | — | no | — |
+| `offsetY` | `number \| null` | — | no | — |
+| `permanent` | `boolean` | — | no | — |
+| `persistent` | `boolean` | — | no | — |
+| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
+| `resizable` | `boolean` | — | no | — |
+| `tag` | `"div" \| "nav" \| "section" \| null` | — | no | `div`, `nav`, `section` |
+| `touchless` | `boolean` | — | no | — |
+| `width` | `string \| number` | — | no | — |
+
+**SNavigationDrawer slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `append` | `{ class: string; }` |
+| `default` | `{ on: { click: () => void; transitionend: (e: Event) => void; mouseenter: () => void; mouseleave: () => void; }; }` |
+| `prepend` | `{ class: string; }` |
+
+**SNavigationDrawer events**
+
+| Event | Payload |
+| --- | --- |
+| `transitionend` | `[value: Event]` |
+| `update:miniVariant` | `[value: boolean]` |
+| `update:modelValue` | `[value: boolean \| undefined]` |
+| `update:width` | `[value: number]` |
+
+<!-- generated:api:end SNavigationDrawer -->
+
+**SNavigationDrawer notes**
+
+- `for` / `app`: Layout link
+- `v-model`: Open state. On desktop it auto-opens and on mobile it auto-closes (unless `persistent`) (default: closed until first resize check)
+- `location`: Side. `bottom` is always mobile-style (default: `'left'`)
+- `permanent`: Always open on desktop (**app-level layout only**)
+- `persistent`: Desktop: ignore outside clicks and resizes
+- `miniVariant`: Collapsed width (`v-model:mini-variant`)
+- `miniVariantWidth`: Mini width (set it, e.g. `56`) (default: `256` when not numeric)
+- `expandOnHover`: Mini until hovered
+- `forceMobile`: Use mobile behaviour on desktop
+- `touchless`: Disable swipe and hover handlers
+- `activator`: Only **excluded from click-outside**. It does **not** toggle the drawer
+- `width`: Width. Use `v-model:width` with `resizable` (default: `256`)
+- `resizable`: Drag handle on the inner edge (desktop, not mini). Arrow keys resize by 16px
+- `minWidth` / `maxWidth`: Resize limits (default: `200` / `720`)
+- `height`: Height. App-level = the drawer has `app`, or its `for` is the app's name (default: `100vh` when app-level, else `100%`)
+- `position`, `elevation`: Shared props
+- `tag`: Root element (default: `nav` when app-level, else `aside`)
+- `hideOverlay`: Declared. The scrim is not rendered in the current version
 
 **Slots:** `prepend`, `default` (scope `{ on }`: `click`, `transitionend`, `mouseenter`, `mouseleave` handlers), `append`.
 **Events:** `update:modelValue`, `update:width` (resize end), `update:miniVariant`, `transitionend`.
@@ -122,30 +295,138 @@ A left and a right drawer can share one layout. Each one offsets its own side of
 
 Props: `for`, `app`, `tag` (default `main` at app level, `section` otherwise). Slot: `default`. Margins follow the drawers (left/right), a `fixed` app bar (top), and the bottom navigation (app level) or footer (nested).
 
+<!-- generated:api:start SMain -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SMain props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `app` | `boolean` | — | no | — |
+| `for` | `string` | — | no | — |
+| `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
+
+**SMain slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SMain events**
+
+None.
+
+<!-- generated:api:end SMain -->
+
 ## SFooter
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `for` / `app` | — | — | Layout link |
-| `position` | `'fixed' \| 'absolute' \| …` | — | Applied only in an app-level layout |
-| `inset` / `padless` | `boolean` | `false` | Inset / no padding |
-| `color`, `elevation`, `height`, `width`, `min*`/`max*` | — | — | Shared props |
-| `tag` | `'footer' \| 'div'` | `'footer'` | Root element |
+<!-- generated:api:start SFooter -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SFooter props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `app` | `boolean` | — | no | — |
+| `color` | `string` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `elevation` | `"" \| 0 \| 1 \| 2 \| 22 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 23 \| 24 \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| null` | — | no | — |
+| `for` | `string` | — | no | — |
+| `height` | `string \| number \| null` | — | no | — |
+| `inset` | `boolean` | `false` | no | — |
+| `maxHeight` | `string \| number \| null` | — | no | — |
+| `maxWidth` | `string \| number \| null` | — | no | — |
+| `minHeight` | `string \| number \| null` | — | no | — |
+| `minWidth` | `string \| number \| null` | — | no | — |
+| `padless` | `boolean` | `false` | no | — |
+| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
+| `tag` | `"div" \| "footer" \| null` | `"footer"` | no | `div`, `footer` |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+| `width` | `string \| number \| null` | — | no | — |
+
+**SFooter slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SFooter events**
+
+None.
+
+<!-- generated:api:end SFooter -->
+
+**SFooter notes**
+
+- `for` / `app`: Layout link
+- `position`: Applied only in an app-level layout
+- `inset` / `padless`: Inset / no padding
+- `color`, `elevation`, `height`, `width`, `min*`/`max*`: Shared props
+- `tag`: Root element
 
 Slot: `default`. Its width tracks the drawers.
 
 ## SBottomNavigation
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `v-model` | `string \| number \| …` | — | `value` of the selected child `SButton` |
-| `height` | `string \| number` | — | **Set it.** Without it the bar collapses and SMain gets no bottom offset |
-| `activeClass` | `string` | — | Class added to the selected button. **There is no active styling without it** |
-| `mandatory` | `boolean` | `false` | Always keep one selected |
-| `grow` / `shift` / `horizontal` / `dense` / `bordered` | `boolean` | `false` | Layout variants |
-| `hideOnScroll` | `boolean` | `false` | Hide on scroll. It also overwrites `v-model` with a boolean, so avoid combining it with selection |
-| `position` | — | fixed at app level | Set `fixed` in a nested layout |
-| `for` / `app`, `tag`, `width`, border props | — | — | Shared props |
+<!-- generated:api:start SBottomNavigation -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SBottomNavigation props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `activeClass` | `string` | — | no | — |
+| `app` | `boolean` | — | no | — |
+| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `bordered` | `boolean` | — | no | — |
+| `continuous` | `boolean` | — | no | — |
+| `dense` | `boolean` | — | no | — |
+| `for` | `string` | — | no | — |
+| `grow` | `boolean` | — | no | — |
+| `height` | `string \| number \| null` | — | no | — |
+| `hideOnScroll` | `boolean` | — | no | — |
+| `horizontal` | `boolean` | — | no | — |
+| `inputValue` | `boolean` | — | no | — |
+| `mandatory` | `boolean` | — | no | — |
+| `maxHeight` | `string \| number \| null` | — | no | — |
+| `maxWidth` | `string \| number \| null` | — | no | — |
+| `minHeight` | `string \| number \| null` | — | no | — |
+| `minWidth` | `string \| number \| null` | — | no | — |
+| `modelValue` | `GroupItemValue` | — | no | — |
+| `outlined` | `boolean \| null` | — | no | — |
+| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
+| `scrollBehavior` | `"auto" \| "smooth"` | — | no | `auto`, `smooth` |
+| `scrollTarget` | `string \| HTMLElement` | — | no | — |
+| `scrollThreshold` | `number` | — | no | — |
+| `shift` | `boolean` | — | no | — |
+| `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
+| `underlined` | `boolean \| null` | — | no | — |
+| `width` | `string \| number \| null` | — | no | — |
+
+**SBottomNavigation slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SBottomNavigation events**
+
+| Event | Payload |
+| --- | --- |
+| `update:modelValue` | `[value: GroupItemValue \| undefined]` |
+
+<!-- generated:api:end SBottomNavigation -->
+
+**SBottomNavigation notes**
+
+- `v-model`: `value` of the selected child `SButton`
+- `height`: **Set it.** Without it the bar collapses and SMain gets no bottom offset
+- `activeClass`: Class added to the selected button. **There is no active styling without it**
+- `mandatory`: Always keep one selected
+- `grow` / `shift` / `horizontal` / `dense` / `bordered`: Layout variants
+- `hideOnScroll`: Hide on scroll. It also overwrites `v-model` with a boolean, so avoid combining it with selection
+- `position`: Set `fixed` in a nested layout (default: fixed at app level)
+- `for` / `app`, `tag`, `width`, border props: Shared props
 
 Slot: `default`. Use `SButton`s with a `value`.
 
@@ -166,13 +447,42 @@ The column component is **`SColumn`**. There is no `SCol`.
 
 **SRow:**
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `align` | `'start' \| 'center' \| 'end' \| 'stretch' \| 'baseline'` | Cross-axis |
-| `justify` | `'start' \| 'center' \| 'end' \| 'spaceBetween' \| 'spaceAround'` | Main-axis (**camelCase**) |
-| `noGutters` / `noOuterGutters` / `dense` / `fillHeight` | `boolean` | Gutters / height |
-| `gap` | `number \| string` | Custom gap (replaces gutters) |
-| `contentClass` / `contentStyle` | — | Inner wrapper class/style |
+<!-- generated:api:start SRow -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SRow props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `align` | `GridAlignPropertyType \| null` | — | no | `baseline`, `center`, `end`, `start`, `stretch` |
+| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentStyle` | `StyleValue` | — | no | — |
+| `dense` | `boolean \| null` | — | no | — |
+| `fillHeight` | `boolean \| null` | — | no | — |
+| `gap` | `string \| number \| null` | — | no | — |
+| `justify` | `GridJustifyPropertyType \| null` | — | no | `center`, `end`, `spaceAround`, `spaceBetween`, `start` |
+| `noGutters` | `boolean \| null` | — | no | — |
+| `noOuterGutters` | `boolean \| null` | — | no | — |
+
+**SRow slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SRow events**
+
+None.
+
+<!-- generated:api:end SRow -->
+
+**SRow notes**
+
+- `align`: Cross-axis
+- `justify`: Main-axis (**camelCase**)
+- `noGutters` / `noOuterGutters` / `dense` / `fillHeight`: Gutters / height
+- `gap`: Custom gap (replaces gutters)
+- `contentClass` / `contentStyle`: Inner wrapper class/style
 
 **SColumn:** `cols`, `sm`, `md`, `lg` (`1`–`12 \| 'auto' \| 'grow'`), `order` (number), `alignSelf`, `contentClass`/`contentStyle`. There is no `xl`.
 
@@ -186,6 +496,82 @@ The column component is **`SColumn`**. There is no `SCol`.
   </SRow>
 </SContainer>
 ```
+
+<!-- generated:api:start SContainer -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SContainer props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `color` | `string` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `fill` | `boolean` | — | no | — |
+| `fluid` | `boolean` | — | no | — |
+| `narrow` | `boolean` | — | no | — |
+| `padless` | `boolean` | — | no | — |
+| `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+| `wide` | `boolean` | — | no | — |
+
+**SContainer slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SContainer events**
+
+None.
+
+<!-- generated:api:end SContainer -->
+
+<!-- generated:api:start SColumn -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SColumn props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `alignSelf` | `"center" \| "auto" \| "start" \| "normal" \| "end" \| "self-start" \| "self-end" \| "flex-start" \| "flex-end" \| "baseline" \| "first baseline" \| "last baseline" \| "stretch" \| "safe center" \| "unsafe center" \| "inherit" \| "initial" \| null` | — | no | `auto`, `baseline`, `center`, `end`, `first baseline`, `flex-end`, `flex-start`, `inherit`, `initial`, `last baseline`, `normal`, `safe center`, `self-end`, `self-start`, `start`, `stretch`, `unsafe center` |
+| `cols` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
+| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentStyle` | `StyleValue` | — | no | — |
+| `lg` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
+| `md` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
+| `order` | `number \| null` | — | no | — |
+| `sm` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
+
+**SColumn slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SColumn events**
+
+None.
+
+<!-- generated:api:end SColumn -->
+
+<!-- generated:api:start SSpacer -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SSpacer props**
+
+None.
+
+**SSpacer slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SSpacer events**
+
+None.
+
+<!-- generated:api:end SSpacer -->
 
 ---
 

@@ -6,43 +6,82 @@ Button with variants, preset sizes, colors, loading state and link behavior.
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsButton.d.ts`
 
-## Props
+<!-- generated:api:start SButton -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `color` | `string` | `undefined` | Preset name (`primary`, `secondary`, `error`, ...) or any CSS color |
-| `colorThreshold` | `number` | `undefined` | Luminance threshold for automatic light/dark text |
-| `variant` | `'fab' \| 'text' \| 'icon' \| null` | `undefined` | `fab` = floating action button, `text` = no background, `icon` = circular icon button. No other values exist |
-| `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `undefined` | Preset size |
-| `type` | `'button' \| 'submit' \| 'reset'` | `'button'` (when unset) | HTML button `type` |
-| `loading` | `boolean` | `false` | Replaces the content with a spinner and disables the button |
-| `block` | `boolean` | `false` | Full width |
-| `rounded` | `boolean` | `false` | Pill shape (ignored for `variant="icon"`) |
-| `disabled` | `boolean` | `false` | Disable interaction |
-| `elevation` | `0–24 \| '' \| null` | `undefined` | Shadow depth |
-| `outlined` | `boolean` | `false` | Border style, text-colored |
-| `underlined` | `boolean` | `false` | Underlined style |
-| `borderRadius` | `'tile' \| 'rounded' \| number \| string` | `undefined` | Custom radius (`8`, `'8px'`, `'1rem'`, ...) |
-| `href` | `string \| null` | `undefined` | Renders an `<a href>` |
-| `to` | `RouteLocationRaw \| null` | `undefined` | Renders a `router-link` (needs vue-router) |
-| `target` | `'_blank' \| '_self' \| '_parent' \| '_top'` | `undefined` | Only applied with `href` |
-| `rel` | `string \| null` | `undefined` | Only applied with `href` |
-| `tag` | `'button' \| 'a'` | `'button'` | Root tag when neither `href` nor `to` is set |
-| `width` / `height` | `string \| number` | `undefined` | Dimensions |
-| `minWidth` / `maxWidth` / `minHeight` / `maxHeight` | `string \| number` | `undefined` | Constraints |
-| `value` | `string \| number \| boolean` | `undefined` | Selection value when used inside `SBottomNavigation` |
+**SButton props**
 
-## Events
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `activeClass` | `string \| null` | — | no | — |
+| `block` | `boolean` | — | no | — |
+| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `color` | `string` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `disabled` | `boolean \| null` | — | no | — |
+| `elevation` | `"" \| 0 \| 1 \| 2 \| 22 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 23 \| 24 \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| null` | — | no | — |
+| `height` | `string \| number \| null` | — | no | — |
+| `href` | `string \| null` | — | no | — |
+| `loading` | `boolean` | — | no | — |
+| `maxHeight` | `string \| number \| null` | — | no | — |
+| `maxWidth` | `string \| number \| null` | — | no | — |
+| `minHeight` | `string \| number \| null` | — | no | — |
+| `minWidth` | `string \| number \| null` | — | no | — |
+| `outlined` | `boolean \| null` | — | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `rel` | `string \| null` | — | no | — |
+| `rounded` | `boolean` | — | no | — |
+| `selected` | `boolean` | — | no | — |
+| `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` |
+| `tag` | `"a" \| "button" \| null` | `"button"` | no | `a`, `button` |
+| `target` | `"_blank" \| "_self" \| "_parent" \| "_top"` | — | no | `_blank`, `_parent`, `_self`, `_top` |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+| `to` | `string \| it \| et \| null` | — | no | — |
+| `type` | `ButtonTypeType` | — | no | `button`, `reset`, `submit` |
+| `underlined` | `boolean \| null` | — | no | — |
+| `value` | `string \| number \| boolean` | — | no | — |
+| `variant` | `"text" \| "icon" \| "fab" \| null` | — | no | `fab`, `icon`, `text` |
+| `width` | `string \| number \| null` | — | no | — |
 
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `click` | `Event` | Native click |
+**SButton slots**
 
-## Slots
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
 
-| Slot | Description |
-|------|-------------|
-| `default` | Label / content (hidden while `loading`) |
+**SButton events**
+
+| Event | Payload |
+| --- | --- |
+| `click` | `[value: Event]` |
+
+<!-- generated:api:end SButton -->
+
+**SButton notes**
+
+- `color`: Preset name (`primary`, `secondary`, `error`, ...) or any CSS color
+- `colorThreshold`: Luminance threshold for automatic light/dark text
+- `variant`: `fab` = floating action button, `text` = no background, `icon` = circular icon button. No other values exist
+- `size`: Preset size
+- `type`: HTML button `type` (default: `'button'` (when unset))
+- `loading`: Replaces the content with a spinner and disables the button
+- `block`: Full width
+- `rounded`: Pill shape (ignored for `variant="icon"`)
+- `disabled`: Disable interaction
+- `elevation`: Shadow depth
+- `outlined`: Border style, text-colored
+- `underlined`: Underlined style
+- `borderRadius`: Custom radius (`8`, `'8px'`, `'1rem'`, ...)
+- `href`: Renders an `<a href>`
+- `to`: Renders a `router-link` (needs vue-router)
+- `target`: Only applied with `href`
+- `rel`: Only applied with `href`
+- `tag`: Root tag when neither `href` nor `to` is set
+- `width` / `height`: Dimensions
+- `minWidth` / `maxWidth` / `minHeight` / `maxHeight`: Constraints
+- `value`: Selection value when used inside `SBottomNavigation`
+- `click` (event): Native click
+- `default` (slot): Label / content (hidden while `loading`)
 
 ## Usage
 

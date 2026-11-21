@@ -6,32 +6,69 @@ Small floating label shown while hovering an activator. Built on the `SMenu` pos
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsTooltip.d.ts`
 
-## Props
+<!-- generated:api:start STooltip -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `location` | `string \| string[]` | `undefined` | `'top'`, `'bottom'`, `'left'`, `'right'`. **Unset = overlaps the activator** — always pass one |
-| `color` | `string` | `undefined` | Background. Use a CSS color (`'#333'`, `'rgb(...)'`); preset names are hidden by the default translucent background |
-| `offsetX` / `offsetY` | `number \| null` | `undefined` | Extra offset in px |
-| `position` | `'fixed' \| ...` | `undefined` | `'fixed'` = viewport-relative positioning |
-| `width` / `height` / `min*` / `max*` | `string \| number` | `undefined` | Tooltip dimensions |
+**STooltip props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
+| `closeOnClick` | `boolean` | — | no | — |
+| `closeOnContentClick` | `boolean` | — | no | — |
+| `closeOnScroll` | `boolean` | — | no | — |
+| `color` | `string` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentStyle` | `StyleValue` | — | no | — |
+| `disabled` | `boolean \| null` | — | no | — |
+| `height` | `string \| number \| null` | — | no | — |
+| `location` | `LocationRaw` | — | no | — |
+| `maxHeight` | `string \| number \| null` | — | no | — |
+| `maxWidth` | `string \| number \| null` | — | no | — |
+| `minHeight` | `string \| number \| null` | — | no | — |
+| `minWidth` | `string \| number \| null` | — | no | — |
+| `modelValue` | `boolean` | — | no | — |
+| `offsetX` | `number \| null` | — | no | — |
+| `offsetY` | `number \| null` | — | no | — |
+| `opacity` | `string \| number` | — | no | — |
+| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
+| `preventCloseOnClick` | `boolean` | — | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `screenPadding` | `number \| null` | — | no | — |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+| `width` | `string \| number \| null` | — | no | — |
+
+**STooltip slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `activator` | `{}` |
+| `default` | `{}` |
+
+**STooltip events**
+
+| Event | Payload |
+| --- | --- |
+| `update:modelValue` | `[value: boolean \| undefined]` |
+
+<!-- generated:api:end STooltip -->
+
+**STooltip notes**
+
+- `location`: `'top'`, `'bottom'`, `'left'`, `'right'`. **Unset = overlaps the activator** — always pass one
+- `color`: Background. Use a CSS color (`'#333'`, `'rgb(...)'`); preset names are hidden by the default translucent background
+- `offsetX` / `offsetY`: Extra offset in px
+- `position`: `'fixed'` = viewport-relative positioning
+- `width` / `height` / `min*` / `max*`: Tooltip dimensions
+- `activator` (slot): Hover target. STooltip wraps it in its own `<div>` that carries the hover/click listeners — do not bind anything
+- `default` (slot): Tooltip content
 
 Other `SMenu` props are accepted by the types but are not meaningful for a tooltip.
 
 ## Model
 
 `v-model: boolean` — optional; set by hover (and toggled by clicking the activator).
-
-## Slots
-
-| Slot | Scoped data | Description |
-|------|-------------|-------------|
-| `activator` | **none** | Hover target. STooltip wraps it in its own `<div>` that carries the hover/click listeners — do not bind anything |
-| `default` | — | Tooltip content |
-
-## Events
-
-None.
 
 ## Usage
 

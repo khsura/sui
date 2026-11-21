@@ -7,42 +7,72 @@ Calendar with month and week views, events, and prev/next navigation. (`SCalenda
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsCalendar.d.ts`
 
-## Props
+<!-- generated:api:start SCalendar -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `type` | `'month' \| 'week'` | `'month'` | View. Set it once — see Gotchas |
-| `focus` (`v-model:focus`) | `string` (`'YYYY-MM-DD'`) | today | Focused date; invalid/empty → today |
-| `events` | `CalendarEvent[]` | `undefined` | Events to display |
-| `eventColor` | `(event) => string` | `undefined` | Per-event color (otherwise `event.color`) |
-| `color` | `string` | `undefined` | Highlight color of the focused date |
-| `theme` / `colorThreshold` | shared color props | `undefined` | Theme override / text-contrast threshold |
-| `hideHeader` | `boolean` | `false` | *Week view:* hide the weekday header |
-| `showWeek` | `boolean` | `false` | *Week view:* week-number column |
-| `longWeekdays` | `boolean` | `false` | *Week view:* full weekday names |
-| `showMonthOnFirst` | `boolean` | `false` | *Week view:* month name on the 1st |
-| `shortMonths` | `boolean` | `false` | *Week view:* abbreviated month names |
-| `minWeeks` | `number` | `1` | *Week view:* minimum weeks rendered |
-| `eventOverlapMode` | `'stacked' \| 'column'` | `'column'` | *Week view:* layout of overlapping timed events |
-| `allDayRows` | `number` | `7` | *Week view:* all-day rows before "more" |
+**SCalendar props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `allDayRows` | `number` | — | no | — |
+| `color` | `string` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `eventColor` | `((event: T) => string)` | — | no | — |
+| `eventOverlapMode` | `"stacked" \| "column"` | — | no | `column`, `stacked` |
+| `events` | `T[]` | — | no | — |
+| `focus` | `string` | — | no | — |
+| `hideHeader` | `boolean` | — | no | — |
+| `longWeekdays` | `boolean` | — | no | — |
+| `minWeeks` | `number` | — | no | — |
+| `shortMonths` | `boolean` | — | no | — |
+| `showMonthOnFirst` | `boolean` | — | no | — |
+| `showWeek` | `boolean` | — | no | — |
+| `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+| `type` | `"month" \| "week"` | `"month"` | no | `month`, `week` |
+
+**SCalendar slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `event` | `{ event: CalendarEventExtended<T>; }` |
+
+**SCalendar events**
+
+| Event | Payload |
+| --- | --- |
+| `change` | `[{ start: CalendarDate; end: CalendarDate; }]` |
+| `click:date` | `[{ date: CalendarDate; events: T[]; }]` |
+| `click:event` | `[{ date: CalendarDate; event: T; }]` |
+| `click:time` | `[{ date: CalendarDate; events: T[]; }]` |
+| `update:focus` | `[value: string \| undefined]` |
+
+<!-- generated:api:end SCalendar -->
+
+**SCalendar notes**
+
+- `type`: View. Set it once — see Gotchas
+- `focus` (`v-model:focus`): Focused date; invalid/empty → today (default: today)
+- `events`: Events to display
+- `eventColor`: Per-event color (otherwise `event.color`)
+- `color`: Highlight color of the focused date
+- `theme` / `colorThreshold`: Theme override / text-contrast threshold
+- `hideHeader`: *Week view:* hide the weekday header
+- `showWeek`: *Week view:* week-number column
+- `longWeekdays`: *Week view:* full weekday names
+- `showMonthOnFirst`: *Week view:* month name on the 1st
+- `shortMonths`: *Week view:* abbreviated month names
+- `minWeeks`: *Week view:* minimum weeks rendered (default: `1`)
+- `eventOverlapMode`: *Week view:* layout of overlapping timed events (default: `'column'`)
+- `allDayRows`: *Week view:* all-day rows before "more" (default: `7`)
+- `update:focus` (event): Focus changed
+- `change` (event): Focus changed (navigation or date click); range of the new month/week. **Not emitted on mount**
+- `click:date` (event): Date clicked (also moves focus there)
+- `click:event` (event): Event clicked
+- `click:time` (event): Time slot clicked (week view)
+- `event` (slot): **Month view only** — custom event bar content. `event` has extra `isStartDate`, `isEndDate`, `isWeekStart`, `isWeekEnd`
 
 The week-view props have no effect in month view. `tag` is typed but ignored (root is always a `div`).
-
-## Events
-
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `update:focus` | `string` | Focus changed |
-| `change` | `{ start: CalendarDate, end: CalendarDate }` | Focus changed (navigation or date click); range of the new month/week. **Not emitted on mount** |
-| `click:date` | `{ date: CalendarDate, events: CalendarEvent[] }` | Date clicked (also moves focus there) |
-| `click:event` | `{ date: CalendarDate, event: CalendarEvent }` | Event clicked |
-| `click:time` | `{ date: CalendarDate, events: CalendarEvent[] }` | Time slot clicked (week view) |
-
-## Slots
-
-| Slot | Scoped data | Description |
-|------|-------------|-------------|
-| `event` | `{ event }` | **Month view only** — custom event bar content. `event` has extra `isStartDate`, `isEndDate`, `isWeekStart`, `isWeekEnd` |
 
 ## Exposed (template ref)
 

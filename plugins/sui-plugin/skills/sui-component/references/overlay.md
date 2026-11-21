@@ -6,22 +6,41 @@ Low-level layer primitive. Teleports its slot into the overlay container rendere
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsOverlay.d.ts`
 
-## Props
+<!-- generated:api:start SOverlay -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `boolean \| null` | `undefined` | Show/hide the slot (and scrim) |
-| `scrim` | `boolean` | `false` | 50% black backdrop; makes the layer `position: fixed; inset: 0` |
-| `zIndex` | `number` | `undefined` | z-index of the layer (only with `scrim` or `position="fixed"`) |
-| `position` | `'fixed' \| ...` | `undefined` | `'fixed'` wraps content in the full-viewport layer without a scrim |
-| `transition` | `string` | `undefined` | Vue `<Transition>` name for the content |
-| `disabled` | `boolean` | `false` | Disables the teleport (renders in place) |
+**SOverlay props**
 
-## Slots
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `disabled` | `boolean` | — | no | — |
+| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
+| `scrim` | `boolean` | — | no | — |
+| `transition` | `string` | — | no | — |
+| `value` | `boolean \| null` | — | no | — |
+| `zIndex` | `number` | — | no | — |
 
-| Slot | Scoped data | Description |
-|------|-------------|-------------|
-| `default` | `{ attrs, value }` | Content, rendered only while `value` is true. Bind `v-bind="attrs"` (adds the content class: absolute, clickable) |
+**SOverlay slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{ attrs: { class: string; }; value: true; }` |
+
+**SOverlay events**
+
+None.
+
+<!-- generated:api:end SOverlay -->
+
+**SOverlay notes**
+
+- `value`: Show/hide the slot (and scrim)
+- `scrim`: 50% black backdrop; makes the layer `position: fixed; inset: 0`
+- `zIndex`: z-index of the layer (only with `scrim` or `position="fixed"`)
+- `position`: `'fixed'` wraps content in the full-viewport layer without a scrim
+- `transition`: Vue `<Transition>` name for the content
+- `disabled`: Disables the teleport (renders in place)
+- `default` (slot): Content, rendered only while `value` is true. Bind `v-bind="attrs"` (adds the content class: absolute, clickable)
 
 ## Events
 

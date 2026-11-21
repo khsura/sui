@@ -10,6 +10,8 @@ Help the user use this SUI component: $ARGUMENTS
 2. Give the import, the props you use, and a complete working example built from the reference.
 3. If a prop isn't in the reference, check `node_modules/@khsura/sui/@types/definitions/props/props<Component>.d.ts` before using it. Never guess — unknown props are silently ignored.
 
+In each reference, the props / slots / events tables between `generated:api` markers are generated from the package's `sui-api.json`, so they list every prop with its exact type. The **notes** list under each table and the prose around it explain behaviour and gotchas.
+
 All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `@mdi/font`): **sui-getting-started**.
 
 ---

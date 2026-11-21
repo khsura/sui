@@ -6,37 +6,63 @@ Overlays a small notification indicator on another element. Supports number/text
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsBadge.d.ts`
 
-## Props
+<!-- generated:api:start SBadge -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `boolean` | `undefined` (falsy) | Show the badge. **No default — the badge is hidden unless you pass `value`** |
-| `content` | `string \| number` | `undefined` | Text/number inside the badge. Falsy values (`0`, `''`) render an empty badge |
-| `icon` | `MaterialDesignIcon` | `undefined` | MDI icon inside the badge (wins over `content`) |
-| `label` | `string` | `undefined` | `aria-label` of the badge (`role="status"`, `aria-live="polite"`) |
-| `color` | `string` | `undefined` (primary) | Preset name or CSS color for the badge background |
-| `colorThreshold` | `number` | `undefined` | Contrast threshold for auto text color |
-| `theme` | `AppThemeType` | `undefined` | Per-component theme override |
-| `dot` | `boolean` | `undefined` | Dot mode — 9px circle, ignores `content`/`icon` |
-| `overlap` | `boolean` | `undefined` | Pull the badge further onto the child's corner |
-| `inline` | `boolean` | `undefined` | Render next to the content instead of absolutely positioned |
-| `bottom` | `boolean` | `undefined` | Position at the bottom |
-| `left` | `boolean` | `undefined` | Position on the left (with `inline`, badge renders before the content) |
-| `tile` | `boolean` | `undefined` | Square corners |
-| `offsetX` | `string \| number` | `undefined` | Horizontal offset (replaces the built-in spacer) |
-| `offsetY` | `string \| number` | `undefined` | Vertical offset |
-| `transitionName` | `STransition` | `undefined` | Named transition for show/hide |
+**SBadge props**
 
-## Slots
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `bottom` | `boolean` | — | no | — |
+| `color` | `string` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `content` | `string \| number` | — | no | — |
+| `dot` | `boolean` | — | no | — |
+| `icon` | `string` | — | no | — |
+| `inline` | `boolean` | — | no | — |
+| `label` | `string` | — | no | — |
+| `left` | `boolean` | — | no | — |
+| `offsetX` | `string \| number` | — | no | — |
+| `offsetY` | `string \| number` | — | no | — |
+| `overlap` | `boolean` | — | no | — |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+| `tile` | `boolean` | — | no | — |
+| `transitionName` | `STransition` | — | no | — |
+| `value` | `boolean` | — | no | — |
 
-| Slot | Description |
-|------|-------------|
-| `default` | The element the badge wraps |
-| `badge` | Custom badge content — overrides `content`, `icon` and `dot` content |
+**SBadge slots**
 
-## Events
+| Slot | Slot props |
+| --- | --- |
+| `badge` | `{}` |
+| `default` | `{}` |
+
+**SBadge events**
 
 None.
+
+<!-- generated:api:end SBadge -->
+
+**SBadge notes**
+
+- `value`: Show the badge. **No default — the badge is hidden unless you pass `value`** (default: `undefined` (falsy))
+- `content`: Text/number inside the badge. Falsy values (`0`, `''`) render an empty badge
+- `icon`: MDI icon inside the badge (wins over `content`)
+- `label`: `aria-label` of the badge (`role="status"`, `aria-live="polite"`)
+- `color`: Preset name or CSS color for the badge background (default: `undefined` (primary))
+- `colorThreshold`: Contrast threshold for auto text color
+- `theme`: Per-component theme override
+- `dot`: Dot mode — 9px circle, ignores `content`/`icon`
+- `overlap`: Pull the badge further onto the child's corner
+- `inline`: Render next to the content instead of absolutely positioned
+- `bottom`: Position at the bottom
+- `left`: Position on the left (with `inline`, badge renders before the content)
+- `tile`: Square corners
+- `offsetX`: Horizontal offset (replaces the built-in spacer)
+- `offsetY`: Vertical offset
+- `transitionName`: Named transition for show/hide
+- `default` (slot): The element the badge wraps
+- `badge` (slot): Custom badge content — overrides `content`, `icon` and `dot` content
 
 ## Usage
 

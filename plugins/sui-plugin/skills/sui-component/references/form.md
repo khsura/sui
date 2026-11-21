@@ -41,9 +41,37 @@ Renders a native `<form>` and collects child inputs.
 | `v-model:errors` | `string[]` | All current error messages |
 | `v-model:error` | `boolean` | `true` when there are errors |
 
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `submit` | `Event` | Native submit — **not** prevented; use `@submit.prevent` |
+<!-- generated:api:start SForm -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SForm props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `error` | `boolean` | — | no | — |
+| `errors` | `string[]` | `[]` | no | — |
+| `modelValue` | `boolean` | — | no | — |
+
+**SForm slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SForm events**
+
+| Event | Payload |
+| --- | --- |
+| `submit` | `[Event]` |
+| `update:error` | `[value: boolean \| undefined]` |
+| `update:errors` | `[value: string[]]` |
+| `update:modelValue` | `[value: boolean \| undefined]` |
+
+<!-- generated:api:end SForm -->
+
+**SForm notes**
+
+- `submit` (event): Native submit — **not** prevented; use `@submit.prevent`
 
 Exposed: `validate(): boolean` — **returns `true` when there ARE errors**; `resetValidation()`.
 
@@ -51,23 +79,93 @@ Exposed: `validate(): boolean` — **returns `true` when there ARE errors**; `re
 
 ## SInput
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `label` | `string \| null` | `undefined` | Label above the field |
-| `placeholder` | `string \| null` | `undefined` | Placeholder |
-| `type` | `'text' \| 'email' \| 'number' \| 'password' \| 'search' \| 'tel' \| 'url' \| 'date' \| 'datetime-local' \| 'time' \| 'week'` | native (`text`) | Input type |
-| `inputmode` | `'none' \| 'text' \| 'numeric' \| 'decimal' \| 'email' \| 'tel' \| 'url' \| 'search'` | `undefined` | Mobile keyboard |
-| `suffix` / `appendOuter` | `string \| null` | `undefined` | Text inside / outside the field (or use the slots) |
-| `simple` | `boolean \| null` | `undefined` | Underline-only style |
-| `dense` / `tile` / `textRight` | `boolean` | `undefined` | Compact / square / right-aligned |
-| `min` / `max` | `string \| number \| null` | `undefined` | Bounds (enforced for `type="number"`) |
-| `positive` / `allowDecimal` | `boolean \| null` | `undefined` | Number input: >0 only / accept decimals |
-| `usePreviousValueWhenExceeded` | `boolean \| null` | `undefined` | Over `max`: keep the previous value instead of clamping |
-| `minlength` / `maxlength` / `pattern` | — | `undefined` | Native attributes |
-| `name`, `autocomplete`, `autocapitalize`, `autofocus`, `spellcheck`, `ariaLabelledby` | — | `undefined` | Native attributes |
-| `isPasteDisabled` | `boolean` | `undefined` | Block paste |
-| `inputBackground` / `placeholderBackground` | `string \| null` | `undefined` | Field / placeholder background (preset or CSS color) |
-| `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `undefined` | Preset size |
+<!-- generated:api:start SInput -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SInput props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `allowDecimal` | `boolean \| null` | — | no | — |
+| `appendOuter` | `string \| null` | — | no | — |
+| `ariaLabelledby` | `string` | — | no | — |
+| `autocapitalize` | `"on" \| "off" \| null` | — | no | `off`, `on` |
+| `autocomplete` | `string \| null` | — | no | — |
+| `autofocus` | `boolean \| null` | — | no | — |
+| `dense` | `boolean` | — | no | — |
+| `dirty` | `boolean` | — | no | — |
+| `disabled` | `boolean \| null` | — | no | — |
+| `error` | `boolean` | — | no | — |
+| `hideDetails` | `boolean` | — | no | — |
+| `hideError` | `boolean` | — | no | — |
+| `id` | `string` | — | no | — |
+| `inputBackground` | `string \| null` | — | no | — |
+| `inputmode` | `InputModeTypeText \| null` | — | no | `decimal`, `email`, `none`, `numeric`, `search`, `tel`, `text`, `url` |
+| `isPasteDisabled` | `boolean` | — | no | — |
+| `label` | `string \| null` | — | no | — |
+| `max` | `string \| number \| null` | — | no | — |
+| `maxlength` | `string \| number \| null` | — | no | — |
+| `min` | `string \| number \| null` | — | no | — |
+| `minlength` | `string \| number \| null` | — | no | — |
+| `modelValue` | `T \| null` | — | no | — |
+| `name` | `string` | — | no | — |
+| `pattern` | `string \| null` | — | no | — |
+| `placeholder` | `string \| null` | — | no | — |
+| `placeholderBackground` | `string \| null` | — | no | — |
+| `positive` | `boolean \| null` | — | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `rules` | `FormInputModelValueRule[]` | — | no | — |
+| `simple` | `boolean \| null` | — | no | — |
+| `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` |
+| `spellcheck` | `boolean \| null` | — | no | — |
+| `suffix` | `string \| null` | — | no | — |
+| `textRight` | `boolean \| null` | — | no | — |
+| `tile` | `boolean` | — | no | — |
+| `type` | `InputTypeText \| null` | — | no | `date`, `datetime-local`, `email`, `number`, `password`, `search`, `tel`, `text`, `time`, `url`, `week` |
+| `usePreviousValueWhenExceeded` | `boolean \| null` | — | no | — |
+
+**SInput slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `appendOuter` | `{}` |
+| `suffix` | `{}` |
+
+**SInput events**
+
+| Event | Payload |
+| --- | --- |
+| `autocomplete` | `[HTMLInputElement \| null]` |
+| `blur` | `[Event]` |
+| `change` | `[string \| number \| null]` |
+| `focus` | `[Event]` |
+| `input` | `[Event]` |
+| `keydown` | `[KeyboardEvent]` |
+| `paste` | `[ClipboardEvent]` |
+| `update:dirty` | `[boolean]` |
+| `update:error` | `[boolean]` |
+| `update:errors` | `[string[]]` |
+| `update:modelValue` | `[value: T \| null \| undefined]` |
+
+<!-- generated:api:end SInput -->
+
+**SInput notes**
+
+- `label`: Label above the field
+- `placeholder`: Placeholder
+- `type`: Input type (default: native (`text`))
+- `inputmode`: Mobile keyboard
+- `suffix` / `appendOuter`: Text inside / outside the field (or use the slots)
+- `simple`: Underline-only style
+- `dense` / `tile` / `textRight`: Compact / square / right-aligned
+- `min` / `max`: Bounds (enforced for `type="number"`)
+- `positive` / `allowDecimal`: Number input: >0 only / accept decimals
+- `usePreviousValueWhenExceeded`: Over `max`: keep the previous value instead of clamping
+- `minlength` / `maxlength` / `pattern`: Native attributes
+- `name`, `autocomplete`, `autocapitalize`, `autofocus`, `spellcheck`, `ariaLabelledby`: Native attributes
+- `isPasteDisabled`: Block paste
+- `inputBackground` / `placeholderBackground`: Field / placeholder background (preset or CSS color)
+- `size`: Preset size
 
 Model: `v-model` — `string | number | null`. Slots: `suffix`, `appendOuter` (no `label` slot). Events: `change`, `input`, `focus`, `blur`, `keydown`, `paste`, `autocomplete` + shared. Exposed: `validate()`.
 
@@ -75,19 +173,147 @@ Model: `v-model` — `string | number | null`. Slots: `suffix`, `appendOuter` (n
 
 Props: `label`, `placeholder`, `rows` (default `2`), `cols` (default `20`), **`autogrow`** (not `autoGrow`), `resize` (default off → `resize: none`), `simple`, `dense`, `tile`, `minlength`, `maxlength`, `name`, `autocomplete`, `autocapitalize`, `autofocus`, `spellcheck`, `ariaLabelledby`, `inputBackground`, `placeholderBackground`, `size` + shared. Model: `string` (`null` → `''`). Events: `change`, `input`, `blur`, `keydown` + shared. No slots. Exposed: `validate()`.
 
+<!-- generated:api:start STextarea -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**STextarea props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `ariaLabelledby` | `string` | — | no | — |
+| `autocapitalize` | `"on" \| "off"` | — | no | `off`, `on` |
+| `autocomplete` | `string` | — | no | — |
+| `autofocus` | `boolean` | — | no | — |
+| `autogrow` | `boolean` | — | no | — |
+| `cols` | `number` | `20` | no | — |
+| `dense` | `boolean` | — | no | — |
+| `dirty` | `boolean` | — | no | — |
+| `disabled` | `boolean \| null` | — | no | — |
+| `error` | `boolean` | — | no | — |
+| `hideDetails` | `boolean` | — | no | — |
+| `hideError` | `boolean` | — | no | — |
+| `id` | `string` | — | no | — |
+| `inputBackground` | `string` | — | no | — |
+| `label` | `string` | — | no | — |
+| `maxlength` | `string \| number` | — | no | — |
+| `minlength` | `string \| number` | — | no | — |
+| `modelValue` | `string` | `""` | no | — |
+| `name` | `string` | — | no | — |
+| `placeholder` | `string` | — | no | — |
+| `placeholderBackground` | `string` | — | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `resize` | `boolean` | — | no | — |
+| `rows` | `number` | `2` | no | — |
+| `rules` | `FormInputModelValueRule[]` | — | no | — |
+| `simple` | `boolean` | — | no | — |
+| `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` |
+| `spellcheck` | `boolean` | — | no | — |
+| `tile` | `boolean` | — | no | — |
+
+**STextarea slots**
+
+None.
+
+**STextarea events**
+
+| Event | Payload |
+| --- | --- |
+| `autocomplete` | `[HTMLInputElement \| null]` |
+| `blur` | `[Event]` |
+| `change` | `[string]` |
+| `focus` | `[Event]` |
+| `input` | `[Event]` |
+| `keydown` | `[KeyboardEvent]` |
+| `paste` | `[ClipboardEvent]` |
+| `update:dirty` | `[boolean]` |
+| `update:error` | `[boolean]` |
+| `update:errors` | `[string[]]` |
+| `update:modelValue` | `[value: string]` |
+
+<!-- generated:api:end STextarea -->
+
 ## SSelect
 
 Single-value dropdown (no `multiple`, `chips`, `clearable` or `placeholder` — use [SAutocomplete](./autocomplete.md) for those).
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `items` | `Array<SelectItem \| string \| null \| undefined>` | `undefined` | Options |
-| `label` | `string \| null` | `undefined` | Label above, **and** the text shown while nothing is selected |
-| `name` | `string \| null` | `undefined` | Name of a hidden native `<select>` |
-| `dense` / `grow` / `text` / `divided` | `boolean` | `undefined` | Compact / full width / text list style / list dividers |
-| `color` | `string` | `undefined` | List color |
-| `outlined` / `underlined` / `borderRadius` | border props | `undefined` | Activator border |
-| `location`, `offsetX`, `offsetY`, … | menu props | `undefined` | Dropdown positioning |
+<!-- generated:api:start SSelect -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SSelect props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
+| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `closeOnClick` | `boolean` | — | no | — |
+| `closeOnContentClick` | `boolean` | — | no | — |
+| `closeOnScroll` | `boolean` | — | no | — |
+| `color` | `string` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentStyle` | `StyleValue` | — | no | — |
+| `dense` | `boolean` | — | no | — |
+| `dirty` | `boolean` | — | no | — |
+| `disabled` | `boolean \| null` | — | no | — |
+| `divided` | `boolean` | — | no | — |
+| `error` | `boolean` | — | no | — |
+| `grow` | `boolean` | — | no | — |
+| `height` | `string \| number \| null` | — | no | — |
+| `hideDetails` | `boolean` | — | no | — |
+| `hideError` | `boolean` | — | no | — |
+| `id` | `string` | — | no | — |
+| `items` | `(string \| SelectItem \| null \| undefined)[]` | — | no | — |
+| `label` | `string \| null` | — | no | — |
+| `location` | `LocationRaw` | — | no | — |
+| `maxHeight` | `string \| number \| null` | — | no | — |
+| `maxWidth` | `string \| number \| null` | — | no | — |
+| `menu` | `boolean` | — | no | — |
+| `minHeight` | `string \| number \| null` | — | no | — |
+| `minWidth` | `string \| number \| null` | — | no | — |
+| `modelValue` | `T \| null` | — | no | — |
+| `name` | `string \| null` | — | no | — |
+| `offsetX` | `number \| null` | — | no | — |
+| `offsetY` | `number \| null` | — | no | — |
+| `outlined` | `boolean \| null` | — | no | — |
+| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
+| `preventCloseOnClick` | `boolean` | — | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `rules` | `FormInputModelValueRule[]` | — | no | — |
+| `screenPadding` | `number \| null` | — | no | — |
+| `text` | `boolean` | — | no | — |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+| `underlined` | `boolean \| null` | — | no | — |
+| `width` | `string \| number \| null` | — | no | — |
+
+**SSelect slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `activator` | `{ item: SelectItem \| null; value: boolean \| undefined; }` |
+| `dropdownIcon` | `{ color: string \| undefined; value: boolean \| undefined; }` |
+
+**SSelect events**
+
+| Event | Payload |
+| --- | --- |
+| `change` | `[T \| null]` |
+| `update:dirty` | `[boolean]` |
+| `update:error` | `[boolean]` |
+| `update:errors` | `[string[]]` |
+| `update:menu` | `[value: boolean \| undefined]` |
+| `update:modelValue` | `[value: T \| null \| undefined]` |
+
+<!-- generated:api:end SSelect -->
+
+**SSelect notes**
+
+- `items`: Options
+- `label`: Label above, **and** the text shown while nothing is selected
+- `name`: Name of a hidden native `<select>`
+- `dense` / `grow` / `text` / `divided`: Compact / full width / text list style / list dividers
+- `color`: List color
+- `outlined` / `underlined` / `borderRadius`: Activator border
+- `location`, `offsetX`, `offsetY`, …: Dropdown positioning
 
 ```ts
 interface SelectItem { text: string; value: string | number | null | undefined; disabled?: boolean }
@@ -99,6 +325,46 @@ Model: `v-model` — `string | number | null`; `v-model:menu` — open state. Sl
 
 Boolean only. Props: `label`, `color` (preset name only), `size` (`'default' | 'large'`), `block`, `bordered` + shared. Model: `boolean`. Events: `change` (`boolean`) + shared. No `value`, `indeterminate` or array/group model.
 
+<!-- generated:api:start SCheckbox -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SCheckbox props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `block` | `boolean` | — | no | — |
+| `bordered` | `boolean` | — | no | — |
+| `color` | `PresetColor` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `dirty` | `boolean` | — | no | — |
+| `disabled` | `boolean \| null` | — | no | — |
+| `error` | `boolean` | — | no | — |
+| `hideDetails` | `boolean` | — | no | — |
+| `hideError` | `boolean` | — | no | — |
+| `id` | `string` | — | no | — |
+| `label` | `string` | — | no | — |
+| `modelValue` | `boolean` | — | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `rules` | `FormInputModelValueRule[]` | — | no | — |
+| `size` | `"default" \| "large"` | — | no | `default`, `large` |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+
+**SCheckbox slots**
+
+None.
+
+**SCheckbox events**
+
+| Event | Payload |
+| --- | --- |
+| `change` | `[value: boolean]` |
+| `update:dirty` | `[value: boolean]` |
+| `update:error` | `[value: boolean]` |
+| `update:errors` | `[value: string[]]` |
+| `update:modelValue` | `[value: boolean \| undefined]` |
+
+<!-- generated:api:end SCheckbox -->
+
 ## SRadioGroup / SRadio
 
 Options are **`SRadio` children** — there is no `items` prop.
@@ -107,13 +373,147 @@ Options are **`SRadio` children** — there is no `items` prop.
 
 `SRadio` props: `value` (falls back to `:key`), `label`, `id`, `name`, `disabled`, `readonly`, `outlined`, `type` (button type). Slot `label` `{ attrs }`. Event `update:checked` (`boolean`).
 
+<!-- generated:api:start SRadioGroup -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SRadioGroup props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `color` | `string \| null` | — | no | — |
+| `column` | `boolean \| null` | — | no | — |
+| `continuous` | `boolean` | — | no | — |
+| `dirty` | `boolean` | — | no | — |
+| `disabled` | `boolean \| null` | — | no | — |
+| `error` | `boolean` | — | no | — |
+| `grow` | `boolean \| null` | — | no | — |
+| `hideDetails` | `boolean` | — | no | — |
+| `hideError` | `boolean` | — | no | — |
+| `id` | `string` | — | no | — |
+| `mandatory` | `boolean` | — | no | — |
+| `modelValue` | `GroupItemValue` | — | no | — |
+| `name` | `string` | — | no | — |
+| `outlined` | `boolean \| null` | — | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `rules` | `FormInputModelValueRule[]` | — | no | — |
+| `underlined` | `boolean \| null` | — | no | — |
+
+**SRadioGroup slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SRadioGroup events**
+
+| Event | Payload |
+| --- | --- |
+| `change` | `[value: GroupItemValue \| null]` |
+| `update:dirty` | `[value: boolean]` |
+| `update:error` | `[value: boolean]` |
+| `update:errors` | `[value: string[]]` |
+| `update:menu` | `[value: boolean \| null \| undefined]` |
+| `update:modelValue` | `[value: GroupItemValue \| undefined]` |
+
+<!-- generated:api:end SRadioGroup -->
+
+<!-- generated:api:start SRadio -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SRadio props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `activeClass` | `string \| null` | — | no | — |
+| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `disabled` | `boolean \| null` | — | no | — |
+| `id` | `string` | — | no | — |
+| `label` | `string \| null` | — | no | — |
+| `name` | `string \| null` | — | no | — |
+| `outlined` | `boolean \| null` | — | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `selected` | `boolean` | — | no | — |
+| `type` | `ButtonTypeType` | — | no | `button`, `reset`, `submit` |
+| `underlined` | `boolean \| null` | — | no | — |
+| `value` | `string \| number \| boolean` | — | no | — |
+
+**SRadio slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `label` | `{ attrs: { class: { s_radio__label: boolean; 's_radio__label--checked': boolean; }; }; }` |
+
+**SRadio events**
+
+| Event | Payload |
+| --- | --- |
+| `update:checked` | `[value: boolean]` |
+
+<!-- generated:api:end SRadio -->
+
 ## SSwitch
 
 Props: `label`, `color`, `id`, `disabled`, `readonly`. Model: `boolean`. Slot: `label`. Rules/`hideDetails` are typed but ignored — no error display, not registered with `SForm`.
 
+<!-- generated:api:start SSwitch -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SSwitch props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `color` | `string` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `dirty` | `boolean` | — | no | — |
+| `disabled` | `boolean \| null` | — | no | — |
+| `error` | `boolean` | — | no | — |
+| `hideDetails` | `boolean` | — | no | — |
+| `hideError` | `boolean` | — | no | — |
+| `id` | `string` | — | no | — |
+| `label` | `string \| null` | — | no | — |
+| `modelValue` | `boolean` | — | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `rules` | `FormInputModelValueRule[]` | — | no | — |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+
+**SSwitch slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `label` | `{}` |
+
+**SSwitch events**
+
+| Event | Payload |
+| --- | --- |
+| `update:modelValue` | `[value: boolean \| undefined]` |
+
+<!-- generated:api:end SSwitch -->
+
 ## SFormInputError
 
 Props: `errors: string[]` (shows the first, as HTML), `simple: boolean`. For custom inputs.
+
+<!-- generated:api:start SFormInputError -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SFormInputError props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `errors` | `string[]` | `[]` | no | — |
+| `simple` | `boolean \| null` | `false` | no | — |
+
+**SFormInputError slots**
+
+None.
+
+**SFormInputError events**
+
+None.
+
+<!-- generated:api:end SFormInputError -->
 
 ---
 
