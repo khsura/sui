@@ -394,14 +394,20 @@ defineExpose({
   border-spacing: 0;
   background-color: s_getAppColor('card');
 
+  // A flex column, so a height or max-height on STable makes the rows scroll (and the sticky header stick)
+  // while the pagination stays visible below them.
   &__container {
     position: relative;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
   }
 
   &__wrapper {
     display: block;
+    flex: 1 1 auto;
     width: 100%;
+    min-height: 0;
     overflow: auto;
 
     // Property is nonstandard. Avoid using it.
