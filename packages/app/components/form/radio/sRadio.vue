@@ -1,28 +1,31 @@
 <template>
   <div :class="classList" :style="styleListBorder">
-    <!-- tabindex -1: the radio input is the Tab stop; its click bubbles here -->
-    <button :class="classListButton" @click="updateValue" :type="getButtonType(type)" tabindex="-1">
+    <!-- The whole option is the radio's <label>: a click anywhere on it reaches the native input, which is
+         the only interactive element (no button around it), so arrow keys move between the group's radios -->
+    <label :class="classListButton" :for="computedId">
       <input
         :id="computedId"
         type="radio"
-        :name="groupProps?.name ?? name ?? undefined"
+        :name="groupProps?.name ?? name ?? groupName ?? undefined"
         :value="value"
         :checked="isSelected"
         :class="classListInput"
         :disabled="groupProps?.disabled || !!disabled"
+        :aria-label="ariaLabel ?? undefined"
+        @click="updateValue"
       />
       <span :class="classListRadio">
         <slot name="label" :attrs="{ class: classListLabel }">
           <!-- The option's own text: the group's `hideDetails` hides only its error area, not this -->
-          <label v-if="label" :for="computedId" :class="classListLabel">{{ label }}</label>
+          <span v-if="label" :class="classListLabel">{{ label }}</span>
         </slot>
       </span>
-    </button>
+    </label>
   </div>
 </template>
 <script setup lang="ts">
 import { computed, inject, nextTick, useId } from 'vue'
-import { ProviderPropsName } from '@/app/configs'
+import { ProviderName, ProviderPropsName } from '@/app/configs'
 import {
   useBorderService,
   useComponentDefaultsService,
@@ -30,7 +33,6 @@ import {
   useSingleGroupItemService,
 } from '@/app/services'
 import type { PropsBorder, PropsDisabled, PropsSingleGroupItem } from '@/app/definitions'
-import { getButtonType } from '@/app/lib/button'
 import type { ButtonTypeType } from '@/app/types'
 
 const rawProps = defineProps<
@@ -38,6 +40,9 @@ const rawProps = defineProps<
     id?: string
     name?: string | null
     label?: string | null
+    /** Accessible name for a radio without a visible `label` (for example an icon-only option). */
+    ariaLabel?: string | null
+    /** @deprecated The option is a native radio inside a label now; `type` has no effect. */
     type?: ButtonTypeType
   } & PropsDisabled &
     PropsSingleGroupItem &
@@ -47,6 +52,8 @@ const rawProps = defineProps<
 const props = useComponentDefaultsService('SRadio', rawProps)
 const emit = defineEmits<(event: 'update:checked', value: boolean) => void>()
 const groupProps = inject(ProviderPropsName.radioGroupProps)
+// The group's generated name, so its radios form one arrow-key group even without a `name` prop
+const groupName = inject(ProviderName.radioGroupName, null)
 const { toggleGroupItem, isSelected } = useSingleGroupItemService(props)
 const generatedId = useId()
 const computedId = computed(() => props.id ?? generatedId)
@@ -221,8 +228,7 @@ const updateValue = async () => {
 
   // Keyboard focus only, so a mouse click does not leave a ring behind
   &__input:focus-visible + &__radio::before {
-    outline: 2px solid s_getPresetColor('info');
-    outline-offset: 2px;
+    @include s_focusRing();
   }
 }
 </style>

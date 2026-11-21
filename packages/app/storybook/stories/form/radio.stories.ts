@@ -8,6 +8,8 @@ import { createStoryObj } from '@/app/storybook/helpers'
 
 const radio: Meta<typeof SRadioGroup> = {
   title: 'UI Components/Form/Radio',
+  // axe audits every story of this component in CI (keyboard-driven component without a screenshot)
+  tags: ['a11y'],
 }
 
 export default radio
@@ -170,8 +172,9 @@ export const RadioButtonWithoutLabel = createStoryObj<typeof SRadioGroup>({
       },
       template: `
         <SRadioGroup v-bind="args">
-          <SRadio value="value1"></SRadio>
-          <SRadio value="value2"></SRadio>
+          <!-- No visible label, so each radio needs an accessible name -->
+          <SRadio value="value1" aria-label="Value 1"></SRadio>
+          <SRadio value="value2" aria-label="Value 2"></SRadio>
         </SRadioGroup>
       `,
     })

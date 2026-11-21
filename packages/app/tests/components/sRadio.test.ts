@@ -32,8 +32,10 @@ describe('SRadio', () => {
 
     expect(input.attributes('type')).toBe('radio')
     expect(input.attributes('name')).toBe('letter')
+    // the option is the input's <label>; no button around the input (axe: nested-interactive)
     expect(wrapper.find('label').attributes('for')).toBe(input.attributes('id'))
-    expect(wrapper.find('button').attributes('tabindex')).toBe('-1')
+    expect(wrapper.find('label').element.contains(input.element)).toBe(true)
+    expect(wrapper.find('button').exists()).toBe(false)
 
     input.element.focus()
     expect(document.activeElement).toBe(input.element)
@@ -51,12 +53,47 @@ describe('SRadio', () => {
     const input = wrapper.findAll<HTMLInputElement>('input')[1]
 
     input.element.focus()
-    // Space on a focused radio is the browser's click activation; it bubbles to the button
+    // Space (or an arrow key) on a focused radio is the browser's click activation
     input.element.click()
     await flushPromises()
 
     expect(selected.value).toBe('b')
     expect(input.element.checked).toBe(true)
+    wrapper.unmount()
+  })
+
+  test('radios of a group without a name share a generated one, so arrow keys move between them', () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { SApp, SRadio, SRadioGroup },
+        template: `
+          <SApp>
+            <SRadioGroup>
+              <SRadio value="a" label="A" />
+              <SRadio value="b" label="B" />
+            </SRadioGroup>
+          </SApp>
+        `,
+      }),
+    )
+
+    const [first, second] = wrapper.findAll<HTMLInputElement>('input')
+
+    expect(first?.attributes('name')).toBeTruthy()
+    expect(second?.attributes('name')).toBe(first?.attributes('name'))
+    expect(wrapper.find('.s_radioGroup').attributes('role')).toBe('radiogroup')
+    wrapper.unmount()
+  })
+
+  test('forwards aria-label to the input of a radio without a visible label', () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { SApp, SRadio, SRadioGroup },
+        template: `<SApp><SRadioGroup><SRadio value="a" aria-label="Option A" /></SRadioGroup></SApp>`,
+      }),
+    )
+
+    expect(wrapper.find('input').attributes('aria-label')).toBe('Option A')
     wrapper.unmount()
   })
 
