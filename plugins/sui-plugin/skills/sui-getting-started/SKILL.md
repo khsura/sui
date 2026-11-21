@@ -1,6 +1,6 @@
 ---
 name: sui-getting-started
-description: Set up and configure @khsura/sui in a Vue 3 or Nuxt app. Use when installing @khsura/sui (public npm, migrating off the old GitHub Packages registry), wiring createSUI and the SApp root, importing the stylesheets and @mdi/font icons, adding @khsura/sui-nuxt, overriding theme colors or switching dark mode with useTheme, setting app-wide component defaults, setting up vue-i18n for SUI messages and form rules, importing SUI TypeScript types, or looking up shared props, the component list, composables and common mistakes.
+description: Set up and configure @khsura/sui in a Vue 3 or Nuxt app. Use when installing @khsura/sui (public npm, migrating off the old GitHub Packages registry), wiring createSUI and the SApp root, importing the stylesheets and @mdi/font icons, adding @khsura/sui-nuxt, overriding theme colors or switching dark mode with useTheme, setting app-wide component defaults, setting up vue-i18n for SUI messages and form rules, importing SUI TypeScript types, setting up the @khsura/sui-mcp MCP server for Claude Code, Cursor, VS Code or Windsurf, or looking up shared props, the component list, composables and common mistakes.
 ---
 
 # SUI — Getting Started in a consumer app
@@ -330,6 +330,28 @@ Directives (`v-scroll`, `v-resize`) and utility classes: **sui-utilities**.
 | Unknown props (`SDialog title`, `persistent-hint`, `app`) | Silently ignored — check `@types/definitions/props` |
 | `:deep(.s_*) { … !important }` | A prop, a `createSUI({ components })` default, or theme colors |
 | `alpha` hex in `presetColors` | Opaque hex + `color-mix()` where you need translucency |
+
+---
+
+## AI tooling — the SUI MCP server
+
+`@khsura/sui-mcp` is a local stdio MCP server that answers from the `@khsura/sui` version the project installs. Set it up from the app's folder:
+
+```bash
+npx -y @khsura/sui-mcp config            # detects Claude Code / Cursor / VS Code / Windsurf and writes the config
+npx -y @khsura/sui-mcp config --dry-run  # print the planned changes only
+npx -y @khsura/sui-mcp config --client cursor
+```
+
+It merges a `sui` entry (`{ "command": "npx", "args": ["-y", "@khsura/sui-mcp"] }`) into `.mcp.json` (Claude Code), `.cursor/mcp.json` (Cursor) or `.vscode/mcp.json` (VS Code, under `servers` with `"type": "stdio"`), keeping other servers. For Windsurf it prints the snippet for `~/.codeium/windsurf/mcp_config.json`. Restart the client afterwards.
+
+When the server is connected:
+
+- Call `get_component_api` before using a component you have not checked; it reports the project's version. If it says the component needs a newer `@khsura/sui`, upgrade or pick another component.
+- Start common patterns (app shell, validated form, activator overlays, data table, responsive grid, theme setup) from `get_recipe`.
+- Run `validate_sui_template` on every template you write and fix every error before finishing.
+
+Per-client snippets: the package README at https://www.npmjs.com/package/@khsura/sui-mcp and the **AI / MCP** page at https://sui.surakh.com/.
 
 ---
 
