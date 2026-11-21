@@ -4,7 +4,7 @@ import { usePositionService } from './positionService'
 import { useScrollableService } from './scrollableService'
 import { useToolbarService } from './toolbarService'
 import { type PropsAppBar } from '@/app/definitions'
-import { getCleanSetObject, getNumericCssAttribute, isBrowser } from '@/app/lib'
+import { getCleanSetObject, getNumericCssAttribute, getSafeAreaInset, isBrowser } from '@/app/lib'
 import { type ThresholdMetParams } from '@/app/types'
 
 export const useAppBarService = (props: PropsAppBar) => {
@@ -107,6 +107,17 @@ export const useAppBarService = (props: PropsAppBar) => {
     }
   })
 
+  // A hidden fixed bar also slides its notch padding (the top safe-area inset) out of view.
+  const hiddenOffset = computed(() => {
+    const offset = getNumericCssAttribute(computedTransform.value)
+
+    if (!computedTransform.value || !isFixedPosition.value) {
+      return offset
+    }
+
+    return `calc(${offset} - ${getSafeAreaInset('top')})`
+  })
+
   const styles = computed(() => {
     return getCleanSetObject({
       marginLeft: left.value,
@@ -115,7 +126,7 @@ export const useAppBarService = (props: PropsAppBar) => {
       top: isFixedOrAbsolutePosition.value
         ? getNumericCssAttribute(Math.max(app.value.offsetTop - currentScroll.value, 0))
         : undefined,
-      transform: `translateY(${getNumericCssAttribute(computedTransform.value)})`,
+      transform: `translateY(${hiddenOffset.value})`,
     })
   })
 
