@@ -1,4 +1,5 @@
 {
+  "pull-request-footer": "Before merging a minor release: run the [real-iOS release checklist](https://github.com/khsura/sui/blob/main/docs/release/ios-checklist.md) and record the result on this PR.",
   "packages": {
     ".": {
       "release-type": "node"
