@@ -259,7 +259,7 @@ export const ShortPageBottomNavigation = {
           <SMain>
             <SContainer><p>One line of content.</p></SContainer>
           </SMain>
-          <SBottomNavigation v-model="currentTab">
+          <SBottomNavigation v-model="currentTab" :height="56">
             <SButton value="recent"><SIcon icon="mdi-history" /><span>Recent</span></SButton>
             <SButton value="favorites"><SIcon icon="mdi-heart" /><span>Favorites</span></SButton>
             <SButton value="nearby"><SIcon icon="mdi-map-marker" /><span>Nearby</span></SButton>
