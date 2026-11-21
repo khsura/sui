@@ -12,6 +12,8 @@ Every `visual` story is captured in 12 combinations:
 | Theme   | light and dark            |
 | Browser | Chromium and WebKit       |
 
+In CI, PRs into a `feature/**` milestone branch run the **Chromium** projects only (light and dark), to keep task PRs fast; story `play` checks and the axe audit still run. PRs into `main` (milestone releases) and manual workflow runs use the full Chromium + WebKit matrix, so WebKit-only regressions are caught before a release. Baselines for both browsers must still be committed: the CI `update` job and `yarn test:visual:update` always write all projects.
+
 The harness builds a static Storybook (`storybook build`), serves it, and drives it with `@playwright/test`. Each Playwright project is one browser and theme pair, for example `webkit-dark`, and the baselines live in `tests/visual/__screenshots__/<project>/<story-id>--<width>.png`.
 
 The theme comes from the Storybook `theme` global, which the app decorator passes to `useTheme().setTheme()`. You can switch it from the Storybook toolbar too.
