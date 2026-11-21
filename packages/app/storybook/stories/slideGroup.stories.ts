@@ -305,11 +305,24 @@ const getNavigatorButtons = (group: Element) => {
   return { previousButton, nextButton }
 }
 
+// The arrows' disabled state follows the target position, which is set before the smooth scroll runs, so the
+// viewport's own scroll position is the settled end state (WebKit's smooth scroll outlasts the 300ms slide wait).
+const getViewport = (group: Element) => {
+  const viewport = group.querySelector('.s_slideGroup__main')
+
+  if (!viewport) {
+    throw new Error('slide group viewport not found')
+  }
+
+  return viewport
+}
+
 const assertAtStart = (group: Element, label: string) => {
   const { previousButton, nextButton } = getNavigatorButtons(group)
 
   assertThat(previousButton.disabled, `${label}: the left arrow is enabled at the start`)
   assertThat(!nextButton.disabled, `${label}: the right arrow is disabled at the start`)
+  assertThat(getViewport(group).scrollLeft === 0, `${label}: the row has not scrolled back to the start`)
 }
 
 const assertAtEnd = (group: Element, label: string) => {
@@ -317,6 +330,21 @@ const assertAtEnd = (group: Element, label: string) => {
 
   assertThat(!previousButton.disabled, `${label}: the left arrow is disabled at the end`)
   assertThat(nextButton.disabled, `${label}: the right arrow is enabled at the end`)
+  assertThat(getViewport(group).scrollLeft > 0, `${label}: the row has not scrolled`)
+}
+
+// Resolves once the smooth scroll has stopped: the position is unchanged between two `waitFor` polls, which are
+// several animation frames apart.
+const waitForScrollToSettle = async (group: Element) => {
+  let previousScrollLeft: number | null = null
+
+  await waitFor(() => {
+    const { scrollLeft } = getViewport(group)
+    const isSettled = scrollLeft === previousScrollLeft
+
+    previousScrollLeft = scrollLeft
+    assertThat(isSettled, 'the row is still scrolling')
+  })
 }
 
 // Clicks one arrow until it disables itself, waiting out each slide animation (both arrows disable while it runs).
@@ -380,6 +408,7 @@ export const SlideGroupEdges = {
       await waitFor(() => assertAtStart(group, label))
       await clickUntilDisabled(group, (element) => getNavigatorButtons(element).nextButton)
       await waitFor(() => assertAtEnd(group, label))
+      await waitForScrollToSettle(group)
       await clickUntilDisabled(group, (element) => getNavigatorButtons(element).previousButton)
       await waitFor(() => assertAtStart(group, label))
     }
