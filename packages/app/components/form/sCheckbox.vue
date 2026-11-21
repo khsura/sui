@@ -79,6 +79,7 @@ const checkboxClasses = computed(() => {
     's_checkbox--disabled': props.disabled,
     's_checkbox--readonly': props.readonly,
     's_checkbox--error': hasError.value,
+    's_checkbox--details': !props.hideDetails && !props.hideError,
     's_checkbox--size__large': props.size === 'large',
     [`s_checkbox--color__${props.color}`]: getIsPredefinedPresetColor(props.color),
   }
@@ -95,6 +96,13 @@ $s_checkbox--size: 24px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
+  // As a form field (with its error line) the box keeps a gap above it, as a
+  // text field's label does: without it the error message of the field above
+  // ran into the box.
+  &--details {
+    padding-top: calc($s_spacer * 2);
+  }
 
   &__container {
     position: relative;
