@@ -36,10 +36,12 @@ const { measurableStyles } = useMeasurableStylesService(props)
 const activatorElement = useTemplateRef('activatorElement')
 const contentElement = useTemplateRef('contentElement')
 
-const { activatorOn, activatorAttrs, contentClasses, contentStyles, updateLocation } = useMenuService(props, model, {
-  activatorElement,
-  contentElement,
-})
+const { activatorOn, activatorAttrs, contentClasses, contentStyles, updateLocation } = useMenuService(
+  props,
+  model,
+  { activatorElement, contentElement },
+  { keepInViewport: true },
+)
 
 const computedContentStyles = computed(() => {
   return {
