@@ -98,5 +98,6 @@ Other `SMenu` props are accepted by the types but are not meaningful for a toolt
 | `disabled` to suppress the tooltip | Not supported — hover still opens it; use `v-if` on the tooltip |
 
 - The activator wrapper is a block `<div>`; wrap inline text if layout matters.
+- Long text wraps at 320px (less on narrow screens), and the tooltip flips or shifts to stay 8px inside the viewport.
 - The app must be wrapped in `<SApp>` (tooltips teleport into its overlay container).
 - `opacity` appears in the prop types but has no effect.

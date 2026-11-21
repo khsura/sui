@@ -58,7 +58,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsMenu.d.ts`
 - `closeOnScroll`: Close on window scroll
 - `position`: `'fixed'` positions relative to the viewport (use inside fixed containers)
 - `offsetX` / `offsetY`: Extra offset in px
-- `screenPadding`: Shift left by this many px when the menu would overflow the right edge
+- `screenPadding`: Gap in px the menu keeps from the viewport edges (default 8)
 - `contentClass`: Classes on the content element
 - `contentStyle`: Styles on the content element
 - `preventCloseOnClick`: Activator click only opens, never closes
@@ -105,3 +105,6 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsMenu.d.ts`
 
 - The app must be wrapped in `<SApp>` (menus teleport into its overlay container).
 - `closeOnClick` exists in the prop types but has no effect; outside clicks always close the menu.
+- The menu stays inside the viewport: it flips above or below its activator when the other side has room, otherwise shifts, and keeps an 8px gutter from every edge (`screenPadding` overrides the gutter). It follows its activator when the page or a scroll container scrolls, so a row menu inside an `SList` or table is safe.
+- The menu is as wide as its items (capped at 90vw), so list titles are not cut off.
+- Esc closes the menu and returns focus to the activator.
