@@ -15,7 +15,7 @@ const email = ref('')
         <s-button v-bind="attrs" :block="true" v-on="on">Details</s-button>
       </template>
       <SForm>
-        <SInput v-model="email" label="Email" type="email" placeholder="you@example.com" :rules="[]" />
+        <SInput v-model="email" label="Email" type="text" autocomplete="email" placeholder="you@example.com" :rules="[]" />
       </SForm>
     </SDialog>
   </SLayout>

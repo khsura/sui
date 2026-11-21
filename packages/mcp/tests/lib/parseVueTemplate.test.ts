@@ -16,6 +16,16 @@ describe('parseVueTemplate', () => {
     expect(button?.loc.start).toMatchObject({ line: 4, column: 3 })
   })
 
+  it('returns the script contents of an SFC and none for a fragment', () => {
+    const { scriptSource } = parseVueTemplate(
+      '<script lang="ts">\nexport const a = 1\n</script>\n<script setup>\nconst b = ref(\'\')\n</script>\n<template><SButton /></template>',
+    )
+
+    expect(scriptSource).toContain('export const a = 1')
+    expect(scriptSource).toContain("const b = ref('')")
+    expect(parseVueTemplate('<SButton />').scriptSource).toBe('')
+  })
+
   it('returns no root for an SFC without a template', () => {
     expect(parseVueTemplate('<script setup>\nconst a = 1\n</script>').root).toBeNull()
   })

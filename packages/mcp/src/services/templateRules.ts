@@ -22,6 +22,7 @@ import {
 } from '../constants'
 import { levenshteinDistance, toCamelCase } from '../lib'
 import { codeList, isDirective, positionOf, slotDirectives, staticArgument } from '../utils'
+import { behaviourRules } from './behaviourRules'
 import { compositionRules } from './compositionRules'
 
 const findProp = (component: SuiApiComponent, attributeName: string) => {
@@ -218,11 +219,12 @@ export const unknownSlotRule: TemplateRule = {
   },
 }
 
-/** The rules this validator runs, in order: API checks first, then the composition rules. */
+/** The rules this validator runs, in order: API checks first, then the composition and behaviour rules. */
 export const templateRules: TemplateRule[] = [
   unknownComponentRule,
   unknownPropRule,
   invalidEnumValueRule,
   unknownSlotRule,
   ...compositionRules,
+  ...behaviourRules,
 ]
