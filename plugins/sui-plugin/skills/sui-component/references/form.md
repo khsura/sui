@@ -33,7 +33,7 @@ Shared events: `update:error` (`boolean`), `update:errors` (`string[]`), `update
 
 ## SForm
 
-Renders a native `<form novalidate>` and collects child inputs. Native browser validation is off, so `type="email"` / `required` never show the browser bubble over the SUI error; validate with `rules`. `:novalidate="false"` turns it back on.
+Renders a native `<form novalidate>` and collects child inputs. Native browser validation is off, so `type="email"` / `required` never show the browser bubble over the SUI error; validate with `rules`. `:novalidate="false"` turns it back on. Before 1.20.0 `SForm` did not add `novalidate`; add it yourself there.
 
 Every validated field reserves one error line under itself. In an action row (field + button), set `hide-details` / `hide-error` on the field so the button lines up with the field. Field labels are inset 16px to line up with the value text inside the field.
 

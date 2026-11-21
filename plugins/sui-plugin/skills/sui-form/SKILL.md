@@ -18,9 +18,9 @@ Then generate a complete Vue SFC using these rules:
 **Form rules:**
 
 - Wrap everything in `<SForm ref="formRef" @submit.prevent="submit">` and validate in `submit` (see **SForm.validate()** below — its return value is inverted from what you'd expect)
-- `SForm` renders `<form novalidate>`: the SUI `rules` are the only validation, so `type="email"`, `required` or `pattern` never pop the browser's own bubble over the SUI error. Validate emails with a rule. `:novalidate="false"` turns native validation back on
-- Every validated field reserves one line under itself for its error message, so the rhythm stays even when errors appear. In an action row (a field next to a button), put `hide-details` (or `hide-error`) on the field so the button lines up with the field instead of the label
-- Bind an empty `SDatePickerInput` as `''` or `null` — both mean "no date"
+- `SForm` renders `<form novalidate>`: the SUI `rules` are the only validation, so `type="email"`, `required` or `pattern` never pop the browser's own bubble over the SUI error. Validate emails with a rule. `:novalidate="false"` turns native validation back on. Before 1.20.0 `SForm` did not add `novalidate`; add it yourself there
+- Every validated field reserves one line under itself for its error message, so the rhythm stays even when errors appear. In an action row (a field next to a button), put `hide-details` (or `hide-error`) on the field so the button lines up with the field instead of the label. `SCheckbox` keeps its label with `hide-details` (before 1.20.0 it hid it; use `hide-error` there)
+- Bind an empty `SDatePickerInput` as `''` or `null` — both mean "no date" (before 1.20.0 `''` opened on "Invalid date"; use `null` there)
 - Use `SInput` for text/email/password/number — always include `label` and `v-model`
 - Use `STextarea` for multi-line text (add `autogrow` if height should expand — all lowercase, not `auto-grow`). For a character count use its `counter` prop (with `maxlength`: `12 / 200`), never a `<p>` after the field — that lands below the reserved error line, far from the field
 - Use `SSelect` for a plain single-value dropdown — `items` must be `SelectItem[]` or `string[]`. Type `SelectItem` from `@khsura/sui` (`text`, `value`, optional `disabled`). It is outlined like `SInput` by default, never repeats its `label` inside the field (use `placeholder` for an empty-state hint) and is as wide as its longest option — add `grow` for full width. **SSelect has no `multiple`, `chips` or `clearable`** — when you need any of those, use `SAutocomplete`.

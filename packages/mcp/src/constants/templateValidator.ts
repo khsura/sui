@@ -79,6 +79,13 @@ export const RULE_BLOCK_BUTTONS_IN_ROW = 'block-buttons-in-row'
 export const RULE_CARD_TITLE_TEXT_ALIGN = 'card-title-text-align'
 export const RULE_DATE_PICKER_EMPTY_STRING = 'date-picker-empty-string'
 
+/**
+ * The first `@khsura/sui` release with the M2 hardening fixes (SForm `novalidate`, SCheckbox label with
+ * `hide-details`, `''` as "no date", snackbar action colour, SCardTitle `s_textAlign__*`). Rules for
+ * those behaviours set it as `fixedIn`, so they only warn for projects on an older version.
+ */
+export const SUI_M2_FIXES_VERSION = '1.20.0'
+
 /** Which elements the engine hands a rule: SUI components only (the default) or every element. */
 export const RULE_TARGET_SUI_COMPONENT = 'sui-component'
 export const RULE_TARGET_ANY_ELEMENT = 'any-element'
@@ -161,9 +168,14 @@ export const SNACKBAR_ACTION_SLOT_NAME = 'action'
 export const COLOR_ATTRIBUTE = 'color'
 export const VARIANT_ATTRIBUTE = 'variant'
 export const TEXT_BUTTON_VARIANT = 'text'
+/** Action variants that, before the M2 fix, kept the page's dark text colour on the dark snackbar when no `color` was set. */
+export const SNACKBAR_UNCOLOURED_ACTION_VARIANTS = ['text', 'icon']
+/** `s_textColor__*` sets a button's text colour, which also keeps an uncoloured action readable. */
+export const TEXT_COLOR_CLASS_PREFIX = 's_textColor__'
 /** Preset colours below 4.5:1 as text on the default `#424242` snackbar (primary is 2.18:1). */
 export const SNACKBAR_UNREADABLE_PRESET_COLORS = ['primary', 'secondary', 'success', 'info', 'error']
 export const SNACKBAR_READABLE_ACTION_COLOR = 'warning'
+export const SNACKBAR_LIGHT_ACTION_COLOR_HINT = `\`color="${SNACKBAR_READABLE_ACTION_COLOR}"\` or a CSS colour such as \`color="#ffffff"\``
 
 export const BLOCK_ATTRIBUTE = 'block'
 export const MIN_BLOCK_BUTTONS_IN_ROW = 2

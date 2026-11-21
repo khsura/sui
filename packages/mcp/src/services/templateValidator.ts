@@ -3,7 +3,7 @@ import type { ElementNode, ParentNode } from '@vue/compiler-dom'
 import { NodeTypes } from '@vue/compiler-dom'
 import type { TemplateIssue, TemplateParseError, TemplateRule } from '../types'
 import { RULE_PARSE_ERROR, RULE_TARGET_ANY_ELEMENT, SEVERITY_ERROR } from '../constants'
-import { parseVueTemplate } from '../lib'
+import { isVersionAtLeast, parseVueTemplate } from '../lib'
 import { isSuiComponentTag } from '../utils'
 import { useComponentCatalogService } from './componentCatalog'
 import { templateRules } from './templateRules'
@@ -39,19 +39,28 @@ const byPosition = (left: TemplateIssue, right: TemplateIssue): number =>
 /** Validates SUI usage in a `.vue` SFC or template fragment against one `sui-api.json`. */
 export const useTemplateValidatorService = (api: SuiApi, rules: TemplateRule[] = templateRules) => {
   const catalog = useComponentCatalogService(api)
+  const apiVersion = api.version
+  const activeRules = rules.filter((rule) => !rule.fixedIn || !isVersionAtLeast(apiVersion, rule.fixedIn))
 
   const validate = (code: string): TemplateIssue[] => {
     const { root, errors, scriptSource } = parseVueTemplate(code)
     const elements = root ? placedElements(root) : []
 
     const ruleIssues = elements.flatMap(({ element, ancestors }) => {
-      const applicableRules = rules.filter((rule) => appliesTo(rule, element.tag))
+      const applicableRules = activeRules.filter((rule) => appliesTo(rule, element.tag))
 
       if (!applicableRules.length) {
         return []
       }
 
-      const context = { element, ancestors, lookup: catalog.findComponent(element.tag), api, scriptSource }
+      const context = {
+        element,
+        ancestors,
+        lookup: catalog.findComponent(element.tag),
+        api,
+        apiVersion,
+        scriptSource,
+      }
 
       return applicableRules.flatMap((rule) => rule.check(context))
     })

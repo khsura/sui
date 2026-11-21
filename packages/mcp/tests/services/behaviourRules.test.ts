@@ -1,11 +1,18 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import type { SuiApi } from '@khsura/shared/types'
 import type { TemplateIssue } from '../../src/types'
+import { SUI_M2_FIXES_VERSION } from '../../src/constants'
 import { useTemplateValidatorService } from '../../src/services'
 import { fixtureApi } from '../testTemplates'
 
-const validate = (code: string): TemplateIssue[] => useTemplateValidatorService(fixtureApi).validate(code)
-const issuesOf = (rule: string, code: string): TemplateIssue[] => validate(code).filter((issue) => issue.rule === rule)
+/** The fixture API is 1.18.3, so the version-gated rules fire unless a test passes a newer one. */
+const validateWith = (api: SuiApi, code: string): TemplateIssue[] => useTemplateValidatorService(api).validate(code)
+
+const issuesWith = (api: SuiApi, rule: string, code: string): TemplateIssue[] =>
+  validateWith(api, code).filter((issue) => issue.rule === rule)
+
+const issuesOf = (rule: string, code: string): TemplateIssue[] => issuesWith(fixtureApi, rule, code)
 
 /** A page from the AI eval (`docs/ai-eval/<run>/pages`) that showed the misuse. */
 const readEvalPage = (run: 'baseline' | 'with-mcp', fileName: string): string =>
@@ -218,6 +225,72 @@ describe('behaviour rules', () => {
         [8, 31],
         [12, 15],
       ])
+    })
+  })
+
+  describe('version gates', () => {
+    const olderApi: SuiApi = { ...fixtureApi, version: '1.19.4' }
+    const fixedApi: SuiApi = { ...fixtureApi, version: SUI_M2_FIXES_VERSION }
+    const newerApi: SuiApi = { ...fixtureApi, version: '1.21.0' }
+
+    const snackbar = (button: string): string =>
+      `<SSnackbar v-model="open"><template #action>${button}</template></SSnackbar>`
+
+    const rulesWith = (api: SuiApi, code: string): string[] => validateWith(api, code).map((issue) => issue.rule)
+
+    it.each([
+      ['native-validation-in-form', '<SForm><SInput type="email" /></SForm>'],
+      ['hide-details-hides-label', '<SCheckbox label="Remember me" hide-details />'],
+      ['card-title-text-align', '<SCardTitle class="s_textAlign__center">Title</SCardTitle>'],
+      ['date-picker-empty-string', '<SDatePickerInput model-value="" />'],
+      ['snackbar-action-contrast', snackbar('<SButton variant="text">Undo</SButton>')],
+    ])('%s fires before the fix and stays silent from it on', (rule, code) => {
+      expect(rulesWith(olderApi, code)).toContain(rule)
+      expect(rulesWith(fixedApi, code)).not.toContain(rule)
+      expect(rulesWith(newerApi, code)).not.toContain(rule)
+    })
+
+    it('keeps the gated rules when the version is not semver', () => {
+      expect(rulesWith({ ...fixtureApi, version: 'dev' }, '<SForm><SInput type="email" /></SForm>')).toContain(
+        'native-validation-in-form',
+      )
+    })
+
+    describe('snackbar-action-contrast', () => {
+      const rule = 'snackbar-action-contrast'
+
+      it.each([
+        ['a text action', '<SButton variant="text">Undo</SButton>'],
+        ['an icon action', '<SButton variant="icon" icon="close" aria-label="Close" />'],
+      ])('reports %s without a colour before the fix', (_, button) => {
+        const [issue] = issuesWith(olderApi, rule, snackbar(button))
+
+        expect(issue).toMatchObject({ severity: 'warning', recipe: 'activator-overlays' })
+        expect(issue.message).toContain(`Before @khsura/sui ${SUI_M2_FIXES_VERSION}`)
+        expect(issue.fixHint).toContain('color="warning"')
+      })
+
+      it.each([
+        ['a filled button', '<SButton>Undo</SButton>'],
+        ['a text-colour class', '<SButton variant="text" class="s_textColor__warning">Undo</SButton>'],
+        ['a bound colour', '<SButton variant="text" :color="actionColor">Undo</SButton>'],
+      ])('passes %s before the fix', (_, button) => {
+        expect(issuesWith(olderApi, rule, snackbar(button))).toEqual([])
+      })
+
+      it('keeps warning on an explicit low-contrast colour from the fix on', () => {
+        const [issue] = issuesWith(fixedApi, rule, snackbar('<SButton variant="text" color="primary">Undo</SButton>'))
+
+        expect(issue).toMatchObject({ severity: 'warning', recipe: 'activator-overlays' })
+        expect(issue.fixHint).toContain('Remove `color`')
+      })
+
+      it('does not suggest removing the colour before the fix', () => {
+        const [issue] = issuesWith(olderApi, rule, snackbar('<SButton variant="text" color="primary">Undo</SButton>'))
+
+        expect(issue.fixHint).not.toContain('Remove `color`')
+        expect(issue.fixHint).toContain('color="warning"')
+      })
     })
   })
 })
