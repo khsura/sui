@@ -19,6 +19,7 @@ const { tagName } = useTagService(props)
   flex-wrap: wrap;
   align-items: center;
   padding: $s_cardItemPadding;
-  word-break: break-all;
+  // Wrap between words; split a word only when it is wider than the card on its own.
+  overflow-wrap: anywhere;
 }
 </style>
