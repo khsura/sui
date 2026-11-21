@@ -1,6 +1,12 @@
 {
   "name": "@khsura/sui",
   "version": "1.18.3",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khsura/sui.git",
+    "directory": "packages/app"
+  },
+  "homepage": "https://sui.surakh.com/",
   "type": "module",
   "scripts": {
     "prebuild": "yarn g:rimraf dist && yarn g:rimraf @types && yarn g:rimraf .claude-plugin && yarn g:rimraf sui-plugin",
@@ -25,6 +31,10 @@
     ".claude-plugin",
     "sui-plugin"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "main": "./dist/s-ui.umd.cjs",
   "module": "./dist/s-ui.js",
   "types": "./@types/index.d.ts",
