@@ -186,7 +186,7 @@ None.
 - `min` / `max`: Bounds for the popup and carousel buttons (default: ±5 years around `today` (picker))
 - `rules`: Validation rules
 - `hideDetails`: Hide label and error area
-- Model: `''` and `null` both mean no date. Near the viewport bottom the picker opens above the field
+- Model: `''` and `null` both mean no date (before 1.20.0 `''` opened the picker on "Invalid date"; use `null` there). Near the viewport bottom the picker opens above the field
 - `hideError`: Hide the error message
 - `id`: Input id (default: auto)
 - `disabled` / `readonly`: Native input states; disable carousel buttons

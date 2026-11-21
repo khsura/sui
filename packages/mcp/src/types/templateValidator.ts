@@ -41,6 +41,8 @@ export interface TemplateRuleContext {
   /** The catalog lookup for the tag; never found for a native element. */
   lookup: ComponentLookup
   api: SuiApi
+  /** The `@khsura/sui` version of the resolved `sui-api.json`, for checks that depend on the installed release. */
+  apiVersion: string
   /** The SFC's script contents, for checks that need a model's initial value; empty for a fragment. */
   scriptSource: string
 }
@@ -50,6 +52,8 @@ export interface TemplateRule {
   id: string
   /** Elements the engine runs the check on; SUI components when omitted. */
   target?: TemplateRuleTarget
+  /** The `@khsura/sui` version (semver) whose component fix made the rule obsolete; the engine skips it from there on. */
+  fixedIn?: string
   check: (context: TemplateRuleContext) => TemplateIssue[]
 }
 
