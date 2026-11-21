@@ -16,6 +16,8 @@ export type PropsTextarea<T extends FormInputModelValue = string> = {
   simple?: boolean | undefined
   minlength?: string | number | undefined
   maxlength?: string | number | undefined
+  /** Shows the character count (`12 / 200` with `maxlength`) at the right of the error line, right under the field. */
+  counter?: boolean | undefined
   ariaLabelledby?: string | undefined
   name?: string | undefined
   dense?: boolean | undefined

@@ -28,7 +28,10 @@
       @input="(event) => onEvent('input', event)"
       @blur="(event) => onEvent('blur', event)"
     />
-    <kFormInputError v-if="!hideDetails && !hideError" :errors="errors" :simple="simple"></kFormInputError>
+    <div v-if="!hideDetails && (!hideError || counter)" class="s_textarea__details">
+      <kFormInputError v-if="!hideError" class="s_textarea__error" :errors="errors" :simple="simple"></kFormInputError>
+      <span v-if="counter" class="s_textarea__counter">{{ counterText }}</span>
+    </div>
   </section>
 </template>
 
@@ -88,6 +91,13 @@ const inputStyleList = computed(() => {
     ...(!isPresetInputBackground.value ? { backgroundColor: props.inputBackground } : {}),
     ...(textareaHeight.value ? { height: textareaHeight.value, overflow: 'hidden' } : {}),
   }
+})
+
+// `12 / 200` with a maxlength, otherwise just the character count.
+const counterText = computed(() => {
+  const length = model.value.length
+
+  return props.maxlength ? `${length} / ${props.maxlength}` : `${length}`
 })
 
 const onEvent = async (name?: string, event?: Event | KeyboardEvent) => {
@@ -185,6 +195,25 @@ $inputPadding: calc($s_spacer * 2);
     @include s_typography('caption');
     display: block;
     padding: $s_spacer calc($s_spacer * 4);
+    color: s_getAppColor('secondaryText');
+  }
+
+  // The error message and the counter share the line under the field.
+  &__details {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &__error {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  &__counter {
+    @include s_typography('caption');
+    flex: 0 0 auto;
+    padding: $s_spacer calc($s_spacer * 4);
+    margin-left: auto;
     color: s_getAppColor('secondaryText');
   }
 
