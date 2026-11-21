@@ -26,7 +26,7 @@ describe('runConfigCommand', () => {
     const { exitCode, stdout } = run(['--client', 'claude-code', '--project', projectDir])
 
     expect(exitCode).toBe(0)
-    expect(stdout).toContain(`Claude Code: ${join(projectDir, '.mcp.json')} created.`)
+    expect(stdout).toContain(`Claude Code: ${join(projectDir, '.mcp.json')}: created with the "sui" server.`)
     expect(JSON.parse(readFileSync(join(projectDir, '.mcp.json'), 'utf8')).mcpServers.sui.command).toBe('npx')
   })
 
@@ -34,7 +34,7 @@ describe('runConfigCommand', () => {
     const { exitCode, stdout, cwd } = run(['--client', 'cursor', '--dry-run'])
 
     expect(exitCode).toBe(0)
-    expect(stdout).toContain('would be created. New contents:')
+    expect(stdout).toContain('would be created with the "sui" server. New contents:')
     expect(stdout).toContain('"@khsura/sui-mcp"')
     expect(existsSync(join(cwd, '.cursor', 'mcp.json'))).toBe(false)
   })

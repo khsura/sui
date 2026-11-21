@@ -4,6 +4,7 @@ import type { ClientConfigPlan, ConfigCommandIo, ConfigCommandOptions, McpClient
 import { configUsage } from '../configs'
 import {
   CONFIG_ACTION_PRINT,
+  CONFIG_STATUS_CREATED,
   CONFIG_STATUS_UNCHANGED,
   EXIT_CODE_FAILURE,
   EXIT_CODE_SUCCESS,
@@ -57,11 +58,14 @@ const describePlan = (plan: ClientConfigPlan, dryRun: boolean): string => {
     return `${target.label}: ${path} already has the "${SUI_SERVER_ENTRY_NAME}" server; nothing to do.`
   }
 
-  const verb = dryRun ? `would be ${merged.status}` : merged.status
+  const change =
+    merged.status === CONFIG_STATUS_CREATED
+      ? `created with the "${SUI_SERVER_ENTRY_NAME}" server`
+      : `"${SUI_SERVER_ENTRY_NAME}" server ${merged.status}`
 
   return dryRun
-    ? [`${target.label}: ${path} ${verb}. New contents:`, merged.text].join('\n')
-    : `${target.label}: ${path} ${verb}.`
+    ? [`${target.label} (dry run): ${path}: would be ${change}. New contents:`, merged.text].join('\n')
+    : `${target.label}: ${path}: ${change}.`
 }
 
 const errorMessage = (error: unknown): string => (error instanceof Error ? error.message : String(error))
