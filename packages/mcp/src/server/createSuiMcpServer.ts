@@ -7,6 +7,7 @@ import {
   registerListComponentsTool,
   registerListGuidesTool,
   registerPingTool,
+  registerValidateSuiTemplateTool,
 } from '../handlers'
 import { resolveSuiApi } from '../services'
 
@@ -26,6 +27,7 @@ export const createSuiMcpServer = (
   registerGetComponentApiTool(server, loadSuiApi)
   registerListGuidesTool(server, guideSourceOptions)
   registerGetGuideTool(server, guideSourceOptions)
+  registerValidateSuiTemplateTool(server, loadSuiApi)
 
   return server
 }
