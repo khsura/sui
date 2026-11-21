@@ -89,7 +89,6 @@ const classList = computed(() => {
 const classListButton = computed(() => {
   return {
     s_radio__button: true,
-    's_radio__button--notSet': groupProps?.modelValue === null || groupProps?.modelValue === undefined,
     [`s_radio__button--color__${groupProps?.color}`]: !!groupProps?.color,
     ...classListBorder.value,
     's_radio__button--grow': groupProps?.grow,
@@ -165,13 +164,14 @@ const updateValue = async () => {
       }
     }
 
-    &--notSet {
-      background-color: s_getAppColor('inputPlaceholderShown');
-    }
-
     &--grow {
       flex: 1;
       justify-content: start;
+    }
+
+    // An option is a radio and its text, never a filled chip: a disabled option is only faded.
+    &.s_disabled {
+      background-color: transparent;
     }
   }
 
