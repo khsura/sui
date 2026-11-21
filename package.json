@@ -16,7 +16,7 @@
     "g:vite-node": "cd $INIT_CWD && vite-node",
     "g:eslint": "cd $INIT_CWD && eslint",
     "g:stylelint": "cd $INIT_CWD && stylelint",
-    "g:publish": "cd $INIT_CWD && yarn npm publish --tolerate-republish",
+    "g:publish": "cd $INIT_CWD && node ../../scripts/publishIfNew.mjs",
     "g:tsc": "cd $INIT_CWD && vue-tsc && tsc-alias",
     "g:sass": "cd $INIT_CWD && sass",
     "build": "nx run-many --target=build --all",

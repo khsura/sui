@@ -8,7 +8,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
-  id-token: write # npm provenance (OIDC) for `yarn npm publish --provenance`
+  id-token: write # npm Trusted Publishing (OIDC): no npm token, provenance attached automatically
 
 env:
   HUSKY: 0
@@ -36,7 +36,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24" # ships npm >= 11.5.1, required for Trusted Publishing
           registry-url: "https://registry.npmjs.org"
         if: ${{ steps.release.outputs.release_created }}
 
@@ -54,10 +54,7 @@ jobs:
 
       # Builds and publishes every package with a `release` target (@khsura/sui, then @khsura/sui-mcp,
       # which bundles the app's dist/sui-api.json) to public npm. Versions already on npm are skipped.
+      # Auth: npm Trusted Publishing for khsura/sui + release-please.yaml (configured on npmjs.com) — no secret.
       - name: Run publish
         run: yarn release
         if: ${{ steps.release.outputs.release_created }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          YARN_NPM_PUBLISH_PROVENANCE: "true" # same as `yarn npm publish --provenance`
