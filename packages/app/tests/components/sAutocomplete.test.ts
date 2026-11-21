@@ -285,3 +285,17 @@ describe('SAutocomplete - menu placed above the field', () => {
     expect(menuBottom()).toBe(FIELD_TOP)
   })
 })
+
+describe('SAutocomplete - native autocomplete attribute', () => {
+  test('turns the browser form history off by default, so only its menu opens', () => {
+    const { input } = setup()
+
+    expect(input.attributes('autocomplete')).toBe('off')
+  })
+
+  test('keeps an autocomplete value the caller passes', () => {
+    const { input } = setup({ autocomplete: 'on' })
+
+    expect(input.attributes('autocomplete')).toBe('on')
+  })
+})
