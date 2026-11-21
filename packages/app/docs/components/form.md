@@ -185,7 +185,7 @@ Multi-line text input.
 
 Single-value dropdown selection input. It has no `multiple`, `chips` or `clearable` props — use `SAutocomplete` for those.
 
-It is outlined by default, like `SInput` (`:outlined="false"` for the borderless, shadowed look), and as wide as its longest option or placeholder, like a native select (`grow` for full width). A long selected text is clipped with an ellipsis.
+It is outlined by default, like `SInput` (`:outlined="false"` for the borderless, shadowed look), and as wide as its longest option or placeholder, like a native select (`grow` for full width). A long selected text is clipped with an ellipsis. In the list, a long option stays on one line and ends in an ellipsis, with its full text in a `title` tooltip (as in `SAutocomplete`).
 
 ### Props (extends common form props)
 

@@ -727,3 +727,69 @@ export const FieldsInNarrowBox = {
     await expect(dateInput && getComputedStyle(dateInput).textOverflow).toBe('ellipsis')
   },
 } satisfies StoryObj
+
+// Longer than 90vw at 1280px, so the option is truncated at every width.
+const LONG_OPTION_TEXT =
+  'An option with a very long name that keeps going and going, far wider than the dropdown list can ever be, ' +
+  'so it must be cut off with an ellipsis instead of being clipped mid-glyph at the edge of the list'
+
+const longOptionItems: SelectItem[] = [
+  { text: 'Short option', value: 'short' },
+  { text: LONG_OPTION_TEXT, value: 'long' },
+]
+
+/** The long option shows one line ending in an ellipsis, and its full text in a `title` tooltip. */
+const assertLongOptionTruncated = (selector: string) => {
+  const option = [...document.querySelectorAll<HTMLElement>(selector)].find(
+    (element) => element.title === LONG_OPTION_TEXT,
+  )
+
+  assertThat(Boolean(option), `no ${selector} with the full text in its title`)
+  if (!option) {
+    return
+  }
+
+  assertThat(getComputedStyle(option).textOverflow === 'ellipsis', `${selector} has no text-overflow: ellipsis`)
+  assertThat(option.scrollWidth > option.clientWidth, `${selector} is not truncated`)
+  assertInsideViewport(option)
+}
+
+export const SelectLongOption = {
+  tags: ['visual'],
+  render: () =>
+    defineComponent({
+      components: stressComponents,
+      setup: () => ({ longOptionItems, value: ref('short') }),
+      template: `<SSelect v-model="value" label="Option" :items="longOptionItems" hide-details />`,
+    }),
+  play: async ({ canvasElement, userEvent }) => {
+    const activator = canvasElement.querySelector('.s_select__activator')
+
+    await expect(activator).toBeInTheDocument()
+    if (activator) {
+      await userEvent.click(activator)
+    }
+
+    await waitFor(() => assertLongOptionTruncated('.s_select__list .s_select__item'))
+  },
+} satisfies StoryObj
+
+export const AutocompleteLongOption = {
+  tags: ['visual'],
+  render: () =>
+    defineComponent({
+      components: stressComponents,
+      setup: () => ({ longOptionItems, value: ref(null) }),
+      template: `<SAutocomplete v-model="value" label="Option" :items="longOptionItems" hide-details />`,
+    }),
+  play: async ({ canvasElement, userEvent }) => {
+    const input = canvasElement.querySelector('input')
+
+    await expect(input).toBeInTheDocument()
+    if (input) {
+      await userEvent.click(input)
+    }
+
+    await waitFor(() => assertLongOptionTruncated('.s_autocomplete__list .s_autocomplete__itemText'))
+  },
+} satisfies StoryObj

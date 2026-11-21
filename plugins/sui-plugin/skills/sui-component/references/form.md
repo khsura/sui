@@ -353,7 +353,7 @@ Single-value dropdown (no `multiple`, `chips`, `clearable` or `placeholder` — 
 - `items`: Options
 - `label`: Label above the field (never repeated inside it)
 - `placeholder`: Text shown in the field while nothing is selected
-- Width: as wide as the longest option or placeholder, like a native select; a long selection is clipped with an ellipsis
+- Width: as wide as the longest option or placeholder, like a native select; a long selection is clipped with an ellipsis; a long option in the list stays on one line with an ellipsis and its full text in `title`
 - `name`: Name of a hidden native `<select>`
 - `dense` / `grow` / `text` / `divided`: Compact / full width / text list style / list dividers
 - `color`: List color
