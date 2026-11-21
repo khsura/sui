@@ -142,7 +142,7 @@ Text input with a date picker popup. Optionally renders prev/next **carousel** b
 
 ## Model
 
-`v-model` — the date string in the format of `type` (`'YYYY-MM-DD'`, `'YYYY-MM'` or `'YYYY'`). `''` and `null` both mean no date. Near the bottom of the viewport the picker opens above the field. A long label or error message wraps at the field width instead of widening the field.
+`v-model` — the date string in the format of `type` (`'YYYY-MM-DD'`, `'YYYY-MM'` or `'YYYY'`). `''` and `null` both mean no date. The picker stays inside the viewport with an 8px gutter: near the bottom it opens above the field when there is room there, and near the right edge it shifts left. A long label or error message wraps at the field width instead of widening the field.
 
 ## Events
 
