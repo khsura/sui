@@ -139,7 +139,8 @@ app.use(
 ```
 
 - **`presetColors` keys:** `primary`, `secondary`, `success`, `info`, `warning`, `important`, `error` — usable as `color="..."` on components. Extra keys you add become usable too.
-- **`appColors` keys:** `appBar`, `title`, `text`, `secondaryText`, `anchor`, `background`, `card`, `button`, `switch`, `border`, `disabled`, `snackbar`, `inputPlaceholderShown`, `textErrorHover`.
+- **`appColors` keys:** `appBar`, `title`, `text`, `secondaryText`, `anchor`, `background`, `card`, `button`, `switch`, `border`, `disabled`, `snackbar`, `inputPlaceholderShown`, `textErrorHover`, `textError`, `focusRing`.
+- **Contrast:** each preset's text colour (`--s-color-<name>--text`) is the light or dark theme `text` colour with the higher WCAG contrast ratio. Pick preset values that reach 4.5:1 with one of them; `getContrastRatio` is not exported, so check with any contrast tool. `textError` (form error text) must reach 4.5:1 and `focusRing` 3:1 on `background` and `card`.
 - Use **opaque hex** values (`#ffc107`). An alpha hex (`#ffc10799`) looks washed out everywhere; for translucency use `color-mix(in srgb, #{s_getPresetColor('warning')} 60%, transparent)` in SCSS.
 
 ### Dark mode — `useTheme()`

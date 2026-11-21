@@ -130,6 +130,14 @@ Navigating from `@click` renders a `div` — no middle-click, "copy link", or li
 | `var(--s-color-surface-variant)` | `color-mix(in srgb, #{s_getAppColor('text')} 8%, transparent)` |
 
 - **`s_getPresetColor` keys:** `primary`, `secondary`, `success`, `info`, `warning`, `important`, `error` (+ any you add in `createSUI({ themes })`)
-- **`s_getAppColor` keys:** `appBar`, `title`, `text`, `secondaryText`, `anchor`, `background`, `card`, `button`, `switch`, `border`, `disabled`, `snackbar`, `inputPlaceholderShown`, `textErrorHover`
+- **`s_getAppColor` keys:** `appBar`, `title`, `text`, `secondaryText`, `anchor`, `background`, `card`, `button`, `switch`, `border`, `disabled`, `snackbar`, `inputPlaceholderShown`, `textErrorHover`, `textError`, `focusRing`
 
 The variables are set on `<SApp>`, so they only resolve inside it. More helpers: **sui-utilities**.
+
+## Accessibility
+
+- **Icon-only buttons need `aria-label`:** `<SButton variant="icon" aria-label="Close"><SIcon icon="mdi-close" /></SButton>`. Without it the button has no name (axe `button-name`, critical). The same goes for a link that wraps only an image.
+- **Text on a colour is picked by WCAG contrast** (light or dark theme text, whichever contrasts more). Don't hard-code `color: white` on `color="success"` chips; the default `success` (`#2e7d32`) and light `secondary` (`#cc4125`) already reach 4.5:1 with their text. Passing `colorThreshold` switches back to the old YIQ brightness rule.
+- **Keyboard:** SSelect and SAutocomplete are comboboxes (arrow keys move the highlighted option, Enter picks, Esc closes), STabs uses arrow keys / Home / End with one Tab stop, SRadioGroup uses native radio arrow keys, editable SStepper steps are buttons. Don't add your own `@keydown` handlers or `tabindex` for these.
+- **Focus ring:** components draw a 2px `focusRing` outline under `:focus-visible`. Don't remove it with `outline: none`; for your own focusable element use `@include s_focusRing();`.
+- SProgressCircular / SProgressLinear are named `Loading` by default; pass `aria-label` to say what loads. Full checklist: `docs/a11y.md` in the package and https://sui.surakh.com/.

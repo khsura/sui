@@ -15,8 +15,10 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsAutocomplete.d.ts
 | --- | --- | --- | --- | --- |
 | `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
 | `allowUnlisted` | `boolean` | — | no | — |
+| `ariaLabel` | `string \| null` | — | no | — |
 | `autocomplete` | `string` | `"off"` | no | — |
 | `chips` | `boolean` | — | no | — |
+| `clearAriaLabel` | `string` | `"Clear"` | no | — |
 | `clearable` | `boolean` | — | no | — |
 | `closableChips` | `boolean` | — | no | — |
 | `closeOnClick` | `boolean` | — | no | — |
@@ -37,6 +39,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsAutocomplete.d.ts
 | `items` | `string[] \| SelectItem[]` | — | no | — |
 | `label` | `string \| null` | — | no | — |
 | `loading` | `boolean` | — | no | — |
+| `loadingAriaLabel` | `string` | `"Loading"` | no | — |
 | `location` | `LocationRaw` | `"bottom"` | no | — |
 | `maxHeight` | `string \| number \| null` | — | no | — |
 | `maxWidth` | `string \| number \| null` | — | no | — |
