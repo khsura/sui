@@ -1,65 +1,73 @@
-import { nextTick } from 'vue'
-import { z } from 'zod'
-import { getWindow, retry } from '@/app/lib'
-import { cssVariables } from '@/app/constants'
+import { getCurrentScope, onScopeDispose } from 'vue'
+import { getWindow } from '@/app/lib'
+import { cssVariables, overlayScrollBlockedClassName } from '@/app/constants'
+import { scrollLockOwners } from '@/app/store'
 
+const getHtml = () => getWindow()?.document.documentElement ?? null
+
+// Pins the page where it is: the html element becomes position: fixed, offset by the current scroll.
+const lockPage = () => {
+  const window = getWindow()
+  const html = getHtml()
+
+  if (!window || !html || html.classList.contains(overlayScrollBlockedClassName)) {
+    return
+  }
+
+  html.style.setProperty(cssVariables.bodyScrollX, `-${window.scrollX}px`)
+  html.style.setProperty(cssVariables.bodyScrollY, `-${window.scrollY}px`)
+  html.classList.add(overlayScrollBlockedClassName)
+}
+
+// Releases the page and scrolls back to where it was pinned.
+const unlockPage = () => {
+  const window = getWindow()
+  const html = getHtml()
+
+  if (!window || !html || !html.classList.contains(overlayScrollBlockedClassName)) {
+    return
+  }
+
+  const left = -Number.parseFloat(html.style.getPropertyValue(cssVariables.bodyScrollX)) || 0
+  const top = -Number.parseFloat(html.style.getPropertyValue(cssVariables.bodyScrollY)) || 0
+
+  html.style.removeProperty(cssVariables.bodyScrollX)
+  html.style.removeProperty(cssVariables.bodyScrollY)
+  html.classList.remove(overlayScrollBlockedClassName)
+  window.scrollTo({ left, top, behavior: 'instant' })
+}
+
+/**
+ * Blocks the page scroll behind a modal overlay. Each caller is one lock owner; the page stays pinned while any
+ * owner holds a lock and is released when the last one lets go. Both calls are idempotent and apply at once, so
+ * a drawer that turns mobile and closes in the same tick (a window resize across the md breakpoint) ends unlocked
+ * whatever order its watchers ran in. An owner created inside a component lets go when the component unmounts.
+ */
 export const useBackgroundScrollService = () => {
-  const enableBackgroundScrollOnce = async () => {
-    const window = getWindow()
-    const html = window?.document.querySelector<HTMLElement>('html')
+  const owner = Symbol('backgroundScrollOwner')
 
-    await nextTick()
-
-    const overlays = window?.document.querySelectorAll(
-      '.s_dialog__content--active, .s_navigationDrawer--active.s_navigationDrawer--mobile',
-    )
-
-    const activeCount = overlays?.length ?? 0
-
-    if (activeCount > 0) {
-      return false
+  // On the server there is no page to pin, and the module-level owner registry would be shared across requests.
+  const disableBackgroundScroll = () => {
+    if (!getWindow()) {
+      return
     }
 
-    if (activeCount === 0 && html) {
-      const scrollXProperty = html.style.getPropertyValue(cssVariables.bodyScrollX).replace('px', '')
-      const scrollYProperty = html.style.getPropertyValue(cssVariables.bodyScrollY).replace('px', '')
-
-      if (scrollXProperty === '' || scrollYProperty === '') {
-        return
-      }
-
-      const x = z.coerce.number().parse(scrollXProperty)
-      const y = z.coerce.number().parse(scrollYProperty)
-
-      html.style.setProperty(cssVariables.bodyScrollX, null)
-      html.style.setProperty(cssVariables.bodyScrollY, null)
-      html.classList.remove('s_overlay__scrollBlocked')
-
-      await nextTick()
-
-      window?.scrollTo({ left: -1 * x, top: -1 * y, behavior: 'instant' })
-    }
-
-    return true
+    scrollLockOwners.add(owner)
+    lockPage()
   }
 
-  const enableBackgroundScroll = async () => {
-    await retry(enableBackgroundScrollOnce, 50, 20)
+  const enableBackgroundScroll = () => {
+    if (!getWindow() || !scrollLockOwners.delete(owner)) {
+      return
+    }
+
+    if (scrollLockOwners.size === 0) {
+      unlockPage()
+    }
   }
 
-  const disableBackgroundScroll = async () => {
-    await nextTick()
-
-    // must be called inside for ssr
-    const window = getWindow()
-    const html = window?.document.querySelector<HTMLElement>('html')
-
-    if (html && window) {
-      html.style.setProperty(cssVariables.bodyScrollX, `-${window?.scrollX}px`)
-      html.style.setProperty(cssVariables.bodyScrollY, `-${window?.scrollY}px`)
-      await nextTick()
-      html.classList.add('s_overlay__scrollBlocked')
-    }
+  if (getCurrentScope()) {
+    onScopeDispose(enableBackgroundScroll)
   }
 
   return {
