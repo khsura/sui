@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.19.0](https://github.com/khsura/sui/compare/sui-v1.18.3...sui-v1.19.0) (2026-11-21)
+
+
+### Features
+
+* SUI MCP server, component API metadata and AI-eval (M1) ([b5e9d83](https://github.com/khsura/sui/commit/b5e9d832fbeeb1622039291b88f69af2e29baf4d))
+
 ## [1.18.3](https://github.com/khsura/sui/compare/sui-v1.18.2...sui-v1.18.3) (2026-11-21)
 
 
