@@ -15,10 +15,11 @@ export const argTypesLink: ArgTypes<PropsLink> = {
     },
   },
   to: {
-    description: "vue route's location",
+    description:
+      'Internal route (string path or location object). Renders a router-link when the app uses vue-router, otherwise a plain <a href>',
     table: {
       type: {
-        summary: 'RouteLocation | null',
+        summary: 'LinkLocation | null',
       },
       defaultValue: {
         summary: 'null',

@@ -107,7 +107,7 @@ Popups teleport into the container rendered by `<SApp>` — without `SApp` at th
 
 | Prop | Renders | For |
 |---|---|---|
-| `to` | `router-link` | internal route |
+| `to` | `router-link` (plain `<a href>` without vue-router) | internal route |
 | `href` | `<a>` | external URL (`target`, `rel` go with it) |
 | neither | `div` or `tag` | not a link |
 
