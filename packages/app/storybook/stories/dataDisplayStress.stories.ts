@@ -507,6 +507,12 @@ export const ListsAndPanels = {
         assertThat(getRect(content).width >= listContentMinWidth, 'the list text collapses next to its actions')
       }
 
+      // The first crumb starts at the content edge, like the card below it.
+      const crumbs = getTextRect(canvasElement.querySelector('.s_breadcrumbs__listItem'))
+      const card = getRect(canvasElement.querySelector('.stress-file-list'))
+
+      assertThat(Math.abs(crumbs.left - card.left) <= pixelTolerance, 'the breadcrumbs are indented')
+
       // The panel content starts at the same x as its header text.
       const header = canvasElement.querySelector('.stress-panels .s_expansionPanelHeader .s_listItemContent')
       const content = canvasElement.querySelector('.stress-panels .s_expansionPanelContent__content')
