@@ -2,13 +2,13 @@ import { fileURLToPath } from 'node:url'
 import { dirname } from 'node:path'
 
 import type { StorybookConfig } from '@storybook/vue3-vite'
-// import { mergeConfig, type UserConfig } from 'vite'
+import { cssBrowserTargets } from '../vite.config.ts'
 
 const getAbsolutePath = (value: string) => {
   return dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)))
 }
 
-export default {
+const storybookConfig: StorybookConfig = {
   stories: ['../storybook/stories/**/*.mdx', '../storybook/stories/**/*.stories.@(ts|tsx)'],
   addons: [
     // 'storybook-dark-mode',
@@ -26,4 +26,12 @@ export default {
       },
     },
   },
-} satisfies StorybookConfig
+  // The Vite builder passes only `build.target` on from vite.config.ts, so the Storybook build (and the visual
+  // harness that screenshots it) needs the library's CSS target too, or it renders CSS the library no longer ships.
+  viteFinal: (config) => ({
+    ...config,
+    build: { ...config.build, cssTarget: cssBrowserTargets },
+  }),
+}
+
+export default storybookConfig
