@@ -38,7 +38,10 @@ const LONG_TITLE = 'Quarterly operations dashboard for the northern region wareh
 const NAV_ITEM_COUNT = 30
 const TABLE_ROW_COUNT = 6
 const TABLE_COLUMN_COUNT = 10
-const NESTED_LAYOUT_HEIGHT = 320
+// Keeps Drawer Variants within one 800px viewport at desktop width. Chromium captures a taller page with
+// `captureBeyondViewport`, which resizes the window to 1x1 for a moment: the `md` breakpoint flips, and the
+// persistent drawers close for good (docs/visual-testing.md, "Flaky captures").
+const NESTED_LAYOUT_HEIGHT = 240
 const RAIL_WIDTH = 56
 const navIcons = ['mdi-view-dashboard', 'mdi-folder', 'mdi-account-group', 'mdi-chart-bar', 'mdi-cog']
 
