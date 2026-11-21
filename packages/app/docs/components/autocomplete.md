@@ -28,7 +28,7 @@ Searchable dropdown input with filtering, multiple selection, chips, free-text e
 | `delimiter` | `string \| string[] \| RegExp` | `undefined` | Keys that commit the typed text (like Enter) |
 | `autocomplete` | `'on' \| 'off'` | `undefined` | Native `autocomplete` attribute |
 | `name` | `string` | `undefined` | Typed but ignored — the input's name is always `autocomplete` |
-| `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `undefined` | Preset size |
+| `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `undefined` | Input font size, as on `SInput` (`large` 1.25rem, `extra` 1.5rem, never below 16px) |
 | `disabled` | `boolean` | `undefined` | Typed but does not disable the text field |
 | `location` | `string` | `'bottom'` | Dropdown position |
 | `offsetX` / `offsetY` | `number \| null` | `undefined` | Dropdown offset |

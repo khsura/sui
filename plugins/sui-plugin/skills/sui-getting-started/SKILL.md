@@ -164,7 +164,7 @@ Set a prop once for every instance instead of repeating it (or overriding classe
 app.use(
   createSUI({
     components: {
-      SSelect: { outlined: true },
+      SSelect: { grow: true },
       SButton: { color: 'primary', size: 'small' },
       SInput: { dense: true },
     },
@@ -323,10 +323,10 @@ Directives (`v-scroll`, `v-resize`) and utility classes: **sui-utilities**.
 | `SMenu` without `location` opens on top of its button | `location="bottom"` |
 | Named `SLayout` with un-`for`ed children | `for` on every child, or `name`/`for` on none |
 | Items as `{ title, value }` / `{ label, id }` | `{ text, value }` or plain strings |
-| `SSelect multiple / chips / clearable / placeholder` | `SAutocomplete` |
+| `SSelect multiple / chips / clearable` | `SAutocomplete` |
 | Rule returns `false` | Return a message string |
 | `if (!formRef.value.validate()) return` | `validate()` returns `true` when there **are** errors |
-| `hideDetails` to hide just the error | `hideError` (`hideDetails` hides the label too) |
+| `hideDetails` to hide just the error | `hideError` (`hideDetails` hides the label above a field too; `SCheckbox`/`SRadio` keep their own label) |
 | Unknown props (`SDialog title`, `persistent-hint`, `app`) | Silently ignored — check `@types/definitions/props` |
 | `:deep(.s_*) { … !important }` | A prop, a `createSUI({ components })` default, or theme colors |
 | `alpha` hex in `presetColors` | Opaque hex + `color-mix()` where you need translucency |
