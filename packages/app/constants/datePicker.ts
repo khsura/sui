@@ -18,3 +18,6 @@ export const datePickerWidth = '100%'
  * in some fonts, such as the WebKit system font.
  */
 export const datePickerInputPlaceholderCharWidthEm = 0.7
+
+// dayjs format of a day button's accessible name in the calendar grid (e.g. "Thursday, January 1, 2026")
+export const datePickerDayAriaLabelFormat = 'dddd, MMMM D, YYYY'

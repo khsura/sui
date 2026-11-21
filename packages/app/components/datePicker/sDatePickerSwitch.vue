@@ -53,6 +53,9 @@ import { useDatePickerItemSwitchService } from '@/app/services'
 const props = withDefaults(defineProps<PropsDatePickerItemSwitch>(), {
   prevIcon: 'mdi-chevron-left',
   nextIcon: 'mdi-chevron-right',
+  // icon-only buttons need a name; SDatePicker passes its own labels through when given
+  prevAriaLabel: 'Previous',
+  nextAriaLabel: 'Next',
 })
 
 const emit = defineEmits<{
