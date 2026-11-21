@@ -101,6 +101,7 @@ const getListItemLinkClasses = (id: number, item: BreadcrumbsItem) => {
   &__list {
     // The reset gives every <ol> a 1.5em list indent, which put the first crumb 21px inside the content below.
     padding-inline-start: 0;
+    list-style: none;
 
     &Item {
       display: inline-flex;

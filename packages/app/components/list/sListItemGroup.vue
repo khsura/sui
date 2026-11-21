@@ -60,6 +60,7 @@ ul.s_listItemGroup,
 ol.s_listItemGroup {
   padding-left: 0;
   margin: 0;
+  list-style: none;
 
   > .s_list {
     padding: 8px 0 8px 8px;
