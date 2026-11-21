@@ -10,4 +10,5 @@ components: SDialog, SMenu, STooltip, SSnackbar, SButton, SCard, SCardTitle, SCa
 - `SMenu` stays open on content clicks unless you add `close-on-content-click`.
 - `SDialog` has no background of its own; put an `SCard` inside. It has no Escape-key handling.
 - `SSnackbar` has no `color` prop. Without `timeout` it stays until `v-model` turns `false`, so give it a close action.
+- The snackbar is dark (`#424242`) in both themes. Give a text action button a light colour such as `color="warning"` or `color="#ffffff"`; `primary`, `secondary`, `success`, `info` and `error` text is below 4.5:1 on it (`primary` is 2.18:1).
 - All four teleport into the container `<SApp>` renders; they do not appear without it.
