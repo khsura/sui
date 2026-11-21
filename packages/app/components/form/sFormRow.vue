@@ -47,5 +47,17 @@ defineSlots<{
   &:has(> .s_field--labelled) > .s_field:not(.s_field--labelled) {
     margin-top: $s_field__labelHeight;
   }
+
+  // The fields reserve an error line under their box; a button reserves the same space, so a line of the
+  // wrapped row that holds only buttons keeps the gap to the next line.
+  &:has(> .s_field--details) > :not(.s_field) {
+    margin-bottom: $s_formInputError__minHeight;
+  }
+
+  // Without an error line (`hide-details`) nothing separates the row from what follows, so add the same gap.
+  &:not(:has(> .s_field--details)) {
+    row-gap: calc($s_spacer * 2);
+    margin-bottom: $s_formInputError__minHeight;
+  }
 }
 </style>

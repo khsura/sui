@@ -177,6 +177,8 @@ export const TextFieldSizes = {
 
 // A button and the field box next to it may differ by sub-pixel rounding only.
 const ALIGN_TOLERANCE_PX = 1
+// The least space between two stacked rows of fields and buttons.
+const MIN_ROW_GAP_PX = 8
 const FORM_LAYOUT_ROW_COUNT = 5
 const FIELD_BOX_SELECTOR = '.s_input__field, .s_select__activator, .s_datePickerInput__field'
 const getBoxRect = (field: Element | null) => field?.querySelector(FIELD_BOX_SELECTOR)?.getBoundingClientRect()
@@ -213,6 +215,20 @@ const expectButtonsAlignedWithFieldBoxes = async (row: Element) => {
     await expect(Math.abs(buttonRect.height - boxRect.height), `${rowLabel}: button height`).toBeLessThanOrEqual(
       ALIGN_TOLERANCE_PX,
     )
+  }
+}
+
+/** The lowest painted edge of a row: its field boxes and buttons (labels, error lines and margins excluded). */
+const getRowContentBottom = (row: Element) =>
+  Math.max(...Array.from(row.children).map((child) => (getBoxRect(child) ?? child.getBoundingClientRect()).bottom))
+
+/** Stacked rows never touch: each row starts some space below the boxes and buttons of the row above. */
+const expectRowsSpaced = async (rows: Element[]) => {
+  for (const [index, row] of rows.slice(1).entries()) {
+    const previousRow = rows[index]
+    const gap = row.getBoundingClientRect().top - getRowContentBottom(previousRow)
+
+    await expect(gap, `gap above ${row.getAttribute('data-testid') ?? 'row'}`).toBeGreaterThanOrEqual(MIN_ROW_GAP_PX)
   }
 }
 
@@ -299,6 +315,8 @@ export const FormLayout = {
     for (const row of rows) {
       await expectButtonsAlignedWithFieldBoxes(row)
     }
+
+    await expectRowsSpaced(rows)
   },
 } satisfies StoryObj
 
