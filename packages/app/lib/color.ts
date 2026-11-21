@@ -106,6 +106,50 @@ export const getReadableTextColor = <T extends string>(background: RgbInput, lig
   return lightContrast >= darkContrast ? lightText : darkText
 }
 
+const toHexChannel = (channel: number) => Math.round(channel).toString(16).padStart(2, '0')
+
+// Mixes `color` toward `target` by `amount` (0 keeps `color`, 1 gives `target`) in sRGB, as a #rrggbb hex.
+export const mixColors = (color: RgbInput, target: RgbInput, amount: number) => {
+  const from = convertToRgb(color)
+  const to = convertToRgb(target)
+
+  if (!from || !to) {
+    return null
+  }
+
+  const mix = (start: number, end: number) => start + (end - start) * amount
+
+  return `#${toHexChannel(mix(from.r, to.r))}${toHexChannel(mix(from.g, to.g))}${toHexChannel(mix(from.b, to.b))}`
+}
+
+/**
+ * `color` used as text: kept as is when it already reaches `minimumContrast` on every surface, otherwise mixed
+ * toward `towards` (the theme text colour) in `step` increments until it does. Returns `color` when it cannot parse.
+ */
+export const getReadableTextVariant = (
+  color: string,
+  surfaces: string[],
+  towards: string,
+  options: { minimumContrast: number; step: number },
+) => {
+  const isReadable = (candidate: string) =>
+    surfaces.every((surface) => (getContrastRatio(candidate, surface) ?? 0) >= options.minimumContrast)
+
+  for (let amount = 0; amount < 1; amount += options.step) {
+    const candidate = mixColors(color, towards, amount)
+
+    if (candidate === null) {
+      return color
+    }
+
+    if (isReadable(candidate)) {
+      return candidate
+    }
+  }
+
+  return towards
+}
+
 /**
  * Whether `rgb` is dark enough to need light text.
  * Without `threshold` it compares WCAG contrast: light text is chosen when it contrasts more than dark text.

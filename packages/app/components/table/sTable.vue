@@ -479,7 +479,8 @@ defineExpose({
 
   &__noData {
     padding: calc($s_spacer * 6) calc($s_spacer * 4);
-    color: s_getAppColor('disabled');
+    // secondaryText, not disabled: the message must stay readable (4.5:1)
+    color: s_getAppColor('secondaryText');
     text-align: center;
   }
 

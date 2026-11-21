@@ -1,6 +1,6 @@
 import { defaultAppConfig } from '@/app/configs'
-import { AppTheme, minimumLargeTextContrast, minimumTextContrast } from '@/app/constants'
-import { getContrastRatio, getReadableTextColor } from '@/app/lib'
+import { AppTheme, minimumLargeTextContrast, minimumTextContrast, readableTextMixStep } from '@/app/constants'
+import { getContrastRatio, getReadableTextColor, getReadableTextVariant } from '@/app/lib'
 
 const { themes } = defaultAppConfig
 const lightText = themes[AppTheme.dark].appColors.text
@@ -18,6 +18,20 @@ describe.each(Object.values(AppTheme))('default %s theme contrast', (theme) => {
 
   test.each([appColors.background, appColors.card])('form error text on %s reaches 4.5:1', (surface) => {
     expect(getContrastRatio(appColors.textError, surface)).toBeGreaterThanOrEqual(minimumTextContrast)
+  })
+
+  // Presets used as text (`--s-color-<name>--readable`) must read on both surfaces.
+  test.each(Object.entries(presetColors))('%s (%s) as text reaches 4.5:1 on background and card', (_name, color) => {
+    const surfaces = [appColors.background, appColors.card]
+
+    const readable = getReadableTextVariant(color, surfaces, appColors.text, {
+      minimumContrast: minimumTextContrast,
+      step: readableTextMixStep,
+    })
+
+    for (const surface of surfaces) {
+      expect(getContrastRatio(readable, surface)).toBeGreaterThanOrEqual(minimumTextContrast)
+    }
   })
 
   // WCAG 1.4.11: a focus indicator is a UI component and needs 3:1 against what surrounds it.

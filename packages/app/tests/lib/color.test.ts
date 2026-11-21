@@ -1,5 +1,12 @@
 import { colorThreshold } from '@/app/constants'
-import { getContrastRatio, getReadableTextColor, getRelativeLuminance, isDarkColor } from '@/app/lib'
+import {
+  getContrastRatio,
+  getReadableTextColor,
+  getReadableTextVariant,
+  getRelativeLuminance,
+  isDarkColor,
+  mixColors,
+} from '@/app/lib'
 
 const contrastPrecision = 2
 
@@ -82,5 +89,33 @@ describe('isDarkColor', () => {
     // YIQ brightness of #4caf50 is 135, below 55% of 255 (140), so the legacy rule calls it dark
     expect(isDarkColor('#4caf50', colorThreshold)).toBe(true)
     expect(isDarkColor('#4caf50', 50)).toBe(false)
+  })
+})
+
+describe('mixColors', () => {
+  test('returns the start, the end and the midpoint', () => {
+    expect(mixColors('#000000', '#ffffff', 0)).toBe('#000000')
+    expect(mixColors('#000000', '#ffffff', 1)).toBe('#ffffff')
+    expect(mixColors('#000000', '#ffffff', 0.5)).toBe('#808080')
+  })
+
+  test('returns null for an unparsable colour', () => {
+    expect(mixColors('nope', '#ffffff', 0.5)).toBeNull()
+  })
+})
+
+describe('getReadableTextVariant', () => {
+  const options = { minimumContrast: 4.5, step: 0.05 }
+
+  test('keeps a colour that already reads on every surface', () => {
+    expect(getReadableTextVariant('#df0101', ['#ffffff'], '#333333', options)).toBe('#df0101')
+  })
+
+  test('lightens primary toward the light text on a dark card until it reaches 4.5:1', () => {
+    const readable = getReadableTextVariant('#0071eb', ['#222222', '#333333'], '#fdfdfd', options)
+
+    expect(readable).not.toBe('#0071eb')
+    expect(getContrastRatio(readable, '#333333')).toBeGreaterThanOrEqual(4.5)
+    expect(getContrastRatio(readable, '#222222')).toBeGreaterThanOrEqual(4.5)
   })
 })

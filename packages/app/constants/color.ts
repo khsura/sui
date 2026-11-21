@@ -187,6 +187,10 @@ export const contrastFlare = 0.05
 export const minimumTextContrast = 4.5
 export const minimumLargeTextContrast = 3
 
+// How far (0-1) each step mixes a preset colour toward the theme text colour while searching for a readable
+// text variant (`--s-color-<name>--readable`).
+export const readableTextMixStep = 0.05
+
 // The extremes the automatic text colour is chosen between when no theme text colours are given.
 export const lightestTextColor = '#ffffff'
 export const darkestTextColor = '#000000'
