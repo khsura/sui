@@ -1,7 +1,7 @@
 import { faker } from '@khsura/shared'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { userEvent, waitFor } from 'storybook/test'
-import { SButton, SIcon, SSlideGroup, SImage, SCard, SSlideItem, useDisplay } from '@/app/index'
+import { SButton, SCard, SCardText, SIcon, SImage, SSlideGroup, SSlideItem, useDisplay } from '@/app/index'
 import { createStoryObj } from '@/app/storybook/helpers'
 
 const banners = [
@@ -337,13 +337,13 @@ const clickUntilDisabled = async (group: Element, pickButton: (group: Element) =
 export const SlideGroupEdges = {
   tags: ['visual'],
   render: () => ({
-    components: { SButton, SIcon, SSlideGroup, SSlideItem },
+    components: { SButton, SCard, SCardText, SIcon, SSlideGroup, SSlideItem },
     setup: () => ({ slides: Array.from({ length: edgeSlideCount }, (_, index) => `Slide ${index + 1}`) }),
     template: /* html */ `
       <div style="display: flex; flex-direction: column; gap: 24px;">
         <SSlideGroup class="stress-slide-default" :scrollable="false">
           <SSlideItem v-for="(slide, index) in slides" :key="slide" :index="index">
-            <div style="display: flex; align-items: center; justify-content: center; width: 120px; height: 64px; border: 1px solid currentColor; border-radius: 8px;">{{ slide }}</div>
+            <SCard outlined :width="120"><SCardText>{{ slide }}</SCardText></SCard>
           </SSlideItem>
         </SSlideGroup>
         <SSlideGroup class="stress-slide-slots" :scrollable="false">
@@ -353,7 +353,7 @@ export const SlideGroupEdges = {
             </SButton>
           </template>
           <SSlideItem v-for="(slide, index) in slides" :key="slide" :index="index">
-            <div style="display: flex; align-items: center; justify-content: center; width: 120px; height: 64px; border: 1px solid currentColor; border-radius: 8px;">{{ slide }}</div>
+            <SCard outlined :width="120"><SCardText>{{ slide }}</SCardText></SCard>
           </SSlideItem>
           <template #right="{ attrs, on }">
             <SButton variant="icon" aria-label="Next slides" v-bind="attrs" v-on="on">
