@@ -305,6 +305,12 @@ exports[`buildApiMetadata > matches the snapshot for SButton, SInput, SDialog, S
       },
       {
         "description": "",
+        "name": "ariaLabel",
+        "required": false,
+        "type": "string | undefined",
+      },
+      {
+        "description": "",
         "name": "ariaLabelledby",
         "required": false,
         "type": "string | undefined",
