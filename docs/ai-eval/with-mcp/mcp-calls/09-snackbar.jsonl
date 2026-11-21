@@ -1,0 +1,16 @@
+{"time":"2026-11-21T06:22:36.916Z","page":"09-snackbar","tool":"instructions"}
+{"time":"2026-11-21T06:22:45.931Z","page":"09-snackbar","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T06:22:46.671Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SSnackbar"},"isError":false}
+{"time":"2026-11-21T06:22:53.584Z","page":"09-snackbar","tool":"get_recipe","args":{"name":"activator-overlays"},"isError":false}
+{"time":"2026-11-21T06:22:54.586Z","page":"09-snackbar","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T06:23:03.267Z","page":"09-snackbar","tool":"get_recipe","args":{"name":"activator-overlays"},"isError":false}
+{"time":"2026-11-21T06:23:04.786Z","page":"09-snackbar","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T06:23:29.692Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SDialog"},"isError":false}
+{"time":"2026-11-21T06:23:32.356Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SApp"},"isError":false}
+{"time":"2026-11-21T06:23:33.762Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SListItem"},"isError":false}
+{"time":"2026-11-21T06:23:36.274Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"STextField"},"isError":true}
+{"time":"2026-11-21T06:23:38.472Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SButton"},"isError":false}
+{"time":"2026-11-21T06:23:40.929Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SList"},"isError":false}
+{"time":"2026-11-21T06:24:01.518Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SInput"},"isError":false}
+{"time":"2026-11-21T06:25:16.606Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SForm"},"isError":false}
+{"time":"2026-11-21T06:25:19.066Z","page":"09-snackbar","tool":"validate_sui_template","args":{"code":"<5194 chars>"},"isError":false}

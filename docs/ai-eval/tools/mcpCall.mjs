@@ -12,7 +12,7 @@
 //
 // Environment:
 //   SUI_PROJECT_ROOT  passed through to the server (defaults to packages/app, whose
-//                     dist/sui-api.json is the local build; unset = server default lookup)
+//                     dist/sui-api.json is the local build)
 //   SUI_EVAL_LOG      JSONL log of calls (default: none)
 //   SUI_EVAL_PAGE     page id written into each log line (e.g. 01-settings)
 import { appendFile, readFile } from 'node:fs/promises'

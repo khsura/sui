@@ -1,0 +1,13 @@
+{"time":"2026-11-21T06:22:36.481Z","page":"02-dashboard-shell","tool":"instructions"}
+{"time":"2026-11-21T06:22:50.082Z","page":"02-dashboard-shell","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T06:22:51.615Z","page":"02-dashboard-shell","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T06:22:58.064Z","page":"02-dashboard-shell","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T06:22:58.683Z","page":"02-dashboard-shell","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T06:23:14.976Z","page":"02-dashboard-shell","tool":"get_recipe","args":{"name":"app-shell"},"isError":false}
+{"time":"2026-11-21T06:23:17.090Z","page":"02-dashboard-shell","tool":"get_recipe","args":{"name":"data-table"},"isError":false}
+{"time":"2026-11-21T06:23:47.543Z","page":"02-dashboard-shell","tool":"get_component_api","args":{"name":"SAvatar"},"isError":true}
+{"time":"2026-11-21T06:23:49.944Z","page":"02-dashboard-shell","tool":"get_component_api","args":{"name":"SApp"},"isError":false}
+{"time":"2026-11-21T06:23:51.541Z","page":"02-dashboard-shell","tool":"get_component_api","args":{"name":"SNavigationDrawer"},"isError":false}
+{"time":"2026-11-21T06:23:52.789Z","page":"02-dashboard-shell","tool":"get_component_api","args":{"name":"STable"},"isError":false}
+{"time":"2026-11-21T06:23:53.901Z","page":"02-dashboard-shell","tool":"get_component_api","args":{"name":"SChip"},"isError":false}
+{"time":"2026-11-21T06:25:02.516Z","page":"02-dashboard-shell","tool":"validate_sui_template","args":{"code":"<4415 chars>"},"isError":false}
