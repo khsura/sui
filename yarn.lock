@@ -2496,6 +2496,8 @@ __metadata:
 "@khsura/shared@workspace:^, @khsura/shared@workspace:packages/shared":
   version: 0.0.0-use.local
   resolution: "@khsura/shared@workspace:packages/shared"
+  dependencies:
+    zod: "npm:^4.4.3"
   languageName: unknown
   linkType: soft
 
