@@ -27,6 +27,8 @@ export interface ParsedTemplate {
   /** The template root, or `null` when the code is an SFC without a `<template>` block. */
   root: RootNode | null
   errors: TemplateParseError[]
+  /** The `<script>` and `<script setup>` contents of an SFC; empty for a bare template fragment. */
+  scriptSource: string
 }
 
 export type TemplateRuleTarget = typeof RULE_TARGET_SUI_COMPONENT | typeof RULE_TARGET_ANY_ELEMENT
@@ -39,6 +41,8 @@ export interface TemplateRuleContext {
   /** The catalog lookup for the tag; never found for a native element. */
   lookup: ComponentLookup
   api: SuiApi
+  /** The SFC's script contents, for checks that need a model's initial value; empty for a fragment. */
+  scriptSource: string
 }
 
 /** A framework-neutral check: the MCP tool runs it today, an eslint plugin can run the same list later. */

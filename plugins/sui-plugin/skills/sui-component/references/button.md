@@ -65,7 +65,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsButton.d.ts`
 - `size`: Preset size
 - `type`: HTML button `type` (default: `'button'` (when unset))
 - `loading`: Replaces the content with a spinner and disables the button
-- `block`: Full width
+- `block`: Full width. A block button does not shrink, so two block buttons side by side in one flex row overflow — put each in its own `SColumn`
 - `rounded`: Pill shape (ignored for `variant="icon"`)
 - `disabled`: Disable interaction
 - `elevation`: Shadow depth

@@ -111,6 +111,12 @@ The server sends these instructions when a client connects:
 | `form-rules-outside-form` | warning | An `S*` input with `rules` / `:rules` and no enclosing SForm: rules only run on value change, so untouched fields pass on submit. | `validated-form` |
 | `icon-button-label` | warning | An SButton whose only content is an SIcon and that has no `aria-label`, `aria-labelledby` or `title`. | `app-shell` |
 | `no-raw-replacement` | warning | Raw `<button>`, `<input>` (not `type="hidden"`), `<select>`, `<textarea>` or `<dialog>`, with the SUI component to use (`<input type="checkbox">` → SCheckbox, `radio` → SRadioGroup). | `validated-form`, `activator-overlays` for `<dialog>` |
+| `native-validation-in-form` | warning | `type="email"`, `url` or `number` on an `S*` input inside an SForm without `novalidate`: the browser validates on submit and its bubble covers SUI's error text. The fix hint suggests `type="text" inputmode="email"` (or `novalidate` for numbers). | `validated-form` |
+| `hide-details-hides-label` | warning | `hide-details` on an SCheckbox that has a `label`: it hides the label too, so the checkbox shows no text. Use `hide-error`. | `validated-form` |
+| `snackbar-action-contrast` | warning | A `variant="text"` SButton with `color="primary"` (or `secondary`, `success`, `info`, `error`) in an SSnackbar `#action` slot: below 4.5:1 on the dark `#424242` snackbar. | `activator-overlays` |
+| `block-buttons-in-row` | warning | Two or more `block` SButtons as siblings in a flex row (`s_display__flex` / `s_display--*__flex`, an inline `display: flex`, or SCardActions): `block` does not shrink, so later buttons are pushed off screen. | `responsive-grid` |
+| `card-title-text-align` | warning | An `s_textAlign__*` class on SCardTitle, which is a flex container, so the class has no effect. The fix hint names the matching `s_justify__*` class. | — |
+| `date-picker-empty-string` | warning | An SDatePickerInput whose `v-model` / `:model-value` is `''`, or whose model starts as `''` in the SFC script (`x = ref('')`, `{ x: '' }`): the picker opens on "Invalid date". Start it as `null`. | `validated-form` |
 
 Recipe names are stable (`app-shell`, `validated-form`, `activator-overlays`, `data-table`, `responsive-grid`, `theme-setup`); `get_recipe` serves the recipes under these names.
 
@@ -121,11 +127,12 @@ Future work: a `table-structure` rule (STable column keys and `item.<column>` sl
 - Global and common native attributes (`class`, `style`, `id`, `key`, `ref`, `role`, `type`, `href`, …), `aria-*`, `data-*` and `on*` listeners fall through to the component's root element, so they are never unknown props. The list is in `src/constants/templateValidator.ts`.
 - Event listeners (`@x`, `v-on`), `v-bind="object"`, dynamic arguments (`:[name]`, `#[name]`) and dynamic values (`:size="x"`) are not checked.
 - Components whose `sui-api.json` entry lists no slots (slots that could not be extracted, such as STable's `item.<column>`) skip the slot check.
-- Non-SUI tags (`RouterLink`, …) are ignored, and native elements are only checked by `no-raw-replacement`.
+- Non-SUI tags (`RouterLink`, …) are ignored, and native elements are only checked by `no-raw-replacement` and (as the parent of a button row) `block-buttons-in-row`.
 - `layout-for` does not require `for` when there is no enclosing SLayout in the submitted code (the layout lives in a parent file) or the enclosing SLayout has no `name` (children without `for` join the app-level layout, which is correct). A child with `app`, a bound `:for` and a bound `:name` are not compared.
 - `icon-button-label` cannot see inside `v-bind="object"`, so a button with an object spread is assumed labelled.
+- The behaviour rules only read static values: a bound `:type`, `:color` or `:class` object, and a flex row made by a scoped CSS class, are not checked. `date-picker-empty-string` finds the model's initial value by its last path segment (`form.from` → `from: ''`) in the submitted SFC's script; models initialised elsewhere (a store, a prop) are not checked.
 
-The API rules live in `src/services/templateRules.ts` and the composition rules in `src/services/compositionRules.ts`, as `{ id, target?, check(context) }` objects over the Vue template AST, independent of MCP, so more rules (or an eslint plugin) can reuse them. A rule sees the element, its ancestors and the catalog lookup; `target: 'any-element'` runs it on native elements too.
+The API rules live in `src/services/templateRules.ts` and the composition rules in `src/services/compositionRules.ts`, the behaviour rules in `src/services/behaviourRules.ts`, as `{ id, target?, check(context) }` objects over the Vue template AST, independent of MCP, so more rules (or an eslint plugin) can reuse them. A rule sees the element, its ancestors, the catalog lookup and the SFC's script source; `target: 'any-element'` runs it on native elements too.
 
 ## Where the guides come from
 

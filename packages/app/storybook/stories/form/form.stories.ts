@@ -52,7 +52,7 @@ export const Form = createStoryObj<{ onSubmit: (event: Event) => void }>({
       },
       template: `
       <SForm ref="form" class="s_pa__3" v-bind="args" v-model="valid" v-model:error="error" v-model:errors="errors" @submit.prevent="submit">
-        <SInput id="email" v-model="email" :rules="rules" type="email" label="email" placeholder="sura.kh@surakh.com"></SInput>
+        <SInput id="email" v-model="email" :rules="rules" type="text" inputmode="email" label="email" placeholder="sura.kh@surakh.com"></SInput>
         <SButton type="submit" :disabled="error" color="primary">submit</SButton>
         <SButton @click="reset" text class="s_ml__2">reset</SButton>
       </SForm>

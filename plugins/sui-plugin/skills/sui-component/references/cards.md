@@ -86,6 +86,8 @@ Each takes only `tag` (default `'div'`) and a `default` slot. No events.
 
 Spacing between adjacent title → subtitle → text is tightened automatically.
 
+`SCardTitle` is a flex row, so `s_textAlign__center` on it has no effect. Centre its content with `s_justify__center` (`s_justify__end` for right).
+
 <!-- generated:api:start SCardTitle -->
 <!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 

@@ -2,6 +2,7 @@ import type { CompilerError, SourceLocation } from '@vue/compiler-dom'
 import { parse as parseFragment } from '@vue/compiler-dom'
 import { parse as parseSfc } from '@vue/compiler-sfc'
 import type { ParsedTemplate, TemplateParseError } from '../types'
+import { SCRIPT_BLOCK_SEPARATOR } from '../constants'
 
 const FIRST_POSITION = { line: 1, column: 1 }
 
@@ -24,11 +25,15 @@ export const parseVueTemplate = (source: string): ParsedTemplate => {
   const isSfc = Boolean(descriptor.template ?? descriptor.script ?? descriptor.scriptSetup)
 
   if (isSfc) {
-    return { root: descriptor.template?.ast ?? null, errors: sfcErrors.map(toParseError) }
+    const scriptSource = [descriptor.script, descriptor.scriptSetup]
+      .map((block) => block?.content ?? '')
+      .join(SCRIPT_BLOCK_SEPARATOR)
+
+    return { root: descriptor.template?.ast ?? null, errors: sfcErrors.map(toParseError), scriptSource }
   }
 
   const fragmentErrors: TemplateParseError[] = []
   const root = parseFragment(source, { onError: (error) => fragmentErrors.push(toParseError(error)) })
 
-  return { root, errors: fragmentErrors }
+  return { root, errors: fragmentErrors, scriptSource: '' }
 }
