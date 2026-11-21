@@ -82,6 +82,7 @@ import SOverlay from '@/app/components/sOverlay.vue'
 import SButton from '@/app/components/sButton.vue'
 import type { PropsDatePickerInput, PropsMenu } from '@/app/definitions'
 import { datePickerDisplayFormat } from '@/app/configs'
+import { datePickerInputExtraWidthCh } from '@/app/constants'
 import { convertDatePickerValue } from '@/app/repositories'
 import {
   useComponentDefaultsService,
@@ -165,7 +166,7 @@ const inputSize = computed(() => inputFormat.value.length)
  * attribute alone is not enough: iOS Safari let the field shrink below it and
  * cut the last digit off.
  */
-const inputStyles = computed(() => ({ minWidth: `${inputSize.value}ch` }))
+const inputStyles = computed(() => ({ minWidth: `${inputSize.value + datePickerInputExtraWidthCh}ch` }))
 
 /**
  * Keeps the committed value in the format of the current type.
@@ -306,6 +307,13 @@ $s_datePickerInput--fontSizes: (
     color: s_getAppColor('secondaryText');
   }
 
+  // The field is as wide as its value. A long label or error message wraps at
+  // that width instead of stretching the field out of its column.
+  &__label,
+  &__content > .s_formInputError {
+    contain: inline-size;
+  }
+
   &__field {
     @include s_borderRadius();
     position: relative;
@@ -352,7 +360,8 @@ $s_datePickerInput--fontSizes: (
     // `inputStyles` sets the content's minimum width; the padding sits outside it.
     min-width: auto;
     padding: calc($s_spacer * 2) calc($s_spacer * 4);
-    font-size: 1rem;
+    // The SInput font size, so both fields are the same height.
+    font-size: 16px;
     line-height: inherit;
     color: s_getAppColor('text');
     outline: none;
