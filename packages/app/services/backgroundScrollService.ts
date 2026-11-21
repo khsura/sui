@@ -46,13 +46,18 @@ const unlockPage = () => {
 export const useBackgroundScrollService = () => {
   const owner = Symbol('backgroundScrollOwner')
 
+  // On the server there is no page to pin, and the module-level owner registry would be shared across requests.
   const disableBackgroundScroll = () => {
+    if (!getWindow()) {
+      return
+    }
+
     scrollLockOwners.add(owner)
     lockPage()
   }
 
   const enableBackgroundScroll = () => {
-    if (!scrollLockOwners.delete(owner)) {
+    if (!getWindow() || !scrollLockOwners.delete(owner)) {
       return
     }
 

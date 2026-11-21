@@ -81,6 +81,27 @@ describe('useBackgroundScrollService', () => {
     expect(isPageLocked()).toBe(true)
   })
 
+  // SSR: the owner registry is module state, so a server render must never register in it.
+  test('without a window, locking and unlocking leave the owner registry empty', () => {
+    const { disableBackgroundScroll, enableBackgroundScroll } = useBackgroundScrollService()
+
+    vi.stubGlobal('window', undefined)
+
+    try {
+      disableBackgroundScroll()
+
+      expect(scrollLockOwners.size).toBe(0)
+
+      enableBackgroundScroll()
+
+      expect(scrollLockOwners.size).toBe(0)
+    } finally {
+      vi.unstubAllGlobals()
+    }
+
+    expect(isPageLocked()).toBe(false)
+  })
+
   // Switching Storybook stories (or routes) unmounts an open mobile drawer without closing it first.
   test('an owner releases its lock when its scope is disposed', () => {
     const scope = effectScope()
