@@ -8,6 +8,8 @@ import type { SelectItem } from '@/app/types'
 
 const autocomplete: Meta<typeof SAutocomplete> = {
   title: 'UI Components/Autocomplete',
+  // axe audits every story of this component in CI (keyboard-driven component without a screenshot)
+  tags: ['a11y'],
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: SAutocomplete as any,
   argTypes: {

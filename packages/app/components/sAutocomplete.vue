@@ -55,15 +55,27 @@
             ref="inputElement"
             name="autocomplete"
             :autocomplete="autocomplete"
-            @keydown="onKeydown"
+            role="combobox"
+            aria-autocomplete="list"
+            :aria-expanded="isMenuOpen"
+            :aria-controls="listboxId"
+            :aria-activedescendant="isMenuOpen ? activeOptionId : undefined"
+            :aria-label="label && !hideDetails ? undefined : (ariaLabel ?? label ?? placeholder)"
+            @keydown="onComboboxKeydown"
             @keypress.enter="onEnter"
             @keydown.backspace="onBackspace"
             @focus="onFocus"
           />
-          <SButton v-if="!loading && clearable && !isEmpty(model)" @click="clear" variant="icon" size="small">
+          <SButton
+            v-if="!loading && clearable && !isEmpty(model)"
+            :aria-label="clearAriaLabel"
+            @click="clear"
+            variant="icon"
+            size="small"
+          >
             <SIcon icon="mdi-close"></SIcon>
           </SButton>
-          <SProgressCircular v-if="loading" :size="20" indeterminate></SProgressCircular>
+          <SProgressCircular v-if="loading" :size="20" :aria-label="loadingAriaLabel" indeterminate></SProgressCircular>
         </OnClickOutside>
       </div>
     </div>
@@ -77,15 +89,27 @@
           :style="contentStyles"
           :class="contentClasses"
         >
-          <SList :divided="divided" :dense="dense">
+          <SList
+            :id="listboxId"
+            role="listbox"
+            :aria-multiselectable="isMultiple || undefined"
+            :divided="divided"
+            :dense="dense"
+          >
             <SListItem
-              v-for="(item, id) in filteredItems"
-              :key="`${typeof item === 'string' ? item : item.value} - ${id}`"
+              v-for="(item, index) in filteredItems"
+              :id="getOptionId(index)"
+              :key="`${typeof item === 'string' ? item : item.value} - ${index}`"
+              role="option"
+              :aria-selected="getIsSelected(item)"
+              :aria-disabled="getSelectItem(item).disabled || undefined"
+              :class="{ 's_autocomplete__listItem--active': index === activeIndex }"
               :link="true"
               :disabled="getSelectItem(item).disabled"
               @click="onSelectItem(item)"
             >
-              <SListItemIcon v-if="isMultiple" class="s_autocomplete__checkboxIcon">
+              <!-- inert: a picture of the state only; the option itself is the control (aria-selected) -->
+              <SListItemIcon v-if="isMultiple" class="s_autocomplete__checkboxIcon" inert>
                 <SCheckbox :model-value="getIsSelected(item)" hide-details></SCheckbox>
               </SListItemIcon>
               <SListItemContent>
@@ -95,8 +119,12 @@
             </SListItem>
             <SListItem
               v-if="showCreateOption"
+              :id="getOptionId(filteredItems.length)"
+              role="option"
+              :aria-selected="false"
               :link="true"
               class="s_autocomplete__createOption"
+              :class="{ 's_autocomplete__listItem--active': filteredItems.length === activeIndex }"
               @click="onSelectUnlisted"
             >
               <SListItemIcon v-if="isMultiple" class="s_autocomplete__checkboxIcon">
@@ -112,11 +140,12 @@
   </div>
 </template>
 <script lang="ts" setup generic="T extends boolean = false">
-import { computed, useId, useTemplateRef, watch } from 'vue'
+import { computed, nextTick, useId, useTemplateRef, watch } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
 import { getSelectItem } from '../helpers'
 import type { AutocompleteEmitEvents, AutocompleteModelType, AutocompleteModelTypeBase } from '../types/autocomplete'
-import { useAutocompleteService, useComponentDefaultsService } from '../services'
+import { useAutocompleteService, useComponentDefaultsService, useListboxNavigationService } from '../services'
+import { keyboardKey } from '../constants'
 import type { PropsAutocomplete } from '../definitions'
 import { isEmpty } from '../lib/isEmpty'
 import SChip from './sChip.vue'
@@ -134,6 +163,8 @@ const rawProps = withDefaults(defineProps<PropsAutocomplete<T>>(), {
   debounce: 500,
   // The field draws its own menu; the browser's form-history list would open on top of it.
   autocomplete: 'off',
+  clearAriaLabel: 'Clear',
+  loadingAriaLabel: 'Loading',
 })
 
 const props = useComponentDefaultsService('SAutocomplete', rawProps)
@@ -177,6 +208,82 @@ const {
 })
 
 updateItemsPool(props.items ?? [])
+
+// The "Add …" option counts as one more option after the filtered items.
+const optionCount = computed(() => filteredItems.value.length + (showCreateOption.value ? 1 : 0))
+
+const { activeIndex, activeOptionId, listboxId, getOptionId, resetActiveIndex, moveActive } =
+  useListboxNavigationService({
+    idPrefix: inputId,
+    getOptionCount: () => optionCount.value,
+    getIsOptionDisabled: (index) => {
+      const item = filteredItems.value[index]
+
+      return item === undefined ? false : !!getSelectItem(item).disabled
+    },
+  })
+
+const listNavigationKeys: Record<string, () => void> = {
+  [keyboardKey.arrowDown]: () => moveActive(1),
+  [keyboardKey.arrowUp]: () => moveActive(-1),
+}
+
+const selectActiveOption = () => {
+  const item = filteredItems.value[activeIndex.value]
+
+  if (item !== undefined) {
+    void onSelectItem(item)
+  } else if (showCreateOption.value && activeIndex.value === filteredItems.value.length) {
+    void onSelectUnlisted()
+  }
+}
+
+// Arrow keys open the list and move the highlighted option; Enter picks it; Escape closes the list.
+const onComboboxKeydown = (event: KeyboardEvent) => {
+  const navigate = listNavigationKeys[event.key]
+
+  if (navigate) {
+    event.preventDefault()
+
+    if (!isMenuOpen.value) {
+      isMenuOpen.value = true
+    }
+
+    navigate()
+
+    return
+  }
+
+  if (event.key === keyboardKey.enter && isMenuOpen.value && activeIndex.value >= 0) {
+    // preventDefault also stops the keypress that would add the typed text
+    event.preventDefault()
+    selectActiveOption()
+
+    return
+  }
+
+  if (event.key === keyboardKey.escape && isMenuOpen.value) {
+    // stop here, so an SDialog around the field stays open
+    event.preventDefault()
+    event.stopPropagation()
+    isMenuOpen.value = false
+
+    return
+  }
+
+  onKeydown(event)
+}
+
+// A new query or a closed list starts the highlight over.
+watch([queryText, isMenuOpen], () => {
+  resetActiveIndex()
+})
+
+// Keep the highlighted option visible while the arrow keys move through a long list.
+watch(activeIndex, async (index) => {
+  await nextTick()
+  inputElement.value?.ownerDocument.getElementById(getOptionId(index))?.scrollIntoView?.({ block: 'nearest' })
+})
 
 // Watch for external changes to modelValue
 watch(
@@ -307,6 +414,11 @@ $s_autocomplete--fontSizes: (
     // width: 100%;
     max-height: 80vh;
     overflow-y: auto;
+  }
+
+  // The option the arrow keys highlight (focus itself stays in the input)
+  &__listItem--active {
+    @include s_focusRing(-2px);
   }
 
   &__selectedItemCloseIcon {
