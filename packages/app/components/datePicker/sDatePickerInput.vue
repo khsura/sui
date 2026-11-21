@@ -122,6 +122,8 @@ const { contentClasses, contentStyles, updateLocation } = useMenuService(
   { ...props, location: 'bottom' } as unknown as PropsMenu,
   menuModel,
   { activatorElement, contentElement },
+  // Near the bottom of the viewport the picker opens above the field instead of covering it.
+  { autoFlip: true },
 )
 
 const closeMenu = () => {
