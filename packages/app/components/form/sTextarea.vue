@@ -49,7 +49,12 @@ import kFormInputError from './common/sFormInputError.vue'
 import { getCleanSetObject, getNumericCssAttribute } from '@/app/lib'
 import type { PropsTextarea } from '@/app/definitions'
 import { useColorRepository } from '@/app/repositories/colorRepository'
-import { useComponentDefaultsService, useDisabledService, useFormInputService } from '@/app/services'
+import {
+  useComponentDefaultsService,
+  useDisabledService,
+  useFieldLayoutService,
+  useFormInputService,
+} from '@/app/services'
 import { type EmitFormTextInput } from '@/app/types'
 
 const rawProps = withDefaults(defineProps<PropsTextarea<string>>(), {
@@ -79,8 +84,16 @@ const isPresetInputBackground = computed(() => getIsPredefinedPresetColor(props.
 const isPresetPlaceholderBackground = computed(() => getIsPredefinedPresetColor(props.placeholderBackground ?? null))
 const textareaHeight = ref<string | null>(null)
 
+const { classListField } = useFieldLayoutService(
+  computed(() => ({
+    hasLabel: !!props.label && !props.hideDetails,
+    hasDetails: !props.hideDetails && (!props.hideError || !!props.counter),
+  })),
+)
+
 const classList = computed(() => {
   return {
+    ...classListField.value,
     's_textarea--disabled': props.disabled,
     's_textarea--dense': props.dense,
     's_textarea--tile': props.tile,

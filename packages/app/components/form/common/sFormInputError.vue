@@ -32,7 +32,7 @@ const classList = computed(() => {
 .s_formInputError {
   @include s_typography('caption');
   visibility: hidden;
-  min-height: calc($s_spacer * 7);
+  min-height: $s_formInputError__minHeight;
   padding: $s_spacer calc($s_spacer * 4);
   color: s_getAppColor('textError');
   opacity: 0;

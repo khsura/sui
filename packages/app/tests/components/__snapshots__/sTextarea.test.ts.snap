@@ -2,7 +2,7 @@
 
 exports[`STextarea > renders correctly 1`] = `
 <section
-  class="s_textarea"
+  class="s_textarea s_field s_field--details"
 >
   <!--v-if-->
   <textarea

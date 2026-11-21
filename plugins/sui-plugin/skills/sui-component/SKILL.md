@@ -34,7 +34,7 @@ All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `
 | `SDivider` | [references/divider.md](references/divider.md) |
 | `SDroppable` | [references/droppable.md](references/droppable.md) |
 | `SExpansionPanels`, `SExpansionPanel`, `SExpansionPanelHeader`, `SExpansionPanelContent` | [references/expansion-panels.md](references/expansion-panels.md) |
-| `SForm`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SRadio`, `SSwitch` | [references/form.md](references/form.md) (and the **sui-form** skill) |
+| `SForm`, `SFormRow`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SRadio`, `SSwitch` | [references/form.md](references/form.md) (and the **sui-form** skill) |
 | `SIcon` | [references/icon.md](references/icon.md) |
 | `SImage` | [references/image.md](references/image.md) |
 | `SApp`, `SLayout`, `SAppBar`, `SNavigationDrawer`, `SMain`, `SFooter`, `SBottomNavigation`, `SContainer`, `SRow`, `SColumn`, `SSpacer` | [references/layout.md](references/layout.md) (and the **sui-layout** skill) |

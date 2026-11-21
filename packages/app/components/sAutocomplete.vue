@@ -1,5 +1,5 @@
 <template>
-  <div class="s_autocomplete" :class="{ [`s_autocomplete--size__${size}`]: !!size }">
+  <div class="s_autocomplete" :class="{ ...classListField, [`s_autocomplete--size__${size}`]: !!size }">
     <label v-if="label" v-show="!hideDetails" :for="inputId" class="s_autocomplete__label">{{ label }}</label>
     <div ref="activatorElement" class="s_autocomplete__inputField">
       <div class="s_autocomplete__inputFieldContent" :class="{ 's_autocomplete__inputFieldContent--focus': isFocused }">
@@ -144,7 +144,12 @@ import { computed, nextTick, useId, useTemplateRef, watch } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
 import { getSelectItem } from '../helpers'
 import type { AutocompleteEmitEvents, AutocompleteModelType, AutocompleteModelTypeBase } from '../types/autocomplete'
-import { useAutocompleteService, useComponentDefaultsService, useListboxNavigationService } from '../services'
+import {
+  useAutocompleteService,
+  useComponentDefaultsService,
+  useFieldLayoutService,
+  useListboxNavigationService,
+} from '../services'
 import { keyboardKey } from '../constants'
 import type { PropsAutocomplete } from '../definitions'
 import { isEmpty } from '../lib/isEmpty'
@@ -168,6 +173,12 @@ const rawProps = withDefaults(defineProps<PropsAutocomplete<T>>(), {
 })
 
 const props = useComponentDefaultsService('SAutocomplete', rawProps)
+
+// SAutocomplete reserves no details line under its field (it runs no rules).
+const { classListField } = useFieldLayoutService(
+  computed(() => ({ hasLabel: !!props.label && !props.hideDetails, hasDetails: false })),
+)
+
 const model = defineModel<AutocompleteModelType<T> | null>()
 const emit = defineEmits<AutocompleteEmitEvents>()
 const activatorElement = useTemplateRef('activatorElement')

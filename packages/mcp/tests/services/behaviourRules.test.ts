@@ -159,6 +159,49 @@ describe('behaviour rules', () => {
     })
   })
 
+  describe('field-button-row', () => {
+    const rule = 'field-button-row'
+
+    it.each([
+      [
+        'an SFormRow',
+        '<SFormRow><SInput v-model="q" label="Search" /><SButton color="primary">Search</SButton></SFormRow>',
+      ],
+      [
+        'a field with hide-details',
+        '<div class="s_display__flex"><SInput v-model="q" hide-details /><SButton>Search</SButton></div>',
+      ],
+      ['a block parent', '<div><SInput v-model="q" label="Search" /><SButton>Search</SButton></div>'],
+      ['a flex row without a field', '<div style="display: flex"><SButton>A</SButton><SButton>B</SButton></div>'],
+      [
+        'a checkbox and a button',
+        '<div style="display: flex"><SCheckbox v-model="c" label="A" /><SButton>B</SButton></div>',
+      ],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it.each([
+      [
+        'an inline flex style',
+        '<div style="display: flex; gap: 8px">\n<SInput v-model="q" label="Search" />\n<SButton>Search</SButton></div>',
+      ],
+      [
+        'a flex utility class',
+        '<div class="s_display__flex">\n<SDatePickerInput v-model="from" />\n<SButton>Apply</SButton></div>',
+      ],
+      [
+        'kebab-case tags',
+        '<div style="display:flex">\n<s-select v-model="s" :items="items" />\n<s-button>Apply</s-button></div>',
+      ],
+    ])('reports a field and a button in %s', (_, code) => {
+      const [issue] = issuesOf(rule, code)
+
+      expect(issue).toMatchObject({ severity: 'warning', line: 3, recipe: 'filter-bar' })
+      expect(issue.fixHint).toContain('SFormRow')
+    })
+  })
+
   describe('card-title-text-align', () => {
     const rule = 'card-title-text-align'
 

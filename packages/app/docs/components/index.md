@@ -46,7 +46,7 @@ This directory contains per-component documentation optimized for Claude AI codi
 ### Forms
 | File | Components |
 |------|-----------|
-| [form.md](./form.md) | `SForm`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` |
+| [form.md](./form.md) | `SForm`, `SFormRow`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` |
 | [autocomplete.md](./autocomplete.md) | `SAutocomplete` |
 
 ### Data Display

@@ -35,7 +35,7 @@ Shared events: `update:error` (`boolean`), `update:errors` (`string[]`), `update
 
 Renders a native `<form novalidate>` and collects child inputs. Native browser validation is off, so `type="email"` / `required` never show the browser bubble over the SUI error; validate with `rules`. `:novalidate="false"` turns it back on. Before 1.20.0 `SForm` did not add `novalidate`; add it yourself there.
 
-Every validated field reserves one error line under itself. In an action row (field + button), set `hide-details` / `hide-error` on the field so the button lines up with the field. Field labels are inset 16px to line up with the value text inside the field.
+Every validated field reserves one error line under itself. For an action row (field + button: search bar, filter bar) use `SFormRow` (below), never a plain flex `<div>`, where the button lines up with the label. Field labels are inset 16px to line up with the value text inside the field.
 
 | Model | Type | Description |
 |-------|------|-------------|
@@ -76,6 +76,42 @@ Every validated field reserves one error line under itself. In an action row (fi
 - `submit` (event): Native submit — **not** prevented; use `@submit.prevent`
 
 Exposed: `validate(): boolean` — **returns `true` when there ARE errors**; `resetValidation()`.
+
+---
+
+## SFormRow
+
+*Since 1.20.0.* A wrapping row of text fields (`SInput`, `SSelect`, `SDatePickerInput`, `SAutocomplete`, `STextarea`) and their buttons. Each button's top and bottom match the field box: with or without a label, while an error shows, and when the row wraps at 375px. No props; slot `default`.
+
+<!-- generated:api:start SFormRow -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SFormRow props**
+
+None.
+
+**SFormRow slots**
+
+| Slot | Slot props | Description |
+| --- | --- | --- |
+| `default` | `any` | The fields and buttons of the row. |
+
+**SFormRow events**
+
+None.
+
+<!-- generated:api:end SFormRow -->
+
+```vue
+<SFormRow>
+  <SDatePickerInput v-model="from" label="From" />
+  <SSelect v-model="status" label="Status" :items="statuses" />
+  <SButton color="primary" @click="apply">Apply</SButton>
+</SFormRow>
+```
+
+- `SInput` / `STextarea` / `SAutocomplete` (and `grow` `SSelect`, `block` `SDatePickerInput`) share the free width; `SSelect` / `SDatePickerInput` otherwise keep their own width; buttons keep theirs; the row wraps when they don't fit. Each field keeps its error line; buttons reserve the same space, so wrapped lines and the next row keep their gap.
+- Don't mix a `simple` field into it (its label is shorter). Before 1.20.0 there is no `SFormRow`: put `hide-details` on the field in a flex row.
 
 ---
 
@@ -377,7 +413,7 @@ None.
 
 ## SRadioGroup / SRadio
 
-Options are **`SRadio` children** — there is no `items` prop. Long option labels wrap; the group's `hideDetails` removes only its error area (labels stay).
+Options are **`SRadio` children** — there is no `items` prop. Long option labels wrap; the group's `hideDetails` removes only its error area (labels stay). Options have no background (before 1.20.0 a group with no value showed grey chips behind its options).
 
 `SRadioGroup` props: `name`, `column`, `grow`, `color` (preset name), `mandatory`, `outlined` / `underlined` / `borderRadius` + shared. Model: `string | number | boolean`. Events: `change` + shared.
 
