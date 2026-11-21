@@ -54,4 +54,24 @@ describe('STable', () => {
     expect(wrapper.emitted('update:folded')?.[0]).toEqual([['admin']])
     expect(wrapper.text()).not.toContain('Bat')
   })
+
+  test('shows a loading row while loading with no items yet', () => {
+    const wrapper = getSTable({ items: [], loading: true })
+
+    expect(wrapper.find('.s_table__row--loading').text()).toBe('Loading…')
+    expect(wrapper.find('.s_table__row--noData').exists()).toBe(false)
+  })
+
+  test('uses loadingText for the loading row', () => {
+    const wrapper = getSTable({ items: [], loading: true, loadingText: 'Fetching orders' })
+
+    expect(wrapper.find('.s_table__row--loading').text()).toBe('Fetching orders')
+  })
+
+  test('keeps the rows and no loading row while reloading items', () => {
+    const wrapper = getSTable({ loading: true })
+
+    expect(wrapper.find('.s_table__row--loading').exists()).toBe(false)
+    expect(wrapper.text()).toContain('Bat')
+  })
 })

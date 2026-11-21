@@ -342,6 +342,10 @@ export const TableStates = {
         !!canvasElement.querySelector('.stress-empty-table .s_table__noData'),
         'the empty table has no empty state',
       )
+      assertThat(
+        !!canvasElement.querySelector('.stress-loading-table .s_table__row--loading'),
+        'the loading table shows no loading row',
+      )
     })
   },
 } satisfies StoryObj

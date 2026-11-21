@@ -180,6 +180,13 @@
             </template>
           </template>
 
+          <!-- Table Item - Loading, while there are no rows yet -->
+          <tr v-if="showLoadingRow" class="s_table__row s_table__row--loading">
+            <td :colspan="totalItemColumns" class="s_table__noData">
+              <slot name="loadingData">{{ computedLoadingText }}</slot>
+            </td>
+          </tr>
+
           <!-- Table Item - No Data -->
           <tr v-if="showNoData" class="s_table__row s_table__row--noData">
             <td :colspan="totalItemColumns" class="s_table__noData">
@@ -248,6 +255,8 @@ defineSlots<{
   expanded?: (props: { item: T }) => void
   /** Shown instead of the rows when `items` is empty and not loading. */
   noData?: () => void
+  /** Shown instead of the rows while `loading` is set and `items` is still empty. */
+  loadingData?: () => void
   /** Label of the items-per-page selector in the pagination. */
   itemsPerPageLabel?: () => void
 }>()
@@ -321,6 +330,8 @@ const translate = (key: string): string | undefined => {
 
 const showNoData = computed(() => !props.loading && props.items.length === 0)
 const computedNoDataText = computed(() => props.noDataText ?? translate('table.noData') ?? 'No data')
+const showLoadingRow = computed(() => props.loading && props.items.length === 0)
+const computedLoadingText = computed(() => props.loadingText ?? translate('table.loading') ?? 'Loading…')
 
 const shouldHidePagination = computed(() => {
   if (props.hidePagination && (!itemsPerPage.value || itemsPerPage.value > (props.totalItems ?? props.items.length))) {
