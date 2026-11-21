@@ -44,7 +44,7 @@ Root container.
 |------|-------------|-------------|
 | `default` | — | `SSlideItem` components |
 | `left` | `{ attrs: { disabled }, on: { click } }` | Custom left/prev scroll button |
-| `right` | `{ attrs: { disabled }, on: { click } }` | Custom right/next scroll button. Note: its `attrs.disabled` mirrors the *previous* button's state |
+| `right` | `{ attrs: { disabled }, on: { click } }` | Custom right/next scroll button. `attrs.disabled` is `true` at the right end (before 1.20.0 it mirrored the left button's state) |
 
 ---
 

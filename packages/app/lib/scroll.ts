@@ -107,26 +107,42 @@ export const smoothScrollTo = (el: HTMLElement | string | null, options?: { offs
   })
 }
 
-/** @description for safari */
+// The running polyfill animation of each element, so a new scroll replaces it instead of adding its steps to it.
+const elementScrollAnimationFrames = new WeakMap<HTMLElement, number>()
+
+/**
+ * @description for safari. Each frame is placed on the line from the start to the target position, and the last
+ * frame lands exactly on the target. Stepping from the element's current (browser-rounded) position, with two
+ * overlapping animations both adding their steps, used to stop the element several pixels off its target.
+ */
 const smoothElementScrollPolyfill = (element: HTMLElement, options?: ScrollToOptions | undefined) => {
-  let animationFrame: number | undefined
-  let time = 0
-  const stepLeftPerFrame = ((options?.left ?? 0) - element.scrollLeft) / totalAnimations
-  const stepTopPerFrame = ((options?.top ?? 0) - element.scrollTop) / totalAnimations
+  const runningAnimationFrame = elementScrollAnimationFrames.get(element)
+
+  if (runningAnimationFrame !== undefined) {
+    cancelAnimationFrame(runningAnimationFrame)
+  }
+
+  const startLeft = element.scrollLeft
+  const startTop = element.scrollTop
+  let frame = 0
 
   const step = () => {
+    frame += 1
+    const progress = Math.min(frame / totalAnimations, 1)
+
     element.scroll({
-      ...(options?.top !== undefined ? { top: element.scrollTop + stepTopPerFrame } : {}),
-      ...(options?.left !== undefined ? { left: element.scrollLeft + stepLeftPerFrame } : {}),
+      ...(options?.top !== undefined ? { top: startTop + (options.top - startTop) * progress } : {}),
+      ...(options?.left !== undefined ? { left: startLeft + (options.left - startLeft) * progress } : {}),
     })
-    animationFrame = requestAnimationFrame(step)
-    time += 1
-    if (time >= totalAnimations) {
-      cancelAnimationFrame(animationFrame)
+
+    if (progress < 1) {
+      elementScrollAnimationFrames.set(element, requestAnimationFrame(step))
+    } else {
+      elementScrollAnimationFrames.delete(element)
     }
   }
 
-  animationFrame = requestAnimationFrame(step)
+  elementScrollAnimationFrames.set(element, requestAnimationFrame(step))
 }
 
 export const smoothElementScroll = (element: HTMLElement | null, options?: ScrollToOptions | undefined) => {
