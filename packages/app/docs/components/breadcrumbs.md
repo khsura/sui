@@ -18,7 +18,7 @@ Navigation trail showing the current page's location in a hierarchy.
 ```typescript
 interface BreadcrumbsItem {
   text: string | number    // Display label
-  to?: RouteLocationRaw    // Renders a router-link
+  to?: LinkLocation        // Renders a router-link (plain <a href> without vue-router)
   href?: string            // Renders an <a>
   disabled?: boolean       // Renders a plain <span>, grayed out
   link?: boolean           // Declared on the type, not used by the component
@@ -74,4 +74,4 @@ const breadcrumbs = computed(() => [
 
 - The **last item is disabled automatically** (current page) unless you set `disabled: false` on it explicitly.
 - Disabled items ignore `color`.
-- `to` wins over `href` when both are set; `to` requires vue-router in the app.
+- `to` wins over `href` when both are set. Without vue-router in the app, a `to` item renders a plain `<a href>` (a route given by `name` gets no `href`).

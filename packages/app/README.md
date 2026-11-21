@@ -29,6 +29,8 @@ npm i @khsura/sui
 yarn add @khsura/sui
 ```
 
+`vue` is a peer dependency: the app needs **Vue 3.5.41 or newer** (3.5.40 and older have a template compiler bug that breaks `v-show` inside a keyed `v-for`, e.g. tab panels). `vue-router` is optional: with it, `to` props render a `router-link`; without it, they render a plain `<a href>`.
+
 > **Migrating from GitHub Packages:** older versions were published to GitHub Packages. Remove the `@khsura:registry=...` line (and its `:_authToken=...` line) from your `.npmrc`, or the `npmScopes.khsura` block from `.yarnrc.yml`, so the scope resolves from npm again.
 
 ### 2. Install the plugin

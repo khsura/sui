@@ -77,7 +77,7 @@ A flex row with a minimum height of 48px (40px when the list is `dense`).
 | `selectable` | `boolean \| null` | — | no | — |
 | `tag` | `"div" \| "li" \| null` | — | no | `div`, `li` |
 | `target` | `"_blank" \| "_self" \| "_parent" \| "_top"` | — | no | `_blank`, `_parent`, `_self`, `_top` |
-| `to` | `string \| it \| et \| null` | — | no | — |
+| `to` | `LinkLocation \| null` | — | no | — |
 
 **SListItem slots**
 
@@ -100,7 +100,7 @@ A flex row with a minimum height of 48px (40px when the list is `dense`).
 - `lines`: Subtitle line clamp for this item (overrides the list's `lines`)
 - `disabled`: Disabled state
 - `href`: Render as `<a>`
-- `to`: Render as `router-link`
+- `to`: Render as `router-link` (plain `<a href>` without vue-router)
 - `target` / `rel`: Link attributes
 - `tag`: Root element (when not a link) (default: `'div'`)
 - `default` (slot): Item content
