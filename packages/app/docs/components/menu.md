@@ -15,7 +15,7 @@ Floating popup menu anchored to an activator element. Clicking the activator tog
 | `position` | `'fixed' \| 'absolute' \| ...` | `undefined` | `'fixed'` positions relative to the viewport (use inside fixed/scrolling containers) |
 | `offsetX` | `number \| null` | `undefined` | Extra horizontal offset (px) |
 | `offsetY` | `number \| null` | `undefined` | Extra vertical offset (px) |
-| `screenPadding` | `number \| null` | `undefined` | Shift the menu left by this many px when it would overflow the right edge |
+| `screenPadding` | `number \| null` | `undefined` | Gap in px the menu keeps from the viewport edges (default 8) |
 | `contentClass` | `string \| string[] \| Record<string, boolean>` | `undefined` | Classes on the content element |
 | `contentStyle` | `StyleValue` | `undefined` | Styles on the content element |
 | `preventCloseOnClick` | `boolean` | `false` | Activator click only opens, never closes |
@@ -94,4 +94,7 @@ Floating popup menu anchored to an activator element. Clicking the activator tog
 - `closeOnContentClick` defaults to `false` — add `close-on-content-click` for action menus that should close when an item is clicked.
 - The position is computed only when `v-model` turns `true`; opening with `:model-value="true"` on first render is not positioned — open it after mount.
 - The app must be wrapped in `<SApp>` (menus teleport into its overlay container).
-- `position="fixed"` is useful when the activator is inside a fixed or scrollable container.
+- `position="fixed"` is useful when the activator is inside a fixed container.
+- The menu stays inside the viewport: it flips above or below its activator when the other side has room, otherwise shifts, and keeps an 8px gutter from every edge (`screenPadding` overrides the gutter). It follows its activator when the page or a scroll container scrolls, so a row menu inside an `SList` or table is safe.
+- The menu is as wide as its items (capped at 90vw), so list titles are not cut off.
+- Esc closes the menu and returns focus to the activator.

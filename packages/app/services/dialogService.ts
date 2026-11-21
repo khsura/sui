@@ -1,5 +1,6 @@
 import { type ModelRef, type ShallowRef, computed } from 'vue'
-import { STransition } from '@/app/constants'
+import { STransition, cssVariables } from '@/app/constants'
+import { getCleanSetObject } from '@/app/lib/getCleanSetObject'
 import { type PropsDialog } from '@/app/definitions'
 import { useActivatorService, useLocationService } from '@/app/services/core'
 import { useElevationService } from '@/app/services/elevationService'
@@ -26,10 +27,18 @@ export const useDialogService = (
     ...classListElevation.value,
   }))
 
+  // Width and height go through CSS variables, so the stylesheet can cap them at the viewport minus a gutter:
+  // an inline `max-width: 420px` would otherwise beat the stylesheet and touch the edges of a phone screen.
   const contentStyles = computed(() => {
-    return {
-      ...measurableStyles.value,
-    }
+    const { width, maxWidth, height, maxHeight, ...otherStyles } = measurableStyles.value
+
+    return getCleanSetObject({
+      ...otherStyles,
+      [cssVariables.dialogWidth]: width,
+      [cssVariables.dialogMaxWidth]: maxWidth,
+      [cssVariables.dialogHeight]: height,
+      [cssVariables.dialogMaxHeight]: maxHeight,
+    })
   })
 
   const onClickOutside = () => {

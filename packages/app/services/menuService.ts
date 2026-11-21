@@ -2,7 +2,15 @@ import { computed, ref, type ComponentPublicInstance, type Ref, type ShallowRef 
 import { usePositionService } from './positionService'
 import { useActivatorService, useContentService, useLocationService } from './core'
 import { type PropsMenu } from '@/app/definitions'
-import { getCleanSetObject, getDocument, getNumericCssAttribute, getViewportLocation, getWindow } from '@/app/lib'
+import { overlayViewportGutter } from '@/app/constants'
+import {
+  getCleanSetObject,
+  getDocument,
+  getNumericCssAttribute,
+  getOverlayPlacement,
+  getViewportLocation,
+  getWindow,
+} from '@/app/lib'
 import { type MenuContentStyle } from '@/app/types'
 
 export const useMenuService = (
@@ -18,6 +26,8 @@ export const useMenuService = (
     alignMiddle?: boolean
     preventOverlap?: boolean
     autoFlip?: boolean
+    /** Flip or shift the content so it stays inside the viewport (gutter: `screenPadding` or the default). */
+    keepInViewport?: boolean
     onChange?: (v: boolean | undefined | null) => void
   },
 ) => {
@@ -130,6 +140,7 @@ export const useMenuService = (
     return {
       left,
       top: adjustedTop,
+      preferredTop: top,
       width,
       height: effectiveHeight,
       bottom: adjustedTop + effectiveHeight,
@@ -147,6 +158,33 @@ export const useMenuService = (
     }
 
     const { width: activatorWidth } = activator
+
+    if (options?.keepInViewport) {
+      // Work in viewport coordinates: the content is placed in document coordinates unless it is fixed.
+      const scrollTop = props.position === 'fixed' ? 0 : viewportLocation.top
+      const scrollLeft = props.position === 'fixed' ? 0 : viewportLocation.left
+
+      const placement = getOverlayPlacement({
+        content: {
+          top: contentLocation.preferredTop - scrollTop,
+          left: contentLocation.left - scrollLeft,
+          width: contentLocation.width,
+          height: contentLocation.height,
+        },
+        activator: { top: activator.top, left: activator.left, width: activator.width, height: activator.height },
+        viewportWidth: viewportLocation.width,
+        viewportHeight: viewportLocation.height,
+        gutter: props.screenPadding ?? overlayViewportGutter,
+      })
+
+      top.value = placement.top + scrollTop
+      left.value = placement.left + scrollLeft
+      minWidth.value = options.noContentMinWidth ? null : activatorWidth
+      maxHeight.value = contentLocation.maxHeight
+
+      return
+    }
+
     const overflowRight = Math.max(contentLocation.right - viewportLocation.right, 0)
     const isOverflowBottom = contentLocation.top + contentLocation.height >= (getDocument()?.body.offsetHeight ?? 0)
     const overflowBottom = isOverflowBottom ? Math.max(contentLocation.bottom - viewportLocation.bottom, 0) : 0
