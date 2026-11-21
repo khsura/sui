@@ -5,6 +5,9 @@ import {
   type SelectItem,
   SAutocomplete,
   SButton,
+  SCard,
+  SCardText,
+  SCardTitle,
   SCheckbox,
   SDatePickerInput,
   SForm,
@@ -47,6 +50,9 @@ const required = (value: unknown) => Boolean(value) || 'This field is required'
 const stressComponents = {
   SAutocomplete,
   SButton,
+  SCard,
+  SCardText,
+  SCardTitle,
   SCheckbox,
   SDatePickerInput,
   SForm,
@@ -520,5 +526,60 @@ export const DatePickerAtEdges = {
         assertAttachedToField(picker, getEdgeElement(canvasElement, corner, '.s_datePickerInput__field'))
       })
     }
+  },
+} satisfies StoryObj
+
+// Width (px) of the card around the form, as in the validated-form recipe: the full-width date field is much wider
+// than the calendar it opens.
+const FORM_CARD_MAX_WIDTH = 560
+// Fixed "today", so the calendar shows the same month in every screenshot.
+const FORM_CARD_TODAY = '2026-01-15'
+
+// The date picker of a full-width (`block`) field in a form card, with a button under it. The popup hugs the
+// calendar: a popup box wider than the calendar had no background on its right-hand strip, so the button showed
+// through it.
+export const DatePickerInFormCard = {
+  tags: ['visual'],
+  render: () =>
+    defineComponent({
+      components: stressComponents,
+      setup: () => ({ form: ref({ name: '', startDate: '' }), required, today: FORM_CARD_TODAY }),
+      template: `
+        <SCard :max-width="${FORM_CARD_MAX_WIDTH}" class="s_mx__auto">
+          <SCardTitle>Create account</SCardTitle>
+          <SCardText>
+            <SForm @submit.prevent>
+              <SInput v-model="form.name" label="Full name" :rules="[required]" />
+              <SDatePickerInput v-model="form.startDate" label="Start date" :today="today" block :rules="[required]" />
+              <SButton type="submit" color="primary" block>Create account</SButton>
+            </SForm>
+          </SCardText>
+        </SCard>
+      `,
+    }),
+  play: async ({ canvasElement, userEvent }) => {
+    const suffix = canvasElement.querySelector('.s_datePickerInput__suffix')
+
+    await expect(suffix).toBeInTheDocument()
+    if (suffix) {
+      await userEvent.click(suffix)
+    }
+
+    await waitFor(() => {
+      const picker = getOpenDropdown('.s_datePickerInput__picker')
+      const calendar = picker?.querySelector('.s_datePicker')
+      // The popup box (which has no background of its own) must be exactly the calendar's box.
+      const pickerBox = getRect(picker)
+      const calendarBox = getRect(calendar ?? null)
+
+      for (const side of ['left', 'top', 'width', 'height'] as const) {
+        const difference = Math.abs(pickerBox[side] - calendarBox[side])
+
+        assertThat(
+          difference <= PIXEL_TOLERANCE,
+          `the date picker popup ${side} differs from the calendar's by ${difference}px (transparent strip)`,
+        )
+      }
+    })
   },
 } satisfies StoryObj
