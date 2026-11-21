@@ -1,6 +1,7 @@
 import { faker } from '@khsura/shared'
-import type { Meta } from '@storybook/vue3-vite'
-import { SSlideGroup, SImage, SCard, SSlideItem, useDisplay } from '@/app/index'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import { userEvent, waitFor } from 'storybook/test'
+import { SButton, SIcon, SSlideGroup, SImage, SCard, SSlideItem, useDisplay } from '@/app/index'
 import { createStoryObj } from '@/app/storybook/helpers'
 
 const banners = [
@@ -283,3 +284,104 @@ export const SlideGroupWithFewItems = createStoryObj<typeof SSlideGroup>({
     slideStep: null,
   },
 })
+
+const edgeSlideCount = 14
+// Enough clicks to cross the widest row; a row that never reaches its edge fails instead of looping.
+const maxNavigatorClicks = 20
+
+const assertThat = (condition: boolean, message: string) => {
+  if (!condition) {
+    throw new Error(message)
+  }
+}
+
+const getNavigatorButtons = (group: Element) => {
+  const [previousButton, nextButton] = group.querySelectorAll<HTMLButtonElement>('.s_slideGroup__navigator button')
+
+  if (!previousButton || !nextButton) {
+    throw new Error('slide group navigator buttons not found')
+  }
+
+  return { previousButton, nextButton }
+}
+
+const assertAtStart = (group: Element, label: string) => {
+  const { previousButton, nextButton } = getNavigatorButtons(group)
+
+  assertThat(previousButton.disabled, `${label}: the left arrow is enabled at the start`)
+  assertThat(!nextButton.disabled, `${label}: the right arrow is disabled at the start`)
+}
+
+const assertAtEnd = (group: Element, label: string) => {
+  const { previousButton, nextButton } = getNavigatorButtons(group)
+
+  assertThat(!previousButton.disabled, `${label}: the left arrow is disabled at the end`)
+  assertThat(nextButton.disabled, `${label}: the right arrow is enabled at the end`)
+}
+
+// Clicks one arrow until it disables itself, waiting out each slide animation (both arrows disable while it runs).
+const clickUntilDisabled = async (group: Element, pickButton: (group: Element) => HTMLButtonElement) => {
+  for (let click = 0; click < maxNavigatorClicks && !pickButton(group).disabled; click++) {
+    await userEvent.click(pickButton(group))
+    await waitFor(() => {
+      const { previousButton, nextButton } = getNavigatorButtons(group)
+
+      assertThat(!previousButton.disabled || !nextButton.disabled, 'the slide animation has not finished')
+    })
+  }
+}
+
+// Each arrow must be disabled only at its own edge, for the built-in arrows and for arrows passed through the
+// `left` / `right` slots (their `attrs.disabled`). The play function scrolls to the right end and back, so the
+// screenshot shows the start position.
+export const SlideGroupEdges = {
+  tags: ['visual'],
+  render: () => ({
+    components: { SButton, SIcon, SSlideGroup, SSlideItem },
+    setup: () => ({ slides: Array.from({ length: edgeSlideCount }, (_, index) => `Slide ${index + 1}`) }),
+    template: /* html */ `
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <SSlideGroup class="stress-slide-default" :scrollable="false">
+          <SSlideItem v-for="(slide, index) in slides" :key="slide" :index="index">
+            <div style="display: flex; align-items: center; justify-content: center; width: 120px; height: 64px; border: 1px solid currentColor; border-radius: 8px;">{{ slide }}</div>
+          </SSlideItem>
+        </SSlideGroup>
+        <SSlideGroup class="stress-slide-slots" :scrollable="false">
+          <template #left="{ attrs, on }">
+            <SButton variant="icon" aria-label="Previous slides" v-bind="attrs" v-on="on">
+              <SIcon icon="mdi-arrow-left"></SIcon>
+            </SButton>
+          </template>
+          <SSlideItem v-for="(slide, index) in slides" :key="slide" :index="index">
+            <div style="display: flex; align-items: center; justify-content: center; width: 120px; height: 64px; border: 1px solid currentColor; border-radius: 8px;">{{ slide }}</div>
+          </SSlideItem>
+          <template #right="{ attrs, on }">
+            <SButton variant="icon" aria-label="Next slides" v-bind="attrs" v-on="on">
+              <SIcon icon="mdi-arrow-right"></SIcon>
+            </SButton>
+          </template>
+        </SSlideGroup>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const groups = [
+      { label: 'built-in arrows', selector: '.stress-slide-default' },
+      { label: 'slot arrows', selector: '.stress-slide-slots' },
+    ]
+
+    for (const { label, selector } of groups) {
+      const group = canvasElement.querySelector(selector)
+
+      if (!group) {
+        throw new Error(`${label}: slide group not found`)
+      }
+
+      await waitFor(() => assertAtStart(group, label))
+      await clickUntilDisabled(group, (element) => getNavigatorButtons(element).nextButton)
+      await waitFor(() => assertAtEnd(group, label))
+      await clickUntilDisabled(group, (element) => getNavigatorButtons(element).previousButton)
+      await waitFor(() => assertAtStart(group, label))
+    }
+  },
+} satisfies StoryObj
