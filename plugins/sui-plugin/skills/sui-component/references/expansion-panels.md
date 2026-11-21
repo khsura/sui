@@ -10,53 +10,130 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsExpansionPanels.d
 
 ## SExpansionPanels
 
-### Props
+<!-- generated:api:start SExpansionPanels -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `modelValue` | `number[] \| null` | `[]` | `index` values of open panels (use `v-model`) |
-| `multiple` | `boolean` | `false` | Allow several panels open at once |
-| `mandatory` | `boolean` | `false` | Keep at least one panel open. Opens the first one if the model is empty |
-| `expandIcon` | `MaterialDesignIcon` | `'mdi-chevron-down'` | Header toggle icon |
-| `expandIconSize` | `SizePropertyType` | `undefined` | Toggle icon size |
+**SExpansionPanels props**
 
-### Slots / Events
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `expandIcon` | `string` | — | no | — |
+| `expandIconSize` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` |
+| `mandatory` | `boolean` | — | no | — |
+| `modelValue` | `(number[] & GroupItemValue[])` | `[]` | no | — |
+| `multiple` | `boolean` | — | no | — |
 
-| Slot | Description |
-|------|-------------|
-| `default` | `SExpansionPanel` components |
+**SExpansionPanels slots**
 
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `update:modelValue` | `number[]` | Open panels changed |
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SExpansionPanels events**
+
+| Event | Payload |
+| --- | --- |
+| `update:modelValue` | `[value: GroupItemValue[]]` |
+
+<!-- generated:api:end SExpansionPanels -->
+
+**SExpansionPanels notes**
+
+- `modelValue`: `index` values of open panels (use `v-model`)
+- `multiple`: Allow several panels open at once
+- `mandatory`: Keep at least one panel open. Opens the first one if the model is empty
+- `expandIcon`: Header toggle icon (default: `'mdi-chevron-down'`)
+- `expandIconSize`: Toggle icon size
+- `default` (slot): `SExpansionPanel` components
+- `update:modelValue` (event): Open panels changed
 
 ---
 
 ## SExpansionPanel
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `index` | `number` | vnode `key`, else an auto id | Panel identity, the value stored in the `v-model` array |
+<!-- generated:api:start SExpansionPanel -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Slot | Scoped data | Description |
-|------|-------------|-------------|
-| `default` | `{ isExpanded }` | `SExpansionPanelHeader` + `SExpansionPanelContent` |
+**SExpansionPanel props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `activeClass` | `string \| null` | — | no | — |
+| `disabled` | `boolean` | — | no | — |
+| `index` | `number \| null` | — | no | — |
+
+**SExpansionPanel slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{ isExpanded: boolean; }` |
+
+**SExpansionPanel events**
+
+None.
+
+<!-- generated:api:end SExpansionPanel -->
+
+**SExpansionPanel notes**
+
+- `index`: Panel identity, the value stored in the `v-model` array (default: vnode `key`, else an auto id)
+- `default` (slot): `SExpansionPanelHeader` + `SExpansionPanelContent`
 
 ## SExpansionPanelHeader
 
 Clickable row that toggles its panel.
 
-| Slot | Scoped data | Description |
-|------|-------------|-------------|
-| `default` | `{ open }` | Header label |
-| `actions` | `{ isExpanded }` | Replaces the expand icon |
-| `top` | none | Content above the header row |
+<!-- generated:api:start SExpansionPanelHeader -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SExpansionPanelHeader props**
+
+None.
+
+**SExpansionPanelHeader slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `actions` | `{ isExpanded: boolean \| null; }` |
+| `default` | `{ open: boolean \| null; }` |
+| `top` | `{}` |
+
+**SExpansionPanelHeader events**
+
+None.
+
+<!-- generated:api:end SExpansionPanelHeader -->
+
+**SExpansionPanelHeader notes**
+
+- `default` (slot): Header label
+- `actions` (slot): Replaces the expand icon
+- `top` (slot): Content above the header row
 
 ## SExpansionPanelContent
 
-| Slot | Scoped data | Description |
-|------|-------------|-------------|
-| `default` | `{ isExpanded }` | Collapsible body |
+<!-- generated:api:start SExpansionPanelContent -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SExpansionPanelContent props**
+
+None.
+
+**SExpansionPanelContent slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{ isExpanded: boolean \| null; }` |
+
+**SExpansionPanelContent events**
+
+None.
+
+<!-- generated:api:end SExpansionPanelContent -->
+
+**SExpansionPanelContent notes**
+
+- `default` (slot): Collapsible body
 
 ---
 

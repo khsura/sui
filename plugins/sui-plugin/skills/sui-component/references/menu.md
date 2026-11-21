@@ -6,38 +6,71 @@ Floating popup anchored to an activator. Clicking the activator toggles it; clic
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsMenu.d.ts`
 
-## Props
+<!-- generated:api:start SMenu -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `location` | `string \| string[]` | `undefined` | `'bottom'`, `'top'`, `'left'`, `'right'` (combinable, e.g. `'bottom right'`). **Unset = opens over the activator** |
-| `closeOnContentClick` | `boolean` | `false` | Close when the menu content is clicked |
-| `closeOnScroll` | `boolean` | `false` | Close on window scroll |
-| `position` | `'fixed' \| 'absolute' \| ...` | `undefined` | `'fixed'` positions relative to the viewport (use inside fixed containers) |
-| `offsetX` / `offsetY` | `number \| null` | `undefined` | Extra offset in px |
-| `screenPadding` | `number \| null` | `undefined` | Shift left by this many px when the menu would overflow the right edge |
-| `contentClass` | `string \| string[] \| Record<string, boolean>` | `undefined` | Classes on the content element |
-| `contentStyle` | `StyleValue` | `undefined` | Styles on the content element |
-| `preventCloseOnClick` | `boolean` | `false` | Activator click only opens, never closes |
-| `disabled` | `boolean` | `false` | Passed to the activator via `attrs` (disables the trigger) |
-| `width` / `height` / `min*` / `max*` | `string \| number` | `undefined` | Content dimensions (min-width defaults to activator width) |
+**SMenu props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
+| `closeOnClick` | `boolean` | — | no | — |
+| `closeOnContentClick` | `boolean` | — | no | — |
+| `closeOnScroll` | `boolean` | — | no | — |
+| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentStyle` | `StyleValue` | — | no | — |
+| `disabled` | `boolean \| null` | — | no | — |
+| `height` | `string \| number \| null` | — | no | — |
+| `location` | `LocationRaw` | — | no | — |
+| `maxHeight` | `string \| number \| null` | — | no | — |
+| `maxWidth` | `string \| number \| null` | — | no | — |
+| `minHeight` | `string \| number \| null` | — | no | — |
+| `minWidth` | `string \| number \| null` | — | no | — |
+| `modelValue` | `boolean` | — | no | — |
+| `offsetX` | `number \| null` | — | no | — |
+| `offsetY` | `number \| null` | — | no | — |
+| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
+| `preventCloseOnClick` | `boolean` | — | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `screenPadding` | `number \| null` | — | no | — |
+| `width` | `string \| number \| null` | — | no | — |
+
+**SMenu slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `activator` | `{ on: { click: () => void; }; attrs: Partial<PropsRequired<{ disabled: boolean \| null \| undefined; readonly: boolean \| null \| undefined; }>>; }` |
+| `default` | `{}` |
+
+**SMenu events**
+
+| Event | Payload |
+| --- | --- |
+| `close` | `[]` |
+| `update:modelValue` | `[value: boolean \| undefined]` |
+
+<!-- generated:api:end SMenu -->
+
+**SMenu notes**
+
+- `location`: `'bottom'`, `'top'`, `'left'`, `'right'` (combinable, e.g. `'bottom right'`). **Unset = opens over the activator**
+- `closeOnContentClick`: Close when the menu content is clicked
+- `closeOnScroll`: Close on window scroll
+- `position`: `'fixed'` positions relative to the viewport (use inside fixed containers)
+- `offsetX` / `offsetY`: Extra offset in px
+- `screenPadding`: Shift left by this many px when the menu would overflow the right edge
+- `contentClass`: Classes on the content element
+- `contentStyle`: Styles on the content element
+- `preventCloseOnClick`: Activator click only opens, never closes
+- `disabled`: Passed to the activator via `attrs` (disables the trigger)
+- `width` / `height` / `min*` / `max*`: Content dimensions (min-width defaults to activator width)
+- `activator` (slot): Trigger. Bind **both** `v-on="on"` and `v-bind="attrs"`
+- `default` (slot): Menu content
+- `close` (event): Emitted whenever the model changes to `false`
 
 ## Model
 
 `v-model: boolean` — optional; the menu works uncontrolled too.
-
-## Slots
-
-| Slot | Scoped data | Description |
-|------|-------------|-------------|
-| `activator` | `{ on, attrs }` | Trigger. Bind **both** `v-on="on"` and `v-bind="attrs"` |
-| `default` | — | Menu content |
-
-## Events
-
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `close` | — | Emitted whenever the model changes to `false` |
 
 ## Usage
 

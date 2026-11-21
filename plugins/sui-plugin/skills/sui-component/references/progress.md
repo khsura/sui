@@ -10,19 +10,43 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsProgressLinear.d.
 
 Horizontal progress bar.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `number \| string` | `0` | Progress 0–100 |
-| `indeterminate` | `boolean` | `false` | Animated, unknown duration |
-| `color` | `string` | `'info'` | Bar color (preset name or CSS color) |
-| `backgroundColor` | `string \| null` | `undefined` | Track color. Falls back to `color` |
-| `backgroundOpacity` | `string \| number \| null` | `undefined` | Track opacity |
-| `size` | `string \| number \| null` | `undefined` | Bar height (number = px) |
-| `position` | `'static' \| 'fixed' \| 'absolute' \| 'relative' \| 'sticky'` | `undefined` | Only `fixed` and `absolute` add positioning styles |
+<!-- generated:api:start SProgressLinear -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Slot | Description |
-|------|-------------|
-| `default` | Rendered inside the bar container (e.g. a label) |
+**SProgressLinear props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `backgroundColor` | `string \| null` | — | no | — |
+| `backgroundOpacity` | `string \| number \| null` | — | no | — |
+| `color` | `string` | `"info"` | no | — |
+| `indeterminate` | `boolean` | — | no | — |
+| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
+| `size` | `string \| number \| null` | — | no | — |
+| `value` | `string \| number` | `0` | no | — |
+
+**SProgressLinear slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SProgressLinear events**
+
+None.
+
+<!-- generated:api:end SProgressLinear -->
+
+**SProgressLinear notes**
+
+- `value`: Progress 0–100
+- `indeterminate`: Animated, unknown duration
+- `color`: Bar color (preset name or CSS color)
+- `backgroundColor`: Track color. Falls back to `color`
+- `backgroundOpacity`: Track opacity
+- `size`: Bar height (number = px)
+- `position`: Only `fixed` and `absolute` add positioning styles
+- `default` (slot): Rendered inside the bar container (e.g. a label)
 
 No events.
 
@@ -32,19 +56,43 @@ No events.
 
 Circular progress / spinner.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `number` | `0` | Progress 0–100 (clamped) |
-| `indeterminate` | `boolean` | `false` | Spinning state |
-| `color` | `string \| null` | `undefined` | Arc color (text-color based, inherits `currentColor`) |
-| `size` | `number \| string` | `32` | Diameter in px. Must be numeric (`'2rem'` breaks) |
-| `width` | `number` | `4` | Stroke width in px |
-| `rotate` | `number` | `undefined` | Starting angle offset in degrees |
-| `theme` | `AppThemeType` | `undefined` | Theme override |
+<!-- generated:api:start SProgressCircular -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Slot | Description |
-|------|-------------|
-| `default` | Content centered in the circle |
+**SProgressCircular props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `color` | `string \| null` | — | no | — |
+| `indeterminate` | `boolean` | — | no | — |
+| `rotate` | `number` | — | no | — |
+| `size` | `string \| number` | `32` | no | — |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+| `value` | `number` | `0` | no | — |
+| `width` | `number` | `4` | no | — |
+
+**SProgressCircular slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SProgressCircular events**
+
+None.
+
+<!-- generated:api:end SProgressCircular -->
+
+**SProgressCircular notes**
+
+- `value`: Progress 0–100 (clamped)
+- `indeterminate`: Spinning state
+- `color`: Arc color (text-color based, inherits `currentColor`)
+- `size`: Diameter in px. Must be numeric (`'2rem'` breaks)
+- `width`: Stroke width in px
+- `rotate`: Starting angle offset in degrees
+- `theme`: Theme override
+- `default` (slot): Content centered in the circle
 
 No events.
 

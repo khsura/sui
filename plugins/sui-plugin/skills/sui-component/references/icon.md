@@ -20,21 +20,40 @@ Renders a Material Design Icon (MDI) by class name as `<span aria-hidden="true" 
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsIcon.d.ts`
 
-## Props
+<!-- generated:api:start SIcon -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `icon` | `string` | **required** | Full MDI class name including the `mdi-` prefix, e.g. `'mdi-home'`, `'mdi-heart-outline'` |
-| `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra' \| number \| string` | `undefined` (default size) | Preset name → size class. A number or CSS length → inline `font-size` |
-| `color` | `string` | `undefined` | Text color: preset/app color name or any CSS color |
-| `theme` | `'light' \| 'dark'` | `undefined` | Force light/dark styling (ignored when `color` is a preset) |
-| `spin` | `boolean` | `false` | Continuous rotation animation |
-| `rotated` | `boolean` | `false` | Rotate 180° (animated) |
-| `extra` | `Array<string>` | `undefined` | Extra classes added to the span, e.g. MDI helpers `'mdi-flip-h'`, `'mdi-rotate-90'` |
+**SIcon props**
 
-## Slots
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `color` | `string \| null` | — | no | — |
+| `extra` | `string[] \| null` | — | no | — |
+| `icon` | `string` | — | yes | — |
+| `rotated` | `boolean \| null` | — | no | — |
+| `size` | `SizePropertyUnionType` | — | no | — |
+| `spin` | `boolean` | — | no | — |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+
+**SIcon slots**
 
 None.
+
+**SIcon events**
+
+None.
+
+<!-- generated:api:end SIcon -->
+
+**SIcon notes**
+
+- `icon`: Full MDI class name including the `mdi-` prefix, e.g. `'mdi-home'`, `'mdi-heart-outline'` (default: **required**)
+- `size`: Preset name → size class. A number or CSS length → inline `font-size` (default: `undefined` (default size))
+- `color`: Text color: preset/app color name or any CSS color
+- `theme`: Force light/dark styling (ignored when `color` is a preset)
+- `spin`: Continuous rotation animation
+- `rotated`: Rotate 180° (animated)
+- `extra`: Extra classes added to the span, e.g. MDI helpers `'mdi-flip-h'`, `'mdi-rotate-90'`
 
 ## Events
 

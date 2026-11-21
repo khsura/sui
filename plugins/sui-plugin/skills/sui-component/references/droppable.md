@@ -6,27 +6,47 @@ Drag-and-drop drop zone (files or any dragged content). Renders a plain `<div>` 
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsDroppable.d.ts`
 
-## Props
+<!-- generated:api:start SDroppable -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `disabled` | `boolean \| null` | `undefined` | Stop emitting `drop` and keep `isDraggingOver` false |
-| `readonly` | `boolean \| null` | `undefined` | Typed (shared prop) but has no effect |
-| `width` / `height` | `string \| number \| null` | `undefined` | Size (numbers → px) |
-| `minWidth` / `maxWidth` | `string \| number \| null` | `undefined` | Width limits |
-| `minHeight` / `maxHeight` | `string \| number \| null` | `undefined` | Height limits |
+**SDroppable props**
 
-## Events
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `disabled` | `boolean \| null` | — | no | — |
+| `height` | `string \| number \| null` | — | no | — |
+| `maxHeight` | `string \| number \| null` | — | no | — |
+| `maxWidth` | `string \| number \| null` | — | no | — |
+| `minHeight` | `string \| number \| null` | — | no | — |
+| `minWidth` | `string \| number \| null` | — | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `width` | `string \| number \| null` | — | no | — |
 
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `drop` | `DragEvent` | Content dropped (not emitted when `disabled` or the browser lacks DnD support) |
+**SDroppable slots**
 
-## Slots
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{ class: string; attrs: { isDraggingOver: boolean; disabled: boolean \| null \| undefined; supportsDragAndDrop: boolean; }; isDraggingOver: boolean; disabled: boolean \| null \| undefined; supportsDragAndDrop: boolean; }` |
 
-| Slot | Scoped data | Description |
-|------|-------------|-------------|
-| `default` | `{ isDraggingOver, disabled, supportsDragAndDrop, attrs }` | Drop-zone content. `attrs` bundles the other three |
+**SDroppable events**
+
+| Event | Payload |
+| --- | --- |
+| `drop` | `[value: DragEvent]` |
+
+<!-- generated:api:end SDroppable -->
+
+**SDroppable notes**
+
+- `disabled`: Stop emitting `drop` and keep `isDraggingOver` false
+- `readonly`: Typed (shared prop) but has no effect
+- `width` / `height`: Size (numbers → px)
+- `minWidth` / `maxWidth`: Width limits
+- `minHeight` / `maxHeight`: Height limits
+- `drop` (event): Content dropped (not emitted when `disabled` or the browser lacks DnD support)
+- `default` (slot): Drop-zone content. `attrs` bundles the other three
+
+## Default slot scope
 
 | Property | Type | Description |
 |----------|------|-------------|

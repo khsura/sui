@@ -10,41 +10,76 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsStepper.d.ts`, `p
 
 ## SStepper
 
-### Props
+<!-- generated:api:start SStepper -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `modelValue` | `number` | `undefined` | Current step number (use `v-model`) |
-| `items` | `Array<{ step: number; text?: string; editable?: boolean }>` | `[]` | Step definitions. Used only when the default slot is empty |
-| `shrink` | `boolean` | `false` | Shrink to content width |
+**SStepper props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `items` | `{ editable?: boolean \| undefined; step: number; text?: string \| undefined; }[]` | `[]` | no | — |
+| `modelValue` | `number` | — | no | — |
+| `shrink` | `boolean` | — | no | — |
+| `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
+
+**SStepper slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{ value: number \| undefined; }` |
+
+**SStepper events**
+
+| Event | Payload |
+| --- | --- |
+| `update:modelValue` | `[value: number]` |
+
+<!-- generated:api:end SStepper -->
+
+**SStepper notes**
+
+- `modelValue`: Current step number (use `v-model`)
+- `items`: Step definitions. Used only when the default slot is empty
+- `shrink`: Shrink to content width
+- `default` (slot): `SStepperStep` components. Replaces `items` rendering
+- `update:modelValue` (event): Emitted when an `editable` step is clicked. Clamped to the lowest/highest registered step
 
 `tag` exists in the type but is ignored (root is always a `div`).
-
-### Slots
-
-| Slot | Scoped data | Description |
-|------|-------------|-------------|
-| `default` | `{ value }` (current step) | `SStepperStep` components. Replaces `items` rendering |
-
-### Events
-
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `update:modelValue` | `number` | Emitted when an `editable` step is clicked. Clamped to the lowest/highest registered step |
 
 ---
 
 ## SStepperStep
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `step` | `number` | **required** | Step number |
-| `editable` | `boolean` | `false` | Clicking the step jumps to it (forward or back) |
-| `disabled` | `boolean` | `false` | Disabled styling only. Does not block clicks on an `editable` step |
+<!-- generated:api:start SStepperStep -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Slot | Description |
-|------|-------------|
-| `default` | Step label |
+**SStepperStep props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `disabled` | `boolean` | — | no | — |
+| `editable` | `boolean` | — | no | — |
+| `step` | `number` | — | yes | — |
+| `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
+
+**SStepperStep slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SStepperStep events**
+
+None.
+
+<!-- generated:api:end SStepperStep -->
+
+**SStepperStep notes**
+
+- `step`: Step number (default: **required**)
+- `editable`: Clicking the step jumps to it (forward or back)
+- `disabled`: Disabled styling only. Does not block clicks on an `editable` step
+- `default` (slot): Step label
 
 Steps with `step < modelValue` show a checkmark (visited). `step === modelValue` is current. Must be a child of `SStepper` (throws otherwise).
 

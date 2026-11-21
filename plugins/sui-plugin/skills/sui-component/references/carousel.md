@@ -10,43 +10,77 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsCarousel.d.ts`, `
 
 ## SCarousel
 
-### Props
+<!-- generated:api:start SCarousel -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `modelValue` | `string \| number \| boolean` | `undefined` | Active slide's `value` (use `v-model`) |
-| `cycle` | `boolean` | `true` | Auto-advance through slides |
-| `interval` | `number` | `6000` | Auto-advance interval in ms |
-| `height` | `number \| string` | `500` | Carousel height (number = px) |
-| `color` | `string` | `undefined` | Color of the active delimiter dot |
-| `hideDelimiters` | `boolean` | `false` | Hide the navigation dots |
-| `hideDelimiterBackground` | `boolean` | `false` | Hide the dots' background strip |
-| `controlsBackgroundColor` | `string` | `'#0000004d'` | Background of the dots strip |
-| `delimiterIcon` | `MaterialDesignIcon` | `'mdi-circle'` | Dot icon |
-| `verticalDelimiters` | `boolean \| 'left' \| 'right'` | `undefined` | Stack dots vertically on the left/right edge |
-| `hideArrows` | `boolean` | `false` | Hide prev/next arrows |
-| `prevIcon` | `MaterialDesignIcon` | `'mdi-chevron-left'` | Previous arrow icon |
-| `nextIcon` | `MaterialDesignIcon` | `'mdi-chevron-right'` | Next arrow icon |
-| `touch` | `boolean \| TouchHandlers` | `true` | Swipe gestures |
-| `noAnimation` | `boolean` | `false` | Disable the slide transition |
-| `selectedClass` | `string` | `undefined` | Class for the active item |
-| `tag` | `string` | `'div'` | Root HTML element |
+**SCarousel props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `color` | `string` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `continuous` | `boolean` | — | no | — |
+| `controlsBackgroundColor` | `string` | `"#0000004d"` | no | — |
+| `cycle` | `boolean` | `true` | no | — |
+| `delimiterIcon` | `string` | `"mdi-circle"` | no | — |
+| `disabled` | `boolean \| null` | — | no | — |
+| `height` | `string \| number` | `500` | no | — |
+| `hideArrows` | `boolean` | — | no | — |
+| `hideDelimiterBackground` | `boolean` | — | no | — |
+| `hideDelimiters` | `boolean` | — | no | — |
+| `interval` | `number` | `6000` | no | — |
+| `modelValue` | `GroupItemValue` | — | no | — |
+| `nextIcon` | `string` | `"mdi-chevron-right"` | no | — |
+| `noAnimation` | `boolean` | `false` | no | — |
+| `prevIcon` | `string` | `"mdi-chevron-left"` | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `selectedClass` | `string` | — | no | — |
+| `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+| `touch` | `boolean \| TouchHandlers` | `true` | no | — |
+| `verticalDelimiters` | `boolean \| "left" \| "right"` | — | no | — |
+
+**SCarousel slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SCarousel events**
+
+| Event | Payload |
+| --- | --- |
+| `update:modelValue` | `[value: GroupItemValue \| undefined]` |
+
+<!-- generated:api:end SCarousel -->
+
+**SCarousel notes**
+
+- `modelValue`: Active slide's `value` (use `v-model`)
+- `cycle`: Auto-advance through slides
+- `interval`: Auto-advance interval in ms
+- `height`: Carousel height (number = px)
+- `color`: Color of the active delimiter dot
+- `hideDelimiters`: Hide the navigation dots
+- `hideDelimiterBackground`: Hide the dots' background strip
+- `controlsBackgroundColor`: Background of the dots strip
+- `delimiterIcon`: Dot icon
+- `verticalDelimiters`: Stack dots vertically on the left/right edge
+- `hideArrows`: Hide prev/next arrows
+- `prevIcon`: Previous arrow icon
+- `nextIcon`: Next arrow icon
+- `touch`: Swipe gestures
+- `noAnimation`: Disable the slide transition
+- `selectedClass`: Class for the active item
+- `tag`: Root HTML element (default: `'div'`)
+- `default` (slot): `SCarouselItem` components
+- `update:modelValue` (event): Active slide changed (arrows, dots, swipe, auto-play)
 
 Always looping and always one slide selected (`continuous` + `mandatory` are hard-wired). The `continuous` and `disabled` props exist in the type but have no effect on SCarousel.
 
 ### Slots
 
-| Slot | Description |
-|------|-------------|
-| `default` | `SCarouselItem` components |
-
 No `prev`/`next` slots on SCarousel.
-
-### Events
-
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `update:modelValue` | slide `value` | Active slide changed (arrows, dots, swipe, auto-play) |
 
 ---
 
@@ -54,17 +88,48 @@ No `prev`/`next` slots on SCarousel.
 
 Each item renders an `SImage`. Your default-slot content is drawn as an overlay on top of the image.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `string \| number \| boolean` | auto id | Slide identifier matched against the carousel `v-model` |
-| `src` | `string \| null` | **required** | Image URL. Pass `:src="null"` for content-only slides |
-| `alt` | `string \| null` | `undefined` | Image alt text |
-| `objectFit` | `'fill' \| 'contain' \| 'cover' \| 'none' \| 'scale-down'` | `undefined` | Image fit |
-| `aspectRatio` | `number \| null` | `undefined` | Image aspect ratio |
+<!-- generated:api:start SCarouselItem -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Slot | Description |
-|------|-------------|
-| `default` | Overlay content on top of the image |
+**SCarouselItem props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `activeClass` | `string \| null` | — | no | — |
+| `alt` | `string \| null` | — | no | — |
+| `aspectRatio` | `number \| null` | — | no | — |
+| `height` | `string \| number \| null` | — | no | — |
+| `lazyLoad` | `LazyLoad \| null` | — | no | — |
+| `maxHeight` | `string \| number \| null` | — | no | — |
+| `maxWidth` | `string \| number \| null` | — | no | — |
+| `minHeight` | `string \| number \| null` | — | no | — |
+| `minWidth` | `string \| number \| null` | — | no | — |
+| `objectFit` | `"fill" \| "none" \| "contain" \| "cover" \| "scale-down"` | — | no | `contain`, `cover`, `fill`, `none`, `scale-down` |
+| `selected` | `boolean` | — | no | — |
+| `src` | `string \| null` | — | yes | — |
+| `value` | `string \| number \| boolean` | — | no | — |
+| `width` | `string \| number \| null` | — | no | — |
+
+**SCarouselItem slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SCarouselItem events**
+
+None.
+
+<!-- generated:api:end SCarouselItem -->
+
+**SCarouselItem notes**
+
+- `value`: Slide identifier matched against the carousel `v-model` (default: auto id)
+- `src`: Image URL. Pass `:src="null"` for content-only slides (default: **required**)
+- `alt`: Image alt text
+- `objectFit`: Image fit
+- `aspectRatio`: Image aspect ratio
+- `default` (slot): Overlay content on top of the image
 
 ---
 

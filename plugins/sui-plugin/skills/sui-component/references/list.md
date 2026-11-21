@@ -10,26 +10,50 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsList.d.ts`, `prop
 
 ## SList
 
-### Props
+<!-- generated:api:start SList -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `divided` | `boolean` | `false` | Border between items |
-| `lines` | `number` (1–6) | `undefined` | Line clamp for `SListItemSubtitle` (the subtitle clamps to 2 lines when this is unset) |
-| `outlined` | `boolean` | `false` | Outlined border. `color` then sets the **text** color |
-| `dense` | `boolean` | `false` | No list padding, 40px rows, dense title/icon/action |
-| `link` | `boolean` | `false` | Hover style + pointer on every item |
-| `text` | `boolean` | `false` | `color` sets the text color instead of the background |
-| `color` | `string` | `undefined` | Background color (or text color with `outlined`/`text`) |
-| `colorThreshold` | `number` | `undefined` | Contrast threshold for custom colors |
-| `tag` | `'ul' \| 'ol' \| 'div'` | `'div'` | Root element |
-| `inset` | `boolean` | `false` | Declared, but has no styling (no visible effect) |
+**SList props**
 
-### Slots
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `color` | `string` | — | no | — |
+| `colorThreshold` | `number` | — | no | — |
+| `dense` | `boolean \| null` | — | no | — |
+| `divided` | `boolean` | — | no | — |
+| `inset` | `boolean \| null` | — | no | — |
+| `lines` | `number \| null` | — | no | — |
+| `link` | `boolean \| null` | — | no | — |
+| `outlined` | `boolean \| null` | — | no | — |
+| `tag` | `"div" \| "ol" \| "ul" \| null` | — | no | `div`, `ol`, `ul` |
+| `text` | `boolean \| null` | — | no | — |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` |
 
-| Slot | Description |
-|------|-------------|
-| `default` | `SListItem`, `SListItemGroup`, `SDivider`, … |
+**SList slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SList events**
+
+None.
+
+<!-- generated:api:end SList -->
+
+**SList notes**
+
+- `divided`: Border between items
+- `lines`: Line clamp for `SListItemSubtitle` (the subtitle clamps to 2 lines when this is unset)
+- `outlined`: Outlined border. `color` then sets the **text** color
+- `dense`: No list padding, 40px rows, dense title/icon/action
+- `link`: Hover style + pointer on every item
+- `text`: `color` sets the text color instead of the background
+- `color`: Background color (or text color with `outlined`/`text`)
+- `colorThreshold`: Contrast threshold for custom colors
+- `tag`: Root element (default: `'div'`)
+- `inset`: Declared, but has no styling (no visible effect)
+- `default` (slot): `SListItem`, `SListItemGroup`, `SDivider`, …
 
 ---
 
@@ -37,30 +61,50 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsList.d.ts`, `prop
 
 A flex row with a minimum height of 48px (40px when the list is `dense`).
 
-### Props
+<!-- generated:api:start SListItem -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `link` | `boolean` | `false` | Hover background + pointer (automatic when `href`/`to` is set) |
-| `selectable` | `boolean` | `false` | Only sets `cursor: pointer`. It does **not** add selected styling |
-| `lines` | `number` (1–6) | `undefined` | Subtitle line clamp for this item (overrides the list's `lines`) |
-| `disabled` | `boolean` | `false` | Disabled state |
-| `href` | `string` | `undefined` | Render as `<a>` |
-| `to` | `RouteLocationRaw` | `undefined` | Render as `router-link` |
-| `target` / `rel` | `string` | `undefined` | Link attributes |
-| `tag` | `'li' \| 'div'` | `'div'` | Root element (when not a link) |
+**SListItem props**
 
-### Slots
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `disabled` | `boolean \| null` | — | no | — |
+| `href` | `string` | — | no | — |
+| `lines` | `number \| null` | — | no | — |
+| `link` | `boolean \| null` | — | no | — |
+| `readonly` | `boolean \| null` | — | no | — |
+| `rel` | `string` | — | no | — |
+| `selectable` | `boolean \| null` | — | no | — |
+| `tag` | `"div" \| "li" \| null` | — | no | `div`, `li` |
+| `target` | `"_blank" \| "_self" \| "_parent" \| "_top"` | — | no | `_blank`, `_parent`, `_self`, `_top` |
+| `to` | `string \| it \| et \| null` | — | no | — |
 
-| Slot | Description |
-|------|-------------|
-| `default` | Item content |
+**SListItem slots**
 
-### Events
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
 
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `click` | `Event` | Item clicked |
+**SListItem events**
+
+| Event | Payload |
+| --- | --- |
+| `click` | `[value: Event]` |
+
+<!-- generated:api:end SListItem -->
+
+**SListItem notes**
+
+- `link`: Hover background + pointer (automatic when `href`/`to` is set)
+- `selectable`: Only sets `cursor: pointer`. It does **not** add selected styling
+- `lines`: Subtitle line clamp for this item (overrides the list's `lines`)
+- `disabled`: Disabled state
+- `href`: Render as `<a>`
+- `to`: Render as `router-link`
+- `target` / `rel`: Link attributes
+- `tag`: Root element (when not a link) (default: `'div'`)
+- `default` (slot): Item content
+- `click` (event): Item clicked
 
 ---
 
@@ -72,14 +116,115 @@ A flex row with a minimum height of 48px (40px when the list is `dense`).
 - `SListItemTitle` is the primary line. It **must be inside an `SList`** (it throws otherwise).
 - `SListItemSubtitle` is the secondary line, clamped to 2 lines by default. It **must be inside both `SList` and `SListItem`**.
 
+<!-- generated:api:start SListItemContent -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SListItemContent props**
+
+None.
+
+**SListItemContent slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SListItemContent events**
+
+None.
+
+<!-- generated:api:end SListItemContent -->
+
+<!-- generated:api:start SListItemTitle -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SListItemTitle props**
+
+None.
+
+**SListItemTitle slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SListItemTitle events**
+
+None.
+
+<!-- generated:api:end SListItemTitle -->
+
+<!-- generated:api:start SListItemSubtitle -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SListItemSubtitle props**
+
+None.
+
+**SListItemSubtitle slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SListItemSubtitle events**
+
+None.
+
+<!-- generated:api:end SListItemSubtitle -->
+
 ## SListItemIcon / SListItemAction
 
 Leading icon area and trailing action area. `default` slot.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `alignCenter` | `boolean` | `false` | Vertically center the content |
-| `dense` | `boolean` | `false` | Dense sizing (the parent list's `dense` takes precedence) |
+<!-- generated:api:start SListItemIcon -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SListItemIcon props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `alignCenter` | `boolean \| null` | — | no | — |
+| `dense` | `boolean \| null` | — | no | — |
+
+**SListItemIcon slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SListItemIcon events**
+
+None.
+
+<!-- generated:api:end SListItemIcon -->
+
+**SListItemIcon notes**
+
+- `alignCenter`: Vertically center the content
+- `dense`: Dense sizing (the parent list's `dense` takes precedence)
+
+<!-- generated:api:start SListItemAction -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SListItemAction props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `alignCenter` | `boolean \| null` | — | no | — |
+| `dense` | `boolean \| null` | — | no | — |
+
+**SListItemAction slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `default` | `{}` |
+
+**SListItemAction events**
+
+None.
+
+<!-- generated:api:end SListItemAction -->
 
 ---
 
@@ -87,16 +232,39 @@ Leading icon area and trailing action area. `default` slot.
 
 A collapsible sub-list. By default it renders a clickable header row (title, subtitle, chevron). The children are rendered in a nested `SList` that inherits the parent list's props. **It must be inside an `SList`.**
 
-| Prop / Model | Type | Default | Description |
-|--------------|------|---------|-------------|
-| `v-model` | `boolean` | `false` | Expanded state |
-| `title` | `string \| null` | `null` | Header title |
-| `subtitle` | `string \| null` | `null` | Header subtitle |
+<!-- generated:api:start SListItemGroup -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
-| Slot | Description |
-|------|-------------|
-| `activator` | Replaces the default header row (no slot props; toggle `v-model` yourself) |
-| `default` | Items shown when expanded |
+**SListItemGroup props**
+
+| Prop | Type | Default | Required | Values |
+| --- | --- | --- | --- | --- |
+| `modelValue` | `boolean` | `false` | no | — |
+| `subtitle` | `string \| null` | `null` | no | — |
+| `title` | `string \| null` | `null` | no | — |
+
+**SListItemGroup slots**
+
+| Slot | Slot props |
+| --- | --- |
+| `activator` | `{}` |
+| `default` | `{}` |
+
+**SListItemGroup events**
+
+| Event | Payload |
+| --- | --- |
+| `update:modelValue` | `[value: boolean]` |
+
+<!-- generated:api:end SListItemGroup -->
+
+**SListItemGroup notes**
+
+- `v-model`: Expanded state
+- `title`: Header title
+- `subtitle`: Header subtitle
+- `activator` (slot): Replaces the default header row (no slot props; toggle `v-model` yourself)
+- `default` (slot): Items shown when expanded
 
 ---
 
