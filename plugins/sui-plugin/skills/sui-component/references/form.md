@@ -584,3 +584,4 @@ const submit = () => {
 
 - `SRadioGroup` without `mandatory`: clicking the selected radio clears the value.
 - `SSelect` validates when its menu opens, so a required error can appear on first open.
+- `SSelect` / `SAutocomplete` / `SDatePickerInput` dropdowns flip or shift to stay 8px inside the viewport — no wrapper, padding or `location` workaround needed for fields at the bottom or right edge.
