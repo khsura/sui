@@ -51,6 +51,9 @@ const radioGroupClasses = computed(() => {
     flex-wrap: wrap;
 
     .s_radio {
+      // No wider than the group, so a long label wraps.
+      min-width: 0;
+      max-width: calc(100% - #{$s_spacer * 2});
       margin: $s_spacer;
     }
   }

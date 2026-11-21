@@ -133,6 +133,15 @@ const updateValue = async () => {
 
   &__button {
     @include s_button();
+    // A long label wraps inside its column instead of running out of it.
+    max-width: 100%;
+    height: auto;
+    min-height: #{map.get($s_button--sizes, 'default')}px;
+    padding-block: $s_spacer;
+    line-height: 1.25;
+    text-align: start;
+    text-indent: 0;
+    white-space: normal;
 
     @each $colorName in $s_presetColorNames {
       &--color__#{$colorName} {
