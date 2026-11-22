@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { suiApiSchema } from '@khsura/shared/schemas'
 import { COMPONENT_ALIASES } from '../../src/constants'
+import type * as ConstantsModule from '../../src/constants'
 import { useComponentCatalogService } from '../../src/services'
 import { latestFixturePath } from '../testProject'
 import { withComponents } from '../testTemplates'
@@ -138,5 +139,34 @@ describe('other-library component aliases', () => {
     const lookup = fullCatalog.findComponent('SDialg')
 
     expect(!lookup.found && lookup.alias).toBeUndefined()
+  })
+})
+
+describe('an alias with no SUI equivalent', () => {
+  // Synthetic: the real map has no such alias right now, but the code path must keep working for the next one.
+  const syntheticAlias = 'SSyntheticWidget'
+  const syntheticHint = 'There is no widget component; compose it from SCard and SList.'
+
+  afterEach(() => {
+    vi.doUnmock('../../src/constants')
+    vi.resetModules()
+  })
+
+  it('returns the hint with no SUI targets and still suggests names', async () => {
+    vi.resetModules()
+    vi.doMock('../../src/constants', async (importOriginal) => {
+      const original = await importOriginal<typeof ConstantsModule>()
+
+      return {
+        ...original,
+        COMPONENT_ALIASES: { ...original.COMPONENT_ALIASES, [syntheticAlias]: { suiNames: [], hint: syntheticHint } },
+      }
+    })
+    const { useComponentCatalogService: useMockedCatalogService } = await import('../../src/services')
+    const lookup = useMockedCatalogService(api).findComponent(syntheticAlias)
+
+    expect(lookup.found).toBe(false)
+    expect(!lookup.found && lookup.alias).toEqual({ alias: syntheticAlias, suiNames: [], hint: syntheticHint })
+    expect(!lookup.found && lookup.suggestions.length).toBeGreaterThan(0)
   })
 })

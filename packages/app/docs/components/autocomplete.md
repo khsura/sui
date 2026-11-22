@@ -27,6 +27,7 @@ Searchable dropdown input with filtering, multiple selection, chips, free-text e
 | `dense` | `boolean` | `false` | Dense list |
 | `filterMode` | `'start' \| 'contains' \| 'exact' \| 'none'` | `'contains'` | Built-in, case-insensitive filter behavior |
 | `filter` | `(item: SelectItem, queryText: string) => boolean` | `undefined` | Custom filter function (overrides `filterMode` unless it is `'none'`) |
+| `noDataText` | `string` | `undefined` | Message in the open menu when nothing matches (and there is no "Add" option). Without it, or the `#noData` slot, the menu stays blank |
 | `debounce` | `number` | `500` | Delay in ms before `searchItem` is emitted |
 | `delimiter` | `string \| string[] \| RegExp` | `undefined` | Keys that commit the typed text (like Enter) |
 | `autocomplete` | `'on' \| 'off'` | `undefined` | Native `autocomplete` attribute |
@@ -59,6 +60,12 @@ interface SelectItem {
 | `update:modelValue` | value or value[] | Selection changed |
 | `searchItem` (`@search-item`) | `string` | Current query, `debounce` ms after the last keystroke — use for async search |
 | `createItem` (`@create-item`) | `SelectItem` | An unlisted value was added (`allowUnlisted`) |
+
+## Slots
+
+| Slot | Scoped data | Description |
+|------|-------------|-------------|
+| `noData` | `{ query: string }` | Replaces `noDataText` when no option is left, such as an `SEmptyState` |
 
 ## Usage
 

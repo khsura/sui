@@ -12,6 +12,12 @@ import {
   COLOR_ATTRIBUTE,
   DATE_PICKER_EMPTY_STRING_COMPONENTS,
   DIRECTIVE_MODEL,
+  DIRECTIVE_ON,
+  EMPTY_STATE_ACTION_EVENT,
+  EMPTY_STATE_ACTION_TEXT_ATTRIBUTE,
+  EMPTY_STATE_ACTIONS_SLOT,
+  EMPTY_STATE_COMPONENT,
+  EMPTY_STATE_WRONG_ACTION_EVENTS,
   EMPTY_STRING_EXPRESSION,
   EMPTY_STRING_INITIAL_PATTERNS,
   FLEX_DISPLAY_CLASS_PATTERN,
@@ -52,6 +58,8 @@ import {
   RULE_BLOCK_BUTTONS_IN_ROW,
   RULE_CARD_TITLE_TEXT_ALIGN,
   RULE_DATE_PICKER_EMPTY_STRING,
+  RULE_EMPTY_STATE_ACTION_EVENT,
+  RULE_EMPTY_STATE_ACTION_WITHOUT_LISTENER,
   RULE_FIELD_BUTTON_ROW,
   RULE_FILL_HEIGHT_UNDER_APP,
   RULE_HIDDEN_LABEL_NO_VISIBLE_NAME,
@@ -85,6 +93,7 @@ import {
   expressionSource,
   findAttribute,
   findPropAttribute,
+  hasObjectSpread,
   isBooleanPropOn,
   isComponentTag,
   isDirective,
@@ -573,6 +582,65 @@ export const hiddenLabelNoVisibleNameRule: TemplateRule = {
   },
 }
 
+/** The `v-on` / `@` directives on `element` with a static event name. */
+const eventListeners = (element: ElementNode) =>
+  element.props
+    .filter(isDirective)
+    .filter((directive) => directive.name === DIRECTIVE_ON)
+    .map((directive) => ({ directive, event: staticArgument(directive.arg) }))
+
+export const emptyStateActionEventRule: TemplateRule = {
+  id: RULE_EMPTY_STATE_ACTION_EVENT,
+  check: ({ element }) => {
+    if (!isComponentTag(element.tag, EMPTY_STATE_COMPONENT)) {
+      return []
+    }
+
+    return eventListeners(element)
+      .filter(({ event }) => event !== undefined && EMPTY_STATE_WRONG_ACTION_EVENTS.includes(event))
+      .map(({ directive, event }) => ({
+        ...positionOf(directive),
+        rule: RULE_EMPTY_STATE_ACTION_EVENT,
+        severity: SEVERITY_WARNING,
+        message: `\`@${event ?? ''}\` on \`SEmptyState\` is not its action event: SEmptyState emits \`action\` from its button${event === 'click' ? ', and a plain `@click` fires for a click anywhere in the block' : ', so this listener never fires'}.`,
+        fixHint: `Listen to \`@action\`: \`<SEmptyState action-text="Create order" @action="${expressionSource(directive) ?? 'onAction'}" />\`.`,
+      }))
+  },
+}
+
+export const emptyStateActionWithoutListenerRule: TemplateRule = {
+  id: RULE_EMPTY_STATE_ACTION_WITHOUT_LISTENER,
+  check: ({ element }) => {
+    const actionText = isComponentTag(element.tag, EMPTY_STATE_COMPONENT)
+      ? findPropAttribute(element, EMPTY_STATE_ACTION_TEXT_ATTRIBUTE)
+      : undefined
+
+    const hasListener = eventListeners(element).some(
+      ({ event }) => event === undefined || event === EMPTY_STATE_ACTION_EVENT,
+    )
+
+    const fillsActions = slotFills(element).some(
+      (fill) => staticArgument(fill.directive.arg) === EMPTY_STATE_ACTIONS_SLOT,
+    )
+
+    if (!actionText || hasListener || fillsActions || hasObjectSpread(element)) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(actionText.node),
+        rule: RULE_EMPTY_STATE_ACTION_WITHOUT_LISTENER,
+        severity: SEVERITY_WARNING,
+        message:
+          '`action-text` on `SEmptyState` renders a button, but nothing listens to its `action` event, so the button does nothing.',
+        fixHint:
+          'Add `@action="…"`, or for navigation drop `action-text` and use the slot: `<SEmptyState title="No orders yet"><template #actions><SButton color="primary" to="/orders/new">Create order</SButton></template></SEmptyState>`.',
+      },
+    ]
+  },
+}
+
 export const behaviourRules: TemplateRule[] = [
   nativeValidationInFormRule,
   hideDetailsHidesLabelRule,
@@ -586,4 +654,6 @@ export const behaviourRules: TemplateRule[] = [
   avatarTextNotInitialsRule,
   paginationLengthRowsRule,
   paginationZeroBasedRule,
+  emptyStateActionEventRule,
+  emptyStateActionWithoutListenerRule,
 ]

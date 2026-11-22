@@ -1,6 +1,6 @@
 ---
 name: sui-component
-description: Look up and use any component from @khsura/sui (SButton, SCard, SDialog, SMenu, STooltip, STable, SList, STabs, SStepper, SCarousel, SExpansionPanels, SDatePicker, SCalendar, SToggleButtonGroup, SSlideGroup, SToolbar, SSplitView, SDroppable, SBadge, SChip, SAvatar, SPagination, SIcon, SImage, SAlert, SOverlay, …) in a Vue or Nuxt app. Use when writing or fixing template code with an S-prefixed component, choosing props/slots/events, debugging a SUI component that renders wrong or ignores a prop, or styling SUI components with theme colors. Loads one per-family reference file with the verified props table, slots, events, example and gotchas.
+description: Look up and use any component from @khsura/sui (SButton, SCard, SDialog, SMenu, STooltip, STable, SList, STabs, SStepper, SCarousel, SExpansionPanels, SDatePicker, SCalendar, SToggleButtonGroup, SSlideGroup, SToolbar, SSplitView, SDroppable, SBadge, SChip, SAvatar, SPagination, SEmptyState, SIcon, SImage, SAlert, SOverlay, …) in a Vue or Nuxt app. Use when writing or fixing template code with an S-prefixed component, choosing props/slots/events, debugging a SUI component that renders wrong or ignores a prop, or styling SUI components with theme colors. Loads one per-family reference file with the verified props table, slots, events, example and gotchas.
 argument-hint: [component name or description of what you need]
 ---
 
@@ -35,6 +35,7 @@ All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `
 | `SDialog` | [references/dialog.md](references/dialog.md) |
 | `SDivider` | [references/divider.md](references/divider.md) |
 | `SDroppable` | [references/droppable.md](references/droppable.md) |
+| `SEmptyState` | [references/empty-state.md](references/empty-state.md) |
 | `SExpansionPanels`, `SExpansionPanel`, `SExpansionPanelHeader`, `SExpansionPanelContent` | [references/expansion-panels.md](references/expansion-panels.md) |
 | `SForm`, `SFormRow`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SRadio`, `SSwitch` | [references/form.md](references/form.md) (and the **sui-form** skill) |
 | `SIcon` | [references/icon.md](references/icon.md) |

@@ -58,6 +58,7 @@ This directory contains per-component documentation optimized for Claude AI codi
 | [list.md](./list.md) | `SList`, `SListItem`, `SListItemTitle`, `SListItemSubtitle`, `SListItemIcon`, `SListItemAction`, `SListItemContent`, `SListItemGroup` |
 | [table.md](./table.md) | `STable`, `STableBodyCell`, `STableHeadCell` |
 | [progress.md](./progress.md) | `SProgressLinear`, `SProgressCircular` |
+| [empty-state.md](./empty-state.md) | `SEmptyState` |
 
 ### Content Panels
 | File | Components |

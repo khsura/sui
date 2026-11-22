@@ -96,7 +96,7 @@ interface TableHeader {
 | `expanded` | Expanded row content — receives `{ item }` |
 | `group` | Group header row — receives `{ group, items, isFolded, toggleFold }` |
 | `itemsPerPageLabel` | Custom pagination label |
-| `noData` | Empty-state content shown when `items` is empty (and not `loading`) |
+| `noData` | Empty-state content shown when `items` is empty (and not `loading`), such as an `SEmptyState`. Without the slot the row shows `noDataText` as plain text |
 | `loadingData` | Loading-row content shown while `loading` is set and `items` is empty |
 
 ## Usage
@@ -200,3 +200,4 @@ const folded = ref<boolean | string[]>(true)
 - `update:options` fires only for page / page-size changes. For server-side pagination, listen to it and provide `total-items`.
 - Selection matches rows by object identity; `item-key` is only used to match expanded rows.
 - Buttons inside a row also trigger `click:row` — use `@click.stop`.
+- For an icon, a title or an action in the no-data row, put an `SEmptyState` in the `#noData` slot (`<SEmptyState size="small" icon="mdi-cart-outline" title="No orders yet" />`). Do not build one from `div`s and icons; the default text-only row stays as it is.
