@@ -264,10 +264,14 @@ export const SafeAreaLandscapePermanentDrawers = {
       `,
     }),
   play: async ({ canvasElement }) => {
-    const leftDrawer = await waitFor(() =>
-      getElement(canvasElement, '.s_navigationDrawer--permanent:not(.s_navigationDrawer--right)'),
-    )
+    const firstDrawer = await waitFor(() => getElement(canvasElement, '.s_navigationDrawer'))
 
+    // below the desktop breakpoint a permanent drawer is a mobile one (covered by the shell story above)
+    if (firstDrawer.classList.contains('s_navigationDrawer--isMobile')) {
+      return
+    }
+
+    const leftDrawer = getElement(canvasElement, '.s_navigationDrawer--permanent:not(.s_navigationDrawer--right)')
     const rightDrawer = getElement(canvasElement, '.s_navigationDrawer--permanent.s_navigationDrawer--right')
     const main = getElement(canvasElement, '.s_main')
     const appBar = getElement(canvasElement, '.s_appBar')
