@@ -491,6 +491,13 @@ $s_autocomplete--fontSizes: (
       min-height: calc(#{$s_autocomplete__fieldHeight} + var(--s-density-offset));
       padding-block: calc(#{$s_spacer} + var(--s-density-offset) / 4);
     }
+
+    // The native input's own line box (font-dependent) would otherwise hold the field above the min-height.
+    .s_autocomplete__input {
+      height: auto;
+      padding-block: 0;
+      line-height: 1.1;
+    }
   }
 }
 </style>
