@@ -4,7 +4,8 @@
     <SCardText>
       <SSwitch v-model="isDark" label="Dark mode" />
       <p class="s_text--body__2 s_mb__2">Preset colors from the active theme:</p>
-      <SRow :gap="8">
+      <!-- no-outer-gutters: the buttons start in line with the paragraph above (SRow pads itself by default). -->
+      <SRow no-outer-gutters :gap="8">
         <SButton v-for="color in PRESET_COLOR_NAMES" :key="color" :color="color" size="small">{{ color }}</SButton>
       </SRow>
     </SCardText>
