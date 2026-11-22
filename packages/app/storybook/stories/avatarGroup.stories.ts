@@ -109,6 +109,14 @@ export const AvatarGroupStress = {
     const longGroup = canvasElement.querySelector<HTMLElement>('[data-test="long"]')
 
     await expect(longGroup?.scrollWidth).toBeLessThanOrEqual((longGroup?.clientWidth ?? 0) + pixelTolerance)
+
+    // A wrapped line starts flush with the first one, not sticking out to the left of the group.
+    const groupLeft = longGroup?.getBoundingClientRect().left ?? 0
+
+    for (const avatarElement of longGroup?.querySelectorAll('.s_avatar') ?? []) {
+      await expect(avatarElement.getBoundingClientRect().left).toBeGreaterThanOrEqual(groupLeft - pixelTolerance)
+    }
+
     await expect(root.scrollWidth).toBeLessThanOrEqual(root.clientWidth + pixelTolerance)
   },
 } satisfies StoryObj<typeof SAvatarGroup>

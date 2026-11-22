@@ -74,4 +74,9 @@ describe('SAvatarGroup', () => {
 
     expect(wrapper.findAll('.s_avatar--size__small')).toHaveLength(initials.length)
   })
+
+  test('the group size sets the overlap size on the group', () => {
+    expect(getSAvatarGroup({ size: 'large' }).find('.s_avatarGroup').classes('s_avatarGroup--size__large')).toBe(true)
+    expect(getSAvatarGroup({ size: 64 }).find('.s_avatarGroup').attributes('style')).toContain('--s-avatar-size: 64px')
+  })
 })

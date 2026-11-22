@@ -72,18 +72,6 @@ defineSlots<{
 }>()
 </script>
 <style lang="scss">
-// Sizes come from !default variables, never hard-coded in a rule, so a global density can scale them later.
-$s_avatar--sizes: () !default;
-$s_avatar--sizes: map.merge(
-  (
-    'mini': 24px,
-    'small': 32px,
-    'default': 40px,
-    'large': 48px,
-    'extra': 56px,
-  ),
-  $s_avatar--sizes
-);
 $s_avatar__fontRatio: 0.4 !default;
 $s_avatar__iconRatio: 0.6 !default;
 $s_avatar__fontWeight: 500 !default;
