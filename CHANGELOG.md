@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.0](https://github.com/khsura/sui/compare/root-v1.17.1...root-v1.18.0) (2026-11-22)
+
+
+### Features
+
+* M2 hardening — visual regression harness, component fixes, a11y contrast ([3f21587](https://github.com/khsura/sui/commit/3f215875caa70dcfdd2620468a65894c19b609d5))
+
 ## [1.17.1](https://github.com/khsura/sui/compare/root-v1.17.0...root-v1.17.1) (2026-11-21)
 
 
