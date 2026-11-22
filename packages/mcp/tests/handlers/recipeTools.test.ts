@@ -35,11 +35,11 @@ describe('recipe tools', () => {
     expect(tools.map((tool) => tool.name)).toEqual(expect.arrayContaining(['list_recipes', 'get_recipe']))
   })
 
-  it('list_recipes lists all nine recipes with when to use', async () => {
+  it('list_recipes lists all ten recipes with when to use', async () => {
     const client = await connectClient()
     const text = responseText(await client.callTool({ name: 'list_recipes', arguments: {} }))
 
-    expect(text).toContain('9 recipes.')
+    expect(text).toContain('10 recipes.')
     for (const name of RECIPE_NAMES) {
       expect(text).toContain(`| \`${name}\` |`)
     }

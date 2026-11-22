@@ -206,6 +206,7 @@ Resolution order for every prop: **prop on the element > `defaults.<Component>` 
 - Defaults are reactive: changing them at runtime re-renders the affected components.
 - **Density — for a compact admin look, set global density once instead of per-component heights/paddings:** `defaults: { global: { density: 'compact' } }` (`'default' | 'comfortable' | 'compact'`). It lowers fields (`SInput`, `STextarea`, `SNumberInput`, `SFileInput`, `SSelect`, `SAutocomplete`), `SButton`, `SChip`, `SList`/`SListItem` rows, `STable` rows and `SToolbar` together, so fields and buttons in an `SFormRow` stay level: one step is 4px (fields/buttons 36 → 32 → 28px, list and table rows 48 → 44 → 40px). Never fake it with inline `style="height: …"`, `padding` or `:deep(.s_input__input)` overrides — they drift from the buttons beside the field. A `density` prop on one element still wins; the older `dense` booleans keep working unchanged and are independent of `density`.
 - `components: { … }` (the older untyped option) still works as the per-component layer; `defaults` wins when both set the same prop. Prefer `defaults`.
+- **Scoped to a region** (since 1.22.0): wrap a dense toolbar or filter bar in `<SDefaultsProvider :defaults="{ global: { size: 'small' }, SInput: { dense: true } }">` instead of `size="small"` on each component. It takes the same typed object, merges onto the layer above it (outer provider or `createSUI`) per component and per prop (`global` too), renders no element, and an explicit prop still wins. Recipe: `dense-toolbar`.
 
 ---
 

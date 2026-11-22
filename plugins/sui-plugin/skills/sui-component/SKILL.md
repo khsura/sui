@@ -32,6 +32,7 @@ All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `
 | `SCarousel`, `SCarouselItem` | [references/carousel.md](references/carousel.md) |
 | `SChip` | [references/chip.md](references/chip.md) |
 | `SDatePicker`, `SDatePickerInput` | [references/date-picker.md](references/date-picker.md) |
+| `SDefaultsProvider` (since 1.22.0) | [references/defaults-provider.md](references/defaults-provider.md) |
 | `SDialog` | [references/dialog.md](references/dialog.md) |
 | `SDivider` | [references/divider.md](references/divider.md) |
 | `SDroppable` | [references/droppable.md](references/droppable.md) |

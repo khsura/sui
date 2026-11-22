@@ -34,6 +34,10 @@ A global value only reaches the components listed for that prop in `globalCompon
 
 To opt one component out, set it on that component: `{ global: { size: 'small' }, SIcon: { size: 'default' } }`.
 
+## Scoped defaults (`SDefaultsProvider`)
+
+`<SDefaultsProvider :defaults="…">` takes the same `ComponentDefaultsOptions` and applies it to its subtree only, such as a dense filter bar or toolbar. Its layer is merged onto the nearest outer layer (an outer provider, else `createSUI({ defaults })`) per component and per prop, with `global` merged the same way; the inner value wins. The resolution order above then runs against the merged layer, so a component default from any layer still beats a `global` value. See [components/defaults-provider.md](./components/defaults-provider.md).
+
 ## Typing
 
 `defaults` is `ComponentDefaultsOptions`: one optional `Partial<Props…>` per entry of `ComponentPropsMap` (`definitions/componentDefaults.ts`) plus `global`. Misspelled component names, props or values fail type-checking. The older `components` option stays as an untyped alias; `defaults` wins when both set the same prop.
@@ -41,7 +45,7 @@ To opt one component out, set it on that component: `{ global: { size: 'small' }
 ## Implementation
 
 - `useComponentDefaultsService(name, rawProps)` (`services/componentDefaultsService.ts`) wraps the props in a Proxy that resolves each read with `resolveComponentDefault` (`lib/componentDefaults.ts`).
-- The layer comes from `useComponentDefaultsRepository()`: a scoped layer provided under `ProviderName.componentDefaults` (a ref, getter or plain object, already merged with its parent) replaces the app-level `appState.defaults`. This is the hook for scoped defaults providers.
+- The layer comes from `useComponentDefaultsRepository()`: a scoped layer provided under `ProviderName.componentDefaults` (a ref, getter or plain object, already merged with its parent) replaces the app-level `appState.defaults`. `SDefaultsProvider` provides one: `mergeComponentDefaults(outer, props.defaults)` (`lib/componentDefaults.ts`), where `outer` is the layer it injects itself, so nested providers merge per component and per prop (`global` too) instead of replacing each other.
 - Defaults live in the reactive app store, so changing them at runtime re-renders affected components.
 - Tests: `tests/services/componentDefaultsService.test.ts`, `tests/lib/componentDefaults.test.ts`.
 
