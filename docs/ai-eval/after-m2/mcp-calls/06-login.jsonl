@@ -1,0 +1,14 @@
+{"time":"2026-11-21T17:24:42.103Z","page":"06-login","tool":"instructions"}
+{"time":"2026-11-21T17:24:59.832Z","page":"06-login","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T17:25:02.292Z","page":"06-login","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T17:25:09.290Z","page":"06-login","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T17:25:14.742Z","page":"06-login","tool":"get_recipe","args":{"name":"validated-form"},"isError":false}
+{"time":"2026-11-21T17:25:21.955Z","page":"06-login","tool":"get_recipe","args":{"name":"validated-form"},"isError":false}
+{"time":"2026-11-21T17:25:38.959Z","page":"06-login","tool":"get_component_api","args":{"name":"SInput"},"isError":false}
+{"time":"2026-11-21T17:26:16.900Z","page":"06-login","tool":"get_component_api","args":{"name":"SButton"},"isError":false}
+{"time":"2026-11-21T17:26:17.852Z","page":"06-login","tool":"get_component_api","args":{"name":"SCheckbox"},"isError":false}
+{"time":"2026-11-21T17:26:18.810Z","page":"06-login","tool":"get_component_api","args":{"name":"SApp"},"isError":false}
+{"time":"2026-11-21T17:26:19.861Z","page":"06-login","tool":"get_component_api","args":{"name":"SForm"},"isError":false}
+{"time":"2026-11-21T17:26:20.801Z","page":"06-login","tool":"get_component_api","args":{"name":"SCard"},"isError":false}
+{"time":"2026-11-21T17:26:21.643Z","page":"06-login","tool":"get_component_api","args":{"name":"SIcon"},"isError":false}
+{"time":"2026-11-21T17:26:53.813Z","page":"06-login","tool":"validate_sui_template","args":{"code":"<4149 chars>"},"isError":false}
