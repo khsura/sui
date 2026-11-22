@@ -1600,7 +1600,7 @@
         },
         {
           "name": "borderRadius",
-          "type": "number | \"tile\" | \"rounded\" | `${number}em` | `${number}px` | `${number}rem` | `${number}%` | `${number}vh` | `${number}vw` | null | undefined",
+          "type": "number | \"rounded\" | \"tile\" | `${number}%` | `${number}em` | `${number}px` | `${number}rem` | `${number}vh` | `${number}vw` | null | undefined",
           "required": false,
           "description": ""
         },

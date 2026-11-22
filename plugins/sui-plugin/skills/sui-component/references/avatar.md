@@ -16,7 +16,7 @@ Docs: https://sui.surakh.com/?path=/docs/ui-components-avatar--docs
 | Prop | Type | Default | Required | Values | Description |
 | --- | --- | --- | --- | --- | --- |
 | `alt` | `string` | — | no | — | Accessible name of the avatar, usually the person's name. Used as the image `alt` and as the `aria-label`. Leave it empty for a decorative avatar. |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — | — |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — | — |
 | `color` | `string` | — | no | — | — |
 | `colorThreshold` | `number` | — | no | — | — |
 | `icon` | `string` | — | no | — | Material Design icon shown when there is neither an image nor text. Defaults to `mdi-account`. |
