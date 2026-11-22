@@ -108,6 +108,18 @@ Popups teleport into the container rendered by `<SApp>` — without `SApp` at th
 
 ---
 
+## Same prop on every instance? Set it once
+
+If the app repeats the same styling prop at every call site (`size="small"` on each `SButton`, `SChip`, `SIcon`…), set it once in `createSUI` and drop it from the templates:
+
+```typescript
+createSUI({ defaults: { global: { size: 'small' }, SButton: { elevation: 0 } } })
+```
+
+Order: prop on the element > `defaults.SButton` > `defaults.global` > built-in. `global` covers `size`, `borderRadius`, `rounded`, `elevation`, `color`, and only reaches components with that prop on the same scale. Details: **sui-getting-started** → *Component defaults*.
+
+---
+
 ## Linking: `to` for a route, `href` for a URL
 
 `SButton`, `SCard` and `SListItem` take both; pass **one**, never both.

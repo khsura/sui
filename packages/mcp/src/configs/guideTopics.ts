@@ -27,8 +27,9 @@ export const guideDefinitions: Record<GuideTopic, GuideDefinition> = {
   'component-defaults': {
     topic: 'component-defaults',
     title: 'Component defaults',
-    summary: 'Set app-wide default props per component with createSUI({ components }).',
-    sections: [{ file: GETTING_STARTED_SKILL_PATH, heading: 'Component defaults — `components`' }],
+    summary:
+      "Set app-wide default props once with createSUI({ defaults }): per component and global styling props (global: { size: 'small' }).",
+    sections: [{ file: GETTING_STARTED_SKILL_PATH, heading: 'Component defaults — `defaults`' }],
   },
   display: {
     topic: 'display',
