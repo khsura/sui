@@ -180,7 +180,9 @@ $s_emptyState__text--lineHeight: 1.5 !default;
     margin-bottom: $s_emptyState__title--marginBottom;
     font-weight: 500;
     line-height: $s_emptyState__title--lineHeight;
-    color: s_getAppColor('text');
+
+    // The root's colour: the app text colour, or the `theme` prop's text colour from s_dark().
+    color: inherit;
   }
 
   &__text {
@@ -198,6 +200,14 @@ $s_emptyState__text--lineHeight: 1.5 !default;
     justify-content: center;
     max-width: 100%;
     margin-top: $s_emptyState__actions--marginTop;
+  }
+
+  // With the `theme` prop the muted parts take that theme's secondaryText, not the app's.
+  @each $themeName in $s_themeNames {
+    &.s_#{$themeName} &__media,
+    &.s_#{$themeName} &__text {
+      color: s_getThemeColor('secondaryText', $themeName);
+    }
   }
 }
 </style>

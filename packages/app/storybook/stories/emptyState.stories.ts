@@ -96,6 +96,8 @@ export const InsideOtherComponents = createStoryObj<typeof SEmptyState>({
 const pixelTolerance = 1
 // The phone width the empty states in the frame must fit without scrolling sideways.
 const phoneWidth = 375
+// The default dark theme's secondaryText (#cccccc), as getComputedStyle reports it.
+const darkThemeSecondaryText = 'rgb(204, 204, 204)'
 const longTitle = 'We could not find any invoices for this customer in the selected period'
 
 const longText =
@@ -145,7 +147,7 @@ export const EmptyStateStress = {
             <span>Inbox</span>
             <SEmptyState icon="mdi-email-outline" size="small" title="No mail" :text="longText"></SEmptyState>
           </div>
-          <SEmptyState theme="dark" icon="mdi-weather-night" title="Dark theme" text="Readable in both themes." action-text="Retry" style="background: #121212"></SEmptyState>
+          <SEmptyState class="stress-dark" theme="dark" icon="mdi-weather-night" title="Dark theme" text="Readable in both themes." action-text="Retry"></SEmptyState>
           <STable :headers="tableHeaders" :items="[]" outlined hide-pagination>
             <template #noData>
               <SEmptyState icon="mdi-cart-outline" size="small" title="No orders yet" :text="longText"></SEmptyState>
@@ -198,6 +200,20 @@ export const EmptyStateStress = {
           )
         }
       }
+
+      // theme="dark" on a light page: the title and the muted text take the dark theme's colours, not the app's.
+      const dark = phone?.querySelector('.stress-dark')
+      const darkTitleColor = getComputedStyle(dark?.querySelector('.s_emptyState__title') ?? document.body).color
+      const darkTextColor = getComputedStyle(dark?.querySelector('.s_emptyState__text') ?? document.body).color
+
+      assertThat(
+        darkTitleColor === getComputedStyle(dark ?? document.body).color,
+        'the dark title does not follow the theme',
+      )
+      assertThat(
+        darkTextColor === darkThemeSecondaryText,
+        `the dark text is ${darkTextColor}, not the dark secondaryText`,
+      )
 
       const menuMessage = canvasElement.ownerDocument.querySelector('.s_select__noData .s_emptyState__title')
 
