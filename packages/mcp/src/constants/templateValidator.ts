@@ -80,6 +80,9 @@ export const RULE_CARD_TITLE_TEXT_ALIGN = 'card-title-text-align'
 export const RULE_DATE_PICKER_EMPTY_STRING = 'date-picker-empty-string'
 export const RULE_FIELD_BUTTON_ROW = 'field-button-row'
 export const RULE_FILL_HEIGHT_UNDER_APP = 'fill-height-under-app'
+export const RULE_AVATAR_IMAGE_IN_SLOT = 'avatar-image-in-slot'
+export const RULE_AVATAR_TEXT_NOT_INITIALS = 'avatar-text-not-initials'
+export const RULE_AVATAR_GROUP_CHILD = 'avatar-group-child'
 export const RULE_PAGINATION_LENGTH_ROWS = 'pagination-length-rows'
 export const RULE_PAGINATION_ZERO_BASED = 'pagination-zero-based'
 
@@ -242,6 +245,17 @@ export const DIALOG_TAG = 'dialog'
 export const ACTIVATOR_BINDING_FIX =
   'Write `#activator="{ on, attrs }"` and put both `v-on="on"` and `v-bind="attrs"` on the activator\'s root element.'
 
+export const AVATAR_COMPONENT = 'SAvatar'
+export const AVATAR_GROUP_COMPONENT = 'SAvatarGroup'
+export const AVATAR_TEXT_ATTRIBUTE = 'text'
+/** Elements that put a picture in an avatar's slot instead of its `image` prop. */
+export const AVATAR_SLOT_IMAGE_TAGS = ['img', 'SImage']
+export const IMAGE_SOURCE_ATTRIBUTE = 'src'
+/** The longest `text` an avatar shows in full; it is meant for initials such as `JD`. */
+export const AVATAR_MAX_INITIALS = 3
+export const WHITESPACE_CHARACTER_PATTERN = /\s/
+/** Children an SAvatarGroup accepts besides SAvatar: a `<slot>` that passes avatars through. */
+export const AVATAR_GROUP_PASSTHROUGH_TAGS = ['slot']
 export const PAGINATION_COMPONENT = 'SPagination'
 export const PAGINATION_LENGTH_ATTRIBUTE = 'length'
 /** A `:length` that counts rows, not pages: `items.length`, `rows.size`, `totalItems`, `itemsCount`, … */

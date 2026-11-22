@@ -1,7 +1,3 @@
-/** Hint shared by the `SAvatar`-style names until a real avatar component ships. */
-const AVATAR_HINT =
-  'There is no avatar component yet (planned for M3). For a photo use `<SImage src="…" :aspect-ratio="1" object-fit="cover" :width="40" style="border-radius: 50%" />`; for initials use a fixed-size element with `border-radius: 50%`, a background colour and centred text.'
-
 /**
  * Component names from Vuetify, Quasar, Element and similar libraries that are not in @khsura/sui,
  * with the SUI component(s) to use instead and a short hint. An empty `suiNames` means SUI has no
@@ -45,7 +41,6 @@ export const COMPONENT_ALIASES = {
     suiNames: ['STab', 'SWindowItem'],
     hint: 'Put an `STab` in `STabs` and its content in an `SWindowItem` inside an `SWindow`.',
   },
-  SAvatar: { suiNames: [], hint: AVATAR_HINT },
   SModal: { suiNames: ['SDialog'], hint: 'The modal is `SDialog`, opened from its `#activator` slot or a `v-model`.' },
   SDrawer: { suiNames: ['SNavigationDrawer'], hint: 'The side drawer is `SNavigationDrawer`, a child of `SLayout`.' },
   SHeader: { suiNames: ['SAppBar'], hint: 'The page header bar is `SAppBar`, a child of `SLayout`.' },

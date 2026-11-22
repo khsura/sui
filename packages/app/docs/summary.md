@@ -11,6 +11,8 @@ Quick reference for all components in the `@khsura/sui` package.
 | `SButton` | `import { SButton } from '@khsura/sui'` | [button.md](./components/button.md) |
 | `SIcon` | `import { SIcon } from '@khsura/sui'` | [icon.md](./components/icon.md) |
 | `SChip` | `import { SChip } from '@khsura/sui'` | [chip.md](./components/chip.md) |
+| `SAvatar` | `import { SAvatar } from '@khsura/sui'` | [avatar.md](./components/avatar.md) |
+| `SAvatarGroup` | `import { SAvatarGroup } from '@khsura/sui'` | [avatar-group.md](./components/avatar-group.md) |
 | `SBadge` | `import { SBadge } from '@khsura/sui'` | [badge.md](./components/badge.md) |
 | `SDivider` | `import { SDivider } from '@khsura/sui'` | [divider.md](./components/divider.md) |
 | `SImage` | `import { SImage } from '@khsura/sui'` | [image.md](./components/image.md) |
