@@ -27,7 +27,8 @@
     "storybook:build": "storybook build",
     "build:api": "yarn g:vite-node scripts/apiMetadata/generateApiMetadata.ts",
     "sync:skills": "yarn g:vite-node scripts/apiMetadata/syncSkillTables.ts",
-    "check:skills": "yarn g:vite-node scripts/apiMetadata/syncSkillTables.ts --check"
+    "check:skills": "yarn g:vite-node scripts/apiMetadata/syncSkillTables.ts --check",
+    "scaffold:component": "yarn g:vite-node scripts/scaffoldComponent/scaffoldComponent.ts"
   },
   "files": [
     "dist",
