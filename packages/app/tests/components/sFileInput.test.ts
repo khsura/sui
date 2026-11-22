@@ -248,6 +248,9 @@ describe('SFileInput', () => {
 
   test('disabled and loading block the input; loading shows a labelled spinner', () => {
     expect(getSFileInput({ disabled: true }).find('input').attributes('disabled')).toBeDefined()
+    // The dimmed file names belong to a disabled control, which the contrast rules exempt.
+    expect(getSFileInput({ disabled: true }).find('.s_fileInput__field').attributes('aria-disabled')).toBe('true')
+    expect(getSFileInput().find('.s_fileInput__field').attributes('aria-disabled')).toBeUndefined()
     expect(getSFileInput({ readonly: true }).find('input').attributes('disabled')).toBeDefined()
 
     const loading = getSFileInput({ loading: true, loadingAriaLabel: 'Reading file' })

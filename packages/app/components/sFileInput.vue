@@ -5,6 +5,7 @@
       <template #default="{ isDraggingOver }">
         <div
           class="s_fileInput__field"
+          :aria-disabled="disabled || undefined"
           :class="{
             's_fileInput__field--drag': isDraggingOver,
             's_fileInput__field--error': hasError,
