@@ -89,6 +89,7 @@ export const RULE_HIDDEN_LABEL_NO_VISIBLE_NAME = 'hidden-label-no-visible-name'
 export const RULE_EMPTY_STATE_ACTION_EVENT = 'empty-state-action-event'
 export const RULE_EMPTY_STATE_ACTION_WITHOUT_LISTENER = 'empty-state-action-without-listener'
 export const RULE_EMPTY_STATE_OUTSIDE_NO_DATA_SLOT = 'empty-state-outside-no-data-slot'
+export const RULE_NUMBER_INPUT_PREFERRED = 'number-input-preferred'
 
 /**
  * The first `@khsura/sui` release with the M2 hardening fixes (SForm `novalidate`, SCheckbox label with
@@ -171,6 +172,16 @@ export const DEFAULT_SEPARATOR = '='
 /** `<input type>` values the browser validates on submit, showing its own bubble on top of SUI's error text. */
 export const INPUT_TYPE_NUMBER = 'number'
 export const NATIVE_VALIDATING_INPUT_TYPES = ['email', 'url', 'number']
+export const INPUT_COMPONENT = 'SInput'
+/** The numeric field (since 1.21.0); rules recommend it only when the resolved `sui-api.json` lists it. */
+export const NUMBER_INPUT_COMPONENT = 'SNumberInput'
+/** SInput's number-only props and what SNumberInput uses instead, for the migration hint. */
+export const NUMBER_INPUT_PROP_REPLACEMENTS = new Map([
+  ['allow-decimal', '`:precision="2"` (decimal places; whole numbers by default)'],
+  ['positive', '`:min` (`:min="1"` for whole numbers above 0)'],
+  ['use-previous-value-when-exceeded', 'nothing: SNumberInput clamps to `min` / `max` on blur'],
+  ['inputmode', 'nothing: SNumberInput picks `numeric` or `decimal` from `min` and `precision`'],
+])
 /** On SForm it reaches the rendered `<form>` and turns the browser's own validation off. */
 export const NO_VALIDATE_ATTRIBUTE = 'novalidate'
 
@@ -207,7 +218,14 @@ export const MIN_BLOCK_BUTTONS_IN_ROW = 2
 /** Components whose root is a `display: flex` row. */
 export const FLEX_ROW_COMPONENTS = ['SCardActions']
 /** Text fields that render a label above their box and an error line under it. */
-export const LABELLED_FIELD_COMPONENTS = ['SInput', 'SSelect', 'SDatePickerInput', 'SAutocomplete', 'STextarea']
+export const LABELLED_FIELD_COMPONENTS = [
+  'SInput',
+  'SNumberInput',
+  'SSelect',
+  'SDatePickerInput',
+  'SAutocomplete',
+  'STextarea',
+]
 /** The row that lines buttons up with the field boxes next to them (since 1.20.0). */
 export const FORM_ROW_COMPONENT = 'SFormRow'
 /** `s_display__flex`, `s_display--md__inlineFlex`: the utility classes that make an element a flex row. */

@@ -185,11 +185,25 @@ describe('composition rules', () => {
       ['<select><option>a</option></select>', 'SSelect'],
       ['<textarea />', 'STextarea'],
       ['<dialog open>Hi</dialog>', 'SDialog'],
+      ['<input type="number" />', 'SNumberInput'],
     ])('warns about %s', (code, replacement) => {
       const [issue] = issuesOf('no-raw-replacement', code)
 
       expect(issue).toMatchObject({ severity: 'warning', line: 1, column: 1 })
       expect(issue.fixHint).toBe(`Use \`${replacement}\` instead.`)
+    })
+
+    it('suggests SInput for a number input when the installed release has no SNumberInput', () => {
+      const olderApi = {
+        ...fixtureApi,
+        components: fixtureApi.components.filter((entry) => entry.name !== 'SNumberInput'),
+      }
+
+      const [issue] = useTemplateValidatorService(olderApi)
+        .validate('<input type="number" />')
+        .filter((entry) => entry.rule === 'no-raw-replacement')
+
+      expect(issue?.fixHint).toBe('Use `SInput` instead.')
     })
   })
 

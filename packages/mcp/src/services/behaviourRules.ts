@@ -28,6 +28,7 @@ import {
   HEIGHT_FILL_CLASS,
   HIDE_DETAILS_ATTRIBUTE,
   HIDE_DETAILS_LABEL_COMPONENTS,
+  INPUT_COMPONENT,
   INPUT_TYPE_ATTRIBUTE,
   INPUT_TYPE_NUMBER,
   LABEL_ATTRIBUTE,
@@ -41,6 +42,8 @@ import {
   MODEL_VALUE_ATTRIBUTE,
   NATIVE_VALIDATING_INPUT_TYPES,
   NO_VALIDATE_ATTRIBUTE,
+  NUMBER_INPUT_COMPONENT,
+  NUMBER_INPUT_PROP_REPLACEMENTS,
   PAGINATION_COMPONENT,
   PAGINATION_LENGTH_ATTRIBUTE,
   PAGINATION_PAGE_MATH_EXPRESSION,
@@ -65,6 +68,7 @@ import {
   RULE_HIDDEN_LABEL_NO_VISIBLE_NAME,
   RULE_HIDE_DETAILS_HIDES_LABEL,
   RULE_NATIVE_VALIDATION_IN_FORM,
+  RULE_NUMBER_INPUT_PREFERRED,
   RULE_PAGINATION_LENGTH_ROWS,
   RULE_PAGINATION_ZERO_BASED,
   RULE_SNACKBAR_ACTION_CONTRAST,
@@ -94,6 +98,7 @@ import {
   findAttribute,
   findPropAttribute,
   hasObjectSpread,
+  hasSuiComponent,
   isBooleanPropOn,
   isComponentTag,
   isDirective,
@@ -641,6 +646,42 @@ export const emptyStateActionWithoutListenerRule: TemplateRule = {
   },
 }
 
+/**
+ * `SInput type="number"` is the numeric field AI code reaches for, but it has no step buttons or `precision`, hides a
+ * value below `min` and keeps the browser's number semantics. Recommend SNumberInput, only when the installed release
+ * has it (its `sui-api.json` lists it), so an older project is never pointed at a component it lacks.
+ */
+export const numberInputPreferredRule: TemplateRule = {
+  id: RULE_NUMBER_INPUT_PREFERRED,
+  check: ({ element, api }) => {
+    const typeAttribute = findAttribute(element, INPUT_TYPE_ATTRIBUTE)
+
+    if (
+      !isComponentTag(element.tag, INPUT_COMPONENT) ||
+      typeAttribute?.staticValue?.toLowerCase() !== INPUT_TYPE_NUMBER ||
+      !hasSuiComponent(api, NUMBER_INPUT_COMPONENT)
+    ) {
+      return []
+    }
+
+    const replacements = [...NUMBER_INPUT_PROP_REPLACEMENTS]
+      .filter(([name]) => findPropAttribute(element, name))
+      .map(([name, replacement]) => `\`${name}\` → ${replacement}`)
+
+    return [
+      {
+        ...positionOf(typeAttribute.node),
+        rule: RULE_NUMBER_INPUT_PREFERRED,
+        severity: SEVERITY_WARNING,
+        message:
+          '`SInput type="number"` has no step buttons or `precision`, and hides a value below `min`. `SNumberInput` is the numeric field: `number | null` v-model, +/- buttons and ArrowUp/ArrowDown, clamping on blur, spinbutton semantics and no browser validation bubble.',
+        fixHint: `Use \`<SNumberInput v-model="quantity" label="Quantity" :min="0" />\` (same \`label\`, \`rules\`, \`hide-details\`, \`hide-error\`, \`min\`, \`max\`, \`suffix\`; add \`:step\`, \`:precision="2"\` for money).${replacements.length ? ` Replace ${replacements.join('; ')}.` : ''}`,
+        recipe: RECIPE_VALIDATED_FORM,
+      },
+    ]
+  },
+}
+
 export const behaviourRules: TemplateRule[] = [
   nativeValidationInFormRule,
   hideDetailsHidesLabelRule,
@@ -656,4 +697,5 @@ export const behaviourRules: TemplateRule[] = [
   paginationZeroBasedRule,
   emptyStateActionEventRule,
   emptyStateActionWithoutListenerRule,
+  numberInputPreferredRule,
 ]

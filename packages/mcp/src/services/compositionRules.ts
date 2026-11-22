@@ -1,5 +1,6 @@
 import type { ElementNode } from '@vue/compiler-dom'
 import { NodeTypes } from '@vue/compiler-dom'
+import type { SuiApi } from '@khsura/shared/types'
 import type { TemplateIssue, TemplateRule, TemplateSlotFill } from '../types'
 import {
   ACCESSIBLE_LABEL_ATTRIBUTES,
@@ -22,6 +23,7 @@ import {
   IMAGE_SOURCE_ATTRIBUTE,
   INPUT_TAG,
   INPUT_TYPE_ATTRIBUTE,
+  INPUT_TYPE_NUMBER,
   LAYOUT_APP_ATTRIBUTE,
   LAYOUT_CHILD_COMPONENTS,
   LAYOUT_COMPONENT,
@@ -30,6 +32,7 @@ import {
   NO_DATA_SLOT_COMPONENTS,
   NO_DATA_SLOT_NAME,
   NON_VISUAL_INPUT_TYPES,
+  NUMBER_INPUT_COMPONENT,
   RAW_INPUT_TYPE_REPLACEMENTS,
   RAW_TAG_REPLACEMENTS,
   RECIPE_ACTIVATOR_OVERLAYS,
@@ -59,6 +62,7 @@ import {
   expressionSource,
   findAttribute,
   hasObjectSpread,
+  hasSuiComponent,
   isComponentTag,
   isDirective,
   isOneOfComponentTags,
@@ -275,7 +279,7 @@ export const iconButtonLabelRule: TemplateRule = {
   },
 }
 
-const rawReplacement = (element: ElementNode): string | undefined => {
+const rawReplacement = (element: ElementNode, api: SuiApi): string | undefined => {
   if (element.tag !== INPUT_TAG) {
     return RAW_TAG_REPLACEMENTS.get(element.tag)
   }
@@ -286,14 +290,19 @@ const rawReplacement = (element: ElementNode): string | undefined => {
     return undefined
   }
 
+  // SNumberInput only for a release that has it; an older one keeps SInput type="number".
+  if (inputType === INPUT_TYPE_NUMBER && hasSuiComponent(api, NUMBER_INPUT_COMPONENT)) {
+    return NUMBER_INPUT_COMPONENT
+  }
+
   return (inputType ? RAW_INPUT_TYPE_REPLACEMENTS.get(inputType) : undefined) ?? RAW_TAG_REPLACEMENTS.get(INPUT_TAG)
 }
 
 export const noRawReplacementRule: TemplateRule = {
   id: RULE_NO_RAW_REPLACEMENT,
   target: RULE_TARGET_ANY_ELEMENT,
-  check: ({ element }) => {
-    const replacement = rawReplacement(element)
+  check: ({ element, api }) => {
+    const replacement = rawReplacement(element, api)
 
     if (!replacement) {
       return []
