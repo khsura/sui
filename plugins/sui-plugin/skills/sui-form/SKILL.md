@@ -76,7 +76,7 @@ Use `v-model:error` to disable the submit button **only after a failed submit**:
 
 - Use **`hideError`** when you only want to drop the message line (dense tables, inline filters) but keep the label.
 - Use **`hideDetails`** only when the field should have no label either — it is not a "compact" switch. On `SCheckbox` the label is the only text, so `hideDetails` leaves a bare box ("Remember me" disappears); use `hideError` there.
-- With `hideDetails` the hidden label still names the field (it becomes the control's `aria-label`). A field with no `label` at all needs `aria-label` (`ariaLabel` on SInput, STextarea, SSelect, SAutocomplete; on each SRadio without a `label`).
+- With `hideDetails` the hidden label still names the field (it becomes the control's `aria-label`). On screen only the placeholder (or slot content) is left, so make the placeholder say what the field is for (`label="Search" placeholder="Search by name"`, not `placeholder="e.g. Anna"`); `validate_sui_template` warns otherwise (`hidden-label-no-visible-name`). A field with no `label` at all needs `aria-label` (`ariaLabel` on SInput, STextarea, SSelect, SAutocomplete; on each SRadio without a `label`).
 - Labels, ids and errors are wired for you: an `id` is generated when you don't pass one, and an invalid field gets `aria-invalid` and `aria-describedby` pointing at its error message. Don't add your own `<label for>` or `aria-describedby`.
 - The field frame turns red on error even with either flag set (`SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SDatePickerInput`), so users can still see which field is invalid. Don't add your own `:deep()` error border.
 

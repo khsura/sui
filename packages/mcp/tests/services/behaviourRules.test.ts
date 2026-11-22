@@ -86,6 +86,42 @@ describe('behaviour rules', () => {
     })
   })
 
+  describe('hidden-label-no-visible-name', () => {
+    const rule = 'hidden-label-no-visible-name'
+
+    it.each([
+      ['the label stays visible', '<SInput label="Search by name" placeholder="e.g. Anna" />'],
+      ['a placeholder that names the field', '<SInput label="Search" placeholder="Search files" hide-details />'],
+      ['matching ignores case', '<SSelect label="Status" placeholder="Any status" hide-details />'],
+      ['a bound placeholder', '<SInput label="Search" :placeholder="hint" hide-details />'],
+      ['a bound label', '<SInput :label="title" hide-details />'],
+      ['statically off', '<SInput label="Search" :hide-details="false" />'],
+      [
+        'slot content can name it',
+        '<SInput label="Search" hide-details><template #suffix><SIcon icon="mdi-magnify" /></template></SInput>',
+      ],
+      ['a checkbox (its own rule)', '<SCheckbox label="Remember me" hide-details />'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it.each([
+      ['no placeholder', '<SInput label="Search" hide-details />'],
+      ['a placeholder that shares no word', '<SInput label="Search by name" placeholder="e.g. Anna" hide-details />'],
+      ['a select', '<SSelect label="Status" :items="items" hideDetails />'],
+      ['a date picker input', '<SDatePickerInput label="From" hide-details />'],
+    ])('reports %s', (_, code) => {
+      const [issue] = issuesOf(rule, code)
+
+      expect(issue).toMatchObject({ severity: 'warning', recipe: 'filter-bar' })
+      expect(issue.fixHint).toContain('hide-details')
+    })
+
+    it('fires on the after-M2 eval search field whose label went missing', () => {
+      expect(evalIssues(rule, 'after-m2', '03-mobile-list.vue').length).toBeGreaterThan(0)
+    })
+  })
+
   describe('snackbar-action-contrast', () => {
     const rule = 'snackbar-action-contrast'
 
