@@ -4,6 +4,7 @@ import type { Component } from 'vue'
 import {
   ActivatorOverlaysRecipe,
   AppShellRecipe,
+  CenteredPageRecipe,
   DataTableRecipe,
   FilterBarRecipe,
   ResponsiveGridRecipe,
@@ -84,6 +85,30 @@ export const DataTable = recipeStory(DataTableRecipe)
 export const FilterBar = recipeStory(FilterBarRecipe)
 export const ResponsiveGrid = recipeStory(ResponsiveGridRecipe)
 export const ThemeSetup = recipeStory(ThemeSetupRecipe)
+
+// Allowed distance (px) between the card's vertical centre and the viewport's.
+const CENTRE_TOLERANCE = 2
+
+// Rendered straight inside SApp (no Storybook SMain), as a routed page is. The harness runs the play function at
+// every captured width (375, 768, 1280): the card must be vertically centred in the viewport at each.
+export const CenteredPage: StoryObj = {
+  ...recipeStory(CenteredPageRecipe),
+  parameters: {
+    appDecorator: { main: false },
+  },
+  play: async ({ canvasElement }) => {
+    const card = canvasElement.querySelector('.s_card')
+
+    await expect(card).not.toBeNull()
+    await waitFor(async () => {
+      const cardBox = card?.getBoundingClientRect()
+      const cardCentre = cardBox ? cardBox.top + cardBox.height / 2 : 0
+      const viewportCentre = window.innerHeight / 2
+
+      await expect(Math.abs(cardCentre - viewportCentre)).toBeLessThanOrEqual(CENTRE_TOLERANCE)
+    })
+  },
+}
 
 // Smallest gap (px) between the text box of a field's error message (line height included) and the next control.
 // Without spacing it is about 7.5px (the text visibly touches the control); with it, about 15.5px.
