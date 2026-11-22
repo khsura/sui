@@ -4538,6 +4538,100 @@
       ]
     },
     {
+      "name": "STab",
+      "family": "tabs",
+      "file": "components/tabs/sTab.vue",
+      "props": [
+        {
+          "name": "alignSelf",
+          "type": "\"auto\" | \"baseline\" | \"center\" | \"end\" | \"first baseline\" | \"flex-end\" | \"flex-start\" | \"inherit\" | \"initial\" | \"last baseline\" | \"normal\" | \"safe center\" | \"self-end\" | \"self-start\" | \"start\" | \"stretch\" | \"unsafe center\" | null | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "auto",
+            "baseline",
+            "center",
+            "end",
+            "first baseline",
+            "flex-end",
+            "flex-start",
+            "inherit",
+            "initial",
+            "last baseline",
+            "normal",
+            "safe center",
+            "self-end",
+            "self-start",
+            "start",
+            "stretch",
+            "unsafe center"
+          ]
+        },
+        {
+          "name": "cols",
+          "type": "\"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"10\" | \"11\" | \"12\" | ColumnNumber | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "contentClass",
+          "type": "string | Record<string, boolean> | string[] | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "contentStyle",
+          "type": "StyleValue",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "lg",
+          "type": "\"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"10\" | \"11\" | \"12\" | ColumnNumber | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "md",
+          "type": "\"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"10\" | \"11\" | \"12\" | ColumnNumber | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "order",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "sm",
+          "type": "\"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"10\" | \"11\" | \"12\" | ColumnNumber | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "tab",
+          "type": "number | string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
       "name": "STable",
       "family": "table",
       "file": "components/table/sTable.vue",
@@ -4873,6 +4967,76 @@
         {
           "name": "update:selected",
           "type": "[value: T[]]",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "STabs",
+      "family": "tabs",
+      "file": "components/tabs/sTabs.vue",
+      "props": [
+        {
+          "name": "borderRadius",
+          "type": "number | \"rounded\" | \"tile\" | `${number}%` | `${number}em` | `${number}px` | `${number}rem` | `${number}vh` | `${number}vw` | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "bordered",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "dense",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "number | string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "outlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "selectedTabColor",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"primary\"",
+          "description": ""
+        },
+        {
+          "name": "shrink",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "underlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: string | number]",
           "description": ""
         }
       ]
