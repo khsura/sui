@@ -1,11 +1,13 @@
-import type { ComputedRef, InjectionKey, Ref } from 'vue'
-import type { AppState, GroupProvider, SingleGroupProvider } from '@/app/definitions'
+import type { ComputedRef, InjectionKey, MaybeRefOrGetter, Ref } from 'vue'
+import type { AppState, ComponentDefaultsOptions, GroupProvider, SingleGroupProvider } from '@/app/definitions'
 import type { FormProviderRegisterInputAttribute } from '@/app/types'
 import type { defaultLayoutSizes } from '@/app/constants'
 import type * as props from '@/app/definitions/props'
 
 export const ProviderName = {
   app: Symbol() as InjectionKey<AppState>,
+  /** A scoped defaults layer; when nothing is provided, components read the app-level `defaults`. */
+  componentDefaults: Symbol() as InjectionKey<MaybeRefOrGetter<ComponentDefaultsOptions>>,
   form: Symbol() as InjectionKey<{
     registerItem: (id: string, attrs: FormProviderRegisterInputAttribute) => void
     unregisterItem: (id: string) => void
