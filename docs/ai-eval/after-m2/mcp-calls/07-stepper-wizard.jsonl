@@ -1,0 +1,12 @@
+{"time":"2026-11-21T17:27:12.682Z","page":"07-stepper-wizard","tool":"instructions"}
+{"time":"2026-11-21T17:27:32.342Z","page":"07-stepper-wizard","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T17:27:35.071Z","page":"07-stepper-wizard","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T17:27:42.086Z","page":"07-stepper-wizard","tool":"get_component_api","args":{"name":"SStepper"},"isError":false}
+{"time":"2026-11-21T17:28:07.988Z","page":"07-stepper-wizard","tool":"get_recipe","args":{"name":"validated-form"},"isError":false}
+{"time":"2026-11-21T17:28:28.740Z","page":"07-stepper-wizard","tool":"get_component_api","args":{"name":"SRadio"},"isError":false}
+{"time":"2026-11-21T17:28:31.376Z","page":"07-stepper-wizard","tool":"get_component_api","args":{"name":"SRadioGroup"},"isError":false}
+{"time":"2026-11-21T17:28:41.765Z","page":"07-stepper-wizard","tool":"get_component_api","args":{"name":"SInput"},"isError":false}
+{"time":"2026-11-21T17:28:45.054Z","page":"07-stepper-wizard","tool":"get_component_api","args":{"name":"SButton"},"isError":false}
+{"time":"2026-11-21T17:28:58.631Z","page":"07-stepper-wizard","tool":"get_component_api","args":{"name":"SSpacer"},"isError":false}
+{"time":"2026-11-21T17:29:30.513Z","page":"07-stepper-wizard","tool":"validate_sui_template","args":{"code":"<5104 chars>"},"isError":false}
+{"time":"2026-11-21T17:29:43.475Z","page":"07-stepper-wizard","tool":"validate_sui_template","args":{"code":"<5131 chars>"},"isError":false}
