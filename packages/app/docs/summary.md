@@ -11,6 +11,8 @@ Quick reference for all components in the `@khsura/sui` package.
 | `SButton` | `import { SButton } from '@khsura/sui'` | [button.md](./components/button.md) |
 | `SIcon` | `import { SIcon } from '@khsura/sui'` | [icon.md](./components/icon.md) |
 | `SChip` | `import { SChip } from '@khsura/sui'` | [chip.md](./components/chip.md) |
+| `SAvatar` | `import { SAvatar } from '@khsura/sui'` | [avatar.md](./components/avatar.md) |
+| `SAvatarGroup` | `import { SAvatarGroup } from '@khsura/sui'` | [avatar-group.md](./components/avatar-group.md) |
 | `SBadge` | `import { SBadge } from '@khsura/sui'` | [badge.md](./components/badge.md) |
 | `SDivider` | `import { SDivider } from '@khsura/sui'` | [divider.md](./components/divider.md) |
 | `SImage` | `import { SImage } from '@khsura/sui'` | [image.md](./components/image.md) |
@@ -36,6 +38,7 @@ Quick reference for all components in the `@khsura/sui` package.
 | `SToolbar`, `SToolbarTitle`, `SToolbarItem` | `import { SToolbar, SToolbarTitle, SToolbarItem } from '@khsura/sui'` | [toolbar.md](./components/toolbar.md) |
 | `SSlideGroup`, `SSlideItem` | `import { SSlideGroup, SSlideItem } from '@khsura/sui'` | [slide-group.md](./components/slide-group.md) |
 | `SToggleButtonGroup`, `SToggleButton` | `import { SToggleButtonGroup, SToggleButton } from '@khsura/sui'` | [toggle-button-group.md](./components/toggle-button-group.md) |
+| `SPagination` | `import { SPagination } from '@khsura/sui'` | [pagination.md](./components/pagination.md) |
 
 ---
 
@@ -55,7 +58,9 @@ Quick reference for all components in the `@khsura/sui` package.
 | Component(s) | Import | Doc |
 |---|---|---|
 | `SForm`, `SFormRow`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` | `import { SForm, SFormRow, SInput, STextarea, SSelect, SCheckbox, SRadio, SRadioGroup, SSwitch } from '@khsura/sui'` | [form.md](./components/form.md) |
+| `SFileInput` | `import { SFileInput } from '@khsura/sui'` | [file-input.md](./components/file-input.md) |
 | `SAutocomplete` | `import { SAutocomplete } from '@khsura/sui'` | [autocomplete.md](./components/autocomplete.md) |
+| `SNumberInput` | `import { SNumberInput } from '@khsura/sui'` | [number-input.md](./components/number-input.md) |
 
 ---
 
@@ -66,6 +71,8 @@ Quick reference for all components in the `@khsura/sui` package.
 | `SList`, `SListItem`, `SListItemTitle`, `SListItemSubtitle`, `SListItemIcon`, `SListItemAction`, `SListItemContent`, `SListItemGroup` | `import { SList, SListItem, ... } from '@khsura/sui'` | [list.md](./components/list.md) |
 | `STable`, `STableBodyCell`, `STableHeadCell` | `import { STable } from '@khsura/sui'` | [table.md](./components/table.md) |
 | `SProgressLinear`, `SProgressCircular` | `import { SProgressLinear, SProgressCircular } from '@khsura/sui'` | [progress.md](./components/progress.md) |
+| `SSkeletonLoader` | `import { SSkeletonLoader } from '@khsura/sui'` | [skeleton-loader.md](./components/skeleton-loader.md) |
+| `SEmptyState` | `import { SEmptyState } from '@khsura/sui'` | [empty-state.md](./components/empty-state.md) |
 
 ---
 
@@ -153,6 +160,7 @@ SDialog, SMenu and SSnackbar support an `#activator` slot that passes `{ on, att
 | `SDialog`, `SMenu`, `STooltip`, `SSnackbar`, `SNavigationDrawer` | `boolean` |
 | `SInput`, `STextarea`, `SSelect`, `SSwitch`, `SCheckbox` | value type |
 | `SAutocomplete` | value or `value[]` (when `multiple`) |
+| `SFileInput` | `File[] \| null` (always an array, even without `multiple`; `null` when empty) |
 | `STabs` | `string \| number` (the active `STab`'s `tab` value) |
 | `SExpansionPanels` | `number[]` (the `index` prop of each open panel) |
 | `SCarousel`, `SWindow` | single item value |

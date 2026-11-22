@@ -172,6 +172,13 @@ notched / Dynamic Island iPhone; on a model without a notch the top inset is the
   Rotate the phone to landscape on the short-page and mobile-drawer stories above.
   Expected: the app bar's buttons and the open drawer's items stay clear of the notch side; nothing is cut off.
 
+- [ ] **Permanent drawer in landscape.**
+  Story: [Layout/Safe Area — Landscape permanent drawers](https://sui.surakh.com/iframe.html?id=ui-components-layout-safe-area--safe-area-landscape-permanent-drawers).
+  The story sets simulated side insets (47px left and right), so first check it against the desktop capture. Then
+  rotate the phone to landscape on it, with the notch / Dynamic Island on the left and then on the right.
+  Expected: the drawer on the notch side keeps its icons and labels clear of the notch, and the page content beside
+  it is not hidden under the drawer.
+
 ## Record the run
 
 Paste this into the release PR when you are done:

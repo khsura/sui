@@ -22,3 +22,17 @@ export interface EmitFormTextInput<T extends FormInputModelValue = FormInputMode
   paste: [ClipboardEvent]
   autocomplete: [HTMLInputElement | null]
 }
+
+/** Events of SNumberInput: the value after each change, plus the native focus events of its text box. */
+export interface EmitNumberInput extends EmitFormInput<number | null> {
+  blur: [FocusEvent]
+  focus: [FocusEvent]
+  keydown: [KeyboardEvent]
+}
+
+export interface EmitFileInput extends EmitFormInput<File[] | null> {
+  /** The clear button emptied the field. */
+  clear: []
+  /** Files left out: a dropped file that does not match `accept`, or the extra files when `multiple` is off. */
+  reject: [File[]]
+}

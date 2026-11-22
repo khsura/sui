@@ -15,15 +15,15 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsImage.d.ts`
 | --- | --- | --- | --- | --- |
 | `alt` | `string \| null` | — | no | — |
 | `aspectRatio` | `number \| null` | — | no | — |
-| `height` | `string \| number \| null` | — | no | — |
+| `height` | `number \| string \| null` | — | no | — |
 | `lazyLoad` | `LazyLoad \| null` | — | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
-| `objectFit` | `"fill" \| "none" \| "contain" \| "cover" \| "scale-down"` | — | no | `contain`, `cover`, `fill`, `none`, `scale-down` |
+| `maxHeight` | `number \| string \| null` | — | no | — |
+| `maxWidth` | `number \| string \| null` | — | no | — |
+| `minHeight` | `number \| string \| null` | — | no | — |
+| `minWidth` | `number \| string \| null` | — | no | — |
+| `objectFit` | `"contain" \| "cover" \| "fill" \| "none" \| "scale-down"` | — | no | `contain`, `cover`, `fill`, `none`, `scale-down` |
 | `src` | `string \| null` | — | yes | — |
-| `width` | `string \| number \| null` | — | no | — |
+| `width` | `number \| string \| null` | — | no | — |
 
 **SImage slots**
 
@@ -57,7 +57,7 @@ None.
 <!-- 16:9 cover -->
 <SImage src="/banner.jpg" :aspect-ratio="16/9" object-fit="cover" />
 
-<!-- Square avatar -->
+<!-- Square image (for a user avatar with an initials fallback, use SAvatar) -->
 <SImage src="/avatar.jpg" :aspect-ratio="1" object-fit="cover" :width="80" />
 
 <!-- Overlay -->

@@ -14,8 +14,7 @@
         ></SSelect>
       </div>
       <span class="s_tablePagination__page s_px__3"
-        >{{ pageIndex * itemsPerPage + 1 }} - {{ Math.min(pageIndex * itemsPerPage + itemsPerPage, itemsCount) }} /
-        {{ itemsCount }}</span
+        >{{ itemRange.first }} - {{ itemRange.last }} / {{ itemsCount }}</span
       >
       <div class="s_tablePagination__actions">
         <SButton variant="icon" aria-label="First page" @click="pageIndex = 0" :disabled="!canGoToFirst || loading">
@@ -44,7 +43,8 @@ import { computed } from 'vue'
 import SSelect from '@/app/components/form/sSelect.vue'
 import SButton from '@/app/components/sButton.vue'
 import SIcon from '@/app/components/sIcon.vue'
-import { useComponentDefaultsService } from '@/app/services'
+import { tablePaginationDefaultItemsPerPage } from '@/app/constants'
+import { clampPage, getPageCount, getPageItemRange, useComponentDefaultsService } from '@/app/services'
 
 const itemsPerPage = defineModel<number>('itemsPerPage')
 
@@ -54,9 +54,12 @@ const rawProps = defineProps<{
 }>()
 
 const props = useComponentDefaultsService('STablePagination', rawProps)
+const rowsPerPage = computed(() => itemsPerPage.value ?? tablePaginationDefaultItemsPerPage)
+const pageCount = computed(() => getPageCount(props.itemsCount, rowsPerPage.value))
 
+// pageIndex starts at 0; the shared pagination helpers count pages from 1.
 const getPageIndex = (value: number) => {
-  return Math.max(0, Math.min(value, Math.ceil(props.itemsCount / (itemsPerPage.value ?? 10)) - 1))
+  return clampPage(value + 1, getPageCount(props.itemsCount, rowsPerPage.value)) - 1
 }
 
 const pageIndex = defineModel<number>('pageIndex', {
@@ -70,13 +73,17 @@ const pageIndex = defineModel<number>('pageIndex', {
 })
 
 const itemsPerPageOptions = computed(() => {
-  return [...new Set([itemsPerPage.value ?? 10, 10, 25, 50, 100])]
+  return [...new Set([rowsPerPage.value, 10, 25, 50, 100])]
     .map((item) => ({ value: item, text: item.toString() }))
     .sort((a, b) => a.value - b.value)
 })
 
 const lastPageIndex = computed(() => {
-  return Math.ceil(props.itemsCount / (itemsPerPage.value ?? 10)) - 1
+  return pageCount.value - 1
+})
+
+const itemRange = computed(() => {
+  return getPageItemRange(pageIndex.value + 1, rowsPerPage.value, props.itemsCount)
 })
 
 const canGoToFirst = computed(() => {

@@ -81,7 +81,7 @@ Exposed: `validate(): boolean` — **returns `true` when there ARE errors**; `re
 
 ## SFormRow
 
-*Since 1.20.0.* A wrapping row of text fields (`SInput`, `SSelect`, `SDatePickerInput`, `SAutocomplete`, `STextarea`) and their buttons. Each button's top and bottom match the field box: with or without a label, while an error shows, and when the row wraps at 375px. No props; slot `default`.
+*Since 1.20.0.* A wrapping row of text fields (`SInput`, `SNumberInput` since 1.21.0, `SSelect`, `SDatePickerInput`, `SAutocomplete`, `STextarea`) and their buttons. Each button's top and bottom match the field box: with or without a label, while an error shows, and when the row wraps at 375px. No props; slot `default`.
 
 <!-- generated:api:start SFormRow -->
 <!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
@@ -128,7 +128,7 @@ None.
 | `appendOuter` | `string \| null` | — | no | — |
 | `ariaLabel` | `string` | — | no | — |
 | `ariaLabelledby` | `string` | — | no | — |
-| `autocapitalize` | `"on" \| "off" \| null` | — | no | `off`, `on` |
+| `autocapitalize` | `"off" \| "on" \| null` | — | no | `off`, `on` |
 | `autocomplete` | `string \| null` | — | no | — |
 | `autofocus` | `boolean \| null` | — | no | — |
 | `dense` | `boolean` | — | no | — |
@@ -142,10 +142,10 @@ None.
 | `inputmode` | `InputModeTypeText \| null` | — | no | `decimal`, `email`, `none`, `numeric`, `search`, `tel`, `text`, `url` |
 | `isPasteDisabled` | `boolean` | — | no | — |
 | `label` | `string \| null` | — | no | — |
-| `max` | `string \| number \| null` | — | no | — |
-| `maxlength` | `string \| number \| null` | — | no | — |
-| `min` | `string \| number \| null` | — | no | — |
-| `minlength` | `string \| number \| null` | — | no | — |
+| `max` | `number \| string \| null` | — | no | — |
+| `maxlength` | `number \| string \| null` | — | no | — |
+| `min` | `number \| string \| null` | — | no | — |
+| `minlength` | `number \| string \| null` | — | no | — |
 | `modelValue` | `T \| null` | — | no | — |
 | `name` | `string` | — | no | — |
 | `pattern` | `string \| null` | — | no | — |
@@ -221,7 +221,7 @@ Props: `label`, `placeholder`, `rows` (default `2`), `cols` (default `20`), **`a
 | --- | --- | --- | --- | --- | --- |
 | `ariaLabel` | `string` | — | no | — | — |
 | `ariaLabelledby` | `string` | — | no | — | — |
-| `autocapitalize` | `"on" \| "off"` | — | no | `off`, `on` | — |
+| `autocapitalize` | `"off" \| "on"` | — | no | `off`, `on` | — |
 | `autocomplete` | `string` | — | no | — | — |
 | `autofocus` | `boolean` | — | no | — | — |
 | `autogrow` | `boolean` | — | no | — | — |
@@ -236,8 +236,8 @@ Props: `label`, `placeholder`, `rows` (default `2`), `cols` (default `20`), **`a
 | `id` | `string` | — | no | — | — |
 | `inputBackground` | `string` | — | no | — | — |
 | `label` | `string` | — | no | — | — |
-| `maxlength` | `string \| number` | — | no | — | — |
-| `minlength` | `string \| number` | — | no | — | — |
+| `maxlength` | `number \| string` | — | no | — | — |
+| `minlength` | `number \| string` | — | no | — | — |
 | `modelValue` | `string` | `""` | no | — | — |
 | `name` | `string` | — | no | — | — |
 | `placeholder` | `string` | — | no | — | — |
@@ -284,15 +284,15 @@ Single-value dropdown (no `multiple`, `chips`, `clearable` or `placeholder` — 
 
 | Prop | Type | Default | Required | Values | Description |
 | --- | --- | --- | --- | --- | --- |
-| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — | — |
+| `activator` | `string \| ComponentPublicInstance \| HTMLElement \| null` | — | no | — | — |
 | `ariaLabel` | `string \| null` | — | no | — | Accessible name when there is no visible `label` (otherwise the label names the field). |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — | — |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — | — |
 | `closeOnClick` | `boolean` | — | no | — | — |
 | `closeOnContentClick` | `boolean` | — | no | — | — |
 | `closeOnScroll` | `boolean` | — | no | — | — |
 | `color` | `string` | — | no | — | — |
 | `colorThreshold` | `number` | — | no | — | — |
-| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — | — |
+| `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — | — |
 | `contentStyle` | `StyleValue` | — | no | — | — |
 | `dense` | `boolean` | — | no | — | — |
 | `dirty` | `boolean` | — | no | — | — |
@@ -300,20 +300,21 @@ Single-value dropdown (no `multiple`, `chips`, `clearable` or `placeholder` — 
 | `divided` | `boolean` | — | no | — | — |
 | `error` | `boolean` | — | no | — | — |
 | `grow` | `boolean` | — | no | — | — |
-| `height` | `string \| number \| null` | — | no | — | — |
+| `height` | `number \| string \| null` | — | no | — | — |
 | `hideDetails` | `boolean` | — | no | — | — |
 | `hideError` | `boolean` | — | no | — | — |
 | `id` | `string` | — | no | — | — |
 | `items` | `(string \| SelectItem \| null \| undefined)[]` | — | no | — | — |
 | `label` | `string \| null` | — | no | — | — |
 | `location` | `LocationRaw` | — | no | — | — |
-| `maxHeight` | `string \| number \| null` | — | no | — | — |
-| `maxWidth` | `string \| number \| null` | — | no | — | — |
+| `maxHeight` | `number \| string \| null` | — | no | — | — |
+| `maxWidth` | `number \| string \| null` | — | no | — | — |
 | `menu` | `boolean` | — | no | — | — |
-| `minHeight` | `string \| number \| null` | — | no | — | — |
-| `minWidth` | `string \| number \| null` | — | no | — | — |
+| `minHeight` | `number \| string \| null` | — | no | — | — |
+| `minWidth` | `number \| string \| null` | — | no | — | — |
 | `modelValue` | `T \| null` | — | no | — | — |
 | `name` | `string \| null` | — | no | — | — |
+| `noDataText` | `string` | — | no | — | Message shown in the open menu when `items` is empty. Without it (and without the `noData` slot) an empty menu stays blank. Put an `SEmptyState` in the `noData` slot for an icon or an action. |
 | `offsetX` | `number \| null` | — | no | — | — |
 | `offsetY` | `number \| null` | — | no | — | — |
 | `outlined` | `boolean \| null` | `true` | no | — | — |
@@ -326,14 +327,15 @@ Single-value dropdown (no `multiple`, `chips`, `clearable` or `placeholder` — 
 | `text` | `boolean` | — | no | — | — |
 | `theme` | `AppThemeType` | — | no | `dark`, `light` | — |
 | `underlined` | `boolean \| null` | — | no | — | — |
-| `width` | `string \| number \| null` | — | no | — | — |
+| `width` | `number \| string \| null` | — | no | — | — |
 
 **SSelect slots**
 
-| Slot | Slot props |
-| --- | --- |
-| `activator` | `{ item: SelectItem \| null; value: boolean \| undefined; }` |
-| `dropdownIcon` | `{ color: string \| undefined; value: boolean \| undefined; }` |
+| Slot | Slot props | Description |
+| --- | --- | --- |
+| `activator` | `{ item: SelectItem \| null; value: boolean \| undefined; }` | Replaces the selected item's text in the field. |
+| `dropdownIcon` | `{ color: string \| undefined; value: boolean \| undefined; }` | Replaces the chevron icon. |
+| `noData` | `any` | Replaces `noDataText` when `items` is empty, such as an `SEmptyState`. |
 
 **SSelect events**
 
@@ -426,7 +428,7 @@ Options are **`SRadio` children** — there is no `items` prop. Long option labe
 
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
 | `color` | `string \| null` | — | no | — |
 | `column` | `boolean \| null` | — | no | — |
 | `continuous` | `boolean` | — | no | — |
@@ -473,7 +475,7 @@ Options are **`SRadio` children** — there is no `items` prop. Long option labe
 | --- | --- | --- | --- | --- | --- |
 | `activeClass` | `string \| null` | — | no | — | — |
 | `ariaLabel` | `string \| null` | — | no | — | Accessible name for a radio without a visible `label` (for example an icon-only option). |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — | — |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — | — |
 | `disabled` | `boolean \| null` | — | no | — | — |
 | `id` | `string` | — | no | — | — |
 | `label` | `string \| null` | — | no | — | — |
@@ -483,7 +485,7 @@ Options are **`SRadio` children** — there is no `items` prop. Long option labe
 | `selected` | `boolean` | — | no | — | — |
 | `type` | `ButtonTypeType` | — | no | `button`, `reset`, `submit` | — |
 | `underlined` | `boolean \| null` | — | no | — | — |
-| `value` | `string \| number \| boolean` | — | no | — | — |
+| `value` | `boolean \| number \| string` | — | no | — | — |
 
 **SRadio slots**
 

@@ -52,13 +52,13 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/props<AppBar|Navigatio
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
 | `app` | `boolean` | — | no | — |
-| `height` | `string \| number \| null` | — | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
+| `height` | `number \| string \| null` | — | no | — |
+| `maxHeight` | `number \| string \| null` | — | no | — |
+| `maxWidth` | `number \| string \| null` | — | no | — |
+| `minHeight` | `number \| string \| null` | — | no | — |
+| `minWidth` | `number \| string \| null` | — | no | — |
 | `name` | `string` | — | no | — |
-| `width` | `string \| number \| null` | — | no | — |
+| `width` | `number \| string \| null` | — | no | — |
 
 **SLayout slots**
 
@@ -116,21 +116,21 @@ Built on SToolbar. It renders a `<header>`.
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
 | `app` | `boolean` | — | no | — |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
 | `color` | `string` | `"appBar"` | no | — |
 | `colorThreshold` | `number` | — | no | — |
-| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — |
 | `contentStyle` | `StyleValue` | — | no | — |
 | `density` | `ToolbarDensityType \| null` | — | no | `comfortable`, `compact`, `default` |
 | `elevateOnScroll` | `boolean` | — | no | — |
-| `elevation` | `"" \| 0 \| 1 \| 2 \| 22 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 23 \| 24 \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| null` | — | no | — |
+| `elevation` | `"" \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| 0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 22 \| 23 \| 24 \| null` | — | no | — |
 | `extended` | `boolean \| null` | — | no | — |
 | `extensionClass` | `string \| Record<string, boolean \| undefined>` | — | no | — |
-| `extensionHeight` | `string \| number` | `defaultToolbarExtensionHeight` | no | — |
+| `extensionHeight` | `number \| string` | `defaultToolbarExtensionHeight` | no | — |
 | `extensionStyle` | `Record<string, string>` | — | no | — |
 | `fixedExtension` | `boolean` | — | no | — |
 | `for` | `string` | — | no | — |
-| `height` | `string \| number \| null` | `defaultToolbarContentHeight` | no | — |
+| `height` | `number \| string \| null` | `defaultToolbarContentHeight` | no | — |
 | `hideOnScroll` | `boolean` | — | no | — |
 | `outlined` | `boolean \| null` | — | no | — |
 | `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
@@ -214,19 +214,19 @@ None.
 
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
-| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
+| `activator` | `string \| ComponentPublicInstance \| HTMLElement \| null` | — | no | — |
 | `app` | `boolean` | — | no | — |
-| `elevation` | `"" \| 0 \| 1 \| 2 \| 22 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 23 \| 24 \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| null` | — | no | — |
+| `elevation` | `"" \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| 0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 22 \| 23 \| 24 \| null` | — | no | — |
 | `expandOnHover` | `boolean` | — | no | — |
 | `for` | `string` | — | no | — |
 | `forceMobile` | `boolean` | — | no | — |
-| `height` | `string \| number \| null` | — | no | — |
+| `height` | `number \| string \| null` | — | no | — |
 | `hideOverlay` | `boolean` | — | no | — |
 | `location` | `LocationRaw` | — | no | — |
 | `maxWidth` | `number` | — | no | — |
 | `minWidth` | `number` | — | no | — |
 | `miniVariant` | `boolean` | — | no | — |
-| `miniVariantWidth` | `string \| number` | — | no | — |
+| `miniVariantWidth` | `number \| string` | — | no | — |
 | `modelValue` | `boolean` | — | no | — |
 | `offsetX` | `number \| null` | — | no | — |
 | `offsetY` | `number \| null` | — | no | — |
@@ -236,7 +236,7 @@ None.
 | `resizable` | `boolean` | — | no | — |
 | `tag` | `"div" \| "nav" \| "section" \| null` | — | no | `div`, `nav`, `section` |
 | `touchless` | `boolean` | — | no | — |
-| `width` | `string \| number` | — | no | — |
+| `width` | `number \| string` | — | no | — |
 
 **SNavigationDrawer slots**
 
@@ -330,19 +330,19 @@ None.
 | `app` | `boolean` | — | no | — |
 | `color` | `string` | — | no | — |
 | `colorThreshold` | `number` | — | no | — |
-| `elevation` | `"" \| 0 \| 1 \| 2 \| 22 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 23 \| 24 \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| null` | — | no | — |
+| `elevation` | `"" \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| 0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 22 \| 23 \| 24 \| null` | — | no | — |
 | `for` | `string` | — | no | — |
-| `height` | `string \| number \| null` | — | no | — |
+| `height` | `number \| string \| null` | — | no | — |
 | `inset` | `boolean` | `false` | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
+| `maxHeight` | `number \| string \| null` | — | no | — |
+| `maxWidth` | `number \| string \| null` | — | no | — |
+| `minHeight` | `number \| string \| null` | — | no | — |
+| `minWidth` | `number \| string \| null` | — | no | — |
 | `padless` | `boolean` | `false` | no | — |
 | `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
 | `tag` | `"div" \| "footer" \| null` | `"footer"` | no | `div`, `footer` |
 | `theme` | `AppThemeType` | — | no | `dark`, `light` |
-| `width` | `string \| number \| null` | — | no | — |
+| `width` | `number \| string \| null` | — | no | — |
 
 **SFooter slots**
 
@@ -377,21 +377,21 @@ Slot: `default`. Its width tracks the drawers.
 | --- | --- | --- | --- | --- |
 | `activeClass` | `string` | — | no | — |
 | `app` | `boolean` | — | no | — |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
 | `bordered` | `boolean` | — | no | — |
 | `continuous` | `boolean` | — | no | — |
 | `dense` | `boolean` | — | no | — |
 | `for` | `string` | — | no | — |
 | `grow` | `boolean` | — | no | — |
-| `height` | `string \| number \| null` | — | no | — |
+| `height` | `number \| string \| null` | — | no | — |
 | `hideOnScroll` | `boolean` | — | no | — |
 | `horizontal` | `boolean` | — | no | — |
 | `inputValue` | `boolean` | — | no | — |
 | `mandatory` | `boolean` | — | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
+| `maxHeight` | `number \| string \| null` | — | no | — |
+| `maxWidth` | `number \| string \| null` | — | no | — |
+| `minHeight` | `number \| string \| null` | — | no | — |
+| `minWidth` | `number \| string \| null` | — | no | — |
 | `modelValue` | `GroupItemValue` | — | no | — |
 | `outlined` | `boolean \| null` | — | no | — |
 | `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
@@ -401,7 +401,7 @@ Slot: `default`. Its width tracks the drawers.
 | `shift` | `boolean` | — | no | — |
 | `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
 | `underlined` | `boolean \| null` | — | no | — |
-| `width` | `string \| number \| null` | — | no | — |
+| `width` | `number \| string \| null` | — | no | — |
 
 **SBottomNavigation slots**
 
@@ -452,17 +452,17 @@ The column component is **`SColumn`**. There is no `SCol`.
 
 **SRow props**
 
-| Prop | Type | Default | Required | Values |
-| --- | --- | --- | --- | --- |
-| `align` | `GridAlignPropertyType \| null` | — | no | `baseline`, `center`, `end`, `start`, `stretch` |
-| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
-| `contentStyle` | `StyleValue` | — | no | — |
-| `dense` | `boolean \| null` | — | no | — |
-| `fillHeight` | `boolean \| null` | — | no | — |
-| `gap` | `string \| number \| null` | — | no | — |
-| `justify` | `GridJustifyPropertyType \| null` | — | no | `center`, `end`, `spaceAround`, `spaceBetween`, `start` |
-| `noGutters` | `boolean \| null` | — | no | — |
-| `noOuterGutters` | `boolean \| null` | — | no | — |
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `align` | `GridAlignPropertyType \| null` | — | no | `baseline`, `center`, `end`, `start`, `stretch` | — |
+| `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — | — |
+| `contentStyle` | `StyleValue` | — | no | — | — |
+| `dense` | `boolean \| null` | — | no | — | — |
+| `fillHeight` | `boolean \| null` | — | no | — | — |
+| `gap` | `number \| string \| null` | — | no | — | — |
+| `justify` | `GridJustifyPropertyType \| null` | — | no | `center`, `end`, `spaceAround`, `spaceBetween`, `start` | — |
+| `noGutters` | `boolean \| null` | — | no | — | — |
+| `noOuterGutters` | `boolean \| null` | — | no | — | Removes the row's own padding; columns keep theirs. Pair with `gap` to line the grid up with text beside it. |
 
 **SRow slots**
 
@@ -482,6 +482,8 @@ None.
 - `justify`: Main-axis (**camelCase**)
 - `noGutters` / `noOuterGutters` / `dense` / `fillHeight`: Gutters / height
 - `gap`: Custom gap (replaces gutters)
+
+**Lining a grid up with text:** a default `SRow` pads itself by 8px and each `SColumn` pads by 8px, so the columns start 16px inside a heading or paragraph next to the row. A grid next to a heading or paragraph needs `no-outer-gutters` **and** `:gap="16"` to line up (`no-outer-gutters` alone still leaves the columns' 8px). Separate stacked gap rows with `class="s_mt__4"`. See the `responsive-grid` recipe.
 - `contentClass` / `contentStyle`: Inner wrapper class/style
 
 **SColumn:** `cols`, `sm`, `md`, `lg` (`1`–`12 \| 'auto' \| 'grow'`), `order` (number), `alignSelf`, `contentClass`/`contentStyle`. There is no `xl`.
@@ -533,9 +535,9 @@ None.
 
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
-| `alignSelf` | `"center" \| "auto" \| "start" \| "normal" \| "end" \| "self-start" \| "self-end" \| "flex-start" \| "flex-end" \| "baseline" \| "first baseline" \| "last baseline" \| "stretch" \| "safe center" \| "unsafe center" \| "inherit" \| "initial" \| null` | — | no | `auto`, `baseline`, `center`, `end`, `first baseline`, `flex-end`, `flex-start`, `inherit`, `initial`, `last baseline`, `normal`, `safe center`, `self-end`, `self-start`, `start`, `stretch`, `unsafe center` |
+| `alignSelf` | `"auto" \| "baseline" \| "center" \| "end" \| "first baseline" \| "flex-end" \| "flex-start" \| "inherit" \| "initial" \| "last baseline" \| "normal" \| "safe center" \| "self-end" \| "self-start" \| "start" \| "stretch" \| "unsafe center" \| null` | — | no | `auto`, `baseline`, `center`, `end`, `first baseline`, `flex-end`, `flex-start`, `inherit`, `initial`, `last baseline`, `normal`, `safe center`, `self-end`, `self-start`, `start`, `stretch`, `unsafe center` |
 | `cols` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
-| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — |
 | `contentStyle` | `StyleValue` | — | no | — |
 | `lg` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
 | `md` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
@@ -608,6 +610,7 @@ None.
 | `<SAppBar><template #prepend>…` | Not forwarded. Put content in `default` |
 | `<SRow justify="space-between">` | `justify="spaceBetween"` |
 | `<SCol>` | `<SColumn>` |
+| `<h2>` then a plain `<SRow>`: the cards sit 16px inside the heading | `<SRow no-outer-gutters :gap="16">` so the first column starts where the heading does |
 | `<SBottomNavigation v-model="tab">` with no `height`/`active-class` | Set `:height` and `active-class` |
 | `<SAppBar elevate-on-scroll>` with no position | Add `position="fixed"` |
-| `padding-top: env(safe-area-inset-top)` on a fixed `SAppBar` / `SBottomNavigation` / mobile drawer | They pad by the iPhone safe areas themselves; only add `viewport-fit=cover` to the viewport meta (getting-started skill). Your own `env()` padding doubles the inset |
+| `padding-top: env(safe-area-inset-top)` on a fixed `SAppBar` / `SBottomNavigation` / mobile drawer, or `padding-left: env(safe-area-inset-left)` on a `permanent` drawer / `SMain` | They pad by the iPhone safe areas themselves; only add `viewport-fit=cover` to the viewport meta (getting-started skill). Your own `env()` padding doubles the inset |

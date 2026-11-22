@@ -1,6 +1,6 @@
-import { flushPromises } from '@vue/test-utils'
-import { nextTick } from 'vue'
-import { SAutocomplete } from '@/app/components'
+import { flushPromises, mount } from '@vue/test-utils'
+import { defineComponent, nextTick } from 'vue'
+import { SApp, SAutocomplete, SEmptyState } from '@/app/components'
 import { mountWithApp } from '@/app/tests/_helpers'
 
 const items = ['Apple', 'Banana', 'Cherry']
@@ -297,5 +297,77 @@ describe('SAutocomplete - native autocomplete attribute', () => {
     const { input } = setup({ autocomplete: 'on' })
 
     expect(input.attributes('autocomplete')).toBe('on')
+  })
+})
+
+describe('SAutocomplete - no data', () => {
+  afterEach(() => {
+    document.body.innerHTML = ''
+  })
+
+  const openAndType = async (text: string) => {
+    const input = document.querySelector<HTMLInputElement>('.s_autocomplete__input')
+
+    if (!input) throw new Error('the input is not rendered')
+    input.dispatchEvent(new FocusEvent('focus'))
+    input.value = text
+    input.dispatchEvent(new Event('input'))
+    await flushPromises()
+  }
+
+  test('a menu with no match stays blank without noDataText or the noData slot', async () => {
+    mountWithApp(SAutocomplete, { props: { items }, attachTo: document.body })
+
+    await openAndType('zzz')
+
+    expect(document.querySelector('.s_autocomplete__list')).not.toBeNull()
+    expect(document.querySelector('.s_autocomplete__noData')).toBeNull()
+  })
+
+  test('shows noDataText as a status message outside the listbox when nothing matches', async () => {
+    mountWithApp(SAutocomplete, { props: { items, noDataText: 'No match' }, attachTo: document.body })
+
+    await openAndType('zzz')
+    const message = document.querySelector('.s_autocomplete__noData')
+
+    expect(message?.textContent?.trim()).toBe('No match')
+    expect(message?.getAttribute('role')).toBe('status')
+    expect(message?.closest('[role="listbox"]')).toBeNull()
+  })
+
+  test('hides noDataText while an item matches, while loading and when the "Add" option is shown', async () => {
+    mountWithApp(SAutocomplete, { props: { items, noDataText: 'No match' }, attachTo: document.body })
+    await openAndType('app')
+    expect(document.querySelector('.s_autocomplete__noData')).toBeNull()
+    document.body.innerHTML = ''
+
+    mountWithApp(SAutocomplete, { props: { items, noDataText: 'No match', loading: true }, attachTo: document.body })
+    await openAndType('zzz')
+    expect(document.querySelector('.s_autocomplete__noData')).toBeNull()
+    document.body.innerHTML = ''
+
+    mountWithApp(SAutocomplete, {
+      props: { items, noDataText: 'No match', allowUnlisted: true },
+      attachTo: document.body,
+    })
+    await openAndType('zzz')
+    expect(document.querySelector('.s_autocomplete__noData')).toBeNull()
+  })
+
+  test('renders an SEmptyState from the noData slot with the query', async () => {
+    mount(
+      defineComponent({
+        components: { SApp, SAutocomplete, SEmptyState },
+        setup: () => ({ items }),
+        template: `<SApp><SAutocomplete :items="items"><template #noData="{ query }"><SEmptyState size="small" :title="'Nothing for ' + query" /></template></SAutocomplete></SApp>`,
+      }),
+      { attachTo: document.body },
+    )
+
+    await openAndType('zzz')
+
+    expect(document.querySelector('.s_autocomplete__noData .s_emptyState__title')?.textContent?.trim()).toBe(
+      'Nothing for zzz',
+    )
   })
 })

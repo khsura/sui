@@ -11,57 +11,60 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsAutocomplete.d.ts
 
 **SAutocomplete props**
 
-| Prop | Type | Default | Required | Values |
-| --- | --- | --- | --- | --- |
-| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
-| `allowUnlisted` | `boolean` | — | no | — |
-| `ariaLabel` | `string \| null` | — | no | — |
-| `autocomplete` | `string` | `"off"` | no | — |
-| `chips` | `boolean` | — | no | — |
-| `clearAriaLabel` | `string` | `"Clear"` | no | — |
-| `clearable` | `boolean` | — | no | — |
-| `closableChips` | `boolean` | — | no | — |
-| `closeOnClick` | `boolean` | — | no | — |
-| `closeOnContentClick` | `boolean` | — | no | — |
-| `closeOnScroll` | `boolean` | — | no | — |
-| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
-| `contentStyle` | `StyleValue` | — | no | — |
-| `debounce` | `number` | `500` | no | — |
-| `delimiter` | `string \| RegExp \| string[]` | — | no | — |
-| `dense` | `boolean` | — | no | — |
-| `disabled` | `boolean \| null` | — | no | — |
-| `divided` | `boolean` | — | no | — |
-| `filter` | `((item: SelectItem, queryText: string) => boolean)` | — | no | — |
-| `filterMode` | `"start" \| "contains" \| "exact" \| "none"` | `"contains"` | no | `contains`, `exact`, `none`, `start` |
-| `height` | `string \| number \| null` | — | no | — |
-| `hideDetails` | `boolean` | — | no | — |
-| `id` | `string` | — | no | — |
-| `items` | `string[] \| SelectItem[]` | — | no | — |
-| `label` | `string \| null` | — | no | — |
-| `loading` | `boolean` | — | no | — |
-| `loadingAriaLabel` | `string` | `"Loading"` | no | — |
-| `location` | `LocationRaw` | `"bottom"` | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
-| `modelValue` | `(AutocompleteModelType<T> & (AutocompleteModelType<T> \| null))` | — | no | — |
-| `multiple` | `T` | — | no | — |
-| `name` | `string` | — | no | — |
-| `offsetX` | `number \| null` | — | no | — |
-| `offsetY` | `number \| null` | — | no | — |
-| `onUpdateSearchInput` | `((value: string) => void)` | — | no | — |
-| `placeholder` | `string` | — | no | — |
-| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
-| `preventCloseOnClick` | `boolean` | — | no | — |
-| `readonly` | `boolean \| null` | — | no | — |
-| `screenPadding` | `number \| null` | — | no | — |
-| `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` |
-| `width` | `string \| number \| null` | — | no | — |
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `activator` | `string \| ComponentPublicInstance \| HTMLElement \| null` | — | no | — | — |
+| `allowUnlisted` | `boolean` | — | no | — | — |
+| `ariaLabel` | `string \| null` | — | no | — | — |
+| `autocomplete` | `string` | `"off"` | no | — | — |
+| `chips` | `boolean` | — | no | — | — |
+| `clearAriaLabel` | `string` | `"Clear"` | no | — | — |
+| `clearable` | `boolean` | — | no | — | — |
+| `closableChips` | `boolean` | — | no | — | — |
+| `closeOnClick` | `boolean` | — | no | — | — |
+| `closeOnContentClick` | `boolean` | — | no | — | — |
+| `closeOnScroll` | `boolean` | — | no | — | — |
+| `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — | — |
+| `contentStyle` | `StyleValue` | — | no | — | — |
+| `debounce` | `number` | `500` | no | — | — |
+| `delimiter` | `string \| RegExp \| string[]` | — | no | — | — |
+| `dense` | `boolean` | — | no | — | — |
+| `disabled` | `boolean \| null` | — | no | — | — |
+| `divided` | `boolean` | — | no | — | — |
+| `filter` | `((item: SelectItem, queryText: string) => boolean)` | — | no | — | — |
+| `filterMode` | `"contains" \| "exact" \| "none" \| "start"` | `"contains"` | no | `contains`, `exact`, `none`, `start` | — |
+| `height` | `number \| string \| null` | — | no | — | — |
+| `hideDetails` | `boolean` | — | no | — | — |
+| `id` | `string` | — | no | — | — |
+| `items` | `SelectItem[] \| string[]` | — | no | — | — |
+| `label` | `string \| null` | — | no | — | — |
+| `loading` | `boolean` | — | no | — | — |
+| `loadingAriaLabel` | `string` | `"Loading"` | no | — | — |
+| `location` | `LocationRaw` | `"bottom"` | no | — | — |
+| `maxHeight` | `number \| string \| null` | — | no | — | — |
+| `maxWidth` | `number \| string \| null` | — | no | — | — |
+| `minHeight` | `number \| string \| null` | — | no | — | — |
+| `minWidth` | `number \| string \| null` | — | no | — | — |
+| `modelValue` | `(AutocompleteModelType<T> & (AutocompleteModelType<T> \| null))` | — | no | — | — |
+| `multiple` | `T` | — | no | — | — |
+| `name` | `string` | — | no | — | — |
+| `noDataText` | `string` | — | no | — | Message shown in the open menu when no item matches the query (and there is no "Add" option). Without it (and without the `noData` slot) the menu stays blank. Put an `SEmptyState` in the `noData` slot for an icon or an action. |
+| `offsetX` | `number \| null` | — | no | — | — |
+| `offsetY` | `number \| null` | — | no | — | — |
+| `onUpdateSearchInput` | `((value: string) => void)` | — | no | — | — |
+| `placeholder` | `string` | — | no | — | — |
+| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` | — |
+| `preventCloseOnClick` | `boolean` | — | no | — | — |
+| `readonly` | `boolean \| null` | — | no | — | — |
+| `screenPadding` | `number \| null` | — | no | — | — |
+| `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` | — |
+| `width` | `number \| string \| null` | — | no | — | — |
 
 **SAutocomplete slots**
 
-None.
+| Slot | Slot props | Description |
+| --- | --- | --- |
+| `noData` | `{ query: string; }` | Replaces `noDataText` when no option is left, such as an `SEmptyState`. Receives the typed `query`. |
 
 **SAutocomplete events**
 

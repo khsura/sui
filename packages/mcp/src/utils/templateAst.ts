@@ -86,6 +86,12 @@ export const slotFills = (element: ElementNode): TemplateSlotFill[] => {
 export const slotDirectives = (element: ElementNode): DirectiveNode[] =>
   slotFills(element).map((fill) => fill.directive)
 
+/** True when `element` has content between its tags (elements, text or `{{ }}`), not counting comments. */
+export const hasChildContent = (element: ElementNode): boolean =>
+  element.children.some(
+    (child) => child.type !== NodeTypes.COMMENT && (child.type !== NodeTypes.TEXT || child.content.trim() !== ''),
+  )
+
 /** Every element below `element`, depth first. */
 export const descendantElementsOf = (element: ElementNode): ElementNode[] =>
   childElementsOf(element).flatMap((child) => [child, ...descendantElementsOf(child)])

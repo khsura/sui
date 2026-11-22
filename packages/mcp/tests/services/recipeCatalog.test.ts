@@ -12,6 +12,7 @@ import {
   RECIPE_FILTER_BAR,
   RECIPE_NAMES,
   RECIPE_RESPONSIVE_GRID,
+  RECIPE_TABBED_SECTIONS,
   RECIPE_THEME_SETUP,
   RECIPE_VALIDATED_FORM,
   SUI_M2_FIXES_VERSION,
@@ -70,6 +71,7 @@ describe('useRecipeCatalogService', () => {
         RECIPE_THEME_SETUP,
         RECIPE_FILTER_BAR,
         RECIPE_CENTERED_PAGE,
+        RECIPE_TABBED_SECTIONS,
       ].sort(),
     )
   })

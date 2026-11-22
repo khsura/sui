@@ -8,4 +8,5 @@ components: SFormRow, SForm, SInput, SDatePickerInput, SSelect, SButton, SCard, 
 - `SFormRow` wraps on a phone: `SInput` takes the free width, `SSelect` and `SDatePickerInput` keep their own width (add `grow` / `block` to stretch them), buttons keep theirs. Do not add `block` to a button in the row.
 - Keep the fields' error lines (no `hide-details`): the row and the button use them as the gap to the next row. A row whose fields all use `hide-details` adds the same gap below itself.
 - Before 1.20.0 there is no `SFormRow`: put `hide-details` on the field in a flex row so it renders no label or error line, and give it a `placeholder` or `aria-label` instead.
+- `SFormRow` has no outer padding, so the fields line up with the card heading and the text below. If you lay filters out with `SRow` / `SColumn` instead, add `no-outer-gutters :gap="16"` to the row: a default `SRow` pads itself and each column by 8px, so the fields start 16px inside the heading.
 - A search runs on submit: make the button `type="submit"` inside an `SForm`, so Enter in the field searches too.

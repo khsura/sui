@@ -1,28 +1,69 @@
-import { computed, nextTick, onMounted, watch, type Ref } from 'vue'
-import { tabsScrollerSelector, tabsSelectedTabSelector } from '@/app/constants'
-import { getDocument, getScrollLeftToReveal } from '@/app/lib'
+import { useEventListener, useMutationObserver, useResizeObserver } from '@vueuse/core'
+import { computed, nextTick, onMounted, ref, watch, type Ref } from 'vue'
+import {
+  tabsReducedMotionQuery,
+  tabsScrollEdgeTolerance,
+  tabsScrollerSelector,
+  tabsScrollStepRatio,
+  tabsSelectedTabSelector,
+} from '@/app/constants'
+import { getDocument, getHiddenScrollEdges, getScrollLeftToReveal, getWindow, smoothElementScroll } from '@/app/lib'
 
 /**
  * STabs keeps its tabs on one row that scrolls sideways when they do not fit. This keeps the selected tab
  * scrolled into view, without scrolling the page: on mount, once the web fonts have loaded, and whenever the
- * selection changes.
+ * selection changes. It also reports which ends of the row hide tabs, so STabs can fade the row out there
+ * (and, with `showArrows`, show a scroll arrow), and scrolls the row by most of its width when an arrow is clicked.
  */
 export const useTabsService = (selected: Ref<number | string>, element: Ref<HTMLElement | null | undefined>) => {
   const scroller = computed(() => element.value?.querySelector<HTMLElement>(tabsScrollerSelector) ?? null)
+  const isStartHidden = ref(false)
+  const isEndHidden = ref(false)
+
+  const updateHiddenEdges = () => {
+    const hiddenEdges = scroller.value
+      ? getHiddenScrollEdges(scroller.value, tabsScrollEdgeTolerance)
+      : { start: false, end: false }
+
+    isStartHidden.value = hiddenEdges.start
+    isEndHidden.value = hiddenEdges.end
+  }
 
   const revealSelectedTab = () => {
     const selectedTab = scroller.value?.querySelector<HTMLElement>(tabsSelectedTabSelector)
 
-    if (!scroller.value || !selectedTab) {
+    if (scroller.value && selectedTab) {
+      scroller.value.scrollLeft = getScrollLeftToReveal(
+        scroller.value.getBoundingClientRect(),
+        selectedTab.getBoundingClientRect(),
+        scroller.value.scrollLeft,
+      )
+    }
+
+    updateHiddenEdges()
+  }
+
+  const scrollByStep = (direction: -1 | 1) => {
+    if (!scroller.value) {
       return
     }
 
-    scroller.value.scrollLeft = getScrollLeftToReveal(
-      scroller.value.getBoundingClientRect(),
-      selectedTab.getBoundingClientRect(),
-      scroller.value.scrollLeft,
-    )
+    const left = scroller.value.scrollLeft + direction * scroller.value.clientWidth * tabsScrollStepRatio
+
+    if (getWindow()?.matchMedia?.(tabsReducedMotionQuery).matches) {
+      scroller.value.scrollLeft = left
+
+      return
+    }
+
+    // The shared helper animates the scroll itself where native smooth scrolling is unreliable (WebKit).
+    smoothElementScroll(scroller.value, { left, behavior: 'smooth' })
   }
+
+  useEventListener(scroller, 'scroll', updateHiddenEdges, { passive: true })
+  // The row overflows or fits again when the container resizes or tabs are added or removed.
+  useResizeObserver(scroller, updateHiddenEdges)
+  useMutationObserver(scroller, updateHiddenEdges, { childList: true, subtree: true, characterData: true })
 
   onMounted(() => {
     revealSelectedTab()
@@ -31,5 +72,11 @@ export const useTabsService = (selected: Ref<number | string>, element: Ref<HTML
   })
   watch(selected, () => nextTick(revealSelectedTab))
 
-  return { revealSelectedTab }
+  return {
+    isStartHidden,
+    isEndHidden,
+    revealSelectedTab,
+    scrollBackward: () => scrollByStep(-1),
+    scrollForward: () => scrollByStep(1),
+  }
 }

@@ -12,7 +12,7 @@ import { useComponentDefaultsService, useLayoutService } from '@/app/services'
 
 const rawProps = defineProps<PropsMain>()
 const props = useComponentDefaultsService('SMain', rawProps)
-const { app: layoutApp, isApp } = useLayoutService(props)
+const { app: layoutApp, isApp, left, right, width } = useLayoutService(props)
 
 const elementTag = computed(() => {
   if (props.tag) {
@@ -23,7 +23,6 @@ const elementTag = computed(() => {
 })
 
 const styles = computed(() => {
-  const widthToSubtract = layoutApp.value.left + layoutApp.value.right
   const isFixedPosition = getIsFixedPosition({ position: layoutApp.value.appBarPosition })
   const marginTop = isFixedPosition ? layoutApp.value.appBarHeight + layoutApp.value.offsetTop : 0
   const marginBottom = isApp.value ? layoutApp.value.bottomNavigationHeight : layoutApp.value.footerHeight
@@ -47,9 +46,10 @@ const styles = computed(() => {
 
   return {
     marginTop: offsetTop,
-    marginLeft: getNumericCssAttribute(layoutApp.value.left),
-    marginRight: getNumericCssAttribute(layoutApp.value.right),
-    width: `calc(100% - ${getNumericCssAttribute(widthToSubtract)})`,
+    // beside a permanent drawer, these include that side's safe-area inset (0px without one)
+    marginLeft: left.value,
+    marginRight: right.value,
+    width: width.value,
     minHeight: `calc(${isApp.value ? '100vh' : '100%'} - ${spaceTakenWithInsets})`,
   }
 })

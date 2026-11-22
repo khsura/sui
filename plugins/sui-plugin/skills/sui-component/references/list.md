@@ -76,7 +76,7 @@ A flex row with a minimum height of 48px (40px when the list is `dense`).
 | `rel` | `string` | — | no | — |
 | `selectable` | `boolean \| null` | — | no | — |
 | `tag` | `"div" \| "li" \| null` | — | no | `div`, `li` |
-| `target` | `"_blank" \| "_self" \| "_parent" \| "_top"` | — | no | `_blank`, `_parent`, `_self`, `_top` |
+| `target` | `"_blank" \| "_parent" \| "_self" \| "_top"` | — | no | `_blank`, `_parent`, `_self`, `_top` |
 | `to` | `LinkLocation \| null` | — | no | — |
 
 **SListItem slots**

@@ -80,6 +80,22 @@ export const RULE_CARD_TITLE_TEXT_ALIGN = 'card-title-text-align'
 export const RULE_DATE_PICKER_EMPTY_STRING = 'date-picker-empty-string'
 export const RULE_FIELD_BUTTON_ROW = 'field-button-row'
 export const RULE_FILL_HEIGHT_UNDER_APP = 'fill-height-under-app'
+export const RULE_AVATAR_IMAGE_IN_SLOT = 'avatar-image-in-slot'
+export const RULE_AVATAR_TEXT_NOT_INITIALS = 'avatar-text-not-initials'
+export const RULE_AVATAR_GROUP_CHILD = 'avatar-group-child'
+export const RULE_PAGINATION_LENGTH_ROWS = 'pagination-length-rows'
+export const RULE_PAGINATION_ZERO_BASED = 'pagination-zero-based'
+export const RULE_SKELETON_LOADER_UNKNOWN_PRESET = 'skeleton-loader-unknown-preset'
+export const RULE_SKELETON_LOADER_NEVER_HIDES = 'skeleton-loader-never-hides'
+export const RULE_HIDDEN_LABEL_NO_VISIBLE_NAME = 'hidden-label-no-visible-name'
+export const RULE_EMPTY_STATE_ACTION_EVENT = 'empty-state-action-event'
+export const RULE_EMPTY_STATE_ACTION_WITHOUT_LISTENER = 'empty-state-action-without-listener'
+export const RULE_EMPTY_STATE_OUTSIDE_NO_DATA_SLOT = 'empty-state-outside-no-data-slot'
+export const RULE_NUMBER_INPUT_PREFERRED = 'number-input-preferred'
+export const RULE_RAW_FILE_INPUT = 'raw-file-input'
+export const RULE_FILE_INPUT_CHANGE_EVENT = 'file-input-change-event'
+export const RULE_TABS_IN_SLIDE_GROUP = 'tabs-in-slide-group'
+export const RULE_ROW_INSET_FROM_TEXT = 'row-inset-from-text'
 
 /**
  * The first `@khsura/sui` release with the M2 hardening fixes (SForm `novalidate`, SCheckbox label with
@@ -101,6 +117,7 @@ export const RECIPE_RESPONSIVE_GRID = 'responsive-grid'
 export const RECIPE_THEME_SETUP = 'theme-setup'
 export const RECIPE_FILTER_BAR = 'filter-bar'
 export const RECIPE_CENTERED_PAGE = 'centered-page'
+export const RECIPE_TABBED_SECTIONS = 'tabbed-sections'
 
 export const ACTIVATOR_SLOT_NAME = 'activator'
 export const ACTIVATOR_ON_KEY = 'on'
@@ -112,6 +129,8 @@ export const SLOTLESS_ACTIVATOR_COMPONENTS = ['STooltip']
 export const DIRECTIVE_ON = 'on'
 
 export const APP_COMPONENT = 'SApp'
+export const TABS_COMPONENT = 'STabs'
+export const SLIDE_GROUP_COMPONENT = 'SSlideGroup'
 /** `height: 100%`; a direct child of SApp with it grows into SApp's flex column (since 1.20.0). */
 export const HEIGHT_FILL_CLASS = 's_height--fill'
 export const LAYOUT_COMPONENT = 'SLayout'
@@ -162,11 +181,25 @@ export const DEFAULT_SEPARATOR = '='
 /** `<input type>` values the browser validates on submit, showing its own bubble on top of SUI's error text. */
 export const INPUT_TYPE_NUMBER = 'number'
 export const NATIVE_VALIDATING_INPUT_TYPES = ['email', 'url', 'number']
+export const INPUT_COMPONENT = 'SInput'
+/** The numeric field (since 1.21.0); rules recommend it only when the resolved `sui-api.json` lists it. */
+export const NUMBER_INPUT_COMPONENT = 'SNumberInput'
+/** SInput's number-only props and what SNumberInput uses instead, for the migration hint. */
+export const NUMBER_INPUT_PROP_REPLACEMENTS = new Map([
+  ['allow-decimal', '`:precision="2"` (decimal places; whole numbers by default)'],
+  ['positive', '`:min` (`:min="1"` for whole numbers above 0)'],
+  ['use-previous-value-when-exceeded', 'nothing: SNumberInput clamps to `min` / `max` on blur'],
+  ['inputmode', 'nothing: SNumberInput picks `numeric` or `decimal` from `min` and `precision`'],
+])
 /** On SForm it reaches the rendered `<form>` and turns the browser's own validation off. */
 export const NO_VALIDATE_ATTRIBUTE = 'novalidate'
 
 export const HIDE_DETAILS_ATTRIBUTE = 'hide-details'
 export const LABEL_ATTRIBUTE = 'label'
+export const PLACEHOLDER_ATTRIBUTE = 'placeholder'
+/** Words shorter than this (`by`, `of`, `e.g`) don't count when matching a placeholder against its label. */
+export const LABEL_WORD_MIN_LENGTH = 3
+export const LABEL_WORD_PATTERN = /[\p{L}\p{N}]+/gu
 /** Inputs whose only visible text is the `label` prop, which `hide-details` hides as well. */
 export const HIDE_DETAILS_LABEL_COMPONENTS = ['SCheckbox']
 
@@ -194,9 +227,29 @@ export const MIN_BLOCK_BUTTONS_IN_ROW = 2
 /** Components whose root is a `display: flex` row. */
 export const FLEX_ROW_COMPONENTS = ['SCardActions']
 /** Text fields that render a label above their box and an error line under it. */
-export const LABELLED_FIELD_COMPONENTS = ['SInput', 'SSelect', 'SDatePickerInput', 'SAutocomplete', 'STextarea']
+export const LABELLED_FIELD_COMPONENTS = [
+  'SInput',
+  'SNumberInput',
+  'SSelect',
+  'SDatePickerInput',
+  'SAutocomplete',
+  'STextarea',
+  'SFileInput',
+]
 /** The row that lines buttons up with the field boxes next to them (since 1.20.0). */
 export const FORM_ROW_COMPONENT = 'SFormRow'
+export const GRID_ROW_COMPONENT = 'SRow'
+export const ROW_NO_GUTTERS_PROP = 'no-gutters'
+export const ROW_NO_OUTER_GUTTERS_PROP = 'no-outer-gutters'
+export const ROW_GAP_PROP = 'gap'
+/** Native text elements whose left edge a grid beside them should line up with. */
+export const ROW_TEXT_SIBLING_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p']
+/** Components that sit flush with the content edge, like text, so a grid beside them should line up too. */
+export const ROW_FLUSH_SIBLING_COMPONENTS = ['SBreadcrumbs']
+/** Wrappers that add no padding: a row inside one is still beside the wrapper's siblings. */
+export const ROW_TRANSPARENT_WRAPPERS = ['SForm', 'form']
+/** Horizontal padding / margin utility classes: a text sibling carrying one is inset on purpose. */
+export const HORIZONTAL_INSET_CLASS_PATTERN = /^s_(?:pa|px|pl|ps|ma|mx|ml|ms)__/
 /** `s_display__flex`, `s_display--md__inlineFlex`: the utility classes that make an element a flex row. */
 export const FLEX_DISPLAY_CLASS_PATTERN = /^s_display(?:--[a-z]+)?__(?:flex|inlineFlex)$/
 export const FLEX_DISPLAY_STYLE_PATTERN = /(?:^|;)\s*display\s*:\s*(?:inline-)?flex\b/
@@ -239,3 +292,88 @@ export const SCRIPT_BLOCK_SEPARATOR = '\n'
 export const DIALOG_TAG = 'dialog'
 export const ACTIVATOR_BINDING_FIX =
   'Write `#activator="{ on, attrs }"` and put both `v-on="on"` and `v-bind="attrs"` on the activator\'s root element.'
+
+export const AVATAR_COMPONENT = 'SAvatar'
+export const AVATAR_GROUP_COMPONENT = 'SAvatarGroup'
+export const AVATAR_TEXT_ATTRIBUTE = 'text'
+/** Elements that put a picture in an avatar's slot instead of its `image` prop. */
+export const AVATAR_SLOT_IMAGE_TAGS = ['img', 'SImage']
+export const IMAGE_SOURCE_ATTRIBUTE = 'src'
+/** The longest `text` an avatar shows in full; it is meant for initials such as `JD`. */
+export const AVATAR_MAX_INITIALS = 3
+export const WHITESPACE_CHARACTER_PATTERN = /\s/
+/** Children an SAvatarGroup accepts besides SAvatar: a `<slot>` that passes avatars through. */
+export const AVATAR_GROUP_PASSTHROUGH_TAGS = ['slot']
+export const PAGINATION_COMPONENT = 'SPagination'
+export const PAGINATION_LENGTH_ATTRIBUTE = 'length'
+/** A `:length` that counts rows, not pages: `items.length`, `rows.size`, `totalItems`, `itemsCount`, … */
+export const PAGINATION_ROW_COUNT_EXPRESSION =
+  /(?:\.(?:length|size)|^(?:total|totalItems|totalRows|totalCount|totalRecords|itemsCount|itemCount|rowCount|rowsCount))\s*$/
+/** Signs that the expression already divides rows into pages: `Math.ceil(total / perPage)`, `total / 20`. */
+export const PAGINATION_PAGE_MATH_EXPRESSION = /\/|\bceil\b/
+/** A 0-based model, such as STable's `pageIndex`, given to SPagination's 1-based `v-model`. */
+export const PAGINATION_ZERO_BASED_MODEL = /index$/i
+
+export const SKELETON_LOADER_COMPONENT = 'SSkeletonLoader'
+export const SKELETON_LOADER_TYPE_ATTRIBUTE = 'type'
+export const SKELETON_LOADER_LOADING_ATTRIBUTE = 'loading'
+/** Separates the presets in SSkeletonLoader's `type` string: `'avatar, text'`. */
+export const SKELETON_LOADER_TYPE_SEPARATOR = ','
+/** Separates a preset from its repeat count: `'text@3'`. */
+export const SKELETON_LOADER_REPEAT_SEPARATOR = '@'
+/** The presets SSkeletonLoader draws. The `type` prop is a plain string, so sui-api.json cannot list them. */
+export const SKELETON_LOADER_PRESETS = [
+  'text',
+  'heading',
+  'avatar',
+  'button',
+  'image',
+  'card',
+  'list-item',
+  'list-item-avatar',
+  'table-row',
+  'table',
+]
+/** Vuetify VSkeletonLoader presets that SUI does not have, with the SUI `type` that draws the same thing. */
+export const SKELETON_LOADER_VUETIFY_PRESETS: Record<string, string> = {
+  paragraph: 'text@3',
+  sentences: 'text@2',
+  subtitle: 'text',
+  article: 'heading, text@3',
+  chip: 'button',
+  actions: 'button@2',
+  'list-item-two-line': 'list-item-avatar',
+  'list-item-three-line': 'list-item-avatar',
+  'list-item-avatar-two-line': 'list-item-avatar',
+  'list-item-avatar-three-line': 'list-item-avatar',
+  'card-avatar': 'card',
+  'table-heading': 'heading',
+  'table-thead': 'table-row',
+  'table-tbody': 'table-row@5',
+  'table-tfoot': 'table-row',
+}
+export const EMPTY_STATE_COMPONENT = 'SEmptyState'
+export const EMPTY_STATE_ACTION_TEXT_ATTRIBUTE = 'action-text'
+/** The event SEmptyState's built-in button emits. */
+export const EMPTY_STATE_ACTION_EVENT = 'action'
+/** The slot that replaces SEmptyState's built-in button. */
+export const EMPTY_STATE_ACTIONS_SLOT = 'actions'
+/** Listeners AI code writes for the action button: Vuetify's `click:action`, or a plain `click` on the whole block. */
+export const EMPTY_STATE_WRONG_ACTION_EVENTS = ['click:action', 'click']
+/** Components whose no-data state takes an SEmptyState through the `noData` slot, never the default slot. */
+export const NO_DATA_SLOT_COMPONENTS = ['STable', 'SSelect', 'SAutocomplete']
+export const NO_DATA_SLOT_NAME = 'noData'
+
+export const FILE_INPUT_COMPONENT = 'SFileInput'
+/** `<input type="file">`: SFileInput replaces it, so `no-raw-replacement` leaves it to `raw-file-input`. */
+export const FILE_INPUT_TYPE = 'file'
+export const REF_ATTRIBUTE = 'ref'
+export const CHANGE_EVENT = 'change'
+/** A handler that opens a file input's picker through its template ref: `fileInput?.click()`, `$refs.file.click()`. */
+export const PICKER_CLICK_CALL_PATTERN = /[\w$.?]*\.click\(\s*\)/g
+/** The DOM event access AI code writes for a native file input's `change`: `$event.target.files`, `e.target`. */
+export const NATIVE_CHANGE_EVENT_ACCESS_PATTERN = /\.target\b|\$event\.files\b/
+/** Splits a member path such as `fileInput.value?.click` into its names. */
+export const MEMBER_PATH_SEPARATOR_PATTERN = /\?\.|\./
+export const FILE_INPUT_EXAMPLE =
+  '<SFileInput v-model="files" label="Workbook" accept=".csv,.xlsx" :rules="getFileInputRules({ maxSize: 5 * 1024 * 1024, accept: \'.csv,.xlsx\' })" />'

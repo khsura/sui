@@ -74,6 +74,10 @@
               </SListItemContent>
             </SListItem>
           </SList>
+          <!-- Outside the listbox: it is a message, not an option. role="status" announces it. -->
+          <div v-if="showNoData" class="s_select__noData" role="status">
+            <NoDataContent></NoDataContent>
+          </div>
         </div>
       </OnClickOutside>
     </SOverlay>
@@ -81,7 +85,7 @@
 </template>
 <script setup lang="ts" generic="T extends string | number = string | number">
 import { OnClickOutside } from '@vueuse/components'
-import { computed, watch, nextTick, useTemplateRef } from 'vue'
+import { computed, watch, nextTick, useTemplateRef, type VNode, type VNodeChild } from 'vue'
 import { keyboardKey } from '@/app/constants'
 import SFormInputError from '@/app/components/form/common/sFormInputError.vue'
 import { SList, SListItem, SListItemContent, SListItemSubtitle } from '@/app/components/list'
@@ -205,6 +209,21 @@ const selectedItem = computed<SelectItem | null>({
     model.value = item.value as T
   },
 })
+
+const slots = defineSlots<{
+  /** Replaces the selected item's text in the field. */
+  activator?: (props: { item: SelectItem | null; value: boolean | undefined }) => VNode[]
+  /** Replaces the chevron icon. */
+  dropdownIcon?: (props: { color: string | undefined; value: boolean | undefined }) => VNode[]
+  /** Replaces `noDataText` when `items` is empty, such as an `SEmptyState`. */
+  noData?: () => VNode[]
+}>()
+
+// Rendered through a function, not a <slot> outlet: an outlet inside the SOverlay slot would make that slot
+// dynamic and re-render the whole menu on every update of the field.
+const NoDataContent = (): VNodeChild => slots.noData?.() ?? props.noDataText
+// Opt-in: with neither `noDataText` nor the `noData` slot an empty menu looks exactly as before.
+const showNoData = computed(() => objectItems.value.length === 0 && (!!slots.noData || !!props.noDataText))
 
 const { classListField } = useFieldLayoutService(
   computed(() => ({
@@ -496,6 +515,15 @@ $s_select__fieldHeight: calc(#{$s_select__fontSize} * #{$s_select__lineHeight} +
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
+  }
+
+  // Only rendered with `noDataText` or the `noData` slot, so the default empty menu is unchanged.
+  &__noData {
+    padding: calc($s_spacer * 3) calc($s_spacer * 4);
+
+    // secondaryText, not disabled: the message must stay readable (4.5:1)
+    color: s_getAppColor('secondaryText');
+    text-align: center;
   }
 }
 </style>

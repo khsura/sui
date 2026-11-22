@@ -422,6 +422,111 @@ export const TabsSelectedOutOfView = {
   },
 } satisfies StoryObj
 
+// Tabs that do not fit a 375px column (the after-M2 eval: "Account" was cut off with no sign that the row
+// scrolls). The row is swiped sideways, the end that hides tabs fades out, and the last tab, once selected, is
+// scrolled fully into view. The play ends back on the first tab, so the screenshot shows the starting state: the
+// right-hand fade. The second row adds `show-arrows` (a scroll arrow at the end that hides tabs); the third uses
+// `wrap`: the tabs flow onto several rows, with no fade.
+const narrowTabsLabels = ['Getting started', 'Billing and invoices', 'Account settings', 'Notifications', 'Security']
+
+const assertFades = (canvasElement: HTMLElement, expected: { start: boolean; end: boolean }) => {
+  const classes = canvasElement.querySelector('.stress-narrow-tabs')?.classList
+
+  for (const edge of ['start', 'end'] as const) {
+    assertThat(
+      !!classes?.contains(`s_tabs--${edge}Hidden`) === expected[edge],
+      `the ${edge} edge fade should be ${expected[edge] ? 'shown' : 'hidden'}`,
+    )
+  }
+}
+
+const assertTabFullyInView = (canvasElement: HTMLElement, tabIndex: number) => {
+  const scroller = getRect(canvasElement.querySelector('.stress-narrow-tabs .s_toggleButtonGroup__content'))
+  const tab = getRect(canvasElement.querySelectorAll('.stress-narrow-tabs .s_tab')[tabIndex] ?? null)
+
+  assertThat(
+    tab.left >= scroller.left - pixelTolerance && tab.right <= scroller.right + pixelTolerance,
+    `tab ${tabIndex + 1} is not fully in view`,
+  )
+}
+
+export const TabsNarrowScrollAffordance = {
+  tags: ['visual'],
+  render: () => ({
+    components: { SCard, STab, STabs },
+    setup: () => ({ narrowTabsLabels, activeTab: ref(0), arrowTab: ref(0) }),
+    template: /* html */ `
+      <div style="max-width: 375px;">
+        <SCard class="s_pa__4">
+          <STabs v-model="activeTab" class="stress-narrow-tabs">
+            <STab v-for="(label, index) in narrowTabsLabels" :key="label" :tab="index">{{ label }}</STab>
+          </STabs>
+        </SCard>
+        <SCard class="s_pa__4 s_mt__4">
+          <STabs v-model="arrowTab" show-arrows class="stress-arrow-tabs">
+            <STab v-for="(label, index) in narrowTabsLabels" :key="label" :tab="index">{{ label }}</STab>
+          </STabs>
+        </SCard>
+        <SCard class="s_pa__4 s_mt__4">
+          <STabs v-model="activeTab" wrap class="stress-wrapped-tabs">
+            <STab v-for="(label, index) in narrowTabsLabels" :key="label" :tab="index">{{ label }}</STab>
+          </STabs>
+        </SCard>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const lastTabIndex = narrowTabsLabels.length - 1
+
+    const selectedTab = () =>
+      canvasElement.querySelector<HTMLElement>('.stress-narrow-tabs [role="tab"][aria-selected="true"]')
+
+    await waitFor(() => assertFades(canvasElement, { start: false, end: true }))
+
+    // showArrows: only the end that hides tabs gets an arrow, sitting at that edge of the row.
+    const arrowOf = (edge: 'start' | 'end') =>
+      canvasElement.querySelector(`.stress-arrow-tabs .s_tabs__scrollButton--${edge}`)
+
+    await waitFor(() => assertThat(!!arrowOf('end'), 'showArrows shows no end arrow'))
+    assertThat(!arrowOf('start'), 'showArrows shows an arrow at the start, which hides no tabs')
+    assertThat(
+      Math.abs(getRect(arrowOf('end')).right - getRect(canvasElement.querySelector('.stress-arrow-tabs')).right) <=
+        pixelTolerance,
+      'the end arrow is not at the end of the row',
+    )
+    assertThat(
+      !canvasElement.querySelector('.stress-narrow-tabs .s_tabs__scrollButton--end'),
+      'arrows show without showArrows',
+    )
+
+    const wrappedTabs = Array.from(canvasElement.querySelectorAll('.stress-wrapped-tabs .s_tab'))
+    const wrappedRow = getRect(canvasElement.querySelector('.stress-wrapped-tabs'))
+
+    assertThat(
+      new Set(wrappedTabs.map((tab) => Math.round(getRect(tab).top))).size > 1,
+      'wrap kept the tabs on one row',
+    )
+    assertThat(
+      wrappedTabs.every((tab) => getRect(tab).right <= wrappedRow.right + pixelTolerance),
+      'a wrapped tab sticks out of its row',
+    )
+
+    selectedTab()?.focus()
+    await userEvent.keyboard('{End}')
+    await waitFor(() => {
+      assertTabFullyInView(canvasElement, lastTabIndex)
+      assertFades(canvasElement, { start: true, end: false })
+    })
+
+    selectedTab()?.focus()
+    await userEvent.keyboard('{Home}')
+    await waitFor(() => {
+      assertTabFullyInView(canvasElement, 0)
+      assertFades(canvasElement, { start: false, end: true })
+    })
+  },
+} satisfies StoryObj
+
 const files = [
   { name: 'Quarterly financial report final version.pdf', meta: '2.3 MB · Modified 2026-11-02 by Bartholomew' },
   { name: 'Team photo.jpg', meta: '4.0 MB · Modified yesterday' },

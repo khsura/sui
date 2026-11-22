@@ -4,6 +4,7 @@ import type { SuiApiComponent, SuiApiProp } from '@khsura/shared/types'
 import type { PropertyMeta, PropertyMetaSchema } from 'vue-component-meta'
 import { ENUM_SCHEMA_KIND, NULLISH_SCHEMA_MEMBERS, QUOTED_LITERAL_PATTERN } from './constants'
 import { extractPatternSlots } from './slotPatterns'
+import { normalizeUnionType } from './unionType'
 import type { ComponentExport, ComponentMetaChecker } from './types'
 
 const byName = <T extends { name: string }>(left: T, right: T) => (left.name < right.name ? -1 : 1)
@@ -35,7 +36,7 @@ const toProp = (prop: PropertyMeta): SuiApiProp => {
 
   return {
     name: prop.name,
-    type: prop.type,
+    type: normalizeUnionType(prop.type),
     required: prop.required,
     description: prop.description,
     ...(prop.default === undefined ? {} : { default: prop.default }),

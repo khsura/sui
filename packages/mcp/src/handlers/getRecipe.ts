@@ -11,7 +11,7 @@ export const registerGetRecipeTool = (server: McpServer, recipeSourceOptions: Re
     GET_RECIPE_TOOL_NAME,
     {
       description:
-        'Returns one tested @khsura/sui recipe: its notes (the rules it relies on) and the full copy-ready Vue SFC, plus a link to the live Storybook example. Names: app-shell, validated-form, activator-overlays, data-table, responsive-grid, theme-setup, filter-bar, centered-page. Unknown names return the name list.',
+        'Returns one tested @khsura/sui recipe: its notes (the rules it relies on) and the full copy-ready Vue SFC, plus a link to the live Storybook example. Names: app-shell, validated-form, activator-overlays, data-table, responsive-grid, theme-setup, filter-bar, centered-page, tabbed-sections. Unknown names return the name list.',
       inputSchema: getRecipeInputSchema,
     },
     ({ name }) => {

@@ -15,6 +15,8 @@ export type PropsSelect = {
   grow?: boolean
   text?: boolean
   divided?: boolean
+  /** Message shown in the open menu when `items` is empty. Without it (and without the `noData` slot) an empty menu stays blank. Put an `SEmptyState` in the `noData` slot for an icon or an action. */
+  noDataText?: string | undefined
 } & PropsBorder &
   PropsMenu &
   PropsFormInput &

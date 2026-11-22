@@ -1,5 +1,6 @@
-import { flushPromises } from '@vue/test-utils'
-import { SSelect } from '@/app/components'
+import { flushPromises, mount } from '@vue/test-utils'
+import { defineComponent } from 'vue'
+import { SApp, SEmptyState, SSelect } from '@/app/components'
 import { mountWithApp } from '@/app/tests/_helpers'
 
 describe('SSelect', () => {
@@ -117,5 +118,58 @@ describe('SSelect', () => {
 
     expect(sizers.map((sizer) => sizer.text())).toEqual(['Admin', 'Editor', 'Choose'])
     expect(sizers.every((sizer) => sizer.attributes('aria-hidden') === 'true')).toBe(true)
+  })
+})
+
+describe('SSelect - no data', () => {
+  afterEach(() => {
+    document.body.innerHTML = ''
+  })
+
+  const openMenu = async () => {
+    document.querySelector('[role="combobox"]')?.dispatchEvent(new KeyboardEvent('keydown', { key: ' ' }))
+    await flushPromises()
+  }
+
+  test('an empty menu stays blank without noDataText or the noData slot', async () => {
+    mountWithApp(SSelect, { props: { id: 'fruit', items: [] }, attachTo: document.body })
+
+    await openMenu()
+
+    expect(document.querySelector('.s_select__list')).not.toBeNull()
+    expect(document.querySelector('.s_select__noData')).toBeNull()
+  })
+
+  test('shows noDataText as a status message outside the listbox when there are no items', async () => {
+    mountWithApp(SSelect, { props: { id: 'fruit', items: [], noDataText: 'No fruit' }, attachTo: document.body })
+
+    await openMenu()
+    const message = document.querySelector('.s_select__noData')
+
+    expect(message?.textContent?.trim()).toBe('No fruit')
+    expect(message?.getAttribute('role')).toBe('status')
+    expect(message?.closest('[role="listbox"]')).toBeNull()
+  })
+
+  test('hides noDataText while there are items', async () => {
+    mountWithApp(SSelect, { props: { id: 'fruit', items: ['apple'], noDataText: 'No fruit' }, attachTo: document.body })
+
+    await openMenu()
+
+    expect(document.querySelector('.s_select__noData')).toBeNull()
+  })
+
+  test('renders an SEmptyState from the noData slot', async () => {
+    mount(
+      defineComponent({
+        components: { SApp, SSelect, SEmptyState },
+        template: `<SApp><SSelect id="fruit" :items="[]"><template #noData><SEmptyState size="small" title="No fruit" /></template></SSelect></SApp>`,
+      }),
+      { attachTo: document.body },
+    )
+
+    await openMenu()
+
+    expect(document.querySelector('.s_select__noData .s_emptyState__title')?.textContent?.trim()).toBe('No fruit')
   })
 })

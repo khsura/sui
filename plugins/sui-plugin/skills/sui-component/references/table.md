@@ -124,7 +124,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsTable.d.ts`. The 
 - `group` (slot): Group row content (default: the group name)
 - `itemHeader` / `itemFooter` (slot): Full-width rows from `itemHeader`/`itemFooter`
 - `expanded` (slot): Content of an expanded row
-- `noData` (slot): Empty state
+- `noData` (slot): Empty state — put an `SEmptyState` here for an icon, title or action: `<template #noData><SEmptyState size="small" icon="mdi-cart-outline" title="No orders yet" /></template>`
 - `loadingData` (slot): Loading row, shown while `loading` is set and `items` is empty
 - `itemsPerPageLabel` (slot): Pager label
 
@@ -207,6 +207,7 @@ const perPage = ref(10)
 
 | ❌ | ✅ |
 |----|----|
+| A hand-made `<div><SIcon …/><p>No data</p></div>` in `#noData` | `<SEmptyState size="small" icon="…" title="…" />` in `#noData` |
 | `{ key: 'name', title: 'Name' }` | `{ text: 'Name', value: 'name' }`. Using `key` throws a `TypeError` (`value` is undefined) |
 | `#item.name` slot with a header whose `value` is not `'name'` | The slot suffix is the header's `value` |
 | Expecting a built-in checkbox column with `v-model:selected` | No select column exists. Render one with `select` / `isSelected` from the slot scope |

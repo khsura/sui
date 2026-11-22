@@ -1,6 +1,6 @@
 ---
 name: sui-component
-description: Look up and use any component from @khsura/sui (SButton, SCard, SDialog, SMenu, STooltip, STable, SList, STabs, SStepper, SCarousel, SExpansionPanels, SDatePicker, SCalendar, SToggleButtonGroup, SSlideGroup, SToolbar, SSplitView, SDroppable, SBadge, SChip, SIcon, SImage, SAlert, SOverlay, …) in a Vue or Nuxt app. Use when writing or fixing template code with an S-prefixed component, choosing props/slots/events, debugging a SUI component that renders wrong or ignores a prop, or styling SUI components with theme colors. Loads one per-family reference file with the verified props table, slots, events, example and gotchas.
+description: Look up and use any component from @khsura/sui (SButton, SCard, SDialog, SMenu, STooltip, STable, SList, STabs, SStepper, SCarousel, SExpansionPanels, SDatePicker, SNumberInput, SCalendar, SToggleButtonGroup, SSlideGroup, SToolbar, SSplitView, SDroppable, SBadge, SChip, SAvatar, SPagination, SEmptyState, SSkeletonLoader, SFileInput, SIcon, SImage, SAlert, SOverlay, …) in a Vue or Nuxt app. Use when writing or fixing template code with an S-prefixed component, choosing props/slots/events, debugging a SUI component that renders wrong or ignores a prop, or styling SUI components with theme colors. Loads one per-family reference file with the verified props table, slots, events, example and gotchas.
 argument-hint: [component name or description of what you need]
 ---
 
@@ -22,6 +22,8 @@ All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `
 |---|---|
 | `SAlert` | [references/alert.md](references/alert.md) |
 | `SAutocomplete` | [references/autocomplete.md](references/autocomplete.md) |
+| `SAvatar` | [references/avatar.md](references/avatar.md) |
+| `SAvatarGroup` | [references/avatar-group.md](references/avatar-group.md) |
 | `SBadge` | [references/badge.md](references/badge.md) |
 | `SBreadcrumbs` | [references/breadcrumbs.md](references/breadcrumbs.md) |
 | `SButton` | [references/button.md](references/button.md) |
@@ -33,16 +35,21 @@ All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `
 | `SDialog` | [references/dialog.md](references/dialog.md) |
 | `SDivider` | [references/divider.md](references/divider.md) |
 | `SDroppable` | [references/droppable.md](references/droppable.md) |
+| `SEmptyState` | [references/empty-state.md](references/empty-state.md) |
 | `SExpansionPanels`, `SExpansionPanel`, `SExpansionPanelHeader`, `SExpansionPanelContent` | [references/expansion-panels.md](references/expansion-panels.md) |
+| `SFileInput` | [references/file-input.md](references/file-input.md) |
 | `SForm`, `SFormRow`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SRadio`, `SSwitch` | [references/form.md](references/form.md) (and the **sui-form** skill) |
 | `SIcon` | [references/icon.md](references/icon.md) |
 | `SImage` | [references/image.md](references/image.md) |
 | `SApp`, `SLayout`, `SAppBar`, `SNavigationDrawer`, `SMain`, `SFooter`, `SBottomNavigation`, `SContainer`, `SRow`, `SColumn`, `SSpacer` | [references/layout.md](references/layout.md) (and the **sui-layout** skill) |
 | `SList`, `SListItem`, `SListItemIcon`, `SListItemContent`, `SListItemTitle`, `SListItemSubtitle`, `SListItemAction`, `SListItemGroup` | [references/list.md](references/list.md) |
 | `SMenu` | [references/menu.md](references/menu.md) |
+| `SNumberInput` (since 1.21.0) | [references/number-input.md](references/number-input.md) (numbers: quantities, money, percentages) |
 | `SOverlay` | [references/overlay.md](references/overlay.md) |
+| `SPagination` | [references/pagination.md](references/pagination.md) |
 | `SProgressLinear`, `SProgressCircular` | [references/progress.md](references/progress.md) |
 | `SSheet` | [references/sheet.md](references/sheet.md) |
+| `SSkeletonLoader` | [references/skeleton-loader.md](references/skeleton-loader.md) |
 | `SSlideGroup`, `SSlideItem` | [references/slide-group.md](references/slide-group.md) |
 | `SSnackbar` | [references/snackbar.md](references/snackbar.md) |
 | `SSplitView`, `SSplitViewItem` | [references/split-view.md](references/split-view.md) |
@@ -60,10 +67,10 @@ All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `
 
 | ❌ Name | ✅ Use instead |
 |---|---|
-| `SSkeletonLoader` | `SProgressCircular indeterminate` in a centered div |
 | `STextField` | `SInput` (single line) or `STextarea` (multi-line) |
+| `SFileUpload` / `<SInput type="file">` | `SFileInput` (`variant="dropzone"` for a drop area) |
 | `SCol` | `SColumn` |
-| `STablePagination` (not exported) | `STable`'s built-in pagination |
+| `STablePagination` (not exported) | `STable`'s built-in pagination, or `SPagination` for a standalone pager |
 | `SNavigationDrawer` inside a feature component | App shell only — use `<SDialog location="end">` for feature slide-in panels |
 
 ---

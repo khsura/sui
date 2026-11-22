@@ -86,6 +86,42 @@ describe('behaviour rules', () => {
     })
   })
 
+  describe('hidden-label-no-visible-name', () => {
+    const rule = 'hidden-label-no-visible-name'
+
+    it.each([
+      ['the label stays visible', '<SInput label="Search by name" placeholder="e.g. Anna" />'],
+      ['a placeholder that names the field', '<SInput label="Search" placeholder="Search files" hide-details />'],
+      ['matching ignores case', '<SSelect label="Status" placeholder="Any status" hide-details />'],
+      ['a bound placeholder', '<SInput label="Search" :placeholder="hint" hide-details />'],
+      ['a bound label', '<SInput :label="title" hide-details />'],
+      ['statically off', '<SInput label="Search" :hide-details="false" />'],
+      [
+        'slot content can name it',
+        '<SInput label="Search" hide-details><template #suffix><SIcon icon="mdi-magnify" /></template></SInput>',
+      ],
+      ['a checkbox (its own rule)', '<SCheckbox label="Remember me" hide-details />'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it.each([
+      ['no placeholder', '<SInput label="Search" hide-details />'],
+      ['a placeholder that shares no word', '<SInput label="Search by name" placeholder="e.g. Anna" hide-details />'],
+      ['a select', '<SSelect label="Status" :items="items" hideDetails />'],
+      ['a date picker input', '<SDatePickerInput label="From" hide-details />'],
+    ])('reports %s', (_, code) => {
+      const [issue] = issuesOf(rule, code)
+
+      expect(issue).toMatchObject({ severity: 'warning', recipe: 'filter-bar' })
+      expect(issue.fixHint).toContain('hide-details')
+    })
+
+    it('fires on the after-M2 eval search field whose label went missing', () => {
+      expect(evalIssues(rule, 'after-m2', '03-mobile-list.vue').length).toBeGreaterThan(0)
+    })
+  })
+
   describe('snackbar-action-contrast', () => {
     const rule = 'snackbar-action-contrast'
 
@@ -210,6 +246,10 @@ describe('behaviour rules', () => {
         'kebab-case tags',
         '<div style="display:flex">\n<s-select v-model="s" :items="items" />\n<s-button>Apply</s-button></div>',
       ],
+      [
+        'a file input',
+        '<div style="display: flex">\n<SFileInput v-model="files" label="Workbook" />\n<SButton>Import</SButton></div>',
+      ],
     ])('reports a field and a button in %s', (_, code) => {
       const [issue] = issuesOf(rule, code)
 
@@ -313,6 +353,66 @@ describe('behaviour rules', () => {
     })
   })
 
+  describe('tabs-in-slide-group', () => {
+    const rule = 'tabs-in-slide-group'
+
+    it.each([
+      ['STabs on its own', '<STabs v-model="tab"><STab :tab="0">A</STab></STabs>'],
+      ['SSlideGroup without tabs', '<SSlideGroup><SSlideItem>A</SSlideItem></SSlideGroup>'],
+      ['STabs beside an SSlideGroup', '<div><SSlideGroup /><STabs v-model="tab" /></div>'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it('reports STabs wrapped in SSlideGroup', () => {
+      const [issue] = issuesOf(rule, '<SSlideGroup>\n  <div>\n    <STabs v-model="tab" />\n  </div>\n</SSlideGroup>')
+
+      expect(issue).toMatchObject({ severity: 'warning', line: 3, column: 5, recipe: 'tabbed-sections' })
+    })
+  })
+
+  describe('row-inset-from-text', () => {
+    const rule = 'row-inset-from-text'
+    const columns = '<SColumn :cols="6">A</SColumn><SColumn :cols="6">B</SColumn>'
+
+    it.each([
+      [
+        'a row with no-outer-gutters and gap',
+        `<div><h2>Title</h2><SRow no-outer-gutters :gap="16">${columns}</SRow></div>`,
+      ],
+      ['a row with no-gutters', `<div><h2>Title</h2><SRow no-gutters>${columns}</SRow></div>`],
+      ['a row with no text beside it', `<SContainer><SRow>${columns}</SRow></SContainer>`],
+      ['a heading inset on purpose', `<div><h2 class="s_px__2">Title</h2><SRow>${columns}</SRow></div>`],
+      ['text inside a column, not beside the row', `<SRow><SColumn><h2>Title</h2></SColumn></SRow>`],
+      [
+        'a heading beside a padded wrapper',
+        `<div><h2>Title</h2><div class="s_pa__4"><SRow>${columns}</SRow></div></div>`,
+      ],
+      ['a v-bind spread that may set the props', `<div><p>Intro</p><SRow v-bind="rowProps">${columns}</SRow></div>`],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it('reports a default row beside a heading', () => {
+      const [issue] = issuesOf(rule, `<SCardText>\n  <h2>Title</h2>\n  <SRow>${columns}</SRow>\n</SCardText>`)
+
+      expect(issue).toMatchObject({ severity: 'warning', line: 3, column: 3, recipe: 'responsive-grid' })
+      expect(issue.message).toContain('16px')
+      expect(issue.fixHint).toContain('no-outer-gutters :gap="16"')
+    })
+
+    it('reports no-outer-gutters without gap: the columns still pad by 8px', () => {
+      const [issue] = issuesOf(rule, `<div><p>Intro</p><SRow no-outer-gutters>${columns}</SRow></div>`)
+
+      expect(issue?.message).toContain('8px inside')
+    })
+
+    it('fires on the after-M2 eval pages whose grids sat inside the heading and breadcrumbs', () => {
+      expect(evalIssues(rule, 'after-m2', '04-date-range-filter.vue')).toEqual([[9, 11]])
+      expect(evalIssues(rule, 'after-m2', '10-detail-two-column.vue')).toEqual([[5, 5]])
+    })
+  })
+
   describe('version gates', () => {
     const olderApi: SuiApi = { ...fixtureApi, version: '1.19.4' }
     const fixedApi: SuiApi = { ...fixtureApi, version: SUI_M2_FIXES_VERSION }
@@ -387,5 +487,257 @@ describe('behaviour rules', () => {
         expect(issue.fixHint).toContain('color="warning"')
       })
     })
+  })
+})
+
+describe('avatar-text-not-initials', () => {
+  it.each([
+    ['a full name', '<SAvatar text="Jane Doe" />', 'text="JD" alt="Jane Doe"'],
+    ['a long word', '<s-avatar text="Administrator" />', 'text="A" alt="Administrator"'],
+    ['a bound literal', `<SAvatar :text="'Bat Erdene Munkh Ochir'" />`, 'text="BEM"'],
+  ])('flags %s', (_, code, fix) => {
+    const issues = issuesOf('avatar-text-not-initials', code)
+
+    expect(issues).toHaveLength(1)
+    expect(issues[0].fixHint).toContain(fix)
+  })
+
+  it.each([
+    ['initials', '<SAvatar text="JD" />'],
+    ['three letters', '<SAvatar text="ABC" />'],
+    ['a bound expression', '<SAvatar :text="user.initials" />'],
+    ['another component', '<SChip text="Jane Doe" />'],
+  ])('accepts %s', (_, code) => {
+    expect(issuesOf('avatar-text-not-initials', code)).toEqual([])
+  })
+})
+
+describe('SPagination rules', () => {
+  describe('pagination-length-rows', () => {
+    const rule = 'pagination-length-rows'
+
+    it.each([
+      ['a page count', '<SPagination v-model="page" :length="pageCount" />'],
+      ['a division', '<SPagination v-model="page" :length="Math.ceil(items.length / perPage)" />'],
+      ['a literal', '<SPagination v-model="page" :length="10" />'],
+      ['a static attribute', '<SPagination v-model="page" length="10" />'],
+      ['totalPages', '<SPagination v-model="page" :length="totalPages" />'],
+      ['another component', '<STable :length="items.length" />'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it.each([
+      ['an array length', '<SPagination v-model="page" :length="items.length" />'],
+      ['a nested array length', '<SPagination v-model="page" :length="response.data.rows.length" />'],
+      ['totalItems', '<SPagination v-model="page" :length="totalItems" />'],
+      ['itemsCount', '<s-pagination v-model="page" :length="itemsCount" />'],
+    ])('reports %s', (_, code) => {
+      const [issue] = issuesOf(rule, code)
+
+      expect(issue).toMatchObject({ severity: 'warning', line: 1 })
+      expect(issue.fixHint).toContain('Math.ceil')
+    })
+  })
+
+  describe('pagination-zero-based', () => {
+    const rule = 'pagination-zero-based'
+
+    it.each([
+      ['a page ref', '<SPagination v-model="page" :length="10" />'],
+      ['a nested page', '<SPagination v-model="state.currentPage" :length="10" />'],
+      ['no model', '<SPagination :length="10" />'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it.each([
+      ['pageIndex', '<SPagination v-model="pageIndex" :length="10" />'],
+      ['a nested index', '<SPagination v-model="table.pageIndex" :length="10" />'],
+      ['a model-value index', '<SPagination :model-value="pageIndex" :length="10" />'],
+    ])('reports %s', (_, code) => {
+      const [issue] = issuesOf(rule, code)
+
+      expect(issue).toMatchObject({ severity: 'warning' })
+      expect(issue.fixHint).toContain('page.value - 1')
+    })
+  })
+
+  it('accepts a correct SPagination and rejects a misspelt prop', () => {
+    const valid = validateWith(fixtureApi, '<SPagination v-model="page" :length="pageCount" show-first-last-page />')
+    const misspelt = validateWith(fixtureApi, '<SPagination v-model="page" :length="pageCount" :total-visibl="5" />')
+
+    expect(valid).toEqual([])
+    expect(misspelt.map((issue) => issue.rule)).toContain('unknown-prop')
+  })
+
+  describe('SEmptyState API', () => {
+    it('accepts a correct SEmptyState and catches a misspelt or Vuetify prop', () => {
+      expect(
+        validateWith(
+          fixtureApi,
+          '<SEmptyState icon="mdi-inbox-outline" title="No orders" text="Create one." action-text="Create" size="small" @action="create" />',
+        ),
+      ).toEqual([])
+      expect(validateWith(fixtureApi, '<SEmptyState headline="No orders" />').map((issue) => issue.rule)).toContain(
+        'unknown-prop',
+      )
+    })
+  })
+
+  describe('empty-state-action-event', () => {
+    it.each([
+      ['click:action', '<SEmptyState action-text="Retry" @click:action="retry" />'],
+      ['click', '<SEmptyState action-text="Retry" @click="retry" />'],
+      ['click (v-on)', '<SEmptyState action-text="Retry" v-on:click.stop="retry" />'],
+    ])('flags @%s', (_, code) => {
+      const issues = issuesOf('empty-state-action-event', code)
+
+      expect(issues).toHaveLength(1)
+      expect(issues[0].fixHint).toContain('@action="retry"')
+    })
+
+    it('accepts @action', () => {
+      expect(issuesOf('empty-state-action-event', '<SEmptyState action-text="Retry" @action="retry" />')).toEqual([])
+    })
+  })
+
+  describe('empty-state-action-without-listener', () => {
+    it.each([
+      ['a static action-text', '<SEmptyState title="No orders" action-text="Create order" />'],
+      ['a bound actionText', '<SEmptyState title="No orders" :actionText="label" />'],
+    ])('flags %s with no @action', (_, code) => {
+      expect(issuesOf('empty-state-action-without-listener', code)).toHaveLength(1)
+    })
+
+    it.each([
+      ['an @action listener', '<SEmptyState action-text="Create order" @action="create" />'],
+      [
+        'the actions slot',
+        '<SEmptyState action-text="Create order"><template #actions><SButton to="/new">New</SButton></template></SEmptyState>',
+      ],
+      ['a v-bind spread', '<SEmptyState action-text="Create order" v-bind="emptyProps" />'],
+      ['no action-text', '<SEmptyState title="No orders" />'],
+    ])('accepts %s', (_, code) => {
+      expect(issuesOf('empty-state-action-without-listener', code)).toEqual([])
+    })
+  })
+
+  describe('number-input-preferred', () => {
+    const rule = 'number-input-preferred'
+
+    const apiWithoutNumberInput: SuiApi = {
+      ...fixtureApi,
+      components: fixtureApi.components.filter((component) => component.name !== 'SNumberInput'),
+    }
+
+    it.each([
+      ['SNumberInput', '<SNumberInput v-model="quantity" label="Quantity" :min="0" />'],
+      ['a text SInput', '<SInput v-model="name" label="Name" />'],
+      ['a bound type', '<SInput :type="fieldType" />'],
+      ['a native number input', '<input type="number" />'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it('warns about SInput type="number" at its type attribute', () => {
+      const [issue] = issuesOf(rule, '<SInput v-model="quantity" label="Quantity" type="number" />')
+
+      expect(issue).toMatchObject({ severity: 'warning', line: 1, column: 45, recipe: 'validated-form' })
+      expect(issue.fixHint).toContain('<SNumberInput v-model="quantity"')
+    })
+
+    it('maps the number-only SInput props to their SNumberInput replacement', () => {
+      const [issue] = issuesOf(rule, '<SInput v-model="price" type="number" allow-decimal positive />')
+
+      expect(issue.fixHint).toContain('`allow-decimal` → `:precision="2"`')
+      expect(issue.fixHint).toContain('`positive` → `:min`')
+    })
+
+    it('stays quiet for a release without SNumberInput', () => {
+      expect(issuesWith(apiWithoutNumberInput, rule, '<SInput type="number" />')).toEqual([])
+    })
+
+    it('accepts a correct SNumberInput with no other issue', () => {
+      expect(
+        validateWith(
+          fixtureApi,
+          '<SForm><SNumberInput v-model="price" label="Price" prefix="₮" :precision="2" :min="0" control-variant="split" :rules="rules" /></SForm>',
+        ),
+      ).toEqual([])
+    })
+
+    it('rejects a misspelt SNumberInput prop', () => {
+      expect(issuesWith(fixtureApi, 'unknown-prop', '<SNumberInput v-model="n" :presicion="2" />')).toHaveLength(1)
+    })
+  })
+})
+
+describe('SSkeletonLoader rules', () => {
+  describe('skeleton-loader-unknown-preset', () => {
+    const rule = 'skeleton-loader-unknown-preset'
+
+    it.each([
+      ['one preset', '<SSkeletonLoader type="card" />'],
+      ['presets with repeats', '<SSkeletonLoader type="avatar, text@3, list-item-avatar@2" />'],
+      ['a trailing comma', '<SSkeletonLoader type="text," />'],
+      ['a bound type', '<SSkeletonLoader :type="skeletonType" />'],
+      ['no type', '<SSkeletonLoader />'],
+      ['another component', '<SButton type="paragraph" />'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it.each([
+      ['a Vuetify preset', '<SSkeletonLoader type="paragraph" />', 'text@3'],
+      [
+        'a Vuetify preset among real ones',
+        '<s-skeleton-loader type="avatar, list-item-two-line" />',
+        'list-item-avatar',
+      ],
+      ['a quoted bound literal', `<SSkeletonLoader :type="'article'" />`, 'heading, text@3'],
+      ['a wrong repeat syntax', '<SSkeletonLoader type="text*3" />', 'text@3'],
+    ])('reports %s', (_, code, suggestion) => {
+      const [issue] = issuesOf(rule, code)
+
+      expect(issue).toMatchObject({ severity: 'error', line: 1 })
+      expect(issue.fixHint).toContain(suggestion)
+    })
+  })
+
+  describe('skeleton-loader-never-hides', () => {
+    const rule = 'skeleton-loader-never-hides'
+
+    it.each([
+      ['content inside', '<SSkeletonLoader type="card" :loading="isLoading"><SCard>Order</SCard></SSkeletonLoader>'],
+      ['text inside', '<SSkeletonLoader :loading="isLoading">{{ name }}</SSkeletonLoader>'],
+      ['a standalone skeleton', '<SSkeletonLoader v-if="isLoading" type="card" />'],
+      ['a static loading', '<SSkeletonLoader loading type="card" />'],
+      ['an object spread', '<SSkeletonLoader :loading="isLoading" v-bind="skeletonProps" />'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it.each([
+      ['a self-closing skeleton', '<SSkeletonLoader type="card" :loading="isLoading" />'],
+      ['only a comment inside', '<SSkeletonLoader :loading="isLoading"><!-- content --></SSkeletonLoader>'],
+    ])('reports %s', (_, code) => {
+      const [issue] = issuesOf(rule, code)
+
+      expect(issue).toMatchObject({ severity: 'warning' })
+      expect(issue.fixHint).toContain('v-if')
+    })
+  })
+
+  it('accepts a correct SSkeletonLoader and rejects a misspelt prop', () => {
+    const valid = validateWith(
+      fixtureApi,
+      '<SSkeletonLoader type="avatar, text@3" :loading="isLoading" boilerplate><p>{{ name }}</p></SSkeletonLoader>',
+    )
+
+    const misspelt = validateWith(fixtureApi, '<SSkeletonLoader type="text" :loadin="isLoading" />')
+
+    expect(valid).toEqual([])
+    expect(misspelt.map((issue) => issue.rule)).toContain('unknown-prop')
   })
 })

@@ -14,13 +14,13 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsDroppable.d.ts`
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
 | `disabled` | `boolean \| null` | — | no | — |
-| `height` | `string \| number \| null` | — | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
+| `height` | `number \| string \| null` | — | no | — |
+| `maxHeight` | `number \| string \| null` | — | no | — |
+| `maxWidth` | `number \| string \| null` | — | no | — |
+| `minHeight` | `number \| string \| null` | — | no | — |
+| `minWidth` | `number \| string \| null` | — | no | — |
 | `readonly` | `boolean \| null` | — | no | — |
-| `width` | `string \| number \| null` | — | no | — |
+| `width` | `number \| string \| null` | — | no | — |
 
 **SDroppable slots**
 
@@ -84,5 +84,5 @@ const handleDrop = (event: DragEvent) => {
 
 - The drop zone has no built-in look: draw the border/background yourself. While dragging over it, the root gets class `s_droppable--drag` (opacity 0.6).
 - `drop` gives the raw `DragEvent`; read `event.dataTransfer?.files`. Default browser handling (opening the file) is already prevented.
-- There is no click-to-upload — add your own `<input type="file">` or button.
-- No `accept`/file-type filtering: validate files in your `drop` handler.
+- For **file uploads** use `<SFileInput variant="dropzone">` (see [file-input.md](file-input.md)): it adds click-to-browse, keyboard, `accept` filtering, a label, `rules` and the chosen file names. Use SDroppable for other dragged content.
+- SDroppable itself has no click-to-upload and no `accept`/file-type filtering: validate files in your `drop` handler.

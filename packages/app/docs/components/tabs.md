@@ -4,7 +4,7 @@
 
 Single-select tab strip, built on `SToggleButtonGroup`. It renders only the tab buttons — render the panels yourself (e.g. `v-show` / `v-if` on the model).
 
-The tabs stay on **one row**. Each tab keeps the width of its label (tabs stretch to fill spare room), and when they do not fit, the row scrolls sideways (touch, trackpad, shift+wheel) with no scrollbar. The selected tab is scrolled into view on mount and whenever the selection changes. Don't wrap `STabs` in `SSlideGroup` or add `overflow-x: auto` yourself. (Older versions wrapped the tabs onto several rows on phones.)
+The tabs stay on **one row**. Each tab keeps the width of its label (tabs stretch to fill spare room), and when they do not fit, the row scrolls sideways (touch, trackpad, shift+wheel) with no scrollbar. An end that hides tabs fades out, so on a phone the row visibly scrolls (swipe it) instead of looking clipped; when every tab fits there is no fade. Set `show-arrows` to also show a small scroll arrow at each end that hides tabs (click it to scroll by most of the row's width; pointer only), or `wrap` to lay the tabs out on several rows instead. The selected tab is scrolled into view on mount and whenever the selection changes. Don't wrap `STabs` in `SSlideGroup` or add `overflow-x: auto` yourself. (Older versions always wrapped the tabs onto several rows on phones; `wrap` keeps that layout.)
 
 ---
 
@@ -123,3 +123,5 @@ const activeSection = ref('overview')
 - `modelValue` must match one of the `tab` prop values of the child `STab` components.
 - Use `v-show` (not `v-if`) for tab panels to preserve state when switching tabs.
 - The `cols` / `sm` / `md` / `lg` props on `STab` use the grid system to control tab width at different breakpoints.
+- **Mobile (375px):** use the plain `<STabs v-model><STab v-for … :tab>` setup — no `shrink`, no `cols`, no wrapper. Tabs that do not fit scroll sideways (swipe) with the edge fade described above, or set `wrap` to flow them onto several rows. Keep labels short (one or two words) so most of them fit; don't truncate labels with CSS, since a clipped label is the defect the fade exists to avoid.
+- Keyboard users move between tabs with the arrow keys, Home and End, which also scroll the selected tab into view. The `show-arrows` buttons are a pointer affordance only (`aria-hidden`, out of the tab order).
