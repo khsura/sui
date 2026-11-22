@@ -118,8 +118,22 @@ export const useAppBarService = (props: PropsAppBar) => {
     return `calc(${offset} - ${getSafeAreaInset('top')})`
   })
 
+  // Beside a permanent drawer, the bar's margin already includes that side's inset (the drawer clears it), so the
+  // fixed bar drops its own side padding instead of clearing the inset twice.
+  const sideSafeAreaStyles = computed(() => {
+    if (!isFixedPosition.value) {
+      return {}
+    }
+
+    return {
+      paddingLeft: app.value.hasLeftSafeArea ? '0px' : undefined,
+      paddingRight: app.value.hasRightSafeArea ? '0px' : undefined,
+    }
+  })
+
   const styles = computed(() => {
     return getCleanSetObject({
+      ...sideSafeAreaStyles.value,
       marginLeft: left.value,
       marginRight: right.value,
       width: width.value,
