@@ -56,4 +56,19 @@ export const globalComponentDefaultTargets = {
     'SRadioGroup',
     'SSwitch',
   ],
+  // Components that render `density` (see densityService); others ignore it.
+  density: [
+    'SAutocomplete',
+    'SButton',
+    'SChip',
+    'SFileInput',
+    'SInput',
+    'SList',
+    'SListItem',
+    'SNumberInput',
+    'SSelect',
+    'STable',
+    'STextarea',
+    'SToolbar',
+  ],
 } as const satisfies GlobalComponentDefaultTargets

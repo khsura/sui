@@ -1,3 +1,4 @@
+import { type PropsDensity } from './core'
 import { type PropsFormInput } from './propsFormInput'
 import { type PropsSizePreset } from './propsSizePreset'
 import { type FileInputDisplayType, type FileInputVariantType } from '@/app/types'
@@ -39,5 +40,6 @@ export type PropsFileInput = {
   icon?: string | undefined
   /** Smaller paddings, as SInput's `dense`. */
   dense?: boolean | undefined
-} & PropsSizePreset &
+} & PropsDensity &
+  PropsSizePreset &
   PropsFormInput

@@ -93,6 +93,7 @@ import { formatFileSize, getIsFileAccepted } from '@/app/helpers'
 import { getCleanSetObject } from '@/app/lib'
 import {
   useComponentDefaultsService,
+  useDensityService,
   useDisabledService,
   useFieldLayoutService,
   useFormInputService,
@@ -110,6 +111,7 @@ const rawProps = withDefaults(defineProps<PropsFileInput>(), {
 })
 
 const props = useComponentDefaultsService('SFileInput', rawProps)
+const { classListDensity } = useDensityService(props)
 const emit = defineEmits<EmitFileInput>()
 const model = defineModel<File[] | null>()
 const inputElement = useTemplateRef<HTMLInputElement>('inputElement')
@@ -146,6 +148,7 @@ const loaderSize = fileInputLoaderSize
 const classList = computed(() => {
   return {
     ...classListField.value,
+    ...classListDensity.value,
     ...classListSize.value,
     [`s_fileInput--${props.variant}`]: true,
     's_fileInput--dense': !!props.dense,
@@ -265,6 +268,10 @@ defineExpose({
 <style lang="scss">
 // Sizes come from !default variables, never hard-coded in a rule, so a global density can scale them later.
 $s_fileInput--padding: calc($s_spacer * 2) !default;
+// The SInput field height (16px text at line-height 1.1, 8px vertical padding, 1px border) and the small
+// button height, which density shrinks.
+$s_fileInput--densityFieldHeight: calc(16px * 1.1 + #{$s_spacer * 4} + 2px) !default;
+$s_fileInput--densityControlHeight: #{map.get($s_button--sizes, 'small')}px !default;
 $s_fileInput--horizontalPadding: calc($s_spacer * 4) !default;
 $s_fileInput--gap: calc($s_spacer * 2) !default;
 $s_fileInput--dropzonePadding: calc($s_spacer * 6) !default;
@@ -460,6 +467,28 @@ $s_fileInput--fontSizes: (
       position: absolute;
       top: $s_spacer;
       right: $s_spacer;
+    }
+  }
+
+  // Density: one step removes 4px of field height (2px top + bottom), as SInput. The dropzone
+  // keeps its padding — it is a drop target, not a form row.
+  // The field gets a fixed height (the SInput field formula, less the density offset) because its
+  // icon would otherwise keep it taller than SButton; the small chips and clear button shrink with it.
+  @include s_density() {
+    &:not(.s_fileInput--dropzone) {
+      .s_fileInput__field {
+        height: calc(#{$s_fileInput--densityFieldHeight} + var(--s-density-offset));
+        padding-block: 0;
+      }
+
+      .s_fileInput__chip,
+      .s_fileInput__clear {
+        height: calc(#{$s_fileInput--densityControlHeight} + var(--s-density-offset));
+      }
+
+      .s_fileInput__clear {
+        width: calc(#{$s_fileInput--densityControlHeight} + var(--s-density-offset));
+      }
     }
   }
 }

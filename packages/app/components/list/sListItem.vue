@@ -7,7 +7,7 @@
 import { computed, inject, provide } from 'vue'
 import { ProviderPropsName } from '@/app/configs'
 import { type PropsListItem } from '@/app/definitions'
-import { useComponentDefaultsService, useLinkService, useDisabledService } from '@/app/services'
+import { useComponentDefaultsService, useDensityService, useLinkService, useDisabledService } from '@/app/services'
 
 const rawProps = defineProps<PropsListItem>()
 const props = useComponentDefaultsService('SListItem', rawProps)
@@ -19,12 +19,22 @@ const listProps = inject(ProviderPropsName.listProps, null)
 provide(ProviderPropsName.listItemProps, props)
 
 const { classListDisabled } = useDisabledService(props)
+
+// An item follows its list's density unless it sets its own: explicit item prop → the list's
+// resolved density (explicit, component default or global) → the item's own configured default.
+const { classListDensity } = useDensityService({
+  get density() {
+    return rawProps.density ?? listProps?.density ?? props.density
+  },
+})
+
 const { isLink, tag: tagName, linkAttrs } = useLinkService(props)
 
 const classList = computed(() => {
   return {
     s_listItem: true,
     ...classListDisabled.value,
+    ...classListDensity.value,
     's_listItem--selectable': props.selectable,
     's_listItem--dense': listProps?.dense === true,
     // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
@@ -65,6 +75,24 @@ const classList = computed(() => {
 
   &--noUnderline {
     border-bottom: none !important;
+  }
+
+  // Density: one step removes 4px of the 48px row (compact = 40px, the `dense` list height).
+  // Icons and actions carry the same min-height, so they shrink with the row.
+  // A `dense` list item keeps its 40px.
+  @include s_density() {
+    &:not(.s_listItem--dense) {
+      min-height: calc(#{$s_listItem__minHeight} + var(--s-density-offset));
+
+      > .s_listItemAction,
+      > .s_listItemIcon {
+        min-height: calc(#{$s_listItem__minHeight} + var(--s-density-offset));
+      }
+
+      > .s_listItemContent {
+        padding-block: calc(#{$s_listItem__content--padding} + var(--s-density-offset) / 2);
+      }
+    }
   }
 }
 </style>

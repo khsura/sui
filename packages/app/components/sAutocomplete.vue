@@ -1,5 +1,8 @@
 <template>
-  <div class="s_autocomplete" :class="{ ...classListField, [`s_autocomplete--size__${size}`]: !!size }">
+  <div
+    class="s_autocomplete"
+    :class="{ ...classListField, ...classListDensity, [`s_autocomplete--size__${size}`]: !!size }"
+  >
     <label v-if="label" v-show="!hideDetails" :for="inputId" class="s_autocomplete__label">{{ label }}</label>
     <div ref="activatorElement" class="s_autocomplete__inputField">
       <div class="s_autocomplete__inputFieldContent" :class="{ 's_autocomplete__inputFieldContent--focus': isFocused }">
@@ -95,6 +98,7 @@
             :aria-multiselectable="isMultiple || undefined"
             :divided="divided"
             :dense="dense"
+            :density="resolvedDensity"
           >
             <SListItem
               v-for="(item, index) in filteredItems"
@@ -153,6 +157,7 @@ import type { AutocompleteEmitEvents, AutocompleteModelType, AutocompleteModelTy
 import {
   useAutocompleteService,
   useComponentDefaultsService,
+  useDensityService,
   useFieldLayoutService,
   useListboxNavigationService,
 } from '../services'
@@ -179,6 +184,7 @@ const rawProps = withDefaults(defineProps<PropsAutocomplete<T>>(), {
 })
 
 const props = useComponentDefaultsService('SAutocomplete', rawProps)
+const { classListDensity, density: resolvedDensity } = useDensityService(props)
 
 // SAutocomplete reserves no details line under its field (it runs no rules).
 const { classListField } = useFieldLayoutService(
@@ -476,6 +482,15 @@ $s_autocomplete--fontSizes: (
     // secondaryText, not disabled: the message must stay readable (4.5:1)
     color: s_getAppColor('secondaryText');
     text-align: center;
+  }
+
+  // Density: one step removes 4px of field height, as SInput (the padding shrinks too, so the
+  // native input's own line box still fits).
+  @include s_density() {
+    .s_autocomplete__inputFieldContent {
+      min-height: calc(#{$s_autocomplete__fieldHeight} + var(--s-density-offset));
+      padding-block: calc(#{$s_spacer} + var(--s-density-offset) / 4);
+    }
   }
 }
 </style>

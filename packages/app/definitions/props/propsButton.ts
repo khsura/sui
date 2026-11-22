@@ -7,6 +7,7 @@ import {
   type PropsTag,
   type PropsButtonVariant,
   type PropsLink,
+  type PropsDensity,
 } from './core'
 import { type PropsSingleGroupItem } from './propsSingleGroupItem'
 import { type PropsSizePreset } from './propsSizePreset'
@@ -17,7 +18,8 @@ export type PropsButton = {
   loading?: boolean
   block?: boolean
   rounded?: boolean
-} & PropsTag<'button' | 'a'> &
+} & PropsDensity &
+  PropsTag<'button' | 'a'> &
   PropsButtonVariant &
   PropsMeasurableStyles &
   PropsElevation &

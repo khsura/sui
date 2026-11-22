@@ -1,3 +1,4 @@
+import { type PropsDensity } from './core'
 import { type PropsFormInput } from './propsFormInput'
 import { type PropsSizePreset } from './propsSizePreset'
 import { type InputModeTypeText, type InputTypeText } from '@/app/types'
@@ -32,5 +33,6 @@ export type PropsInput = {
   ariaLabelledby?: string
   name?: string
   isPasteDisabled?: boolean
-} & PropsSizePreset &
+} & PropsDensity &
+  PropsSizePreset &
   PropsFormInput

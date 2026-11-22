@@ -1,3 +1,4 @@
+import { type PropsDensity } from './core'
 import type { PropsMenu } from './propsMenu'
 import { type PropsSizePreset } from './propsSizePreset'
 import type { SelectItem, AutocompleteModelType } from '@/app/types'
@@ -62,5 +63,6 @@ export type PropsAutocomplete<T extends boolean = false> = {
 
   // Events
   onUpdateSearchInput?: (value: string) => void
-} & PropsSizePreset &
+} & PropsDensity &
+  PropsSizePreset &
   PropsMenu
