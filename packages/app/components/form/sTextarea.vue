@@ -51,6 +51,7 @@ import type { PropsTextarea } from '@/app/definitions'
 import { useColorRepository } from '@/app/repositories/colorRepository'
 import {
   useComponentDefaultsService,
+  useDensityService,
   useDisabledService,
   useFieldLayoutService,
   useFormInputService,
@@ -63,6 +64,7 @@ const rawProps = withDefaults(defineProps<PropsTextarea<string>>(), {
 })
 
 const props = useComponentDefaultsService('STextarea', rawProps)
+const { classListDensity } = useDensityService(props)
 const emit = defineEmits<EmitFormTextInput<string>>()
 const textareaElement = ref<HTMLTextAreaElement | null>(null)
 
@@ -94,6 +96,7 @@ const { classListField } = useFieldLayoutService(
 const classList = computed(() => {
   return {
     ...classListField.value,
+    ...classListDensity.value,
     's_textarea--disabled': props.disabled,
     's_textarea--dense': props.dense,
     's_textarea--tile': props.tile,
@@ -281,6 +284,13 @@ $inputPadding: calc($s_spacer * 2);
 
     .s_textarea__label {
       padding: $s_spacer $inputPadding;
+    }
+  }
+
+  // Density: one step removes 4px of vertical padding (2px top + bottom), as SInput.
+  @include s_density() {
+    .s_textarea__input {
+      padding-block: calc(#{$inputPadding} + var(--s-density-offset) / 2);
     }
   }
 }

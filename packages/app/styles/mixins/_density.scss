@@ -1,0 +1,19 @@
+@use '../variables';
+
+// Wraps rules that apply only at a non-default density. Inside, `var(--s-density-offset)` is
+// the height to add (-1 step for comfortable, -2 for compact). At `default` no density class is
+// set, so none of these rules exist and the component keeps its pre-density look.
+@mixin s_density() {
+  &.s_density--comfortable {
+    --s-density-offset: #{variables.$s_density__step * -1};
+  }
+
+  &.s_density--compact {
+    --s-density-offset: #{variables.$s_density__step * -2};
+  }
+
+  &.s_density--comfortable,
+  &.s_density--compact {
+    @content;
+  }
+}

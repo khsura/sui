@@ -17,7 +17,7 @@ Main toolbar container. The root is a column flexbox: the main row, then the opt
 | `color` | `string` | `undefined` | Background color (preset or CSS). Child `SButton`s and `SToolbarTitle` adapt to it |
 | `colorThreshold` | `number` | `undefined` | Auto text contrast threshold |
 | `elevation` | `0–24` | `undefined` | Box shadow depth |
-| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` (acts as `'default'`) | Reduces the main row by 0 / 8 / 16 px and the extension by 0 / 4 / 8 px |
+| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` (acts as `'default'`) | Reduces the main row by 0 / 8 / 16 px and the extension by 0 / 4 / 8 px. Defaults to `defaults.global.density` (docs/density.md) |
 | `height` | `number \| string` | `64` | Main row height |
 | `extended` | `boolean` | `false` | Show the extension row |
 | `extensionHeight` | `number \| string` | `48` | Height of extension row |

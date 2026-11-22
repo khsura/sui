@@ -29,6 +29,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsAutocomplete.d.ts
 | `debounce` | `number` | `500` | no | — | — |
 | `delimiter` | `string \| RegExp \| string[]` | — | no | — | — |
 | `dense` | `boolean` | — | no | — | — |
+| `density` | `DensityType \| null` | — | no | `comfortable`, `compact`, `default` | Vertical density: `default` (today's look), `comfortable` (one step tighter) or `compact` (two steps). Set it once for the app with `createSUI({ defaults: { global: { density } } })` instead of overriding heights or paddings per component. |
 | `disabled` | `boolean \| null` | — | no | — | — |
 | `divided` | `boolean` | — | no | — | — |
 | `filter` | `((item: SelectItem, queryText: string) => boolean)` | — | no | — | — |

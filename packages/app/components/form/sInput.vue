@@ -83,6 +83,7 @@ import type { PropsInput } from '@/app/definitions'
 import { useColorRepository } from '@/app/repositories/colorRepository'
 import {
   useComponentDefaultsService,
+  useDensityService,
   useDisabledService,
   useFieldLayoutService,
   useFormInputService,
@@ -102,6 +103,7 @@ const { updateFormInput, errors, hasError, inputId, errorId, ariaAttributesFormI
 >(props, emit, model)
 
 const { classListDisabled } = useDisabledService(props)
+const { classListDensity } = useDensityService(props)
 // TODO: Sura - make able to use all preset colors
 const { getIsPredefinedPresetColor } = useColorRepository()
 const isPresetInputBackground = computed(() => getIsPredefinedPresetColor(props.inputBackground))
@@ -119,6 +121,7 @@ const { classListField } = useFieldLayoutService(
 const classList = computed(() => {
   return {
     ...classListField.value,
+    ...classListDensity.value,
     's_input--simple': props.simple,
     's_input--focus': isFocused.value,
     's_input--disabled': props.disabled,
@@ -586,6 +589,14 @@ $inputPadding: calc($s_spacer * 2);
 
     .s_input__appendOuter {
       padding: $inputPadding $s_spacer;
+    }
+  }
+
+  // Density: one step removes 4px of field height (2px top + bottom), matching SButton.
+  @include s_density() {
+    .s_input__input,
+    .s_input__appendOuter {
+      padding-block: calc(#{$inputPadding} + var(--s-density-offset) / 2);
     }
   }
 }

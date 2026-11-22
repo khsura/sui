@@ -24,6 +24,7 @@ import {
   useBorderService,
   useColorService,
   useComponentDefaultsService,
+  useDensityService,
   useDisabledService,
   useElevationService,
   useLinkService,
@@ -71,6 +72,7 @@ const { toggleGroupItem, isSelected } =
       }
 
 const toolbarProps = inject(ProviderPropsName.toolbar, null)
+const { classListDensity } = useDensityService(props)
 
 // TODO: Sura - use more common approach
 const isDarkToolbar = computed(() => {
@@ -84,6 +86,8 @@ const classList = computed((): Record<string, boolean | null | undefined> => {
     ...classListSize.value,
     ...classListBorder.value,
     ...classListDisabled.value,
+    // bottom-navigation buttons fill the bar's height, so density does not apply to them
+    ...(bottomNavigationProps === null ? classListDensity.value : {}),
     ...(props.variant === 'text' ? classListTextColor.value : classListColor.value),
     s_linkElement: isLink.value,
     's_button--block': props.block,
@@ -239,6 +243,30 @@ onMounted(() => {
 
   &--tile {
     @include s_tile();
+  }
+
+  // Density: one step removes 4px of height (36 → 32 → 28 at size default), so buttons stay
+  // level with SInput / SSelect at the same density. Selectors mirror the size rules' specificity.
+  @include s_density() {
+    height: calc(#{$s_button--size}px + var(--s-density-offset));
+
+    &.s_button--icon,
+    &.s_button--fab {
+      width: calc(#{$s_button--size}px + var(--s-density-offset));
+    }
+
+    @each $key, $size in $s_button--sizes {
+      &.s_button--size__#{$key}:not(.s_button--icon):not(.s_button--fab):not(.s_button--text),
+      &.s_button--size__#{$key}.s_button--text {
+        height: calc(#{$size}px + var(--s-density-offset));
+      }
+
+      &.s_button--size__#{$key}.s_button--icon,
+      &.s_button--size__#{$key}.s_button--fab {
+        width: calc(#{$size}px + var(--s-density-offset));
+        height: calc(#{$size}px + var(--s-density-offset));
+      }
+    }
   }
 
   &--readonly {

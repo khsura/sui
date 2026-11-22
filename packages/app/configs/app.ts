@@ -69,4 +69,5 @@ export const defaultAppConfig = {
     },
   },
   components: {},
+  defaults: {},
 } satisfies Omit<AppState, 'name'>

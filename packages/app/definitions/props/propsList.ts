@@ -1,4 +1,4 @@
-import { type PropsColor, type PropsTag } from './core'
+import { type PropsColor, type PropsTag, type PropsDensity } from './core'
 
 export type PropsList = {
   divided?: boolean
@@ -8,5 +8,6 @@ export type PropsList = {
   link?: boolean | null | undefined
   inset?: boolean | null | undefined
   text?: boolean | null | undefined
-} & PropsColor &
+} & PropsDensity &
+  PropsColor &
   PropsTag<'ul' | 'ol' | 'div'>

@@ -2281,6 +2281,27 @@
       ]
     },
     {
+      "name": "SDefaultsProvider",
+      "family": "core",
+      "file": "components/sDefaultsProvider.vue",
+      "props": [
+        {
+          "name": "defaults",
+          "type": "ComponentDefaultsOptions | undefined",
+          "required": false,
+          "description": "Component defaults for everything inside, typed like `createSUI({ defaults })`: per component\n(`{ SButton: { size: 'small' } }`) and `global`. Merged onto the nearest outer layer (an outer\n`SDefaultsProvider` or the app-level defaults): inner wins per prop, explicit props still win over both."
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "any",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
       "name": "SDialog",
       "family": "core",
       "file": "components/sDialog.vue",

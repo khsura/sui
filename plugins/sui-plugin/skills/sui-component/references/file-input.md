@@ -22,6 +22,7 @@ Docs: https://sui.surakh.com/?path=/docs/ui-components-fileinput--docs
 | `clearable` | `boolean` | — | no | — | Show a button that clears the chosen files. |
 | `countText` | `string` | `"{count} files"` | no | — | The `count` display text for several files; `{count}` is replaced by the number. |
 | `dense` | `boolean` | — | no | — | Smaller paddings, as SInput's `dense`. |
+| `density` | `DensityType \| null` | — | no | `comfortable`, `compact`, `default` | Vertical density: `default` (today's look), `comfortable` (one step tighter) or `compact` (two steps). Set it once for the app with `createSUI({ defaults: { global: { density } } })` instead of overriding heights or paddings per component. |
 | `dirty` | `boolean` | — | no | — | — |
 | `disabled` | `boolean \| null` | — | no | — | — |
 | `display` | `"chips" \| "count" \| "names"` | `"names"` | no | `chips`, `count`, `names` | How the chosen files are shown: their names, one chip each, or a count such as `3 files`. |

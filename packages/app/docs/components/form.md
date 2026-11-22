@@ -134,6 +134,7 @@ Single-line text input field.
 | `inputBackground` / `placeholderBackground` | `string \| null` | `undefined` | Field / placeholder background (preset or CSS color) |
 | `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `undefined` | Preset size |
 | `name` | `string` | `undefined` | Input name for forms |
+| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` (acts as `'default'`) | Vertical density: `comfortable` / `compact` lower the field by 4 / 8px, matching SButton. Defaults to `defaults.global.density`; see docs/density.md. Independent of `dense`, which only narrows the horizontal padding |
 
 ### Model
 
@@ -174,6 +175,7 @@ Multi-line text input.
 | `name`, `autocomplete`, `autocapitalize`, `autofocus`, `spellcheck`, `ariaLabelledby` | — | `undefined` | Native attributes |
 | `inputBackground` / `placeholderBackground` | `string` | `undefined` | Field / placeholder background |
 | `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `undefined` | Preset size |
+| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` (acts as `'default'`) | Vertical density: `comfortable` / `compact` remove 4 / 8px of padding. Defaults to `defaults.global.density` |
 
 ### Model
 
@@ -204,6 +206,7 @@ It is outlined by default, like `SInput` (`:outlined="false"` for the borderless
 | `outlined` | `boolean \| null` | `true` | Outlined field, like `SInput` |
 | `underlined` / `borderRadius` | border props | `undefined` | Activator border |
 | `location` / `offsetX` / `offsetY` | menu props | `undefined` | Dropdown positioning |
+| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` (acts as `'default'`) | Vertical density: `comfortable` / `compact` lower the field by 4 / 8px, matching SButton. Defaults to `defaults.global.density`; see docs/density.md. Also passed to the dropdown list; a `dense` select keeps its 28px |
 
 ### SelectItem shape
 

@@ -102,6 +102,7 @@ Quick reference for all components in the `@khsura/sui` package.
 | Component(s) | Import | Doc |
 |---|---|---|
 | `SLayout`, `SAppBar`, `SAppBarTitle`, `SNavigationDrawer`, `SMain`, `SFooter`, `SBottomNavigation`, `SContainer`, `SRow`, `SColumn`, `SSpacer` | `import { SLayout, SAppBar, ... } from '@khsura/sui'` | [layout.md](./components/layout.md) |
+| `SDefaultsProvider` | `import { SDefaultsProvider } from '@khsura/sui'` | [defaults-provider.md](./components/defaults-provider.md) |
 
 ---
 

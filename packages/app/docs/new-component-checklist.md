@@ -43,7 +43,7 @@ A component that belongs to a family (several parts, such as `SPagination` with 
 - [ ] Enum-like props are string-literal unions (types go in `types/`, the value lists in `configs/` or `constants/`), so `sui-api.json` lists their values and the validator's `invalid-enum-value` rule can check them.
 - [ ] Optional props are written `name?: T | undefined`. No `any`.
 - [ ] Density-ready. Size things with `size` (`PropsSizePreset`) and SCSS `!default` variables, never with hard-coded heights or paddings in the rules. A global `density` (M4) will then only need to change the variables.
-- [ ] The component reads its props through `useComponentDefaultsService('SX', rawProps)`, so `createSUI({ components: { SX: { … } } })` defaults work (see [component-defaults.md](./component-defaults.md)).
+- [ ] The component reads its props through `useComponentDefaultsService('SX', rawProps)`, so `createSUI({ defaults: { SX: { … } } })` defaults work (see [component-defaults.md](./component-defaults.md)). Add `SX: PropsX` to `ComponentPropsMap` (`definitions/componentDefaults.ts`), and if it has a preset-scale `size`, `borderRadius`, `rounded`, `elevation` or accent `color`, add it to `globalComponentDefaultTargets` (`configs/componentDefaults.ts`) so `defaults.global` reaches it.
 
 ## 3. Component
 

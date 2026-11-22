@@ -32,6 +32,7 @@ All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `
 | `SCarousel`, `SCarouselItem` | [references/carousel.md](references/carousel.md) |
 | `SChip` | [references/chip.md](references/chip.md) |
 | `SDatePicker`, `SDatePickerInput` | [references/date-picker.md](references/date-picker.md) |
+| `SDefaultsProvider` (since 1.22.0) | [references/defaults-provider.md](references/defaults-provider.md) |
 | `SDialog` | [references/dialog.md](references/dialog.md) |
 | `SDivider` | [references/divider.md](references/divider.md) |
 | `SDroppable` | [references/droppable.md](references/droppable.md) |
@@ -105,6 +106,18 @@ Popups teleport into the container rendered by `<SApp>` — without `SApp` at th
 | `<SCheckbox indeterminate>` / `:value` | `SCheckbox` is a single boolean `v-model` |
 | `<SToggleButton value="...">` | Buttons are identified by index / `key`; see [references/toggle-button-group.md](references/toggle-button-group.md) |
 | `<SButton variant="outlined">` | `variant` is `fab` \| `text` \| `icon` only; use `outlined` boolean prop or `color` |
+
+---
+
+## Same prop on every instance? Set it once
+
+If the app repeats the same styling prop at every call site (`size="small"` on each `SButton`, `SChip`, `SIcon`…), set it once in `createSUI` and drop it from the templates:
+
+```typescript
+createSUI({ defaults: { global: { size: 'small' }, SButton: { elevation: 0 } } })
+```
+
+Order: prop on the element > `defaults.SButton` > `defaults.global` > built-in. `global` covers `size`, `borderRadius`, `rounded`, `elevation`, `color`, `density`, and only reaches components with that prop on the same scale. For a compact admin look use `global: { density: 'compact' }` (fields, buttons, chips, list and table rows, toolbars shrink together) instead of per-component heights or paddings. Details: **sui-getting-started** → *Component defaults*.
 
 ---
 

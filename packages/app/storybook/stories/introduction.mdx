@@ -61,7 +61,7 @@ export default defineNuxtConfig({
   modules: ['@khsura/sui-nuxt'],
   css: ['@mdi/font/css/materialdesignicons.css'],
   sui: {
-    // options passed to createSUI(): theme, themes, components
+    // options passed to createSUI(): theme, themes, defaults
   },
 })
 ```
@@ -81,6 +81,21 @@ createSUI({
 ```
 
 Switch at runtime with `useTheme()`. Every component takes `color` as a preset (`primary`, `secondary`, `success`, `info`, `warning`, `important`, `error`) or any CSS color.
+
+## Component defaults
+
+Set a prop once instead of at every call site:
+
+```ts
+createSUI({
+  defaults: {
+    global: { size: 'small' },     // size, borderRadius, rounded, elevation, color
+    SButton: { variant: 'text' },  // per component, typed
+  },
+})
+```
+
+Order: prop on the element > `defaults.SButton` > `defaults.global` > built-in default. A `global` value only reaches components that have that prop on the same scale.
 
 ## Find your way around
 

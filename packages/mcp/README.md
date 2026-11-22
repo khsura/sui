@@ -86,7 +86,7 @@ The server sends these instructions when a client connects:
 | `get_guide` | One setup guide as markdown: `installation` (Vue and Nuxt, styles, `@mdi/font`), `theming` (theme colors, dark mode), `component-defaults`, `display` (`useDisplay` breakpoints), `i18n`, `common-mistakes`. Unknown topics return an error with the topic list. |
 | `validate_sui_template` | Checks a `.vue` SFC or bare template fragment against the API and the composition rules below. Returns a summary line, then `line:col [rule] message — fix: hint — recipe: name` per issue (the recipe part only when one applies). Issues are a normal result, not a tool error. |
 | `list_recipes` | The tested, copy-ready recipes with when to use each. |
-| `get_recipe` | One recipe: its notes, the full Vue SFC in a ```` ```vue ```` block and the link to its live Storybook story. Names: `app-shell`, `validated-form`, `activator-overlays`, `data-table`, `responsive-grid`, `theme-setup`, `filter-bar`, `centered-page`, `tabbed-sections`. Unknown names return an error with the name list. |
+| `get_recipe` | One recipe: its notes, the full Vue SFC in a ```` ```vue ```` block and the link to its live Storybook story. Names: `app-shell`, `validated-form`, `activator-overlays`, `data-table`, `responsive-grid`, `theme-setup`, `filter-bar`, `centered-page`, `tabbed-sections`, `dense-toolbar`. Unknown names return an error with the name list. |
 | `ping` | Health check. |
 
 ## Example prompts
@@ -129,7 +129,7 @@ The server sends these instructions when a client connects:
 
 Rules for behaviours that a component fix removed carry a `fixedIn` version: the engine skips them when the resolved `sui-api.json` version is that version or newer, so a project on an older `@khsura/sui` still gets the warning. A `version` that is not semver keeps every rule on.
 
-Recipe names are stable (`app-shell`, `validated-form`, `activator-overlays`, `data-table`, `responsive-grid`, `theme-setup`, `filter-bar`, `centered-page`, `tabbed-sections`); `get_recipe` serves the recipes under these names.
+Recipe names are stable (`app-shell`, `validated-form`, `activator-overlays`, `data-table`, `responsive-grid`, `theme-setup`, `filter-bar`, `centered-page`, `tabbed-sections`, `dense-toolbar`); `get_recipe` serves the recipes under these names.
 
 Future work: a `table-structure` rule (STable column keys and `item.<column>` slot names, per `packages/app/docs/components/table.md`) is waiting on complete STable slot data in `sui-api.json`.
 

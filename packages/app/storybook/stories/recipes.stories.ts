@@ -6,6 +6,7 @@ import {
   AppShellRecipe,
   CenteredPageRecipe,
   DataTableRecipe,
+  DenseToolbarRecipe,
   FilterBarRecipe,
   ResponsiveGridRecipe,
   TabbedSectionsRecipe,
@@ -84,6 +85,21 @@ export const ActivatorOverlays: StoryObj = {
 
 export const DataTable = recipeStory(DataTableRecipe)
 export const FilterBar = recipeStory(FilterBarRecipe)
+
+// Every button and field inside the recipe's SDefaultsProvider is dense, with no size prop on any of them.
+export const DenseToolbar: StoryObj = {
+  ...recipeStory(DenseToolbarRecipe),
+  play: async ({ canvasElement }) => {
+    await waitFor(() => expect(canvasElement.querySelectorAll('.s_button').length).toBeGreaterThan(0))
+
+    for (const button of canvasElement.querySelectorAll('.s_button')) {
+      await expect(button.classList.contains('s_button--size__small')).toBe(true)
+    }
+
+    await expect(canvasElement.querySelector('.s_input')?.classList.contains('s_input--size__small')).toBe(true)
+    await expect(canvasElement.querySelector('.s_input')?.classList.contains('s_input--dense')).toBe(true)
+  },
+}
 // Allowed distance (px) between the grid's outer edges and the heading / paragraph edges.
 const EDGE_TOLERANCE = 1
 

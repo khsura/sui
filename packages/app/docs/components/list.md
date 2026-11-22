@@ -24,6 +24,7 @@ Root list container.
 | `color` | `string` | `undefined` | Background color (text color with `outlined` / `text`) |
 | `colorThreshold` | `number` | `undefined` | Contrast threshold for custom colors |
 | `tag` | `'ul' \| 'ol' \| 'div'` | `'div'` | Root HTML element |
+| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` (acts as `'default'`) | Row density: 48 / 44 / 40px rows for `default` / `comfortable` / `compact`; items follow it. Defaults to `defaults.global.density`. `dense` items keep 40px |
 
 ### Slots
 
@@ -49,6 +50,7 @@ Single row in the list.
 | `to` | `LinkLocation \| null` | `undefined` | Render as `router-link` (plain `<a href>` without vue-router) |
 | `target` / `rel` | `string` | `undefined` | Link attributes |
 | `tag` | `'li' \| 'div'` | `'div'` | Root element (when not a link) |
+| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` (acts as `'default'`) | Row density for this item; otherwise the parent list's density, then `defaults.global.density` |
 
 ### Slots
 

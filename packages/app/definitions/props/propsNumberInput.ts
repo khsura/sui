@@ -1,3 +1,4 @@
+import { type PropsDensity } from './core'
 import { type PropsFormInput } from './propsFormInput'
 import { type PropsSizePreset } from './propsSizePreset'
 import { type NumberInputControlVariant } from '@/app/types'
@@ -44,5 +45,6 @@ export type PropsNumberInput = {
   dense?: boolean | undefined
   /** Removes the rounded corners. */
   tile?: boolean | undefined
-} & PropsSizePreset &
+} & PropsDensity &
+  PropsSizePreset &
   PropsFormInput

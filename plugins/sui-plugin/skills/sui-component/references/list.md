@@ -15,19 +15,20 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsList.d.ts`, `prop
 
 **SList props**
 
-| Prop | Type | Default | Required | Values |
-| --- | --- | --- | --- | --- |
-| `color` | `string` | — | no | — |
-| `colorThreshold` | `number` | — | no | — |
-| `dense` | `boolean \| null` | — | no | — |
-| `divided` | `boolean` | — | no | — |
-| `inset` | `boolean \| null` | — | no | — |
-| `lines` | `number \| null` | — | no | — |
-| `link` | `boolean \| null` | — | no | — |
-| `outlined` | `boolean \| null` | — | no | — |
-| `tag` | `"div" \| "ol" \| "ul" \| null` | — | no | `div`, `ol`, `ul` |
-| `text` | `boolean \| null` | — | no | — |
-| `theme` | `AppThemeType` | — | no | `dark`, `light` |
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `color` | `string` | — | no | — | — |
+| `colorThreshold` | `number` | — | no | — | — |
+| `dense` | `boolean \| null` | — | no | — | — |
+| `density` | `DensityType \| null` | — | no | `comfortable`, `compact`, `default` | Vertical density: `default` (today's look), `comfortable` (one step tighter) or `compact` (two steps). Set it once for the app with `createSUI({ defaults: { global: { density } } })` instead of overriding heights or paddings per component. |
+| `divided` | `boolean` | — | no | — | — |
+| `inset` | `boolean \| null` | — | no | — | — |
+| `lines` | `number \| null` | — | no | — | — |
+| `link` | `boolean \| null` | — | no | — | — |
+| `outlined` | `boolean \| null` | — | no | — | — |
+| `tag` | `"div" \| "ol" \| "ul" \| null` | — | no | `div`, `ol`, `ul` | — |
+| `text` | `boolean \| null` | — | no | — | — |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` | — |
 
 **SList slots**
 
@@ -66,18 +67,19 @@ A flex row with a minimum height of 48px (40px when the list is `dense`).
 
 **SListItem props**
 
-| Prop | Type | Default | Required | Values |
-| --- | --- | --- | --- | --- |
-| `disabled` | `boolean \| null` | — | no | — |
-| `href` | `string` | — | no | — |
-| `lines` | `number \| null` | — | no | — |
-| `link` | `boolean \| null` | — | no | — |
-| `readonly` | `boolean \| null` | — | no | — |
-| `rel` | `string` | — | no | — |
-| `selectable` | `boolean \| null` | — | no | — |
-| `tag` | `"div" \| "li" \| null` | — | no | `div`, `li` |
-| `target` | `"_blank" \| "_parent" \| "_self" \| "_top"` | — | no | `_blank`, `_parent`, `_self`, `_top` |
-| `to` | `LinkLocation \| null` | — | no | — |
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `density` | `DensityType \| null` | — | no | `comfortable`, `compact`, `default` | Vertical density: `default` (today's look), `comfortable` (one step tighter) or `compact` (two steps). Set it once for the app with `createSUI({ defaults: { global: { density } } })` instead of overriding heights or paddings per component. |
+| `disabled` | `boolean \| null` | — | no | — | — |
+| `href` | `string` | — | no | — | — |
+| `lines` | `number \| null` | — | no | — | — |
+| `link` | `boolean \| null` | — | no | — | — |
+| `readonly` | `boolean \| null` | — | no | — | — |
+| `rel` | `string` | — | no | — | — |
+| `selectable` | `boolean \| null` | — | no | — | — |
+| `tag` | `"div" \| "li" \| null` | — | no | `div`, `li` | — |
+| `target` | `"_blank" \| "_parent" \| "_self" \| "_top"` | — | no | `_blank`, `_parent`, `_self`, `_top` | — |
+| `to` | `LinkLocation \| null` | — | no | — | — |
 
 **SListItem slots**
 

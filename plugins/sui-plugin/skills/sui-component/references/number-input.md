@@ -21,6 +21,7 @@ Docs: https://sui.surakh.com/?path=/docs/ui-components-form-numberinput--docs
 | `controlVariant` | `"split" \| "stacked" \| null` | — | no | `split`, `stacked` | Layout of the buttons: `stacked` (both at the end of the field, default) or `split` (minus first, plus last). |
 | `decrementAriaLabel` | `string` | — | no | — | Accessible name of the decrement button. Default `Decrease`. |
 | `dense` | `boolean` | — | no | — | Smaller padding, as on SInput. |
+| `density` | `DensityType \| null` | — | no | `comfortable`, `compact`, `default` | Vertical density: `default` (today's look), `comfortable` (one step tighter) or `compact` (two steps). Set it once for the app with `createSUI({ defaults: { global: { density } } })` instead of overriding heights or paddings per component. |
 | `dirty` | `boolean` | — | no | — | — |
 | `disabled` | `boolean \| null` | — | no | — | — |
 | `error` | `boolean` | — | no | — | — |
