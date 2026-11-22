@@ -39,8 +39,10 @@ describe('SMain', () => {
     await nextTick()
 
     const mainStyle = wrapper.find('.s_main').attributes('style')
+    // The fixed bar pads itself by the notch inset (0px without a safe area), so the content moves down by it too.
+    // jsdom drops a `margin-top` that holds var(); the Layout/Safe Area story asserts the margin in a real browser.
+    const topInset = 'var(--s-safe-area-top, env(safe-area-inset-top, 0px))'
 
-    expect(mainStyle).toContain(`margin-top: ${defaultToolbarContentHeight}px`)
-    expect(mainStyle).toContain(`min-height: calc(100% - ${defaultToolbarContentHeight}px)`)
+    expect(mainStyle).toContain(`min-height: calc(100% - calc(${defaultToolbarContentHeight}px + ${topInset}))`)
   })
 })

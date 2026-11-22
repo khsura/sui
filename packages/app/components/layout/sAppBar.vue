@@ -169,6 +169,11 @@ onBeforeUnmount(() => {
     position: fixed;
     top: 0;
     z-index: 5;
+
+    // clear the notch / status bar, and the side insets in landscape (0px without a safe area)
+    padding-top: s_safeAreaInset('top');
+    padding-right: s_safeAreaInset('right');
+    padding-left: s_safeAreaInset('left');
   }
 
   &--bottom {

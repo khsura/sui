@@ -3,3 +3,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap"
   rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css" rel="stylesheet">
+<!-- Opt the story iframe in to the iPhone safe areas, as an app does with viewport-fit=cover, so the real-iOS checklist
+     (docs/release/ios-checklist.md) sees the notch / home-indicator padding. Elsewhere the insets stay 0px. -->
+<script>
+  (() => {
+    const viewportMeta = document.querySelector('meta[name="viewport"]')
+
+    if (viewportMeta && !viewportMeta.content.includes('viewport-fit')) {
+      viewportMeta.content = `${viewportMeta.content}, viewport-fit=cover`
+    }
+  })()
+</script>

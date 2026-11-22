@@ -18,6 +18,15 @@ const { styles } = useAppService(props)
 
 <style lang="scss">
 .s_app {
+  // The iPhone notch / home-indicator insets (0px without `viewport-fit=cover` or a safe area). The fixed app
+  // bar, bottom navigation, mobile drawer, fullscreen dialog and snackbar pad by these; override them on a
+  // element to simulate a device in a story or test. The fallback keeps its unit: a unitless 0 is invalid in calc().
+  /* stylelint-disable length-zero-no-unit */
+  --s-safe-area-top: env(safe-area-inset-top, 0px);
+  --s-safe-area-right: env(safe-area-inset-right, 0px);
+  --s-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --s-safe-area-left: env(safe-area-inset-left, 0px);
+  /* stylelint-enable length-zero-no-unit */
   display: flex;
   flex: 1 1 auto;
   flex-flow: column;

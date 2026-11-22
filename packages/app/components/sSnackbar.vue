@@ -17,7 +17,7 @@
 import { watch, computed, useTemplateRef } from 'vue'
 import SOverlay from '@/app/components/sOverlay.vue'
 import { STransition } from '@/app/constants'
-import { getCleanSetObject, getNumericCssAttribute } from '@/app/lib'
+import { getCleanSetObject, getLengthWithSafeArea, getNumericCssAttribute } from '@/app/lib'
 import { getWindow } from '@/app/lib/browser'
 import type { PropsSnackbar } from '@/app/definitions'
 import { getIsAbsolutePosition, getIsFixedPosition } from '@/app/repositories/positionRepository'
@@ -58,10 +58,16 @@ const offsetTop = computed(() => {
   return Math.max(app.value.appBarHeight - currentScroll.value, 0)
 })
 
+// Clear the notch / home indicator as well (0px without a safe area). A bottom navigation already grows by the
+// bottom inset, so either way the snackbar sits that inset above its usual spot; a fixed app bar grows by the top
+// inset the same way.
 const wrapperStyles = computed(() => {
   return getCleanSetObject({
-    top: props.location === 'top' ? getNumericCssAttribute(offsetTop.value) : undefined,
-    bottom: props.location !== 'top' ? getNumericCssAttribute(app.value.bottomNavigationHeight) : undefined,
+    top: props.location === 'top' ? getLengthWithSafeArea(getNumericCssAttribute(offsetTop.value), 'top') : undefined,
+    bottom:
+      props.location !== 'top'
+        ? getLengthWithSafeArea(getNumericCssAttribute(app.value.bottomNavigationHeight), 'bottom')
+        : undefined,
   })
 })
 
