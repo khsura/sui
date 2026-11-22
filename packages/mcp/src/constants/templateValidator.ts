@@ -80,6 +80,8 @@ export const RULE_CARD_TITLE_TEXT_ALIGN = 'card-title-text-align'
 export const RULE_DATE_PICKER_EMPTY_STRING = 'date-picker-empty-string'
 export const RULE_FIELD_BUTTON_ROW = 'field-button-row'
 export const RULE_FILL_HEIGHT_UNDER_APP = 'fill-height-under-app'
+export const RULE_PAGINATION_LENGTH_ROWS = 'pagination-length-rows'
+export const RULE_PAGINATION_ZERO_BASED = 'pagination-zero-based'
 
 /**
  * The first `@khsura/sui` release with the M2 hardening fixes (SForm `novalidate`, SCheckbox label with
@@ -239,3 +241,13 @@ export const SCRIPT_BLOCK_SEPARATOR = '\n'
 export const DIALOG_TAG = 'dialog'
 export const ACTIVATOR_BINDING_FIX =
   'Write `#activator="{ on, attrs }"` and put both `v-on="on"` and `v-bind="attrs"` on the activator\'s root element.'
+
+export const PAGINATION_COMPONENT = 'SPagination'
+export const PAGINATION_LENGTH_ATTRIBUTE = 'length'
+/** A `:length` that counts rows, not pages: `items.length`, `rows.size`, `totalItems`, `itemsCount`, … */
+export const PAGINATION_ROW_COUNT_EXPRESSION =
+  /(?:\.(?:length|size)|^(?:total|totalItems|totalRows|totalCount|totalRecords|itemsCount|itemCount|rowCount|rowsCount))\s*$/
+/** Signs that the expression already divides rows into pages: `Math.ceil(total / perPage)`, `total / 20`. */
+export const PAGINATION_PAGE_MATH_EXPRESSION = /\/|\bceil\b/
+/** A 0-based model, such as STable's `pageIndex`, given to SPagination's 1-based `v-model`. */
+export const PAGINATION_ZERO_BASED_MODEL = /index$/i
