@@ -57,7 +57,7 @@ None.
 <!-- 16:9 cover -->
 <SImage src="/banner.jpg" :aspect-ratio="16/9" object-fit="cover" />
 
-<!-- Square avatar -->
+<!-- Square image (for a user avatar with an initials fallback, use SAvatar) -->
 <SImage src="/avatar.jpg" :aspect-ratio="1" object-fit="cover" :width="80" />
 
 <!-- Overlay -->

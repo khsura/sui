@@ -59,7 +59,7 @@ None.
   <template #badge>
     <SIcon icon="mdi-check" />
   </template>
-  <SImage src="avatar.jpg" />
+  <SAvatar image="avatar.jpg" text="JD" alt="Jane Doe" />
 </SBadge>
 
 <!-- Bottom-right position -->
