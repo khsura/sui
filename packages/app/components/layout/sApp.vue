@@ -44,6 +44,12 @@ const { styles } = useAppService(props)
     min-height: 100dvh;
   }
 
+  // `height: 100%` of a min-height parent resolves to auto, so a direct child asking to fill SApp grows into
+  // its flex column instead: content centred inside that child is centred in the viewport.
+  > .s_height--fill {
+    flex: 1 1 auto;
+  }
+
   ::-ms-clear,
   ::-ms-reveal {
     display: none;
