@@ -35,6 +35,13 @@ import {
   PAGINATION_PAGE_MATH_EXPRESSION,
   PAGINATION_ROW_COUNT_EXPRESSION,
   PAGINATION_ZERO_BASED_MODEL,
+  SKELETON_LOADER_COMPONENT,
+  SKELETON_LOADER_LOADING_ATTRIBUTE,
+  SKELETON_LOADER_PRESETS,
+  SKELETON_LOADER_REPEAT_SEPARATOR,
+  SKELETON_LOADER_TYPE_ATTRIBUTE,
+  SKELETON_LOADER_TYPE_SEPARATOR,
+  SKELETON_LOADER_VUETIFY_PRESETS,
   RECIPE_ACTIVATOR_OVERLAYS,
   RECIPE_CENTERED_PAGE,
   RECIPE_FILTER_BAR,
@@ -51,8 +58,11 @@ import {
   RULE_NATIVE_VALIDATION_IN_FORM,
   RULE_PAGINATION_LENGTH_ROWS,
   RULE_PAGINATION_ZERO_BASED,
+  RULE_SKELETON_LOADER_NEVER_HIDES,
+  RULE_SKELETON_LOADER_UNKNOWN_PRESET,
   RULE_SNACKBAR_ACTION_CONTRAST,
   RULE_TARGET_ANY_ELEMENT,
+  SEVERITY_ERROR,
   SEVERITY_WARNING,
   SNACKBAR_ACTION_SLOT_NAME,
   SNACKBAR_COMPONENT,
@@ -72,10 +82,13 @@ import {
 import { getHexContrastRatio, isVersionAtLeast } from '../lib'
 import {
   childElementsOf,
+  codeList,
   descendantElementsOf,
   expressionSource,
   findAttribute,
   findPropAttribute,
+  hasChildContent,
+  hasObjectSpread,
   isBooleanPropOn,
   isComponentTag,
   isDirective,
@@ -460,6 +473,67 @@ export const paginationZeroBasedRule: TemplateRule = {
   },
 }
 
+const skeletonLoaderPresetName = (part: string): string => part.split(SKELETON_LOADER_REPEAT_SEPARATOR)[0]?.trim() ?? ''
+
+const skeletonLoaderSuggestion = (name: string): string => {
+  const replacement = SKELETON_LOADER_VUETIFY_PRESETS[name]
+
+  return replacement ? `\`${name}\` → \`${replacement}\`` : `\`${name}\``
+}
+
+export const skeletonLoaderUnknownPresetRule: TemplateRule = {
+  id: RULE_SKELETON_LOADER_UNKNOWN_PRESET,
+  check: ({ element }) => {
+    const type = isComponentTag(element.tag, SKELETON_LOADER_COMPONENT)
+      ? findPropAttribute(element, SKELETON_LOADER_TYPE_ATTRIBUTE)
+      : undefined
+
+    const unknownNames = (type?.staticValue ?? '')
+      .split(SKELETON_LOADER_TYPE_SEPARATOR)
+      .map(skeletonLoaderPresetName)
+      .filter((name) => name !== '' && !SKELETON_LOADER_PRESETS.includes(name))
+
+    if (!type || unknownNames.length === 0) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(type.node),
+        rule: RULE_SKELETON_LOADER_UNKNOWN_PRESET,
+        severity: SEVERITY_ERROR,
+        message: `\`SSkeletonLoader\` has no ${codeList(unknownNames)} preset: it is ignored, so nothing is drawn for it.`,
+        fixHint: `Use SUI presets joined by commas, with \`@N\` to repeat one (\`type="avatar, text@3"\`): ${codeList(SKELETON_LOADER_PRESETS)}. Instead of ${unknownNames.map(skeletonLoaderSuggestion).join(', ')}.`,
+      },
+    ]
+  },
+}
+
+export const skeletonLoaderNeverHidesRule: TemplateRule = {
+  id: RULE_SKELETON_LOADER_NEVER_HIDES,
+  check: ({ element }) => {
+    const loading = isComponentTag(element.tag, SKELETON_LOADER_COMPONENT)
+      ? findPropAttribute(element, SKELETON_LOADER_LOADING_ATTRIBUTE)
+      : undefined
+
+    if (!loading?.isBound || hasChildContent(element) || hasObjectSpread(element)) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(loading.node),
+        rule: RULE_SKELETON_LOADER_NEVER_HIDES,
+        severity: SEVERITY_WARNING,
+        message:
+          '`SSkeletonLoader` has a bound `loading` but no content: with nothing to swap in, the skeleton stays on screen after loading ends.',
+        fixHint:
+          'Put the real content inside it: `<SSkeletonLoader type="card" :loading="isLoading"><SCard>…</SCard></SSkeletonLoader>`, or toggle it yourself with `v-if="isLoading"` and a `v-else` sibling.',
+      },
+    ]
+  },
+}
+
 /** Rules about behaviour and styling misuses that the component API alone cannot catch. */
 export const fillHeightUnderAppRule: TemplateRule = {
   id: RULE_FILL_HEIGHT_UNDER_APP,
@@ -493,4 +567,6 @@ export const behaviourRules: TemplateRule[] = [
   fillHeightUnderAppRule,
   paginationLengthRowsRule,
   paginationZeroBasedRule,
+  skeletonLoaderUnknownPresetRule,
+  skeletonLoaderNeverHidesRule,
 ]

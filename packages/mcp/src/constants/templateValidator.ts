@@ -82,6 +82,8 @@ export const RULE_FIELD_BUTTON_ROW = 'field-button-row'
 export const RULE_FILL_HEIGHT_UNDER_APP = 'fill-height-under-app'
 export const RULE_PAGINATION_LENGTH_ROWS = 'pagination-length-rows'
 export const RULE_PAGINATION_ZERO_BASED = 'pagination-zero-based'
+export const RULE_SKELETON_LOADER_UNKNOWN_PRESET = 'skeleton-loader-unknown-preset'
+export const RULE_SKELETON_LOADER_NEVER_HIDES = 'skeleton-loader-never-hides'
 
 /**
  * The first `@khsura/sui` release with the M2 hardening fixes (SForm `novalidate`, SCheckbox label with
@@ -251,3 +253,42 @@ export const PAGINATION_ROW_COUNT_EXPRESSION =
 export const PAGINATION_PAGE_MATH_EXPRESSION = /\/|\bceil\b/
 /** A 0-based model, such as STable's `pageIndex`, given to SPagination's 1-based `v-model`. */
 export const PAGINATION_ZERO_BASED_MODEL = /index$/i
+
+export const SKELETON_LOADER_COMPONENT = 'SSkeletonLoader'
+export const SKELETON_LOADER_TYPE_ATTRIBUTE = 'type'
+export const SKELETON_LOADER_LOADING_ATTRIBUTE = 'loading'
+/** Separates the presets in SSkeletonLoader's `type` string: `'avatar, text'`. */
+export const SKELETON_LOADER_TYPE_SEPARATOR = ','
+/** Separates a preset from its repeat count: `'text@3'`. */
+export const SKELETON_LOADER_REPEAT_SEPARATOR = '@'
+/** The presets SSkeletonLoader draws. The `type` prop is a plain string, so sui-api.json cannot list them. */
+export const SKELETON_LOADER_PRESETS = [
+  'text',
+  'heading',
+  'avatar',
+  'button',
+  'image',
+  'card',
+  'list-item',
+  'list-item-avatar',
+  'table-row',
+  'table',
+]
+/** Vuetify VSkeletonLoader presets that SUI does not have, with the SUI `type` that draws the same thing. */
+export const SKELETON_LOADER_VUETIFY_PRESETS: Record<string, string> = {
+  paragraph: 'text@3',
+  sentences: 'text@2',
+  subtitle: 'text',
+  article: 'heading, text@3',
+  chip: 'button',
+  actions: 'button@2',
+  'list-item-two-line': 'list-item-avatar',
+  'list-item-three-line': 'list-item-avatar',
+  'list-item-avatar-two-line': 'list-item-avatar',
+  'list-item-avatar-three-line': 'list-item-avatar',
+  'card-avatar': 'card',
+  'table-heading': 'heading',
+  'table-thead': 'table-row',
+  'table-tbody': 'table-row@5',
+  'table-tfoot': 'table-row',
+}

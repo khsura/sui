@@ -121,6 +121,8 @@ The server sends these instructions when a client connects:
 | `fill-height-under-app` | warning | `s_height--fill` on a direct child of `SApp`: before 1.20.0 it resolves to the content height (SApp only has a min-height), so a card centred inside it sticks to the top. Points to the `centered-page` recipe. Skipped from `@khsura/sui` 1.20.0, where that child grows to fill SApp. |
 | `pagination-length-rows` | warning | `SPagination`'s `:length` bound to a row count (`items.length`, `totalItems`, `itemsCount`, …) with no division: `length` is the number of pages, so it would show one page per row. |
 | `pagination-zero-based` | warning | `SPagination`'s `v-model` bound to a name ending in `index` (such as STable's `pageIndex`): SPagination's page starts at 1. |
+| `skeleton-loader-unknown-preset` | error | A static `SSkeletonLoader` `type` with a preset SUI does not have (Vuetify's `paragraph`, `sentences`, `list-item-two-line`, …, or `text*3` instead of `text@3`): the part is ignored. The hint names the SUI preset to use. |
+| `skeleton-loader-never-hides` | warning | `SSkeletonLoader` with a bound `:loading` but no content inside: with nothing to swap in, the skeleton stays on screen after loading ends. |
 
 Rules for behaviours that a component fix removed carry a `fixedIn` version: the engine skips them when the resolved `sui-api.json` version is that version or newer, so a project on an older `@khsura/sui` still gets the warning. A `version` that is not semver keeps every rule on.
 

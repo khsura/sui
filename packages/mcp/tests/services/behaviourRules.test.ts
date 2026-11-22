@@ -449,3 +449,72 @@ describe('SPagination rules', () => {
     expect(misspelt.map((issue) => issue.rule)).toContain('unknown-prop')
   })
 })
+
+describe('SSkeletonLoader rules', () => {
+  describe('skeleton-loader-unknown-preset', () => {
+    const rule = 'skeleton-loader-unknown-preset'
+
+    it.each([
+      ['one preset', '<SSkeletonLoader type="card" />'],
+      ['presets with repeats', '<SSkeletonLoader type="avatar, text@3, list-item-avatar@2" />'],
+      ['a trailing comma', '<SSkeletonLoader type="text," />'],
+      ['a bound type', '<SSkeletonLoader :type="skeletonType" />'],
+      ['no type', '<SSkeletonLoader />'],
+      ['another component', '<SButton type="paragraph" />'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it.each([
+      ['a Vuetify preset', '<SSkeletonLoader type="paragraph" />', 'text@3'],
+      [
+        'a Vuetify preset among real ones',
+        '<s-skeleton-loader type="avatar, list-item-two-line" />',
+        'list-item-avatar',
+      ],
+      ['a quoted bound literal', `<SSkeletonLoader :type="'article'" />`, 'heading, text@3'],
+      ['a wrong repeat syntax', '<SSkeletonLoader type="text*3" />', 'text@3'],
+    ])('reports %s', (_, code, suggestion) => {
+      const [issue] = issuesOf(rule, code)
+
+      expect(issue).toMatchObject({ severity: 'error', line: 1 })
+      expect(issue.fixHint).toContain(suggestion)
+    })
+  })
+
+  describe('skeleton-loader-never-hides', () => {
+    const rule = 'skeleton-loader-never-hides'
+
+    it.each([
+      ['content inside', '<SSkeletonLoader type="card" :loading="isLoading"><SCard>Order</SCard></SSkeletonLoader>'],
+      ['text inside', '<SSkeletonLoader :loading="isLoading">{{ name }}</SSkeletonLoader>'],
+      ['a standalone skeleton', '<SSkeletonLoader v-if="isLoading" type="card" />'],
+      ['a static loading', '<SSkeletonLoader loading type="card" />'],
+      ['an object spread', '<SSkeletonLoader :loading="isLoading" v-bind="skeletonProps" />'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it.each([
+      ['a self-closing skeleton', '<SSkeletonLoader type="card" :loading="isLoading" />'],
+      ['only a comment inside', '<SSkeletonLoader :loading="isLoading"><!-- content --></SSkeletonLoader>'],
+    ])('reports %s', (_, code) => {
+      const [issue] = issuesOf(rule, code)
+
+      expect(issue).toMatchObject({ severity: 'warning' })
+      expect(issue.fixHint).toContain('v-if')
+    })
+  })
+
+  it('accepts a correct SSkeletonLoader and rejects a misspelt prop', () => {
+    const valid = validateWith(
+      fixtureApi,
+      '<SSkeletonLoader type="avatar, text@3" :loading="isLoading" boilerplate><p>{{ name }}</p></SSkeletonLoader>',
+    )
+
+    const misspelt = validateWith(fixtureApi, '<SSkeletonLoader type="text" :loadin="isLoading" />')
+
+    expect(valid).toEqual([])
+    expect(misspelt.map((issue) => issue.rule)).toContain('unknown-prop')
+  })
+})
