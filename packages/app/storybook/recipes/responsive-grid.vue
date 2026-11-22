@@ -1,6 +1,10 @@
 <template>
   <SContainer class="s_py__4">
-    <SRow>
+    <h1 class="s_text--h5 s_mb__2">Dashboard</h1>
+    <p class="s_text--body__2 s_mb__4">Every row below starts and ends in line with this heading and paragraph.</p>
+
+    <!-- no-outer-gutters + gap: the grid lines up with the text around it (see the recipe notes). -->
+    <SRow no-outer-gutters :gap="GRID_GAP">
       <SColumn :cols="12" :md="8">
         <SCard class="s_pa__4" :height="160">
           <h2 class="s_text--h6">Main panel</h2>
@@ -15,7 +19,7 @@
       </SColumn>
     </SRow>
 
-    <SRow>
+    <SRow no-outer-gutters :gap="GRID_GAP" class="s_mt__4">
       <SColumn v-for="stat in stats" :key="stat.label" :cols="12" :sm="6" :lg="3">
         <SCard class="s_pa__4" outlined>
           <div class="s_text--caption">{{ stat.label }}</div>
@@ -24,7 +28,7 @@
       </SColumn>
     </SRow>
 
-    <SRow>
+    <SRow no-outer-gutters :gap="GRID_GAP" class="s_mt__4">
       <SColumn v-for="product in products" :key="product.name" :cols="12" :sm="6" :lg="3">
         <SCard height="100%" outlined>
           <SImage
@@ -40,7 +44,7 @@
       </SColumn>
     </SRow>
 
-    <SRow justify="spaceBetween" align="center">
+    <SRow no-outer-gutters :gap="GRID_GAP" justify="spaceBetween" align="center" class="s_mt__4">
       <SColumn cols="auto">
         <span class="s_text--subtitle__1">Showing 4 of 12</span>
       </SColumn>
@@ -73,6 +77,8 @@ const stats: Stat[] = [
 ]
 
 const IMAGE_ASPECT_RATIO = 4 / 3
+// The space between columns (and between wrapped lines), in px: one grid gutter.
+const GRID_GAP = 16
 
 const products: Product[] = [
   { name: 'Desk lamp', description: 'Warm light.', image: 'https://picsum.photos/seed/lamp/400/300' },
