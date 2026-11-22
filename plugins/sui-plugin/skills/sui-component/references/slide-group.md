@@ -19,7 +19,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsSlideGroup.d.ts`
 | --- | --- | --- | --- | --- | --- |
 | `activeClass` | `string \| null` | — | no | — | — |
 | `centerActive` | `boolean` | — | no | — | — |
-| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — | — |
+| `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — | — |
 | `contentStyle` | `StyleValue` | — | no | — | — |
 | `mandatory` | `boolean` | — | no | — | — |
 | `modelValue` | `GroupItemValue[]` | `[]` | no | — | — |

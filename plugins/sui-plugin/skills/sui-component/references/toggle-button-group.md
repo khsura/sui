@@ -17,7 +17,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsToggleButtonGroup
 
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
 | `bordered` | `boolean` | — | no | — |
 | `dense` | `boolean` | — | no | — |
 | `mandatory` | `boolean` | — | no | — |
@@ -28,7 +28,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsToggleButtonGroup
 | `selectedColor` | `string` | `"primary"` | no | — |
 | `shrink` | `boolean` | — | no | — |
 | `underlined` | `boolean \| null` | — | no | — |
-| `variant` | `"underlined" \| "inset" \| null` | — | no | `inset`, `underlined` |
+| `variant` | `"inset" \| "underlined" \| null` | — | no | `inset`, `underlined` |
 
 **SToggleButtonGroup slots**
 
@@ -76,9 +76,9 @@ Must be inside `SToggleButtonGroup` (throws otherwise).
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
 | `activeClass` | `string \| null` | — | no | — |
-| `alignSelf` | `"center" \| "auto" \| "start" \| "normal" \| "end" \| "self-start" \| "self-end" \| "flex-start" \| "flex-end" \| "baseline" \| "first baseline" \| "last baseline" \| "stretch" \| "safe center" \| "unsafe center" \| "inherit" \| "initial" \| null` | — | no | `auto`, `baseline`, `center`, `end`, `first baseline`, `flex-end`, `flex-start`, `inherit`, `initial`, `last baseline`, `normal`, `safe center`, `self-end`, `self-start`, `start`, `stretch`, `unsafe center` |
+| `alignSelf` | `"auto" \| "baseline" \| "center" \| "end" \| "first baseline" \| "flex-end" \| "flex-start" \| "inherit" \| "initial" \| "last baseline" \| "normal" \| "safe center" \| "self-end" \| "self-start" \| "start" \| "stretch" \| "unsafe center" \| null` | — | no | `auto`, `baseline`, `center`, `end`, `first baseline`, `flex-end`, `flex-start`, `inherit`, `initial`, `last baseline`, `normal`, `safe center`, `self-end`, `self-start`, `start`, `stretch`, `unsafe center` |
 | `cols` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
-| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — |
 | `contentStyle` | `StyleValue` | — | no | — |
 | `disabled` | `boolean` | — | no | — |
 | `index` | `GroupItemValue \| null` | — | no | — |

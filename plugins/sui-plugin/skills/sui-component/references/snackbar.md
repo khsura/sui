@@ -13,10 +13,10 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsSnackbar.d.ts`
 
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
-| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `activator` | `string \| ComponentPublicInstance \| HTMLElement \| null` | — | no | — |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
 | `disabled` | `boolean \| null` | — | no | — |
-| `location` | `"top" \| "bottom" \| null` | — | no | `bottom`, `top` |
+| `location` | `"bottom" \| "top" \| null` | — | no | `bottom`, `top` |
 | `modelValue` | `boolean` | — | no | — |
 | `multiLine` | `boolean \| null` | — | no | — |
 | `outlined` | `boolean \| null` | — | no | — |

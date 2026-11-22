@@ -13,7 +13,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsChip.d.ts`
 
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
 | `closable` | `boolean` | — | no | — |
 | `color` | `string` | — | no | — |
 | `colorThreshold` | `number` | — | no | — |
