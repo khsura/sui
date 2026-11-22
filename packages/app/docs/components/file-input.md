@@ -37,6 +37,7 @@ Live examples: [SFileInput in Storybook](https://sui.surakh.com/?path=/docs/ui-c
 | `disabled` | `boolean` | `false` | Disable the field |
 | `readonly` | `boolean` | `false` | Keep the files shown but block picking, dropping and clearing |
 | `id` | `string` | generated | The input's id |
+| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` (acts as `'default'`) | Vertical density: `comfortable` / `compact` lower the field by 4 / 8px, matching SButton. Defaults to `defaults.global.density`; see docs/density.md (not the dropzone) |
 
 ## Slots
 

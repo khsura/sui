@@ -31,6 +31,7 @@ A versatile button component supporting multiple variants, sizes, colors, and li
 | `minHeight` / `maxHeight` | `string \| number` | `undefined` | Min/max height constraints |
 | `value` | `string \| number \| boolean` | `undefined` | Selection value when used inside `SBottomNavigation` |
 | `colorThreshold` | `number` | `undefined` | Luminance threshold for automatic light/dark text |
+| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` (acts as `'default'`) | Vertical density: `comfortable` / `compact` lower the button by 4 / 8px (36 → 32 → 28 at default size). Defaults to `defaults.global.density`; see docs/density.md |
 
 ## Events
 

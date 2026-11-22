@@ -45,6 +45,7 @@ Data table with client-side sorting, selection and expansion state, grouping (op
 | `stickyLeftColumnsStart` | `number` | `0` | Start index for sticky left columns |
 | `stickyLeftColumnsOffset` | `number` | `undefined` | Offset for sticky left columns |
 | `stickyRightColumn` | `boolean` | `undefined` | Stick the last column to the right |
+| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` (acts as `'default'`) | Row density: 48 / 44 / 40px body and header rows for `default` / `comfortable` / `compact`. Defaults to `defaults.global.density`. `dense` cells keep 36px |
 
 ### TableHeader shape
 

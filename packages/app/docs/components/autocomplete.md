@@ -36,6 +36,7 @@ Searchable dropdown input with filtering, multiple selection, chips, free-text e
 | `disabled` | `boolean` | `undefined` | Typed but does not disable the text field |
 | `location` | `string` | `'bottom'` | Dropdown position |
 | `offsetX` / `offsetY` | `number \| null` | `undefined` | Dropdown offset |
+| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` (acts as `'default'`) | Vertical density: `comfortable` / `compact` lower the field by 4 / 8px, matching SButton. Defaults to `defaults.global.density`; see docs/density.md. Also passed to the dropdown list |
 
 There is no `rules` prop: SAutocomplete does not run validation rules or register with `SForm`.
 

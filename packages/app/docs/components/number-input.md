@@ -34,6 +34,7 @@ Live examples: [SNumberInput in Storybook](https://sui.surakh.com/?path=/docs/ui
 | `name`, `id`, `autofocus` | | | Passed to the `<input>` |
 | `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `undefined` | Font size, as on SInput |
 | `dense` / `tile` | `boolean` | `false` | Smaller padding / square corners |
+| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` (acts as `'default'`) | Vertical density: `comfortable` / `compact` lower the field by 4 / 8px, matching SButton. Defaults to `defaults.global.density`; see docs/density.md |
 
 ## Events
 

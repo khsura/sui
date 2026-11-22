@@ -19,6 +19,7 @@ Small pill-shaped element for tags, filters, or selections. Supports closable, l
 | `borderRadius` | `'tile' \| 'rounded' \| number \| string` | `undefined` | Custom border radius |
 | `colorThreshold` | `number` | `undefined` | Auto text contrast threshold |
 | `theme` | `AppThemeType` | `undefined` | Per-component theme override |
+| `density` | `'default' \| 'comfortable' \| 'compact'` | `undefined` (acts as `'default'`) | Vertical density: `comfortable` / `compact` lower the chip by 4 / 8px. Defaults to `defaults.global.density` |
 
 ## Events
 

@@ -11,49 +11,50 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsTable.d.ts`. The 
 
 **STable props**
 
-| Prop | Type | Default | Required | Values |
-| --- | --- | --- | --- | --- |
-| `dense` | `boolean` | `false` | no | — |
-| `expanded` | `T[]` | — | no | — |
-| `foldable` | `boolean` | `false` | no | — |
-| `folded` | `boolean \| string[]` | `[]` | no | — |
-| `groupBy` | `string \| string[]` | — | no | — |
-| `headers` | `TableHeader<string>[]` | `[]` | yes | — |
-| `hideHeader` | `boolean` | `false` | no | — |
-| `hidePagination` | `boolean` | `false` | no | — |
-| `hideTopBottomBorders` | `boolean` | `false` | no | — |
-| `hideVerticalBorders` | `boolean` | `false` | no | — |
-| `itemClass` | `TableItemClass<T, string>` | — | no | — |
-| `itemFooter` | `string` | `""` | no | — |
-| `itemFooterClass` | `TableItemClass<T, string>` | — | no | — |
-| `itemFooterStyle` | `TableItemStyle<T, string>` | — | no | — |
-| `itemHeader` | `string` | `""` | no | — |
-| `itemHeaderClass` | `TableItemClass<T, string>` | — | no | — |
-| `itemHeaderStyle` | `TableItemStyle<T, string>` | — | no | — |
-| `itemKey` | `string` | — | no | — |
-| `itemRowClass` | `TableRowClass<T>` | — | no | — |
-| `itemStyle` | `TableItemStyle<T, string>` | — | no | — |
-| `items` | `T[]` | `[]` | yes | — |
-| `itemsPerPage` | `number` | — | no | — |
-| `itemsPerPageLabel` | `string` | — | no | — |
-| `loading` | `boolean` | — | no | — |
-| `loadingText` | `string` | — | no | — |
-| `multiSort` | `boolean` | `false` | no | — |
-| `noDataText` | `string` | — | no | — |
-| `outlined` | `boolean` | `false` | no | — |
-| `rounded` | `boolean` | — | no | — |
-| `selected` | `T[]` | — | no | — |
-| `shadowExpandedContent` | `boolean` | `false` | no | — |
-| `singleExpand` | `boolean` | — | no | — |
-| `singleSelect` | `boolean` | — | no | — |
-| `stickyHeader` | `boolean` | `false` | no | — |
-| `stickyLeftColumnsOffset` | `number` | — | no | — |
-| `stickyLeftColumnsSize` | `number` | `0` | no | — |
-| `stickyLeftColumnsStart` | `number` | `0` | no | — |
-| `stickyRightColumn` | `boolean` | — | no | — |
-| `tile` | `boolean` | — | no | — |
-| `totalItems` | `number` | — | no | — |
-| `underlined` | `boolean` | — | no | — |
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `dense` | `boolean` | `false` | no | — | — |
+| `density` | `DensityType \| null` | — | no | `comfortable`, `compact`, `default` | Vertical density: `default` (today's look), `comfortable` (one step tighter) or `compact` (two steps). Set it once for the app with `createSUI({ defaults: { global: { density } } })` instead of overriding heights or paddings per component. |
+| `expanded` | `T[]` | — | no | — | — |
+| `foldable` | `boolean` | `false` | no | — | — |
+| `folded` | `boolean \| string[]` | `[]` | no | — | — |
+| `groupBy` | `string \| string[]` | — | no | — | — |
+| `headers` | `TableHeader<string>[]` | `[]` | yes | — | — |
+| `hideHeader` | `boolean` | `false` | no | — | — |
+| `hidePagination` | `boolean` | `false` | no | — | — |
+| `hideTopBottomBorders` | `boolean` | `false` | no | — | — |
+| `hideVerticalBorders` | `boolean` | `false` | no | — | — |
+| `itemClass` | `TableItemClass<T, string>` | — | no | — | — |
+| `itemFooter` | `string` | `""` | no | — | — |
+| `itemFooterClass` | `TableItemClass<T, string>` | — | no | — | — |
+| `itemFooterStyle` | `TableItemStyle<T, string>` | — | no | — | — |
+| `itemHeader` | `string` | `""` | no | — | — |
+| `itemHeaderClass` | `TableItemClass<T, string>` | — | no | — | — |
+| `itemHeaderStyle` | `TableItemStyle<T, string>` | — | no | — | — |
+| `itemKey` | `string` | — | no | — | — |
+| `itemRowClass` | `TableRowClass<T>` | — | no | — | — |
+| `itemStyle` | `TableItemStyle<T, string>` | — | no | — | — |
+| `items` | `T[]` | `[]` | yes | — | — |
+| `itemsPerPage` | `number` | — | no | — | — |
+| `itemsPerPageLabel` | `string` | — | no | — | — |
+| `loading` | `boolean` | — | no | — | — |
+| `loadingText` | `string` | — | no | — | — |
+| `multiSort` | `boolean` | `false` | no | — | — |
+| `noDataText` | `string` | — | no | — | — |
+| `outlined` | `boolean` | `false` | no | — | — |
+| `rounded` | `boolean` | — | no | — | — |
+| `selected` | `T[]` | — | no | — | — |
+| `shadowExpandedContent` | `boolean` | `false` | no | — | — |
+| `singleExpand` | `boolean` | — | no | — | — |
+| `singleSelect` | `boolean` | — | no | — | — |
+| `stickyHeader` | `boolean` | `false` | no | — | — |
+| `stickyLeftColumnsOffset` | `number` | — | no | — | — |
+| `stickyLeftColumnsSize` | `number` | `0` | no | — | — |
+| `stickyLeftColumnsStart` | `number` | `0` | no | — | — |
+| `stickyRightColumn` | `boolean` | — | no | — | — |
+| `tile` | `boolean` | — | no | — | — |
+| `totalItems` | `number` | — | no | — | — |
+| `underlined` | `boolean` | — | no | — | — |
 
 **STable slots**
 

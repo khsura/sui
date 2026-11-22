@@ -122,46 +122,47 @@ None.
 
 **SInput props**
 
-| Prop | Type | Default | Required | Values |
-| --- | --- | --- | --- | --- |
-| `allowDecimal` | `boolean \| null` | — | no | — |
-| `appendOuter` | `string \| null` | — | no | — |
-| `ariaLabel` | `string` | — | no | — |
-| `ariaLabelledby` | `string` | — | no | — |
-| `autocapitalize` | `"off" \| "on" \| null` | — | no | `off`, `on` |
-| `autocomplete` | `string \| null` | — | no | — |
-| `autofocus` | `boolean \| null` | — | no | — |
-| `dense` | `boolean` | — | no | — |
-| `dirty` | `boolean` | — | no | — |
-| `disabled` | `boolean \| null` | — | no | — |
-| `error` | `boolean` | — | no | — |
-| `hideDetails` | `boolean` | — | no | — |
-| `hideError` | `boolean` | — | no | — |
-| `id` | `string` | — | no | — |
-| `inputBackground` | `string \| null` | — | no | — |
-| `inputmode` | `InputModeTypeText \| null` | — | no | `decimal`, `email`, `none`, `numeric`, `search`, `tel`, `text`, `url` |
-| `isPasteDisabled` | `boolean` | — | no | — |
-| `label` | `string \| null` | — | no | — |
-| `max` | `number \| string \| null` | — | no | — |
-| `maxlength` | `number \| string \| null` | — | no | — |
-| `min` | `number \| string \| null` | — | no | — |
-| `minlength` | `number \| string \| null` | — | no | — |
-| `modelValue` | `T \| null` | — | no | — |
-| `name` | `string` | — | no | — |
-| `pattern` | `string \| null` | — | no | — |
-| `placeholder` | `string \| null` | — | no | — |
-| `placeholderBackground` | `string \| null` | — | no | — |
-| `positive` | `boolean \| null` | — | no | — |
-| `readonly` | `boolean \| null` | — | no | — |
-| `rules` | `FormInputModelValueRule[]` | — | no | — |
-| `simple` | `boolean \| null` | — | no | — |
-| `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` |
-| `spellcheck` | `boolean \| null` | — | no | — |
-| `suffix` | `string \| null` | — | no | — |
-| `textRight` | `boolean \| null` | — | no | — |
-| `tile` | `boolean` | — | no | — |
-| `type` | `InputTypeText \| null` | — | no | `date`, `datetime-local`, `email`, `number`, `password`, `search`, `tel`, `text`, `time`, `url`, `week` |
-| `usePreviousValueWhenExceeded` | `boolean \| null` | — | no | — |
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `allowDecimal` | `boolean \| null` | — | no | — | — |
+| `appendOuter` | `string \| null` | — | no | — | — |
+| `ariaLabel` | `string` | — | no | — | — |
+| `ariaLabelledby` | `string` | — | no | — | — |
+| `autocapitalize` | `"off" \| "on" \| null` | — | no | `off`, `on` | — |
+| `autocomplete` | `string \| null` | — | no | — | — |
+| `autofocus` | `boolean \| null` | — | no | — | — |
+| `dense` | `boolean` | — | no | — | — |
+| `density` | `DensityType \| null` | — | no | `comfortable`, `compact`, `default` | Vertical density: `default` (today's look), `comfortable` (one step tighter) or `compact` (two steps). Set it once for the app with `createSUI({ defaults: { global: { density } } })` instead of overriding heights or paddings per component. |
+| `dirty` | `boolean` | — | no | — | — |
+| `disabled` | `boolean \| null` | — | no | — | — |
+| `error` | `boolean` | — | no | — | — |
+| `hideDetails` | `boolean` | — | no | — | — |
+| `hideError` | `boolean` | — | no | — | — |
+| `id` | `string` | — | no | — | — |
+| `inputBackground` | `string \| null` | — | no | — | — |
+| `inputmode` | `InputModeTypeText \| null` | — | no | `decimal`, `email`, `none`, `numeric`, `search`, `tel`, `text`, `url` | — |
+| `isPasteDisabled` | `boolean` | — | no | — | — |
+| `label` | `string \| null` | — | no | — | — |
+| `max` | `number \| string \| null` | — | no | — | — |
+| `maxlength` | `number \| string \| null` | — | no | — | — |
+| `min` | `number \| string \| null` | — | no | — | — |
+| `minlength` | `number \| string \| null` | — | no | — | — |
+| `modelValue` | `T \| null` | — | no | — | — |
+| `name` | `string` | — | no | — | — |
+| `pattern` | `string \| null` | — | no | — | — |
+| `placeholder` | `string \| null` | — | no | — | — |
+| `placeholderBackground` | `string \| null` | — | no | — | — |
+| `positive` | `boolean \| null` | — | no | — | — |
+| `readonly` | `boolean \| null` | — | no | — | — |
+| `rules` | `FormInputModelValueRule[]` | — | no | — | — |
+| `simple` | `boolean \| null` | — | no | — | — |
+| `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` | — |
+| `spellcheck` | `boolean \| null` | — | no | — | — |
+| `suffix` | `string \| null` | — | no | — | — |
+| `textRight` | `boolean \| null` | — | no | — | — |
+| `tile` | `boolean` | — | no | — | — |
+| `type` | `InputTypeText \| null` | — | no | `date`, `datetime-local`, `email`, `number`, `password`, `search`, `tel`, `text`, `time`, `url`, `week` | — |
+| `usePreviousValueWhenExceeded` | `boolean \| null` | — | no | — | — |
 
 **SInput slots**
 
@@ -228,6 +229,7 @@ Props: `label`, `placeholder`, `rows` (default `2`), `cols` (default `20`), **`a
 | `cols` | `number` | `20` | no | — | — |
 | `counter` | `boolean` | — | no | — | Shows the character count (`12 / 200` with `maxlength`) at the right of the error line, right under the field. |
 | `dense` | `boolean` | — | no | — | — |
+| `density` | `DensityType \| null` | — | no | `comfortable`, `compact`, `default` | Vertical density: `default` (today's look), `comfortable` (one step tighter) or `compact` (two steps). Set it once for the app with `createSUI({ defaults: { global: { density } } })` instead of overriding heights or paddings per component. |
 | `dirty` | `boolean` | — | no | — | — |
 | `disabled` | `boolean \| null` | — | no | — | — |
 | `error` | `boolean` | — | no | — | — |
@@ -295,6 +297,7 @@ Single-value dropdown (no `multiple`, `chips`, `clearable` or `placeholder` — 
 | `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — | — |
 | `contentStyle` | `StyleValue` | — | no | — | — |
 | `dense` | `boolean` | — | no | — | — |
+| `density` | `DensityType \| null` | — | no | `comfortable`, `compact`, `default` | Vertical density: `default` (today's look), `comfortable` (one step tighter) or `compact` (two steps). Set it once for the app with `createSUI({ defaults: { global: { density } } })` instead of overriding heights or paddings per component. |
 | `dirty` | `boolean` | — | no | — | — |
 | `disabled` | `boolean \| null` | — | no | — | — |
 | `divided` | `boolean` | — | no | — | — |
