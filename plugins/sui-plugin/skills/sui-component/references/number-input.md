@@ -71,6 +71,7 @@ None.
 - A value below `min` (a `0` default with `:min="1"`) is shown, not hidden, and clamped on blur.
 - `inputmode` is automatic: `numeric` / `decimal` when `min` ≥ 0, `text` when negatives are allowed (a phone's number keypad has no minus). Set `:min="0"` for the number keypad.
 - No native `min`/`max`/`step` attributes, so the browser's validation bubble never shows inside `SForm`.
+- In `SFormRow`, number fields share the free width equally (a long label doesn't make one wider), so two number fields and a button fit on one line at 375 px. Keep their labels short: a label that wraps pushes its box down.
 
 ## Usage
 

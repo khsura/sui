@@ -91,6 +91,7 @@ export const NumberInputStress = {
       const empty = ref<number | null>(null)
       const rowQuantity = ref<number | null>(1)
       const rowPrice = ref<number | null>(null)
+      const rowDiscount = ref<number | null>(5)
 
       return {
         stacked,
@@ -102,6 +103,7 @@ export const NumberInputStress = {
         empty,
         rowQuantity,
         rowPrice,
+        rowDiscount,
         longLabel,
         rules: [minimumOneRule],
         sizes: ['mini', 'small', 'default', 'large', 'extra'],
@@ -132,9 +134,9 @@ export const NumberInputStress = {
             <SNumberInput v-model="rowQuantity" label="Qty" :min="1" control-variant="split" />
             <SButton>Add</SButton>
           </SFormRow>
-          <SFormRow>
+          <SFormRow data-testid="sharedRow">
             <SNumberInput v-model="rowPrice" placeholder="Unit price" :precision="2" :min="0" />
-            <SNumberInput v-model="rowQuantity" label="Wraps to its own line" :min="1" />
+            <SNumberInput v-model="rowDiscount" label="Discount" suffix="%" :min="0" :max="100" />
             <SButton>Add</SButton>
           </SFormRow>
         </SForm>
@@ -193,6 +195,14 @@ export const NumberInputStress = {
     const rowButtonRect = getRect(row?.querySelector('.s_button'))
 
     await expect(Math.abs(rowButtonRect.top - rowFieldRect.top)).toBeLessThanOrEqual(pixelTolerance)
+
+    // Two number fields and a button share one line at 375 px: every field box and the button start together.
+    const sharedRow = canvasElement.querySelector('[data-testid="sharedRow"]')
+    const sharedButtonTop = getRect(sharedRow?.querySelector('.s_button')).top
+
+    for (const field of sharedRow?.querySelectorAll('.s_numberInput__field') ?? []) {
+      await expect(Math.abs(getRect(field).top - sharedButtonTop)).toBeLessThanOrEqual(pixelTolerance)
+    }
 
     await expect(root.scrollWidth).toBeLessThanOrEqual(root.clientWidth + pixelTolerance)
   },

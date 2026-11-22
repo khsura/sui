@@ -29,13 +29,18 @@ defineSlots<{
 
   // ... and a full-width field takes the free width instead of a whole line, so the row wraps only when needed.
   > .s_input,
-  > .s_numberInput,
   > .s_textarea,
   > .s_autocomplete,
   > .s_select--grow,
   > .s_datePickerInput--block {
     flex: 1 1 auto;
     width: auto;
+  }
+
+  // A number field shares the free width equally with its neighbours, whatever its label's length: a number is
+  // short, so it never needs a line of its own.
+  > .s_numberInput {
+    flex: 1 1 0;
   }
 
   > :not(.s_field) {

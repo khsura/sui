@@ -96,3 +96,4 @@ const atLeastOne = (value?: number | null) => (value ?? 0) >= 1 || 'Enter at lea
 - `min` / `max` are not enforced while typing (so `15` can be typed with `min="10"`); the value is clamped on blur. Use a rule when the user should see a message instead.
 - No native `min` / `max` / `step` attributes are rendered, so the browser's validation bubble never covers the SUI error inside `SForm`.
 - Don't add `.number` to `v-model`; the value is already a number.
+- In `SFormRow`, number fields share the free width equally (a long label doesn't make one wider), so two number fields and a button fit on one line at 375 px. Keep their labels short: a label that wraps pushes its box down.
