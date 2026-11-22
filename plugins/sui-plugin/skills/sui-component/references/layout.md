@@ -452,17 +452,17 @@ The column component is **`SColumn`**. There is no `SCol`.
 
 **SRow props**
 
-| Prop | Type | Default | Required | Values |
-| --- | --- | --- | --- | --- |
-| `align` | `GridAlignPropertyType \| null` | — | no | `baseline`, `center`, `end`, `start`, `stretch` |
-| `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — |
-| `contentStyle` | `StyleValue` | — | no | — |
-| `dense` | `boolean \| null` | — | no | — |
-| `fillHeight` | `boolean \| null` | — | no | — |
-| `gap` | `number \| string \| null` | — | no | — |
-| `justify` | `GridJustifyPropertyType \| null` | — | no | `center`, `end`, `spaceAround`, `spaceBetween`, `start` |
-| `noGutters` | `boolean \| null` | — | no | — |
-| `noOuterGutters` | `boolean \| null` | — | no | — |
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `align` | `GridAlignPropertyType \| null` | — | no | `baseline`, `center`, `end`, `start`, `stretch` | — |
+| `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — | — |
+| `contentStyle` | `StyleValue` | — | no | — | — |
+| `dense` | `boolean \| null` | — | no | — | — |
+| `fillHeight` | `boolean \| null` | — | no | — | — |
+| `gap` | `number \| string \| null` | — | no | — | — |
+| `justify` | `GridJustifyPropertyType \| null` | — | no | `center`, `end`, `spaceAround`, `spaceBetween`, `start` | — |
+| `noGutters` | `boolean \| null` | — | no | — | — |
+| `noOuterGutters` | `boolean \| null` | — | no | — | Removes the row's own padding; columns keep theirs. Pair with `gap` to line the grid up with text beside it. |
 
 **SRow slots**
 
@@ -482,6 +482,8 @@ None.
 - `justify`: Main-axis (**camelCase**)
 - `noGutters` / `noOuterGutters` / `dense` / `fillHeight`: Gutters / height
 - `gap`: Custom gap (replaces gutters)
+
+**Lining a grid up with text:** a default `SRow` pads itself by 8px and each `SColumn` pads by 8px, so the columns start 16px inside a heading or paragraph next to the row. A grid next to a heading or paragraph needs `no-outer-gutters` **and** `:gap="16"` to line up (`no-outer-gutters` alone still leaves the columns' 8px). Separate stacked gap rows with `class="s_mt__4"`. See the `responsive-grid` recipe.
 - `contentClass` / `contentStyle`: Inner wrapper class/style
 
 **SColumn:** `cols`, `sm`, `md`, `lg` (`1`–`12 \| 'auto' \| 'grow'`), `order` (number), `alignSelf`, `contentClass`/`contentStyle`. There is no `xl`.
@@ -608,6 +610,7 @@ None.
 | `<SAppBar><template #prepend>…` | Not forwarded. Put content in `default` |
 | `<SRow justify="space-between">` | `justify="spaceBetween"` |
 | `<SCol>` | `<SColumn>` |
+| `<h2>` then a plain `<SRow>`: the cards sit 16px inside the heading | `<SRow no-outer-gutters :gap="16">` so the first column starts where the heading does |
 | `<SBottomNavigation v-model="tab">` with no `height`/`active-class` | Set `:height` and `active-class` |
 | `<SAppBar elevate-on-scroll>` with no position | Add `position="fixed"` |
 | `padding-top: env(safe-area-inset-top)` on a fixed `SAppBar` / `SBottomNavigation` / mobile drawer, or `padding-left: env(safe-area-inset-left)` on a `permanent` drawer / `SMain` | They pad by the iPhone safe areas themselves; only add `viewport-fit=cover` to the viewport meta (getting-started skill). Your own `env()` padding doubles the inset |

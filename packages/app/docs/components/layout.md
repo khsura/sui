@@ -270,7 +270,7 @@ Mobile bottom navigation bar.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `noGutters` | `boolean` | `false` | Remove column gutters |
-| `noOuterGutters` | `boolean` | `false` | Remove outer padding only |
+| `noOuterGutters` | `boolean` | `false` | Remove the row's own padding; columns keep theirs (add `gap` to line the grid up with text, see below) |
 | `align` | `GridAlignPropertyType` | `undefined` | Cross-axis alignment: `'start'`, `'center'`, `'end'`, `'stretch'`, `'baseline'` |
 | `justify` | `GridJustifyPropertyType` | `undefined` | Main-axis justify (**camelCase**): `'start'`, `'center'`, `'end'`, `'spaceBetween'`, `'spaceAround'` |
 | `fillHeight` | `boolean` | `false` | Fill parent height |
@@ -291,6 +291,23 @@ Mobile bottom navigation bar.
 | `contentClass` / `contentStyle` | class / style | `undefined` | Inner wrapper class / style |
 
 There is no `xl` prop.
+
+### Lining a grid up with text
+
+`SRow` pads itself by half a gutter (8px) and each `SColumn` pads its content by another half, so in a default row the first column's content starts **16px inside** a heading or paragraph next to the row (8px with `dense`). That default is kept on purpose (existing layouts rely on it). **A grid next to a heading or paragraph needs `no-outer-gutters` and `:gap` to line up:** `no-outer-gutters` drops the row's own padding, and `gap` replaces the columns' padding with a gap between them (column widths subtract it). With `no-outer-gutters` alone, the column content still starts 8px in.
+
+```vue
+<SCardText>
+  <h2 class="s_text--h6">Shipping details</h2>
+  <SRow no-outer-gutters :gap="16">
+    <SColumn :cols="12" :sm="6"><SCard outlined>Billing</SCard></SColumn>
+    <SColumn :cols="12" :sm="6"><SCard outlined>Delivery</SCard></SColumn>
+  </SRow>
+  <p class="s_mt__3">Lines up with the heading and the cards.</p>
+</SCardText>
+```
+
+A gap row has no padding above or below, so separate stacked rows with a margin (`class="s_mt__4"`). See the `responsive-grid` recipe.
 
 ---
 

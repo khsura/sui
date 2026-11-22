@@ -34,3 +34,4 @@ createApp(App)
 - Options are deep-merged with the defaults, so pass only what you change.
 - `presetColors` keys: `primary`, `secondary`, `success`, `info`, `warning`, `important`, `error` (extra keys become usable as `color`). Use opaque hex values.
 - `useTheme()` returns `{ theme, setTheme }`. Toggle with `setTheme(theme.value === 'dark' ? 'light' : 'dark')`; `setTheme(null)` follows the OS. There is no `toggleTheme()`.
+- The swatch row is `SRow no-outer-gutters :gap="8"`: `no-outer-gutters` drops the row's own 8px padding so the buttons start in line with the paragraph above them.

@@ -21,7 +21,8 @@ const grids: Meta<typeof SRow> = {
     },
     noOuterGutters: {
       type: { name: 'string', required: false },
-      description: 'Removes default margins around the row',
+      description:
+        "Removes the row's own padding (columns keep theirs). Add `gap` too to line the grid up with a heading or paragraph next to it",
       control: {
         type: 'boolean',
       },

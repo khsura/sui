@@ -95,6 +95,7 @@ export const RULE_NUMBER_INPUT_PREFERRED = 'number-input-preferred'
 export const RULE_RAW_FILE_INPUT = 'raw-file-input'
 export const RULE_FILE_INPUT_CHANGE_EVENT = 'file-input-change-event'
 export const RULE_TABS_IN_SLIDE_GROUP = 'tabs-in-slide-group'
+export const RULE_ROW_INSET_FROM_TEXT = 'row-inset-from-text'
 
 /**
  * The first `@khsura/sui` release with the M2 hardening fixes (SForm `novalidate`, SCheckbox label with
@@ -237,6 +238,18 @@ export const LABELLED_FIELD_COMPONENTS = [
 ]
 /** The row that lines buttons up with the field boxes next to them (since 1.20.0). */
 export const FORM_ROW_COMPONENT = 'SFormRow'
+export const GRID_ROW_COMPONENT = 'SRow'
+export const ROW_NO_GUTTERS_PROP = 'no-gutters'
+export const ROW_NO_OUTER_GUTTERS_PROP = 'no-outer-gutters'
+export const ROW_GAP_PROP = 'gap'
+/** Native text elements whose left edge a grid beside them should line up with. */
+export const ROW_TEXT_SIBLING_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p']
+/** Components that sit flush with the content edge, like text, so a grid beside them should line up too. */
+export const ROW_FLUSH_SIBLING_COMPONENTS = ['SBreadcrumbs']
+/** Wrappers that add no padding: a row inside one is still beside the wrapper's siblings. */
+export const ROW_TRANSPARENT_WRAPPERS = ['SForm', 'form']
+/** Horizontal padding / margin utility classes: a text sibling carrying one is inset on purpose. */
+export const HORIZONTAL_INSET_CLASS_PATTERN = /^s_(?:pa|px|pl|ps|ma|mx|ml|ms)__/
 /** `s_display__flex`, `s_display--md__inlineFlex`: the utility classes that make an element a flex row. */
 export const FLEX_DISPLAY_CLASS_PATTERN = /^s_display(?:--[a-z]+)?__(?:flex|inlineFlex)$/
 export const FLEX_DISPLAY_STYLE_PATTERN = /(?:^|;)\s*display\s*:\s*(?:inline-)?flex\b/

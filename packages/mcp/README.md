@@ -125,6 +125,7 @@ The server sends these instructions when a client connects:
 | `skeleton-loader-unknown-preset` | error | A static `SSkeletonLoader` `type` with a preset SUI does not have (Vuetify's `paragraph`, `sentences`, `list-item-two-line`, …, or `text*3` instead of `text@3`): the part is ignored. The hint names the SUI preset to use. |
 | `skeleton-loader-never-hides` | warning | `SSkeletonLoader` with a bound `:loading` but no content inside: with nothing to swap in, the skeleton stays on screen after loading ends. |
 | `tabs-in-slide-group` | warning | `STabs` with an `SSlideGroup` ancestor: STabs already scrolls its own row, with an edge fade and scroll arrows, so the wrapper only adds a second scroller. | `tabbed-sections` |
+| `row-inset-from-text` | warning | An `SRow` beside a native heading or paragraph (or `SBreadcrumbs`), directly or through an `SForm` / `<form>`, without `no-outer-gutters` + `gap` (or `no-gutters`): the row and its columns pad by 8px each, so the grid starts 16px inside the text. Siblings with their own horizontal padding / margin class are skipped. | `responsive-grid` |
 
 Rules for behaviours that a component fix removed carry a `fixedIn` version: the engine skips them when the resolved `sui-api.json` version is that version or newer, so a project on an older `@khsura/sui` still gets the warning. A `version` that is not semver keeps every rule on.
 

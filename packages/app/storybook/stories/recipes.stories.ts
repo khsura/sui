@@ -84,7 +84,34 @@ export const ActivatorOverlays: StoryObj = {
 
 export const DataTable = recipeStory(DataTableRecipe)
 export const FilterBar = recipeStory(FilterBarRecipe)
-export const ResponsiveGrid = recipeStory(ResponsiveGridRecipe)
+// Allowed distance (px) between the grid's outer edges and the heading / paragraph edges.
+const EDGE_TOLERANCE = 1
+
+// Every row starts and ends where the heading and paragraph above it do (no-outer-gutters + gap), at every width.
+export const ResponsiveGrid: StoryObj = {
+  ...recipeStory(ResponsiveGridRecipe),
+  play: async ({ canvasElement }) => {
+    const heading = canvasElement.querySelector('h1')
+    const paragraph = heading?.nextElementSibling
+    const rows = [...canvasElement.querySelectorAll('.s_row')]
+
+    await expect(heading).not.toBeNull()
+    await expect(rows.length).toBeGreaterThan(0)
+    await waitFor(async () => {
+      const headingLeft = heading?.getBoundingClientRect().left ?? 0
+      const paragraphRight = paragraph?.getBoundingClientRect().right ?? 0
+
+      for (const row of rows) {
+        const columns = [...row.querySelectorAll(':scope > .s_row__content > .s_column')]
+        const lefts = columns.map((column) => column.getBoundingClientRect().left)
+        const rights = columns.map((column) => column.getBoundingClientRect().right)
+
+        await expect(Math.abs(Math.min(...lefts) - headingLeft)).toBeLessThanOrEqual(EDGE_TOLERANCE)
+        await expect(Math.abs(Math.max(...rights) - paragraphRight)).toBeLessThanOrEqual(EDGE_TOLERANCE)
+      }
+    })
+  },
+}
 export const ThemeSetup = recipeStory(ThemeSetupRecipe)
 export const TabbedSections = recipeStory(TabbedSectionsRecipe)
 

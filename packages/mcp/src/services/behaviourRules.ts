@@ -103,6 +103,15 @@ import {
   RULE_TABS_IN_SLIDE_GROUP,
   SLIDE_GROUP_COMPONENT,
   TABS_COMPONENT,
+  GRID_ROW_COMPONENT,
+  HORIZONTAL_INSET_CLASS_PATTERN,
+  ROW_GAP_PROP,
+  ROW_NO_GUTTERS_PROP,
+  ROW_NO_OUTER_GUTTERS_PROP,
+  ROW_FLUSH_SIBLING_COMPONENTS,
+  ROW_TEXT_SIBLING_TAGS,
+  ROW_TRANSPARENT_WRAPPERS,
+  RULE_ROW_INSET_FROM_TEXT,
 } from '../constants'
 import { getHexContrastRatio, isVersionAtLeast } from '../lib'
 import {
@@ -723,6 +732,68 @@ export const emptyStateActionWithoutListenerRule: TemplateRule = {
   },
 }
 
+const isFlushRowSibling = (element: ElementNode): boolean =>
+  (ROW_TEXT_SIBLING_TAGS.includes(element.tag) || isOneOfComponentTags(element.tag, ROW_FLUSH_SIBLING_COMPONENTS)) &&
+  !staticClassNames(element).some((className) => HORIZONTAL_INSET_CLASS_PATTERN.test(className))
+
+/**
+ * The elements beside `row`: its parent's other children, and, while the row sits in a wrapper that adds no
+ * padding (`SForm`, `<form>`), that wrapper's siblings too.
+ */
+const rowNeighbours = (row: ElementNode, ancestors: ElementNode[]): ElementNode[] => {
+  const neighbours: ElementNode[] = []
+  let current = row
+
+  for (const container of [...ancestors].reverse()) {
+    neighbours.push(...childElementsOf(container).filter((child) => child !== current))
+
+    if (!isOneOfComponentTags(container.tag, ROW_TRANSPARENT_WRAPPERS)) {
+      break
+    }
+
+    current = container
+  }
+
+  return neighbours
+}
+
+// A default SRow pads itself and each SColumn by half a gutter, so next to a heading, paragraph or breadcrumbs its
+// columns start 16px in. Only a direct neighbour without its own horizontal inset counts, to keep false positives low.
+export const rowInsetFromTextRule: TemplateRule = {
+  id: RULE_ROW_INSET_FROM_TEXT,
+  check: ({ element, ancestors }) => {
+    if (!isComponentTag(element.tag, GRID_ROW_COMPONENT) || hasObjectSpread(element)) {
+      return []
+    }
+
+    const hasOuterGuttersOff = isBooleanPropOn(element, ROW_NO_OUTER_GUTTERS_PROP)
+
+    const isAligned =
+      isBooleanPropOn(element, ROW_NO_GUTTERS_PROP) ||
+      (hasOuterGuttersOff && !!findPropAttribute(element, ROW_GAP_PROP))
+
+    const flushSibling = isAligned ? undefined : rowNeighbours(element, ancestors).find(isFlushRowSibling)
+
+    if (!flushSibling) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(element),
+        rule: RULE_ROW_INSET_FROM_TEXT,
+        severity: SEVERITY_WARNING,
+        message: hasOuterGuttersOff
+          ? `\`SRow no-outer-gutters\` beside \`<${flushSibling.tag}>\`: the row no longer pads itself, but each SColumn still pads its content by 8px, so the columns start 8px inside it.`
+          : `\`SRow\` beside \`<${flushSibling.tag}>\`: the row and each SColumn pad by 8px, so the columns start 16px inside it.`,
+        fixHint:
+          'Add `no-outer-gutters :gap="16"` to the `SRow` (gap replaces the column padding), and separate stacked rows with `class="s_mt__4"`. Keep the default padding only when the inset is intended.',
+        recipe: RECIPE_RESPONSIVE_GRID,
+      },
+    ]
+  },
+}
+
 /**
  * `SInput type="number"` is the numeric field AI code reaches for, but it has no step buttons or `precision`, hides a
  * value below `min` and keeps the browser's number semantics. Recommend SNumberInput, only when the installed release
@@ -802,6 +873,7 @@ export const behaviourRules: TemplateRule[] = [
   skeletonLoaderNeverHidesRule,
   emptyStateActionEventRule,
   emptyStateActionWithoutListenerRule,
+  rowInsetFromTextRule,
   numberInputPreferredRule,
   tabsInSlideGroupRule,
 ]
