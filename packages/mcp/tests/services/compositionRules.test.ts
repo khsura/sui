@@ -319,3 +319,76 @@ describe('avatar composition rules', () => {
     })
   })
 })
+
+describe('file input rules', () => {
+  // A release before SFileInput: its API has no such component.
+  const olderApi = { ...fixtureApi, components: fixtureApi.components.filter(({ name }) => name !== 'SFileInput') }
+  const validateOlder = (code: string): TemplateIssue[] => useTemplateValidatorService(olderApi).validate(code)
+
+  const buttonHack = `<div>
+  <input ref="fileInputRef" type="file" accept=".csv" class="hidden" @change="onFileChange" />
+  <SButton @click="fileInputRef?.click()">Import</SButton>
+</div>`
+
+  describe('raw-file-input', () => {
+    it('warns about a raw file input and points at SFileInput, not SInput', () => {
+      const issues = validate('<input type="file" @change="onFile" />')
+      const [issue] = issues.filter((entry) => entry.rule === 'raw-file-input')
+
+      expect(issue).toMatchObject({ severity: 'warning', line: 1, column: 1, recipe: 'validated-form' })
+      expect(issue.fixHint).toContain('<SFileInput v-model="files"')
+      expect(issues.filter((entry) => entry.rule === 'no-raw-replacement')).toEqual([])
+    })
+
+    it.each([
+      ['an optional-chained ref', 'fileInputRef?.click()'],
+      ['a ref value', 'fileInputRef.value.click()'],
+      ['$refs', '$refs.fileInputRef.click()'],
+    ])('names the hidden input + button hack with %s', (_, call) => {
+      const [issue] = issuesOf('raw-file-input', buttonHack.replace('fileInputRef?.click()', call))
+
+      expect(issue.message).toContain('opened by a button')
+      expect(issue).toMatchObject({ line: 2, column: 3 })
+    })
+
+    it('does not call another ref click the hack', () => {
+      const [issue] = issuesOf('raw-file-input', buttonHack.replace('fileInputRef?.click()', 'otherRef?.click()'))
+
+      expect(issue.message).toContain('raw `<input type="file">`')
+    })
+
+    it('says nothing on a release without SFileInput, and no longer suggests SInput there', () => {
+      expect(validateOlder(buttonHack)).toEqual([])
+      expect(validateOlder('<input type="file" />')).toEqual([])
+    })
+
+    it('passes SFileInput itself', () => {
+      expect(validate('<SFileInput v-model="files" label="Workbook" accept=".csv,.xlsx" />')).toEqual([])
+    })
+  })
+
+  describe('file-input-change-event', () => {
+    it.each([
+      '<SFileInput label="File" @change="upload($event.target.files[0])" />',
+      '<SFileInput label="File" @change="(e) => upload(e.target.files)" />',
+      '<SFileInput label="File" @change="upload($event.files)" />',
+    ])('flags DOM event access: %s', (code) => {
+      const [issue] = issuesOf('file-input-change-event', code)
+
+      expect(issue).toMatchObject({ severity: 'error', line: 1 })
+      expect(issue.fixHint).toContain('v-model="files"')
+    })
+
+    it.each([
+      '<SFileInput label="File" @change="(files) => upload(files?.[0])" />',
+      '<SFileInput label="File" @change="onFiles" />',
+      '<SFileInput label="File" @reject="(files) => warn(files.length)" />',
+    ])('passes a handler that takes the files: %s', (code) => {
+      expect(issuesOf('file-input-change-event', code)).toEqual([])
+    })
+  })
+
+  it('reports a Vuetify-only prop as unknown', () => {
+    expect(issuesOf('unknown-prop', '<SFileInput label="File" chips />')).toHaveLength(1)
+  })
+})

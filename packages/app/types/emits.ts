@@ -29,3 +29,10 @@ export interface EmitNumberInput extends EmitFormInput<number | null> {
   focus: [FocusEvent]
   keydown: [KeyboardEvent]
 }
+
+export interface EmitFileInput extends EmitFormInput<File[] | null> {
+  /** The clear button emptied the field. */
+  clear: []
+  /** Files left out: a dropped file that does not match `accept`, or the extra files when `multiple` is off. */
+  reject: [File[]]
+}

@@ -2061,6 +2061,241 @@
       "events": []
     },
     {
+      "name": "SFileInput",
+      "family": "core",
+      "file": "components/sFileInput.vue",
+      "props": [
+        {
+          "name": "accept",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Allowed types in the native format: `.csv,.xlsx`, `image/*`, `application/pdf`. Dropped files that do not match are rejected (the `reject` event)."
+        },
+        {
+          "name": "ariaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Accessible name when there is no visible `label`; wins over `label`."
+        },
+        {
+          "name": "ariaLabelledby",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Id of the element that names the file input."
+        },
+        {
+          "name": "clearAriaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"Clear\"",
+          "description": "Accessible name of the clear button."
+        },
+        {
+          "name": "clearable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show a button that clears the chosen files."
+        },
+        {
+          "name": "countText",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"{count} files\"",
+          "description": "The `count` display text for several files; `{count}` is replaced by the number."
+        },
+        {
+          "name": "dense",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Smaller paddings, as SInput's `dense`."
+        },
+        {
+          "name": "dirty",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "display",
+          "type": "\"chips\" | \"count\" | \"names\" | undefined",
+          "required": false,
+          "default": "\"names\"",
+          "description": "How the chosen files are shown: their names, one chip each, or a count such as `3 files`.",
+          "enumValues": [
+            "chips",
+            "count",
+            "names"
+          ]
+        },
+        {
+          "name": "dropText",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"Drop files here or click to browse\"",
+          "description": "The `dropzone` variant's call to action."
+        },
+        {
+          "name": "error",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideDetails",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideError",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "icon",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Material Design icon before the selection (`input`) or above the text (`dropzone`); `''` hides it."
+        },
+        {
+          "name": "id",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label above the field, tied to the file input. With `hideDetails` it is hidden and becomes the `aria-label`, as in SInput."
+        },
+        {
+          "name": "loading",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show a spinner and block picking, e.g. while the chosen file uploads or is parsed."
+        },
+        {
+          "name": "loadingAriaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"Loading\"",
+          "description": "Accessible name of the loading spinner."
+        },
+        {
+          "name": "modelValue",
+          "type": "File[] | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "multiple",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Allow several files. The model is always a `File[]` (or `null` when empty), even for one file."
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "description": "The native input's `name`, so a plain `<form>` submit sends the files."
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Text shown in the field while no file is chosen."
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "rules",
+          "type": "FormInputModelValueRule[] | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "showSize",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show each file's size next to its name."
+        },
+        {
+          "name": "size",
+          "type": "SizePropertyType",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "default",
+            "extra",
+            "large",
+            "mini",
+            "small"
+          ]
+        },
+        {
+          "name": "variant",
+          "type": "\"dropzone\" | \"input\" | undefined",
+          "required": false,
+          "default": "\"input\"",
+          "description": "`input`: a text-field box. `dropzone`: a large area that also takes dragged files.",
+          "enumValues": [
+            "dropzone",
+            "input"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "change",
+          "type": "[File[] | null]",
+          "description": ""
+        },
+        {
+          "name": "clear",
+          "type": "[]",
+          "description": ""
+        },
+        {
+          "name": "reject",
+          "type": "[File[]]",
+          "description": ""
+        },
+        {
+          "name": "update:dirty",
+          "type": "[boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:error",
+          "type": "[boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:errors",
+          "type": "[string[]]",
+          "description": ""
+        },
+        {
+          "name": "update:modelValue",
+          "type": "[value: File[] | null | undefined]",
+          "description": ""
+        }
+      ]
+    },
+    {
       "name": "SNumberInput",
       "family": "form",
       "file": "components/form/sNumberInput.vue",
