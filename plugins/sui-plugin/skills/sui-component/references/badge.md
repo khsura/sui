@@ -16,14 +16,14 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsBadge.d.ts`
 | `bottom` | `boolean` | — | no | — |
 | `color` | `string` | — | no | — |
 | `colorThreshold` | `number` | — | no | — |
-| `content` | `string \| number` | — | no | — |
+| `content` | `number \| string` | — | no | — |
 | `dot` | `boolean` | — | no | — |
 | `icon` | `string` | — | no | — |
 | `inline` | `boolean` | — | no | — |
 | `label` | `string` | — | no | — |
 | `left` | `boolean` | — | no | — |
-| `offsetX` | `string \| number` | — | no | — |
-| `offsetY` | `string \| number` | — | no | — |
+| `offsetX` | `number \| string` | — | no | — |
+| `offsetY` | `number \| string` | — | no | — |
 | `overlap` | `boolean` | — | no | — |
 | `theme` | `AppThemeType` | — | no | `dark`, `light` |
 | `tile` | `boolean` | — | no | — |

@@ -14,13 +14,13 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsDroppable.d.ts`
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
 | `disabled` | `boolean \| null` | — | no | — |
-| `height` | `string \| number \| null` | — | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
+| `height` | `number \| string \| null` | — | no | — |
+| `maxHeight` | `number \| string \| null` | — | no | — |
+| `maxWidth` | `number \| string \| null` | — | no | — |
+| `minHeight` | `number \| string \| null` | — | no | — |
+| `minWidth` | `number \| string \| null` | — | no | — |
 | `readonly` | `boolean \| null` | — | no | — |
-| `width` | `string \| number \| null` | — | no | — |
+| `width` | `number \| string \| null` | — | no | — |
 
 **SDroppable slots**
 

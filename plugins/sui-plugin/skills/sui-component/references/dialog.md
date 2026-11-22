@@ -13,18 +13,18 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsDialog.d.ts`
 
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
-| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
+| `activator` | `string \| ComponentPublicInstance \| HTMLElement \| null` | — | no | — |
 | `borderless` | `boolean` | — | no | — |
 | `closeOnClick` | `boolean` | — | no | — |
 | `disabled` | `boolean \| null` | — | no | — |
-| `elevation` | `"" \| 0 \| 1 \| 2 \| 22 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 23 \| 24 \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| null` | — | no | — |
+| `elevation` | `"" \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| 0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 22 \| 23 \| 24 \| null` | — | no | — |
 | `fullscreen` | `boolean` | — | no | — |
-| `height` | `string \| number \| null` | — | no | — |
+| `height` | `number \| string \| null` | — | no | — |
 | `location` | `LocationRaw` | — | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
+| `maxHeight` | `number \| string \| null` | — | no | — |
+| `maxWidth` | `number \| string \| null` | — | no | — |
+| `minHeight` | `number \| string \| null` | — | no | — |
+| `minWidth` | `number \| string \| null` | — | no | — |
 | `modelValue` | `boolean` | — | no | — |
 | `offsetX` | `number \| null` | — | no | — |
 | `offsetY` | `number \| null` | — | no | — |
@@ -33,7 +33,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsDialog.d.ts`
 | `readonly` | `boolean \| null` | — | no | — |
 | `scrollable` | `boolean` | — | no | — |
 | `scrollableBackground` | `boolean` | — | no | — |
-| `width` | `string \| number \| null` | — | no | — |
+| `width` | `number \| string \| null` | — | no | — |
 | `zIndex` | `number` | — | no | — |
 
 **SDialog slots**
