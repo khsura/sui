@@ -42,13 +42,16 @@ export default safeArea
 
 // an iPhone in portrait: the notch / status bar on top, the home indicator at the bottom, no side insets
 const SIMULATED_INSETS = { top: 47, right: 0, bottom: 34, left: 0 }
+// an iPhone in landscape: the notch / Dynamic Island on one side, so both sides report it, plus the home indicator
+const SIMULATED_LANDSCAPE_INSETS = { top: 0, right: 47, bottom: 21, left: 47 }
 const BOTTOM_NAVIGATION_HEIGHT = 56
+const DRAWER_WIDTH = 256
 const toPx = (value: number) => `${value}px`
-const insetEntries = Object.entries(SIMULATED_INSETS)
 
 // Overlays teleport into SApp's own container, so the variables go on the SApp element, not on the story root.
-const useSimulatedSafeArea = () => {
+const useSimulatedSafeArea = (insets: Record<string, number> = SIMULATED_INSETS) => {
   const storyRoot = useTemplateRef<HTMLElement>('storyRoot')
+  const insetEntries = Object.entries(insets)
 
   onMounted(() => {
     const appElement = storyRoot.value?.closest<HTMLElement>('.s_app')
@@ -219,5 +222,76 @@ export const SafeAreaFullscreenDialog = {
     await expect(dialogStyle.paddingBottom).toBe(toPx(SIMULATED_INSETS.bottom))
     await expect(dialogStyle.paddingLeft).toBe(toPx(SIMULATED_INSETS.left))
     await expect(dialogStyle.paddingRight).toBe(toPx(SIMULATED_INSETS.right))
+  },
+} satisfies StoryObj
+
+/**
+ * Permanent (desktop-style) drawers on an iPhone in landscape: each pads the side it sits on by that side's inset and
+ * widens by it, so its items clear the notch / Dynamic Island, and SMain and the app bar shift by the same amount.
+ */
+export const SafeAreaLandscapePermanentDrawers = {
+  tags: ['visual'],
+  render: () =>
+    defineComponent({
+      components: safeAreaComponents,
+      setup: () => {
+        useSimulatedSafeArea(SIMULATED_LANDSCAPE_INSETS)
+
+        return { navItems, DRAWER_WIDTH }
+      },
+      template: `
+        <div ref="storyRoot">
+          <SLayout>
+            <SAppBar position="fixed"><SAppBarTitle>Landscape</SAppBarTitle></SAppBar>
+            <SNavigationDrawer permanent :width="DRAWER_WIDTH">
+              <SList>
+                <SListItem v-for="item in navItems" :key="item.title" link>
+                  <SListItemIcon><SIcon :icon="item.icon" /></SListItemIcon>
+                  <SListItemContent><SListItemTitle>{{ item.title }}</SListItemTitle></SListItemContent>
+                </SListItem>
+              </SList>
+            </SNavigationDrawer>
+            <SNavigationDrawer permanent location="right" :width="DRAWER_WIDTH">
+              <SList>
+                <SListItem link><SListItemContent><SListItemTitle>Details</SListItemTitle></SListItemContent></SListItem>
+              </SList>
+            </SNavigationDrawer>
+            <SMain>
+              <SContainer><p>The content sits between both drawers, clear of the side insets.</p></SContainer>
+            </SMain>
+          </SLayout>
+        </div>
+      `,
+    }),
+  play: async ({ canvasElement }) => {
+    const leftDrawer = await waitFor(() =>
+      getElement(canvasElement, '.s_navigationDrawer--permanent:not(.s_navigationDrawer--right)'),
+    )
+
+    const rightDrawer = getElement(canvasElement, '.s_navigationDrawer--permanent.s_navigationDrawer--right')
+    const main = getElement(canvasElement, '.s_main')
+    const appBar = getElement(canvasElement, '.s_appBar')
+
+    await waitFor(() => expect(getComputedStyle(leftDrawer).paddingLeft).toBe(toPx(SIMULATED_LANDSCAPE_INSETS.left)))
+
+    // each drawer pads only the side it sits on and widens by it, so its items keep their usual width
+    await expect(getComputedStyle(leftDrawer).paddingRight).toBe('0px')
+    await expect(getComputedStyle(rightDrawer).paddingRight).toBe(toPx(SIMULATED_LANDSCAPE_INSETS.right))
+    await expect(getComputedStyle(rightDrawer).paddingLeft).toBe('0px')
+    await expect(leftDrawer.getBoundingClientRect().width).toBe(DRAWER_WIDTH + SIMULATED_LANDSCAPE_INSETS.left)
+    await expect(rightDrawer.getBoundingClientRect().width).toBe(DRAWER_WIDTH + SIMULATED_LANDSCAPE_INSETS.right)
+
+    // SMain shifts by each drawer including its inset, so no content is hidden under a drawer
+    const mainStyle = getComputedStyle(main)
+
+    await expect(mainStyle.marginLeft).toBe(toPx(DRAWER_WIDTH + SIMULATED_LANDSCAPE_INSETS.left))
+    await expect(mainStyle.marginRight).toBe(toPx(DRAWER_WIDTH + SIMULATED_LANDSCAPE_INSETS.right))
+
+    // the fixed app bar beside the drawers shifts the same way and doesn't pad the insets a second time
+    const appBarStyle = getComputedStyle(appBar)
+
+    await expect(appBarStyle.marginLeft).toBe(toPx(DRAWER_WIDTH + SIMULATED_LANDSCAPE_INSETS.left))
+    await expect(appBarStyle.paddingLeft).toBe('0px')
+    await expect(appBarStyle.paddingRight).toBe('0px')
   },
 } satisfies StoryObj
