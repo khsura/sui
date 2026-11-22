@@ -423,9 +423,10 @@ export const TabsSelectedOutOfView = {
 } satisfies StoryObj
 
 // Tabs that do not fit a 375px column (the after-M2 eval: "Account" was cut off with no sign that the row
-// scrolls). The end that hides tabs fades out and shows a scroll arrow; the arrow scrolls the row, and the last
-// tab, once selected, is scrolled fully into view. The play ends back on the first tab, so the screenshot shows
-// the starting state: the right-hand arrow and fade.
+// scrolls). The end that hides tabs fades out and shows a scroll arrow, and the last tab, once selected, is
+// scrolled fully into view. The play ends back on the first tab, so the screenshot shows the starting state: the
+// right-hand arrow and fade. The arrow's own scrolling is covered by tests/components/sTabs.test.ts: its smooth
+// scroll animation does not run reliably in the visual harness's WebKit.
 const narrowTabsLabels = ['Getting started', 'Billing and invoices', 'Account settings', 'Notifications', 'Security']
 
 const getScrollButton = (canvasElement: HTMLElement, edge: 'start' | 'end') =>
@@ -465,26 +466,6 @@ const assertTabFullyInView = (canvasElement: HTMLElement, tabIndex: number) => {
   )
 }
 
-// Upper bound for the arrow's smooth scroll (WebKit's runs much longer than Chromium's).
-const smoothScrollTimeoutMs = 5000
-
-// Resolves once the row has stopped scrolling: the position is unchanged between two `waitFor` polls.
-const waitForNarrowTabsScrollToSettle = async (canvasElement: HTMLElement) => {
-  let previousScrollLeft: number | null = null
-
-  await waitFor(
-    () => {
-      const scroller = canvasElement.querySelector('.stress-narrow-tabs .s_toggleButtonGroup__content')
-      const scrollLeft = scroller?.scrollLeft ?? null
-      const isSettled = scrollLeft === previousScrollLeft
-
-      previousScrollLeft = scrollLeft
-      assertThat(isSettled, 'the row of tabs is still scrolling')
-    },
-    { timeout: smoothScrollTimeoutMs },
-  )
-}
-
 export const TabsNarrowScrollAffordance = {
   tags: ['visual'],
   render: () => ({
@@ -507,19 +488,6 @@ export const TabsNarrowScrollAffordance = {
       canvasElement.querySelector<HTMLElement>('.stress-narrow-tabs [role="tab"][aria-selected="true"]')
 
     await waitFor(() => assertScrollButtons(canvasElement, { start: false, end: true }))
-
-    const endButton = getScrollButton(canvasElement, 'end')
-
-    if (endButton) {
-      await userEvent.click(endButton)
-    }
-
-    // The arrow scrolled the row, so tabs now hide past the left edge too. WebKit's smooth scroll can take well
-    // over waitFor's default second, and must settle before End moves the row again.
-    await waitFor(() => assertScrollButtons(canvasElement, { start: true, end: true }), {
-      timeout: smoothScrollTimeoutMs,
-    })
-    await waitForNarrowTabsScrollToSettle(canvasElement)
 
     selectedTab()?.focus()
     await userEvent.keyboard('{End}')
