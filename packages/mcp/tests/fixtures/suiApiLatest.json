@@ -1586,6 +1586,140 @@
           "description": ""
         }
       ]
+    },
+    {
+      "name": "SPagination",
+      "family": "core",
+      "file": "components/sPagination.vue",
+      "props": [
+        {
+          "name": "ariaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"Pagination\"",
+          "description": "Accessible name of the `<nav>` landmark. Defaults to `'Pagination'`."
+        },
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"primary\"",
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "compact",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "undefined",
+          "description": "Compact mode: no first/last buttons and at most 5 page slots. Leave it unset and SPagination switches to it\nby itself when the full list does not fit its width (on a phone, for example). `true` or `false` forces it."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "default": "false",
+          "description": ""
+        },
+        {
+          "name": "firstAriaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"First page\"",
+          "description": "Accessible name of the first-page button. Defaults to `'First page'`."
+        },
+        {
+          "name": "lastAriaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"Last page\"",
+          "description": "Accessible name of the last-page button. Defaults to `'Last page'`."
+        },
+        {
+          "name": "length",
+          "type": "number",
+          "required": true,
+          "description": "Number of pages (not the number of rows): `Math.ceil(totalItems / itemsPerPage)`."
+        },
+        {
+          "name": "modelValue",
+          "type": "number | undefined",
+          "required": false,
+          "default": "undefined",
+          "description": "Current page, starting at 1. Use `v-model`. Values outside `1…length` are clamped. Defaults to `1`."
+        },
+        {
+          "name": "nextAriaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"Next page\"",
+          "description": "Accessible name of the next-page button. Defaults to `'Next page'`."
+        },
+        {
+          "name": "pageAriaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"Page\"",
+          "description": "Accessible name of a page button, followed by its number: `'Page'` gives \"Page 3\". Defaults to `'Page'`."
+        },
+        {
+          "name": "prevAriaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"Previous page\"",
+          "description": "Accessible name of the previous-page button. Defaults to `'Previous page'`."
+        },
+        {
+          "name": "showFirstLastPage",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": "Shows the first-page and last-page buttons beside the previous and next buttons. Hidden in compact mode."
+        },
+        {
+          "name": "size",
+          "type": "SizePropertyType",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "default",
+            "extra",
+            "large",
+            "mini",
+            "small"
+          ]
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        },
+        {
+          "name": "totalVisible",
+          "type": "number | undefined",
+          "required": false,
+          "default": "undefined",
+          "description": "Most slots to show, pages and ellipses together (not counting the arrow buttons). Hidden pages become \"…\",\nand the first and last page stay visible. Defaults to `7`."
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: number]",
+          "description": ""
+        }
+      ]
     }
   ]
 }

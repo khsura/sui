@@ -34,6 +34,7 @@ This directory contains per-component documentation optimized for Claude AI codi
 | [toolbar.md](./toolbar.md) | `SToolbar`, `SToolbarTitle`, `SToolbarItem` |
 | [slide-group.md](./slide-group.md) | `SSlideGroup`, `SSlideItem` |
 | [toggle-button-group.md](./toggle-button-group.md) | `SToggleButtonGroup`, `SToggleButton` |
+| [pagination.md](./pagination.md) | `SPagination` |
 
 ### Popups & Overlays
 | File | Components |
@@ -132,6 +133,7 @@ Always bind **both** `v-on="on"` and `v-bind="attrs"`.
 | `SCarousel`, `SWindow` | single item value |
 | `SSlideGroup`, `SToggleButtonGroup` | always an array of item identifiers (`index` or vnode `key`) |
 | `SStepper` | `number` (the active step's `step` value) |
+| `SPagination` | `number` (the current page, starting at 1) |
 | `SForm` | `boolean` (`true` when valid); also `v-model:errors`, `v-model:error` |
 | `SDatePicker`, `SDatePickerInput` | `string` (`'YYYY-MM-DD'`, `'YYYY-MM'` or `'YYYY'`) |
 | `SNavigationDrawer` | `boolean` |
