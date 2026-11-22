@@ -470,4 +470,56 @@ describe('SPagination rules', () => {
     expect(valid).toEqual([])
     expect(misspelt.map((issue) => issue.rule)).toContain('unknown-prop')
   })
+
+  describe('SEmptyState API', () => {
+    it('accepts a correct SEmptyState and catches a misspelt or Vuetify prop', () => {
+      expect(
+        validateWith(
+          fixtureApi,
+          '<SEmptyState icon="mdi-inbox-outline" title="No orders" text="Create one." action-text="Create" size="small" @action="create" />',
+        ),
+      ).toEqual([])
+      expect(validateWith(fixtureApi, '<SEmptyState headline="No orders" />').map((issue) => issue.rule)).toContain(
+        'unknown-prop',
+      )
+    })
+  })
+
+  describe('empty-state-action-event', () => {
+    it.each([
+      ['click:action', '<SEmptyState action-text="Retry" @click:action="retry" />'],
+      ['click', '<SEmptyState action-text="Retry" @click="retry" />'],
+      ['click (v-on)', '<SEmptyState action-text="Retry" v-on:click.stop="retry" />'],
+    ])('flags @%s', (_, code) => {
+      const issues = issuesOf('empty-state-action-event', code)
+
+      expect(issues).toHaveLength(1)
+      expect(issues[0].fixHint).toContain('@action="retry"')
+    })
+
+    it('accepts @action', () => {
+      expect(issuesOf('empty-state-action-event', '<SEmptyState action-text="Retry" @action="retry" />')).toEqual([])
+    })
+  })
+
+  describe('empty-state-action-without-listener', () => {
+    it.each([
+      ['a static action-text', '<SEmptyState title="No orders" action-text="Create order" />'],
+      ['a bound actionText', '<SEmptyState title="No orders" :actionText="label" />'],
+    ])('flags %s with no @action', (_, code) => {
+      expect(issuesOf('empty-state-action-without-listener', code)).toHaveLength(1)
+    })
+
+    it.each([
+      ['an @action listener', '<SEmptyState action-text="Create order" @action="create" />'],
+      [
+        'the actions slot',
+        '<SEmptyState action-text="Create order"><template #actions><SButton to="/new">New</SButton></template></SEmptyState>',
+      ],
+      ['a v-bind spread', '<SEmptyState action-text="Create order" v-bind="emptyProps" />'],
+      ['no action-text', '<SEmptyState title="No orders" />'],
+    ])('accepts %s', (_, code) => {
+      expect(issuesOf('empty-state-action-without-listener', code)).toEqual([])
+    })
+  })
 })

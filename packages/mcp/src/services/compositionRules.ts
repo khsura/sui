@@ -14,6 +14,7 @@ import {
   BUTTON_COMPONENT,
   DIRECTIVE_SLOT,
   DIALOG_TAG,
+  EMPTY_STATE_COMPONENT,
   DIRECTIVE_BIND,
   DIRECTIVE_ON,
   FORM_COMPONENT,
@@ -26,6 +27,8 @@ import {
   LAYOUT_COMPONENT,
   LAYOUT_FOR_ATTRIBUTE,
   LAYOUT_NAME_ATTRIBUTE,
+  NO_DATA_SLOT_COMPONENTS,
+  NO_DATA_SLOT_NAME,
   NON_VISUAL_INPUT_TYPES,
   RAW_INPUT_TYPE_REPLACEMENTS,
   RAW_TAG_REPLACEMENTS,
@@ -35,6 +38,7 @@ import {
   RULE_ACTIVATOR_BINDING,
   RULE_AVATAR_GROUP_CHILD,
   RULE_AVATAR_IMAGE_IN_SLOT,
+  RULE_EMPTY_STATE_OUTSIDE_NO_DATA_SLOT,
   RULE_FORM_RULES_OUTSIDE_FORM,
   RULE_ICON_BUTTON_LABEL,
   RULE_LAYOUT_FOR,
@@ -369,6 +373,35 @@ export const avatarGroupChildRule: TemplateRule = {
   },
 }
 
+/** Elements in the default slot of `element`: its children outside a `#slot` template, looking through plain `<template>`s. */
+const defaultSlotElements = (element: ElementNode): ElementNode[] =>
+  childElementsOf(element).flatMap((child) => {
+    if (child.tag === TEMPLATE_TAG) {
+      return isSlotFillTemplate(child) ? [] : defaultSlotElements(child)
+    }
+
+    return [child, ...descendantElementsOf(child)]
+  })
+
+export const emptyStateOutsideNoDataSlotRule: TemplateRule = {
+  id: RULE_EMPTY_STATE_OUTSIDE_NO_DATA_SLOT,
+  check: ({ element }) => {
+    if (!isOneOfComponentTags(element.tag, NO_DATA_SLOT_COMPONENTS)) {
+      return []
+    }
+
+    return defaultSlotElements(element)
+      .filter((child) => isComponentTag(child.tag, EMPTY_STATE_COMPONENT))
+      .map((emptyState) => ({
+        ...positionOf(emptyState),
+        rule: RULE_EMPTY_STATE_OUTSIDE_NO_DATA_SLOT,
+        severity: SEVERITY_ERROR,
+        message: `\`SEmptyState\` in the default slot of \`${element.tag}\` is never rendered: its no-data content goes in the \`#${NO_DATA_SLOT_NAME}\` slot.`,
+        fixHint: `Wrap it in the slot template: \`<${element.tag} …><template #${NO_DATA_SLOT_NAME}><SEmptyState size="small" icon="mdi-inbox-outline" title="Nothing here yet" /></template></${element.tag}>\`.`,
+      }))
+  },
+}
+
 /** Rules about how components fit together, beyond what one component's API says. */
 export const compositionRules: TemplateRule[] = [
   activatorBindingRule,
@@ -378,4 +411,5 @@ export const compositionRules: TemplateRule[] = [
   noRawReplacementRule,
   avatarImageInSlotRule,
   avatarGroupChildRule,
+  emptyStateOutsideNoDataSlotRule,
 ]

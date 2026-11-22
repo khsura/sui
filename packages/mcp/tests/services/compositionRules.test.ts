@@ -272,4 +272,36 @@ describe('avatar composition rules', () => {
       expect(issuesOf('avatar-group-child', code)).toEqual([])
     })
   })
+
+  describe('empty-state-outside-no-data-slot', () => {
+    it.each([
+      ['STable', '<STable :headers="headers" :items="[]"><SEmptyState title="No orders" /></STable>'],
+      ['SSelect', '<SSelect :items="[]"><div><SEmptyState title="No warehouses" /></div></SSelect>'],
+      [
+        'SAutocomplete',
+        '<SAutocomplete :items="items"><template v-if="ready"><SEmptyState title="No match" /></template></SAutocomplete>',
+      ],
+    ])('flags an SEmptyState in the default slot of %s', (tag, code) => {
+      const issues = issuesOf('empty-state-outside-no-data-slot', code)
+
+      expect(issues).toHaveLength(1)
+      expect(issues[0].severity).toBe('error')
+      expect(issues[0].message).toContain(tag)
+      expect(issues[0].fixHint).toContain('#noData')
+    })
+
+    it.each([
+      [
+        'STable',
+        '<STable :headers="headers" :items="[]"><template #noData><SEmptyState size="small" title="No orders" /></template></STable>',
+      ],
+      [
+        'SSelect',
+        '<SSelect :items="[]"><template v-slot:noData><SEmptyState size="mini" title="No warehouses" /></template></SSelect>',
+      ],
+      ['an SEmptyState outside any of them', '<div><SEmptyState title="No orders" /></div>'],
+    ])('accepts %s with the noData slot', (_, code) => {
+      expect(issuesOf('empty-state-outside-no-data-slot', code)).toEqual([])
+    })
+  })
 })

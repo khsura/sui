@@ -199,6 +199,106 @@
       ]
     },
     {
+      "name": "SEmptyState",
+      "family": "core",
+      "file": "components/sEmptyState.vue",
+      "props": [
+        {
+          "name": "actionText",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Label of the built-in action button. The button is shown only when this is set; clicking it emits `action`."
+        },
+        {
+          "name": "color",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": "Colour of the icon only (preset name or CSS colour), not a background: an empty state has no background of its own."
+        },
+        {
+          "name": "icon",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Material Design icon shown above the title, such as `mdi-inbox-outline`. Ignored when `image` is set. Decorative: hidden from screen readers."
+        },
+        {
+          "name": "image",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Illustration URL shown above the title. Wins over `icon`. Decorative (`alt=\"\"`): put the meaning in `title` and `text`."
+        },
+        {
+          "name": "size",
+          "type": "SizePropertyType",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "default",
+            "extra",
+            "large",
+            "mini",
+            "small"
+          ]
+        },
+        {
+          "name": "text",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Supporting sentence under the title that says why it is empty or what to do next."
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        },
+        {
+          "name": "title",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Short headline, such as `No orders yet`. Rendered as text, not as a heading element."
+        }
+      ],
+      "slots": [
+        {
+          "name": "actions",
+          "type": "any",
+          "description": "Replaces the built-in action button, such as two SButtons or a link."
+        },
+        {
+          "name": "default",
+          "type": "any",
+          "description": "Extra content between the text and the actions."
+        },
+        {
+          "name": "media",
+          "type": "any",
+          "description": "Replaces the icon or image, such as an illustration component. Keep it decorative."
+        },
+        {
+          "name": "text",
+          "type": "any",
+          "description": "Replaces the `text` sentence."
+        },
+        {
+          "name": "title",
+          "type": "any",
+          "description": "Replaces the `title` text."
+        }
+      ],
+      "events": [
+        {
+          "name": "action",
+          "type": "[event: Event]",
+          "description": ""
+        }
+      ]
+    },
+    {
       "name": "SForm",
       "family": "form",
       "file": "components/form/sForm.vue",
@@ -858,6 +958,12 @@
           "description": ""
         },
         {
+          "name": "noDataText",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Message shown in the open menu when `items` is empty. Without it (and without the `noData` slot) an empty menu stays blank. Put an `SEmptyState` in the `noData` slot for an icon or an action."
+        },
+        {
           "name": "position",
           "type": "Position",
           "required": false,
@@ -891,6 +997,11 @@
           "name": "dropdownIcon",
           "type": "{ color: string | undefined; value: boolean | undefined; }",
           "description": ""
+        },
+        {
+          "name": "noData",
+          "type": "any",
+          "description": "Replaces `noDataText` when `items` is empty, such as an `SEmptyState`."
         }
       ],
       "events": [

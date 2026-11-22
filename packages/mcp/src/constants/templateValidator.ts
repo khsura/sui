@@ -85,6 +85,9 @@ export const RULE_AVATAR_TEXT_NOT_INITIALS = 'avatar-text-not-initials'
 export const RULE_AVATAR_GROUP_CHILD = 'avatar-group-child'
 export const RULE_PAGINATION_LENGTH_ROWS = 'pagination-length-rows'
 export const RULE_PAGINATION_ZERO_BASED = 'pagination-zero-based'
+export const RULE_EMPTY_STATE_ACTION_EVENT = 'empty-state-action-event'
+export const RULE_EMPTY_STATE_ACTION_WITHOUT_LISTENER = 'empty-state-action-without-listener'
+export const RULE_EMPTY_STATE_OUTSIDE_NO_DATA_SLOT = 'empty-state-outside-no-data-slot'
 
 /**
  * The first `@khsura/sui` release with the M2 hardening fixes (SForm `novalidate`, SCheckbox label with
@@ -265,3 +268,14 @@ export const PAGINATION_ROW_COUNT_EXPRESSION =
 export const PAGINATION_PAGE_MATH_EXPRESSION = /\/|\bceil\b/
 /** A 0-based model, such as STable's `pageIndex`, given to SPagination's 1-based `v-model`. */
 export const PAGINATION_ZERO_BASED_MODEL = /index$/i
+export const EMPTY_STATE_COMPONENT = 'SEmptyState'
+export const EMPTY_STATE_ACTION_TEXT_ATTRIBUTE = 'action-text'
+/** The event SEmptyState's built-in button emits. */
+export const EMPTY_STATE_ACTION_EVENT = 'action'
+/** The slot that replaces SEmptyState's built-in button. */
+export const EMPTY_STATE_ACTIONS_SLOT = 'actions'
+/** Listeners AI code writes for the action button: Vuetify's `click:action`, or a plain `click` on the whole block. */
+export const EMPTY_STATE_WRONG_ACTION_EVENTS = ['click:action', 'click']
+/** Components whose no-data state takes an SEmptyState through the `noData` slot, never the default slot. */
+export const NO_DATA_SLOT_COMPONENTS = ['STable', 'SSelect', 'SAutocomplete']
+export const NO_DATA_SLOT_NAME = 'noData'
