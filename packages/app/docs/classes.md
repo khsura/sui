@@ -390,7 +390,7 @@ Adds a Material Design box shadow. Maps to the same values as the `elevation` co
 
 | Class | CSS |
 |-------|-----|
-| `s_height--fill` | `height: 100%` |
+| `s_height--fill` | `height: 100%`. On a direct child of `SApp` it also sets `flex: 1 1 auto`, so the child fills the viewport-tall app (a percentage height of a `min-height` parent would resolve to auto) |
 | `s_width--fill` | `width: 100%` |
 
 ---
