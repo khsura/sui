@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/khsura/sui/compare/shared-v1.5.0...shared-v1.6.0) (2026-11-22)
+
+
+### Features
+
+* global config — typed component defaults, SDefaultsProvider, density (M4) ([cffa0ac](https://github.com/khsura/sui/commit/cffa0ac0928ffcf6a22046c617986c874241b954))
+
 ## [1.5.0](https://github.com/khsura/sui/compare/shared-v1.4.0...shared-v1.5.0) (2026-11-22)
 
 

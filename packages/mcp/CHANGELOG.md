@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/khsura/sui/compare/sui-mcp-v0.4.0...sui-mcp-v0.5.0) (2026-11-22)
+
+
+### Features
+
+* global config — typed component defaults, SDefaultsProvider, density (M4) ([cffa0ac](https://github.com/khsura/sui/commit/cffa0ac0928ffcf6a22046c617986c874241b954))
+
 ## [0.4.0](https://github.com/khsura/sui/compare/sui-mcp-v0.3.0...sui-mcp-v0.4.0) (2026-11-22)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.22.0](https://github.com/khsura/sui/compare/sui-v1.21.0...sui-v1.22.0) (2026-11-22)
+
+
+### Features
+
+* global config — typed component defaults, SDefaultsProvider, density (M4) ([cffa0ac](https://github.com/khsura/sui/commit/cffa0ac0928ffcf6a22046c617986c874241b954))
+
 ## [1.21.0](https://github.com/khsura/sui/compare/sui-v1.20.0...sui-v1.21.0) (2026-11-22)
 
 
