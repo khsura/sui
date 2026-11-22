@@ -411,3 +411,63 @@ describe('avatar-text-not-initials', () => {
     expect(issuesOf('avatar-text-not-initials', code)).toEqual([])
   })
 })
+
+describe('SPagination rules', () => {
+  describe('pagination-length-rows', () => {
+    const rule = 'pagination-length-rows'
+
+    it.each([
+      ['a page count', '<SPagination v-model="page" :length="pageCount" />'],
+      ['a division', '<SPagination v-model="page" :length="Math.ceil(items.length / perPage)" />'],
+      ['a literal', '<SPagination v-model="page" :length="10" />'],
+      ['a static attribute', '<SPagination v-model="page" length="10" />'],
+      ['totalPages', '<SPagination v-model="page" :length="totalPages" />'],
+      ['another component', '<STable :length="items.length" />'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it.each([
+      ['an array length', '<SPagination v-model="page" :length="items.length" />'],
+      ['a nested array length', '<SPagination v-model="page" :length="response.data.rows.length" />'],
+      ['totalItems', '<SPagination v-model="page" :length="totalItems" />'],
+      ['itemsCount', '<s-pagination v-model="page" :length="itemsCount" />'],
+    ])('reports %s', (_, code) => {
+      const [issue] = issuesOf(rule, code)
+
+      expect(issue).toMatchObject({ severity: 'warning', line: 1 })
+      expect(issue.fixHint).toContain('Math.ceil')
+    })
+  })
+
+  describe('pagination-zero-based', () => {
+    const rule = 'pagination-zero-based'
+
+    it.each([
+      ['a page ref', '<SPagination v-model="page" :length="10" />'],
+      ['a nested page', '<SPagination v-model="state.currentPage" :length="10" />'],
+      ['no model', '<SPagination :length="10" />'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it.each([
+      ['pageIndex', '<SPagination v-model="pageIndex" :length="10" />'],
+      ['a nested index', '<SPagination v-model="table.pageIndex" :length="10" />'],
+      ['a model-value index', '<SPagination :model-value="pageIndex" :length="10" />'],
+    ])('reports %s', (_, code) => {
+      const [issue] = issuesOf(rule, code)
+
+      expect(issue).toMatchObject({ severity: 'warning' })
+      expect(issue.fixHint).toContain('page.value - 1')
+    })
+  })
+
+  it('accepts a correct SPagination and rejects a misspelt prop', () => {
+    const valid = validateWith(fixtureApi, '<SPagination v-model="page" :length="pageCount" show-first-last-page />')
+    const misspelt = validateWith(fixtureApi, '<SPagination v-model="page" :length="pageCount" :total-visibl="5" />')
+
+    expect(valid).toEqual([])
+    expect(misspelt.map((issue) => issue.rule)).toContain('unknown-prop')
+  })
+})

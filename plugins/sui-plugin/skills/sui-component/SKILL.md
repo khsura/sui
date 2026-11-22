@@ -1,6 +1,6 @@
 ---
 name: sui-component
-description: Look up and use any component from @khsura/sui (SButton, SCard, SDialog, SMenu, STooltip, STable, SList, STabs, SStepper, SCarousel, SExpansionPanels, SDatePicker, SCalendar, SToggleButtonGroup, SSlideGroup, SToolbar, SSplitView, SDroppable, SBadge, SChip, SAvatar, SIcon, SImage, SAlert, SOverlay, …) in a Vue or Nuxt app. Use when writing or fixing template code with an S-prefixed component, choosing props/slots/events, debugging a SUI component that renders wrong or ignores a prop, or styling SUI components with theme colors. Loads one per-family reference file with the verified props table, slots, events, example and gotchas.
+description: Look up and use any component from @khsura/sui (SButton, SCard, SDialog, SMenu, STooltip, STable, SList, STabs, SStepper, SCarousel, SExpansionPanels, SDatePicker, SCalendar, SToggleButtonGroup, SSlideGroup, SToolbar, SSplitView, SDroppable, SBadge, SChip, SAvatar, SPagination, SIcon, SImage, SAlert, SOverlay, …) in a Vue or Nuxt app. Use when writing or fixing template code with an S-prefixed component, choosing props/slots/events, debugging a SUI component that renders wrong or ignores a prop, or styling SUI components with theme colors. Loads one per-family reference file with the verified props table, slots, events, example and gotchas.
 argument-hint: [component name or description of what you need]
 ---
 
@@ -43,6 +43,7 @@ All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `
 | `SList`, `SListItem`, `SListItemIcon`, `SListItemContent`, `SListItemTitle`, `SListItemSubtitle`, `SListItemAction`, `SListItemGroup` | [references/list.md](references/list.md) |
 | `SMenu` | [references/menu.md](references/menu.md) |
 | `SOverlay` | [references/overlay.md](references/overlay.md) |
+| `SPagination` | [references/pagination.md](references/pagination.md) |
 | `SProgressLinear`, `SProgressCircular` | [references/progress.md](references/progress.md) |
 | `SSheet` | [references/sheet.md](references/sheet.md) |
 | `SSlideGroup`, `SSlideItem` | [references/slide-group.md](references/slide-group.md) |
@@ -65,7 +66,7 @@ All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `
 | `SSkeletonLoader` | `SProgressCircular indeterminate` in a centered div |
 | `STextField` | `SInput` (single line) or `STextarea` (multi-line) |
 | `SCol` | `SColumn` |
-| `STablePagination` (not exported) | `STable`'s built-in pagination |
+| `STablePagination` (not exported) | `STable`'s built-in pagination, or `SPagination` for a standalone pager |
 | `SNavigationDrawer` inside a feature component | App shell only — use `<SDialog location="end">` for feature slide-in panels |
 
 ---

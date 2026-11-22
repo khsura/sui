@@ -119,6 +119,8 @@ The server sends these instructions when a client connects:
 | `card-title-text-align` | warning | An `s_textAlign__*` class on SCardTitle, which is a flex container, so the class has no effect. The fix hint names the matching `s_justify__*` class. Only before 1.20.0 (`fixedIn`). | — |
 | `date-picker-empty-string` | warning | An SDatePickerInput whose `v-model` / `:model-value` is `''`, or whose model starts as `''` in the SFC script (`x = ref('')`, `{ x: '' }`): the picker opens on "Invalid date". Start it as `null`. Only before 1.20.0 (`fixedIn`). | `validated-form` |
 | `fill-height-under-app` | warning | `s_height--fill` on a direct child of `SApp`: before 1.20.0 it resolves to the content height (SApp only has a min-height), so a card centred inside it sticks to the top. Points to the `centered-page` recipe. Skipped from `@khsura/sui` 1.20.0, where that child grows to fill SApp. |
+| `pagination-length-rows` | warning | `SPagination`'s `:length` bound to a row count (`items.length`, `totalItems`, `itemsCount`, …) with no division: `length` is the number of pages, so it would show one page per row. |
+| `pagination-zero-based` | warning | `SPagination`'s `v-model` bound to a name ending in `index` (such as STable's `pageIndex`): SPagination's page starts at 1. |
 
 Rules for behaviours that a component fix removed carry a `fixedIn` version: the engine skips them when the resolved `sui-api.json` version is that version or newer, so a project on an older `@khsura/sui` still gets the warning. A `version` that is not semver keeps every rule on.
 

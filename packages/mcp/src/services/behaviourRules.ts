@@ -33,6 +33,11 @@ import {
   MODEL_VALUE_ATTRIBUTE,
   NATIVE_VALIDATING_INPUT_TYPES,
   NO_VALIDATE_ATTRIBUTE,
+  PAGINATION_COMPONENT,
+  PAGINATION_LENGTH_ATTRIBUTE,
+  PAGINATION_PAGE_MATH_EXPRESSION,
+  PAGINATION_ROW_COUNT_EXPRESSION,
+  PAGINATION_ZERO_BASED_MODEL,
   RECIPE_ACTIVATOR_OVERLAYS,
   RECIPE_CENTERED_PAGE,
   RECIPE_FILTER_BAR,
@@ -48,6 +53,8 @@ import {
   RULE_FILL_HEIGHT_UNDER_APP,
   RULE_HIDE_DETAILS_HIDES_LABEL,
   RULE_NATIVE_VALIDATION_IN_FORM,
+  RULE_PAGINATION_LENGTH_ROWS,
+  RULE_PAGINATION_ZERO_BASED,
   RULE_SNACKBAR_ACTION_CONTRAST,
   RULE_TARGET_ANY_ELEMENT,
   SEVERITY_WARNING,
@@ -398,6 +405,66 @@ export const datePickerEmptyStringRule: TemplateRule = {
   },
 }
 
+export const paginationLengthRowsRule: TemplateRule = {
+  id: RULE_PAGINATION_LENGTH_ROWS,
+  check: ({ element }) => {
+    const length = isComponentTag(element.tag, PAGINATION_COMPONENT)
+      ? findPropAttribute(element, PAGINATION_LENGTH_ATTRIBUTE)
+      : undefined
+
+    const source = length && isDirective(length.node) ? expressionSource(length.node) : undefined
+
+    if (
+      !length ||
+      source === undefined ||
+      !PAGINATION_ROW_COUNT_EXPRESSION.test(source) ||
+      PAGINATION_PAGE_MATH_EXPRESSION.test(source)
+    ) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(length.node),
+        rule: RULE_PAGINATION_LENGTH_ROWS,
+        severity: SEVERITY_WARNING,
+        message: `\`:length="${source}"\` on \`SPagination\` looks like a number of rows, but \`length\` is the number of pages: it would show one page per row.`,
+        fixHint:
+          'Pass the page count: `const pageCount = computed(() => Math.ceil(totalItems.value / itemsPerPage))`, then `<SPagination v-model="page" :length="pageCount" />`.',
+      },
+    ]
+  },
+}
+
+export const paginationZeroBasedRule: TemplateRule = {
+  id: RULE_PAGINATION_ZERO_BASED,
+  check: ({ element }) => {
+    const binding = isComponentTag(element.tag, PAGINATION_COMPONENT) ? modelBinding(element) : undefined
+    const source = binding && isDirective(binding) ? expressionSource(binding) : undefined
+    const lastSegment = source?.trim().split(MODEL_PATH_SEPARATOR).at(-1)
+
+    if (
+      !binding ||
+      !source ||
+      !MODEL_PATH_PATTERN.test(source) ||
+      !PAGINATION_ZERO_BASED_MODEL.test(lastSegment ?? '')
+    ) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(binding),
+        rule: RULE_PAGINATION_ZERO_BASED,
+        severity: SEVERITY_WARNING,
+        message: `\`${source}\` looks like a 0-based index (such as STable's \`pageIndex\`), but \`SPagination\`'s \`v-model\` is the page number starting at 1: page 1 would show as page 2.`,
+        fixHint:
+          'Keep a 1-based `page` ref for SPagination and derive the index where you need it: `const pageIndex = computed(() => page.value - 1)`.',
+      },
+    ]
+  },
+}
+
 /** Rules about behaviour and styling misuses that the component API alone cannot catch. */
 export const fillHeightUnderAppRule: TemplateRule = {
   id: RULE_FILL_HEIGHT_UNDER_APP,
@@ -462,4 +529,6 @@ export const behaviourRules: TemplateRule[] = [
   datePickerEmptyStringRule,
   fillHeightUnderAppRule,
   avatarTextNotInitialsRule,
+  paginationLengthRowsRule,
+  paginationZeroBasedRule,
 ]

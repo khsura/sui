@@ -83,6 +83,8 @@ export const RULE_FILL_HEIGHT_UNDER_APP = 'fill-height-under-app'
 export const RULE_AVATAR_IMAGE_IN_SLOT = 'avatar-image-in-slot'
 export const RULE_AVATAR_TEXT_NOT_INITIALS = 'avatar-text-not-initials'
 export const RULE_AVATAR_GROUP_CHILD = 'avatar-group-child'
+export const RULE_PAGINATION_LENGTH_ROWS = 'pagination-length-rows'
+export const RULE_PAGINATION_ZERO_BASED = 'pagination-zero-based'
 
 /**
  * The first `@khsura/sui` release with the M2 hardening fixes (SForm `novalidate`, SCheckbox label with
@@ -254,3 +256,12 @@ export const AVATAR_MAX_INITIALS = 3
 export const WHITESPACE_CHARACTER_PATTERN = /\s/
 /** Children an SAvatarGroup accepts besides SAvatar: a `<slot>` that passes avatars through. */
 export const AVATAR_GROUP_PASSTHROUGH_TAGS = ['slot']
+export const PAGINATION_COMPONENT = 'SPagination'
+export const PAGINATION_LENGTH_ATTRIBUTE = 'length'
+/** A `:length` that counts rows, not pages: `items.length`, `rows.size`, `totalItems`, `itemsCount`, … */
+export const PAGINATION_ROW_COUNT_EXPRESSION =
+  /(?:\.(?:length|size)|^(?:total|totalItems|totalRows|totalCount|totalRecords|itemsCount|itemCount|rowCount|rowsCount))\s*$/
+/** Signs that the expression already divides rows into pages: `Math.ceil(total / perPage)`, `total / 20`. */
+export const PAGINATION_PAGE_MATH_EXPRESSION = /\/|\bceil\b/
+/** A 0-based model, such as STable's `pageIndex`, given to SPagination's 1-based `v-model`. */
+export const PAGINATION_ZERO_BASED_MODEL = /index$/i

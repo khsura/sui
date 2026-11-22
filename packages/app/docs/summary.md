@@ -38,6 +38,7 @@ Quick reference for all components in the `@khsura/sui` package.
 | `SToolbar`, `SToolbarTitle`, `SToolbarItem` | `import { SToolbar, SToolbarTitle, SToolbarItem } from '@khsura/sui'` | [toolbar.md](./components/toolbar.md) |
 | `SSlideGroup`, `SSlideItem` | `import { SSlideGroup, SSlideItem } from '@khsura/sui'` | [slide-group.md](./components/slide-group.md) |
 | `SToggleButtonGroup`, `SToggleButton` | `import { SToggleButtonGroup, SToggleButton } from '@khsura/sui'` | [toggle-button-group.md](./components/toggle-button-group.md) |
+| `SPagination` | `import { SPagination } from '@khsura/sui'` | [pagination.md](./components/pagination.md) |
 
 ---
 
