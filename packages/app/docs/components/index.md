@@ -82,6 +82,7 @@ This directory contains per-component documentation optimized for Claude AI codi
 | File | Components |
 |------|-----------|
 | [layout.md](./layout.md) | `SLayout`, `SAppBar`, `SAppBarTitle`, `SNavigationDrawer`, `SMain`, `SFooter`, `SBottomNavigation`, `SContainer`, `SRow`, `SColumn`, `SSpacer` |
+| [defaults-provider.md](./defaults-provider.md) | `SDefaultsProvider` (scoped component defaults for a subtree) |
 
 ### Input / Upload
 | File | Components |

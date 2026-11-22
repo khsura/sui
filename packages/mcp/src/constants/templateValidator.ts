@@ -118,6 +118,7 @@ export const RECIPE_THEME_SETUP = 'theme-setup'
 export const RECIPE_FILTER_BAR = 'filter-bar'
 export const RECIPE_CENTERED_PAGE = 'centered-page'
 export const RECIPE_TABBED_SECTIONS = 'tabbed-sections'
+export const RECIPE_DENSE_TOOLBAR = 'dense-toolbar'
 
 export const ACTIVATOR_SLOT_NAME = 'activator'
 export const ACTIVATOR_ON_KEY = 'on'
