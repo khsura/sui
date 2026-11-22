@@ -25,6 +25,8 @@ import {
   INPUT_TYPE_ATTRIBUTE,
   INPUT_TYPE_NUMBER,
   LABEL_ATTRIBUTE,
+  LABEL_WORD_MIN_LENGTH,
+  LABEL_WORD_PATTERN,
   LABELLED_FIELD_COMPONENTS,
   MIN_BLOCK_BUTTONS_IN_ROW,
   MODEL_NAME_PLACEHOLDER,
@@ -38,6 +40,7 @@ import {
   PAGINATION_PAGE_MATH_EXPRESSION,
   PAGINATION_ROW_COUNT_EXPRESSION,
   PAGINATION_ZERO_BASED_MODEL,
+  PLACEHOLDER_ATTRIBUTE,
   RECIPE_ACTIVATOR_OVERLAYS,
   RECIPE_CENTERED_PAGE,
   RECIPE_FILTER_BAR,
@@ -51,6 +54,7 @@ import {
   RULE_DATE_PICKER_EMPTY_STRING,
   RULE_FIELD_BUTTON_ROW,
   RULE_FILL_HEIGHT_UNDER_APP,
+  RULE_HIDDEN_LABEL_NO_VISIBLE_NAME,
   RULE_HIDE_DETAILS_HIDES_LABEL,
   RULE_NATIVE_VALIDATION_IN_FORM,
   RULE_PAGINATION_LENGTH_ROWS,
@@ -519,9 +523,60 @@ export const avatarTextNotInitialsRule: TemplateRule = {
   },
 }
 
+const labelWordsOf = (text: string): string[] =>
+  (text.toLocaleLowerCase().match(LABEL_WORD_PATTERN) ?? []).filter((word) => word.length >= LABEL_WORD_MIN_LENGTH)
+
+/**
+ * `hide-details` on a text field hides its `label` by design (it becomes the input's `aria-label`), so on screen only
+ * the placeholder or a slot can say what the field is for. Warn when nothing visible does: no placeholder, or one that
+ * shares no word with the label (`label="Search by name" placeholder="e.g. Anna"`). Bound values and slot content are
+ * trusted.
+ */
+export const hiddenLabelNoVisibleNameRule: TemplateRule = {
+  id: RULE_HIDDEN_LABEL_NO_VISIBLE_NAME,
+  check: ({ element }) => {
+    const hideDetails = findPropAttribute(element, HIDE_DETAILS_ATTRIBUTE)
+    const label = findAttribute(element, LABEL_ATTRIBUTE)?.staticValue
+
+    if (
+      !isOneOfComponentTags(element.tag, LABELLED_FIELD_COMPONENTS) ||
+      !hideDetails ||
+      !isBooleanPropOn(element, HIDE_DETAILS_ATTRIBUTE) ||
+      !label ||
+      childElementsOf(element).length > 0
+    ) {
+      return []
+    }
+
+    const placeholder = findAttribute(element, PLACEHOLDER_ATTRIBUTE)
+
+    if (placeholder && placeholder.staticValue === undefined) {
+      return []
+    }
+
+    const placeholderWords = labelWordsOf(placeholder?.staticValue ?? '')
+
+    if (labelWordsOf(label).some((word) => placeholderWords.includes(word))) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(hideDetails.node),
+        rule: RULE_HIDDEN_LABEL_NO_VISIBLE_NAME,
+        severity: SEVERITY_WARNING,
+        message: `\`hide-details\` on \`${element.tag}\` hides \`label="${label}"\` (it becomes the input's \`aria-label\`), and nothing visible names the field: ${placeholder ? `the placeholder "${placeholder.staticValue}" doesn't say what it is for` : 'it has no placeholder'}.`,
+        fixHint: `Keep the label visible by dropping \`hide-details\` (inside \`SFormRow\` the field still lines up with its buttons), or give it a placeholder that names it, e.g. \`placeholder="${label}"\`.`,
+        recipe: RECIPE_FILTER_BAR,
+      },
+    ]
+  },
+}
+
 export const behaviourRules: TemplateRule[] = [
   nativeValidationInFormRule,
   hideDetailsHidesLabelRule,
+  hiddenLabelNoVisibleNameRule,
   snackbarActionContrastRule,
   blockButtonsInRowRule,
   fieldButtonRowRule,

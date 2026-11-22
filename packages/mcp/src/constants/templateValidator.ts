@@ -85,6 +85,7 @@ export const RULE_AVATAR_TEXT_NOT_INITIALS = 'avatar-text-not-initials'
 export const RULE_AVATAR_GROUP_CHILD = 'avatar-group-child'
 export const RULE_PAGINATION_LENGTH_ROWS = 'pagination-length-rows'
 export const RULE_PAGINATION_ZERO_BASED = 'pagination-zero-based'
+export const RULE_HIDDEN_LABEL_NO_VISIBLE_NAME = 'hidden-label-no-visible-name'
 
 /**
  * The first `@khsura/sui` release with the M2 hardening fixes (SForm `novalidate`, SCheckbox label with
@@ -172,6 +173,10 @@ export const NO_VALIDATE_ATTRIBUTE = 'novalidate'
 
 export const HIDE_DETAILS_ATTRIBUTE = 'hide-details'
 export const LABEL_ATTRIBUTE = 'label'
+export const PLACEHOLDER_ATTRIBUTE = 'placeholder'
+/** Words shorter than this (`by`, `of`, `e.g`) don't count when matching a placeholder against its label. */
+export const LABEL_WORD_MIN_LENGTH = 3
+export const LABEL_WORD_PATTERN = /[\p{L}\p{N}]+/gu
 /** Inputs whose only visible text is the `label` prop, which `hide-details` hides as well. */
 export const HIDE_DETAILS_LABEL_COMPONENTS = ['SCheckbox']
 
