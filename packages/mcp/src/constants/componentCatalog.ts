@@ -24,6 +24,7 @@ export const DEFAULT_FAMILY_PURPOSE = 'SUI component'
 export const FAMILY_PURPOSES = {
   core: 'core UI building block',
   layout: 'app shell layout (SLayout and its named regions)',
+  avatar: 'user avatar (image, initials or icon) or an overlapping group of them',
   badge: 'status badge overlay',
   calendar: 'calendar view',
   cards: 'card container or one of its sections',

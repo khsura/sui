@@ -62,7 +62,6 @@ describe('other-library component aliases', () => {
     ['STabPanels', ['SWindow']],
     ['STabPanel', ['SWindowItem']],
     ['STabPane', ['STab', 'SWindowItem']],
-    ['SAvatar', []],
     ['SModal', ['SDialog']],
     ['SDrawer', ['SNavigationDrawer']],
     ['SHeader', ['SAppBar']],
@@ -110,20 +109,13 @@ describe('other-library component aliases', () => {
     expect(!lookup.found && lookup.alias?.suiNames.length).toBe(1)
   })
 
-  it('says SAvatar is not available yet and gives a workaround', () => {
-    const lookup = fullCatalog.findComponent('SAvatar')
-
-    expect(!lookup.found && lookup.alias?.hint).toContain('M3')
-    expect(!lookup.found && lookup.alias?.hint).toContain('SImage')
-  })
-
   it('keeps the alias targets out of the Levenshtein suggestions', () => {
     const lookup = fullCatalog.findComponent('SCol')
 
     expect(!lookup.found && lookup.suggestions).not.toContain('SColumn')
   })
 
-  it.each(['SAvatar', 'SCol'])('stops applying %s once the real component exists', (name) => {
+  it.each(['SModal', 'SCol'])('stops applying %s once the real component exists', (name) => {
     const lookup = useComponentCatalogService(withComponents(fullApi, [name])).findComponent(name)
 
     expect(lookup.found && lookup.component.name).toBe(name)

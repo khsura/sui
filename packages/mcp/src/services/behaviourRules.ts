@@ -2,6 +2,9 @@ import type { ElementNode } from '@vue/compiler-dom'
 import type { TemplateIssue, TemplateRule } from '../types'
 import {
   APP_COMPONENT,
+  AVATAR_COMPONENT,
+  AVATAR_MAX_INITIALS,
+  AVATAR_TEXT_ATTRIBUTE,
   BLOCK_ATTRIBUTE,
   BUTTON_COMPONENT,
   CARD_TITLE_COMPONENT,
@@ -37,6 +40,7 @@ import {
   RECIPE_VALIDATED_FORM,
   REGEX_ESCAPE_REPLACEMENT,
   REGEX_SPECIAL_CHARACTERS,
+  RULE_AVATAR_TEXT_NOT_INITIALS,
   RULE_BLOCK_BUTTONS_IN_ROW,
   RULE_CARD_TITLE_TEXT_ALIGN,
   RULE_DATE_PICKER_EMPTY_STRING,
@@ -61,6 +65,7 @@ import {
   TEXT_ALIGN_JUSTIFY_CLASSES,
   TEXT_BUTTON_VARIANT,
   VARIANT_ATTRIBUTE,
+  WHITESPACE_CHARACTER_PATTERN,
 } from '../constants'
 import { getHexContrastRatio, isVersionAtLeast } from '../lib'
 import {
@@ -415,6 +420,38 @@ export const fillHeightUnderAppRule: TemplateRule = {
   },
 }
 
+export const avatarTextNotInitialsRule: TemplateRule = {
+  id: RULE_AVATAR_TEXT_NOT_INITIALS,
+  check: ({ element }) => {
+    const textAttribute = isComponentTag(element.tag, AVATAR_COMPONENT)
+      ? findAttribute(element, AVATAR_TEXT_ATTRIBUTE)
+      : undefined
+
+    const text = textAttribute?.staticValue?.trim()
+
+    if (!textAttribute || !text || (text.length <= AVATAR_MAX_INITIALS && !WHITESPACE_CHARACTER_PATTERN.test(text))) {
+      return []
+    }
+
+    const initials = text
+      .split(WHITESPACE_CHARACTER_PATTERN)
+      .filter(Boolean)
+      .map((word) => word.charAt(0).toUpperCase())
+      .join('')
+      .slice(0, AVATAR_MAX_INITIALS)
+
+    return [
+      {
+        ...positionOf(textAttribute.node),
+        rule: RULE_AVATAR_TEXT_NOT_INITIALS,
+        severity: SEVERITY_WARNING,
+        message: `\`text="${text}"\` on \`SAvatar\` is not initials: the avatar is a fixed-size circle, so a name is clipped to its first letters.`,
+        fixHint: `Pass the initials and put the name in \`alt\`: \`<SAvatar text="${initials}" alt="${text}" />\`.`,
+      },
+    ]
+  },
+}
+
 export const behaviourRules: TemplateRule[] = [
   nativeValidationInFormRule,
   hideDetailsHidesLabelRule,
@@ -424,4 +461,5 @@ export const behaviourRules: TemplateRule[] = [
   cardTitleTextAlignRule,
   datePickerEmptyStringRule,
   fillHeightUnderAppRule,
+  avatarTextNotInitialsRule,
 ]

@@ -389,3 +389,25 @@ describe('behaviour rules', () => {
     })
   })
 })
+
+describe('avatar-text-not-initials', () => {
+  it.each([
+    ['a full name', '<SAvatar text="Jane Doe" />', 'text="JD" alt="Jane Doe"'],
+    ['a long word', '<s-avatar text="Administrator" />', 'text="A" alt="Administrator"'],
+    ['a bound literal', `<SAvatar :text="'Bat Erdene Munkh Ochir'" />`, 'text="BEM"'],
+  ])('flags %s', (_, code, fix) => {
+    const issues = issuesOf('avatar-text-not-initials', code)
+
+    expect(issues).toHaveLength(1)
+    expect(issues[0].fixHint).toContain(fix)
+  })
+
+  it.each([
+    ['initials', '<SAvatar text="JD" />'],
+    ['three letters', '<SAvatar text="ABC" />'],
+    ['a bound expression', '<SAvatar :text="user.initials" />'],
+    ['another component', '<SChip text="Jane Doe" />'],
+  ])('accepts %s', (_, code) => {
+    expect(issuesOf('avatar-text-not-initials', code)).toEqual([])
+  })
+})
