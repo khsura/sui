@@ -40,7 +40,7 @@ Vue 3.5.40 and older have a template compiler bug (fixed in vuejs/core#11682). I
 <section v-for="section in sections" v-show="activeTab === section.key" :key="section.key">
 ```
 
-Upgrade Vue. If you can't, render the panels with `SWindow` / `SWindowItem` bound to the same model, or move `:key` to a wrapping `<template v-for="section in sections" :key="section.key">` and keep `v-show` on the element inside it.
+Upgrade Vue. If you can't, render the panels with `SWindow` / `SWindowItem` bound to the same model (it sizes itself to the active panel; on `@khsura/sui` 1.19.0 and earlier give `SWindow` a `height` or it renders at 0 height), or move `:key` to a wrapping `<template v-for="section in sections" :key="section.key">` and keep `v-show` on the element inside it.
 
 ---
 

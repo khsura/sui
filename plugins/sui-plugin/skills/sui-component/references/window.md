@@ -87,6 +87,11 @@ None.
 
 - `value`: Identifier matched against the window's `v-model`
 
+**Sizing**
+
+- Without a `height`, `SWindow` takes the height of the active `SWindowItem`, so tab panels need no height. Set `height` only when every panel must be the same size (for example a fixed-height slideshow).
+- `@khsura/sui` 1.19.0 and earlier rendered a window without `height` at 0 height (all items were absolutely positioned). On those versions set a `height`, or use `v-show` panels instead.
+
 ## Template ref
 
 The component also exposes `goNext()` and `goPrev()` through a template ref.

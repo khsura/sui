@@ -48,6 +48,7 @@ const canDisplay = computed(() => {
 const classes = computed(() => {
   return {
     s_windowItem: true,
+    's_windowItem--active': isSelected.value,
     [windowProps?.selectedClass ?? '']: isSelected.value && !!windowProps?.selectedClass,
     's_windowItem--noTransition': windowProps?.noAnimation,
   }
@@ -75,10 +76,19 @@ const styles = computed(() => {
 </script>
 <style lang="scss">
 .s_windowItem {
+  // Neighbours (the leaving item and the off-screen siblings) overlay the active one.
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   transition: $s_windowItemTransition;
+
+  // The active item stays in normal flow so SWindow sizes itself to it when no height is set.
+  // With a height on SWindow, `height: 100%` still fills it as before.
+  &--active {
+    position: relative;
+  }
 
   &--noTransition {
     transition: none;
