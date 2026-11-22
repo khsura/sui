@@ -132,5 +132,6 @@ const slides = [
 - `SCarousel` is built on top of `SWindow` — use `SCarousel` for image slideshows and `SWindow` for content/step wizards.
 - On mount the window shows the item whose `value` matches `v-model`; when the model names no item, it selects the first item and emits its `value`.
 - `continuous` enables looping navigation; without it the prev/next arrows disappear at the first/last item.
+- With no `height`, `SWindow` sizes itself to the active item: the active `SWindowItem` stays in normal flow and only the neighbouring items (the one sliding out, and the off-screen siblings) are absolutely positioned. Setting `height` still gives every item that fixed height. On `@khsura/sui` 1.19.0 and earlier every item was absolutely positioned, so a window without a `height` rendered at 0 height there.
 - `touch` is off by default on `SWindow` (SCarousel turns it on).
 - Use the `prev`/`next` slots to replace the default arrow buttons with custom controls.
