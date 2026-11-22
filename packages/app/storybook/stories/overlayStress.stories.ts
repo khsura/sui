@@ -21,6 +21,8 @@ import {
   SSpacer,
   STooltip,
 } from '@/app/index'
+import { minimumTextContrast } from '@/app/constants'
+import { getContrastRatio } from '@/app/lib/color'
 import { assertNoListMarkers } from '@/app/storybook/helpers'
 
 // Stress cases for the overlay components. Each story groups several cases so the visual harness stays fast,
@@ -42,6 +44,10 @@ const wrappedTooltipMinHeight = 30
 const dialogMaxWidth = 420
 // Sub-pixel rounding allowed in the geometry checks.
 const pixelTolerance = 1
+// Text colour actions in the snackbar colour story: a preset text colour, the `primary` preset and no colour.
+const snackbarActionColors = ['warning', 'primary', undefined]
+// `rgb(r, g, b)` / `rgba(r, g, b, a)` from getComputedStyle: the three channels.
+const computedRgbPattern = /rgba?\((\d+),\s*(\d+),\s*(\d+)/
 
 // Each item has a real icon: a dot-shaped icon (mdi-circle-small) reads as a list bullet in the screenshots.
 const menuItems = [
@@ -597,5 +603,84 @@ export const SnackbarActions = {
     }
 
     await expect(getComputedStyle(action).color).toBe(getComputedStyle(wrapper).color)
+  },
+} satisfies StoryObj
+
+const parseComputedRgb = (color: string): [number, number, number] => {
+  const match = computedRgbPattern.exec(color)
+
+  if (!match) {
+    throw new Error(`cannot parse computed colour ${color}`)
+  }
+
+  return [Number(match[1]), Number(match[2]), Number(match[3])]
+}
+
+// The snackbar is dark in both themes. Text actions with a preset colour (`warning`, `primary`) and without one
+// must all reach 4.5:1 on it: preset text colours inside the snackbar use variants tuned for the snackbar, not the
+// darker light-theme variants tuned for the page (`warning` used to be rgb(112, 106, 82), 1.85:1).
+export const SnackbarActionColors = {
+  tags: ['visual'],
+  render: () => ({
+    components: overlayComponents,
+    setup() {
+      const isSnackbarOpen = ref(false)
+
+      onMounted(async () => {
+        await nextTick()
+        isSnackbarOpen.value = true
+      })
+
+      return { isSnackbarOpen, snackbarActionColors }
+    },
+    template: /* html */ `
+      <div style="height: 100vh;">
+        <SSnackbar v-model="isSnackbarOpen">
+          Message archived
+          <template #action>
+            <SButton
+              v-for="color in snackbarActionColors"
+              :key="color ?? 'default'"
+              variant="text"
+              :color="color"
+              class="stress-snackbar-color-action"
+            >
+              {{ color ?? 'Undo' }}
+            </SButton>
+          </template>
+        </SSnackbar>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument
+
+    const wrapper = await waitFor(async () => {
+      const element = ownerDocument.querySelector('.s_snackbar__wrapper')
+
+      await expect(element).toBeVisible()
+
+      return element
+    })
+
+    if (!wrapper) {
+      throw new Error('snackbar not found')
+    }
+
+    const background = parseComputedRgb(getComputedStyle(wrapper).backgroundColor)
+    const actions = ownerDocument.querySelectorAll('.stress-snackbar-color-action')
+
+    await expect(actions).toHaveLength(snackbarActionColors.length)
+
+    // waitFor: the button's colour transition must settle before its colour is final.
+    await waitFor(async () => {
+      for (const action of actions) {
+        const contrast = getContrastRatio(parseComputedRgb(getComputedStyle(action).color), background) ?? 0
+
+        await expect(contrast, `${action.textContent?.trim()} action contrast`).toBeGreaterThanOrEqual(
+          minimumTextContrast,
+        )
+      }
+    })
   },
 } satisfies StoryObj
