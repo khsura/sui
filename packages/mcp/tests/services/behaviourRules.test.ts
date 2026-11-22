@@ -353,6 +353,24 @@ describe('behaviour rules', () => {
     })
   })
 
+  describe('tabs-in-slide-group', () => {
+    const rule = 'tabs-in-slide-group'
+
+    it.each([
+      ['STabs on its own', '<STabs v-model="tab"><STab :tab="0">A</STab></STabs>'],
+      ['SSlideGroup without tabs', '<SSlideGroup><SSlideItem>A</SSlideItem></SSlideGroup>'],
+      ['STabs beside an SSlideGroup', '<div><SSlideGroup /><STabs v-model="tab" /></div>'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it('reports STabs wrapped in SSlideGroup', () => {
+      const [issue] = issuesOf(rule, '<SSlideGroup>\n  <div>\n    <STabs v-model="tab" />\n  </div>\n</SSlideGroup>')
+
+      expect(issue).toMatchObject({ severity: 'warning', line: 3, column: 5, recipe: 'tabbed-sections' })
+    })
+  })
+
   describe('row-inset-from-text', () => {
     const rule = 'row-inset-from-text'
     const columns = '<SColumn :cols="6">A</SColumn><SColumn :cols="6">B</SColumn>'

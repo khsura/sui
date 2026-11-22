@@ -8,6 +8,7 @@ export const RECIPE_NAMES = [
   'theme-setup',
   'filter-bar',
   'centered-page',
+  'tabbed-sections',
 ] as const
 
 export const RECIPES_DIRNAME = 'recipes'

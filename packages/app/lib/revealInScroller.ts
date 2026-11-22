@@ -23,3 +23,19 @@ export const getScrollLeftToReveal = (scroller: HorizontalEdges, item: Horizonta
 
   return scrollLeft
 }
+
+/** The scroll metrics of a horizontal scroller (a subset of HTMLElement). */
+export interface HorizontalScrollMetrics {
+  scrollLeft: number
+  scrollWidth: number
+  clientWidth: number
+}
+
+/**
+ * Which ends of a horizontal scroller hide content: `start` when it is scrolled away from the left edge,
+ * `end` when more content lies past the right edge. `tolerance` absorbs sub-pixel rounding.
+ */
+export const getHiddenScrollEdges = (metrics: HorizontalScrollMetrics, tolerance: number) => ({
+  start: metrics.scrollLeft > tolerance,
+  end: metrics.scrollLeft + metrics.clientWidth < metrics.scrollWidth - tolerance,
+})

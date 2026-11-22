@@ -99,6 +99,10 @@ import {
   TEXT_BUTTON_VARIANT,
   VARIANT_ATTRIBUTE,
   WHITESPACE_CHARACTER_PATTERN,
+  RECIPE_TABBED_SECTIONS,
+  RULE_TABS_IN_SLIDE_GROUP,
+  SLIDE_GROUP_COMPONENT,
+  TABS_COMPONENT,
   GRID_ROW_COMPONENT,
   HORIZONTAL_INSET_CLASS_PATTERN,
   ROW_GAP_PROP,
@@ -826,6 +830,32 @@ export const numberInputPreferredRule: TemplateRule = {
   },
 }
 
+// STabs already scrolls its own row (with an edge fade and scroll arrows); inside SSlideGroup the two
+// scrollers fight and the tabs' own arrows end up clipped.
+export const tabsInSlideGroupRule: TemplateRule = {
+  id: RULE_TABS_IN_SLIDE_GROUP,
+  check: ({ element, ancestors }) => {
+    if (
+      !isComponentTag(element.tag, TABS_COMPONENT) ||
+      !ancestors.some((ancestor) => isComponentTag(ancestor.tag, SLIDE_GROUP_COMPONENT))
+    ) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(element),
+        rule: RULE_TABS_IN_SLIDE_GROUP,
+        severity: SEVERITY_WARNING,
+        message:
+          '`STabs` inside `SSlideGroup`: STabs already keeps its tabs on one row that scrolls sideways, with an edge fade and scroll arrows when they do not fit.',
+        fixHint: 'Remove the `SSlideGroup` wrapper and use `<STabs v-model>` with `<STab :tab>` children directly.',
+        recipe: RECIPE_TABBED_SECTIONS,
+      },
+    ]
+  },
+}
+
 export const behaviourRules: TemplateRule[] = [
   nativeValidationInFormRule,
   hideDetailsHidesLabelRule,
@@ -845,4 +875,5 @@ export const behaviourRules: TemplateRule[] = [
   emptyStateActionWithoutListenerRule,
   rowInsetFromTextRule,
   numberInputPreferredRule,
+  tabsInSlideGroupRule,
 ]

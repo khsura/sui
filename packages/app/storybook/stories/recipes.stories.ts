@@ -8,6 +8,7 @@ import {
   DataTableRecipe,
   FilterBarRecipe,
   ResponsiveGridRecipe,
+  TabbedSectionsRecipe,
   ThemeSetupRecipe,
   ValidatedFormRecipe,
 } from '@/app/storybook/recipes'
@@ -112,6 +113,7 @@ export const ResponsiveGrid: StoryObj = {
   },
 }
 export const ThemeSetup = recipeStory(ThemeSetupRecipe)
+export const TabbedSections = recipeStory(TabbedSectionsRecipe)
 
 // Allowed distance (px) between the card's vertical centre and the viewport's.
 const CENTRE_TOLERANCE = 2

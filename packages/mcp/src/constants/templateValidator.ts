@@ -94,6 +94,7 @@ export const RULE_EMPTY_STATE_OUTSIDE_NO_DATA_SLOT = 'empty-state-outside-no-dat
 export const RULE_NUMBER_INPUT_PREFERRED = 'number-input-preferred'
 export const RULE_RAW_FILE_INPUT = 'raw-file-input'
 export const RULE_FILE_INPUT_CHANGE_EVENT = 'file-input-change-event'
+export const RULE_TABS_IN_SLIDE_GROUP = 'tabs-in-slide-group'
 export const RULE_ROW_INSET_FROM_TEXT = 'row-inset-from-text'
 
 /**
@@ -116,6 +117,7 @@ export const RECIPE_RESPONSIVE_GRID = 'responsive-grid'
 export const RECIPE_THEME_SETUP = 'theme-setup'
 export const RECIPE_FILTER_BAR = 'filter-bar'
 export const RECIPE_CENTERED_PAGE = 'centered-page'
+export const RECIPE_TABBED_SECTIONS = 'tabbed-sections'
 
 export const ACTIVATOR_SLOT_NAME = 'activator'
 export const ACTIVATOR_ON_KEY = 'on'
@@ -127,6 +129,8 @@ export const SLOTLESS_ACTIVATOR_COMPONENTS = ['STooltip']
 export const DIRECTIVE_ON = 'on'
 
 export const APP_COMPONENT = 'SApp'
+export const TABS_COMPONENT = 'STabs'
+export const SLIDE_GROUP_COMPONENT = 'SSlideGroup'
 /** `height: 100%`; a direct child of SApp with it grows into SApp's flex column (since 1.20.0). */
 export const HEIGHT_FILL_CLASS = 's_height--fill'
 export const LAYOUT_COMPONENT = 'SLayout'
