@@ -26,7 +26,8 @@ export type PropsAutocomplete<T extends boolean = false> = {
   /** @description by default, the filter mode is 'contains' */
   filterMode?: 'start' | 'contains' | 'exact' | 'none' | undefined
   debounce?: number
-  // noDataText?: string
+  /** Message shown in the open menu when no item matches the query (and there is no "Add" option). Without it (and without the `noData` slot) the menu stays blank. Put an `SEmptyState` in the `noData` slot for an icon or an action. */
+  noDataText?: string | undefined
   // noFilter?: boolean
 
   // Selection behavior

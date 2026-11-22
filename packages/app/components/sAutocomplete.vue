@@ -136,13 +136,17 @@
               <span></span>
             </SListItem>
           </SList>
+          <!-- Outside the listbox: it is a message, not an option. role="status" announces it while typing. -->
+          <div v-if="showNoData" class="s_autocomplete__noData" role="status">
+            <NoDataContent></NoDataContent>
+          </div>
         </SCard>
       </OnClickOutside>
     </SOverlay>
   </div>
 </template>
 <script lang="ts" setup generic="T extends boolean = false">
-import { computed, nextTick, useId, useTemplateRef, watch } from 'vue'
+import { computed, nextTick, useId, useTemplateRef, watch, type VNode, type VNodeChild } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
 import { getSelectItem } from '../helpers'
 import type { AutocompleteEmitEvents, AutocompleteModelType, AutocompleteModelTypeBase } from '../types/autocomplete'
@@ -224,6 +228,17 @@ updateItemsPool(props.items ?? [])
 
 // The "Add …" option counts as one more option after the filtered items.
 const optionCount = computed(() => filteredItems.value.length + (showCreateOption.value ? 1 : 0))
+
+const slots = defineSlots<{
+  /** Replaces `noDataText` when no option is left, such as an `SEmptyState`. Receives the typed `query`. */
+  noData?: (props: { query: string }) => VNode[]
+}>()
+
+// Rendered through a function, not a <slot> outlet: an outlet inside the SOverlay slot would make that slot
+// dynamic and re-render the whole menu on every update of the field.
+const NoDataContent = (): VNodeChild => slots.noData?.({ query: queryText.value }) ?? props.noDataText
+// Opt-in: with neither `noDataText` nor the `noData` slot an empty menu looks exactly as before.
+const showNoData = computed(() => optionCount.value === 0 && !props.loading && (!!slots.noData || !!props.noDataText))
 
 const { activeIndex, activeOptionId, listboxId, getOptionId, resetActiveIndex, moveActive } =
   useListboxNavigationService({
@@ -452,6 +467,15 @@ $s_autocomplete--fontSizes: (
   // (label click bubbles + browser-synthesized input click also bubbles).
   &__checkboxIcon {
     pointer-events: none;
+  }
+
+  // Only rendered with `noDataText` or the `noData` slot, so the default empty menu is unchanged.
+  &__noData {
+    padding: calc($s_spacer * 3) calc($s_spacer * 4);
+
+    // secondaryText, not disabled: the message must stay readable (4.5:1)
+    color: s_getAppColor('secondaryText');
+    text-align: center;
   }
 }
 </style>
