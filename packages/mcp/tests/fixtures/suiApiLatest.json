@@ -2294,6 +2294,242 @@
           "description": ""
         }
       ]
+    },
+    {
+      "name": "SNumberInput",
+      "family": "form",
+      "file": "components/form/sNumberInput.vue",
+      "props": [
+        {
+          "name": "ariaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Accessible name when the visible `label` is not enough (or absent); with `hideDetails` the label is used."
+        },
+        {
+          "name": "ariaLabelledby",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Id of the element that names the field, instead of `label`."
+        },
+        {
+          "name": "autofocus",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": "Focuses the field when it mounts."
+        },
+        {
+          "name": "controlVariant",
+          "type": "\"split\" | \"stacked\" | null | undefined",
+          "required": false,
+          "description": "Layout of the buttons: `stacked` (both at the end of the field, default) or `split` (minus first, plus last).",
+          "enumValues": [
+            "split",
+            "stacked"
+          ]
+        },
+        {
+          "name": "decrementAriaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Accessible name of the decrement button. Default `Decrease`."
+        },
+        {
+          "name": "dense",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Smaller padding, as on SInput."
+        },
+        {
+          "name": "dirty",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "error",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideControls",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": "Hides the increment and decrement buttons; the arrow keys still step the value."
+        },
+        {
+          "name": "hideDetails",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hideError",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "id",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "incrementAriaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Accessible name of the increment button. Default `Increase`."
+        },
+        {
+          "name": "label",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": "Text above the field. With `hideDetails` it is hidden and becomes the field's `aria-label`."
+        },
+        {
+          "name": "max",
+          "type": "number | string | null | undefined",
+          "required": false,
+          "description": "Highest allowed value. A higher value is clamped down to it on blur, and the increment button stops there."
+        },
+        {
+          "name": "min",
+          "type": "number | string | null | undefined",
+          "required": false,
+          "description": "Lowest allowed value. A lower value is clamped up to it on blur, and the decrement button stops there."
+        },
+        {
+          "name": "modelValue",
+          "type": "number | null | undefined",
+          "required": false,
+          "default": "null",
+          "description": ""
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Name submitted with a native form."
+        },
+        {
+          "name": "placeholder",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": "Hint shown while the field is empty."
+        },
+        {
+          "name": "precision",
+          "type": "number | null | undefined",
+          "required": false,
+          "description": "Decimal places the value keeps. Default `0` (whole numbers; typing `.` is refused). Use `2` for money.\n`null` allows any number of decimals. The field shows exactly this many decimals once it loses focus."
+        },
+        {
+          "name": "prefix",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": "Text inside the field before the number, such as a currency sign."
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "rules",
+          "type": "FormInputModelValueRule[] | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "size",
+          "type": "SizePropertyType",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "default",
+            "extra",
+            "large",
+            "mini",
+            "small"
+          ]
+        },
+        {
+          "name": "step",
+          "type": "number | string | null | undefined",
+          "required": false,
+          "description": "Amount the buttons and the ArrowUp / ArrowDown keys add or remove. Default `1`."
+        },
+        {
+          "name": "suffix",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": "Text inside the field after the number, such as `%` or a unit."
+        },
+        {
+          "name": "textRight",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": "Aligns the number to the right, as in a column of amounts."
+        },
+        {
+          "name": "tile",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Removes the rounded corners."
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "blur",
+          "type": "[FocusEvent]",
+          "description": ""
+        },
+        {
+          "name": "change",
+          "type": "[number | null]",
+          "description": ""
+        },
+        {
+          "name": "focus",
+          "type": "[FocusEvent]",
+          "description": ""
+        },
+        {
+          "name": "keydown",
+          "type": "[KeyboardEvent]",
+          "description": ""
+        },
+        {
+          "name": "update:dirty",
+          "type": "[boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:error",
+          "type": "[boolean]",
+          "description": ""
+        },
+        {
+          "name": "update:errors",
+          "type": "[string[]]",
+          "description": ""
+        },
+        {
+          "name": "update:modelValue",
+          "type": "[value: number | null]",
+          "description": ""
+        }
+      ]
     }
   ]
 }

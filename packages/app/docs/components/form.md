@@ -73,9 +73,9 @@ Renders a native `<form novalidate>` and coordinates validation across child inp
 
 ## SFormRow
 
-*Since 1.20.0.* A wrapping row of text fields (`SInput`, `SSelect`, `SDatePickerInput`, `SAutocomplete`, `STextarea`) and the buttons that act on them. Each button's top and bottom match the field box next to it, with or without a label, while an error shows, and when the row wraps on a phone. Stacked fields outside an `SFormRow` are unchanged.
+*Since 1.20.0.* A wrapping row of text fields (`SInput`, `SNumberInput`, `SSelect`, `SDatePickerInput`, `SAutocomplete`, `STextarea`) and the buttons that act on them. Each button's top and bottom match the field box next to it, with or without a label, while an error shows, and when the row wraps on a phone. Stacked fields outside an `SFormRow` are unchanged.
 
-- No props. `SInput`, `STextarea`, `SAutocomplete`, a `grow` `SSelect` and a `block` `SDatePickerInput` share the free width; `SSelect` and `SDatePickerInput` otherwise keep their own width (as wide as their value), buttons keep theirs, and the row wraps when they don't fit.
+- No props. `SInput`, `SNumberInput`, `STextarea`, `SAutocomplete`, a `grow` `SSelect` and a `block` `SDatePickerInput` share the free width; `SSelect` and `SDatePickerInput` otherwise keep their own width (as wide as their value), buttons keep theirs, and the row wraps when they don't fit.
 - Once any field in the row shows a `label`, the buttons and unlabelled fields start one label height lower, at the top of the field boxes.
 - Each field keeps its reserved error line; a button reserves the same space, so wrapped lines and the next row keep their gap. A row whose fields all use `hide-details` adds that gap below itself.
 - Aligns the default (outlined) fields and default-size buttons. A `simple` field's label is shorter, so do not mix it into an `SFormRow`.
@@ -477,7 +477,7 @@ const onSearch = async (query: string) => {
 - `SForm` does NOT validate on mount and does NOT prevent submit; use `@submit.prevent` and call `validate()` on the form ref. `if (!formRef.value.validate()) submit()` — it returns `true` when there are errors.
 - `SSelect` validates when its menu opens, so a required error can appear on first open.
 - The `SSelect`, `SAutocomplete` and `SDatePickerInput` dropdowns stay inside the viewport with an 8px gutter: they flip to the other side of the field or shift (left near the right edge), like `SMenu`. Fields at the bottom or right edge of the screen need no workaround.
-- For number inputs, combine `type="number"` with `inputmode="numeric"` for best mobile UX (`inputmode="decimal"` together with `allowDecimal`).
+- For number inputs prefer [`SNumberInput`](./number-input.md): steps, `precision`, clamping on blur and spinbutton semantics built in. With SInput, combine `type="number"` with `inputmode="numeric"` for best mobile UX (`inputmode="decimal"` together with `allowDecimal`).
 
 ## Accessibility
 

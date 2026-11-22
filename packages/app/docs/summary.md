@@ -60,6 +60,7 @@ Quick reference for all components in the `@khsura/sui` package.
 | `SForm`, `SFormRow`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` | `import { SForm, SFormRow, SInput, STextarea, SSelect, SCheckbox, SRadio, SRadioGroup, SSwitch } from '@khsura/sui'` | [form.md](./components/form.md) |
 | `SFileInput` | `import { SFileInput } from '@khsura/sui'` | [file-input.md](./components/file-input.md) |
 | `SAutocomplete` | `import { SAutocomplete } from '@khsura/sui'` | [autocomplete.md](./components/autocomplete.md) |
+| `SNumberInput` | `import { SNumberInput } from '@khsura/sui'` | [number-input.md](./components/number-input.md) |
 
 ---
 

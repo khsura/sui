@@ -6,7 +6,7 @@
 </template>
 <script setup lang="ts">
 /**
- * Lines up text fields (`SInput`, `SSelect`, `SDatePickerInput`, `SAutocomplete`, `STextarea`) and the buttons
+ * Lines up text fields (`SInput`, `SNumberInput`, `SSelect`, `SDatePickerInput`, `SAutocomplete`, `STextarea`) and the buttons
  * next to them in one wrapping row. Each button's top and bottom match the field box, not the field's label or
  * its error line, with or without a label and while an error shows.
  */
@@ -36,6 +36,12 @@ defineSlots<{
   > .s_datePickerInput--block {
     flex: 1 1 auto;
     width: auto;
+  }
+
+  // A number field shares the free width equally with its neighbours, whatever its label's length: a number is
+  // short, so it never needs a line of its own.
+  > .s_numberInput {
+    flex: 1 1 0;
   }
 
   > :not(.s_field) {

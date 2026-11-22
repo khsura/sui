@@ -580,6 +580,55 @@ describe('SPagination rules', () => {
       expect(issuesOf('empty-state-action-without-listener', code)).toEqual([])
     })
   })
+
+  describe('number-input-preferred', () => {
+    const rule = 'number-input-preferred'
+
+    const apiWithoutNumberInput: SuiApi = {
+      ...fixtureApi,
+      components: fixtureApi.components.filter((component) => component.name !== 'SNumberInput'),
+    }
+
+    it.each([
+      ['SNumberInput', '<SNumberInput v-model="quantity" label="Quantity" :min="0" />'],
+      ['a text SInput', '<SInput v-model="name" label="Name" />'],
+      ['a bound type', '<SInput :type="fieldType" />'],
+      ['a native number input', '<input type="number" />'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it('warns about SInput type="number" at its type attribute', () => {
+      const [issue] = issuesOf(rule, '<SInput v-model="quantity" label="Quantity" type="number" />')
+
+      expect(issue).toMatchObject({ severity: 'warning', line: 1, column: 45, recipe: 'validated-form' })
+      expect(issue.fixHint).toContain('<SNumberInput v-model="quantity"')
+    })
+
+    it('maps the number-only SInput props to their SNumberInput replacement', () => {
+      const [issue] = issuesOf(rule, '<SInput v-model="price" type="number" allow-decimal positive />')
+
+      expect(issue.fixHint).toContain('`allow-decimal` → `:precision="2"`')
+      expect(issue.fixHint).toContain('`positive` → `:min`')
+    })
+
+    it('stays quiet for a release without SNumberInput', () => {
+      expect(issuesWith(apiWithoutNumberInput, rule, '<SInput type="number" />')).toEqual([])
+    })
+
+    it('accepts a correct SNumberInput with no other issue', () => {
+      expect(
+        validateWith(
+          fixtureApi,
+          '<SForm><SNumberInput v-model="price" label="Price" prefix="₮" :precision="2" :min="0" control-variant="split" :rules="rules" /></SForm>',
+        ),
+      ).toEqual([])
+    })
+
+    it('rejects a misspelt SNumberInput prop', () => {
+      expect(issuesWith(fixtureApi, 'unknown-prop', '<SNumberInput v-model="n" :presicion="2" />')).toHaveLength(1)
+    })
+  })
 })
 
 describe('SSkeletonLoader rules', () => {

@@ -81,7 +81,7 @@ Exposed: `validate(): boolean` — **returns `true` when there ARE errors**; `re
 
 ## SFormRow
 
-*Since 1.20.0.* A wrapping row of text fields (`SInput`, `SSelect`, `SDatePickerInput`, `SAutocomplete`, `STextarea`) and their buttons. Each button's top and bottom match the field box: with or without a label, while an error shows, and when the row wraps at 375px. No props; slot `default`.
+*Since 1.20.0.* A wrapping row of text fields (`SInput`, `SNumberInput` since 1.21.0, `SSelect`, `SDatePickerInput`, `SAutocomplete`, `STextarea`) and their buttons. Each button's top and bottom match the field box: with or without a label, while an error shows, and when the row wraps at 375px. No props; slot `default`.
 
 <!-- generated:api:start SFormRow -->
 <!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->

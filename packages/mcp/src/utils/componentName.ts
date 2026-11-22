@@ -1,3 +1,4 @@
+import type { SuiApi } from '@khsura/shared/types'
 import { COMPONENT_PREFIX, SUI_KEBAB_TAG_PATTERN, SUI_PASCAL_TAG_PATTERN } from '../constants'
 
 const NAME_SEPARATORS = /[\s_-]/g
@@ -27,3 +28,10 @@ export const humanizeComponentName = (name: string): string => {
 /** True for tags the validator treats as SUI components: `SButton` or `s-button`. Native tags such as `select` never match. */
 export const isSuiComponentTag = (tag: string): boolean =>
   SUI_PASCAL_TAG_PATTERN.test(tag) || SUI_KEBAB_TAG_PATTERN.test(tag)
+
+/**
+ * True when the resolved `sui-api.json` lists the component, i.e. the installed `@khsura/sui` release has it. Rules
+ * that recommend a newer component check this, so a project on an older release is never told to use one it lacks.
+ */
+export const hasSuiComponent = (api: SuiApi, name: string): boolean =>
+  api.components.some((component) => component.name === name)
