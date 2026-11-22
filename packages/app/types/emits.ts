@@ -22,3 +22,10 @@ export interface EmitFormTextInput<T extends FormInputModelValue = FormInputMode
   paste: [ClipboardEvent]
   autocomplete: [HTMLInputElement | null]
 }
+
+/** Events of SNumberInput: the value after each change, plus the native focus events of its text box. */
+export interface EmitNumberInput extends EmitFormInput<number | null> {
+  blur: [FocusEvent]
+  focus: [FocusEvent]
+  keydown: [KeyboardEvent]
+}
