@@ -80,10 +80,17 @@ export const RULE_CARD_TITLE_TEXT_ALIGN = 'card-title-text-align'
 export const RULE_DATE_PICKER_EMPTY_STRING = 'date-picker-empty-string'
 export const RULE_FIELD_BUTTON_ROW = 'field-button-row'
 export const RULE_FILL_HEIGHT_UNDER_APP = 'fill-height-under-app'
+export const RULE_AVATAR_IMAGE_IN_SLOT = 'avatar-image-in-slot'
+export const RULE_AVATAR_TEXT_NOT_INITIALS = 'avatar-text-not-initials'
+export const RULE_AVATAR_GROUP_CHILD = 'avatar-group-child'
 export const RULE_PAGINATION_LENGTH_ROWS = 'pagination-length-rows'
 export const RULE_PAGINATION_ZERO_BASED = 'pagination-zero-based'
 export const RULE_SKELETON_LOADER_UNKNOWN_PRESET = 'skeleton-loader-unknown-preset'
 export const RULE_SKELETON_LOADER_NEVER_HIDES = 'skeleton-loader-never-hides'
+export const RULE_HIDDEN_LABEL_NO_VISIBLE_NAME = 'hidden-label-no-visible-name'
+export const RULE_EMPTY_STATE_ACTION_EVENT = 'empty-state-action-event'
+export const RULE_EMPTY_STATE_ACTION_WITHOUT_LISTENER = 'empty-state-action-without-listener'
+export const RULE_EMPTY_STATE_OUTSIDE_NO_DATA_SLOT = 'empty-state-outside-no-data-slot'
 
 /**
  * The first `@khsura/sui` release with the M2 hardening fixes (SForm `novalidate`, SCheckbox label with
@@ -171,6 +178,10 @@ export const NO_VALIDATE_ATTRIBUTE = 'novalidate'
 
 export const HIDE_DETAILS_ATTRIBUTE = 'hide-details'
 export const LABEL_ATTRIBUTE = 'label'
+export const PLACEHOLDER_ATTRIBUTE = 'placeholder'
+/** Words shorter than this (`by`, `of`, `e.g`) don't count when matching a placeholder against its label. */
+export const LABEL_WORD_MIN_LENGTH = 3
+export const LABEL_WORD_PATTERN = /[\p{L}\p{N}]+/gu
 /** Inputs whose only visible text is the `label` prop, which `hide-details` hides as well. */
 export const HIDE_DETAILS_LABEL_COMPONENTS = ['SCheckbox']
 
@@ -244,6 +255,17 @@ export const DIALOG_TAG = 'dialog'
 export const ACTIVATOR_BINDING_FIX =
   'Write `#activator="{ on, attrs }"` and put both `v-on="on"` and `v-bind="attrs"` on the activator\'s root element.'
 
+export const AVATAR_COMPONENT = 'SAvatar'
+export const AVATAR_GROUP_COMPONENT = 'SAvatarGroup'
+export const AVATAR_TEXT_ATTRIBUTE = 'text'
+/** Elements that put a picture in an avatar's slot instead of its `image` prop. */
+export const AVATAR_SLOT_IMAGE_TAGS = ['img', 'SImage']
+export const IMAGE_SOURCE_ATTRIBUTE = 'src'
+/** The longest `text` an avatar shows in full; it is meant for initials such as `JD`. */
+export const AVATAR_MAX_INITIALS = 3
+export const WHITESPACE_CHARACTER_PATTERN = /\s/
+/** Children an SAvatarGroup accepts besides SAvatar: a `<slot>` that passes avatars through. */
+export const AVATAR_GROUP_PASSTHROUGH_TAGS = ['slot']
 export const PAGINATION_COMPONENT = 'SPagination'
 export const PAGINATION_LENGTH_ATTRIBUTE = 'length'
 /** A `:length` that counts rows, not pages: `items.length`, `rows.size`, `totalItems`, `itemsCount`, … */
@@ -292,3 +314,14 @@ export const SKELETON_LOADER_VUETIFY_PRESETS: Record<string, string> = {
   'table-tbody': 'table-row@5',
   'table-tfoot': 'table-row',
 }
+export const EMPTY_STATE_COMPONENT = 'SEmptyState'
+export const EMPTY_STATE_ACTION_TEXT_ATTRIBUTE = 'action-text'
+/** The event SEmptyState's built-in button emits. */
+export const EMPTY_STATE_ACTION_EVENT = 'action'
+/** The slot that replaces SEmptyState's built-in button. */
+export const EMPTY_STATE_ACTIONS_SLOT = 'actions'
+/** Listeners AI code writes for the action button: Vuetify's `click:action`, or a plain `click` on the whole block. */
+export const EMPTY_STATE_WRONG_ACTION_EVENTS = ['click:action', 'click']
+/** Components whose no-data state takes an SEmptyState through the `noData` slot, never the default slot. */
+export const NO_DATA_SLOT_COMPONENTS = ['STable', 'SSelect', 'SAutocomplete']
+export const NO_DATA_SLOT_NAME = 'noData'

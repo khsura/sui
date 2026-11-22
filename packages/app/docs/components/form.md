@@ -199,6 +199,7 @@ It is outlined by default, like `SInput` (`:outlined="false"` for the borderless
 | `grow` | `boolean` | `undefined` | Full width |
 | `text` | `boolean` | `undefined` | Text list style |
 | `divided` | `boolean` | `undefined` | Dividers between list items |
+| `noDataText` | `string` | `undefined` | Message in the open menu when `items` is empty. Without it, or the `noData` slot, an empty menu stays blank |
 | `color` | `string` | `undefined` | List color |
 | `outlined` | `boolean \| null` | `true` | Outlined field, like `SInput` |
 | `underlined` / `borderRadius` | border props | `undefined` | Activator border |
@@ -225,6 +226,7 @@ interface SelectItem {
 |------|-------------|
 | `activator` | Custom activator — receives `{ item, value }` |
 | `dropdownIcon` | Custom dropdown icon — receives `{ color, value }` |
+| `noData` | Replaces `noDataText` when `items` is empty, such as `<SEmptyState size="mini" icon="mdi-warehouse" title="No warehouses" />`. Rendered as a `role="status"` message outside the listbox |
 
 ---
 
@@ -246,6 +248,7 @@ Searchable select with filtering, multiple selection and chips. Full reference: 
 | `divided` | `boolean` | `false` | Dividers in dropdown list |
 | `loading` | `boolean` | `false` | Loading spinner |
 | `delimiter` | `string \| string[] \| RegExp` | `undefined` | Keys that commit the typed text |
+| `noDataText` | `string` | `undefined` | Message in the open menu when nothing matches; the `noData` slot (`{ query }`) takes an `SEmptyState` |
 
 ### Events
 

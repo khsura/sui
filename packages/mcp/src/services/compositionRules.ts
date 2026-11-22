@@ -7,12 +7,19 @@ import {
   ACTIVATOR_BINDING_FIX,
   ACTIVATOR_ON_KEY,
   ACTIVATOR_SLOT_NAME,
+  AVATAR_COMPONENT,
+  AVATAR_GROUP_COMPONENT,
+  AVATAR_GROUP_PASSTHROUGH_TAGS,
+  AVATAR_SLOT_IMAGE_TAGS,
   BUTTON_COMPONENT,
+  DIRECTIVE_SLOT,
   DIALOG_TAG,
+  EMPTY_STATE_COMPONENT,
   DIRECTIVE_BIND,
   DIRECTIVE_ON,
   FORM_COMPONENT,
   ICON_COMPONENT,
+  IMAGE_SOURCE_ATTRIBUTE,
   INPUT_TAG,
   INPUT_TYPE_ATTRIBUTE,
   LAYOUT_APP_ATTRIBUTE,
@@ -20,6 +27,8 @@ import {
   LAYOUT_COMPONENT,
   LAYOUT_FOR_ATTRIBUTE,
   LAYOUT_NAME_ATTRIBUTE,
+  NO_DATA_SLOT_COMPONENTS,
+  NO_DATA_SLOT_NAME,
   NON_VISUAL_INPUT_TYPES,
   RAW_INPUT_TYPE_REPLACEMENTS,
   RAW_TAG_REPLACEMENTS,
@@ -27,6 +36,9 @@ import {
   RECIPE_APP_SHELL,
   RECIPE_VALIDATED_FORM,
   RULE_ACTIVATOR_BINDING,
+  RULE_AVATAR_GROUP_CHILD,
+  RULE_AVATAR_IMAGE_IN_SLOT,
+  RULE_EMPTY_STATE_OUTSIDE_NO_DATA_SLOT,
   RULE_FORM_RULES_OUTSIDE_FORM,
   RULE_ICON_BUTTON_LABEL,
   RULE_LAYOUT_FOR,
@@ -37,11 +49,13 @@ import {
   SEVERITY_WARNING,
   SLOT_PROP_ACTIVATOR_COMPONENTS,
   SLOTLESS_ACTIVATOR_COMPONENTS,
+  TEMPLATE_TAG,
   WHITESPACE_PATTERN,
 } from '../constants'
 import { slotPropAccessor } from '../lib'
 import {
   childElementsOf,
+  descendantElementsOf,
   expressionSource,
   findAttribute,
   hasObjectSpread,
@@ -298,6 +312,96 @@ export const noRawReplacementRule: TemplateRule = {
   },
 }
 
+export const avatarImageInSlotRule: TemplateRule = {
+  id: RULE_AVATAR_IMAGE_IN_SLOT,
+  check: ({ element }) => {
+    if (!isComponentTag(element.tag, AVATAR_COMPONENT)) {
+      return []
+    }
+
+    return descendantElementsOf(element)
+      .filter((child) => isOneOfComponentTags(child.tag, AVATAR_SLOT_IMAGE_TAGS))
+      .map((image) => {
+        const source = findAttribute(image, IMAGE_SOURCE_ATTRIBUTE)
+
+        const imageBinding =
+          source && isDirective(source.node)
+            ? `:image="${expressionSource(source.node) ?? ''}"`
+            : `image="${source?.staticValue ?? '…'}"`
+
+        return {
+          ...positionOf(image),
+          rule: RULE_AVATAR_IMAGE_IN_SLOT,
+          severity: SEVERITY_WARNING,
+          message: `\`<${image.tag}>\` inside \`SAvatar\` replaces the avatar's own image: when it fails to load, the avatar shows a broken image instead of the initials or the icon.`,
+          fixHint: `Pass the URL to the avatar and drop the \`<${image.tag}>\`: \`<SAvatar ${imageBinding} text="JD" alt="Jane Doe" />\`.`,
+        }
+      })
+  },
+}
+
+const isSlotFillTemplate = (template: ElementNode): boolean =>
+  template.props.filter(isDirective).some((directive) => directive.name === DIRECTIVE_SLOT)
+
+/** Children the group cannot overlap or count as one avatar: anything but SAvatar or a passthrough `<slot>`, looking through `<template v-for>`. */
+const strayAvatarGroupChildren = (element: ElementNode): ElementNode[] =>
+  childElementsOf(element).flatMap((child) => {
+    if (child.tag === TEMPLATE_TAG) {
+      return isSlotFillTemplate(child) ? [] : strayAvatarGroupChildren(child)
+    }
+
+    return isComponentTag(child.tag, AVATAR_COMPONENT) || AVATAR_GROUP_PASSTHROUGH_TAGS.includes(child.tag)
+      ? []
+      : [child]
+  })
+
+export const avatarGroupChildRule: TemplateRule = {
+  id: RULE_AVATAR_GROUP_CHILD,
+  check: ({ element }) => {
+    if (!isComponentTag(element.tag, AVATAR_GROUP_COMPONENT)) {
+      return []
+    }
+
+    return strayAvatarGroupChildren(element).map((child) => ({
+      ...positionOf(child),
+      rule: RULE_AVATAR_GROUP_CHILD,
+      severity: SEVERITY_WARNING,
+      message: `\`<${child.tag}>\` is a direct child of \`SAvatarGroup\`: the group only overlaps and rings \`SAvatar\` children, so a wrapper breaks the overlap and counts as one avatar for \`max\`.`,
+      fixHint:
+        'Put each `SAvatar` directly in the group: `<SAvatar v-for="member in members" :key="member.id" :image="member.photoUrl" :alt="member.name" />`. For a tooltip or a link, wrap the whole group, not each avatar.',
+    }))
+  },
+}
+
+/** Elements in the default slot of `element`: its children outside a `#slot` template, looking through plain `<template>`s. */
+const defaultSlotElements = (element: ElementNode): ElementNode[] =>
+  childElementsOf(element).flatMap((child) => {
+    if (child.tag === TEMPLATE_TAG) {
+      return isSlotFillTemplate(child) ? [] : defaultSlotElements(child)
+    }
+
+    return [child, ...descendantElementsOf(child)]
+  })
+
+export const emptyStateOutsideNoDataSlotRule: TemplateRule = {
+  id: RULE_EMPTY_STATE_OUTSIDE_NO_DATA_SLOT,
+  check: ({ element }) => {
+    if (!isOneOfComponentTags(element.tag, NO_DATA_SLOT_COMPONENTS)) {
+      return []
+    }
+
+    return defaultSlotElements(element)
+      .filter((child) => isComponentTag(child.tag, EMPTY_STATE_COMPONENT))
+      .map((emptyState) => ({
+        ...positionOf(emptyState),
+        rule: RULE_EMPTY_STATE_OUTSIDE_NO_DATA_SLOT,
+        severity: SEVERITY_ERROR,
+        message: `\`SEmptyState\` in the default slot of \`${element.tag}\` is never rendered: its no-data content goes in the \`#${NO_DATA_SLOT_NAME}\` slot.`,
+        fixHint: `Wrap it in the slot template: \`<${element.tag} …><template #${NO_DATA_SLOT_NAME}><SEmptyState size="small" icon="mdi-inbox-outline" title="Nothing here yet" /></template></${element.tag}>\`.`,
+      }))
+  },
+}
+
 /** Rules about how components fit together, beyond what one component's API says. */
 export const compositionRules: TemplateRule[] = [
   activatorBindingRule,
@@ -305,4 +409,7 @@ export const compositionRules: TemplateRule[] = [
   formRulesOutsideFormRule,
   iconButtonLabelRule,
   noRawReplacementRule,
+  avatarImageInSlotRule,
+  avatarGroupChildRule,
+  emptyStateOutsideNoDataSlotRule,
 ]

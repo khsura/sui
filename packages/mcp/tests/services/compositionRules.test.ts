@@ -211,3 +211,97 @@ describe('composition rules', () => {
     })
   })
 })
+
+describe('avatar composition rules', () => {
+  describe('avatar-image-in-slot', () => {
+    it.each([
+      ['a raw img', '<SAvatar><img src="/jane.png" alt="Jane" /></SAvatar>', 'image="/jane.png"'],
+      ['a bound SImage', '<s-avatar><SImage :src="user.photo" /></s-avatar>', ':image="user.photo"'],
+      [
+        'an img in the default slot template',
+        '<SAvatar><template #default><img :src="url" /></template></SAvatar>',
+        ':image="url"',
+      ],
+    ])('flags %s', (_, code, binding) => {
+      const issues = issuesOf('avatar-image-in-slot', code)
+
+      expect(issues).toHaveLength(1)
+      expect(issues[0].fixHint).toContain(`<SAvatar ${binding}`)
+    })
+
+    it.each([
+      ['the image prop', '<SAvatar :image="user.photo" text="JD" alt="Jane Doe" />'],
+      ['an icon in the slot', '<SAvatar><SIcon icon="mdi-star" /></SAvatar>'],
+      ['an img outside the avatar', '<div><img src="/logo.png" alt="Logo" /><SAvatar text="JD" /></div>'],
+    ])('accepts %s', (_, code) => {
+      expect(issuesOf('avatar-image-in-slot', code)).toEqual([])
+    })
+  })
+
+  describe('avatar-group-child', () => {
+    it.each([
+      ['a div wrapper', '<SAvatarGroup><div><SAvatar text="JD" /></div></SAvatarGroup>', 'div'],
+      [
+        'a v-for template of tooltips',
+        '<SAvatarGroup><template v-for="m in members" :key="m.id"><STooltip><template #activator><SAvatar :text="m.initials" /></template>{{ m.name }}</STooltip></template></SAvatarGroup>',
+        'STooltip',
+      ],
+    ])('flags %s', (_, code, tag) => {
+      const issues = issuesOf('avatar-group-child', code)
+
+      expect(issues).toHaveLength(1)
+      expect(issues[0].message).toContain(`<${tag}>`)
+    })
+
+    it.each([
+      ['avatars', '<SAvatarGroup :max="3"><SAvatar text="AB" /><SAvatar text="CD" /></SAvatarGroup>'],
+      [
+        'a v-for of avatars',
+        '<SAvatarGroup><SAvatar v-for="m in members" :key="m.id" :text="m.initials" /></SAvatarGroup>',
+      ],
+      [
+        'a v-for template of avatars',
+        '<SAvatarGroup><template v-for="m in members" :key="m.id"><SAvatar :text="m.initials" /></template></SAvatarGroup>',
+      ],
+      [
+        'a more slot',
+        '<SAvatarGroup :max="1"><SAvatar text="AB" /><template #more="{ count }"><SChip>+{{ count }}</SChip></template></SAvatarGroup>',
+      ],
+      ['a passthrough slot', '<SAvatarGroup><slot /></SAvatarGroup>'],
+    ])('accepts %s', (_, code) => {
+      expect(issuesOf('avatar-group-child', code)).toEqual([])
+    })
+  })
+
+  describe('empty-state-outside-no-data-slot', () => {
+    it.each([
+      ['STable', '<STable :headers="headers" :items="[]"><SEmptyState title="No orders" /></STable>'],
+      ['SSelect', '<SSelect :items="[]"><div><SEmptyState title="No warehouses" /></div></SSelect>'],
+      [
+        'SAutocomplete',
+        '<SAutocomplete :items="items"><template v-if="ready"><SEmptyState title="No match" /></template></SAutocomplete>',
+      ],
+    ])('flags an SEmptyState in the default slot of %s', (tag, code) => {
+      const issues = issuesOf('empty-state-outside-no-data-slot', code)
+
+      expect(issues).toHaveLength(1)
+      expect(issues[0].severity).toBe('error')
+      expect(issues[0].message).toContain(tag)
+      expect(issues[0].fixHint).toContain('#noData')
+    })
+
+    it.each([
+      [
+        'STable',
+        '<STable :headers="headers" :items="[]"><template #noData><SEmptyState size="small" title="No orders" /></template></STable>',
+      ],
+      [
+        'SSelect',
+        '<SSelect :items="[]"><template v-slot:noData><SEmptyState size="mini" title="No warehouses" /></template></SSelect>',
+      ],
+      ['an SEmptyState outside any of them', '<div><SEmptyState title="No orders" /></div>'],
+    ])('accepts %s with the noData slot', (_, code) => {
+      expect(issuesOf('empty-state-outside-no-data-slot', code)).toEqual([])
+    })
+  })
+})

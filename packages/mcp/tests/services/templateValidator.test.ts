@@ -76,7 +76,6 @@ describe('useTemplateValidatorService', () => {
         ['<STextField label="Email" />', 'SUI equivalent: `SInput`'],
         ['<STabsWindow v-model="tab" />', 'SUI equivalent: `SWindow`'],
         ['<s-tabs-window-item value="a" />', 'SUI equivalent: `SWindowItem`'],
-        ['<SAvatar />', 'There is no avatar component yet (planned for M3)'],
       ])('maps %s first', (code, advice) => {
         const issue = unknownIssue(code)
 
@@ -92,9 +91,9 @@ describe('useTemplateValidatorService', () => {
       })
 
       it('accepts the real component once it exists', () => {
-        const api = withComponents(aliasApi, ['SAvatar'])
+        const api = withComponents(aliasApi, ['SModal'])
 
-        expect(useTemplateValidatorService(api).validate('<SAvatar />')).toEqual([])
+        expect(useTemplateValidatorService(api).validate('<SModal />')).toEqual([])
       })
     })
 

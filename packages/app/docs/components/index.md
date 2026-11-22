@@ -15,6 +15,8 @@ This directory contains per-component documentation optimized for Claude AI codi
 | [button.md](./button.md) | `SButton` |
 | [icon.md](./icon.md) | `SIcon` |
 | [chip.md](./chip.md) | `SChip` |
+| [avatar.md](./avatar.md) | `SAvatar` |
+| [avatar-group.md](./avatar-group.md) | `SAvatarGroup` |
 | [badge.md](./badge.md) | `SBadge` |
 | [divider.md](./divider.md) | `SDivider` |
 | [image.md](./image.md) | `SImage` |
@@ -57,6 +59,7 @@ This directory contains per-component documentation optimized for Claude AI codi
 | [table.md](./table.md) | `STable`, `STableBodyCell`, `STableHeadCell` |
 | [progress.md](./progress.md) | `SProgressLinear`, `SProgressCircular` |
 | [skeleton-loader.md](./skeleton-loader.md) | `SSkeletonLoader` |
+| [empty-state.md](./empty-state.md) | `SEmptyState` |
 
 ### Content Panels
 | File | Components |

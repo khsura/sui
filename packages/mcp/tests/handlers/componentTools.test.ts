@@ -103,7 +103,7 @@ describe('component tools', () => {
 
   it.each([
     ['STextField', 'SUI equivalent: `SInput`'],
-    ['s-avatar', 'planned for M3'],
+    ['s-modal', 'SUI equivalent: `SDialog`'],
   ])('answers %s with the other-library mapping before the close names', async (name, advice) => {
     const client = await connectClient(bundledOnly())
     const response = await client.callTool({ name: 'get_component_api', arguments: { name } })

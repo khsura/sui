@@ -199,6 +199,106 @@
       ]
     },
     {
+      "name": "SEmptyState",
+      "family": "core",
+      "file": "components/sEmptyState.vue",
+      "props": [
+        {
+          "name": "actionText",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Label of the built-in action button. The button is shown only when this is set; clicking it emits `action`."
+        },
+        {
+          "name": "color",
+          "type": "string | null | undefined",
+          "required": false,
+          "description": "Colour of the icon only (preset name or CSS colour), not a background: an empty state has no background of its own."
+        },
+        {
+          "name": "icon",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Material Design icon shown above the title, such as `mdi-inbox-outline`. Ignored when `image` is set. Decorative: hidden from screen readers."
+        },
+        {
+          "name": "image",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Illustration URL shown above the title. Wins over `icon`. Decorative (`alt=\"\"`): put the meaning in `title` and `text`."
+        },
+        {
+          "name": "size",
+          "type": "SizePropertyType",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "default",
+            "extra",
+            "large",
+            "mini",
+            "small"
+          ]
+        },
+        {
+          "name": "text",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Supporting sentence under the title that says why it is empty or what to do next."
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        },
+        {
+          "name": "title",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Short headline, such as `No orders yet`. Rendered as text, not as a heading element."
+        }
+      ],
+      "slots": [
+        {
+          "name": "actions",
+          "type": "any",
+          "description": "Replaces the built-in action button, such as two SButtons or a link."
+        },
+        {
+          "name": "default",
+          "type": "any",
+          "description": "Extra content between the text and the actions."
+        },
+        {
+          "name": "media",
+          "type": "any",
+          "description": "Replaces the icon or image, such as an illustration component. Keep it decorative."
+        },
+        {
+          "name": "text",
+          "type": "any",
+          "description": "Replaces the `text` sentence."
+        },
+        {
+          "name": "title",
+          "type": "any",
+          "description": "Replaces the `title` text."
+        }
+      ],
+      "events": [
+        {
+          "name": "action",
+          "type": "[event: Event]",
+          "description": ""
+        }
+      ]
+    },
+    {
       "name": "SForm",
       "family": "form",
       "file": "components/form/sForm.vue",
@@ -858,6 +958,12 @@
           "description": ""
         },
         {
+          "name": "noDataText",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Message shown in the open menu when `items` is empty. Without it (and without the `noData` slot) an empty menu stays blank. Put an `SEmptyState` in the `noData` slot for an icon or an action."
+        },
+        {
           "name": "position",
           "type": "Position",
           "required": false,
@@ -891,6 +997,11 @@
           "name": "dropdownIcon",
           "type": "{ color: string | undefined; value: boolean | undefined; }",
           "description": ""
+        },
+        {
+          "name": "noData",
+          "type": "any",
+          "description": "Replaces `noDataText` when `items` is empty, such as an `SEmptyState`."
         }
       ],
       "events": [
@@ -1720,6 +1831,145 @@
           "description": ""
         }
       ]
+    },
+    {
+      "name": "SAvatar",
+      "family": "avatar",
+      "file": "components/avatar/sAvatar.vue",
+      "props": [
+        {
+          "name": "alt",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Accessible name of the avatar, usually the person's name. Used as the image `alt` and as the `aria-label`. Leave it empty for a decorative avatar."
+        },
+        {
+          "name": "borderRadius",
+          "type": "number | \"rounded\" | \"tile\" | `${number}%` | `${number}em` | `${number}px` | `${number}rem` | `${number}vh` | `${number}vw` | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "icon",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Material Design icon shown when there is neither an image nor text. Defaults to `mdi-account`."
+        },
+        {
+          "name": "image",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Image URL. When it is missing or fails to load, the avatar shows `text`, then `icon`. Do not put an `<img>` in the slot."
+        },
+        {
+          "name": "outlined",
+          "type": "boolean | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "size",
+          "type": "SizePropertyUnionType",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "text",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Initials shown when there is no image or it fails to load. Keep it to 1–3 characters, such as `JD`, not a full name."
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "any",
+          "description": ""
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "SAvatarGroup",
+      "family": "avatar",
+      "file": "components/avatar/sAvatarGroup.vue",
+      "props": [
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "colorThreshold",
+          "type": "number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "max",
+          "type": "number | undefined",
+          "required": false,
+          "description": "The most avatars shown. The rest collapse into one \"+N\" avatar. Shows every avatar when unset."
+        },
+        {
+          "name": "moreLabel",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Accessible name of the \"+N\" avatar. `{count}` is replaced with the number of hidden avatars. Defaults to `{count} more`."
+        },
+        {
+          "name": "size",
+          "type": "SizePropertyUnionType",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "any",
+          "description": ""
+        },
+        {
+          "name": "more",
+          "type": "{ count: number; }",
+          "description": ""
+        }
+      ],
+      "events": []
     },
     {
       "name": "SSkeletonLoader",

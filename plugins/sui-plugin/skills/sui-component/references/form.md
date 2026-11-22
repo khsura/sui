@@ -314,6 +314,7 @@ Single-value dropdown (no `multiple`, `chips`, `clearable` or `placeholder` — 
 | `minWidth` | `number \| string \| null` | — | no | — | — |
 | `modelValue` | `T \| null` | — | no | — | — |
 | `name` | `string \| null` | — | no | — | — |
+| `noDataText` | `string` | — | no | — | Message shown in the open menu when `items` is empty. Without it (and without the `noData` slot) an empty menu stays blank. Put an `SEmptyState` in the `noData` slot for an icon or an action. |
 | `offsetX` | `number \| null` | — | no | — | — |
 | `offsetY` | `number \| null` | — | no | — | — |
 | `outlined` | `boolean \| null` | `true` | no | — | — |
@@ -330,10 +331,11 @@ Single-value dropdown (no `multiple`, `chips`, `clearable` or `placeholder` — 
 
 **SSelect slots**
 
-| Slot | Slot props |
-| --- | --- |
-| `activator` | `{ item: SelectItem \| null; value: boolean \| undefined; }` |
-| `dropdownIcon` | `{ color: string \| undefined; value: boolean \| undefined; }` |
+| Slot | Slot props | Description |
+| --- | --- | --- |
+| `activator` | `{ item: SelectItem \| null; value: boolean \| undefined; }` | Replaces the selected item's text in the field. |
+| `dropdownIcon` | `{ color: string \| undefined; value: boolean \| undefined; }` | Replaces the chevron icon. |
+| `noData` | `any` | Replaces `noDataText` when `items` is empty, such as an `SEmptyState`. |
 
 **SSelect events**
 

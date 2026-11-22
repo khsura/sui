@@ -2,6 +2,9 @@ import type { ElementNode } from '@vue/compiler-dom'
 import type { TemplateIssue, TemplateRule } from '../types'
 import {
   APP_COMPONENT,
+  AVATAR_COMPONENT,
+  AVATAR_MAX_INITIALS,
+  AVATAR_TEXT_ATTRIBUTE,
   BLOCK_ATTRIBUTE,
   BUTTON_COMPONENT,
   CARD_TITLE_COMPONENT,
@@ -9,6 +12,12 @@ import {
   COLOR_ATTRIBUTE,
   DATE_PICKER_EMPTY_STRING_COMPONENTS,
   DIRECTIVE_MODEL,
+  DIRECTIVE_ON,
+  EMPTY_STATE_ACTION_EVENT,
+  EMPTY_STATE_ACTION_TEXT_ATTRIBUTE,
+  EMPTY_STATE_ACTIONS_SLOT,
+  EMPTY_STATE_COMPONENT,
+  EMPTY_STATE_WRONG_ACTION_EVENTS,
   EMPTY_STRING_EXPRESSION,
   EMPTY_STRING_INITIAL_PATTERNS,
   FLEX_DISPLAY_CLASS_PATTERN,
@@ -22,6 +31,8 @@ import {
   INPUT_TYPE_ATTRIBUTE,
   INPUT_TYPE_NUMBER,
   LABEL_ATTRIBUTE,
+  LABEL_WORD_MIN_LENGTH,
+  LABEL_WORD_PATTERN,
   LABELLED_FIELD_COMPONENTS,
   MIN_BLOCK_BUTTONS_IN_ROW,
   MODEL_NAME_PLACEHOLDER,
@@ -42,6 +53,7 @@ import {
   SKELETON_LOADER_TYPE_ATTRIBUTE,
   SKELETON_LOADER_TYPE_SEPARATOR,
   SKELETON_LOADER_VUETIFY_PRESETS,
+  PLACEHOLDER_ATTRIBUTE,
   RECIPE_ACTIVATOR_OVERLAYS,
   RECIPE_CENTERED_PAGE,
   RECIPE_FILTER_BAR,
@@ -49,11 +61,15 @@ import {
   RECIPE_VALIDATED_FORM,
   REGEX_ESCAPE_REPLACEMENT,
   REGEX_SPECIAL_CHARACTERS,
+  RULE_AVATAR_TEXT_NOT_INITIALS,
   RULE_BLOCK_BUTTONS_IN_ROW,
   RULE_CARD_TITLE_TEXT_ALIGN,
   RULE_DATE_PICKER_EMPTY_STRING,
+  RULE_EMPTY_STATE_ACTION_EVENT,
+  RULE_EMPTY_STATE_ACTION_WITHOUT_LISTENER,
   RULE_FIELD_BUTTON_ROW,
   RULE_FILL_HEIGHT_UNDER_APP,
+  RULE_HIDDEN_LABEL_NO_VISIBLE_NAME,
   RULE_HIDE_DETAILS_HIDES_LABEL,
   RULE_NATIVE_VALIDATION_IN_FORM,
   RULE_PAGINATION_LENGTH_ROWS,
@@ -78,6 +94,7 @@ import {
   TEXT_ALIGN_JUSTIFY_CLASSES,
   TEXT_BUTTON_VARIANT,
   VARIANT_ATTRIBUTE,
+  WHITESPACE_CHARACTER_PATTERN,
 } from '../constants'
 import { getHexContrastRatio, isVersionAtLeast } from '../lib'
 import {
@@ -556,17 +573,162 @@ export const fillHeightUnderAppRule: TemplateRule = {
   },
 }
 
+export const avatarTextNotInitialsRule: TemplateRule = {
+  id: RULE_AVATAR_TEXT_NOT_INITIALS,
+  check: ({ element }) => {
+    const textAttribute = isComponentTag(element.tag, AVATAR_COMPONENT)
+      ? findAttribute(element, AVATAR_TEXT_ATTRIBUTE)
+      : undefined
+
+    const text = textAttribute?.staticValue?.trim()
+
+    if (!textAttribute || !text || (text.length <= AVATAR_MAX_INITIALS && !WHITESPACE_CHARACTER_PATTERN.test(text))) {
+      return []
+    }
+
+    const initials = text
+      .split(WHITESPACE_CHARACTER_PATTERN)
+      .filter(Boolean)
+      .map((word) => word.charAt(0).toUpperCase())
+      .join('')
+      .slice(0, AVATAR_MAX_INITIALS)
+
+    return [
+      {
+        ...positionOf(textAttribute.node),
+        rule: RULE_AVATAR_TEXT_NOT_INITIALS,
+        severity: SEVERITY_WARNING,
+        message: `\`text="${text}"\` on \`SAvatar\` is not initials: the avatar is a fixed-size circle, so a name is clipped to its first letters.`,
+        fixHint: `Pass the initials and put the name in \`alt\`: \`<SAvatar text="${initials}" alt="${text}" />\`.`,
+      },
+    ]
+  },
+}
+
+const labelWordsOf = (text: string): string[] =>
+  (text.toLocaleLowerCase().match(LABEL_WORD_PATTERN) ?? []).filter((word) => word.length >= LABEL_WORD_MIN_LENGTH)
+
+/**
+ * `hide-details` on a text field hides its `label` by design (it becomes the input's `aria-label`), so on screen only
+ * the placeholder or a slot can say what the field is for. Warn when nothing visible does: no placeholder, or one that
+ * shares no word with the label (`label="Search by name" placeholder="e.g. Anna"`). Bound values and slot content are
+ * trusted.
+ */
+export const hiddenLabelNoVisibleNameRule: TemplateRule = {
+  id: RULE_HIDDEN_LABEL_NO_VISIBLE_NAME,
+  check: ({ element }) => {
+    const hideDetails = findPropAttribute(element, HIDE_DETAILS_ATTRIBUTE)
+    const label = findAttribute(element, LABEL_ATTRIBUTE)?.staticValue
+
+    if (
+      !isOneOfComponentTags(element.tag, LABELLED_FIELD_COMPONENTS) ||
+      !hideDetails ||
+      !isBooleanPropOn(element, HIDE_DETAILS_ATTRIBUTE) ||
+      !label ||
+      childElementsOf(element).length > 0
+    ) {
+      return []
+    }
+
+    const placeholder = findAttribute(element, PLACEHOLDER_ATTRIBUTE)
+
+    if (placeholder && placeholder.staticValue === undefined) {
+      return []
+    }
+
+    const placeholderWords = labelWordsOf(placeholder?.staticValue ?? '')
+
+    if (labelWordsOf(label).some((word) => placeholderWords.includes(word))) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(hideDetails.node),
+        rule: RULE_HIDDEN_LABEL_NO_VISIBLE_NAME,
+        severity: SEVERITY_WARNING,
+        message: `\`hide-details\` on \`${element.tag}\` hides \`label="${label}"\` (it becomes the input's \`aria-label\`), and nothing visible names the field: ${placeholder ? `the placeholder "${placeholder.staticValue}" doesn't say what it is for` : 'it has no placeholder'}.`,
+        fixHint: `Keep the label visible by dropping \`hide-details\` (inside \`SFormRow\` the field still lines up with its buttons), or give it a placeholder that names it, e.g. \`placeholder="${label}"\`.`,
+        recipe: RECIPE_FILTER_BAR,
+      },
+    ]
+  },
+}
+
+/** The `v-on` / `@` directives on `element` with a static event name. */
+const eventListeners = (element: ElementNode) =>
+  element.props
+    .filter(isDirective)
+    .filter((directive) => directive.name === DIRECTIVE_ON)
+    .map((directive) => ({ directive, event: staticArgument(directive.arg) }))
+
+export const emptyStateActionEventRule: TemplateRule = {
+  id: RULE_EMPTY_STATE_ACTION_EVENT,
+  check: ({ element }) => {
+    if (!isComponentTag(element.tag, EMPTY_STATE_COMPONENT)) {
+      return []
+    }
+
+    return eventListeners(element)
+      .filter(({ event }) => event !== undefined && EMPTY_STATE_WRONG_ACTION_EVENTS.includes(event))
+      .map(({ directive, event }) => ({
+        ...positionOf(directive),
+        rule: RULE_EMPTY_STATE_ACTION_EVENT,
+        severity: SEVERITY_WARNING,
+        message: `\`@${event ?? ''}\` on \`SEmptyState\` is not its action event: SEmptyState emits \`action\` from its button${event === 'click' ? ', and a plain `@click` fires for a click anywhere in the block' : ', so this listener never fires'}.`,
+        fixHint: `Listen to \`@action\`: \`<SEmptyState action-text="Create order" @action="${expressionSource(directive) ?? 'onAction'}" />\`.`,
+      }))
+  },
+}
+
+export const emptyStateActionWithoutListenerRule: TemplateRule = {
+  id: RULE_EMPTY_STATE_ACTION_WITHOUT_LISTENER,
+  check: ({ element }) => {
+    const actionText = isComponentTag(element.tag, EMPTY_STATE_COMPONENT)
+      ? findPropAttribute(element, EMPTY_STATE_ACTION_TEXT_ATTRIBUTE)
+      : undefined
+
+    const hasListener = eventListeners(element).some(
+      ({ event }) => event === undefined || event === EMPTY_STATE_ACTION_EVENT,
+    )
+
+    const fillsActions = slotFills(element).some(
+      (fill) => staticArgument(fill.directive.arg) === EMPTY_STATE_ACTIONS_SLOT,
+    )
+
+    if (!actionText || hasListener || fillsActions || hasObjectSpread(element)) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(actionText.node),
+        rule: RULE_EMPTY_STATE_ACTION_WITHOUT_LISTENER,
+        severity: SEVERITY_WARNING,
+        message:
+          '`action-text` on `SEmptyState` renders a button, but nothing listens to its `action` event, so the button does nothing.',
+        fixHint:
+          'Add `@action="…"`, or for navigation drop `action-text` and use the slot: `<SEmptyState title="No orders yet"><template #actions><SButton color="primary" to="/orders/new">Create order</SButton></template></SEmptyState>`.',
+      },
+    ]
+  },
+}
+
 export const behaviourRules: TemplateRule[] = [
   nativeValidationInFormRule,
   hideDetailsHidesLabelRule,
+  hiddenLabelNoVisibleNameRule,
   snackbarActionContrastRule,
   blockButtonsInRowRule,
   fieldButtonRowRule,
   cardTitleTextAlignRule,
   datePickerEmptyStringRule,
   fillHeightUnderAppRule,
+  avatarTextNotInitialsRule,
   paginationLengthRowsRule,
   paginationZeroBasedRule,
   skeletonLoaderUnknownPresetRule,
   skeletonLoaderNeverHidesRule,
+  emptyStateActionEventRule,
+  emptyStateActionWithoutListenerRule,
 ]
