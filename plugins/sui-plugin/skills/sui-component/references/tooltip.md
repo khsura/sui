@@ -13,31 +13,31 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsTooltip.d.ts`
 
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
-| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
+| `activator` | `string \| ComponentPublicInstance \| HTMLElement \| null` | — | no | — |
 | `closeOnClick` | `boolean` | — | no | — |
 | `closeOnContentClick` | `boolean` | — | no | — |
 | `closeOnScroll` | `boolean` | — | no | — |
 | `color` | `string` | — | no | — |
 | `colorThreshold` | `number` | — | no | — |
-| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — |
 | `contentStyle` | `StyleValue` | — | no | — |
 | `disabled` | `boolean \| null` | — | no | — |
-| `height` | `string \| number \| null` | — | no | — |
+| `height` | `number \| string \| null` | — | no | — |
 | `location` | `LocationRaw` | — | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
+| `maxHeight` | `number \| string \| null` | — | no | — |
+| `maxWidth` | `number \| string \| null` | — | no | — |
+| `minHeight` | `number \| string \| null` | — | no | — |
+| `minWidth` | `number \| string \| null` | — | no | — |
 | `modelValue` | `boolean` | — | no | — |
 | `offsetX` | `number \| null` | — | no | — |
 | `offsetY` | `number \| null` | — | no | — |
-| `opacity` | `string \| number` | — | no | — |
+| `opacity` | `number \| string` | — | no | — |
 | `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
 | `preventCloseOnClick` | `boolean` | — | no | — |
 | `readonly` | `boolean \| null` | — | no | — |
 | `screenPadding` | `number \| null` | — | no | — |
 | `theme` | `AppThemeType` | — | no | `dark`, `light` |
-| `width` | `string \| number \| null` | — | no | — |
+| `width` | `number \| string \| null` | — | no | — |
 
 **STooltip slots**
 

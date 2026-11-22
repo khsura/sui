@@ -19,10 +19,10 @@ The tabs stay on **one row**. Each tab keeps the width of its label (tabs stretc
 
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
 | `bordered` | `boolean` | — | no | — |
 | `dense` | `boolean` | — | no | — |
-| `modelValue` | `string \| number` | — | yes | — |
+| `modelValue` | `number \| string` | — | yes | — |
 | `outlined` | `boolean \| null` | — | no | — |
 | `selectedTabColor` | `string` | `"primary"` | no | — |
 | `shrink` | `boolean` | — | no | — |
@@ -68,16 +68,16 @@ Always exactly one tab active (mandatory, single-select).
 
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
-| `alignSelf` | `"center" \| "auto" \| "start" \| "normal" \| "end" \| "self-start" \| "self-end" \| "flex-start" \| "flex-end" \| "baseline" \| "first baseline" \| "last baseline" \| "stretch" \| "safe center" \| "unsafe center" \| "inherit" \| "initial" \| null` | — | no | `auto`, `baseline`, `center`, `end`, `first baseline`, `flex-end`, `flex-start`, `inherit`, `initial`, `last baseline`, `normal`, `safe center`, `self-end`, `self-start`, `start`, `stretch`, `unsafe center` |
+| `alignSelf` | `"auto" \| "baseline" \| "center" \| "end" \| "first baseline" \| "flex-end" \| "flex-start" \| "inherit" \| "initial" \| "last baseline" \| "normal" \| "safe center" \| "self-end" \| "self-start" \| "start" \| "stretch" \| "unsafe center" \| null` | — | no | `auto`, `baseline`, `center`, `end`, `first baseline`, `flex-end`, `flex-start`, `inherit`, `initial`, `last baseline`, `normal`, `safe center`, `self-end`, `self-start`, `start`, `stretch`, `unsafe center` |
 | `cols` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
-| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — |
 | `contentStyle` | `StyleValue` | — | no | — |
 | `disabled` | `boolean` | — | no | — |
 | `lg` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
 | `md` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
 | `order` | `number \| null` | — | no | — |
 | `sm` | `"1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| ColumnNumber \| null` | — | no | — |
-| `tab` | `string \| number` | — | yes | — |
+| `tab` | `number \| string` | — | yes | — |
 
 **STab slots**
 

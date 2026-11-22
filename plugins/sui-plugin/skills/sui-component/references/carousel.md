@@ -24,7 +24,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsCarousel.d.ts`, `
 | `cycle` | `boolean` | `true` | no | — |
 | `delimiterIcon` | `string` | `"mdi-circle"` | no | — |
 | `disabled` | `boolean \| null` | — | no | — |
-| `height` | `string \| number` | `500` | no | — |
+| `height` | `number \| string` | `500` | no | — |
 | `hideArrows` | `boolean` | — | no | — |
 | `hideDelimiterBackground` | `boolean` | — | no | — |
 | `hideDelimiters` | `boolean` | — | no | — |
@@ -98,17 +98,17 @@ Each item renders an `SImage`. Your default-slot content is drawn as an overlay 
 | `activeClass` | `string \| null` | — | no | — |
 | `alt` | `string \| null` | — | no | — |
 | `aspectRatio` | `number \| null` | — | no | — |
-| `height` | `string \| number \| null` | — | no | — |
+| `height` | `number \| string \| null` | — | no | — |
 | `lazyLoad` | `LazyLoad \| null` | — | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
-| `objectFit` | `"fill" \| "none" \| "contain" \| "cover" \| "scale-down"` | — | no | `contain`, `cover`, `fill`, `none`, `scale-down` |
+| `maxHeight` | `number \| string \| null` | — | no | — |
+| `maxWidth` | `number \| string \| null` | — | no | — |
+| `minHeight` | `number \| string \| null` | — | no | — |
+| `minWidth` | `number \| string \| null` | — | no | — |
+| `objectFit` | `"contain" \| "cover" \| "fill" \| "none" \| "scale-down"` | — | no | `contain`, `cover`, `fill`, `none`, `scale-down` |
 | `selected` | `boolean` | — | no | — |
 | `src` | `string \| null` | — | yes | — |
-| `value` | `string \| number \| boolean` | — | no | — |
-| `width` | `string \| number \| null` | — | no | — |
+| `value` | `boolean \| number \| string` | — | no | — |
+| `width` | `number \| string \| null` | — | no | — |
 
 **SCarouselItem slots**
 

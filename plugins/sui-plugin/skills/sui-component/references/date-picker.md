@@ -18,21 +18,21 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsDatePicker.d.ts`
 | `dateFormat` | `string` | `datePickerDisplayFormat.date` | no | — |
 | `dense` | `boolean` | — | no | — |
 | `disabled` | `boolean` | — | no | — |
-| `height` | `string \| number \| null` | — | no | — |
+| `height` | `number \| string \| null` | — | no | — |
 | `hideTitle` | `boolean` | — | no | — |
 | `max` | `string` | — | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
+| `maxHeight` | `number \| string \| null` | — | no | — |
+| `maxWidth` | `number \| string \| null` | — | no | — |
 | `min` | `string` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
+| `minHeight` | `number \| string \| null` | — | no | — |
+| `minWidth` | `number \| string \| null` | — | no | — |
 | `modelValue` | `string \| null` | — | no | — |
 | `monthFormat` | `string` | `datePickerDisplayFormat.month` | no | — |
 | `readonly` | `boolean` | — | no | — |
 | `theme` | `AppThemeType` | — | no | `dark`, `light` |
 | `today` | `string` | `dayjs().format("YYYY-MM-DD")` | no | — |
 | `type` | `DatePickerTypeType` | `"date"` | yes | `date`, `month`, `year` |
-| `width` | `string \| number \| null` | — | no | — |
+| `width` | `number \| string \| null` | — | no | — |
 | `yearFormat` | `string` | `datePickerDisplayFormat.year` | no | — |
 
 **SDatePicker slots**
@@ -136,18 +136,18 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsDatePickerInput.d
 | `dirty` | `boolean` | — | no | — | — |
 | `disabled` | `boolean` | — | no | — | — |
 | `error` | `boolean` | — | no | — | — |
-| `height` | `string \| number \| null` | — | no | — | — |
+| `height` | `number \| string \| null` | — | no | — | — |
 | `hideDetails` | `boolean` | — | no | — | — |
 | `hideError` | `boolean` | — | no | — | — |
 | `hideTitle` | `boolean` | — | no | — | — |
 | `id` | `string` | — | no | — | — |
 | `label` | `string \| null` | — | no | — | — |
 | `max` | `string` | — | no | — | — |
-| `maxHeight` | `string \| number \| null` | — | no | — | — |
-| `maxWidth` | `string \| number \| null` | — | no | — | — |
+| `maxHeight` | `number \| string \| null` | — | no | — | — |
+| `maxWidth` | `number \| string \| null` | — | no | — | — |
 | `min` | `string` | — | no | — | — |
-| `minHeight` | `string \| number \| null` | — | no | — | — |
-| `minWidth` | `string \| number \| null` | — | no | — | — |
+| `minHeight` | `number \| string \| null` | — | no | — | — |
+| `minWidth` | `number \| string \| null` | — | no | — | — |
 | `modelValue` | `string \| null` | — | no | — | — |
 | `monthFormat` | `string` | `datePickerDisplayFormat.month` | no | — | — |
 | `placeholder` | `string \| null` | — | no | — | — |
@@ -159,7 +159,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsDatePickerInput.d
 | `tile` | `boolean` | — | no | — | — |
 | `today` | `string` | `dayjs().format("YYYY-MM-DD")` | no | — | — |
 | `type` | `DatePickerTypeType` | `"date"` | yes | `date`, `month`, `year` | — |
-| `width` | `string \| number \| null` | — | no | — | — |
+| `width` | `number \| string \| null` | — | no | — | — |
 | `yearFormat` | `string` | `datePickerDisplayFormat.year` | no | — | — |
 
 **SDatePickerInput slots**
