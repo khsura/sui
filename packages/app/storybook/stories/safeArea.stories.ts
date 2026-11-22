@@ -24,6 +24,7 @@ import {
   SSnackbar,
   SSpacer,
 } from '@/app/index'
+import { thresholds } from '@/app/configs'
 
 /**
  * iPhone safe areas (notch / home indicator), simulated. Playwright cannot emulate `env(safe-area-inset-*)`, so these
@@ -264,12 +265,13 @@ export const SafeAreaLandscapePermanentDrawers = {
       `,
     }),
   play: async ({ canvasElement }) => {
-    const firstDrawer = await waitFor(() => getElement(canvasElement, '.s_navigationDrawer'))
-
-    // below the desktop breakpoint a permanent drawer is a mobile one (covered by the shell story above)
-    if (firstDrawer.classList.contains('s_navigationDrawer--isMobile')) {
+    // below the desktop breakpoint a permanent drawer is a closed mobile one and isn't rendered
+    // (the shell story above covers mobile drawers)
+    if ((canvasElement.ownerDocument.defaultView?.innerWidth ?? 0) < thresholds.md) {
       return
     }
+
+    await waitFor(() => getElement(canvasElement, '.s_navigationDrawer--permanent'))
 
     const leftDrawer = getElement(canvasElement, '.s_navigationDrawer--permanent:not(.s_navigationDrawer--right)')
     const rightDrawer = getElement(canvasElement, '.s_navigationDrawer--permanent.s_navigationDrawer--right')
