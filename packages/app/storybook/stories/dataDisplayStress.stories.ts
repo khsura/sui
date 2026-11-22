@@ -465,6 +465,26 @@ const assertTabFullyInView = (canvasElement: HTMLElement, tabIndex: number) => {
   )
 }
 
+// Upper bound for the arrow's smooth scroll (WebKit's runs much longer than Chromium's).
+const smoothScrollTimeoutMs = 5000
+
+// Resolves once the row has stopped scrolling: the position is unchanged between two `waitFor` polls.
+const waitForNarrowTabsScrollToSettle = async (canvasElement: HTMLElement) => {
+  let previousScrollLeft: number | null = null
+
+  await waitFor(
+    () => {
+      const scroller = canvasElement.querySelector('.stress-narrow-tabs .s_toggleButtonGroup__content')
+      const scrollLeft = scroller?.scrollLeft ?? null
+      const isSettled = scrollLeft === previousScrollLeft
+
+      previousScrollLeft = scrollLeft
+      assertThat(isSettled, 'the row of tabs is still scrolling')
+    },
+    { timeout: smoothScrollTimeoutMs },
+  )
+}
+
 export const TabsNarrowScrollAffordance = {
   tags: ['visual'],
   render: () => ({
@@ -494,8 +514,12 @@ export const TabsNarrowScrollAffordance = {
       await userEvent.click(endButton)
     }
 
-    // The arrow scrolled the row, so tabs now hide past the left edge too.
-    await waitFor(() => assertScrollButtons(canvasElement, { start: true, end: true }))
+    // The arrow scrolled the row, so tabs now hide past the left edge too. WebKit's smooth scroll can take well
+    // over waitFor's default second, and must settle before End moves the row again.
+    await waitFor(() => assertScrollButtons(canvasElement, { start: true, end: true }), {
+      timeout: smoothScrollTimeoutMs,
+    })
+    await waitForNarrowTabsScrollToSettle(canvasElement)
 
     selectedTab()?.focus()
     await userEvent.keyboard('{End}')

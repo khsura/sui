@@ -1,12 +1,13 @@
 import { useEventListener, useMutationObserver, useResizeObserver } from '@vueuse/core'
 import { computed, nextTick, onMounted, ref, watch, type Ref } from 'vue'
 import {
+  tabsReducedMotionQuery,
   tabsScrollEdgeTolerance,
   tabsScrollerSelector,
   tabsScrollStepRatio,
   tabsSelectedTabSelector,
 } from '@/app/constants'
-import { getDocument, getHiddenScrollEdges, getScrollLeftToReveal } from '@/app/lib'
+import { getDocument, getHiddenScrollEdges, getScrollLeftToReveal, getWindow } from '@/app/lib'
 
 /**
  * STabs keeps its tabs on one row that scrolls sideways when they do not fit. This keeps the selected tab
@@ -43,7 +44,12 @@ export const useTabsService = (selected: Ref<number | string>, element: Ref<HTML
   }
 
   const scrollByStep = (direction: -1 | 1) => {
-    scroller.value?.scrollBy({ left: direction * scroller.value.clientWidth * tabsScrollStepRatio, behavior: 'smooth' })
+    const prefersReducedMotion = getWindow()?.matchMedia?.(tabsReducedMotionQuery).matches ?? false
+
+    scroller.value?.scrollBy({
+      left: direction * scroller.value.clientWidth * tabsScrollStepRatio,
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    })
   }
 
   useEventListener(scroller, 'scroll', updateHiddenEdges, { passive: true })
