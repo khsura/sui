@@ -70,6 +70,7 @@ Quick reference for all components in the `@khsura/sui` package.
 | `SList`, `SListItem`, `SListItemTitle`, `SListItemSubtitle`, `SListItemIcon`, `SListItemAction`, `SListItemContent`, `SListItemGroup` | `import { SList, SListItem, ... } from '@khsura/sui'` | [list.md](./components/list.md) |
 | `STable`, `STableBodyCell`, `STableHeadCell` | `import { STable } from '@khsura/sui'` | [table.md](./components/table.md) |
 | `SProgressLinear`, `SProgressCircular` | `import { SProgressLinear, SProgressCircular } from '@khsura/sui'` | [progress.md](./components/progress.md) |
+| `SSkeletonLoader` | `import { SSkeletonLoader } from '@khsura/sui'` | [skeleton-loader.md](./components/skeleton-loader.md) |
 | `SEmptyState` | `import { SEmptyState } from '@khsura/sui'` | [empty-state.md](./components/empty-state.md) |
 
 ---
