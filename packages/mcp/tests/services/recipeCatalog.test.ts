@@ -9,6 +9,7 @@ import {
   RECIPE_APP_SHELL,
   RECIPE_CENTERED_PAGE,
   RECIPE_DATA_TABLE,
+  RECIPE_DENSE_TOOLBAR,
   RECIPE_FILTER_BAR,
   RECIPE_NAMES,
   RECIPE_RESPONSIVE_GRID,
@@ -72,6 +73,7 @@ describe('useRecipeCatalogService', () => {
         RECIPE_FILTER_BAR,
         RECIPE_CENTERED_PAGE,
         RECIPE_TABBED_SECTIONS,
+        RECIPE_DENSE_TOOLBAR,
       ].sort(),
     )
   })
