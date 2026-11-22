@@ -423,35 +423,18 @@ export const TabsSelectedOutOfView = {
 } satisfies StoryObj
 
 // Tabs that do not fit a 375px column (the after-M2 eval: "Account" was cut off with no sign that the row
-// scrolls). The end that hides tabs fades out and shows a scroll arrow, and the last tab, once selected, is
+// scrolls). The row is swiped sideways, the end that hides tabs fades out, and the last tab, once selected, is
 // scrolled fully into view. The play ends back on the first tab, so the screenshot shows the starting state: the
-// right-hand arrow and fade. The arrow's own scrolling is covered by tests/components/sTabs.test.ts: its smooth
-// scroll animation does not run reliably in the visual harness's WebKit.
+// right-hand fade. The second row of tabs uses `wrap`: the tabs flow onto several rows, with no fade.
 const narrowTabsLabels = ['Getting started', 'Billing and invoices', 'Account settings', 'Notifications', 'Security']
 
-const getScrollButton = (canvasElement: HTMLElement, edge: 'start' | 'end') =>
-  canvasElement.querySelector<HTMLElement>(`.stress-narrow-tabs .s_tabs__scrollButton--${edge}`)
+const assertFades = (canvasElement: HTMLElement, expected: { start: boolean; end: boolean }) => {
+  const classes = canvasElement.querySelector('.stress-narrow-tabs')?.classList
 
-const assertScrollButtons = (canvasElement: HTMLElement, expected: { start: boolean; end: boolean }) => {
   for (const edge of ['start', 'end'] as const) {
-    const button = getScrollButton(canvasElement, edge)
-    const isVisible = !!button && getRect(button).width > 0
-    const tabs = getRect(canvasElement.querySelector('.stress-narrow-tabs'))
-
-    if (button && isVisible) {
-      const arrow = getRect(button)
-
-      const isAtEdge =
-        edge === 'start'
-          ? Math.abs(arrow.left - tabs.left) <= pixelTolerance
-          : Math.abs(arrow.right - tabs.right) <= pixelTolerance
-
-      assertThat(isAtEdge, `the ${edge} scroll arrow is not at the ${edge} edge of the tabs`)
-    }
-
     assertThat(
-      isVisible === expected[edge],
-      `the ${edge} scroll arrow should be ${expected[edge] ? 'shown' : 'hidden'}`,
+      !!classes?.contains(`s_tabs--${edge}Hidden`) === expected[edge],
+      `the ${edge} edge fade should be ${expected[edge] ? 'shown' : 'hidden'}`,
     )
   }
 }
@@ -478,6 +461,11 @@ export const TabsNarrowScrollAffordance = {
             <STab v-for="(label, index) in narrowTabsLabels" :key="label" :tab="index">{{ label }}</STab>
           </STabs>
         </SCard>
+        <SCard class="s_pa__4 s_mt__4">
+          <STabs v-model="activeTab" wrap class="stress-wrapped-tabs">
+            <STab v-for="(label, index) in narrowTabsLabels" :key="label" :tab="index">{{ label }}</STab>
+          </STabs>
+        </SCard>
       </div>
     `,
   }),
@@ -487,20 +475,32 @@ export const TabsNarrowScrollAffordance = {
     const selectedTab = () =>
       canvasElement.querySelector<HTMLElement>('.stress-narrow-tabs [role="tab"][aria-selected="true"]')
 
-    await waitFor(() => assertScrollButtons(canvasElement, { start: false, end: true }))
+    await waitFor(() => assertFades(canvasElement, { start: false, end: true }))
+
+    const wrappedTabs = Array.from(canvasElement.querySelectorAll('.stress-wrapped-tabs .s_tab'))
+    const wrappedRow = getRect(canvasElement.querySelector('.stress-wrapped-tabs'))
+
+    assertThat(
+      new Set(wrappedTabs.map((tab) => Math.round(getRect(tab).top))).size > 1,
+      'wrap kept the tabs on one row',
+    )
+    assertThat(
+      wrappedTabs.every((tab) => getRect(tab).right <= wrappedRow.right + pixelTolerance),
+      'a wrapped tab sticks out of its row',
+    )
 
     selectedTab()?.focus()
     await userEvent.keyboard('{End}')
     await waitFor(() => {
       assertTabFullyInView(canvasElement, lastTabIndex)
-      assertScrollButtons(canvasElement, { start: true, end: false })
+      assertFades(canvasElement, { start: true, end: false })
     })
 
     selectedTab()?.focus()
     await userEvent.keyboard('{Home}')
     await waitFor(() => {
       assertTabFullyInView(canvasElement, 0)
-      assertScrollButtons(canvasElement, { start: false, end: true })
+      assertFades(canvasElement, { start: false, end: true })
     })
   },
 } satisfies StoryObj
