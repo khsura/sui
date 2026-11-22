@@ -7,6 +7,7 @@ export const RECIPE_NAMES = [
   'responsive-grid',
   'theme-setup',
   'filter-bar',
+  'centered-page',
 ] as const
 
 export const RECIPES_DIRNAME = 'recipes'

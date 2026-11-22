@@ -79,6 +79,7 @@ export const RULE_BLOCK_BUTTONS_IN_ROW = 'block-buttons-in-row'
 export const RULE_CARD_TITLE_TEXT_ALIGN = 'card-title-text-align'
 export const RULE_DATE_PICKER_EMPTY_STRING = 'date-picker-empty-string'
 export const RULE_FIELD_BUTTON_ROW = 'field-button-row'
+export const RULE_FILL_HEIGHT_UNDER_APP = 'fill-height-under-app'
 
 /**
  * The first `@khsura/sui` release with the M2 hardening fixes (SForm `novalidate`, SCheckbox label with
@@ -99,6 +100,7 @@ export const RECIPE_DATA_TABLE = 'data-table'
 export const RECIPE_RESPONSIVE_GRID = 'responsive-grid'
 export const RECIPE_THEME_SETUP = 'theme-setup'
 export const RECIPE_FILTER_BAR = 'filter-bar'
+export const RECIPE_CENTERED_PAGE = 'centered-page'
 
 export const ACTIVATOR_SLOT_NAME = 'activator'
 export const ACTIVATOR_ON_KEY = 'on'
@@ -109,6 +111,9 @@ export const SLOT_PROP_ACTIVATOR_COMPONENTS = ['SDialog', 'SMenu', 'SSnackbar']
 export const SLOTLESS_ACTIVATOR_COMPONENTS = ['STooltip']
 export const DIRECTIVE_ON = 'on'
 
+export const APP_COMPONENT = 'SApp'
+/** `height: 100%`; a direct child of SApp with it grows into SApp's flex column (since 1.20.0). */
+export const HEIGHT_FILL_CLASS = 's_height--fill'
 export const LAYOUT_COMPONENT = 'SLayout'
 export const LAYOUT_NAME_ATTRIBUTE = 'name'
 export const LAYOUT_FOR_ATTRIBUTE = 'for'
