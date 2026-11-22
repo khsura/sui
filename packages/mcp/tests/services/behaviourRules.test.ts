@@ -246,6 +246,10 @@ describe('behaviour rules', () => {
         'kebab-case tags',
         '<div style="display:flex">\n<s-select v-model="s" :items="items" />\n<s-button>Apply</s-button></div>',
       ],
+      [
+        'a file input',
+        '<div style="display: flex">\n<SFileInput v-model="files" label="Workbook" />\n<SButton>Import</SButton></div>',
+      ],
     ])('reports a field and a button in %s', (_, code) => {
       const [issue] = issuesOf(rule, code)
 

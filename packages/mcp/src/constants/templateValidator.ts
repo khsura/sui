@@ -91,6 +91,8 @@ export const RULE_HIDDEN_LABEL_NO_VISIBLE_NAME = 'hidden-label-no-visible-name'
 export const RULE_EMPTY_STATE_ACTION_EVENT = 'empty-state-action-event'
 export const RULE_EMPTY_STATE_ACTION_WITHOUT_LISTENER = 'empty-state-action-without-listener'
 export const RULE_EMPTY_STATE_OUTSIDE_NO_DATA_SLOT = 'empty-state-outside-no-data-slot'
+export const RULE_RAW_FILE_INPUT = 'raw-file-input'
+export const RULE_FILE_INPUT_CHANGE_EVENT = 'file-input-change-event'
 
 /**
  * The first `@khsura/sui` release with the M2 hardening fixes (SForm `novalidate`, SCheckbox label with
@@ -209,7 +211,14 @@ export const MIN_BLOCK_BUTTONS_IN_ROW = 2
 /** Components whose root is a `display: flex` row. */
 export const FLEX_ROW_COMPONENTS = ['SCardActions']
 /** Text fields that render a label above their box and an error line under it. */
-export const LABELLED_FIELD_COMPONENTS = ['SInput', 'SSelect', 'SDatePickerInput', 'SAutocomplete', 'STextarea']
+export const LABELLED_FIELD_COMPONENTS = [
+  'SInput',
+  'SSelect',
+  'SDatePickerInput',
+  'SAutocomplete',
+  'STextarea',
+  'SFileInput',
+]
 /** The row that lines buttons up with the field boxes next to them (since 1.20.0). */
 export const FORM_ROW_COMPONENT = 'SFormRow'
 /** `s_display__flex`, `s_display--md__inlineFlex`: the utility classes that make an element a flex row. */
@@ -325,3 +334,17 @@ export const EMPTY_STATE_WRONG_ACTION_EVENTS = ['click:action', 'click']
 /** Components whose no-data state takes an SEmptyState through the `noData` slot, never the default slot. */
 export const NO_DATA_SLOT_COMPONENTS = ['STable', 'SSelect', 'SAutocomplete']
 export const NO_DATA_SLOT_NAME = 'noData'
+
+export const FILE_INPUT_COMPONENT = 'SFileInput'
+/** `<input type="file">`: SFileInput replaces it, so `no-raw-replacement` leaves it to `raw-file-input`. */
+export const FILE_INPUT_TYPE = 'file'
+export const REF_ATTRIBUTE = 'ref'
+export const CHANGE_EVENT = 'change'
+/** A handler that opens a file input's picker through its template ref: `fileInput?.click()`, `$refs.file.click()`. */
+export const PICKER_CLICK_CALL_PATTERN = /[\w$.?]*\.click\(\s*\)/g
+/** The DOM event access AI code writes for a native file input's `change`: `$event.target.files`, `e.target`. */
+export const NATIVE_CHANGE_EVENT_ACCESS_PATTERN = /\.target\b|\$event\.files\b/
+/** Splits a member path such as `fileInput.value?.click` into its names. */
+export const MEMBER_PATH_SEPARATOR_PATTERN = /\?\.|\./
+export const FILE_INPUT_EXAMPLE =
+  '<SFileInput v-model="files" label="Workbook" accept=".csv,.xlsx" :rules="getFileInputRules({ maxSize: 5 * 1024 * 1024, accept: \'.csv,.xlsx\' })" />'
