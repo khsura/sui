@@ -325,11 +325,13 @@ describe('SNumberInput', () => {
     })
 
     test('is validated by SForm.validate() with its number value', async () => {
+      // Only the exposed method the test calls, so the template ref needs no component instance type.
+      const form = ref<{ validate: () => unknown } | null>(null)
+
       const wrapper = mount(
         defineComponent({
           components: { SApp, SForm, SNumberInput },
           setup() {
-            const form = ref<InstanceType<typeof SForm> | null>(null)
             const quantity = ref<number | null>(0)
 
             return { form, quantity, rules: [minimumRule] }
@@ -338,9 +340,7 @@ describe('SNumberInput', () => {
         }),
       )
 
-      const form = wrapper.findComponent(SForm)
-
-      form.vm.validate()
+      form.value?.validate()
       await flushPromises()
 
       expect(wrapper.find('.s_formInputError').text()).toContain('At least 1')
