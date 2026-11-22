@@ -7,7 +7,7 @@ import {
   tabsScrollStepRatio,
   tabsSelectedTabSelector,
 } from '@/app/constants'
-import { getDocument, getHiddenScrollEdges, getScrollLeftToReveal, getWindow } from '@/app/lib'
+import { getDocument, getHiddenScrollEdges, getScrollLeftToReveal, getWindow, smoothElementScroll } from '@/app/lib'
 
 /**
  * STabs keeps its tabs on one row that scrolls sideways when they do not fit. This keeps the selected tab
@@ -44,12 +44,20 @@ export const useTabsService = (selected: Ref<number | string>, element: Ref<HTML
   }
 
   const scrollByStep = (direction: -1 | 1) => {
-    const prefersReducedMotion = getWindow()?.matchMedia?.(tabsReducedMotionQuery).matches ?? false
+    if (!scroller.value) {
+      return
+    }
 
-    scroller.value?.scrollBy({
-      left: direction * scroller.value.clientWidth * tabsScrollStepRatio,
-      behavior: prefersReducedMotion ? 'auto' : 'smooth',
-    })
+    const left = scroller.value.scrollLeft + direction * scroller.value.clientWidth * tabsScrollStepRatio
+
+    if (getWindow()?.matchMedia?.(tabsReducedMotionQuery).matches) {
+      scroller.value.scrollLeft = left
+
+      return
+    }
+
+    // The shared helper animates the scroll itself where native smooth scrolling is unreliable (WebKit).
+    smoothElementScroll(scroller.value, { left, behavior: 'smooth' })
   }
 
   useEventListener(scroller, 'scroll', updateHiddenEdges, { passive: true })
