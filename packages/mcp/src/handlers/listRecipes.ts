@@ -10,7 +10,7 @@ export const registerListRecipesTool = (server: McpServer, recipeSourceOptions: 
     LIST_RECIPES_TOOL_NAME,
     {
       description:
-        'Lists the tested, copy-ready @khsura/sui recipes (app shell, validated form, dialog/menu/tooltip/snackbar activators, data table, responsive grid, theme and dark mode) with when to use each and the name to pass to get_recipe. Start a page from a recipe instead of composing SUI components from scratch.',
+        'Lists the tested, copy-ready @khsura/sui recipes (app shell, validated form, dialog/menu/tooltip/snackbar activators, data table, responsive grid, theme and dark mode, filter bar, centered login-style page) with when to use each and the name to pass to get_recipe. Start a page from a recipe instead of composing SUI components from scratch.',
     },
     () => {
       try {

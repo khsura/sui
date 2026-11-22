@@ -36,6 +36,17 @@ describe('SWindow', () => {
     expect(active.value).toBe('details')
   })
 
+  test('marks only the selected item active, so it stays in flow and sizes the window', async () => {
+    const { wrapper, active } = mountWindow('summary')
+
+    await nextTick()
+    expect(wrapper.findAll('.s_windowItem--active').map((item) => item.text())).toEqual(['Summary panel'])
+
+    active.value = 'details'
+    await nextTick()
+    expect(wrapper.findAll('.s_windowItem--active').map((item) => item.text())).toEqual(['Details panel'])
+  })
+
   test('applies a CSS color as an inline style on the root', () => {
     const wrapper = mountWithApp(sui.SWindow, { props: { color: '#1a2b49' } })
 

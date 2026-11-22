@@ -1,5 +1,6 @@
 export { default as ActivatorOverlaysRecipe } from './activator-overlays.vue'
 export { default as AppShellRecipe } from './app-shell.vue'
+export { default as CenteredPageRecipe } from './centered-page.vue'
 export { default as DataTableRecipe } from './data-table.vue'
 export { default as FilterBarRecipe } from './filter-bar.vue'
 export { default as ResponsiveGridRecipe } from './responsive-grid.vue'

@@ -14,11 +14,13 @@ const issuesWith = (api: SuiApi, rule: string, code: string): TemplateIssue[] =>
 
 const issuesOf = (rule: string, code: string): TemplateIssue[] => issuesWith(fixtureApi, rule, code)
 
+type EvalRun = 'baseline' | 'with-mcp' | 'after-m2'
+
 /** A page from the AI eval (`docs/ai-eval/<run>/pages`) that showed the misuse. */
-const readEvalPage = (run: 'baseline' | 'with-mcp', fileName: string): string =>
+const readEvalPage = (run: EvalRun, fileName: string): string =>
   readFileSync(fileURLToPath(new URL(`../../../../docs/ai-eval/${run}/pages/${fileName}`, import.meta.url)), 'utf8')
 
-const evalIssues = (rule: string, run: 'baseline' | 'with-mcp', fileName: string): [number, number][] =>
+const evalIssues = (rule: string, run: EvalRun, fileName: string): [number, number][] =>
   issuesOf(rule, readEvalPage(run, fileName)).map((issue) => [issue.line, issue.column])
 
 describe('behaviour rules', () => {
@@ -285,6 +287,32 @@ describe('behaviour rules', () => {
     })
   })
 
+  describe('fill-height-under-app', () => {
+    const rule = 'fill-height-under-app'
+
+    it.each([
+      ['a fill-height child of a plain div', '<SApp><div><div class="s_height--fill">x</div></div></SApp>'],
+      ['a child of SApp without the class', '<SApp><div class="s_display__flex">x</div></SApp>'],
+      ['the class outside SApp', '<div class="s_height--fill">x</div>'],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it('reports a fill-height direct child of SApp', () => {
+      const [issue] = issuesOf(
+        rule,
+        '<SApp>\n  <div class="s_display__flex s_align__center s_height--fill">x</div>\n</SApp>',
+      )
+
+      expect(issue).toMatchObject({ severity: 'warning', line: 2, column: 3, recipe: 'centered-page' })
+      expect(issue.fixHint).toContain('min-height: 100dvh')
+    })
+
+    it('fires on the after-M2 eval login page whose card stuck to the top', () => {
+      expect(evalIssues(rule, 'after-m2', '06-login.vue')).toEqual([[3, 5]])
+    })
+  })
+
   describe('version gates', () => {
     const olderApi: SuiApi = { ...fixtureApi, version: '1.19.4' }
     const fixedApi: SuiApi = { ...fixtureApi, version: SUI_M2_FIXES_VERSION }
@@ -300,6 +328,7 @@ describe('behaviour rules', () => {
       ['hide-details-hides-label', '<SCheckbox label="Remember me" hide-details />'],
       ['card-title-text-align', '<SCardTitle class="s_textAlign__center">Title</SCardTitle>'],
       ['date-picker-empty-string', '<SDatePickerInput model-value="" />'],
+      ['fill-height-under-app', '<SApp><div class="s_height--fill">x</div></SApp>'],
       ['snackbar-action-contrast', snackbar('<SButton variant="text">Undo</SButton>')],
     ])('%s fires before the fix and stays silent from it on', (rule, code) => {
       expect(rulesWith(olderApi, code)).toContain(rule)

@@ -7,6 +7,7 @@ import { recipeSourceFiles, repoRecipesRoot } from '../../src/configs'
 import {
   RECIPE_ACTIVATOR_OVERLAYS,
   RECIPE_APP_SHELL,
+  RECIPE_CENTERED_PAGE,
   RECIPE_DATA_TABLE,
   RECIPE_FILTER_BAR,
   RECIPE_NAMES,
@@ -68,6 +69,7 @@ describe('useRecipeCatalogService', () => {
         RECIPE_RESPONSIVE_GRID,
         RECIPE_THEME_SETUP,
         RECIPE_FILTER_BAR,
+        RECIPE_CENTERED_PAGE,
       ].sort(),
     )
   })
