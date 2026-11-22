@@ -43,6 +43,7 @@ Root container that manages selection state.
 | Slot | Description |
 |------|-------------|
 | `default` | `SToggleButton` components |
+| `overlay` | Content laid over the group, outside the row of buttons (absolutely position it; `STabs` uses it for its `show-arrows` scroll arrows) |
 
 ---
 

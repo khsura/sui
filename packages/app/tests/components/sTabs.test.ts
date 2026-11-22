@@ -1,17 +1,18 @@
 import { flushPromises, mount } from '@vue/test-utils'
 import { defineComponent, nextTick, ref } from 'vue'
 import { SApp, STab, STabs } from '@/app/components'
+import { tabsScrollStepRatio } from '@/app/constants'
 
-const mountTabs = (wrap = false) => {
+const mountTabs = (wrap = false, showArrows = false) => {
   const selected = ref<number | string>(0)
 
   const wrapper = mount(
     defineComponent({
       components: { SApp, STab, STabs },
-      setup: () => ({ selected, wrap }),
+      setup: () => ({ selected, wrap, showArrows }),
       template: `
         <SApp>
-          <STabs v-model="selected" :wrap="wrap">
+          <STabs v-model="selected" :wrap="wrap" :show-arrows="showArrows">
             <STab :tab="0">One</STab>
             <STab :tab="1">Two</STab>
             <STab :tab="2">Three</STab>
@@ -80,8 +81,8 @@ describe('STabs overflow affordance', () => {
     })
   }
 
-  const mountWithMetrics = async (scrollWidth: number, wrap = false) => {
-    const { wrapper } = mountTabs(wrap)
+  const mountWithMetrics = async (scrollWidth: number, wrap = false, showArrows = false) => {
+    const { wrapper } = mountTabs(wrap, showArrows)
     const scroller = wrapper.find<HTMLElement>('.s_toggleButtonGroup__content').element
 
     fakeScroller(scroller, scrollWidth)
@@ -127,5 +128,34 @@ describe('STabs overflow affordance', () => {
     expect(classes).toContain('s_tabs--wrap')
     expect(classes).not.toContain('s_tabs--endHidden')
     wrapper.unmount()
+  })
+
+  test('showArrows adds a pointer-only arrow at each end that hides tabs, and the arrow scrolls the row', async () => {
+    const { wrapper, scroller } = await mountWithMetrics(contentWidth, false, true)
+    const endButton = wrapper.find('.s_tabs__scrollButton--end')
+
+    expect(wrapper.find('.s_tabs__scrollButton--start').exists()).toBe(false)
+    expect(endButton.attributes('aria-hidden')).toBe('true')
+    expect(endButton.attributes('tabindex')).toBe('-1')
+
+    // Reduced motion makes the arrow jump, so the new position can be read straight away.
+    vi.stubGlobal('matchMedia', (query: string) => ({ matches: query.includes('reduce') }))
+    await endButton.trigger('click')
+    expect(scroller.scrollLeft).toBe(visibleWidth * tabsScrollStepRatio)
+
+    scroller.dispatchEvent(new Event('scroll'))
+    await nextTick()
+    expect(wrapper.find('.s_tabs__scrollButton--start').exists()).toBe(true)
+    wrapper.unmount()
+  })
+
+  test('shows no arrows without showArrows, nor with wrap', async () => {
+    const plain = await mountWithMetrics(contentWidth)
+    const wrapped = await mountWithMetrics(contentWidth, true, true)
+
+    expect(plain.wrapper.find('.s_tabs__scrollButton').exists()).toBe(false)
+    expect(wrapped.wrapper.find('.s_tabs__scrollButton').exists()).toBe(false)
+    plain.wrapper.unmount()
+    wrapped.wrapper.unmount()
   })
 })

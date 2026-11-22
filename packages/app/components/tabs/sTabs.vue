@@ -18,10 +18,38 @@
     @keydown="onTablistKeydown"
   >
     <slot></slot>
+    <!-- Opt-in pointer affordance (showArrows): keyboard users move with the arrow keys, so these stay out of the
+    tab order and the accessibility tree (a tablist may only contain tabs). -->
+    <template v-if="props.showArrows && !props.wrap" #overlay>
+      <SButton
+        v-if="isStartHidden"
+        variant="icon"
+        size="small"
+        class="s_tabs__scrollButton s_tabs__scrollButton--start"
+        tabindex="-1"
+        aria-hidden="true"
+        @click="scrollBackward"
+      >
+        <SIcon icon="mdi-chevron-left"></SIcon>
+      </SButton>
+      <SButton
+        v-if="isEndHidden"
+        variant="icon"
+        size="small"
+        class="s_tabs__scrollButton s_tabs__scrollButton--end"
+        tabindex="-1"
+        aria-hidden="true"
+        @click="scrollForward"
+      >
+        <SIcon icon="mdi-chevron-right"></SIcon>
+      </SButton>
+    </template>
   </SToggleButtonGroup>
 </template>
 <script setup lang="ts">
 import { computed, provide, useTemplateRef } from 'vue'
+import SButton from '@/app/components/sButton.vue'
+import SIcon from '@/app/components/sIcon.vue'
 import { SToggleButtonGroup } from '@/app/components/toggleButtonGroup'
 import { ProviderPropsName } from '@/app/configs'
 import { keyboardKey } from '@/app/constants'
@@ -84,7 +112,7 @@ const model = computed({
   },
 })
 
-const { isStartHidden, isEndHidden } = useTabsService(
+const { isStartHidden, isEndHidden, scrollBackward, scrollForward } = useTabsService(
   computed(() => props.modelValue),
   tabsRootElement,
 )
@@ -92,14 +120,18 @@ const { isStartHidden, isEndHidden } = useTabsService(
 const classList = computed(() => ({
   s_tabs: true,
   's_tabs--wrap': props.wrap,
+  's_tabs--arrows': props.showArrows && !props.wrap,
   's_tabs--startHidden': !props.wrap && isStartHidden.value,
   's_tabs--endHidden': !props.wrap && isEndHidden.value,
 }))
 </script>
 
 <style lang="scss">
-// The faded strip at an end that hides tabs, so a row that scrolls doesn't look clipped.
+// The faded strip at an end that hides tabs, so a row that scrolls doesn't look clipped. With `showArrows` the
+// strip starts clear under the arrow, then fades in to the tabs.
 $s_tabs__fadeWidth: 32px;
+$s_tabs__scrollButtonSize: map-deep-get($s_button--sizes, 'small') * 1px;
+$s_tabs__arrowFadeSolid: $s_tabs__scrollButtonSize + $s_tabs__fadeWidth;
 
 // Fades the row of tabs out at the ends that hide tabs. Each end gets a ($clear, $solid) pair: fully
 // transparent up to $clear, fully visible from $solid. A pair of 0% leaves that end unfaded.
@@ -115,8 +147,26 @@ $s_tabs__fadeWidth: 32px;
 
 // Tabs stay on one row. When they do not fit, the row scrolls sideways (swipe, trackpad or shift+wheel)
 // and each tab keeps the width of its label. An end that hides tabs fades out, so the row visibly scrolls;
-// when every tab fits there is no fade. `wrap` lays the tabs out on several rows instead.
+// when every tab fits there is no fade. `showArrows` adds a scroll arrow at each such end; `wrap` lays the
+// tabs out on several rows instead.
 .s_tabs {
+  &__scrollButton.s_button {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    width: $s_tabs__scrollButtonSize;
+    height: $s_tabs__scrollButtonSize;
+    transform: translateY(-50%);
+  }
+
+  &__scrollButton--start.s_button {
+    left: 0;
+  }
+
+  &__scrollButton--end.s_button {
+    right: 0;
+  }
+
   .s_toggleButtonGroup__content {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -137,6 +187,23 @@ $s_tabs__fadeWidth: 32px;
 
   &--startHidden.s_tabs--endHidden .s_toggleButtonGroup__content {
     @include s_tabs__fadeMask(0%, $s_tabs__fadeWidth, 0%, $s_tabs__fadeWidth);
+  }
+
+  &--arrows.s_tabs--startHidden .s_toggleButtonGroup__content {
+    @include s_tabs__fadeMask($s_tabs__scrollButtonSize, $s_tabs__arrowFadeSolid, 0%, 0%);
+  }
+
+  &--arrows.s_tabs--endHidden .s_toggleButtonGroup__content {
+    @include s_tabs__fadeMask(0%, 0%, $s_tabs__scrollButtonSize, $s_tabs__arrowFadeSolid);
+  }
+
+  &--arrows.s_tabs--startHidden.s_tabs--endHidden .s_toggleButtonGroup__content {
+    @include s_tabs__fadeMask(
+      $s_tabs__scrollButtonSize,
+      $s_tabs__arrowFadeSolid,
+      $s_tabs__scrollButtonSize,
+      $s_tabs__arrowFadeSolid
+    );
   }
 
   .s_toggleButton {

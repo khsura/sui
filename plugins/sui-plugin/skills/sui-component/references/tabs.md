@@ -6,7 +6,7 @@ Single-select tab strip, built on the toggle-button group. It renders only the t
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsTabs.d.ts`, `propsTab.d.ts`
 
-The tabs stay on **one row**. Each tab keeps the width of its label (tabs stretch to fill spare room), and when they do not fit, the row scrolls sideways (touch, trackpad, shift+wheel) with no scrollbar. An end that hides tabs fades out, so on a phone the row visibly scrolls (swipe it) instead of looking clipped; when every tab fits there is no fade. `wrap` lays the tabs out on several rows instead. The selected tab is scrolled into view on mount and whenever the selection changes. Don't wrap `STabs` in `SSlideGroup` or add `overflow-x: auto` yourself. (Older versions always wrapped the tabs onto several rows on phones; `wrap` keeps that layout.)
+The tabs stay on **one row**. Each tab keeps the width of its label (tabs stretch to fill spare room), and when they do not fit, the row scrolls sideways (touch, trackpad, shift+wheel) with no scrollbar. An end that hides tabs fades out, so on a phone the row visibly scrolls (swipe it) instead of looking clipped; when every tab fits there is no fade. `show-arrows` adds a scroll arrow at each end that hides tabs (pointer only); `wrap` lays the tabs out on several rows instead. The selected tab is scrolled into view on mount and whenever the selection changes. Don't wrap `STabs` in `SSlideGroup` or add `overflow-x: auto` yourself. (Older versions always wrapped the tabs onto several rows on phones; `wrap` keeps that layout.)
 
 ---
 
@@ -25,6 +25,7 @@ The tabs stay on **one row**. Each tab keeps the width of its label (tabs stretc
 | `modelValue` | `number \| string` | — | yes | — | — |
 | `outlined` | `boolean \| null` | — | no | — | — |
 | `selectedTabColor` | `string` | `"primary"` | no | — | — |
+| `showArrows` | `boolean` | — | no | — | Show a scroll arrow at each end of the row that hides tabs (pointer only; the row still swipes). Ignored with `wrap`. |
 | `shrink` | `boolean` | — | no | — | — |
 | `underlined` | `boolean \| null` | — | no | — | — |
 | `wrap` | `boolean` | — | no | — | Lay the tabs out on several rows when they do not fit, instead of one row that scrolls sideways. |
