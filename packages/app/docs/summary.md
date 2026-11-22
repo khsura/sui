@@ -58,6 +58,7 @@ Quick reference for all components in the `@khsura/sui` package.
 | Component(s) | Import | Doc |
 |---|---|---|
 | `SForm`, `SFormRow`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` | `import { SForm, SFormRow, SInput, STextarea, SSelect, SCheckbox, SRadio, SRadioGroup, SSwitch } from '@khsura/sui'` | [form.md](./components/form.md) |
+| `SFileInput` | `import { SFileInput } from '@khsura/sui'` | [file-input.md](./components/file-input.md) |
 | `SAutocomplete` | `import { SAutocomplete } from '@khsura/sui'` | [autocomplete.md](./components/autocomplete.md) |
 
 ---
@@ -158,6 +159,7 @@ SDialog, SMenu and SSnackbar support an `#activator` slot that passes `{ on, att
 | `SDialog`, `SMenu`, `STooltip`, `SSnackbar`, `SNavigationDrawer` | `boolean` |
 | `SInput`, `STextarea`, `SSelect`, `SSwitch`, `SCheckbox` | value type |
 | `SAutocomplete` | value or `value[]` (when `multiple`) |
+| `SFileInput` | `File[] \| null` (always an array, even without `multiple`; `null` when empty) |
 | `STabs` | `string \| number` (the active `STab`'s `tab` value) |
 | `SExpansionPanels` | `number[]` (the `index` prop of each open panel) |
 | `SCarousel`, `SWindow` | single item value |

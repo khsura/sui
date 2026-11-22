@@ -96,5 +96,5 @@ const handleDrop = (event: DragEvent) => {
 
 - The `drop` event provides the raw `DragEvent` — use `event.dataTransfer?.files` to access dropped files. The browser's default handling (opening the file) is already prevented.
 - Always provide visual feedback using `isDraggingOver`. While dragging over, the root also gets class `s_droppable--drag` (opacity 0.6).
-- There is no click-to-upload — combine with `SButton` or `<input type="file">` yourself.
+- For file uploads prefer `<SFileInput variant="dropzone">` ([file-input.md](./file-input.md)): click-to-browse, keyboard, `accept` filtering, a label and `rules` included. SDroppable alone has no click-to-upload.
 - There is no `accept` / file-type filtering — validate files in your `drop` handler.

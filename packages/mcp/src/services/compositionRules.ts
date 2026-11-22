@@ -15,6 +15,16 @@ import {
   DIRECTIVE_SLOT,
   DIALOG_TAG,
   EMPTY_STATE_COMPONENT,
+  CHANGE_EVENT,
+  FILE_INPUT_COMPONENT,
+  FILE_INPUT_EXAMPLE,
+  FILE_INPUT_TYPE,
+  MEMBER_PATH_SEPARATOR_PATTERN,
+  NATIVE_CHANGE_EVENT_ACCESS_PATTERN,
+  PICKER_CLICK_CALL_PATTERN,
+  REF_ATTRIBUTE,
+  RULE_FILE_INPUT_CHANGE_EVENT,
+  RULE_RAW_FILE_INPUT,
   DIRECTIVE_BIND,
   DIRECTIVE_ON,
   FORM_COMPONENT,
@@ -282,7 +292,8 @@ const rawReplacement = (element: ElementNode): string | undefined => {
 
   const inputType = findAttribute(element, INPUT_TYPE_ATTRIBUTE)?.staticValue?.toLowerCase()
 
-  if (inputType && NON_VISUAL_INPUT_TYPES.includes(inputType)) {
+  // A file input is `raw-file-input`'s: SInput is no replacement for it.
+  if (inputType && (NON_VISUAL_INPUT_TYPES.includes(inputType) || inputType === FILE_INPUT_TYPE)) {
     return undefined
   }
 
@@ -309,6 +320,83 @@ export const noRawReplacementRule: TemplateRule = {
         recipe: element.tag === DIALOG_TAG ? RECIPE_ACTIVATOR_OVERLAYS : RECIPE_VALIDATED_FORM,
       },
     ]
+  },
+}
+
+const isFileInputElement = (element: ElementNode): boolean =>
+  element.tag === INPUT_TAG &&
+  findAttribute(element, INPUT_TYPE_ATTRIBUTE)?.staticValue?.toLowerCase() === FILE_INPUT_TYPE
+
+/** Whether a listener in `scope` opens the picker through the ref: `@click="fileInput?.click()"`. */
+const opensPickerThroughRef = (scope: ElementNode, refName: string): boolean =>
+  [scope, ...descendantElementsOf(scope)].some((candidate) =>
+    candidate.props.some((prop) => {
+      if (!isDirective(prop) || prop.name !== DIRECTIVE_ON) {
+        return false
+      }
+
+      return [...(expressionSource(prop) ?? '').matchAll(PICKER_CLICK_CALL_PATTERN)].some(([call]) =>
+        call.split(MEMBER_PATH_SEPARATOR_PATTERN).includes(refName),
+      )
+    }),
+  )
+
+/**
+ * A raw `<input type="file">`, often hidden and opened by a button's `ref.click()`. Only for a `@khsura/sui`
+ * whose API has SFileInput, so a project on an older release is not told to use a component it lacks.
+ */
+export const rawFileInputRule: TemplateRule = {
+  id: RULE_RAW_FILE_INPUT,
+  target: RULE_TARGET_ANY_ELEMENT,
+  check: ({ element, ancestors, api }) => {
+    if (!isFileInputElement(element) || !api.components.some((component) => component.name === FILE_INPUT_COMPONENT)) {
+      return []
+    }
+
+    const refName = findAttribute(element, REF_ATTRIBUTE)?.staticValue
+    const scope = ancestors[0] ?? element
+    const isButtonHack = !!refName && opensPickerThroughRef(scope, refName)
+
+    return [
+      {
+        ...positionOf(element),
+        rule: RULE_RAW_FILE_INPUT,
+        severity: SEVERITY_WARNING,
+        message: isButtonHack
+          ? `A file \`<input>\` opened by a button's \`${refName}.click()\` has no label of its own, skips \`rules\` and the error line, and its chosen file is never shown or announced.`
+          : 'A raw `<input type="file">` bypasses SUI theming, its label, `rules` and the error line.',
+        fixHint: `Use \`${FILE_INPUT_EXAMPLE}\` (\`variant="dropzone"\` for a drop area). Its model is a \`File[]\` (\`null\` when empty): read \`files?.[0]\` for one file, or watch the model / listen to \`@change\`, which passes the files, not a DOM event.`,
+        recipe: RECIPE_VALIDATED_FORM,
+      },
+    ]
+  },
+}
+
+/** `@change` on SFileInput passes `File[] | null`; code written for a native input reads `$event.target.files`. */
+export const fileInputChangeEventRule: TemplateRule = {
+  id: RULE_FILE_INPUT_CHANGE_EVENT,
+  check: ({ element }) => {
+    if (!isComponentTag(element.tag, FILE_INPUT_COMPONENT)) {
+      return []
+    }
+
+    return element.props
+      .filter(
+        (prop) =>
+          isDirective(prop) &&
+          prop.name === DIRECTIVE_ON &&
+          staticArgument(prop.arg) === CHANGE_EVENT &&
+          NATIVE_CHANGE_EVENT_ACCESS_PATTERN.test(expressionSource(prop) ?? ''),
+      )
+      .map((listener) => ({
+        ...positionOf(listener),
+        rule: RULE_FILE_INPUT_CHANGE_EVENT,
+        severity: SEVERITY_ERROR,
+        message:
+          '`SFileInput` emits `change` with the chosen files (`File[] | null`), not a DOM event, so `.target` / `$event.files` is `undefined`.',
+        fixHint:
+          'Bind `v-model="files"` and read `files?.[0]`, or take the files from the event: `@change="(files) => upload(files?.[0])"`.',
+      }))
   },
 }
 
@@ -412,4 +500,6 @@ export const compositionRules: TemplateRule[] = [
   avatarImageInSlotRule,
   avatarGroupChildRule,
   emptyStateOutsideNoDataSlotRule,
+  rawFileInputRule,
+  fileInputChangeEventRule,
 ]

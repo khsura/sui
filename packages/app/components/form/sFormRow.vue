@@ -31,6 +31,7 @@ defineSlots<{
   > .s_input,
   > .s_textarea,
   > .s_autocomplete,
+  > .s_fileInput,
   > .s_select--grow,
   > .s_datePickerInput--block {
     flex: 1 1 auto;

@@ -51,6 +51,7 @@ This directory contains per-component documentation optimized for Claude AI codi
 |------|-----------|
 | [form.md](./form.md) | `SForm`, `SFormRow`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` |
 | [autocomplete.md](./autocomplete.md) | `SAutocomplete` |
+| [file-input.md](./file-input.md) | `SFileInput` |
 
 ### Data Display
 | File | Components |
@@ -132,6 +133,7 @@ Always bind **both** `v-on="on"` and `v-bind="attrs"`.
 |-----------|-------------|
 | `SDialog`, `SMenu`, `STooltip`, `SSnackbar` | `boolean` |
 | `SInput`, `STextarea`, `SSelect`, `SAutocomplete`, `SSwitch`, `SCheckbox` | value type |
+| `SFileInput` | `File[] \| null` (always an array, even without `multiple`; `null` when empty) |
 | `STabs` | `string \| number` (the active `STab`'s `tab` value) |
 | `SExpansionPanels` | `number[]` (the `index` prop of each open panel) |
 | `SCarousel`, `SWindow` | single item value |
