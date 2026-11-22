@@ -13,7 +13,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsAutocomplete.d.ts
 
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
-| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
+| `activator` | `string \| ComponentPublicInstance \| HTMLElement \| null` | — | no | — |
 | `allowUnlisted` | `boolean` | — | no | — |
 | `ariaLabel` | `string \| null` | — | no | — |
 | `autocomplete` | `string` | `"off"` | no | — |
@@ -24,7 +24,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsAutocomplete.d.ts
 | `closeOnClick` | `boolean` | — | no | — |
 | `closeOnContentClick` | `boolean` | — | no | — |
 | `closeOnScroll` | `boolean` | — | no | — |
-| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
+| `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — |
 | `contentStyle` | `StyleValue` | — | no | — |
 | `debounce` | `number` | `500` | no | — |
 | `delimiter` | `string \| RegExp \| string[]` | — | no | — |
@@ -32,19 +32,19 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsAutocomplete.d.ts
 | `disabled` | `boolean \| null` | — | no | — |
 | `divided` | `boolean` | — | no | — |
 | `filter` | `((item: SelectItem, queryText: string) => boolean)` | — | no | — |
-| `filterMode` | `"start" \| "contains" \| "exact" \| "none"` | `"contains"` | no | `contains`, `exact`, `none`, `start` |
-| `height` | `string \| number \| null` | — | no | — |
+| `filterMode` | `"contains" \| "exact" \| "none" \| "start"` | `"contains"` | no | `contains`, `exact`, `none`, `start` |
+| `height` | `number \| string \| null` | — | no | — |
 | `hideDetails` | `boolean` | — | no | — |
 | `id` | `string` | — | no | — |
-| `items` | `string[] \| SelectItem[]` | — | no | — |
+| `items` | `SelectItem[] \| string[]` | — | no | — |
 | `label` | `string \| null` | — | no | — |
 | `loading` | `boolean` | — | no | — |
 | `loadingAriaLabel` | `string` | `"Loading"` | no | — |
 | `location` | `LocationRaw` | `"bottom"` | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
+| `maxHeight` | `number \| string \| null` | — | no | — |
+| `maxWidth` | `number \| string \| null` | — | no | — |
+| `minHeight` | `number \| string \| null` | — | no | — |
+| `minWidth` | `number \| string \| null` | — | no | — |
 | `modelValue` | `(AutocompleteModelType<T> & (AutocompleteModelType<T> \| null))` | — | no | — |
 | `multiple` | `T` | — | no | — |
 | `name` | `string` | — | no | — |
@@ -57,7 +57,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsAutocomplete.d.ts
 | `readonly` | `boolean \| null` | — | no | — |
 | `screenPadding` | `number \| null` | — | no | — |
 | `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` |
-| `width` | `string \| number \| null` | — | no | — |
+| `width` | `number \| string \| null` | — | no | — |
 
 **SAutocomplete slots**
 

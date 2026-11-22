@@ -13,20 +13,20 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsSheet.d.ts`
 
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
 | `color` | `string` | — | no | — |
 | `colorThreshold` | `number` | — | no | — |
-| `elevation` | `"" \| 0 \| 1 \| 2 \| 22 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 23 \| 24 \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| null` | — | no | — |
-| `height` | `string \| number \| null` | — | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
+| `elevation` | `"" \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| 0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 22 \| 23 \| 24 \| null` | — | no | — |
+| `height` | `number \| string \| null` | — | no | — |
+| `maxHeight` | `number \| string \| null` | — | no | — |
+| `maxWidth` | `number \| string \| null` | — | no | — |
+| `minHeight` | `number \| string \| null` | — | no | — |
+| `minWidth` | `number \| string \| null` | — | no | — |
 | `outlined` | `boolean \| null` | — | no | — |
 | `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
 | `theme` | `AppThemeType` | — | no | `dark`, `light` |
 | `underlined` | `boolean \| null` | — | no | — |
-| `width` | `string \| number \| null` | — | no | — |
+| `width` | `number \| string \| null` | — | no | — |
 
 **SSheet slots**
 

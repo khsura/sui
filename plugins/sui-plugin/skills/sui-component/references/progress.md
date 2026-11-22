@@ -19,12 +19,12 @@ Horizontal progress bar.
 | --- | --- | --- | --- | --- | --- |
 | `ariaLabel` | `string` | `"Loading"` | no | — | Accessible name of the progress bar. Defaults to `'Loading'`; name what is loading when you can. |
 | `backgroundColor` | `string \| null` | — | no | — | — |
-| `backgroundOpacity` | `string \| number \| null` | — | no | — | — |
+| `backgroundOpacity` | `number \| string \| null` | — | no | — | — |
 | `color` | `string` | `"info"` | no | — | — |
 | `indeterminate` | `boolean` | — | no | — | — |
 | `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` | — |
-| `size` | `string \| number \| null` | — | no | — | — |
-| `value` | `string \| number` | `0` | no | — | — |
+| `size` | `number \| string \| null` | — | no | — | — |
+| `value` | `number \| string` | `0` | no | — | — |
 
 **SProgressLinear slots**
 
@@ -68,7 +68,7 @@ Circular progress / spinner.
 | `color` | `string \| null` | — | no | — | — |
 | `indeterminate` | `boolean` | — | no | — | — |
 | `rotate` | `number` | — | no | — | — |
-| `size` | `string \| number` | `32` | no | — | — |
+| `size` | `number \| string` | `32` | no | — | — |
 | `theme` | `AppThemeType` | — | no | `dark`, `light` | — |
 | `value` | `number` | `0` | no | — | — |
 | `width` | `number` | `4` | no | — | — |
