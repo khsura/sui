@@ -23,7 +23,7 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { skeletonLoaderDefaultLoadingText, skeletonLoaderDefaultType } from '@/app/constants'
+import { skeletonLoaderDefaultType } from '@/app/constants'
 import { getCleanSetObject } from '@/app/lib'
 import type { PropsSkeletonLoader } from '@/app/definitions'
 import {
@@ -35,17 +35,18 @@ import {
 } from '@/app/services'
 
 const rawProps = withDefaults(defineProps<PropsSkeletonLoader>(), {
-  type: skeletonLoaderDefaultType,
+  // Literals, so sui-api.json shows the real defaults.
+  type: 'text',
   loading: false,
   boilerplate: false,
-  loadingText: skeletonLoaderDefaultLoadingText,
+  loadingText: 'Loading…',
 })
 
 const props = useComponentDefaultsService('SSkeletonLoader', rawProps)
 
 const slots = defineSlots<{
   /** The real content, shown once `loading` is `false`. */
-  default?: () => unknown
+  default?: () => void
 }>()
 
 const { themeClasses } = useComponentThemeService(props)

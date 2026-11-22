@@ -20,10 +20,8 @@ export const skeletonLoaderRepeatSeparator = '@'
 export const skeletonLoaderDefaultRepeat = 1
 /** Most times one preset is drawn, so a typo such as `text@1000` cannot flood the DOM. */
 export const skeletonLoaderMaxRepeat = 50
-/** `type` used when none is given. */
+/** `type` drawn when the prop resolves to nothing (for example a component default of `undefined`). */
 export const skeletonLoaderDefaultType = 'text'
-/** Accessible name announced while the skeleton is shown. */
-export const skeletonLoaderDefaultLoadingText = 'Loading…'
 /** Text lines in a `card` preset, under its heading. */
 export const skeletonLoaderCardTextLines = 2
 /** Text lines beside the avatar of a `list-item-avatar` preset. */
