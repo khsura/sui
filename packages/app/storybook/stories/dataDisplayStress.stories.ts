@@ -422,6 +422,97 @@ export const TabsSelectedOutOfView = {
   },
 } satisfies StoryObj
 
+// Tabs that do not fit a 375px column (the after-M2 eval: "Account" was cut off with no sign that the row
+// scrolls). The end that hides tabs fades out and shows a scroll arrow; the arrow scrolls the row, and the last
+// tab, once selected, is scrolled fully into view. The play ends back on the first tab, so the screenshot shows
+// the starting state: the right-hand arrow and fade.
+const narrowTabsLabels = ['Getting started', 'Billing and invoices', 'Account settings', 'Notifications', 'Security']
+
+const getScrollButton = (canvasElement: HTMLElement, edge: 'start' | 'end') =>
+  canvasElement.querySelector<HTMLElement>(`.stress-narrow-tabs .s_tabs__scrollButton--${edge}`)
+
+const assertScrollButtons = (canvasElement: HTMLElement, expected: { start: boolean; end: boolean }) => {
+  for (const edge of ['start', 'end'] as const) {
+    const button = getScrollButton(canvasElement, edge)
+    const isVisible = !!button && getRect(button).width > 0
+    const tabs = getRect(canvasElement.querySelector('.stress-narrow-tabs'))
+
+    if (button && isVisible) {
+      const arrow = getRect(button)
+
+      const isAtEdge =
+        edge === 'start'
+          ? Math.abs(arrow.left - tabs.left) <= pixelTolerance
+          : Math.abs(arrow.right - tabs.right) <= pixelTolerance
+
+      assertThat(isAtEdge, `the ${edge} scroll arrow is not at the ${edge} edge of the tabs`)
+    }
+
+    assertThat(
+      isVisible === expected[edge],
+      `the ${edge} scroll arrow should be ${expected[edge] ? 'shown' : 'hidden'}`,
+    )
+  }
+}
+
+const assertTabFullyInView = (canvasElement: HTMLElement, tabIndex: number) => {
+  const scroller = getRect(canvasElement.querySelector('.stress-narrow-tabs .s_toggleButtonGroup__content'))
+  const tab = getRect(canvasElement.querySelectorAll('.stress-narrow-tabs .s_tab')[tabIndex] ?? null)
+
+  assertThat(
+    tab.left >= scroller.left - pixelTolerance && tab.right <= scroller.right + pixelTolerance,
+    `tab ${tabIndex + 1} is not fully in view`,
+  )
+}
+
+export const TabsNarrowScrollAffordance = {
+  tags: ['visual'],
+  render: () => ({
+    components: { SCard, STab, STabs },
+    setup: () => ({ narrowTabsLabels, activeTab: ref(0) }),
+    template: /* html */ `
+      <div style="max-width: 375px;">
+        <SCard class="s_pa__4">
+          <STabs v-model="activeTab" class="stress-narrow-tabs">
+            <STab v-for="(label, index) in narrowTabsLabels" :key="label" :tab="index">{{ label }}</STab>
+          </STabs>
+        </SCard>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const lastTabIndex = narrowTabsLabels.length - 1
+
+    const selectedTab = () =>
+      canvasElement.querySelector<HTMLElement>('.stress-narrow-tabs [role="tab"][aria-selected="true"]')
+
+    await waitFor(() => assertScrollButtons(canvasElement, { start: false, end: true }))
+
+    const endButton = getScrollButton(canvasElement, 'end')
+
+    if (endButton) {
+      await userEvent.click(endButton)
+    }
+
+    // The arrow scrolled the row, so tabs now hide past the left edge too.
+    await waitFor(() => assertScrollButtons(canvasElement, { start: true, end: true }))
+
+    selectedTab()?.focus()
+    await userEvent.keyboard('{End}')
+    await waitFor(() => {
+      assertTabFullyInView(canvasElement, lastTabIndex)
+      assertScrollButtons(canvasElement, { start: true, end: false })
+    })
+
+    selectedTab()?.focus()
+    await userEvent.keyboard('{Home}')
+    await waitFor(() => {
+      assertTabFullyInView(canvasElement, 0)
+      assertScrollButtons(canvasElement, { start: false, end: true })
+    })
+  },
+} satisfies StoryObj
+
 const files = [
   { name: 'Quarterly financial report final version.pdf', meta: '2.3 MB · Modified 2026-11-02 by Bartholomew' },
   { name: 'Team photo.jpg', meta: '4.0 MB · Modified yesterday' },
