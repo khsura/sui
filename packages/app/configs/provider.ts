@@ -42,4 +42,5 @@ export const ProviderPropsName = {
   dialog: Symbol() as InjectionKey<props.PropsDialog>,
   listProps: Symbol() as InjectionKey<props.PropsList>,
   listItemProps: Symbol() as InjectionKey<props.PropsListItem>,
+  avatarGroupProps: Symbol() as InjectionKey<props.PropsAvatarGroup>,
 }
