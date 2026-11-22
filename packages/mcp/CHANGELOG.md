@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/khsura/sui/compare/sui-mcp-v0.2.1...sui-mcp-v0.3.0) (2026-11-22)
+
+
+### Features
+
+* M2 hardening — visual regression harness, component fixes, a11y contrast ([3f21587](https://github.com/khsura/sui/commit/3f215875caa70dcfdd2620468a65894c19b609d5))
+
 ## [0.2.1](https://github.com/khsura/sui/compare/sui-mcp-v0.2.0...sui-mcp-v0.2.1) (2026-11-21)
 
 
