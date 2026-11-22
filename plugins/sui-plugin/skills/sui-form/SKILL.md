@@ -1,6 +1,6 @@
 ---
 name: sui-form
-description: Build validated forms in a Vue or Nuxt app with @khsura/sui — SForm, SInput, STextarea, SSelect, SAutocomplete, SCheckbox, SRadioGroup/SRadio, SSwitch, SDatePickerInput. Use when creating a form, login/registration/settings/data-entry UI, adding validation rules (inline or the i18n-backed getFormInputModelValueRules), handling submit with SForm.validate(), async/searchable selects, or fixing a SUI form whose validation, error display or v-model doesn't behave.
+description: Build validated forms in a Vue or Nuxt app with @khsura/sui — SForm, SInput, SNumberInput, STextarea, SSelect, SAutocomplete, SCheckbox, SRadioGroup/SRadio, SSwitch, SDatePickerInput. Use when creating a form, login/registration/settings/data-entry UI, adding validation rules (inline or the i18n-backed getFormInputModelValueRules), handling submit with SForm.validate(), async/searchable selects, or fixing a SUI form whose validation, error display or v-model doesn't behave.
 argument-hint: [describe the form fields and purpose]
 ---
 
@@ -143,11 +143,12 @@ const numeric = (v: string) => /^\d+$/.test(v) || 'Must be a number'
 
 Use this to choose the right component and props for each field.
 
-**Common to the validated inputs** (`SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SDatePickerInput`): `label`, `rules`, `disabled`, `hideDetails`, `hideError`, `error`, `dirty`, `id`. `SAutocomplete` and `SSwitch` don't run rules.
+**Common to the validated inputs** (`SInput`, `SNumberInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SDatePickerInput`): `label`, `rules`, `disabled`, `hideDetails`, `hideError`, `error`, `dirty`, `id`. `SAutocomplete` and `SSwitch` don't run rules.
 
 | Component         | v-model            | Key props                                                                                                                                                                                                                                                                                | When to use                               |
 | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
 | **SInput**        | `string \| number` | `label`, `type` (`text` \| `email` \| `password` \| `number` \| `tel` \| `url` \| `search`), `placeholder`, `suffix`, `dense`, `readonly`, `max`/`min`, `maxlength`/`minlength`, `inputmode` (`numeric` \| `decimal` \| `email` \| `tel`), `positive` / `allowDecimal` (numbers), `size` | Single-line text, email, password, number |
+| **SNumberInput**  | `number \| null`   | `label`, `min`/`max`, `step`, `precision` (decimals; default `0`, `2` for money, `null` for any), `controlVariant` (`stacked` \| `split`), `hideControls`, `prefix`/`suffix`, `textRight`, `placeholder`, `readonly`, `dense`, `tile`, `size` | Quantities, amounts, percentages: any number (since 1.21.0) |
 | **STextarea**     | `string`           | `label`, `placeholder`, `rows`, `cols`, `autogrow`, `resize`, `counter`, `dense`, `tile`, `maxlength`/`minlength`, `readonly`                                                                                                                                                                       | Multi-line text                           |
 | **SSelect**       | `string \| number` | `items`: `SelectItem[]` or `string[]` (type from `@khsura/sui`: `text`, `value`, optional `disabled`). Also `label`, `placeholder`, `dense`, `grow`, `text`, `divided`, `color`, `outlined` (default `true`)/`underlined`/`borderRadius`. **No** `multiple`/`chips`/`clearable`                            | Single-value dropdown                     |
 | **SAutocomplete** | `any` or `any[]`   | Same `items` as SSelect; + `multiple`, `chips`, `closableChips`, `clearable`, `placeholder`, `filter`, `filterMode`, `debounce`, `loading`, `allowUnlisted`, `delimiter`. `debounce` defaults to 500 ms. Events: **`@search-item`** (search text, for async options), **`@create-item`** (with `allowUnlisted`). No `rules`; `disabled` does not disable its text field         | Searchable / multi / async select         |
@@ -159,6 +160,8 @@ Use this to choose the right component and props for each field.
 **SelectItem** (SSelect, SAutocomplete): from `@khsura/sui` — `{ text: string, value: string | number | null | undefined, disabled?: boolean }` or plain `string`. Use `text` and `value`, not `title` or `label`.
 
 **SAutocomplete async search:** listen to `@search-item`, not `@update:search-input` (that name is accepted by the typings but never emitted).
+
+**Numbers: prefer `SNumberInput`** (since `@khsura/sui` 1.21.0). It writes `number | null`, steps with +/- buttons and ArrowUp/ArrowDown, keeps `precision` decimals, clamps to `min`/`max` on blur and has spinbutton semantics. It renders `type="text"` with the right `inputmode`, so a browser validation bubble never covers the SUI error inside `SForm`. Older SUI versions don't have it — use SInput `type="number"` there.
 
 **SInput `type="number"`:** bind a plain `v-model` — SInput already writes a `number | null` to the model, so `.number` is unnecessary. Use `min`/`max`/`positive` when the value should be clamped while typing; use a rule when the user should see a message instead. Number inputs are **integer-only by default** — `.` is blocked and pasted decimals are rounded; add `allowDecimal` (with `inputmode="decimal"`) to accept decimals, in which case `min`/`positive` are enforced on blur so values like `0.5` can be typed.
 
