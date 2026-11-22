@@ -15,18 +15,18 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsButton.d.ts`
 | --- | --- | --- | --- | --- |
 | `activeClass` | `string \| null` | — | no | — |
 | `block` | `boolean` | — | no | — |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
 | `color` | `string` | — | no | — |
 | `colorThreshold` | `number` | — | no | — |
 | `disabled` | `boolean \| null` | — | no | — |
-| `elevation` | `"" \| 0 \| 1 \| 2 \| 22 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 23 \| 24 \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| null` | — | no | — |
-| `height` | `string \| number \| null` | — | no | — |
+| `elevation` | `"" \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| 0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 22 \| 23 \| 24 \| null` | — | no | — |
+| `height` | `number \| string \| null` | — | no | — |
 | `href` | `string \| null` | — | no | — |
 | `loading` | `boolean` | — | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
+| `maxHeight` | `number \| string \| null` | — | no | — |
+| `maxWidth` | `number \| string \| null` | — | no | — |
+| `minHeight` | `number \| string \| null` | — | no | — |
+| `minWidth` | `number \| string \| null` | — | no | — |
 | `outlined` | `boolean \| null` | — | no | — |
 | `readonly` | `boolean \| null` | — | no | — |
 | `rel` | `string \| null` | — | no | — |
@@ -34,14 +34,14 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsButton.d.ts`
 | `selected` | `boolean` | — | no | — |
 | `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` |
 | `tag` | `"a" \| "button" \| null` | `"button"` | no | `a`, `button` |
-| `target` | `"_blank" \| "_self" \| "_parent" \| "_top"` | — | no | `_blank`, `_parent`, `_self`, `_top` |
+| `target` | `"_blank" \| "_parent" \| "_self" \| "_top"` | — | no | `_blank`, `_parent`, `_self`, `_top` |
 | `theme` | `AppThemeType` | — | no | `dark`, `light` |
 | `to` | `LinkLocation \| null` | — | no | — |
 | `type` | `ButtonTypeType` | — | no | `button`, `reset`, `submit` |
 | `underlined` | `boolean \| null` | — | no | — |
-| `value` | `string \| number \| boolean` | — | no | — |
-| `variant` | `"text" \| "icon" \| "fab" \| null` | — | no | `fab`, `icon`, `text` |
-| `width` | `string \| number \| null` | — | no | — |
+| `value` | `boolean \| number \| string` | — | no | — |
+| `variant` | `"fab" \| "icon" \| "text" \| null` | — | no | `fab`, `icon`, `text` |
+| `width` | `number \| string \| null` | — | no | — |
 
 **SButton slots**
 

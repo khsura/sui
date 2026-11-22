@@ -17,9 +17,9 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsSplitView.d.ts`
 
 | Prop | Type | Default | Required | Values |
 | --- | --- | --- | --- | --- |
-| `height` | `string \| number` | `"100%"` | no | — |
+| `height` | `number \| string` | `"100%"` | no | — |
 | `vertical` | `boolean` | — | no | — |
-| `width` | `string \| number` | `"100%"` | no | — |
+| `width` | `number \| string` | `"100%"` | no | — |
 
 **SSplitView slots**
 

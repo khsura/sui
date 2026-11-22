@@ -18,7 +18,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsCalendar.d.ts`
 | `color` | `string` | — | no | — |
 | `colorThreshold` | `number` | — | no | — |
 | `eventColor` | `((event: T) => string)` | — | no | — |
-| `eventOverlapMode` | `"stacked" \| "column"` | — | no | `column`, `stacked` |
+| `eventOverlapMode` | `"column" \| "stacked"` | — | no | `column`, `stacked` |
 | `events` | `T[]` | — | no | — |
 | `focus` | `string` | — | no | — |
 | `hideHeader` | `boolean` | — | no | — |

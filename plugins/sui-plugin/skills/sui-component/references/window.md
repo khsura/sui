@@ -69,7 +69,7 @@ Shows one panel at a time with a slide transition, arrows and swipe. Use it for 
 | --- | --- | --- | --- | --- |
 | `activeClass` | `string \| null` | — | no | — |
 | `selected` | `boolean` | — | no | — |
-| `value` | `string \| number \| boolean` | — | no | — |
+| `value` | `boolean \| number \| string` | — | no | — |
 
 **SWindowItem slots**
 
