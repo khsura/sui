@@ -10,4 +10,6 @@ export type PropsTabs = {
   bordered?: boolean
   selectedTabColor?: string
   shrink?: boolean
+  /** Lay the tabs out on several rows when they do not fit, instead of one row that scrolls sideways. */
+  wrap?: boolean
 } & PropsBorder

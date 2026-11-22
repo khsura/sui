@@ -830,8 +830,8 @@ export const numberInputPreferredRule: TemplateRule = {
   },
 }
 
-// STabs already scrolls its own row (with an edge fade and scroll arrows); inside SSlideGroup the two
-// scrollers fight and the tabs' own arrows end up clipped.
+// STabs already scrolls its own row (with an edge fade); inside SSlideGroup the two
+// scrollers fight.
 export const tabsInSlideGroupRule: TemplateRule = {
   id: RULE_TABS_IN_SLIDE_GROUP,
   check: ({ element, ancestors }) => {
@@ -848,7 +848,7 @@ export const tabsInSlideGroupRule: TemplateRule = {
         rule: RULE_TABS_IN_SLIDE_GROUP,
         severity: SEVERITY_WARNING,
         message:
-          '`STabs` inside `SSlideGroup`: STabs already keeps its tabs on one row that scrolls sideways, with an edge fade and scroll arrows when they do not fit.',
+          '`STabs` inside `SSlideGroup`: STabs already keeps its tabs on one row that scrolls sideways, with an edge fade when they do not fit (or `wrap` for several rows).',
         fixHint: 'Remove the `SSlideGroup` wrapper and use `<STabs v-model>` with `<STab :tab>` children directly.',
         recipe: RECIPE_TABBED_SECTIONS,
       },

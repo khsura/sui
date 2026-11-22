@@ -35,7 +35,6 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsToggleButtonGroup
 | Slot | Slot props |
 | --- | --- |
 | `default` | `{}` |
-| `overlay` | `{}` |
 
 **SToggleButtonGroup events**
 
@@ -59,7 +58,6 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsToggleButtonGroup
 - `underlined`: Underlined group border
 - `borderRadius`: Group corner radius
 - `default` (slot): `SToggleButton` components
-- `overlay` (slot): Content laid over the group, outside the row of buttons (absolutely position it; `STabs` uses it for its scroll arrows)
 - `update:modelValue` (event): Selection changed
 
 `GroupItemValue` = `string | number | boolean | symbol`. (`nowrap` is typed but has no effect.)

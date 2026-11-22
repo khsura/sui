@@ -2,16 +2,16 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { defineComponent, nextTick, ref } from 'vue'
 import { SApp, STab, STabs } from '@/app/components'
 
-const mountTabs = () => {
+const mountTabs = (wrap = false) => {
   const selected = ref<number | string>(0)
 
   const wrapper = mount(
     defineComponent({
       components: { SApp, STab, STabs },
-      setup: () => ({ selected }),
+      setup: () => ({ selected, wrap }),
       template: `
         <SApp>
-          <STabs v-model="selected">
+          <STabs v-model="selected" :wrap="wrap">
             <STab :tab="0">One</STab>
             <STab :tab="1">Two</STab>
             <STab :tab="2">Three</STab>
@@ -64,7 +64,6 @@ describe('STabs', () => {
 describe('STabs overflow affordance', () => {
   const visibleWidth = 300
   const contentWidth = 900
-  const scrollStepRatio = 0.8
 
   // jsdom has no layout: give the row of tabs fixed metrics and a writable scroll position.
   const fakeScroller = (scroller: HTMLElement, scrollWidth: number) => {
@@ -81,8 +80,8 @@ describe('STabs overflow affordance', () => {
     })
   }
 
-  const mountWithMetrics = async (scrollWidth: number) => {
-    const { wrapper } = mountTabs()
+  const mountWithMetrics = async (scrollWidth: number, wrap = false) => {
+    const { wrapper } = mountTabs(wrap)
     const scroller = wrapper.find<HTMLElement>('.s_toggleButtonGroup__content').element
 
     fakeScroller(scroller, scrollWidth)
@@ -98,32 +97,35 @@ describe('STabs overflow affordance', () => {
     vi.unstubAllGlobals()
   })
 
-  test('shows no fade and no arrows when every tab fits', async () => {
+  test('shows no fade when every tab fits', async () => {
     const { wrapper } = await mountWithMetrics(visibleWidth)
 
     expect(wrapper.find('.s_tabs').classes()).not.toContain('s_tabs--endHidden')
-    expect(wrapper.find('.s_tabs__scrollButton').exists()).toBe(false)
     wrapper.unmount()
   })
 
-  test('shows the end arrow when tabs hide past the right edge, and the arrow scrolls the row', async () => {
+  test('fades the ends that hide tabs, with no scroll buttons: the row is swiped', async () => {
     const { wrapper, scroller } = await mountWithMetrics(contentWidth)
-    const endButton = wrapper.find('.s_tabs__scrollButton--end')
 
     expect(wrapper.find('.s_tabs').classes()).toContain('s_tabs--endHidden')
-    expect(wrapper.find('.s_tabs__scrollButton--start').exists()).toBe(false)
-    expect(endButton.attributes('aria-hidden')).toBe('true')
-    expect(endButton.attributes('tabindex')).toBe('-1')
+    expect(wrapper.find('.s_tabs').classes()).not.toContain('s_tabs--startHidden')
+    expect(wrapper.find('.s_tabs button[aria-hidden="true"]').exists()).toBe(false)
 
-    // Reduced motion makes the arrow jump, so the new position can be read straight away.
-    vi.stubGlobal('matchMedia', (query: string) => ({ matches: query.includes('reduce') }))
-    await endButton.trigger('click')
-    expect(scroller.scrollLeft).toBe(visibleWidth * scrollStepRatio)
-
+    scroller.scrollLeft = visibleWidth
     scroller.dispatchEvent(new Event('scroll'))
     await nextTick()
-    expect(wrapper.find('.s_tabs__scrollButton--start').exists()).toBe(true)
-    expect(wrapper.find('.s_tabs__scrollButton--end').exists()).toBe(true)
+    expect(wrapper.find('.s_tabs').classes()).toEqual(
+      expect.arrayContaining(['s_tabs--startHidden', 's_tabs--endHidden']),
+    )
+    wrapper.unmount()
+  })
+
+  test('wrap lays the tabs out on several rows: no fade even when they overflow', async () => {
+    const { wrapper } = await mountWithMetrics(contentWidth, true)
+    const classes = wrapper.find('.s_tabs').classes()
+
+    expect(classes).toContain('s_tabs--wrap')
+    expect(classes).not.toContain('s_tabs--endHidden')
     wrapper.unmount()
   })
 })

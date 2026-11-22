@@ -6,7 +6,7 @@ Single-select tab strip, built on the toggle-button group. It renders only the t
 
 Types: `node_modules/@khsura/sui/@types/definitions/props/propsTabs.d.ts`, `propsTab.d.ts`
 
-The tabs stay on **one row**. Each tab keeps the width of its label (tabs stretch to fill spare room), and when they do not fit, the row scrolls sideways (touch, trackpad, shift+wheel) with no scrollbar. An end that hides tabs fades out and shows a small scroll arrow, so on a phone the row visibly scrolls instead of looking clipped; when every tab fits, there is no fade and no arrow. The selected tab is scrolled into view on mount and whenever the selection changes. Don't wrap `STabs` in `SSlideGroup` or add `overflow-x: auto` yourself. (Older versions wrapped the tabs onto several rows on phones.)
+The tabs stay on **one row**. Each tab keeps the width of its label (tabs stretch to fill spare room), and when they do not fit, the row scrolls sideways (touch, trackpad, shift+wheel) with no scrollbar. An end that hides tabs fades out, so on a phone the row visibly scrolls (swipe it) instead of looking clipped; when every tab fits there is no fade. `wrap` lays the tabs out on several rows instead. The selected tab is scrolled into view on mount and whenever the selection changes. Don't wrap `STabs` in `SSlideGroup` or add `overflow-x: auto` yourself. (Older versions always wrapped the tabs onto several rows on phones; `wrap` keeps that layout.)
 
 ---
 
@@ -17,16 +17,17 @@ The tabs stay on **one row**. Each tab keeps the width of its label (tabs stretc
 
 **STabs props**
 
-| Prop | Type | Default | Required | Values |
-| --- | --- | --- | --- | --- |
-| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
-| `bordered` | `boolean` | — | no | — |
-| `dense` | `boolean` | — | no | — |
-| `modelValue` | `number \| string` | — | yes | — |
-| `outlined` | `boolean \| null` | — | no | — |
-| `selectedTabColor` | `string` | `"primary"` | no | — |
-| `shrink` | `boolean` | — | no | — |
-| `underlined` | `boolean \| null` | — | no | — |
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — | — |
+| `bordered` | `boolean` | — | no | — | — |
+| `dense` | `boolean` | — | no | — | — |
+| `modelValue` | `number \| string` | — | yes | — | — |
+| `outlined` | `boolean \| null` | — | no | — | — |
+| `selectedTabColor` | `string` | `"primary"` | no | — | — |
+| `shrink` | `boolean` | — | no | — | — |
+| `underlined` | `boolean \| null` | — | no | — | — |
+| `wrap` | `boolean` | — | no | — | Lay the tabs out on several rows when they do not fit, instead of one row that scrolls sideways. |
 
 **STabs slots**
 
@@ -132,6 +133,6 @@ const active = ref<'overview' | 'api'>('overview')
 | `<STab value="a">` / `<STab :index="0">` | `<STab tab="a">`. The identifier prop is `tab` |
 | `<STabs>` without `v-model` | `modelValue` is required |
 | Panels that slide between tabs | Bind the same model to [SWindow](./window.md) with `SWindowItem value` = the `STab tab` |
-| Many tabs on a phone wrapping onto several rows | They no longer wrap: the row scrolls sideways. Keep labels short anyway, so more of them are visible |
-| `shrink`, `cols`, a wrapper or CSS truncation to fit tabs on a 375px phone | The plain `<STabs v-model><STab v-for … :tab>` setup: tabs that do not fit scroll with an edge fade and scroll arrow. See the `tabbed-sections` recipe |
+| Many tabs on a phone wrapping onto several rows | By default the row scrolls sideways (swipe); set `wrap` to keep the several-row layout. Keep labels short either way |
+| `shrink`, `cols`, a wrapper or CSS truncation to fit tabs on a 375px phone | The plain `<STabs v-model><STab v-for … :tab>` setup: tabs that do not fit scroll sideways with an edge fade (or set `wrap` for several rows). See the `tabbed-sections` recipe |
 | `underlined` to get an active underline | It styles the strip's border. Use `selectedTabColor` for the active state |
