@@ -1,0 +1,15 @@
+{"time":"2026-11-21T17:27:27.824Z","page":"08-tabs-expansion","tool":"instructions"}
+{"time":"2026-11-21T17:27:36.486Z","page":"08-tabs-expansion","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T17:27:37.755Z","page":"08-tabs-expansion","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T17:27:46.124Z","page":"08-tabs-expansion","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T17:27:47.798Z","page":"08-tabs-expansion","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T17:28:04.239Z","page":"08-tabs-expansion","tool":"get_component_api","args":{"name":"STabs"},"isError":false}
+{"time":"2026-11-21T17:28:05.671Z","page":"08-tabs-expansion","tool":"get_component_api","args":{"name":"STab"},"isError":false}
+{"time":"2026-11-21T17:28:07.385Z","page":"08-tabs-expansion","tool":"get_component_api","args":{"name":"SWindow"},"isError":false}
+{"time":"2026-11-21T17:28:09.297Z","page":"08-tabs-expansion","tool":"get_component_api","args":{"name":"SWindowItem"},"isError":false}
+{"time":"2026-11-21T17:28:11.459Z","page":"08-tabs-expansion","tool":"get_component_api","args":{"name":"SExpansionPanels"},"isError":false}
+{"time":"2026-11-21T17:28:13.464Z","page":"08-tabs-expansion","tool":"get_component_api","args":{"name":"SExpansionPanel"},"isError":false}
+{"time":"2026-11-21T17:28:15.248Z","page":"08-tabs-expansion","tool":"get_component_api","args":{"name":"SExpansionPanelHeader"},"isError":false}
+{"time":"2026-11-21T17:28:16.964Z","page":"08-tabs-expansion","tool":"get_component_api","args":{"name":"SExpansionPanelContent"},"isError":false}
+{"time":"2026-11-21T17:28:18.542Z","page":"08-tabs-expansion","tool":"get_component_api","args":{"name":"SContainer"},"isError":false}
+{"time":"2026-11-21T17:29:38.075Z","page":"08-tabs-expansion","tool":"validate_sui_template","args":{"code":"<3665 chars>"},"isError":false}

@@ -1,0 +1,6 @@
+
+> typecheck
+> vue-tsc --noEmit -p tsconfig.json
+
+pages/07-stepper-wizard/Page.vue(29,24): error TS2322: Type 'string | null' is not assignable to type 'GroupItemValue | undefined'.
+  Type 'null' is not assignable to type 'GroupItemValue | undefined'.
