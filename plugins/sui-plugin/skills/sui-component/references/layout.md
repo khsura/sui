@@ -610,4 +610,4 @@ None.
 | `<SCol>` | `<SColumn>` |
 | `<SBottomNavigation v-model="tab">` with no `height`/`active-class` | Set `:height` and `active-class` |
 | `<SAppBar elevate-on-scroll>` with no position | Add `position="fixed"` |
-| `padding-top: env(safe-area-inset-top)` on a fixed `SAppBar` / `SBottomNavigation` / mobile drawer | They pad by the iPhone safe areas themselves; only add `viewport-fit=cover` to the viewport meta (getting-started skill). Your own `env()` padding doubles the inset |
+| `padding-top: env(safe-area-inset-top)` on a fixed `SAppBar` / `SBottomNavigation` / mobile drawer, or `padding-left: env(safe-area-inset-left)` on a `permanent` drawer / `SMain` | They pad by the iPhone safe areas themselves; only add `viewport-fit=cover` to the viewport meta (getting-started skill). Your own `env()` padding doubles the inset |
