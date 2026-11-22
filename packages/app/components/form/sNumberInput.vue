@@ -323,7 +323,7 @@ $s_numberInput--padding: calc($s_spacer * 2) !default;
 $s_numberInput--inlinePadding: calc($s_spacer * 4) !default;
 $s_numberInput--controlWidth: calc($s_spacer * 8) !default;
 $s_numberInput--stackWidth: calc($s_spacer * 6) !default;
-$s_numberInput--inputMinWidth: calc($s_spacer * 20) !default;
+$s_numberInput--inputMinWidth: calc($s_spacer * 16) !default;
 
 .s_numberInput {
   @include s_dark();

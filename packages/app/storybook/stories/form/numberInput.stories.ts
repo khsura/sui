@@ -135,7 +135,7 @@ export const NumberInputStress = {
             <SButton>Add</SButton>
           </SFormRow>
           <SFormRow data-testid="sharedRow">
-            <SNumberInput v-model="rowPrice" placeholder="Unit price" :precision="2" :min="0" />
+            <SNumberInput v-model="rowPrice" placeholder="Price" :precision="2" :min="0" />
             <SNumberInput v-model="rowDiscount" label="Discount" suffix="%" :min="0" :max="100" />
             <SButton>Add</SButton>
           </SFormRow>
