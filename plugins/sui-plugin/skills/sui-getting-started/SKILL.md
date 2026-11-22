@@ -373,7 +373,7 @@ It merges a `sui` entry (`{ "command": "npx", "args": ["-y", "@khsura/sui-mcp"] 
 When the server is connected:
 
 - Call `get_component_api` before using a component you have not checked; it reports the project's version. If it says the component needs a newer `@khsura/sui`, upgrade or pick another component.
-- Start common patterns (app shell, validated form, activator overlays, data table, responsive grid, theme setup) from `get_recipe`.
+- Start common patterns (app shell, validated form, activator overlays, data table, responsive grid, theme setup, filter bar, centered page) from `get_recipe`.
 - Run `validate_sui_template` on every template you write and fix every error before finishing.
 
 Per-client snippets: the package README at https://www.npmjs.com/package/@khsura/sui-mcp and the **AI / MCP** page at https://sui.surakh.com/.

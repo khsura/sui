@@ -33,7 +33,7 @@ SApp
         └── SBottomNavigation
 ```
 
-- **`SApp`** is the root. It provides the app state and is itself an app-level layout. Wrap the whole app in it (after installing the `createSUI()` plugin). `SLayout` throws if no app state is found. `SApp` is at least the viewport height (`100dvh`, `100vh` in older browsers), and an `SLayout` directly inside it grows with it, so a short page keeps the app background and a named layout's drawer down to the bottom of the screen.
+- **`SApp`** is the root. It provides the app state and is itself an app-level layout. Wrap the whole app in it (after installing the `createSUI()` plugin). `SLayout` throws if no app state is found. `SApp` is at least the viewport height (`100dvh`, `100vh` in older browsers), and an `SLayout` directly inside it grows with it, so a short page keeps the app background and a named layout's drawer down to the bottom of the screen. A direct child with `s_height--fill` grows the same way, so a page root with `s_display__flex s_justify__center s_align__center s_height--fill` centres its content in the viewport (see the `centered-page` recipe).
 - **`SLayout` without `name`** → children **without `for`** join it as the **app-level** layout.
 - **`SLayout name="x"`** → **every** child needs `for="x"`. A child without `for` joins the app-level layout instead, so offsets silently break.
 - **App-level vs nested.** A layout is app-level when its name equals the plugin name (`'sui'` by default, i.e. no `name`) or when it has the `app` prop. A named layout is *nested*:

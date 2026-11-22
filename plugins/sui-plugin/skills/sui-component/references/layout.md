@@ -18,7 +18,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/props<AppBar|Navigatio
 
 ## How layouts are linked (read this first)
 
-- **`SApp`** is the root. It provides the app state and is itself an *app-level* layout. Wrap the whole app in it (after installing the `createSUI()` plugin). It is at least the viewport height (`100dvh`), and an `SLayout` directly inside it grows with it, so don't add your own `min-height: 100vh` wrapper.
+- **`SApp`** is the root. It provides the app state and is itself an *app-level* layout. Wrap the whole app in it (after installing the `createSUI()` plugin). It is at least the viewport height (`100dvh`), and an `SLayout` directly inside it grows with it, so don't add your own `min-height: 100vh` wrapper. A direct child with `s_height--fill` grows the same way, so a page root with `s_display__flex s_justify__center s_align__center s_height--fill` centres its content in the viewport (see the `centered-page` recipe).
 - **`SLayout`** creates a layout scope. Children find it by name:
   - SLayout without `name` → children **without `for`** join it as the **app-level** layout (inside `SApp`).
   - SLayout with `name="x"` → **every** child needs `for="x"`. A child without `for` joins the app-level layout instead, so offsets silently break.

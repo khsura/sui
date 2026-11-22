@@ -26,6 +26,7 @@ Then generate a complete Vue SFC using these rules:
 - `SBottomNavigation for="app" v-model="activeNav" :height="56" active-class="…"` — mobile bottom tabs. Set `height` (it collapses without one) and `active-class` (there is no active styling otherwise)
 - The drawer opens itself on desktop and closes itself below the `md` breakpoint, at mount and on resize (unless `persistent`). On mobile it is an overlay with a scrim: toggle it with `v-model`; a tap on the scrim closes it
 - `SApp` already fills the viewport height (`100dvh`) and `SAppBar` already insets its content from the edges — don't add a `min-height: 100vh` wrapper or app bar padding
+- Centred page without an app shell (login, error page): make the page root a **direct child of `SApp`** with `s_display__flex s_justify__center s_align__center s_height--fill`. A direct child with `s_height--fill` grows to fill `SApp`, so the card is centred vertically (since `@khsura/sui` 1.20.0; on older versions `height: 100%` resolves to auto there, so put `style="min-height: 100dvh"` on that child). Start from the `centered-page` recipe
 - Keep one app-level `SLayout`. A nested/secondary `SLayout` does not offset its `SMain` for a drawer and `permanent` has no effect there — use the grid or `SSplitView` inside pages instead
 - `SDivider` in a flex column collapses to zero width (it's an `<hr>` with auto margins) — give it `width: 100%` / `align-self: stretch`
 - Use `SSpacer` inside `SAppBar` to push items right

@@ -1,6 +1,7 @@
 import type { ElementNode } from '@vue/compiler-dom'
 import type { TemplateIssue, TemplateRule } from '../types'
 import {
+  APP_COMPONENT,
   BLOCK_ATTRIBUTE,
   BUTTON_COMPONENT,
   CARD_TITLE_COMPONENT,
@@ -15,6 +16,7 @@ import {
   FLEX_ROW_COMPONENTS,
   FORM_COMPONENT,
   FORM_ROW_COMPONENT,
+  HEIGHT_FILL_CLASS,
   HIDE_DETAILS_ATTRIBUTE,
   HIDE_DETAILS_LABEL_COMPONENTS,
   INPUT_TYPE_ATTRIBUTE,
@@ -29,6 +31,7 @@ import {
   NATIVE_VALIDATING_INPUT_TYPES,
   NO_VALIDATE_ATTRIBUTE,
   RECIPE_ACTIVATOR_OVERLAYS,
+  RECIPE_CENTERED_PAGE,
   RECIPE_FILTER_BAR,
   RECIPE_RESPONSIVE_GRID,
   RECIPE_VALIDATED_FORM,
@@ -38,6 +41,7 @@ import {
   RULE_CARD_TITLE_TEXT_ALIGN,
   RULE_DATE_PICKER_EMPTY_STRING,
   RULE_FIELD_BUTTON_ROW,
+  RULE_FILL_HEIGHT_UNDER_APP,
   RULE_HIDE_DETAILS_HIDES_LABEL,
   RULE_NATIVE_VALIDATION_IN_FORM,
   RULE_SNACKBAR_ACTION_CONTRAST,
@@ -359,6 +363,27 @@ export const datePickerEmptyStringRule: TemplateRule = {
 }
 
 /** Rules about behaviour and styling misuses that the component API alone cannot catch. */
+export const fillHeightUnderAppRule: TemplateRule = {
+  id: RULE_FILL_HEIGHT_UNDER_APP,
+  fixedIn: SUI_M2_FIXES_VERSION,
+  check: ({ element }) => {
+    if (!isComponentTag(element.tag, APP_COMPONENT)) {
+      return []
+    }
+
+    return childElementsOf(element)
+      .filter((child) => staticClassNames(child).includes(HEIGHT_FILL_CLASS))
+      .map((child) => ({
+        ...positionOf(child),
+        rule: RULE_FILL_HEIGHT_UNDER_APP,
+        severity: SEVERITY_WARNING,
+        message: `\`${HEIGHT_FILL_CLASS}\` on a direct child of \`SApp\` resolves to the content height before @khsura/sui 1.20.0 (SApp only has a min-height), so content centred inside it sticks to the top.`,
+        fixHint: 'Upgrade @khsura/sui to 1.20.0 or later, or add `style="min-height: 100dvh"` to this child.',
+        recipe: RECIPE_CENTERED_PAGE,
+      }))
+  },
+}
+
 export const behaviourRules: TemplateRule[] = [
   nativeValidationInFormRule,
   hideDetailsHidesLabelRule,
@@ -367,4 +392,5 @@ export const behaviourRules: TemplateRule[] = [
   fieldButtonRowRule,
   cardTitleTextAlignRule,
   datePickerEmptyStringRule,
+  fillHeightUnderAppRule,
 ]
