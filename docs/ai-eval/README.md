@@ -4,7 +4,8 @@ A repeatable measurement of how often an AI coding assistant writes broken `@khs
 first run (`baseline-2026-11.md`) is the **baseline** to compare later runs against: the AI has the
 sui-plugin skills, but no MCP server and no SUI source. Later runs (with the MCP server, after
 hardening) repeat **exactly** the steps below and add a results file plus a `<condition>/` folder. The
-second run, with the MCP server, is `after-m1.md` with its files in `with-mcp/`.
+second run, with the MCP server, is `after-m1.md` with its files in `with-mcp/`. The third run, with the MCP
+server and the M2 hardening (condition `hardened`), is `after-m2.md` with its files in `after-m2/`.
 
 | File | What it is |
 |---|---|
@@ -16,6 +17,7 @@ second run, with the MCP server, is `after-m1.md` with its files in `with-mcp/`.
 | `baseline/validator.txt`, `vue-tsc.txt`, `contrast.txt`, `console.json` | Raw output of the automatic checks |
 | `after-m1.md` | With-MCP results, the comparison with the baseline, tool usage, and the remaining failure types mapped to tasks |
 | `with-mcp/` | The same layout as `baseline/`, plus `mcp-calls/NN-name.jsonl` (every MCP call each generator made) |
+| `after-m2.md`, `after-m2/` | The `hardened` run: results, the baseline vs after-M1 vs after-M2 comparison, and follow-up tasks. The same layout as `with-mcp/`, plus `probes/` (one-off probe shots where a fixed scenario missed the page's controls) |
 | `tools/validatePages.mjs` | Stdio MCP client: runs `validate_sui_template` from the built `packages/mcp` on every page |
 | `tools/mcpCall.mjs` | One-shot stdio MCP client the `with-mcp` generators use: prints the server instructions or one tool result, and logs each call |
 | `tools/harness/` | The throwaway Vite + Vue render app: screenshots, interaction scenarios, contrast scan, typecheck |
@@ -129,6 +131,11 @@ How the harness works (`src/main.js`):
   over a constant array has `:key` and `v-show` and no other dynamic binding, it gets no patch flag,
   so its `v-show` never updates. That is why page 08's tabs "didn't switch". SUI wasn't involved:
   the same template without SUI fails on 3.5.39 and works on 3.5.41.
+- `sass` is listed, and `@khsura/sui/helpers.scss` is aliased, because pages may `@use` the documented SCSS helpers
+  (added in the after-M2 run; page 10 used them).
+- Run the eval against a build whose `package.json` version matches its features. The MCP gates advice by the
+  installed version, so a milestone branch that is behind `main`'s version gets advice meant for older releases (see
+  `after-m2.md`, Limitations).
 - `vue-router` is listed because the built `s-ui.js` imports it, although `@khsura/sui` doesn't
   declare it as a dependency. Without it, Vite can't resolve the import and no page mounts.
 

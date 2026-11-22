@@ -1,0 +1,24 @@
+{"time":"2026-11-21T17:27:30.555Z","page":"09-snackbar","tool":"instructions"}
+{"time":"2026-11-21T17:27:48.126Z","page":"09-snackbar","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T17:27:49.253Z","page":"09-snackbar","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T17:27:55.090Z","page":"09-snackbar","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T17:28:01.105Z","page":"09-snackbar","tool":"get_recipe","args":{"name":"activator-overlays"},"isError":false}
+{"time":"2026-11-21T17:28:02.901Z","page":"09-snackbar","tool":"get_recipe","args":{"name":"data-table"},"isError":false}
+{"time":"2026-11-21T17:28:11.598Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"STable"},"isError":false}
+{"time":"2026-11-21T17:28:13.523Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"STextField"},"isError":true}
+{"time":"2026-11-21T17:28:15.427Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SDialog"},"isError":false}
+{"time":"2026-11-21T17:28:17.054Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SApp"},"isError":false}
+{"time":"2026-11-21T17:28:18.891Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SMain"},"isError":false}
+{"time":"2026-11-21T17:28:20.606Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SContainer"},"isError":false}
+{"time":"2026-11-21T17:28:27.794Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SInput"},"isError":false}
+{"time":"2026-11-21T17:28:29.659Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SButton"},"isError":false}
+{"time":"2026-11-21T17:28:31.200Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SSnackbar"},"isError":false}
+{"time":"2026-11-21T17:28:32.681Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SCard"},"isError":false}
+{"time":"2026-11-21T17:28:34.416Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SCardTitle"},"isError":false}
+{"time":"2026-11-21T17:28:36.064Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SCardActions"},"isError":false}
+{"time":"2026-11-21T17:28:46.347Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SIcon"},"isError":false}
+{"time":"2026-11-21T17:28:47.867Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SCardText"},"isError":false}
+{"time":"2026-11-21T17:29:23.440Z","page":"09-snackbar","tool":"validate_sui_template","args":{"code":"<5754 chars>"},"isError":false}
+{"time":"2026-11-21T17:29:24.628Z","page":"09-snackbar","tool":"get_component_api","args":{"name":"SRow"},"isError":false}
+{"time":"2026-11-21T17:29:31.486Z","page":"09-snackbar","tool":"get_recipe","args":{"name":"validated-form"},"isError":false}
+{"time":"2026-11-21T17:29:57.358Z","page":"09-snackbar","tool":"validate_sui_template","args":{"code":"<6263 chars>"},"isError":false}

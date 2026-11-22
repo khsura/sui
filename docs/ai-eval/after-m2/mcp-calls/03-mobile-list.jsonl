@@ -1,0 +1,19 @@
+{"time":"2026-11-21T17:21:58.294Z","page":"03-mobile-list","tool":"instructions"}
+{"time":"2026-11-21T17:22:12.703Z","page":"03-mobile-list","tool":"list_recipes","args":{},"isError":false}
+{"time":"2026-11-21T17:22:15.576Z","page":"03-mobile-list","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T17:22:20.555Z","page":"03-mobile-list","tool":"list_components","args":{},"isError":false}
+{"time":"2026-11-21T17:22:28.913Z","page":"03-mobile-list","tool":"get_recipe","args":{"name":"activator-overlays"},"isError":false}
+{"time":"2026-11-21T17:22:31.165Z","page":"03-mobile-list","tool":"get_recipe","args":{"name":"filter-bar"},"isError":false}
+{"time":"2026-11-21T17:22:40.464Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SListItem"},"isError":false}
+{"time":"2026-11-21T17:22:41.313Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SListItemIcon"},"isError":false}
+{"time":"2026-11-21T17:22:42.195Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SListItemAction"},"isError":false}
+{"time":"2026-11-21T17:22:42.890Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SListItemContent"},"isError":false}
+{"time":"2026-11-21T17:22:43.501Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SListItemSubtitle"},"isError":false}
+{"time":"2026-11-21T17:22:44.147Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SMenu"},"isError":false}
+{"time":"2026-11-21T17:22:44.782Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SInput"},"isError":false}
+{"time":"2026-11-21T17:22:45.401Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SImage"},"isError":false}
+{"time":"2026-11-21T17:22:58.305Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SApp"},"isError":false}
+{"time":"2026-11-21T17:22:58.853Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SButton"},"isError":false}
+{"time":"2026-11-21T17:22:59.392Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SIcon"},"isError":false}
+{"time":"2026-11-21T17:22:59.974Z","page":"03-mobile-list","tool":"get_component_api","args":{"name":"SToolbar"},"isError":false}
+{"time":"2026-11-21T17:23:45.684Z","page":"03-mobile-list","tool":"validate_sui_template","args":{"code":"<6273 chars>"},"isError":false}
