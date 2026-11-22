@@ -22,3 +22,10 @@ export interface EmitFormTextInput<T extends FormInputModelValue = FormInputMode
   paste: [ClipboardEvent]
   autocomplete: [HTMLInputElement | null]
 }
+
+export interface EmitFileInput extends EmitFormInput<File[] | null> {
+  /** The clear button emptied the field. */
+  clear: []
+  /** Files left out: a dropped file that does not match `accept`, or the extra files when `multiple` is off. */
+  reject: [File[]]
+}
