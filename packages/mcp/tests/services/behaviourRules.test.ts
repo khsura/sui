@@ -353,6 +353,48 @@ describe('behaviour rules', () => {
     })
   })
 
+  describe('row-inset-from-text', () => {
+    const rule = 'row-inset-from-text'
+    const columns = '<SColumn :cols="6">A</SColumn><SColumn :cols="6">B</SColumn>'
+
+    it.each([
+      [
+        'a row with no-outer-gutters and gap',
+        `<div><h2>Title</h2><SRow no-outer-gutters :gap="16">${columns}</SRow></div>`,
+      ],
+      ['a row with no-gutters', `<div><h2>Title</h2><SRow no-gutters>${columns}</SRow></div>`],
+      ['a row with no text beside it', `<SContainer><SRow>${columns}</SRow></SContainer>`],
+      ['a heading inset on purpose', `<div><h2 class="s_px__2">Title</h2><SRow>${columns}</SRow></div>`],
+      ['text inside a column, not beside the row', `<SRow><SColumn><h2>Title</h2></SColumn></SRow>`],
+      [
+        'a heading beside a padded wrapper',
+        `<div><h2>Title</h2><div class="s_pa__4"><SRow>${columns}</SRow></div></div>`,
+      ],
+      ['a v-bind spread that may set the props', `<div><p>Intro</p><SRow v-bind="rowProps">${columns}</SRow></div>`],
+    ])('passes: %s', (_, code) => {
+      expect(issuesOf(rule, code)).toEqual([])
+    })
+
+    it('reports a default row beside a heading', () => {
+      const [issue] = issuesOf(rule, `<SCardText>\n  <h2>Title</h2>\n  <SRow>${columns}</SRow>\n</SCardText>`)
+
+      expect(issue).toMatchObject({ severity: 'warning', line: 3, column: 3, recipe: 'responsive-grid' })
+      expect(issue.message).toContain('16px')
+      expect(issue.fixHint).toContain('no-outer-gutters :gap="16"')
+    })
+
+    it('reports no-outer-gutters without gap: the columns still pad by 8px', () => {
+      const [issue] = issuesOf(rule, `<div><p>Intro</p><SRow no-outer-gutters>${columns}</SRow></div>`)
+
+      expect(issue?.message).toContain('8px inside')
+    })
+
+    it('fires on the after-M2 eval pages whose grids sat inside the heading and breadcrumbs', () => {
+      expect(evalIssues(rule, 'after-m2', '04-date-range-filter.vue')).toEqual([[9, 11]])
+      expect(evalIssues(rule, 'after-m2', '10-detail-two-column.vue')).toEqual([[5, 5]])
+    })
+  })
+
   describe('version gates', () => {
     const olderApi: SuiApi = { ...fixtureApi, version: '1.19.4' }
     const fixedApi: SuiApi = { ...fixtureApi, version: SUI_M2_FIXES_VERSION }
