@@ -113,34 +113,34 @@ Built on SToolbar. It renders a `<header>`.
 
 **SAppBar props**
 
-| Prop | Type | Default | Required | Values |
-| --- | --- | --- | --- | --- |
-| `app` | `boolean` | — | no | — |
-| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
-| `color` | `string` | `"appBar"` | no | — |
-| `colorThreshold` | `number` | — | no | — |
-| `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — |
-| `contentStyle` | `StyleValue` | — | no | — |
-| `density` | `ToolbarDensityType \| null` | — | no | `comfortable`, `compact`, `default` |
-| `elevateOnScroll` | `boolean` | — | no | — |
-| `elevation` | `"" \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| 0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 22 \| 23 \| 24 \| null` | — | no | — |
-| `extended` | `boolean \| null` | — | no | — |
-| `extensionClass` | `string \| Record<string, boolean \| undefined>` | — | no | — |
-| `extensionHeight` | `number \| string` | `defaultToolbarExtensionHeight` | no | — |
-| `extensionStyle` | `Record<string, string>` | — | no | — |
-| `fixedExtension` | `boolean` | — | no | — |
-| `for` | `string` | — | no | — |
-| `height` | `number \| string \| null` | `defaultToolbarContentHeight` | no | — |
-| `hideOnScroll` | `boolean` | — | no | — |
-| `outlined` | `boolean \| null` | — | no | — |
-| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
-| `scrollBehavior` | `"auto" \| "smooth"` | — | no | `auto`, `smooth` |
-| `scrollTarget` | `string \| HTMLElement` | — | no | — |
-| `scrollThreshold` | `number` | `defaultToolbarContentHeight` | no | — |
-| `tag` | `HtmlTagName \| null` | `"header"` | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
-| `theme` | `AppThemeType` | — | no | `dark`, `light` |
-| `title` | `string \| null` | — | no | — |
-| `underlined` | `boolean \| null` | — | no | — |
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `app` | `boolean` | — | no | — | — |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — | — |
+| `color` | `string` | `"appBar"` | no | — | — |
+| `colorThreshold` | `number` | — | no | — | — |
+| `contentClass` | `string \| Record<string, boolean> \| string[]` | — | no | — | — |
+| `contentStyle` | `StyleValue` | — | no | — | — |
+| `density` | `DensityType \| null` | — | no | `comfortable`, `compact`, `default` | Vertical density: `default` (today's look), `comfortable` (one step tighter) or `compact` (two steps). Set it once for the app with `createSUI({ defaults: { global: { density } } })` instead of overriding heights or paddings per component. |
+| `elevateOnScroll` | `boolean` | — | no | — | — |
+| `elevation` | `"" \| "1" \| "2" \| "3" \| "4" \| "5" \| "6" \| "7" \| "8" \| "9" \| "10" \| "11" \| "12" \| "13" \| "14" \| "15" \| "16" \| "17" \| "18" \| "19" \| "20" \| "21" \| "22" \| "23" \| "24" \| 0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 \| 13 \| 14 \| 15 \| 16 \| 17 \| 18 \| 19 \| 20 \| 21 \| 22 \| 23 \| 24 \| null` | — | no | — | — |
+| `extended` | `boolean \| null` | — | no | — | — |
+| `extensionClass` | `string \| Record<string, boolean \| undefined>` | — | no | — | — |
+| `extensionHeight` | `number \| string` | `defaultToolbarExtensionHeight` | no | — | — |
+| `extensionStyle` | `Record<string, string>` | — | no | — | — |
+| `fixedExtension` | `boolean` | — | no | — | — |
+| `for` | `string` | — | no | — | — |
+| `height` | `number \| string \| null` | `defaultToolbarContentHeight` | no | — | — |
+| `hideOnScroll` | `boolean` | — | no | — | — |
+| `outlined` | `boolean \| null` | — | no | — | — |
+| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` | — |
+| `scrollBehavior` | `"auto" \| "smooth"` | — | no | `auto`, `smooth` | — |
+| `scrollTarget` | `string \| HTMLElement` | — | no | — | — |
+| `scrollThreshold` | `number` | `defaultToolbarContentHeight` | no | — | — |
+| `tag` | `HtmlTagName \| null` | `"header"` | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` | — |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` | — |
+| `title` | `string \| null` | — | no | — | — |
+| `underlined` | `boolean \| null` | — | no | — | — |
 
 **SAppBar slots**
 

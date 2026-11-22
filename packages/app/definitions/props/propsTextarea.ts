@@ -1,3 +1,4 @@
+import { type PropsDensity } from './core'
 import { type PropsFormInput } from './propsFormInput'
 import { type PropsSizePreset } from './propsSizePreset'
 import { type FormInputModelValue } from '@/app/types'
@@ -27,5 +28,6 @@ export type PropsTextarea<T extends FormInputModelValue = string> = {
   inputBackground?: string | undefined
   placeholderBackground?: string | undefined
   modelValue?: T | undefined | null
-} & PropsSizePreset &
+} & PropsDensity &
+  PropsSizePreset &
   PropsFormInput

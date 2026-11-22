@@ -117,7 +117,7 @@ If the app repeats the same styling prop at every call site (`size="small"` on e
 createSUI({ defaults: { global: { size: 'small' }, SButton: { elevation: 0 } } })
 ```
 
-Order: prop on the element > `defaults.SButton` > `defaults.global` > built-in. `global` covers `size`, `borderRadius`, `rounded`, `elevation`, `color`, and only reaches components with that prop on the same scale. Details: **sui-getting-started** → *Component defaults*.
+Order: prop on the element > `defaults.SButton` > `defaults.global` > built-in. `global` covers `size`, `borderRadius`, `rounded`, `elevation`, `color`, `density`, and only reaches components with that prop on the same scale. For a compact admin look use `global: { density: 'compact' }` (fields, buttons, chips, list and table rows, toolbars shrink together) instead of per-component heights or paddings. Details: **sui-getting-started** → *Component defaults*.
 
 ---
 

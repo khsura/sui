@@ -5,7 +5,7 @@ Set a prop once for the whole app instead of repeating it at every call site:
 ```ts
 app.use(createSUI({
   defaults: {
-    global: { size: 'small' },                   // styling props for every component that has them
+    global: { size: 'small', density: 'compact' }, // styling props for every component that has them
     SButton: { variant: 'text', elevation: 0 },  // per component, typed against PropsButton
     SSelect: { outlined: true },
   },
@@ -25,7 +25,7 @@ A configured value of `undefined` counts as "not set" and falls through to the n
 
 ## `global`
 
-`GlobalComponentDefaults` takes `size` (`'mini' | 'small' | 'default' | 'large' | 'extra'`), `borderRadius`, `rounded`, `elevation` and `color`. `variant` is per component only, because its values differ per component.
+`GlobalComponentDefaults` takes `size` (`'mini' | 'small' | 'default' | 'large' | 'extra'`), `borderRadius`, `rounded`, `elevation`, `color` and `density` (`'default' | 'comfortable' | 'compact'`, see [density.md](./density.md)). `variant` is per component only, because its values differ per component.
 
 A global value only reaches the components listed for that prop in `globalComponentDefaultTargets` (`configs/componentDefaults.ts`). The list is checked at compile time with `satisfies GlobalComponentDefaultTargets`: a component whose prop is missing or cannot take the global value's type is a type error. Left out on purpose:
 
@@ -51,4 +51,4 @@ To opt one component out, set it on that component: `{ global: { size: 'small' }
 
 ## Adding a component
 
-Call `useComponentDefaultsService('SX', rawProps)`, add `SX: PropsX` to `ComponentPropsMap`, and add `SX` to the matching `globalComponentDefaultTargets` lists if it has a preset-scale `size`, `borderRadius`, `rounded`, `elevation` or accent `color`.
+Call `useComponentDefaultsService('SX', rawProps)`, add `SX: PropsX` to `ComponentPropsMap`, and add `SX` to the matching `globalComponentDefaultTargets` lists if it has a preset-scale `size`, `borderRadius`, `rounded`, `elevation`, accent `color` or a `density` it renders (`useDensityService`).

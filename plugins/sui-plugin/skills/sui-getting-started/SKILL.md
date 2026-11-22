@@ -143,7 +143,7 @@ Options (type `AppStateOptions`) are deep-merged with the built-in defaults (exp
 | `theme` | `'light' \| 'dark'` | Initial theme (default `'light'`) |
 | `themes` | `{ light?: ThemeConfigOptions, dark?: ThemeConfigOptions }` | Per-theme `presetColors` and `appColors` |
 | `display` | `{ thresholds?, scrollBarWidth? }` | Breakpoints and scrollbar width |
-| `defaults` | `ComponentDefaultsOptions` | App-wide default props: per component (`SButton: {…}`) and `global` styling props (`global: { size: 'small' }`) — typed |
+| `defaults` | `ComponentDefaultsOptions` | App-wide default props: per component (`SButton: {…}`) and `global` styling props (`global: { size: 'small', density: 'compact' }`) — typed |
 | `components` | `{ [ComponentName]: Record<string, unknown> }` | **Deprecated** untyped alias of the per-component part of `defaults` |
 
 ### Theme colors
@@ -201,9 +201,10 @@ app.use(
 Resolution order for every prop: **prop on the element > `defaults.<Component>` > `defaults.global` > built-in default**.
 
 - **Per component** — keys are component names (`SButton`, `SInput`, …); each value is typed against that component's props, so a misspelled name, prop or value (`SButton: { variant: 'outlined' }`) fails type-checking.
-- **`global`** takes the styling props `size` (`'mini' | 'small' | 'default' | 'large' | 'extra'`), `borderRadius`, `rounded`, `elevation` and `color`. A global value only reaches components that have that prop **on the same scale** — it never adds a prop to a component without one. Not reached: `size` → `SCheckbox`, `SProgressCircular`, `SProgressLinear`; `color` → surfaces and text (`SAppBar`, `SCard`, `SSheet`, `SToolbar`, `SAlert`, `SIcon`, …), so a global accent color never repaints backgrounds. `variant` is per component only (its values differ per component).
+- **`global`** takes the styling props `size` (`'mini' | 'small' | 'default' | 'large' | 'extra'`), `borderRadius`, `rounded`, `elevation`, `color` and `density` (`'default' | 'comfortable' | 'compact'`). A global value only reaches components that have that prop **on the same scale** — it never adds a prop to a component without one. Not reached: `size` → `SCheckbox`, `SProgressCircular`, `SProgressLinear`; `color` → surfaces and text (`SAppBar`, `SCard`, `SSheet`, `SToolbar`, `SAlert`, `SIcon`, …), so a global accent color never repaints backgrounds. `variant` is per component only (its values differ per component).
 - To opt one component out of a global value, set it on that component: `global: { size: 'small' }, SIcon: { size: 'default' }`.
 - Defaults are reactive: changing them at runtime re-renders the affected components.
+- **Density — for a compact admin look, set global density once instead of per-component heights/paddings:** `defaults: { global: { density: 'compact' } }` (`'default' | 'comfortable' | 'compact'`). It lowers fields (`SInput`, `STextarea`, `SNumberInput`, `SFileInput`, `SSelect`, `SAutocomplete`), `SButton`, `SChip`, `SList`/`SListItem` rows, `STable` rows and `SToolbar` together, so fields and buttons in an `SFormRow` stay level: one step is 4px (fields/buttons 36 → 32 → 28px, list and table rows 48 → 44 → 40px). Never fake it with inline `style="height: …"`, `padding` or `:deep(.s_input__input)` overrides — they drift from the buttons beside the field. A `density` prop on one element still wins; the older `dense` booleans keep working unchanged and are independent of `density`.
 - `components: { … }` (the older untyped option) still works as the per-component layer; `defaults` wins when both set the same prop. Prefer `defaults`.
 - **Scoped to a region** (since 1.22.0): wrap a dense toolbar or filter bar in `<SDefaultsProvider :defaults="{ global: { size: 'small' }, SInput: { dense: true } }">` instead of `size="small"` on each component. It takes the same typed object, merges onto the layer above it (outer provider or `createSUI`) per component and per prop (`global` too), renders no element, and an explicit prop still wins. Recipe: `dense-toolbar`.
 

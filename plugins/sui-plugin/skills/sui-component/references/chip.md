@@ -11,20 +11,21 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsChip.d.ts`
 
 **SChip props**
 
-| Prop | Type | Default | Required | Values |
-| --- | --- | --- | --- | --- |
-| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
-| `closable` | `boolean` | — | no | — |
-| `color` | `string` | — | no | — |
-| `colorThreshold` | `number` | — | no | — |
-| `disabled` | `boolean \| null` | — | no | — |
-| `label` | `boolean` | — | no | — |
-| `link` | `boolean` | — | no | — |
-| `outlined` | `boolean \| null` | — | no | — |
-| `readonly` | `boolean \| null` | — | no | — |
-| `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` |
-| `theme` | `AppThemeType` | — | no | `dark`, `light` |
-| `underlined` | `boolean \| null` | — | no | — |
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `borderRadius` | `` number \| "rounded" \| "tile" \| `${number}%` \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — | — |
+| `closable` | `boolean` | — | no | — | — |
+| `color` | `string` | — | no | — | — |
+| `colorThreshold` | `number` | — | no | — | — |
+| `density` | `DensityType \| null` | — | no | `comfortable`, `compact`, `default` | Vertical density: `default` (today's look), `comfortable` (one step tighter) or `compact` (two steps). Set it once for the app with `createSUI({ defaults: { global: { density } } })` instead of overriding heights or paddings per component. |
+| `disabled` | `boolean \| null` | — | no | — | — |
+| `label` | `boolean` | — | no | — | — |
+| `link` | `boolean` | — | no | — | — |
+| `outlined` | `boolean \| null` | — | no | — | — |
+| `readonly` | `boolean \| null` | — | no | — | — |
+| `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` | — |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` | — |
+| `underlined` | `boolean \| null` | — | no | — | — |
 
 **SChip slots**
 

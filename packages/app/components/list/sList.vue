@@ -7,11 +7,18 @@
 import { computed, inject, provide } from 'vue'
 import { ProviderPropsName } from '@/app/configs'
 import { type PropsList } from '@/app/definitions'
-import { useComponentDefaultsService, useColorService, useTagService, useTextColorService } from '@/app/services'
+import {
+  useComponentDefaultsService,
+  useColorService,
+  useDensityService,
+  useTagService,
+  useTextColorService,
+} from '@/app/services'
 
 const rawProps = defineProps<PropsList>()
 const props = useComponentDefaultsService('SList', rawProps)
 const { tagName } = useTagService(props)
+const { classListDensity } = useDensityService(props)
 
 provide(ProviderPropsName.listProps, props)
 const navigationDrawerProps = inject(ProviderPropsName.navigationDrawerProps, null)
@@ -33,6 +40,7 @@ const styles = computed(() => {
 const classes = computed(() => {
   return {
     s_list: true,
+    ...classListDensity.value,
     ...(props.text ? classListTextColor.value : classListColor.value),
     's_list--divided': props.divided,
     's_list--outlined': props.outlined,

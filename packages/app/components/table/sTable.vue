@@ -232,6 +232,7 @@ import { getCleanSetObject } from '@/app/lib'
 import {
   useBorderService,
   useComponentDefaultsService,
+  useDensityService,
   useScrollableFocusService,
   useTableService,
 } from '@/app/services'
@@ -287,6 +288,7 @@ const rawProps = withDefaults(defineProps<PropsTable<T>>(), {
 })
 
 const props = useComponentDefaultsService<PropsTable<T>>('STable', rawProps)
+const { classListDensity } = useDensityService(props)
 const emit = defineEmits<EmitsTable<T>>()
 const itemsPerPage = defineModel<number>('itemsPerPage')
 // Names of the collapsed groups, or `true` to start with every group collapsed.
@@ -323,6 +325,7 @@ const tableClasses = computed(() => ({
   's_table--verticalBorder__hidden': props.hideVerticalBorders,
   's_table--noTopBottomBorders': props.hideTopBottomBorders,
   's_table--dense': props.dense,
+  ...classListDensity.value,
   ...classListBorder.value,
 }))
 
@@ -479,6 +482,7 @@ defineExpose({
 
   &__noData {
     padding: calc($s_spacer * 6) calc($s_spacer * 4);
+
     // secondaryText, not disabled: the message must stay readable (4.5:1)
     color: s_getAppColor('secondaryText');
     text-align: center;
@@ -562,6 +566,14 @@ defineExpose({
       box-shadow:
         inset 0 4px 8px -5px #323232bf,
         inset 0 -4px 8px -5px #323232bf;
+    }
+  }
+
+  // Density: one step removes 4px of the 48px row height. `dense` cells keep their 36px.
+  @include s_density() {
+    .s_tableBodyCell:not(.s_tableBodyCell--dense),
+    .s_tableHeadCell:not(.s_tableHeadCell--dense) {
+      height: calc(48px + var(--s-density-offset));
     }
   }
 }

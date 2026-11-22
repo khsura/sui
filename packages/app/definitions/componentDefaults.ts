@@ -1,5 +1,5 @@
 import type * as props from './props'
-import type { CalendarEvent, SizePropertyType } from '@/app/types'
+import type { CalendarEvent, DensityType, SizePropertyType } from '@/app/types'
 
 /**
  * Props type of every component that reads app-wide defaults
@@ -93,6 +93,8 @@ export interface GlobalComponentDefaults {
   rounded?: boolean
   elevation?: props.PropsElevation['elevation']
   color?: string
+  /** Vertical density of fields, buttons, lists, table rows, toolbars and chips. */
+  density?: DensityType
 }
 
 export type GlobalComponentDefaultName = keyof GlobalComponentDefaults

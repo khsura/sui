@@ -49,6 +49,7 @@
             :aria-labelledby="label ? labelId : undefined"
             link
             :dense="dense"
+            :density="resolvedDensity"
             :color="color"
             :text="text"
             :divided="divided"
@@ -95,6 +96,7 @@ import { type PropsSelect } from '@/app/definitions'
 import {
   useBorderService,
   useComponentDefaultsService,
+  useDensityService,
   useDisabledService,
   useFieldLayoutService,
   useFormInputService,
@@ -109,6 +111,7 @@ const rawProps = withDefaults(defineProps<PropsSelect>(), {
 })
 
 const props = useComponentDefaultsService('SSelect', rawProps)
+const { classListDensity, density: resolvedDensity } = useDensityService(props)
 const emit = defineEmits<EmitFormInput<T | null>>()
 const { classListBorder, styleListBorder } = useBorderService(props)
 const model = defineModel<T | null>()
@@ -236,6 +239,7 @@ const selectClasses = computed(() => {
   return {
     's_select--grow': props.grow,
     ...classListField.value,
+    ...classListDensity.value,
   }
 })
 
@@ -476,8 +480,8 @@ $s_select__fieldHeight: calc(#{$s_select__fontSize} * #{$s_select__lineHeight} +
   }
 
   &__sizer {
-    height: 0;
     visibility: hidden;
+    height: 0;
   }
 
   &__spacer {
@@ -524,6 +528,18 @@ $s_select__fieldHeight: calc(#{$s_select__fontSize} * #{$s_select__lineHeight} +
     // secondaryText, not disabled: the message must stay readable (4.5:1)
     color: s_getAppColor('secondaryText');
     text-align: center;
+  }
+
+  // Density: one step removes 4px of field height, as SInput. A `dense` select keeps its 28px.
+  @include s_density() {
+    .s_select__activator {
+      // The activator is inline-flex: once it is shorter than the line box, `middle` would shift it down.
+      vertical-align: top;
+
+      &:not(.s_select__activator--dense) {
+        min-height: calc(#{$s_select__fieldHeight} + var(--s-density-offset));
+      }
+    }
   }
 }
 </style>

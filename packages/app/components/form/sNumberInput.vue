@@ -123,6 +123,7 @@ import {
 } from '@/app/lib'
 import {
   useComponentDefaultsService,
+  useDensityService,
   useDisabledService,
   useFieldLayoutService,
   useFormInputService,
@@ -132,6 +133,7 @@ import { type EmitNumberInput, type NumberInputBounds } from '@/app/types'
 
 const rawProps = defineProps<PropsNumberInput>()
 const props = useComponentDefaultsService('SNumberInput', rawProps)
+const { classListDensity } = useDensityService(props)
 const emit = defineEmits<EmitNumberInput>()
 const model = defineModel<number | null>({ default: null })
 const inputElement = ref<HTMLInputElement | null>(null)
@@ -208,6 +210,7 @@ watch([model, () => bounds.value.precision], ([value, precision]) => {
 
 const classList = computed(() => ({
   ...classListField.value,
+  ...classListDensity.value,
   ...classListSize.value,
   's_numberInput--disabled': props.disabled,
   's_numberInput--dense': props.dense,
@@ -324,6 +327,8 @@ $s_numberInput--inlinePadding: calc($s_spacer * 4) !default;
 $s_numberInput--controlWidth: calc($s_spacer * 8) !default;
 $s_numberInput--stackWidth: calc($s_spacer * 6) !default;
 $s_numberInput--inputMinWidth: calc($s_spacer * 16) !default;
+// The SInput field height: 16px text at line-height 1.1, 8px vertical padding and a 1px border.
+$s_numberInput--densityFieldHeight: calc(16px * 1.1 + #{$s_spacer * 4} + 2px) !default;
 
 .s_numberInput {
   @include s_dark();
@@ -504,6 +509,29 @@ $s_numberInput--inputMinWidth: calc($s_spacer * 16) !default;
 
     .s_numberInput__label {
       padding: $s_spacer $s_numberInput--padding;
+    }
+  }
+
+  // Density: one step removes 4px of field height (2px top + bottom), as SInput.
+  @include s_density() {
+    // A fixed field height (the SInput field formula, less the density offset) instead of padding: the
+    // input's `1rem` text would otherwise follow the root font size and miss SButton's height.
+    .s_numberInput__field {
+      height: calc(#{$s_numberInput--densityFieldHeight} + var(--s-density-offset));
+    }
+
+    .s_numberInput__input {
+      padding-block: 0;
+    }
+
+    // The two stacked arrows would otherwise hold the field at its default height: size containment
+    // lets the stack take the (shorter) field height instead of its content's.
+    .s_numberInput__stack {
+      contain: size;
+
+      .s_numberInput__control {
+        overflow: hidden;
+      }
     }
   }
 }

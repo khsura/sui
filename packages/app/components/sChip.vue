@@ -17,12 +17,14 @@ import {
   useBorderService,
   useColorService,
   useComponentDefaultsService,
+  useDensityService,
   useDisabledService,
   useSizeService,
 } from '@/app/services'
 
 const rawProps = defineProps<PropsChip>()
 const props = useComponentDefaultsService('SChip', rawProps)
+const { classListDensity } = useDensityService(props)
 
 const emit = defineEmits<{
   (event: 'close'): void
@@ -47,6 +49,7 @@ const classList = computed(() => {
     ...classListColor.value,
     ...classListSize.value,
     ...classListDisabled.value,
+    ...classListDensity.value,
   }
 })
 
@@ -171,6 +174,17 @@ defineSlots<{
 
     &:focus::before {
       opacity: $s_button--focus__opacity;
+    }
+  }
+
+  // Density: one step removes 4px of height, as SButton.
+  @include s_density() {
+    height: calc(#{$size}px + var(--s-density-offset));
+
+    @each $name, $sizeValue in $s_button--sizes {
+      &.s_chip--size__#{$name} {
+        height: calc(#{$sizeValue}px + var(--s-density-offset));
+      }
     }
   }
 }

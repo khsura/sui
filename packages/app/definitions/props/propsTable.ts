@@ -1,3 +1,4 @@
+import { type PropsDensity } from './core'
 import type {
   TableItem,
   TableItemClass,
@@ -66,4 +67,4 @@ export type PropsTable<T extends TableItem = TableItem, C extends string = keyof
   itemsPerPageLabel?: string | undefined
   noDataText?: string | undefined
   loadingText?: string | undefined
-}
+} & PropsDensity
