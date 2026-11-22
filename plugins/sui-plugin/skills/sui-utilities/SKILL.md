@@ -30,7 +30,7 @@ When the user asks about:
 Overriding internal classes (`:deep(.s_input__input)`, `.s_button { … !important }`) is the most common source of breakage after a SUI update, because internal class names and structure are not a public API. In order of preference:
 
 1. **A prop** — `color`, `size`, `dense`, `outlined` / `underlined` / `borderRadius`, `elevation`, `width` / `maxWidth`, `inputBackground` / `placeholderBackground` (SInput, STextarea).
-2. **An app-wide default** — `createSUI({ components: { SInput: { dense: true } } })` (see **sui-getting-started**).
+2. **An app-wide default** — `createSUI({ defaults: { SInput: { dense: true }, global: { size: 'small' } } })` (see **sui-getting-started**).
 3. **Theme colors** — change `themes.light/dark.presetColors` / `appColors` instead of recoloring elements one by one.
 4. **Utility classes** on the component root — spacing, display, typography from [docs/classes.md](docs/classes.md).
 5. Only then a scoped `:deep()` override. Keep it narrow, use `s_getPresetColor` / `s_getAppColor` for colors, never hard-code hex values or use `!important`. Add a comment naming the missing prop so it can become a library feature.
