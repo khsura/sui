@@ -45,9 +45,11 @@ import {
   SEVERITY_WARNING,
   SNACKBAR_ACTION_SLOT_NAME,
   SNACKBAR_COMPONENT,
+  SNACKBAR_DEFAULT_BACKGROUND,
   SNACKBAR_LIGHT_ACTION_COLOR_HINT,
   SNACKBAR_UNCOLOURED_ACTION_VARIANTS,
   SNACKBAR_UNREADABLE_PRESET_COLORS,
+  MINIMUM_TEXT_CONTRAST,
   STYLE_ATTRIBUTE,
   SUI_M2_FIXES_VERSION,
   TEXT_COLOR_CLASS_PREFIX,
@@ -56,7 +58,7 @@ import {
   TEXT_BUTTON_VARIANT,
   VARIANT_ATTRIBUTE,
 } from '../constants'
-import { isVersionAtLeast } from '../lib'
+import { getHexContrastRatio, isVersionAtLeast } from '../lib'
 import {
   childElementsOf,
   descendantElementsOf,
@@ -140,6 +142,20 @@ const isUnreadablePresetAction = (button: ElementNode): boolean => {
   return variant === TEXT_BUTTON_VARIANT && color !== undefined && SNACKBAR_UNREADABLE_PRESET_COLORS.includes(color)
 }
 
+/** A text or icon action with a hex CSS colour below 4.5:1 on the default snackbar: used as is, in every version. */
+const lowContrastCssColorOf = (button: ElementNode): { color: string; contrast: number } | undefined => {
+  const color = findAttribute(button, COLOR_ATTRIBUTE)?.staticValue
+  const variant = findAttribute(button, VARIANT_ATTRIBUTE)?.staticValue
+
+  if (color === undefined || variant === undefined || !SNACKBAR_UNCOLOURED_ACTION_VARIANTS.includes(variant)) {
+    return undefined
+  }
+
+  const contrast = getHexContrastRatio(color, SNACKBAR_DEFAULT_BACKGROUND)
+
+  return contrast !== undefined && contrast < MINIMUM_TEXT_CONTRAST ? { color, contrast } : undefined
+}
+
 /** A text or icon action with no colour at all: dark page text on the dark snackbar before the M2 fix. */
 const isUncolouredAction = (button: ElementNode): boolean => {
   const variant = findAttribute(button, VARIANT_ATTRIBUTE)?.staticValue
@@ -152,7 +168,7 @@ const isUncolouredAction = (button: ElementNode): boolean => {
   )
 }
 
-const snackbarActionIssue = (button: ElementNode, hasUncolouredFix: boolean): TemplateIssue | undefined => {
+const snackbarActionIssue = (button: ElementNode, hasSnackbarColorFix: boolean): TemplateIssue | undefined => {
   const base: Omit<TemplateIssue, 'message' | 'fixHint'> = {
     ...positionOf(button),
     rule: RULE_SNACKBAR_ACTION_CONTRAST,
@@ -160,19 +176,33 @@ const snackbarActionIssue = (button: ElementNode, hasUncolouredFix: boolean): Te
     recipe: RECIPE_ACTIVATOR_OVERLAYS,
   }
 
+  const lowContrastCssColor = lowContrastCssColorOf(button)
+
+  if (lowContrastCssColor) {
+    return {
+      ...base,
+      message: `A \`color="${lowContrastCssColor.color}"\` action in the \`SSnackbar\` is ${lowContrastCssColor.contrast.toFixed(2)}:1 on the dark snackbar background (below 4.5:1), so the action is hard to read. A CSS colour is used as is.`,
+      fixHint: hasSnackbarColorFix
+        ? 'Remove `color` (an action without a colour uses the snackbar text colour), or use a light CSS colour such as `color="#ffffff"`.'
+        : `Use a light colour: ${SNACKBAR_LIGHT_ACTION_COLOR_HINT}.`,
+    }
+  }
+
+  if (hasSnackbarColorFix) {
+    return undefined
+  }
+
   if (isUnreadablePresetAction(button)) {
     const color = findAttribute(button, COLOR_ATTRIBUTE)?.staticValue ?? ''
 
     return {
       ...base,
-      message: `A \`color="${color}"\` text button in the \`SSnackbar\` action is below 4.5:1 on the dark snackbar background, so the action is hard to read.`,
-      fixHint: hasUncolouredFix
-        ? `Remove \`color\` (an action without a colour uses the snackbar text colour), or use a light colour: ${SNACKBAR_LIGHT_ACTION_COLOR_HINT}.`
-        : `Use a light colour: ${SNACKBAR_LIGHT_ACTION_COLOR_HINT}.`,
+      message: `Before @khsura/sui ${SUI_M2_FIXES_VERSION}, a \`color="${color}"\` text button in the \`SSnackbar\` action is below 4.5:1 on the dark snackbar background, so the action is hard to read.`,
+      fixHint: `Use a light colour: ${SNACKBAR_LIGHT_ACTION_COLOR_HINT}, or upgrade to ${SUI_M2_FIXES_VERSION} or later and remove \`color\`.`,
     }
   }
 
-  if (!hasUncolouredFix && isUncolouredAction(button)) {
+  if (isUncolouredAction(button)) {
     return {
       ...base,
       message: `Before @khsura/sui ${SUI_M2_FIXES_VERSION}, a text or icon button without \`color\` in the \`SSnackbar\` action keeps the page's dark text colour (about 1.3:1 on the dark snackbar), so the action is hard to read.`,
@@ -184,8 +214,9 @@ const snackbarActionIssue = (button: ElementNode, hasUncolouredFix: boolean): Te
 }
 
 /**
- * Explicit low-contrast preset colours always warn. An action with no colour warns only before
- * `SUI_M2_FIXES_VERSION`, which gives it the snackbar's light text colour.
+ * A hex CSS colour below 4.5:1 on the snackbar always warns: the snackbar cannot adjust it. Before
+ * `SUI_M2_FIXES_VERSION` a low-contrast preset colour or no colour at all warns too; from that version an action
+ * without a colour takes the snackbar's light text colour and a preset colour uses a variant tuned to the snackbar.
  */
 export const snackbarActionContrastRule: TemplateRule = {
   id: RULE_SNACKBAR_ACTION_CONTRAST,
@@ -194,13 +225,13 @@ export const snackbarActionContrastRule: TemplateRule = {
       return []
     }
 
-    const hasUncolouredFix = isVersionAtLeast(apiVersion, SUI_M2_FIXES_VERSION)
+    const hasSnackbarColorFix = isVersionAtLeast(apiVersion, SUI_M2_FIXES_VERSION)
 
     return slotFills(element)
       .filter((fill) => staticArgument(fill.directive.arg) === SNACKBAR_ACTION_SLOT_NAME)
       .flatMap((fill) => descendantElementsOf(fill.owner))
       .filter((descendant) => isComponentTag(descendant.tag, BUTTON_COMPONENT))
-      .flatMap((button) => snackbarActionIssue(button, hasUncolouredFix) ?? [])
+      .flatMap((button) => snackbarActionIssue(button, hasSnackbarColorFix) ?? [])
   },
 }
 
