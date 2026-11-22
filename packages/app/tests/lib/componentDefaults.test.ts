@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { hasRawProp, resolveComponentDefault } from '@/app/lib'
+import { hasRawProp, mergeComponentDefaults, resolveComponentDefault } from '@/app/lib'
 import { globalComponentDefaultTargets } from '@/app/configs'
 
 describe('resolveComponentDefault', () => {
@@ -56,5 +56,57 @@ describe('hasRawProp', () => {
     expect(hasRawProp({ 'aria-label': 'x' }, 'ariaLabel')).toBe(true)
     expect(hasRawProp({ size: undefined }, 'size')).toBe(true)
     expect(hasRawProp({}, 'size')).toBe(false)
+  })
+})
+
+describe('mergeComponentDefaults', () => {
+  test('returns the outer layer when there is no inner one', () => {
+    expect(mergeComponentDefaults({ SButton: { size: 'large' } }, undefined)).toEqual({ SButton: { size: 'large' } })
+  })
+
+  test('returns the inner layer when there is no outer one', () => {
+    expect(mergeComponentDefaults(undefined, { global: { size: 'small' } })).toEqual({ global: { size: 'small' } })
+  })
+
+  test('inner wins per prop and keeps the outer props it does not set', () => {
+    expect(
+      mergeComponentDefaults(
+        { SButton: { size: 'large', variant: 'fab' }, SChip: { size: 'small' } },
+        { SButton: { size: 'small' } },
+      ),
+    ).toEqual({ SButton: { size: 'small', variant: 'fab' }, SChip: { size: 'small' } })
+  })
+
+  test('global merges per prop too', () => {
+    expect(
+      mergeComponentDefaults({ global: { size: 'large', color: 'primary' } }, { global: { size: 'small' } }),
+    ).toEqual({ global: { size: 'small', color: 'primary' } })
+  })
+
+  test('undefined inner values never override', () => {
+    expect(
+      mergeComponentDefaults(
+        { SButton: { size: 'large' }, global: { color: 'primary' } },
+        { SButton: { size: undefined }, global: undefined },
+      ),
+    ).toEqual({ SButton: { size: 'large' }, global: { color: 'primary' } })
+  })
+
+  test('three layers merge in order, innermost last', () => {
+    const app = { SButton: { size: 'large', variant: 'fab' }, global: { color: 'primary' } } as const
+    const outer = mergeComponentDefaults(app, { SButton: { size: 'small' }, global: { elevation: 0 } })
+    const inner = mergeComponentDefaults(outer, { SButton: { variant: 'text' }, global: { color: 'error' } })
+
+    expect(inner).toEqual({ SButton: { size: 'small', variant: 'text' }, global: { color: 'error', elevation: 0 } })
+  })
+
+  test('does not mutate either layer', () => {
+    const outer = { SButton: { size: 'large' as const } }
+    const inner = { SButton: { variant: 'text' as const } }
+
+    mergeComponentDefaults(outer, inner)
+
+    expect(outer).toEqual({ SButton: { size: 'large' } })
+    expect(inner).toEqual({ SButton: { variant: 'text' } })
   })
 })

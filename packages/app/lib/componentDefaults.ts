@@ -73,6 +73,50 @@ export const resolveComponentDefault = ({
   return getOwnDefinedValue(defaults?.global, propName)
 }
 
+const isPlainObject = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
+
+/** `outer` overlaid with the entries of `inner` whose value is not `undefined`. */
+const mergeDefinedEntries = (outer: Record<string, unknown>, inner: Record<string, unknown>) => {
+  const merged: Record<string, unknown> = { ...outer }
+
+  for (const [key, value] of Object.entries(inner)) {
+    if (value !== undefined) {
+      merged[key] = value
+    }
+  }
+
+  return merged
+}
+
+/**
+ * Merges a scoped defaults layer (`inner`, e.g. an `SDefaultsProvider`'s `defaults`) onto the
+ * nearest outer layer (the app-level `createSUI({ defaults })` or an outer provider's merged layer).
+ * Merging is per entry and per prop: `inner.SButton.size` overrides `outer.SButton.size` but keeps
+ * `outer.SButton.variant`, and `global` merges the same way. `undefined` values never override.
+ * It is generic over entry and prop names, so new options (such as `density`) merge with no change here.
+ */
+export const mergeComponentDefaults = (
+  outer: ComponentDefaultsOptions | undefined,
+  inner: ComponentDefaultsOptions | undefined,
+): ComponentDefaultsOptions => {
+  const merged: Record<string, unknown> = { ...outer }
+
+  for (const [entryName, innerEntry] of Object.entries(inner ?? {})) {
+    if (innerEntry === undefined) {
+      continue
+    }
+
+    const outerEntry = merged[entryName]
+
+    merged[entryName] =
+      isPlainObject(outerEntry) && isPlainObject(innerEntry) ? mergeDefinedEntries(outerEntry, innerEntry) : innerEntry
+  }
+
+  // Boundary: `merged` only holds the entries of two ComponentDefaultsOptions, each entry merged with its own kind.
+  return merged as ComponentDefaultsOptions
+}
+
 const UPPERCASE_LETTER = /\B([A-Z])/g
 
 /** Whether the parent passed `propName` (camelCase or kebab-case) in the raw vnode props. */
