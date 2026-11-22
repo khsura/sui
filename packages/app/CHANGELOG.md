@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.21.0](https://github.com/khsura/sui/compare/sui-v1.20.0...sui-v1.21.0) (2026-11-22)
+
+
+### Features
+
+* M3 new components — avatar, pagination, skeleton, empty state, number and file inputs ([6124dad](https://github.com/khsura/sui/commit/6124dad2d94687a7c4b2a22a0e29578acda0ced4))
+
 ## [1.20.0](https://github.com/khsura/sui/compare/sui-v1.19.0...sui-v1.20.0) (2026-11-22)
 
 
