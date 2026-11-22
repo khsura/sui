@@ -51,6 +51,7 @@ This directory contains per-component documentation optimized for Claude AI codi
 |------|-----------|
 | [form.md](./form.md) | `SForm`, `SFormRow`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` |
 | [autocomplete.md](./autocomplete.md) | `SAutocomplete` |
+| [number-input.md](./number-input.md) | `SNumberInput` |
 | [file-input.md](./file-input.md) | `SFileInput` |
 
 ### Data Display
@@ -140,6 +141,7 @@ Always bind **both** `v-on="on"` and `v-bind="attrs"`.
 | `SSlideGroup`, `SToggleButtonGroup` | always an array of item identifiers (`index` or vnode `key`) |
 | `SStepper` | `number` (the active step's `step` value) |
 | `SPagination` | `number` (the current page, starting at 1) |
+| `SNumberInput` | `number \| null` (`null` when the field is empty) |
 | `SForm` | `boolean` (`true` when valid); also `v-model:errors`, `v-model:error` |
 | `SDatePicker`, `SDatePickerInput` | `string` (`'YYYY-MM-DD'`, `'YYYY-MM'` or `'YYYY'`) |
 | `SNavigationDrawer` | `boolean` |

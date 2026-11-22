@@ -1,6 +1,6 @@
 ---
 name: sui-component
-description: Look up and use any component from @khsura/sui (SButton, SCard, SDialog, SMenu, STooltip, STable, SList, STabs, SStepper, SCarousel, SExpansionPanels, SDatePicker, SCalendar, SToggleButtonGroup, SSlideGroup, SToolbar, SSplitView, SDroppable, SBadge, SChip, SAvatar, SPagination, SEmptyState, SSkeletonLoader, SFileInput, SIcon, SImage, SAlert, SOverlay, …) in a Vue or Nuxt app. Use when writing or fixing template code with an S-prefixed component, choosing props/slots/events, debugging a SUI component that renders wrong or ignores a prop, or styling SUI components with theme colors. Loads one per-family reference file with the verified props table, slots, events, example and gotchas.
+description: Look up and use any component from @khsura/sui (SButton, SCard, SDialog, SMenu, STooltip, STable, SList, STabs, SStepper, SCarousel, SExpansionPanels, SDatePicker, SNumberInput, SCalendar, SToggleButtonGroup, SSlideGroup, SToolbar, SSplitView, SDroppable, SBadge, SChip, SAvatar, SPagination, SEmptyState, SSkeletonLoader, SFileInput, SIcon, SImage, SAlert, SOverlay, …) in a Vue or Nuxt app. Use when writing or fixing template code with an S-prefixed component, choosing props/slots/events, debugging a SUI component that renders wrong or ignores a prop, or styling SUI components with theme colors. Loads one per-family reference file with the verified props table, slots, events, example and gotchas.
 argument-hint: [component name or description of what you need]
 ---
 
@@ -44,6 +44,7 @@ All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `
 | `SApp`, `SLayout`, `SAppBar`, `SNavigationDrawer`, `SMain`, `SFooter`, `SBottomNavigation`, `SContainer`, `SRow`, `SColumn`, `SSpacer` | [references/layout.md](references/layout.md) (and the **sui-layout** skill) |
 | `SList`, `SListItem`, `SListItemIcon`, `SListItemContent`, `SListItemTitle`, `SListItemSubtitle`, `SListItemAction`, `SListItemGroup` | [references/list.md](references/list.md) |
 | `SMenu` | [references/menu.md](references/menu.md) |
+| `SNumberInput` (since 1.21.0) | [references/number-input.md](references/number-input.md) (numbers: quantities, money, percentages) |
 | `SOverlay` | [references/overlay.md](references/overlay.md) |
 | `SPagination` | [references/pagination.md](references/pagination.md) |
 | `SProgressLinear`, `SProgressCircular` | [references/progress.md](references/progress.md) |
