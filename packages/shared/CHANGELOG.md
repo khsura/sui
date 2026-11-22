@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/khsura/sui/compare/shared-v1.2.2...shared-v1.3.0) (2026-11-21)
+
+
+### Features
+
+* SUI MCP server, component API metadata and AI-eval (M1) ([b5e9d83](https://github.com/khsura/sui/commit/b5e9d832fbeeb1622039291b88f69af2e29baf4d))
+
 ## [1.2.2](https://github.com/khsura/sui/compare/shared-v1.2.1...shared-v1.2.2) (2026-01-08)
 
 
