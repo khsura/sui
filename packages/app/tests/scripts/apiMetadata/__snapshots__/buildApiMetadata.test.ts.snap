@@ -45,6 +45,19 @@ exports[`buildApiMetadata > matches the snapshot for SButton, SInput, SDialog, S
         "type": "number | undefined",
       },
       {
+        "description": "Vertical density: \`default\` (today's look), \`comfortable\` (one step tighter) or \`compact\`
+(two steps). Set it once for the app with \`createSUI({ defaults: { global: { density } } })\`
+instead of overriding heights or paddings per component.",
+        "enumValues": [
+          "comfortable",
+          "compact",
+          "default",
+        ],
+        "name": "density",
+        "required": false,
+        "type": "DensityType | null | undefined",
+      },
+      {
         "description": "",
         "name": "disabled",
         "required": false,
@@ -342,6 +355,19 @@ exports[`buildApiMetadata > matches the snapshot for SButton, SInput, SDialog, S
         "name": "dense",
         "required": false,
         "type": "boolean | undefined",
+      },
+      {
+        "description": "Vertical density: \`default\` (today's look), \`comfortable\` (one step tighter) or \`compact\`
+(two steps). Set it once for the app with \`createSUI({ defaults: { global: { density } } })\`
+instead of overriding heights or paddings per component.",
+        "enumValues": [
+          "comfortable",
+          "compact",
+          "default",
+        ],
+        "name": "density",
+        "required": false,
+        "type": "DensityType | null | undefined",
       },
       {
         "description": "",
@@ -768,6 +794,19 @@ exports[`buildApiMetadata > matches the snapshot for SButton, SInput, SDialog, S
         "name": "dense",
         "required": false,
         "type": "boolean | undefined",
+      },
+      {
+        "description": "Vertical density: \`default\` (today's look), \`comfortable\` (one step tighter) or \`compact\`
+(two steps). Set it once for the app with \`createSUI({ defaults: { global: { density } } })\`
+instead of overriding heights or paddings per component.",
+        "enumValues": [
+          "comfortable",
+          "compact",
+          "default",
+        ],
+        "name": "density",
+        "required": false,
+        "type": "DensityType | null | undefined",
       },
       {
         "description": "",
