@@ -77,6 +77,16 @@ import { SApp } from '@khsura/sui'
 
 Import components where you use them (Vue): `import { SButton, SCard } from '@khsura/sui'`.
 
+### iPhone notch and home indicator — `viewport-fit=cover`
+
+For a full-screen app on iPhone (a PWA, a Capacitor/Cordova shell, a web view), opt in to the safe areas in `index.html` (Nuxt: `app.head.meta` in `nuxt.config.ts`):
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+```
+
+`SApp` then reads `env(safe-area-inset-*)` into `--s-safe-area-top|right|bottom|left`, and these components pad by them: a fixed `SAppBar` (below the notch, plus the side insets in landscape; `SMain` and a desktop drawer start below it), `SBottomNavigation` (grows above the home indicator), the mobile `SNavigationDrawer` (top, bottom and the side it opens from), a `fullscreen` `SDialog` (all sides) and `SSnackbar` (above the home indicator, or below the notch with `location="top"`). Without `viewport-fit=cover`, on desktop and on Android the insets are `0px` and nothing changes. Don't add your own `env(safe-area-inset-*)` padding to these components: it would double the inset. Content you place at a screen edge yourself can use the same variables, e.g. `padding-bottom: var(--s-safe-area-bottom)`.
+
 ---
 
 ## 3. Styles and icons

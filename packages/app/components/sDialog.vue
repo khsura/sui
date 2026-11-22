@@ -132,6 +132,9 @@ $kDialogViewportHeight: 90%;
         bottom: 0;
         left: 50%;
         max-height: 90%;
+
+        // a bottom sheet never reaches the notch, only the home indicator
+        padding-top: 0;
         transform: translate(-50%, 0%);
       }
     }
@@ -143,8 +146,13 @@ $kDialogViewportHeight: 90%;
       width: 100%;
       max-width: unset;
       height: 100%;
+
+      // keep the content clear of the notch, home indicator and landscape side insets (0px without a safe
+      // area); the card colour fills the inset strips so they read as part of the dialog
+      padding: s_safeAreaInset('top') s_safeAreaInset('right') s_safeAreaInset('bottom') s_safeAreaInset('left');
       margin: 0;
       overflow-y: auto;
+      background-color: s_getAppColor('card');
       border-radius: 0;
       transform: translate(0, 0);
 

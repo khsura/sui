@@ -44,8 +44,13 @@ jobs:
       - name: Install dependencies
         run: node .yarn/releases/yarn-*.cjs install --immutable
 
+      # Task PRs (into feature/** milestone branches) run Chromium only for speed; story play checks and the
+      # axe audit still run. PRs into main (milestone releases) and manual runs use the full Chromium + WebKit
+      # matrix, so WebKit-only regressions are still caught before anything ships.
       - name: Run visual tests
-        run: node .yarn/releases/yarn-*.cjs workspace @khsura/sui test:visual:container
+        env:
+          PROJECT_FILTER: ${{ startsWith(github.base_ref, 'feature/') && '--project=chromium-light --project=chromium-dark' || '' }}
+        run: node .yarn/releases/yarn-*.cjs workspace @khsura/sui test:visual:container $PROJECT_FILTER
 
       - name: Upload diff, actual and expected images
         if: ${{ failure() }}

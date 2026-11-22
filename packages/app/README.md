@@ -56,6 +56,16 @@ You can also import SCSS sources if you want to extend tokens:
 @use '@khsura/sui/helpers.scss' as *;
 ```
 
+### 3. iPhone notch and home indicator (optional)
+
+For a full-screen app on iPhone, add `viewport-fit=cover` to the viewport meta in `index.html`:
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+```
+
+`SApp` reads `env(safe-area-inset-*)` into `--s-safe-area-top|right|bottom|left`. A fixed `SAppBar`, `SBottomNavigation`, the mobile `SNavigationDrawer`, a fullscreen `SDialog` and `SSnackbar` pad by them. Without the opt-in, and on desktop and Android, the insets are `0px` and nothing changes.
+
 ## Quick start
 
 ```vue

@@ -87,3 +87,4 @@ None — use `v-model`.
 - Without `timeout`, provide a close action in `#action`.
 - Single-line by default: long text is cut with an ellipsis — use `multi-line`.
 - The app must be wrapped in `<SApp>` (the snackbar teleports into its overlay container).
+- On an iPhone with `viewport-fit=cover` the snackbar clears the home indicator (or the notch with `location="top"`) by itself.

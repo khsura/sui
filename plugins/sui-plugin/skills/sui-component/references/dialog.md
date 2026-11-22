@@ -117,4 +117,5 @@ None — use `v-model`.
 
 - The app must be wrapped in `<SApp>`: dialogs teleport into the overlay container `SApp` renders.
 - Keyboard and screen readers are handled: the content has `role="dialog"` and `aria-modal="true"`, focus moves into the dialog on open, Tab stays inside it, Esc closes it (not when `persistent`), and focus returns to the activator on close. Esc with a menu open inside the dialog closes only the menu. There is no `close` event — watch `v-model`.
+- A `fullscreen` dialog pads by the iPhone safe-area insets on all sides and fills them with the card colour (needs `viewport-fit=cover`, see the getting-started skill). Don't add your own `env(safe-area-inset-*)` padding to it.
 - `borderless`, `scrollableBackground` and `closeOnClick` appear in the prop types but currently have no effect — do not rely on them.

@@ -1,5 +1,6 @@
 import { Client } from '@modelcontextprotocol/sdk/client/index.js'
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js'
+import packageJson from '../../package.json' with { type: 'json' }
 import { createSuiMcpServer } from '../../src/server'
 
 const connectClient = async () => {
@@ -25,7 +26,7 @@ describe('createSuiMcpServer', () => {
     const client = await connectClient()
     const response = await client.callTool({ name: 'ping', arguments: {} })
 
-    expect(response.content).toEqual([{ type: 'text', text: 'pong 0.1.0' }])
+    expect(response.content).toEqual([{ type: 'text', text: `pong ${packageJson.version}` }])
   })
 
   it('sends server instructions that point the AI at the API, recipes and the validator', async () => {

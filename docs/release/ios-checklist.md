@@ -136,6 +136,42 @@ about 15 minutes. Patch releases need it only when they touch a component listed
   Expected: the bottom snackbar sits above the home indicator, the top one below the status bar, and the action button
   is tappable.
 
+## 6. Safe areas: notch and home indicator (about 2 min)
+
+The Storybook iframe opts in with `viewport-fit=cover`, as an app does, so these stories show the real insets. Use a
+notched / Dynamic Island iPhone; on a model without a notch the top inset is the status bar only.
+
+- [ ] **App shell in portrait.**
+  Story: [Layout/Safe Area — Safe area shell](https://sui.surakh.com/iframe.html?id=ui-components-layout-safe-area--safe-area-shell).
+  The story sets simulated insets (47px top, 34px bottom), so first check that it looks like the desktop capture,
+  then compare the real-device stories below, which use the device's own insets.
+  Expected: the layout matches the simulated story; nothing renders under the notch or the home indicator.
+
+- [ ] **Fixed app bar and bottom navigation.**
+  Story: [Layout/Stress — Short page with bottom navigation](https://sui.surakh.com/iframe.html?id=ui-components-layout-stress--short-page-bottom-navigation).
+  Expected: the app bar's background reaches the top edge behind the status bar while its title and buttons sit below
+  the notch; the bottom navigation's background reaches the bottom edge while its icons sit above the home indicator;
+  the first line of content is not hidden under the app bar.
+
+- [ ] **Mobile drawer.**
+  Story: [Layout/Stress — Mobile drawer open](https://sui.surakh.com/iframe.html?id=ui-components-layout-stress--mobile-drawer-open).
+  Expected: the first drawer item is below the notch and the last one, scrolled to the end, is above the home indicator.
+
+- [ ] **Fullscreen dialog.**
+  Story: [Layout/Safe Area — Fullscreen dialog](https://sui.surakh.com/iframe.html?id=ui-components-layout-safe-area--safe-area-fullscreen-dialog)
+  and [Dialog — fullscreen](https://sui.surakh.com/iframe.html?id=ui-components-dialog--dialog&args=fullscreen:!true).
+  Expected: the card colour fills the whole screen, the title is below the notch and the actions above the home
+  indicator.
+
+- [ ] **Snackbar.**
+  Story: [Snackbar](https://sui.surakh.com/iframe.html?id=ui-components-snackbar--snackbar) and
+  [Snackbar — top](https://sui.surakh.com/iframe.html?id=ui-components-snackbar--snackbar&args=location:top).
+  Expected: the bottom snackbar clears the home indicator; the top one clears the notch.
+
+- [ ] **Landscape.**
+  Rotate the phone to landscape on the short-page and mobile-drawer stories above.
+  Expected: the app bar's buttons and the open drawer's items stay clear of the notch side; nothing is cut off.
+
 ## Record the run
 
 Paste this into the release PR when you are done:

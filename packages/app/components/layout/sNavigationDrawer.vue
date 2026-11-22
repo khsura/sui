@@ -55,7 +55,8 @@ import {
   navigationDrawerEdgeSwipeZone,
   navigationDrawerSwipeMinDistance,
 } from '@/app/constants'
-import { getNumericCssAttribute } from '@/app/lib'
+import { getLengthWithSafeArea, getNumericCssAttribute } from '@/app/lib'
+import { getIsFixedPosition } from '@/app/repositories/positionRepository'
 import {
   useComponentDefaultsService,
   useBackgroundScrollService,
@@ -302,21 +303,41 @@ const classes = computed(() => {
   }
 })
 
+// The mobile drawer pads the side it opens from by that side's safe-area inset, and widens by it so its items
+// keep their usual width (the inset is 0px without a safe area).
+const openWidth = computed(() => {
+  const width = getNumericCssAttribute(computedWidth.value)
+
+  return isMobile.value ? getLengthWithSafeArea(width, isRight.value ? 'right' : 'left') : width
+})
+
+// A desktop drawer that starts below a fixed app bar moves down by the notch padding that bar adds.
+const isBelowFixedAppBar = computed(() => {
+  return (
+    isDesktopApp.value &&
+    !appHorizontalShiftWidth.value &&
+    layoutApp.value.appBarHeight > 0 &&
+    getIsFixedPosition({ position: layoutApp.value.appBarPosition })
+  )
+})
+
 const styles = computed((): object => {
   const translate = isBottom.value ? 'translateY' : 'translateX'
+  const subtractHeight = getNumericCssAttribute(computedSubtractHeight.value)
+  const top = getNumericCssAttribute(computedTop.value)
 
   const maxHeight = isBottom.value
     ? '50vh'
     : computedSubtractHeight.value != null
-      ? `calc(100% - ${getNumericCssAttribute(computedSubtractHeight.value)})`
+      ? `calc(100% - ${isBelowFixedAppBar.value ? getLengthWithSafeArea(subtractHeight, 'top') : subtractHeight})`
       : undefined
 
   return {
     height: elementHeight.value,
-    top: !isBottom.value ? getNumericCssAttribute(computedTop.value) : 'auto',
+    top: !isBottom.value ? (isBelowFixedAppBar.value ? getLengthWithSafeArea(top, 'top') : top) : 'auto',
     maxHeight,
     transform: `${translate}(${getNumericCssAttribute(computedTransform.value, '%')})`,
-    width: !model.value ? '0px' : isBottom.value ? null : getNumericCssAttribute(computedWidth.value),
+    width: !model.value ? '0px' : isBottom.value ? null : openWidth.value,
   }
 })
 
@@ -641,6 +662,23 @@ $s_navigationDrawerOverlayTransitionAnimations: (
 
   &--isMobile {
     z-index: 6;
+
+    // the mobile drawer covers the screen edge it opens from, so it clears the notch, the home indicator and
+    // that side's landscape inset (0px without a safe area)
+    padding-top: s_safeAreaInset('top');
+    padding-bottom: s_safeAreaInset('bottom');
+
+    &:not(.s_navigationDrawer--right, .s_navigationDrawer--bottom) {
+      padding-left: s_safeAreaInset('left');
+    }
+
+    &.s_navigationDrawer--right {
+      padding-right: s_safeAreaInset('right');
+    }
+
+    &.s_navigationDrawer--bottom {
+      padding-top: 0;
+    }
   }
 
   &--miniVariant {
