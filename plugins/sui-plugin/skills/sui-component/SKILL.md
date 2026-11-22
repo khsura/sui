@@ -1,6 +1,6 @@
 ---
 name: sui-component
-description: Look up and use any component from @khsura/sui (SButton, SCard, SDialog, SMenu, STooltip, STable, SList, STabs, SStepper, SCarousel, SExpansionPanels, SDatePicker, SCalendar, SToggleButtonGroup, SSlideGroup, SToolbar, SSplitView, SDroppable, SBadge, SChip, SAvatar, SPagination, SEmptyState, SIcon, SImage, SAlert, SOverlay, …) in a Vue or Nuxt app. Use when writing or fixing template code with an S-prefixed component, choosing props/slots/events, debugging a SUI component that renders wrong or ignores a prop, or styling SUI components with theme colors. Loads one per-family reference file with the verified props table, slots, events, example and gotchas.
+description: Look up and use any component from @khsura/sui (SButton, SCard, SDialog, SMenu, STooltip, STable, SList, STabs, SStepper, SCarousel, SExpansionPanels, SDatePicker, SCalendar, SToggleButtonGroup, SSlideGroup, SToolbar, SSplitView, SDroppable, SBadge, SChip, SAvatar, SPagination, SEmptyState, SSkeletonLoader, SIcon, SImage, SAlert, SOverlay, …) in a Vue or Nuxt app. Use when writing or fixing template code with an S-prefixed component, choosing props/slots/events, debugging a SUI component that renders wrong or ignores a prop, or styling SUI components with theme colors. Loads one per-family reference file with the verified props table, slots, events, example and gotchas.
 argument-hint: [component name or description of what you need]
 ---
 
@@ -47,6 +47,7 @@ All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `
 | `SPagination` | [references/pagination.md](references/pagination.md) |
 | `SProgressLinear`, `SProgressCircular` | [references/progress.md](references/progress.md) |
 | `SSheet` | [references/sheet.md](references/sheet.md) |
+| `SSkeletonLoader` | [references/skeleton-loader.md](references/skeleton-loader.md) |
 | `SSlideGroup`, `SSlideItem` | [references/slide-group.md](references/slide-group.md) |
 | `SSnackbar` | [references/snackbar.md](references/snackbar.md) |
 | `SSplitView`, `SSplitViewItem` | [references/split-view.md](references/split-view.md) |
@@ -64,7 +65,6 @@ All components import from `@khsura/sui`. App setup (registry, `SApp`, styles, `
 
 | ❌ Name | ✅ Use instead |
 |---|---|
-| `SSkeletonLoader` | `SProgressCircular indeterminate` in a centered div |
 | `STextField` | `SInput` (single line) or `STextarea` (multi-line) |
 | `SCol` | `SColumn` |
 | `STablePagination` (not exported) | `STable`'s built-in pagination, or `SPagination` for a standalone pager |

@@ -1970,6 +1970,95 @@
         }
       ],
       "events": []
+    },
+    {
+      "name": "SSkeletonLoader",
+      "family": "core",
+      "file": "components/sSkeletonLoader.vue",
+      "props": [
+        {
+          "name": "boilerplate",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": "Draws still bones, without the shimmer animation (the shimmer also stops for `prefers-reduced-motion`)."
+        },
+        {
+          "name": "height",
+          "type": "number | string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "loading",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": "Shows the skeleton while `true` and the default slot once `false`. Without a default slot the skeleton is always\nshown, so a standalone `<SSkeletonLoader type=\"card\" />` needs no `loading`."
+        },
+        {
+          "name": "loadingText",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"Loading…\"",
+          "description": "Accessible name announced while the skeleton is shown. Defaults to `'Loading…'`."
+        },
+        {
+          "name": "maxHeight",
+          "type": "number | string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "maxWidth",
+          "type": "number | string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minHeight",
+          "type": "number | string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "minWidth",
+          "type": "number | string | null | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "theme",
+          "type": "AppThemeType | undefined",
+          "required": false,
+          "description": "",
+          "enumValues": [
+            "dark",
+            "light"
+          ]
+        },
+        {
+          "name": "type",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"text\"",
+          "description": "What to draw: presets joined by commas, each with an optional `@N` repeat count. Presets: `text`, `heading`,\n`avatar`, `button`, `image`, `card`, `list-item`, `list-item-avatar`, `table-row`, `table`. Example:\n`'avatar, text@3'`. Unknown presets are ignored. Defaults to `'text'`."
+        },
+        {
+          "name": "width",
+          "type": "number | string | null | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "any",
+          "description": "The real content, shown once `loading` is `false`."
+        }
+      ],
+      "events": []
     }
   ]
 }

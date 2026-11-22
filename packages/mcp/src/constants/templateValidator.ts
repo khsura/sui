@@ -85,6 +85,8 @@ export const RULE_AVATAR_TEXT_NOT_INITIALS = 'avatar-text-not-initials'
 export const RULE_AVATAR_GROUP_CHILD = 'avatar-group-child'
 export const RULE_PAGINATION_LENGTH_ROWS = 'pagination-length-rows'
 export const RULE_PAGINATION_ZERO_BASED = 'pagination-zero-based'
+export const RULE_SKELETON_LOADER_UNKNOWN_PRESET = 'skeleton-loader-unknown-preset'
+export const RULE_SKELETON_LOADER_NEVER_HIDES = 'skeleton-loader-never-hides'
 export const RULE_HIDDEN_LABEL_NO_VISIBLE_NAME = 'hidden-label-no-visible-name'
 export const RULE_EMPTY_STATE_ACTION_EVENT = 'empty-state-action-event'
 export const RULE_EMPTY_STATE_ACTION_WITHOUT_LISTENER = 'empty-state-action-without-listener'
@@ -273,6 +275,45 @@ export const PAGINATION_ROW_COUNT_EXPRESSION =
 export const PAGINATION_PAGE_MATH_EXPRESSION = /\/|\bceil\b/
 /** A 0-based model, such as STable's `pageIndex`, given to SPagination's 1-based `v-model`. */
 export const PAGINATION_ZERO_BASED_MODEL = /index$/i
+
+export const SKELETON_LOADER_COMPONENT = 'SSkeletonLoader'
+export const SKELETON_LOADER_TYPE_ATTRIBUTE = 'type'
+export const SKELETON_LOADER_LOADING_ATTRIBUTE = 'loading'
+/** Separates the presets in SSkeletonLoader's `type` string: `'avatar, text'`. */
+export const SKELETON_LOADER_TYPE_SEPARATOR = ','
+/** Separates a preset from its repeat count: `'text@3'`. */
+export const SKELETON_LOADER_REPEAT_SEPARATOR = '@'
+/** The presets SSkeletonLoader draws. The `type` prop is a plain string, so sui-api.json cannot list them. */
+export const SKELETON_LOADER_PRESETS = [
+  'text',
+  'heading',
+  'avatar',
+  'button',
+  'image',
+  'card',
+  'list-item',
+  'list-item-avatar',
+  'table-row',
+  'table',
+]
+/** Vuetify VSkeletonLoader presets that SUI does not have, with the SUI `type` that draws the same thing. */
+export const SKELETON_LOADER_VUETIFY_PRESETS: Record<string, string> = {
+  paragraph: 'text@3',
+  sentences: 'text@2',
+  subtitle: 'text',
+  article: 'heading, text@3',
+  chip: 'button',
+  actions: 'button@2',
+  'list-item-two-line': 'list-item-avatar',
+  'list-item-three-line': 'list-item-avatar',
+  'list-item-avatar-two-line': 'list-item-avatar',
+  'list-item-avatar-three-line': 'list-item-avatar',
+  'card-avatar': 'card',
+  'table-heading': 'heading',
+  'table-thead': 'table-row',
+  'table-tbody': 'table-row@5',
+  'table-tfoot': 'table-row',
+}
 export const EMPTY_STATE_COMPONENT = 'SEmptyState'
 export const EMPTY_STATE_ACTION_TEXT_ATTRIBUTE = 'action-text'
 /** The event SEmptyState's built-in button emits. */
