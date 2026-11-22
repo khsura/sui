@@ -8,6 +8,9 @@ export const defaultLayoutSizes: {
   appBarPosition: Position
   appBarHeight: number
   footerHeight: number
+  // a permanent drawer on that side pads itself by the side's safe-area inset, so the layout shifts by it too
+  hasLeftSafeArea: boolean
+  hasRightSafeArea: boolean
 } = {
   left: 0,
   right: 0,
@@ -16,4 +19,6 @@ export const defaultLayoutSizes: {
   appBarPosition: null,
   appBarHeight: 0,
   footerHeight: 0,
+  hasLeftSafeArea: false,
+  hasRightSafeArea: false,
 }

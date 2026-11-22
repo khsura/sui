@@ -295,6 +295,7 @@ const classes = computed(() => {
     's_navigationDrawer--isMobile': isMobile.value,
     's_navigationDrawer--isMouseover': isMouseover.value,
     's_navigationDrawer--miniVariant': isMiniVariant.value,
+    's_navigationDrawer--permanent': isPermanentDesktopApp.value,
     's_navigationDrawer--customMiniVariant': Number(props.miniVariantWidth) !== 56,
     's_navigationDrawer--openOnHover': props.expandOnHover,
     's_navigationDrawer--right': isRight.value,
@@ -303,12 +304,14 @@ const classes = computed(() => {
   }
 })
 
-// The mobile drawer pads the side it opens from by that side's safe-area inset, and widens by it so its items
-// keep their usual width (the inset is 0px without a safe area).
+// The mobile drawer and a permanent desktop one (iPhone landscape) pad the side they sit on by that side's
+// safe-area inset, and widen by it so their items keep their usual width (the inset is 0px without a safe area).
+const hasSideSafeArea = computed(() => isMobile.value || isPermanentDesktopApp.value)
+
 const openWidth = computed(() => {
   const width = getNumericCssAttribute(computedWidth.value)
 
-  return isMobile.value ? getLengthWithSafeArea(width, isRight.value ? 'right' : 'left') : width
+  return hasSideSafeArea.value ? getLengthWithSafeArea(width, isRight.value ? 'right' : 'left') : width
 })
 
 // A desktop drawer that starts below a fixed app bar moves down by the notch padding that bar adds.
@@ -455,16 +458,27 @@ const appHorizontalShiftWidth = computed(() => {
 // each drawer owns only its own side, so a left and a right drawer can share one layout
 const layoutSide = computed(() => (isRight.value ? 'right' : 'left'))
 
+// the layout beside a permanent drawer shifts by the drawer's safe-area inset as well
+const setLayoutSide = (side: 'left' | 'right', shiftWidth: number, hasSafeArea: boolean) => {
+  layoutApp.value[side] = shiftWidth
+
+  if (side === 'right') {
+    layoutApp.value.hasRightSafeArea = hasSafeArea
+  } else {
+    layoutApp.value.hasLeftSafeArea = hasSafeArea
+  }
+}
+
 watch(
-  [layoutSide, appHorizontalShiftWidth],
-  ([side, shiftWidth], previousValues) => {
+  [layoutSide, appHorizontalShiftWidth, isPermanentDesktopApp],
+  ([side, shiftWidth, isPermanent], previousValues) => {
     const previousSide = previousValues?.[0]
 
     if (previousSide && previousSide !== side) {
-      layoutApp.value[previousSide] = 0
+      setLayoutSide(previousSide, 0, false)
     }
 
-    layoutApp.value[side] = shiftWidth
+    setLayoutSide(side, shiftWidth, isPermanent)
   },
   {
     immediate: true,
@@ -541,7 +555,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   unbindResizer()
   unbindEdgeSwipe()
-  layoutApp.value[layoutSide.value] = 0
+  setLayoutSide(layoutSide.value, 0, false)
 })
 </script>
 
@@ -678,6 +692,17 @@ $s_navigationDrawerOverlayTransitionAnimations: (
 
     &.s_navigationDrawer--bottom {
       padding-top: 0;
+    }
+  }
+
+  // a permanent desktop drawer in iPhone landscape clears the notch / Dynamic Island on the side it sits on
+  &--permanent {
+    &:not(.s_navigationDrawer--right) {
+      padding-left: s_safeAreaInset('left');
+    }
+
+    &.s_navigationDrawer--right {
+      padding-right: s_safeAreaInset('right');
     }
   }
 
