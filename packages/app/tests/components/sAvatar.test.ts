@@ -12,7 +12,7 @@ describe('SAvatar', () => {
     const wrapper = getSAvatar()
 
     expect(wrapper.classes('s_avatar')).toBe(true)
-    expect(wrapper.attributes('style') ?? '').not.toContain('--s_avatar--size')
+    expect(wrapper.attributes('style') ?? '').not.toContain('--s-avatar-size')
   })
 
   test('shows the image when it is set', () => {
@@ -122,7 +122,7 @@ describe('SAvatar', () => {
   test('can change the size with a number', () => {
     const wrapper = getSAvatar({ size: 64 })
 
-    expect(wrapper.attributes('style')).toContain('--s_avatar--size: 64px')
+    expect(wrapper.attributes('style')).toContain('--s-avatar-size: 64px')
   })
 
   test('can change the shape', () => {

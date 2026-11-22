@@ -63,7 +63,7 @@ const styleList = computed(() => {
   return getCleanSetObject({
     ...styleListColor.value,
     ...styleListBorder.value,
-    '--s_avatar--size': isPresetSize.value ? undefined : getNumericCssAttribute(sizeProps.size),
+    '--s-avatar-size': isPresetSize.value ? undefined : getNumericCssAttribute(sizeProps.size),
   })
 })
 
@@ -88,6 +88,7 @@ $s_avatar__fontRatio: 0.4 !default;
 $s_avatar__iconRatio: 0.6 !default;
 $s_avatar__fontWeight: 500 !default;
 $s_avatar__borderWidth: thin !default;
+
 // The gap, in px, between an avatar and the edge of a chip around it (unitless like $s_button--sizes).
 $s_avatar__chipInset: 4 !default;
 $s_avatar__listItemGap: calc($s_spacer * 4) !default;
@@ -95,30 +96,31 @@ $s_avatar__cardTitleGap: calc($s_spacer * 3) !default;
 
 .s_avatar {
   @include s_dark($fillBackground: false);
-  --s_avatar--size: #{map.get($s_avatar--sizes, 'default')};
+
+  --s-avatar-size: #{map.get($s_avatar--sizes, 'default')};
   position: relative;
   display: inline-flex;
   flex: none;
   align-items: center;
   justify-content: center;
-  width: var(--s_avatar--size);
-  height: var(--s_avatar--size);
+  width: var(--s-avatar-size);
+  height: var(--s-avatar-size);
   overflow: hidden;
-  font-size: calc(var(--s_avatar--size) * #{$s_avatar__fontRatio});
+  font-size: calc(var(--s-avatar-size) * #{$s_avatar__fontRatio});
   font-weight: $s_avatar__fontWeight;
   line-height: 1;
-  letter-spacing: normal;
+  vertical-align: middle;
   color: s_getAppColor('text');
   text-transform: uppercase;
+  letter-spacing: normal;
   white-space: nowrap;
-  vertical-align: middle;
   user-select: none;
   background-color: s_getAppColor('button');
   border-radius: 50%;
 
   @each $name, $size in $s_avatar--sizes {
     &--size__#{$name} {
-      --s_avatar--size: #{$size};
+      --s-avatar-size: #{$size};
     }
   }
 
@@ -151,7 +153,7 @@ $s_avatar__cardTitleGap: calc($s_spacer * 3) !default;
   .s_icon.s_avatar__icon {
     width: auto;
     height: auto;
-    font-size: calc(var(--s_avatar--size) * #{$s_avatar__iconRatio});
+    font-size: calc(var(--s-avatar-size) * #{$s_avatar__iconRatio});
     color: inherit;
   }
 }
@@ -166,14 +168,14 @@ $s_avatar__cardTitleGap: calc($s_spacer * 3) !default;
 }
 
 .s_chip .s_avatar {
-  --s_avatar--size: #{map.get($s_button--sizes, 'default') - 2 * $s_avatar__chipInset}px;
+  --s-avatar-size: #{map.get($s_button--sizes, 'default') - 2 * $s_avatar__chipInset}px;
   margin-right: $s_spacer;
   margin-left: calc(#{$s_avatar__chipInset}px - #{$s_spacer * 2});
 }
 
 @each $name, $size in $s_button--sizes {
   .s_chip--size__#{$name} .s_avatar {
-    --s_avatar--size: #{$size - 2 * $s_avatar__chipInset}px;
+    --s-avatar-size: #{$size - 2 * $s_avatar__chipInset}px;
   }
 }
 </style>

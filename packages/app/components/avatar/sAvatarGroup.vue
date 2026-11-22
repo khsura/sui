@@ -72,7 +72,7 @@ $s_avatarGroup__ringWidth: 2px !default;
   }
 
   > .s_avatar:not(:first-child) {
-    margin-left: calc(var(--s_avatar--size) * -#{$s_avatarGroup__overlapRatio});
+    margin-left: calc(var(--s-avatar-size) * -#{$s_avatarGroup__overlapRatio});
   }
 }
 </style>
