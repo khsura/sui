@@ -2,7 +2,7 @@
 
 exports[`STextarea > renders correctly 1`] = `
 <section
-  class="s_textarea"
+  class="s_textarea s_field s_field--details"
 >
   <!--v-if-->
   <textarea
@@ -11,11 +11,18 @@ exports[`STextarea > renders correctly 1`] = `
     id="textarea"
     rows="2"
   />
-  
-  <!-- eslint-disable vue/no-v-html -->
   <div
-    class="s_formInputError"
-  />
-  
+    class="s_textarea__details"
+  >
+    
+    <!-- eslint-disable vue/no-v-html -->
+    <div
+      aria-live="polite"
+      class="s_formInputError s_textarea__error"
+      id="textarea-error"
+    />
+    
+    <!--v-if-->
+  </div>
 </section>
 `;

@@ -1,5 +1,5 @@
 <template>
-  <div class="s_autocomplete">
+  <div class="s_autocomplete" :class="{ ...classListField, [`s_autocomplete--size__${size}`]: !!size }">
     <label v-if="label" v-show="!hideDetails" :for="inputId" class="s_autocomplete__label">{{ label }}</label>
     <div ref="activatorElement" class="s_autocomplete__inputField">
       <div class="s_autocomplete__inputFieldContent" :class="{ 's_autocomplete__inputFieldContent--focus': isFocused }">
@@ -55,15 +55,27 @@
             ref="inputElement"
             name="autocomplete"
             :autocomplete="autocomplete"
-            @keydown="onKeydown"
+            role="combobox"
+            aria-autocomplete="list"
+            :aria-expanded="isMenuOpen"
+            :aria-controls="listboxId"
+            :aria-activedescendant="isMenuOpen ? activeOptionId : undefined"
+            :aria-label="label && !hideDetails ? undefined : (ariaLabel ?? label ?? placeholder)"
+            @keydown="onComboboxKeydown"
             @keypress.enter="onEnter"
             @keydown.backspace="onBackspace"
             @focus="onFocus"
           />
-          <SButton v-if="!loading && clearable && !isEmpty(model)" @click="clear" variant="icon" size="small">
+          <SButton
+            v-if="!loading && clearable && !isEmpty(model)"
+            :aria-label="clearAriaLabel"
+            @click="clear"
+            variant="icon"
+            size="small"
+          >
             <SIcon icon="mdi-close"></SIcon>
           </SButton>
-          <SProgressCircular v-if="loading" :size="20" indeterminate></SProgressCircular>
+          <SProgressCircular v-if="loading" :size="20" :aria-label="loadingAriaLabel" indeterminate></SProgressCircular>
         </OnClickOutside>
       </div>
     </div>
@@ -77,26 +89,44 @@
           :style="contentStyles"
           :class="contentClasses"
         >
-          <SList :divided="divided" :dense="dense">
+          <SList
+            :id="listboxId"
+            role="listbox"
+            :aria-multiselectable="isMultiple || undefined"
+            :divided="divided"
+            :dense="dense"
+          >
             <SListItem
-              v-for="(item, id) in filteredItems"
-              :key="`${typeof item === 'string' ? item : item.value} - ${id}`"
+              v-for="(item, index) in filteredItems"
+              :id="getOptionId(index)"
+              :key="`${typeof item === 'string' ? item : item.value} - ${index}`"
+              role="option"
+              :aria-selected="getIsSelected(item)"
+              :aria-disabled="getSelectItem(item).disabled || undefined"
+              :class="{ 's_autocomplete__listItem--active': index === activeIndex }"
               :link="true"
               :disabled="getSelectItem(item).disabled"
               @click="onSelectItem(item)"
             >
-              <SListItemIcon v-if="isMultiple" class="s_autocomplete__checkboxIcon">
+              <!-- inert: a picture of the state only; the option itself is the control (aria-selected) -->
+              <SListItemIcon v-if="isMultiple" class="s_autocomplete__checkboxIcon" inert>
                 <SCheckbox :model-value="getIsSelected(item)" hide-details></SCheckbox>
               </SListItemIcon>
               <SListItemContent>
-                {{ getItemText(item) }}
+                <span class="s_autocomplete__itemText" :title="getItemText(item) ?? undefined">{{
+                  getItemText(item)
+                }}</span>
               </SListItemContent>
               <span></span>
             </SListItem>
             <SListItem
               v-if="showCreateOption"
+              :id="getOptionId(filteredItems.length)"
+              role="option"
+              :aria-selected="false"
               :link="true"
               class="s_autocomplete__createOption"
+              :class="{ 's_autocomplete__listItem--active': filteredItems.length === activeIndex }"
               @click="onSelectUnlisted"
             >
               <SListItemIcon v-if="isMultiple" class="s_autocomplete__checkboxIcon">
@@ -112,11 +142,17 @@
   </div>
 </template>
 <script lang="ts" setup generic="T extends boolean = false">
-import { computed, useId, useTemplateRef, watch } from 'vue'
+import { computed, nextTick, useId, useTemplateRef, watch } from 'vue'
 import { OnClickOutside } from '@vueuse/components'
 import { getSelectItem } from '../helpers'
 import type { AutocompleteEmitEvents, AutocompleteModelType, AutocompleteModelTypeBase } from '../types/autocomplete'
-import { useAutocompleteService, useComponentDefaultsService } from '../services'
+import {
+  useAutocompleteService,
+  useComponentDefaultsService,
+  useFieldLayoutService,
+  useListboxNavigationService,
+} from '../services'
+import { keyboardKey } from '../constants'
 import type { PropsAutocomplete } from '../definitions'
 import { isEmpty } from '../lib/isEmpty'
 import SChip from './sChip.vue'
@@ -134,9 +170,17 @@ const rawProps = withDefaults(defineProps<PropsAutocomplete<T>>(), {
   debounce: 500,
   // The field draws its own menu; the browser's form-history list would open on top of it.
   autocomplete: 'off',
+  clearAriaLabel: 'Clear',
+  loadingAriaLabel: 'Loading',
 })
 
 const props = useComponentDefaultsService('SAutocomplete', rawProps)
+
+// SAutocomplete reserves no details line under its field (it runs no rules).
+const { classListField } = useFieldLayoutService(
+  computed(() => ({ hasLabel: !!props.label && !props.hideDetails, hasDetails: false })),
+)
+
 const model = defineModel<AutocompleteModelType<T> | null>()
 const emit = defineEmits<AutocompleteEmitEvents>()
 const activatorElement = useTemplateRef('activatorElement')
@@ -178,6 +222,82 @@ const {
 
 updateItemsPool(props.items ?? [])
 
+// The "Add …" option counts as one more option after the filtered items.
+const optionCount = computed(() => filteredItems.value.length + (showCreateOption.value ? 1 : 0))
+
+const { activeIndex, activeOptionId, listboxId, getOptionId, resetActiveIndex, moveActive } =
+  useListboxNavigationService({
+    idPrefix: inputId,
+    getOptionCount: () => optionCount.value,
+    getIsOptionDisabled: (index) => {
+      const item = filteredItems.value[index]
+
+      return item === undefined ? false : !!getSelectItem(item).disabled
+    },
+  })
+
+const listNavigationKeys: Record<string, () => void> = {
+  [keyboardKey.arrowDown]: () => moveActive(1),
+  [keyboardKey.arrowUp]: () => moveActive(-1),
+}
+
+const selectActiveOption = () => {
+  const item = filteredItems.value[activeIndex.value]
+
+  if (item !== undefined) {
+    void onSelectItem(item)
+  } else if (showCreateOption.value && activeIndex.value === filteredItems.value.length) {
+    void onSelectUnlisted()
+  }
+}
+
+// Arrow keys open the list and move the highlighted option; Enter picks it; Escape closes the list.
+const onComboboxKeydown = (event: KeyboardEvent) => {
+  const navigate = listNavigationKeys[event.key]
+
+  if (navigate) {
+    event.preventDefault()
+
+    if (!isMenuOpen.value) {
+      isMenuOpen.value = true
+    }
+
+    navigate()
+
+    return
+  }
+
+  if (event.key === keyboardKey.enter && isMenuOpen.value && activeIndex.value >= 0) {
+    // preventDefault also stops the keypress that would add the typed text
+    event.preventDefault()
+    selectActiveOption()
+
+    return
+  }
+
+  if (event.key === keyboardKey.escape && isMenuOpen.value) {
+    // stop here, so an SDialog around the field stays open
+    event.preventDefault()
+    event.stopPropagation()
+    isMenuOpen.value = false
+
+    return
+  }
+
+  onKeydown(event)
+}
+
+// A new query or a closed list starts the highlight over.
+watch([queryText, isMenuOpen], () => {
+  resetActiveIndex()
+})
+
+// Keep the highlighted option visible while the arrow keys move through a long list.
+watch(activeIndex, async (index) => {
+  await nextTick()
+  inputElement.value?.ownerDocument.getElementById(getOptionId(index))?.scrollIntoView?.({ block: 'nearest' })
+})
+
 // Watch for external changes to modelValue
 watch(
   isMultiple,
@@ -203,8 +323,27 @@ watch(
 </script>
 
 <style lang="scss">
+// The SInput metrics: a 16px font at line-height 1.1, 8px vertical padding and a 1px border.
+$s_autocomplete__fontSize: 16px;
+$s_autocomplete__fieldHeight: calc(#{$s_autocomplete__fontSize} * 1.1 + #{$s_spacer * 4} + 2px);
+
+// The SInput size presets. None goes below 16px, a smaller one makes iOS zoom in on focus.
+$s_autocomplete--fontSizes: (
+  'mini': 1rem,
+  'small': 1rem,
+  'default': 1rem,
+  'large': 1.25rem,
+  'extra': 1.5rem,
+);
+
 .s_autocomplete {
   position: relative;
+
+  @each $key, $size in $s_autocomplete--fontSizes {
+    &--size__#{$key} .s_autocomplete__input {
+      font-size: $size;
+    }
+  }
 
   // The label SSelect draws (`.s_select__label`), so an autocomplete beside a
   // select or an input reads as the same kind of field.
@@ -226,10 +365,10 @@ watch(
     width: 100%;
     max-width: 100%;
 
-    // As tall as SSelect's activator (the default button size, 36px), so an
+    // As tall as an SInput field, with the text inset by the same 16px, so an
     // autocomplete in a row of selects and inputs lines up with them.
-    min-height: calc($s_spacer * 9);
-    padding: $s_spacer;
+    min-height: $s_autocomplete__fieldHeight;
+    padding: $s_spacer calc($s_spacer * 2) $s_spacer calc($s_spacer * 4);
     font-family: $s_inputFontFamily;
     line-height: 1.1;
     background-color: s_getAppColor('card');
@@ -274,7 +413,7 @@ watch(
     width: 100%;
     min-width: 100px;
     height: 100%;
-    font-size: 1rem;
+    font-size: $s_autocomplete__fontSize;
     color: s_getAppColor('card', true);
     outline: none;
     background-color: transparent;
@@ -289,6 +428,18 @@ watch(
     // width: 100%;
     max-height: 80vh;
     overflow-y: auto;
+  }
+
+  // A long option stays on one line and ends in an ellipsis; its `title` shows the full text.
+  &__itemText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  // The option the arrow keys highlight (focus itself stays in the input)
+  &__listItem--active {
+    @include s_focusRing(-2px);
   }
 
   &__selectedItemCloseIcon {

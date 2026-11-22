@@ -78,4 +78,5 @@ None.
 - Unlike `SMenu`/`SDialog`, the activator slot passes no `on`/`attrs` — just put the element in `#activator`.
 - Always set `location`; without it the tooltip covers its activator.
 - The activator wrapper is a block `<div>`; wrap inline text if layout matters.
+- Long text wraps at 320px (less on narrow screens), and the tooltip flips or shifts to stay 8px inside the viewport.
 - The app must be wrapped in `<SApp>` (tooltips teleport into its overlay container).

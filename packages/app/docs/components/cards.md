@@ -23,7 +23,7 @@ Root card container.
 | `borderRadius` | `'tile' \| 'rounded' \| number \| string` | `undefined` | Border radius override |
 | `tag` | `string` | `'div'` | Root HTML element (ignored when `href`/`to` is set) |
 | `href` | `string` | `undefined` | Render as `<a>` |
-| `to` | `RouteLocationRaw \| null` | `undefined` | Render as `router-link` |
+| `to` | `LinkLocation \| null` | `undefined` | Render as `router-link` (plain `<a href>` without vue-router) |
 | `target` | `'_blank' \| '_self' \| '_parent' \| '_top'` | `undefined` | Link target |
 | `rel` | `string` | `undefined` | Link rel |
 | `width` / `height` | `string \| number` | `undefined` | Dimensions |
@@ -76,6 +76,11 @@ Each takes only `tag` (default `'div'`) and a `default` slot.
   <SCardTitle>User Profile</SCardTitle>
   <SCardSubtitle>Last active 2 hours ago</SCardSubtitle>
   <SCardText>Profile details...</SCardText>
+</SCard>
+
+<!-- Centred title: s_textAlign__* classes also set justify-content on the flex title -->
+<SCard>
+  <SCardTitle class="s_textAlign__center">Sign in</SCardTitle>
 </SCard>
 
 <!-- Card with image -->

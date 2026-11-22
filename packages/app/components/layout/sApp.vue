@@ -18,14 +18,37 @@ const { styles } = useAppService(props)
 
 <style lang="scss">
 .s_app {
+  // The iPhone notch / home-indicator insets (0px without `viewport-fit=cover` or a safe area). The fixed app
+  // bar, bottom navigation, mobile drawer, fullscreen dialog and snackbar pad by these; override them on a
+  // element to simulate a device in a story or test. The fallback keeps its unit: a unitless 0 is invalid in calc().
+  /* stylelint-disable length-zero-no-unit */
+  --s-safe-area-top: env(safe-area-inset-top, 0px);
+  --s-safe-area-right: env(safe-area-inset-right, 0px);
+  --s-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --s-safe-area-left: env(safe-area-inset-left, 0px);
+  /* stylelint-enable length-zero-no-unit */
   display: flex;
+  flex: 1 1 auto;
   flex-flow: column;
-  flex-wrap: 1 1 auto;
+
+  // fill the viewport, so a short page keeps the app background (and a layout's drawer) down to the bottom
+  min-height: 100vh;
   font-family: $s_fontFamily;
   line-height: $s_lineHeight;
   color: s_getAppColor('text');
   background-color: s_getAppColor('background');
   fill: s_getAppColor('text');
+
+  // the dynamic viewport height leaves out the mobile browser bars that 100vh counts
+  @supports (min-height: 100dvh) {
+    min-height: 100dvh;
+  }
+
+  // `height: 100%` of a min-height parent resolves to auto, so a direct child asking to fill SApp grows into
+  // its flex column instead: content centred inside that child is centred in the viewport.
+  > .s_height--fill {
+    flex: 1 1 auto;
+  }
 
   ::-ms-clear,
   ::-ms-reveal {
@@ -50,9 +73,10 @@ const { styles } = useAppService(props)
       fill: $textColorValue;
     }
 
+    // the preset's readable variant: 4.5:1 on the app background and cards in either theme
     .s_textColor__#{$colorName}:not(.s_disabled) {
-      color: $colorValue;
-      fill: $colorValue;
+      color: var(--s-color-#{$colorName}--readable, #{$colorValue});
+      fill: var(--s-color-#{$colorName}--readable, #{$colorValue});
     }
   }
 

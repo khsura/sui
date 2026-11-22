@@ -18,7 +18,7 @@ Shared form-input props (`SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioG
 | `rules` | `FormInputModelValueRule[]` | `undefined` | `(value) => true \| string` — a string is the error message |
 | `id` | `string` | auto/`undefined` | Element id |
 | `disabled` / `readonly` | `boolean \| null` | `undefined` | Disabled inputs show no errors |
-| `hideDetails` | `boolean` | `undefined` | Hide label + error area |
+| `hideDetails` | `boolean` | `undefined` | Hide the label above the field + error area (`SCheckbox` / `SRadio` keep their own label) |
 | `hideError` | `boolean` | `undefined` | Hide only the error message |
 | `error` / `dirty` | `boolean` | `undefined` | Typed; `dirty` only syncs the internal flag — neither triggers validation |
 
@@ -33,7 +33,9 @@ Shared events: `update:error` (`boolean`), `update:errors` (`string[]`), `update
 
 ## SForm
 
-Renders a native `<form>` and collects child inputs.
+Renders a native `<form novalidate>` and collects child inputs. Native browser validation is off, so `type="email"` / `required` never show the browser bubble over the SUI error; validate with `rules`. `:novalidate="false"` turns it back on. Before 1.20.0 `SForm` did not add `novalidate`; add it yourself there.
+
+Every validated field reserves one error line under itself. For an action row (field + button: search bar, filter bar) use `SFormRow` (below), never a plain flex `<div>`, where the button lines up with the label. Field labels are inset 16px to line up with the value text inside the field.
 
 | Model | Type | Description |
 |-------|------|-------------|
@@ -77,6 +79,42 @@ Exposed: `validate(): boolean` — **returns `true` when there ARE errors**; `re
 
 ---
 
+## SFormRow
+
+*Since 1.20.0.* A wrapping row of text fields (`SInput`, `SSelect`, `SDatePickerInput`, `SAutocomplete`, `STextarea`) and their buttons. Each button's top and bottom match the field box: with or without a label, while an error shows, and when the row wraps at 375px. No props; slot `default`.
+
+<!-- generated:api:start SFormRow -->
+<!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
+
+**SFormRow props**
+
+None.
+
+**SFormRow slots**
+
+| Slot | Slot props | Description |
+| --- | --- | --- |
+| `default` | `any` | The fields and buttons of the row. |
+
+**SFormRow events**
+
+None.
+
+<!-- generated:api:end SFormRow -->
+
+```vue
+<SFormRow>
+  <SDatePickerInput v-model="from" label="From" />
+  <SSelect v-model="status" label="Status" :items="statuses" />
+  <SButton color="primary" @click="apply">Apply</SButton>
+</SFormRow>
+```
+
+- `SInput` / `STextarea` / `SAutocomplete` (and `grow` `SSelect`, `block` `SDatePickerInput`) share the free width; `SSelect` / `SDatePickerInput` otherwise keep their own width; buttons keep theirs; the row wraps when they don't fit. Each field keeps its error line; buttons reserve the same space, so wrapped lines and the next row keep their gap.
+- Don't mix a `simple` field into it (its label is shorter). Before 1.20.0 there is no `SFormRow`: put `hide-details` on the field in a flex row.
+
+---
+
 ## SInput
 
 <!-- generated:api:start SInput -->
@@ -88,6 +126,7 @@ Exposed: `validate(): boolean` — **returns `true` when there ARE errors**; `re
 | --- | --- | --- | --- | --- |
 | `allowDecimal` | `boolean \| null` | — | no | — |
 | `appendOuter` | `string \| null` | — | no | — |
+| `ariaLabel` | `string` | — | no | — |
 | `ariaLabelledby` | `string` | — | no | — |
 | `autocapitalize` | `"on" \| "off" \| null` | — | no | `off`, `on` |
 | `autocomplete` | `string \| null` | — | no | — |
@@ -171,44 +210,46 @@ Model: `v-model` — `string | number | null`. Slots: `suffix`, `appendOuter` (n
 
 ## STextarea
 
-Props: `label`, `placeholder`, `rows` (default `2`), `cols` (default `20`), **`autogrow`** (not `autoGrow`), `resize` (default off → `resize: none`), `simple`, `dense`, `tile`, `minlength`, `maxlength`, `name`, `autocomplete`, `autocapitalize`, `autofocus`, `spellcheck`, `ariaLabelledby`, `inputBackground`, `placeholderBackground`, `size` + shared. Model: `string` (`null` → `''`). Events: `change`, `input`, `blur`, `keydown` + shared. No slots. Exposed: `validate()`.
+Props: `label`, `placeholder`, `rows` (default `2`), `cols` (default `20`), **`autogrow`** (not `autoGrow`), `resize` (default off → `resize: none`), **`counter`** (character count at the right of the error line; `12 / 200` with `maxlength`), `simple`, `dense`, `tile`, `minlength`, `maxlength`, `name`, `autocomplete`, `autocapitalize`, `autofocus`, `spellcheck`, `ariaLabelledby`, `inputBackground`, `placeholderBackground`, `size` + shared. Model: `string` (`null` → `''`). Events: `change`, `input`, `blur`, `keydown` + shared. No slots. Exposed: `validate()`.
 
 <!-- generated:api:start STextarea -->
 <!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
 
 **STextarea props**
 
-| Prop | Type | Default | Required | Values |
-| --- | --- | --- | --- | --- |
-| `ariaLabelledby` | `string` | — | no | — |
-| `autocapitalize` | `"on" \| "off"` | — | no | `off`, `on` |
-| `autocomplete` | `string` | — | no | — |
-| `autofocus` | `boolean` | — | no | — |
-| `autogrow` | `boolean` | — | no | — |
-| `cols` | `number` | `20` | no | — |
-| `dense` | `boolean` | — | no | — |
-| `dirty` | `boolean` | — | no | — |
-| `disabled` | `boolean \| null` | — | no | — |
-| `error` | `boolean` | — | no | — |
-| `hideDetails` | `boolean` | — | no | — |
-| `hideError` | `boolean` | — | no | — |
-| `id` | `string` | — | no | — |
-| `inputBackground` | `string` | — | no | — |
-| `label` | `string` | — | no | — |
-| `maxlength` | `string \| number` | — | no | — |
-| `minlength` | `string \| number` | — | no | — |
-| `modelValue` | `string` | `""` | no | — |
-| `name` | `string` | — | no | — |
-| `placeholder` | `string` | — | no | — |
-| `placeholderBackground` | `string` | — | no | — |
-| `readonly` | `boolean \| null` | — | no | — |
-| `resize` | `boolean` | — | no | — |
-| `rows` | `number` | `2` | no | — |
-| `rules` | `FormInputModelValueRule[]` | — | no | — |
-| `simple` | `boolean` | — | no | — |
-| `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` |
-| `spellcheck` | `boolean` | — | no | — |
-| `tile` | `boolean` | — | no | — |
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `ariaLabel` | `string` | — | no | — | — |
+| `ariaLabelledby` | `string` | — | no | — | — |
+| `autocapitalize` | `"on" \| "off"` | — | no | `off`, `on` | — |
+| `autocomplete` | `string` | — | no | — | — |
+| `autofocus` | `boolean` | — | no | — | — |
+| `autogrow` | `boolean` | — | no | — | — |
+| `cols` | `number` | `20` | no | — | — |
+| `counter` | `boolean` | — | no | — | Shows the character count (`12 / 200` with `maxlength`) at the right of the error line, right under the field. |
+| `dense` | `boolean` | — | no | — | — |
+| `dirty` | `boolean` | — | no | — | — |
+| `disabled` | `boolean \| null` | — | no | — | — |
+| `error` | `boolean` | — | no | — | — |
+| `hideDetails` | `boolean` | — | no | — | — |
+| `hideError` | `boolean` | — | no | — | — |
+| `id` | `string` | — | no | — | — |
+| `inputBackground` | `string` | — | no | — | — |
+| `label` | `string` | — | no | — | — |
+| `maxlength` | `string \| number` | — | no | — | — |
+| `minlength` | `string \| number` | — | no | — | — |
+| `modelValue` | `string` | `""` | no | — | — |
+| `name` | `string` | — | no | — | — |
+| `placeholder` | `string` | — | no | — | — |
+| `placeholderBackground` | `string` | — | no | — | — |
+| `readonly` | `boolean \| null` | — | no | — | — |
+| `resize` | `boolean` | — | no | — | — |
+| `rows` | `number` | `2` | no | — | — |
+| `rules` | `FormInputModelValueRule[]` | — | no | — | — |
+| `simple` | `boolean` | — | no | — | — |
+| `size` | `SizePropertyType` | — | no | `default`, `extra`, `large`, `mini`, `small` | — |
+| `spellcheck` | `boolean` | — | no | — | — |
+| `tile` | `boolean` | — | no | — | — |
 
 **STextarea slots**
 
@@ -241,49 +282,51 @@ Single-value dropdown (no `multiple`, `chips`, `clearable` or `placeholder` — 
 
 **SSelect props**
 
-| Prop | Type | Default | Required | Values |
-| --- | --- | --- | --- | --- |
-| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
-| `closeOnClick` | `boolean` | — | no | — |
-| `closeOnContentClick` | `boolean` | — | no | — |
-| `closeOnScroll` | `boolean` | — | no | — |
-| `color` | `string` | — | no | — |
-| `colorThreshold` | `number` | — | no | — |
-| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — |
-| `contentStyle` | `StyleValue` | — | no | — |
-| `dense` | `boolean` | — | no | — |
-| `dirty` | `boolean` | — | no | — |
-| `disabled` | `boolean \| null` | — | no | — |
-| `divided` | `boolean` | — | no | — |
-| `error` | `boolean` | — | no | — |
-| `grow` | `boolean` | — | no | — |
-| `height` | `string \| number \| null` | — | no | — |
-| `hideDetails` | `boolean` | — | no | — |
-| `hideError` | `boolean` | — | no | — |
-| `id` | `string` | — | no | — |
-| `items` | `(string \| SelectItem \| null \| undefined)[]` | — | no | — |
-| `label` | `string \| null` | — | no | — |
-| `location` | `LocationRaw` | — | no | — |
-| `maxHeight` | `string \| number \| null` | — | no | — |
-| `maxWidth` | `string \| number \| null` | — | no | — |
-| `menu` | `boolean` | — | no | — |
-| `minHeight` | `string \| number \| null` | — | no | — |
-| `minWidth` | `string \| number \| null` | — | no | — |
-| `modelValue` | `T \| null` | — | no | — |
-| `name` | `string \| null` | — | no | — |
-| `offsetX` | `number \| null` | — | no | — |
-| `offsetY` | `number \| null` | — | no | — |
-| `outlined` | `boolean \| null` | — | no | — |
-| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` |
-| `preventCloseOnClick` | `boolean` | — | no | — |
-| `readonly` | `boolean \| null` | — | no | — |
-| `rules` | `FormInputModelValueRule[]` | — | no | — |
-| `screenPadding` | `number \| null` | — | no | — |
-| `text` | `boolean` | — | no | — |
-| `theme` | `AppThemeType` | — | no | `dark`, `light` |
-| `underlined` | `boolean \| null` | — | no | — |
-| `width` | `string \| number \| null` | — | no | — |
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — | — |
+| `ariaLabel` | `string \| null` | — | no | — | Accessible name when there is no visible `label` (otherwise the label names the field). |
+| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — | — |
+| `closeOnClick` | `boolean` | — | no | — | — |
+| `closeOnContentClick` | `boolean` | — | no | — | — |
+| `closeOnScroll` | `boolean` | — | no | — | — |
+| `color` | `string` | — | no | — | — |
+| `colorThreshold` | `number` | — | no | — | — |
+| `contentClass` | `string \| string[] \| Record<string, boolean>` | — | no | — | — |
+| `contentStyle` | `StyleValue` | — | no | — | — |
+| `dense` | `boolean` | — | no | — | — |
+| `dirty` | `boolean` | — | no | — | — |
+| `disabled` | `boolean \| null` | — | no | — | — |
+| `divided` | `boolean` | — | no | — | — |
+| `error` | `boolean` | — | no | — | — |
+| `grow` | `boolean` | — | no | — | — |
+| `height` | `string \| number \| null` | — | no | — | — |
+| `hideDetails` | `boolean` | — | no | — | — |
+| `hideError` | `boolean` | — | no | — | — |
+| `id` | `string` | — | no | — | — |
+| `items` | `(string \| SelectItem \| null \| undefined)[]` | — | no | — | — |
+| `label` | `string \| null` | — | no | — | — |
+| `location` | `LocationRaw` | — | no | — | — |
+| `maxHeight` | `string \| number \| null` | — | no | — | — |
+| `maxWidth` | `string \| number \| null` | — | no | — | — |
+| `menu` | `boolean` | — | no | — | — |
+| `minHeight` | `string \| number \| null` | — | no | — | — |
+| `minWidth` | `string \| number \| null` | — | no | — | — |
+| `modelValue` | `T \| null` | — | no | — | — |
+| `name` | `string \| null` | — | no | — | — |
+| `offsetX` | `number \| null` | — | no | — | — |
+| `offsetY` | `number \| null` | — | no | — | — |
+| `outlined` | `boolean \| null` | `true` | no | — | — |
+| `placeholder` | `string \| null` | — | no | — | Text shown in the field while nothing is selected. The label is never repeated inside the field. |
+| `position` | `Position` | — | no | `absolute`, `fixed`, `relative`, `static`, `sticky` | — |
+| `preventCloseOnClick` | `boolean` | — | no | — | — |
+| `readonly` | `boolean \| null` | — | no | — | — |
+| `rules` | `FormInputModelValueRule[]` | — | no | — | — |
+| `screenPadding` | `number \| null` | — | no | — | — |
+| `text` | `boolean` | — | no | — | — |
+| `theme` | `AppThemeType` | — | no | `dark`, `light` | — |
+| `underlined` | `boolean \| null` | — | no | — | — |
+| `width` | `string \| number \| null` | — | no | — | — |
 
 **SSelect slots**
 
@@ -308,11 +351,14 @@ Single-value dropdown (no `multiple`, `chips`, `clearable` or `placeholder` — 
 **SSelect notes**
 
 - `items`: Options
-- `label`: Label above, **and** the text shown while nothing is selected
+- `label`: Label above the field (never repeated inside it)
+- `placeholder`: Text shown in the field while nothing is selected
+- Width: as wide as the longest option or placeholder, like a native select; a long selection is clipped with an ellipsis; a long option in the list stays on one line with an ellipsis and its full text in `title`
 - `name`: Name of a hidden native `<select>`
 - `dense` / `grow` / `text` / `divided`: Compact / full width / text list style / list dividers
 - `color`: List color
-- `outlined` / `underlined` / `borderRadius`: Activator border
+- `outlined`: default **`true`** (matches `SInput`); `:outlined="false"` for the borderless, shadowed look
+- `underlined` / `borderRadius`: Activator border
 - `location`, `offsetX`, `offsetY`, …: Dropdown positioning
 
 ```ts
@@ -323,7 +369,7 @@ Model: `v-model` — `string | number | null`; `v-model:menu` — open state. Sl
 
 ## SCheckbox
 
-Boolean only. Props: `label`, `color` (preset name only), `size` (`'default' | 'large'`), `block`, `bordered` + shared. Model: `boolean`. Events: `change` (`boolean`) + shared. No `value`, `indeterminate` or array/group model.
+Boolean only. Props: `label`, `color` (preset name only), `size` (`'default' | 'large'`), `block`, `bordered` + shared. Model: `boolean`. Events: `change` (`boolean`) + shared. No `value`, `indeterminate` or array/group model. The error line sits under the box; `hideDetails` removes only the error area, never the label.
 
 <!-- generated:api:start SCheckbox -->
 <!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->
@@ -367,7 +413,7 @@ None.
 
 ## SRadioGroup / SRadio
 
-Options are **`SRadio` children** — there is no `items` prop.
+Options are **`SRadio` children** — there is no `items` prop. Long option labels wrap; the group's `hideDetails` removes only its error area (labels stay). Options have no background (before 1.20.0 a group with no value showed grey chips behind its options).
 
 `SRadioGroup` props: `name`, `column`, `grow`, `color` (preset name), `mandatory`, `outlined` / `underlined` / `borderRadius` + shared. Model: `string | number | boolean`. Events: `change` + shared.
 
@@ -423,20 +469,21 @@ Options are **`SRadio` children** — there is no `items` prop.
 
 **SRadio props**
 
-| Prop | Type | Default | Required | Values |
-| --- | --- | --- | --- | --- |
-| `activeClass` | `string \| null` | — | no | — |
-| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — |
-| `disabled` | `boolean \| null` | — | no | — |
-| `id` | `string` | — | no | — |
-| `label` | `string \| null` | — | no | — |
-| `name` | `string \| null` | — | no | — |
-| `outlined` | `boolean \| null` | — | no | — |
-| `readonly` | `boolean \| null` | — | no | — |
-| `selected` | `boolean` | — | no | — |
-| `type` | `ButtonTypeType` | — | no | `button`, `reset`, `submit` |
-| `underlined` | `boolean \| null` | — | no | — |
-| `value` | `string \| number \| boolean` | — | no | — |
+| Prop | Type | Default | Required | Values | Description |
+| --- | --- | --- | --- | --- | --- |
+| `activeClass` | `string \| null` | — | no | — | — |
+| `ariaLabel` | `string \| null` | — | no | — | Accessible name for a radio without a visible `label` (for example an icon-only option). |
+| `borderRadius` | `` number \| "tile" \| "rounded" \| `${number}em` \| `${number}px` \| `${number}rem` \| `${number}%` \| `${number}vh` \| `${number}vw` \| null `` | — | no | — | — |
+| `disabled` | `boolean \| null` | — | no | — | — |
+| `id` | `string` | — | no | — | — |
+| `label` | `string \| null` | — | no | — | — |
+| `name` | `string \| null` | — | no | — | — |
+| `outlined` | `boolean \| null` | — | no | — | — |
+| `readonly` | `boolean \| null` | — | no | — | — |
+| `selected` | `boolean` | — | no | — | — |
+| `type` | `ButtonTypeType` | — | no | `button`, `reset`, `submit` | — |
+| `underlined` | `boolean \| null` | — | no | — | — |
+| `value` | `string \| number \| boolean` | — | no | — | — |
 
 **SRadio slots**
 
@@ -573,3 +620,4 @@ const submit = () => {
 
 - `SRadioGroup` without `mandatory`: clicking the selected radio clears the value.
 - `SSelect` validates when its menu opens, so a required error can appear on first open.
+- `SSelect` / `SAutocomplete` / `SDatePickerInput` dropdowns flip or shift to stay 8px inside the viewport — no wrapper, padding or `location` workaround needed for fields at the bottom or right edge.

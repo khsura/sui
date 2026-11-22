@@ -1,4 +1,4 @@
-import type { Meta } from '@storybook/vue3-vite'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { action } from 'storybook/actions'
 import { expect } from 'storybook/test'
 import type { ComponentPublicInstance } from 'vue'
@@ -16,7 +16,9 @@ const input = {
 
 export default input
 
-export const Input = createStoryObj<Meta>({
+export const Input = {
+  // A plain object literal, so Storybook's static indexer reads the `visual` tag (docs/visual-testing.md).
+  tags: ['visual'],
   args: argsInput,
   render: (args) =>
     defineComponent({
@@ -35,7 +37,7 @@ export const Input = createStoryObj<Meta>({
         <SInput v-bind="args" v-model="modelValue"></SInput>
       `,
     }),
-})
+} satisfies StoryObj<Meta>
 
 const renderNumberInput = (args: Record<string, unknown>) =>
   defineComponent({
@@ -138,7 +140,8 @@ export const DecimalInput = createStoryObj<Meta>({
   },
 })
 
-export const Inputs = createStoryObj<Meta>({
+export const Inputs = {
+  tags: ['visual'],
   args: {
     inputBackground: '',
     hideDetails: false,
@@ -390,4 +393,4 @@ export const Inputs = createStoryObj<Meta>({
         </SCard>
       `,
     }),
-})
+} satisfies StoryObj<Meta>

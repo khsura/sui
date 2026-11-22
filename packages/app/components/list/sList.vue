@@ -53,6 +53,9 @@ ol.s_list,
   padding: $s_listPadding;
   margin: 0;
 
+  // tag="ul" / "ol" must not bring the browser's list markers; list-style is inherited, so <li> children lose them too.
+  list-style: none;
+
   &--appMiniVariant {
     padding: $s_listPadding 0;
   }

@@ -1,4 +1,7 @@
 <template>
+  <Transition name="s_transition--appear">
+    <div v-if="isLayoutScrim" class="s_navigationDrawer__scrim"></div>
+  </Transition>
   <SOverlay :disabled="!isOverlay" :scrim="isOverlay" :value="model" :transition="transitionName">
     <component
       :is="elementTag"
@@ -12,7 +15,9 @@
       @mouseleave="touchless ? null : mouseleave"
     >
       <slot name="prepend" class="s_navigationDrawer__prepend"></slot>
-      <div class="s_navigationDrawer__content"><slot :on="on"></slot></div>
+      <div ref="drawerContentElement" class="s_navigationDrawer__content" :tabindex="scrollableTabindex">
+        <slot :on="on"></slot>
+      </div>
       <slot name="append" class="s_navigationDrawer__append"></slot>
       <div
         v-if="isResizable"
@@ -30,7 +35,18 @@
   </SOverlay>
 </template>
 <script setup lang="ts">
-import { type Ref, computed, ref, getCurrentInstance, watch, onBeforeMount, onBeforeUnmount, provide } from 'vue'
+import {
+  type Ref,
+  computed,
+  ref,
+  getCurrentInstance,
+  watch,
+  onBeforeMount,
+  onBeforeUnmount,
+  onMounted,
+  provide,
+  useTemplateRef,
+} from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import SOverlay from '@/app/components/sOverlay.vue'
 import { ProviderPropsName } from '@/app/configs'
@@ -39,7 +55,8 @@ import {
   navigationDrawerEdgeSwipeZone,
   navigationDrawerSwipeMinDistance,
 } from '@/app/constants'
-import { getNumericCssAttribute } from '@/app/lib'
+import { getLengthWithSafeArea, getNumericCssAttribute } from '@/app/lib'
+import { getIsFixedPosition } from '@/app/repositories/positionRepository'
 import {
   useComponentDefaultsService,
   useBackgroundScrollService,
@@ -49,6 +66,7 @@ import {
   useLocationService,
   usePositionService,
   useResizeService,
+  useScrollableFocusService,
   useScrollableService,
   useTouchService,
   useNavigationDrawerService,
@@ -59,6 +77,9 @@ import type { PropsNavigationDrawer } from '@/app/definitions'
 
 const rawProps = defineProps<PropsNavigationDrawer>()
 const props = useComponentDefaultsService('SNavigationDrawer', rawProps)
+const drawerContentElement = useTemplateRef<HTMLElement>('drawerContentElement')
+// A drawer whose items overflow becomes a Tab stop, so its content can be scrolled from the keyboard.
+const { scrollableTabindex } = useScrollableFocusService(drawerContentElement)
 const { isBottom, isRight, computedLocation } = useLocationService(props)
 
 const emit = defineEmits<{
@@ -137,14 +158,17 @@ const { touchstart, touchend, touchmove } = useTouchService({
   right: swipeRight,
 })
 
-const { bindResizer, unbindResizer } = useResizeService(() => {
-  // a persistent drawer keeps the user's open/closed choice; the isMobile watcher still closes it on mobile
+// Open beside the content on desktop and closed on mobile, on mount and on every window resize.
+// A persistent drawer keeps the user's open/closed choice; the isMobile watcher still closes it on mobile.
+const openForDisplay = () => {
   if (props.persistent) {
     return
   }
 
   model.value = !isMobile.value
-})
+}
+
+const { bindResizer, unbindResizer } = useResizeService(openForDisplay)
 
 provide(ProviderPropsName.navigationDrawerProps, props)
 
@@ -173,6 +197,12 @@ const isOverlay = computed((): boolean => {
   }
 
   return !props.hideOverlay && isMobile.value
+})
+
+// A mobile drawer in a named layout stays inside that layout (position: absolute), so it dims only the layout,
+// with a scrim beside it. A tap there is an outside click, which closes the drawer.
+const isLayoutScrim = computed((): boolean => {
+  return !isApp.value && !props.hideOverlay && isMobile.value && !isBottom.value && Boolean(model.value)
 })
 
 const isMiniVariant = computed(() => {
@@ -273,21 +303,41 @@ const classes = computed(() => {
   }
 })
 
+// The mobile drawer pads the side it opens from by that side's safe-area inset, and widens by it so its items
+// keep their usual width (the inset is 0px without a safe area).
+const openWidth = computed(() => {
+  const width = getNumericCssAttribute(computedWidth.value)
+
+  return isMobile.value ? getLengthWithSafeArea(width, isRight.value ? 'right' : 'left') : width
+})
+
+// A desktop drawer that starts below a fixed app bar moves down by the notch padding that bar adds.
+const isBelowFixedAppBar = computed(() => {
+  return (
+    isDesktopApp.value &&
+    !appHorizontalShiftWidth.value &&
+    layoutApp.value.appBarHeight > 0 &&
+    getIsFixedPosition({ position: layoutApp.value.appBarPosition })
+  )
+})
+
 const styles = computed((): object => {
   const translate = isBottom.value ? 'translateY' : 'translateX'
+  const subtractHeight = getNumericCssAttribute(computedSubtractHeight.value)
+  const top = getNumericCssAttribute(computedTop.value)
 
   const maxHeight = isBottom.value
     ? '50vh'
     : computedSubtractHeight.value != null
-      ? `calc(100% - ${getNumericCssAttribute(computedSubtractHeight.value)})`
+      ? `calc(100% - ${isBelowFixedAppBar.value ? getLengthWithSafeArea(subtractHeight, 'top') : subtractHeight})`
       : undefined
 
   return {
     height: elementHeight.value,
-    top: !isBottom.value ? getNumericCssAttribute(computedTop.value) : 'auto',
+    top: !isBottom.value ? (isBelowFixedAppBar.value ? getLengthWithSafeArea(top, 'top') : top) : 'auto',
     maxHeight,
     transform: `${translate}(${getNumericCssAttribute(computedTransform.value, '%')})`,
-    width: !model.value ? '0px' : isBottom.value ? null : getNumericCssAttribute(computedWidth.value),
+    width: !model.value ? '0px' : isBottom.value ? null : openWidth.value,
   }
 })
 
@@ -321,11 +371,11 @@ onClickOutside(
 
 watch(
   [model, isMobile, isPermanentDesktopApp],
-  async () => {
+  () => {
     if (isPermanentDesktopApp.value || !isMobile.value || !model.value) {
-      await enableBackgroundScroll()
+      enableBackgroundScroll()
     } else {
-      await disableBackgroundScroll()
+      disableBackgroundScroll()
     }
   },
   {
@@ -481,6 +531,13 @@ onBeforeMount(() => {
   watch(listensForEdgeSwipe, (listens) => (listens ? bindEdgeSwipe() : unbindEdgeSwipe()), { immediate: true })
 })
 
+// The docs promise a drawer that opens itself on desktop; without this it only did so after the first resize.
+onMounted(() => {
+  if (!isBottom.value) {
+    openForDisplay()
+  }
+})
+
 onBeforeUnmount(() => {
   unbindResizer()
   unbindEdgeSwipe()
@@ -539,6 +596,14 @@ $s_navigationDrawerOverlayTransitionAnimations: (
   }
 }
 
+.s_navigationDrawer__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  background-color: $s_color__black;
+  opacity: 0.5;
+}
+
 .s_navigationDrawer {
   @include s_layoutTransition();
   @include s_elevation(1);
@@ -557,6 +622,10 @@ $s_navigationDrawerOverlayTransitionAnimations: (
   .s_navigationDrawer__content {
     height: 100%;
     overflow: hidden auto;
+
+    &:focus-visible {
+      @include s_focusRing(-2px);
+    }
   }
 
   .s_navigationDrawer__image {
@@ -593,6 +662,23 @@ $s_navigationDrawerOverlayTransitionAnimations: (
 
   &--isMobile {
     z-index: 6;
+
+    // the mobile drawer covers the screen edge it opens from, so it clears the notch, the home indicator and
+    // that side's landscape inset (0px without a safe area)
+    padding-top: s_safeAreaInset('top');
+    padding-bottom: s_safeAreaInset('bottom');
+
+    &:not(.s_navigationDrawer--right, .s_navigationDrawer--bottom) {
+      padding-left: s_safeAreaInset('left');
+    }
+
+    &.s_navigationDrawer--right {
+      padding-right: s_safeAreaInset('right');
+    }
+
+    &.s_navigationDrawer--bottom {
+      padding-top: 0;
+    }
   }
 
   &--miniVariant {

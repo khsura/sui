@@ -178,7 +178,7 @@ exports[`buildApiMetadata > matches the snapshot for SButton, SInput, SDialog, S
         "description": "",
         "name": "to",
         "required": false,
-        "type": "string | it | et | null | undefined",
+        "type": "LinkLocation | null | undefined",
       },
       {
         "description": "",
@@ -302,6 +302,12 @@ exports[`buildApiMetadata > matches the snapshot for SButton, SInput, SDialog, S
         "name": "appendOuter",
         "required": false,
         "type": "string | null | undefined",
+      },
+      {
+        "description": "",
+        "name": "ariaLabel",
+        "required": false,
+        "type": "string | undefined",
       },
       {
         "description": "",
@@ -912,6 +918,12 @@ exports[`buildApiMetadata > matches the snapshot for SButton, SInput, SDialog, S
         "type": "boolean | undefined",
       },
       {
+        "description": "",
+        "name": "loadingText",
+        "required": false,
+        "type": "string | undefined",
+      },
+      {
         "default": "false",
         "description": "",
         "name": "multiSort",
@@ -1050,6 +1062,11 @@ exports[`buildApiMetadata > matches the snapshot for SButton, SInput, SDialog, S
       {
         "description": "Label of the items-per-page selector in the pagination.",
         "name": "itemsPerPageLabel",
+        "type": "any",
+      },
+      {
+        "description": "Shown instead of the rows while \`loading\` is set and \`items\` is still empty.",
+        "name": "loadingData",
         "type": "any",
       },
       {

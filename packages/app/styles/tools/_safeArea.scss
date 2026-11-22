@@ -1,0 +1,8 @@
+// The iPhone notch / home-indicator inset on one side. SApp sets `--s-safe-area-<side>` from
+// `env(safe-area-inset-<side>)`, so a story or test can override it; outside SApp `env()` applies directly.
+// Without a safe area (desktop, Android, no `viewport-fit=cover`) it resolves to 0px.
+@function s_safeAreaInset($side) {
+  // a unitless 0 would be invalid wherever the inset ends up inside calc()
+  // stylelint-disable-next-line length-zero-no-unit
+  @return var(--s-safe-area-#{$side}, env(safe-area-inset-#{$side}, 0px));
+}

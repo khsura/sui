@@ -78,6 +78,15 @@ export const RULE_SNACKBAR_ACTION_CONTRAST = 'snackbar-action-contrast'
 export const RULE_BLOCK_BUTTONS_IN_ROW = 'block-buttons-in-row'
 export const RULE_CARD_TITLE_TEXT_ALIGN = 'card-title-text-align'
 export const RULE_DATE_PICKER_EMPTY_STRING = 'date-picker-empty-string'
+export const RULE_FIELD_BUTTON_ROW = 'field-button-row'
+export const RULE_FILL_HEIGHT_UNDER_APP = 'fill-height-under-app'
+
+/**
+ * The first `@khsura/sui` release with the M2 hardening fixes (SForm `novalidate`, SCheckbox label with
+ * `hide-details`, `''` as "no date", snackbar action colour, SCardTitle `s_textAlign__*`). Rules for
+ * those behaviours set it as `fixedIn`, so they only warn for projects on an older version.
+ */
+export const SUI_M2_FIXES_VERSION = '1.20.0'
 
 /** Which elements the engine hands a rule: SUI components only (the default) or every element. */
 export const RULE_TARGET_SUI_COMPONENT = 'sui-component'
@@ -90,6 +99,8 @@ export const RECIPE_ACTIVATOR_OVERLAYS = 'activator-overlays'
 export const RECIPE_DATA_TABLE = 'data-table'
 export const RECIPE_RESPONSIVE_GRID = 'responsive-grid'
 export const RECIPE_THEME_SETUP = 'theme-setup'
+export const RECIPE_FILTER_BAR = 'filter-bar'
+export const RECIPE_CENTERED_PAGE = 'centered-page'
 
 export const ACTIVATOR_SLOT_NAME = 'activator'
 export const ACTIVATOR_ON_KEY = 'on'
@@ -100,6 +111,9 @@ export const SLOT_PROP_ACTIVATOR_COMPONENTS = ['SDialog', 'SMenu', 'SSnackbar']
 export const SLOTLESS_ACTIVATOR_COMPONENTS = ['STooltip']
 export const DIRECTIVE_ON = 'on'
 
+export const APP_COMPONENT = 'SApp'
+/** `height: 100%`; a direct child of SApp with it grows into SApp's flex column (since 1.20.0). */
+export const HEIGHT_FILL_CLASS = 's_height--fill'
 export const LAYOUT_COMPONENT = 'SLayout'
 export const LAYOUT_NAME_ATTRIBUTE = 'name'
 export const LAYOUT_FOR_ATTRIBUTE = 'for'
@@ -161,14 +175,28 @@ export const SNACKBAR_ACTION_SLOT_NAME = 'action'
 export const COLOR_ATTRIBUTE = 'color'
 export const VARIANT_ATTRIBUTE = 'variant'
 export const TEXT_BUTTON_VARIANT = 'text'
-/** Preset colours below 4.5:1 as text on the default `#424242` snackbar (primary is 2.18:1). */
+/** Action variants that, before the M2 fix, kept the page's dark text colour on the dark snackbar when no `color` was set. */
+export const SNACKBAR_UNCOLOURED_ACTION_VARIANTS = ['text', 'icon']
+/** `s_textColor__*` sets a button's text colour, which also keeps an uncoloured action readable. */
+export const TEXT_COLOR_CLASS_PREFIX = 's_textColor__'
+/**
+ * Preset colours below 4.5:1 as text on the default `#424242` snackbar before `SUI_M2_FIXES_VERSION` (primary is
+ * 2.18:1). From that version a preset text colour inside the snackbar uses a variant tuned to the snackbar.
+ */
 export const SNACKBAR_UNREADABLE_PRESET_COLORS = ['primary', 'secondary', 'success', 'info', 'error']
+/** The theme's default `snackbar` colour, dark in both themes: CSS-colour actions are measured against it. */
+export const SNACKBAR_DEFAULT_BACKGROUND = '#424242'
 export const SNACKBAR_READABLE_ACTION_COLOR = 'warning'
+export const SNACKBAR_LIGHT_ACTION_COLOR_HINT = `\`color="${SNACKBAR_READABLE_ACTION_COLOR}"\` or a CSS colour such as \`color="#ffffff"\``
 
 export const BLOCK_ATTRIBUTE = 'block'
 export const MIN_BLOCK_BUTTONS_IN_ROW = 2
 /** Components whose root is a `display: flex` row. */
 export const FLEX_ROW_COMPONENTS = ['SCardActions']
+/** Text fields that render a label above their box and an error line under it. */
+export const LABELLED_FIELD_COMPONENTS = ['SInput', 'SSelect', 'SDatePickerInput', 'SAutocomplete', 'STextarea']
+/** The row that lines buttons up with the field boxes next to them (since 1.20.0). */
+export const FORM_ROW_COMPONENT = 'SFormRow'
 /** `s_display__flex`, `s_display--md__inlineFlex`: the utility classes that make an element a flex row. */
 export const FLEX_DISPLAY_CLASS_PATTERN = /^s_display(?:--[a-z]+)?__(?:flex|inlineFlex)$/
 export const FLEX_DISPLAY_STYLE_PATTERN = /(?:^|;)\s*display\s*:\s*(?:inline-)?flex\b/

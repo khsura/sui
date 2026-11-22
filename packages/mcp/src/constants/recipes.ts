@@ -6,6 +6,8 @@ export const RECIPE_NAMES = [
   'data-table',
   'responsive-grid',
   'theme-setup',
+  'filter-bar',
+  'centered-page',
 ] as const
 
 export const RECIPES_DIRNAME = 'recipes'

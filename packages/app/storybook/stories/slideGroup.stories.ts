@@ -1,6 +1,7 @@
 import { faker } from '@khsura/shared'
-import type { Meta } from '@storybook/vue3-vite'
-import { SSlideGroup, SImage, SCard, SSlideItem, useDisplay } from '@/app/index'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import { userEvent, waitFor } from 'storybook/test'
+import { SButton, SCard, SCardText, SIcon, SImage, SSlideGroup, SSlideItem, useDisplay } from '@/app/index'
 import { createStoryObj } from '@/app/storybook/helpers'
 
 const banners = [
@@ -98,6 +99,8 @@ const banners = [
 
 const slideGroup: Meta<typeof SSlideGroup> = {
   title: 'UI Components/SlideGroup',
+  // axe audits every story of this component in CI (keyboard-driven component without a screenshot)
+  tags: ['a11y'],
   argTypes: {
     scrollable: {
       type: 'boolean',
@@ -147,6 +150,7 @@ export const SlideGroup = createStoryObj<typeof SSlideGroup>({
               :href="item.url"
               target="_blank"
               rel="noopener noreferrer"
+              :aria-label="'Banner ' + (index + 1)"
             >
               <SImage
                 :src="item.banner"
@@ -168,6 +172,7 @@ export const SlideGroup = createStoryObj<typeof SSlideGroup>({
               :href="item.url"
               target="_blank"
               rel="noopener noreferrer"
+              :aria-label="'Banner ' + (index + 1)"
             >
               <SImage
                 :src="item.banner"
@@ -256,6 +261,7 @@ export const SlideGroupWithFewItems = createStoryObj<typeof SSlideGroup>({
               :href="item.url"
               target="_blank"
               rel="noopener noreferrer"
+              :aria-label="'Banner ' + (index + 1)"
             >
               <SImage
                 :src="item.banner"
@@ -278,3 +284,133 @@ export const SlideGroupWithFewItems = createStoryObj<typeof SSlideGroup>({
     slideStep: null,
   },
 })
+
+const edgeSlideCount = 14
+// Enough clicks to cross the widest row; a row that never reaches its edge fails instead of looping.
+const maxNavigatorClicks = 20
+
+const assertThat = (condition: boolean, message: string) => {
+  if (!condition) {
+    throw new Error(message)
+  }
+}
+
+const getNavigatorButtons = (group: Element) => {
+  const [previousButton, nextButton] = group.querySelectorAll<HTMLButtonElement>('.s_slideGroup__navigator button')
+
+  if (!previousButton || !nextButton) {
+    throw new Error('slide group navigator buttons not found')
+  }
+
+  return { previousButton, nextButton }
+}
+
+// The arrows' disabled state follows the target position, which is set before the smooth scroll runs, so the
+// viewport's own scroll position is the settled end state (WebKit's smooth scroll outlasts the 300ms slide wait).
+const getViewport = (group: Element) => {
+  const viewport = group.querySelector('.s_slideGroup__main')
+
+  if (!viewport) {
+    throw new Error('slide group viewport not found')
+  }
+
+  return viewport
+}
+
+const assertAtStart = (group: Element, label: string) => {
+  const { previousButton, nextButton } = getNavigatorButtons(group)
+
+  assertThat(previousButton.disabled, `${label}: the left arrow is enabled at the start`)
+  assertThat(!nextButton.disabled, `${label}: the right arrow is disabled at the start`)
+  assertThat(getViewport(group).scrollLeft === 0, `${label}: the row has not scrolled back to the start`)
+}
+
+const assertAtEnd = (group: Element, label: string) => {
+  const { previousButton, nextButton } = getNavigatorButtons(group)
+
+  assertThat(!previousButton.disabled, `${label}: the left arrow is disabled at the end`)
+  assertThat(nextButton.disabled, `${label}: the right arrow is enabled at the end`)
+  assertThat(getViewport(group).scrollLeft > 0, `${label}: the row has not scrolled`)
+}
+
+// Resolves once the smooth scroll has stopped: the position is unchanged between two `waitFor` polls, which are
+// several animation frames apart.
+const waitForScrollToSettle = async (group: Element) => {
+  let previousScrollLeft: number | null = null
+
+  await waitFor(() => {
+    const { scrollLeft } = getViewport(group)
+    const isSettled = scrollLeft === previousScrollLeft
+
+    previousScrollLeft = scrollLeft
+    assertThat(isSettled, 'the row is still scrolling')
+  })
+}
+
+// Clicks one arrow until it disables itself, waiting out each slide animation (both arrows disable while it runs).
+const clickUntilDisabled = async (group: Element, pickButton: (group: Element) => HTMLButtonElement) => {
+  for (let click = 0; click < maxNavigatorClicks && !pickButton(group).disabled; click++) {
+    await userEvent.click(pickButton(group))
+    await waitFor(() => {
+      const { previousButton, nextButton } = getNavigatorButtons(group)
+
+      assertThat(!previousButton.disabled || !nextButton.disabled, 'the slide animation has not finished')
+    })
+  }
+}
+
+// Each arrow must be disabled only at its own edge, for the built-in arrows and for arrows passed through the
+// `left` / `right` slots (their `attrs.disabled`). The play function scrolls to the right end and back, so the
+// screenshot shows the start position.
+export const SlideGroupEdges = {
+  tags: ['visual'],
+  render: () => ({
+    components: { SButton, SCard, SCardText, SIcon, SSlideGroup, SSlideItem },
+    setup: () => ({ slides: Array.from({ length: edgeSlideCount }, (_, index) => `Slide ${index + 1}`) }),
+    template: /* html */ `
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <SSlideGroup class="stress-slide-default" :scrollable="false">
+          <SSlideItem v-for="(slide, index) in slides" :key="slide" :index="index">
+            <SCard outlined :width="120"><SCardText>{{ slide }}</SCardText></SCard>
+          </SSlideItem>
+        </SSlideGroup>
+        <SSlideGroup class="stress-slide-slots" :scrollable="false">
+          <template #left="{ attrs, on }">
+            <SButton variant="icon" aria-label="Previous slides" v-bind="attrs" v-on="on">
+              <SIcon icon="mdi-arrow-left"></SIcon>
+            </SButton>
+          </template>
+          <SSlideItem v-for="(slide, index) in slides" :key="slide" :index="index">
+            <SCard outlined :width="120"><SCardText>{{ slide }}</SCardText></SCard>
+          </SSlideItem>
+          <template #right="{ attrs, on }">
+            <SButton variant="icon" aria-label="Next slides" v-bind="attrs" v-on="on">
+              <SIcon icon="mdi-arrow-right"></SIcon>
+            </SButton>
+          </template>
+        </SSlideGroup>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const groups = [
+      { label: 'built-in arrows', selector: '.stress-slide-default' },
+      { label: 'slot arrows', selector: '.stress-slide-slots' },
+    ]
+
+    for (const { label, selector } of groups) {
+      const group = canvasElement.querySelector(selector)
+
+      if (!group) {
+        throw new Error(`${label}: slide group not found`)
+      }
+
+      await waitFor(() => assertAtStart(group, label))
+      await clickUntilDisabled(group, (element) => getNavigatorButtons(element).nextButton)
+      await waitFor(() => assertAtEnd(group, label))
+      await waitForScrollToSettle(group)
+      await clickUntilDisabled(group, (element) => getNavigatorButtons(element).previousButton)
+      await waitFor(() => assertAtStart(group, label))
+    }
+  },
+} satisfies StoryObj

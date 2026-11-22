@@ -43,7 +43,7 @@ None.
 ```ts
 interface BreadcrumbsItem {
   text: string | number
-  to?: RouteLocationRaw   // renders router-link
+  to?: LinkLocation       // renders router-link (plain <a href> without vue-router)
   href?: string           // renders <a>
   disabled?: boolean      // renders plain <span>
   link?: boolean          // declared on the type, not used by the component
@@ -77,4 +77,5 @@ Each item renders as `router-link` if `to` is set, else `<a>` if `href` is set, 
 - The **last item is disabled automatically** (current page) unless you set `disabled: false` on it explicitly.
 - Disabled items ignore `color`.
 - Pass `to` or `href` per item, not both — `to` wins.
-- `to` requires vue-router in the app.
+- vue-router is optional: without it a `to` item renders a plain `<a href>`; use a path, not a route `name`.
+- The first crumb starts at the content edge (no list indent), so it lines up with the cards below. Older versions inherited a 1.5em `<ol>` indent; don't add a negative margin.

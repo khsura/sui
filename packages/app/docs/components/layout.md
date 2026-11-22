@@ -33,14 +33,14 @@ SApp
         └── SBottomNavigation
 ```
 
-- **`SApp`** is the root. It provides the app state and is itself an app-level layout. Wrap the whole app in it (after installing the `createSUI()` plugin). `SLayout` throws if no app state is found.
+- **`SApp`** is the root. It provides the app state and is itself an app-level layout. Wrap the whole app in it (after installing the `createSUI()` plugin). `SLayout` throws if no app state is found. `SApp` is at least the viewport height (`100dvh`, `100vh` in older browsers), and an `SLayout` directly inside it grows with it, so a short page keeps the app background and a named layout's drawer down to the bottom of the screen. A direct child with `s_height--fill` grows the same way, so a page root with `s_display__flex s_justify__center s_align__center s_height--fill` centres its content in the viewport (see the `centered-page` recipe).
 - **`SLayout` without `name`** → children **without `for`** join it as the **app-level** layout.
 - **`SLayout name="x"`** → **every** child needs `for="x"`. A child without `for` joins the app-level layout instead, so offsets silently break.
 - **App-level vs nested.** A layout is app-level when its name equals the plugin name (`'sui'` by default, i.e. no `name`) or when it has the `app` prop. A named layout is *nested*:
   - `SNavigationDrawer` is `position: absolute` inside the layout (not fixed), and `permanent` has no effect.
   - `SFooter` ignores `position`. `SBottomNavigation` is not fixed unless you set `position="fixed"`.
-  - `SMain` renders `<section>` with `min-height: 100%` instead of `<main>` with `100vh`.
-- Below the `md` breakpoint (or with `forceMobile`), a drawer becomes a mobile drawer: it does not push `SMain`, opens by swiping in from the screen edge, and closes on an outside click.
+  - `SMain` renders `<section>` with `min-height: 100%` instead of `<main>` with `100vh` (minus the app bar and footer heights).
+- Below the `md` breakpoint (or with `forceMobile`), a drawer becomes a mobile drawer: it does not push `SMain`, opens by swiping in from the screen edge, dims what is behind it with a scrim (the whole page for an app-level drawer, the layout for a nested one), and closes on an outside click or a tap on the scrim.
 
 ---
 
@@ -94,7 +94,7 @@ Top application bar, built on `SToolbar`. Renders a `<header>`.
 | `default` | App bar content — put everything here and use `SSpacer` to push items apart |
 | `extension` | Extension area below main bar |
 
-`SAppBar` has **no** `prepend` / `append` slots.
+`SAppBar` has **no** `prepend` / `append` slots. Its content keeps an inset from the bar edges: `SAppBarTitle` and any other first or last item start 16px in, toolbar buttons 10px, so you don't need your own padding.
 
 ---
 
@@ -116,14 +116,14 @@ Side drawer/sidebar.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `for` / `app` | `string` / `boolean` | `undefined` | Layout link (see overview) |
-| `modelValue` | `boolean \| null` | `undefined` | Open/closed state (`v-model`). On resize it auto-opens on desktop and auto-closes on mobile (unless `persistent`) |
+| `modelValue` | `boolean \| null` | `undefined` | Open/closed state (`v-model`). At mount and on every resize it opens itself on desktop and closes itself on mobile, whatever the starting value (unless `persistent`, or `location="bottom"` at mount) |
 | `activator` | `string \| HTMLElement \| component` | `undefined` | Element excluded from the drawer's click-outside handling. It does **not** toggle the drawer — toggle `v-model` yourself |
 | `permanent` | `boolean` | `false` | Always open on desktop (app-level layout only) |
 | `miniVariant` | `boolean` | `false` | Collapsed (icon-only) mode (`v-model:mini-variant`) |
 | `miniVariantWidth` | `string \| number` | `256` when not numeric | Width in mini mode — set it (e.g. `56`) |
 | `expandOnHover` | `boolean` | `false` | Mini until hovered |
 | `forceMobile` | `boolean` | `false` | Force mobile behavior on desktop |
-| `hideOverlay` | `boolean` | `false` | Declared but has no effect — the drawer never renders a scrim |
+| `hideOverlay` | `boolean` | `false` | Do not dim the page (or the nested layout) behind an open mobile drawer |
 | `touchless` | `boolean` | `false` | Disable swipe gestures and hover handlers |
 | `location` | `string` | `'left'` | Side: `'left'`, `'right'` or `'bottom'`. `'bottom'` always behaves as mobile |
 | `position` | `'fixed' \| 'absolute' \| …` | `undefined` | CSS position |
@@ -458,6 +458,7 @@ const drawer = ref(false)
 - In a named layout, all children **must** share the same `name`/`for` value for offset calculation to work.
 - `SMain` margins auto-adjust for drawers, a `fixed` `SAppBar`, and the bottom navigation (app level) or footer (nested).
 - `SAppBar` `position` defaults to `undefined` (in flow) — pass `position="fixed"` for a fixed bar.
+- iPhone safe areas: with `viewport-fit=cover` in the viewport meta, `SApp` sets `--s-safe-area-top|right|bottom|left` from `env(safe-area-inset-*)`. A fixed `SAppBar` pads below the notch (and by the side insets in landscape), and `SMain` and a desktop drawer below it move down with it; `SBottomNavigation` (app level or `position="fixed"`) grows by the home-indicator inset; the mobile `SNavigationDrawer` pads its top, bottom and the side it opens from, and widens by that side's inset. Without a safe area the insets are `0px`, so nothing changes. Don't add your own `env()` padding to these components.
 - For multiple independent layouts on the same page, use different `name` values.
 - `SColumn cols="auto"` sizes to content width; `cols="grow"` fills remaining space.
 - `SSpacer` is a `flex-grow: 1` element — use it inside `SRow` or `SAppBar` to push items apart.

@@ -46,7 +46,7 @@ Single row in the list.
 | `link` | `boolean` | `false` | Hover background + pointer (automatic when `href`/`to` is set) |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `href` | `string` | `undefined` | Render as `<a>` |
-| `to` | `RouteLocationRaw \| null` | `undefined` | Render as `router-link` |
+| `to` | `LinkLocation \| null` | `undefined` | Render as `router-link` (plain `<a href>` without vue-router) |
 | `target` / `rel` | `string` | `undefined` | Link attributes |
 | `tag` | `'li' \| 'div'` | `'div'` | Root element (when not a link) |
 
@@ -67,6 +67,8 @@ Single row in the list.
 ## SListItemContent
 
 Wraps the title and subtitle. No props. **Must be inside an `SListItem`** (throws otherwise).
+
+`SListItemContent` keeps a minimum width of `min(40%, 160px)`. When the icon and the actions leave less room than that (two text buttons on a phone), the list item moves the `SListItemAction` onto its own line below the text, aligned to the right edge, instead of squeezing the title to one letter. (Older versions squeezed it.)
 
 **Slot:** `default`
 

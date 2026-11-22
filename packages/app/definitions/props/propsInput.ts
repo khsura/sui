@@ -27,6 +27,8 @@ export type PropsInput = {
   tile?: boolean
   minlength?: string | number | null
   maxlength?: string | number | null
+  // Accessible name when the visible `label` is not enough (or absent); with `hideDetails` the label is used
+  ariaLabel?: string
   ariaLabelledby?: string
   name?: string
   isPasteDisabled?: boolean

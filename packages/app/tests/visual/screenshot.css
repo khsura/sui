@@ -1,0 +1,9 @@
+/* Applied by Playwright only while it takes a visual regression screenshot. */
+*,
+*::before,
+*::after {
+  transition: none !important;
+  animation: none !important;
+  caret-color: transparent !important;
+  scrollbar-width: none !important;
+}

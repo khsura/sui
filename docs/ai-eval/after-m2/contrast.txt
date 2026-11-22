@@ -1,0 +1,13 @@
+02-dashboard-shell/base
+  ⇅ — rgb(197, 197, 197) on 255,255,255 = 1.73
+02-dashboard-shell/drawer
+  ⇅ — rgb(197, 197, 197) on 255,255,255 = 1.73
+09-snackbar/base
+  ⇅ — rgb(197, 197, 197) on 255,255,255 = 1.73
+09-snackbar/deleted
+  ⇅ — rgb(197, 197, 197) on 255,255,255 = 1.73
+  Undo — rgb(112, 106, 82) on 66,66,66 = 1.85
+09-snackbar/rename
+  ⇅ — rgb(197, 197, 197) on 255,255,255 = 1.73
+10-detail-two-column/base
+  ⇅ — rgb(197, 197, 197) on 255,255,255 = 1.73

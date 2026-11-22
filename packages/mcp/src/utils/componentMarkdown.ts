@@ -1,5 +1,5 @@
 import type { SuiApiComponent, SuiApiProp } from '@khsura/shared/types'
-import type { ComponentSummary, ResolvedSuiApi } from '../types'
+import type { ComponentAliasMatch, ComponentSummary, ResolvedSuiApi } from '../types'
 import {
   ACTIVATOR_COMPONENTS,
   ACTIVATOR_NOTE,
@@ -11,6 +11,7 @@ import {
   SLOTLESS_ACTIVATOR_NOTE_COMPONENTS,
 } from '../constants'
 import { inlineCode, markdownTable } from '../lib'
+import { formatComponentAlias } from './componentAliasMarkdown'
 
 const OPTIONAL_TYPE_SUFFIX = / \| undefined$/
 const EMPTY_CELL = '—'
@@ -134,10 +135,27 @@ export const formatComponentApi = (resolved: ResolvedSuiApi, component: SuiApiCo
     formatNamedTypes(component.events, 'Payload'),
   ].join('\n')
 
-export const formatUnknownComponent = (resolved: ResolvedSuiApi, query: string, suggestions: string[]): string => {
-  const hint = suggestions.length
-    ? `Did you mean: ${suggestions.map(inlineCode).join(', ')}?`
-    : `Call ${inlineCode(LIST_COMPONENTS_TOOL_NAME)} to see every component.`
+/** An unknown name: the other-library alias mapping first (when there is one), then the closest names. */
+export const formatUnknownComponent = (
+  resolved: ResolvedSuiApi,
+  query: string,
+  suggestions: string[],
+  alias?: ComponentAliasMatch,
+): string => {
+  const suggestionText = suggestions.map(inlineCode).join(', ')
+  const listHint = `Call ${inlineCode(LIST_COMPONENTS_TOOL_NAME)} to see every component.`
+
+  if (alias) {
+    const otherNames = suggestions.length ? ` Other close names: ${suggestionText}.` : ''
+
+    return [
+      formatSourceHeader(resolved),
+      '',
+      `Unknown component ${inlineCode(query)} (a name from another UI library). ${formatComponentAlias(alias)}${otherNames}`,
+    ].join('\n')
+  }
+
+  const hint = suggestions.length ? `Did you mean: ${suggestionText}?` : listHint
 
   return [formatSourceHeader(resolved), '', `Unknown component ${inlineCode(query)}. ${hint}`].join('\n')
 }

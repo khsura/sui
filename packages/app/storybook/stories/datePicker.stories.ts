@@ -10,6 +10,8 @@ import { createStoryObj } from '@/app/storybook/helpers'
 
 const datePicker: Meta<typeof SDatePicker> = {
   title: 'UI Components/DatePicker',
+  // axe audits every story of this component in CI (keyboard-driven component without a screenshot)
+  tags: ['a11y'],
   argTypes: {
     ...argTypesColor,
     type: {

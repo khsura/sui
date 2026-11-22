@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, watch, provide } from 'vue'
 import { ProviderPropsName } from '@/app/configs'
-import { getCleanSetObject, getNumericValue } from '@/app/lib'
+import { getCleanSetObject, getLengthWithSafeArea, getNumericValue, getSafeAreaInset } from '@/app/lib'
 import { isBrowser } from '@/app/lib/browser'
 import {
   useComponentDefaultsService,
@@ -87,9 +87,23 @@ const contentClasses = computed(() => {
   }
 })
 
+// A bar fixed to the screen bottom grows by the home-indicator inset (0px without a safe area) and pads its
+// items above it, so they stay clear of the indicator.
+const safeAreaStyles = computed(() => {
+  if (!isApp.value && !isFixedPosition.value) {
+    return {}
+  }
+
+  return getCleanSetObject({
+    height: measurableStyles.value.height ? getLengthWithSafeArea(measurableStyles.value.height, 'bottom') : undefined,
+    paddingBottom: getSafeAreaInset('bottom'),
+  })
+})
+
 const styles = computed((): object => {
   return {
     ...measurableStyles.value,
+    ...safeAreaStyles.value,
     transform: isActive.value ? 'none' : 'translateY(100%)',
     left: left.value,
     right: right.value,

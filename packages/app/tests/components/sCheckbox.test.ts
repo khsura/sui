@@ -28,6 +28,18 @@ describe('SCheckbox', () => {
     expect(wrapper.classes()).not.toContain('s_checkbox--error')
   })
 
+  test('keeps its label with hideDetails, which only removes the error area', () => {
+    const wrapper = mountWithApp(SCheckbox, {
+      props: { id: 'remember', label: 'Remember me', hideDetails: true },
+    })
+
+    const labelText = wrapper.find('.s_checkbox__labelText')
+
+    expect(labelText.text()).toBe('Remember me')
+    expect(labelText.attributes('style') ?? '').not.toContain('display: none')
+    expect(wrapper.find('.s_formInputError').exists()).toBe(false)
+  })
+
   describe('keyboard and screen reader access', () => {
     test('keeps a real, focusable checkbox input that is only visually hidden', () => {
       const wrapper = mountWithApp(SCheckbox, { props: { label: 'Agree' }, attachTo: document.body })

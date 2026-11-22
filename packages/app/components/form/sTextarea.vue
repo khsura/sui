@@ -1,11 +1,13 @@
 <template>
   <section class="s_textarea" :class="classList">
-    <label v-if="label" v-show="!hideDetails" :for="id" class="s_textarea__label">{{ label }}</label>
+    <label v-if="label" v-show="!hideDetails" :for="inputId" class="s_textarea__label">{{ label }}</label>
     <textarea
-      :id="id"
+      :id="inputId"
       ref="textareaElement"
       v-bind="
         getCleanSetObject({
+          ...ariaAttributesFormInput,
+          'aria-label': ariaLabel ?? (hideDetails ? label : undefined),
           'aria-labelledby': ariaLabelledby,
           autocapitalize,
           autocomplete,
@@ -28,7 +30,16 @@
       @input="(event) => onEvent('input', event)"
       @blur="(event) => onEvent('blur', event)"
     />
-    <kFormInputError v-if="!hideDetails && !hideError" :errors="errors" :simple="simple"></kFormInputError>
+    <div v-if="!hideDetails && (!hideError || counter)" class="s_textarea__details">
+      <kFormInputError
+        v-if="!hideError"
+        :id="errorId"
+        class="s_textarea__error"
+        :errors="errors"
+        :simple="simple"
+      ></kFormInputError>
+      <span v-if="counter" class="s_textarea__counter">{{ counterText }}</span>
+    </div>
   </section>
 </template>
 
@@ -38,7 +49,12 @@ import kFormInputError from './common/sFormInputError.vue'
 import { getCleanSetObject, getNumericCssAttribute } from '@/app/lib'
 import type { PropsTextarea } from '@/app/definitions'
 import { useColorRepository } from '@/app/repositories/colorRepository'
-import { useComponentDefaultsService, useDisabledService, useFormInputService } from '@/app/services'
+import {
+  useComponentDefaultsService,
+  useDisabledService,
+  useFieldLayoutService,
+  useFormInputService,
+} from '@/app/services'
 import { type EmitFormTextInput } from '@/app/types'
 
 const rawProps = withDefaults(defineProps<PropsTextarea<string>>(), {
@@ -55,7 +71,12 @@ const model = defineModel<string>({
   default: '',
 })
 
-const { updateFormInput, errors, hasError } = useFormInputService<string>(props, emit, model)
+const { updateFormInput, errors, hasError, inputId, errorId, ariaAttributesFormInput } = useFormInputService<string>(
+  props,
+  emit,
+  model,
+)
+
 const { classListDisabled } = useDisabledService(props)
 // TODO - Sura: make able to use all preset colors
 const { getIsPredefinedPresetColor } = useColorRepository()
@@ -63,20 +84,29 @@ const isPresetInputBackground = computed(() => getIsPredefinedPresetColor(props.
 const isPresetPlaceholderBackground = computed(() => getIsPredefinedPresetColor(props.placeholderBackground ?? null))
 const textareaHeight = ref<string | null>(null)
 
+const { classListField } = useFieldLayoutService(
+  computed(() => ({
+    hasLabel: !!props.label && !props.hideDetails,
+    hasDetails: !props.hideDetails && (!props.hideError || !!props.counter),
+  })),
+)
+
 const classList = computed(() => {
   return {
+    ...classListField.value,
     's_textarea--disabled': props.disabled,
     's_textarea--dense': props.dense,
     's_textarea--tile': props.tile,
     's_textarea--error': hasError.value,
     [`s_textarea--size__${props.size}`]: props.size,
-    ...classListDisabled.value,
   }
 })
 
 const inputClassList = computed(() => {
   return {
     s_textarea__input: true,
+    // On the field only, like SInput: on the root it greyed out the label and error line too.
+    ...classListDisabled.value,
     [`s_textarea__input--${props.inputBackground}`]: !!isPresetInputBackground.value,
     [`s_textarea__inputPlaceholder--${props.placeholderBackground}`]: !!isPresetPlaceholderBackground.value,
     's_textarea--resize__none': !props.resize,
@@ -88,6 +118,13 @@ const inputStyleList = computed(() => {
     ...(!isPresetInputBackground.value ? { backgroundColor: props.inputBackground } : {}),
     ...(textareaHeight.value ? { height: textareaHeight.value, overflow: 'hidden' } : {}),
   }
+})
+
+// `12 / 200` with a maxlength, otherwise just the character count.
+const counterText = computed(() => {
+  const length = model.value.length
+
+  return props.maxlength ? `${length} / ${props.maxlength}` : `${length}`
 })
 
 const onEvent = async (name?: string, event?: Event | KeyboardEvent) => {
@@ -152,8 +189,8 @@ $inputPadding: calc($s_spacer * 2);
       outline: 2px solid s_getAppColor('text');
     }
 
-    &:placeholder-shown {
-      background-color: s_getAppColor('inputPlaceholderShown');
+    &.s_disabled {
+      background-color: transparent;
     }
 
     @each $name in $s_presetColorNames {
@@ -189,6 +226,25 @@ $inputPadding: calc($s_spacer * 2);
     @include s_typography('caption');
     display: block;
     padding: $s_spacer calc($s_spacer * 4);
+    color: s_getAppColor('secondaryText');
+  }
+
+  // The error message and the counter share the line under the field.
+  &__details {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &__error {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  &__counter {
+    @include s_typography('caption');
+    flex: 0 0 auto;
+    padding: $s_spacer calc($s_spacer * 4);
+    margin-left: auto;
     color: s_getAppColor('secondaryText');
   }
 

@@ -46,7 +46,7 @@ This directory contains per-component documentation optimized for Claude AI codi
 ### Forms
 | File | Components |
 |------|-----------|
-| [form.md](./form.md) | `SForm`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` |
+| [form.md](./form.md) | `SForm`, `SFormRow`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` |
 | [autocomplete.md](./autocomplete.md) | `SAutocomplete` |
 
 ### Data Display
@@ -101,7 +101,7 @@ This directory contains per-component documentation optimized for Claude AI codi
 | `minWidth` / `minHeight` | `string \| number` | Min dimensions |
 | `tag` | `string` | Override root HTML element |
 | `href` | `string \| null` | Render as `<a>` tag |
-| `to` | `RouteLocationRaw` | Vue Router link |
+| `to` | `LinkLocation` | Internal route: `router-link` with vue-router, else `<a href>` |
 | `colorThreshold` | `number` | Auto text contrast threshold against `color` |
 
 ### Activator Pattern (Dialog, Menu, Snackbar)

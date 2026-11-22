@@ -24,6 +24,10 @@ const styles = computed(() => {
 const classes = computed(() => {
   return {
     s_image: true,
+    // An aspect ratio sizes the image from its width, unless a height is given too.
+    's_image--aspectRatio': !!props.aspectRatio && props.height == null,
+    // No src: show a neutral placeholder instead of a blank gap.
+    's_image--empty': !props.src,
   }
 })
 
@@ -43,6 +47,15 @@ const classesImage = computed(() => {
   width: 100%;
   height: 100%;
   overflow: hidden;
+
+  // height: 100% would resolve against a flex card's height and squash the image; let aspect-ratio set it.
+  &--aspectRatio {
+    height: auto;
+  }
+
+  &--empty {
+    background-color: s_getAppColor('background');
+  }
 
   &__image {
     width: 100%;

@@ -5,6 +5,7 @@
       class="s_table__wrapper"
       :class="{ 's_table__wrapper--outlined': outlined, 's_table__wrapper--noTopBottomBorders': hideTopBottomBorders }"
       :style="styleListBorder"
+      :tabindex="scrollableTabindex"
       @scroll="onHorizontalScroll()"
     >
       <!-- Table -->
@@ -180,6 +181,13 @@
             </template>
           </template>
 
+          <!-- Table Item - Loading, while there are no rows yet -->
+          <tr v-if="showLoadingRow" class="s_table__row s_table__row--loading">
+            <td :colspan="totalItemColumns" class="s_table__noData">
+              <slot name="loadingData">{{ computedLoadingText }}</slot>
+            </td>
+          </tr>
+
           <!-- Table Item - No Data -->
           <tr v-if="showNoData" class="s_table__row s_table__row--noData">
             <td :colspan="totalItemColumns" class="s_table__noData">
@@ -221,7 +229,12 @@ import STableHeadCell from './sTableHeadCell.vue'
 import STableBodyCell from './sTableBodyCell.vue'
 import STablePagination from './sTablePagination.vue'
 import { getCleanSetObject } from '@/app/lib'
-import { useBorderService, useComponentDefaultsService, useTableService } from '@/app/services'
+import {
+  useBorderService,
+  useComponentDefaultsService,
+  useScrollableFocusService,
+  useTableService,
+} from '@/app/services'
 import {
   type TableSortOrder,
   type TableItem,
@@ -248,6 +261,8 @@ defineSlots<{
   expanded?: (props: { item: T }) => void
   /** Shown instead of the rows when `items` is empty and not loading. */
   noData?: () => void
+  /** Shown instead of the rows while `loading` is set and `items` is still empty. */
+  loadingData?: () => void
   /** Label of the items-per-page selector in the pagination. */
   itemsPerPageLabel?: () => void
 }>()
@@ -280,6 +295,8 @@ const folded = defineModel<boolean | string[]>('folded', { default: () => [] })
 const { classListBorder, styleListBorder } = useBorderService(props, { block: 'table' })
 const headerElements = useTemplateRef('headerElements')
 const tableWrapperElement = useTemplateRef('tableWrapperElement')
+// A scrolling table is a Tab stop, so keyboard users can scroll it with the arrow keys.
+const { scrollableTabindex } = useScrollableFocusService(tableWrapperElement)
 
 const {
   isMounted,
@@ -321,6 +338,8 @@ const translate = (key: string): string | undefined => {
 
 const showNoData = computed(() => !props.loading && props.items.length === 0)
 const computedNoDataText = computed(() => props.noDataText ?? translate('table.noData') ?? 'No data')
+const showLoadingRow = computed(() => props.loading && props.items.length === 0)
+const computedLoadingText = computed(() => props.loadingText ?? translate('table.loading') ?? 'Loading…')
 
 const shouldHidePagination = computed(() => {
   if (props.hidePagination && (!itemsPerPage.value || itemsPerPage.value > (props.totalItems ?? props.items.length))) {
@@ -394,19 +413,29 @@ defineExpose({
   border-spacing: 0;
   background-color: s_getAppColor('card');
 
+  // A flex column, so a height or max-height on STable makes the rows scroll (and the sticky header stick)
+  // while the pagination stays visible below them.
   &__container {
     position: relative;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
   }
 
   &__wrapper {
     display: block;
+    flex: 1 1 auto;
     width: 100%;
+    min-height: 0;
     overflow: auto;
 
     // Property is nonstandard. Avoid using it.
     // https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-overflow-scrolling
     -webkit-overflow-scrolling: touch;
+
+    &:focus-visible {
+      @include s_focusRing(-2px);
+    }
 
     &--outlined {
       &.s_table__wrapper--noTopBottomBorders {
@@ -450,7 +479,8 @@ defineExpose({
 
   &__noData {
     padding: calc($s_spacer * 6) calc($s_spacer * 4);
-    color: s_getAppColor('disabled');
+    // secondaryText, not disabled: the message must stay readable (4.5:1)
+    color: s_getAppColor('secondaryText');
     text-align: center;
   }
 

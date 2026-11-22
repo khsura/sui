@@ -20,4 +20,15 @@ const { classes } = useListMediaItemService(props, { componentName: 'listItemAct
     margin-right: calc($s_spacer * 8);
   }
 }
+
+// Actions after the text keep their gap as padding, and an auto margin pushes them to the right edge when the
+// list item wraps them onto their own line (see SListItemContent's minimum width).
+.s_listItemContent ~ .s_listItemAction {
+  padding-left: calc($s_spacer * 8);
+  margin-left: auto;
+
+  &.s_listItemAction--dense {
+    padding-left: calc($s_spacer * 2);
+  }
+}
 </style>

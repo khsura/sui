@@ -20,6 +20,9 @@ Searchable dropdown input with filtering, multiple selection, chips, free-text e
 | `placeholder` | `string` | `undefined` | Input placeholder text |
 | `loading` | `boolean` | `false` | Show loading indicator (async search) |
 | `clearable` | `boolean` | `false` | Show clear button when a value is set |
+| `ariaLabel` | `string \| null` | `undefined` | Accessible name when there is no visible `label` |
+| `clearAriaLabel` | `string` | `'Clear'` | Accessible name of the clear button |
+| `loadingAriaLabel` | `string` | `'Loading'` | Accessible name of the loading spinner |
 | `divided` | `boolean` | `false` | Dividers between dropdown items |
 | `dense` | `boolean` | `false` | Dense list |
 | `filterMode` | `'start' \| 'contains' \| 'exact' \| 'none'` | `'contains'` | Built-in, case-insensitive filter behavior |
@@ -28,7 +31,7 @@ Searchable dropdown input with filtering, multiple selection, chips, free-text e
 | `delimiter` | `string \| string[] \| RegExp` | `undefined` | Keys that commit the typed text (like Enter) |
 | `autocomplete` | `'on' \| 'off'` | `undefined` | Native `autocomplete` attribute |
 | `name` | `string` | `undefined` | Typed but ignored — the input's name is always `autocomplete` |
-| `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `undefined` | Preset size |
+| `size` | `'mini' \| 'small' \| 'default' \| 'large' \| 'extra'` | `undefined` | Input font size, as on `SInput` (`large` 1.25rem, `extra` 1.5rem, never below 16px) |
 | `disabled` | `boolean` | `undefined` | Typed but does not disable the text field |
 | `location` | `string` | `'bottom'` | Dropdown position |
 | `offsetX` / `offsetY` | `number \| null` | `undefined` | Dropdown offset |
@@ -134,3 +137,5 @@ const searchUsers = async (query: string) => {
 - For async filtering, set `filter-mode="none"` to disable built-in filtering and handle it server-side via `@search-item`. `update:search-input` is never emitted.
 - In single mode, typed text that doesn't match an item and is then blurred **clears** the value (unless `allowUnlisted`).
 - `disabled` does not disable the text field, and `name` is ignored.
+- The list opens on the side of the field with more room (capping its height to fit) and stays 8px inside the viewport, shifting left near the right edge. Opened above the field, it stays on the field while typing shortens the list.
+- A long option stays on one line and ends in an ellipsis, with its full text in a `title` tooltip (as in `SSelect`).

@@ -20,6 +20,35 @@ describe('SInput', () => {
     expect(wrapper.find('.s_input__input').attributes().maxlength).toBeUndefined()
   })
 
+  test('ties the label to the input with a generated id when none is passed', () => {
+    const wrapper = mountWithApp(SInput, { props: { label: 'Email' } })
+    const inputId = wrapper.find('.s_input__input').attributes('id')
+
+    expect(inputId).toBeTruthy()
+    expect(wrapper.find('.s_input__label').attributes('for')).toBe(inputId)
+  })
+
+  test('names the input with its label when hideDetails hides the label', () => {
+    const wrapper = mountWithApp(SInput, { props: { id: 'search', label: 'Search', hideDetails: true } })
+
+    expect(wrapper.find('.s_input__input').attributes('aria-label')).toBe('Search')
+  })
+
+  test('marks the input invalid and describes it with the error message', async () => {
+    const requiredRule = (value: unknown) => !!value || 'Required'
+    const wrapper = mountWithApp(SInput, { props: { id: 'email', rules: [requiredRule] } })
+    const input = wrapper.find('.s_input__input')
+
+    expect(input.attributes('aria-invalid')).toBeUndefined()
+
+    await input.setValue('')
+    await flushPromises()
+
+    expect(input.attributes('aria-invalid')).toBe('true')
+    expect(input.attributes('aria-describedby')).toBe('email-error')
+    expect(wrapper.find('#email-error').text()).toBe('Required')
+  })
+
   test('disabled attribute can be set properly', () => {
     const wrapper = mountWithApp(SInput, { props: { id: 'password', disabled: true } })
 

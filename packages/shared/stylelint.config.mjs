@@ -75,7 +75,7 @@ export default {
           /map-deep-(get|merge)/,
           'v-bind',
           'if',
-          /s_(breakpointInfix|breakpointMin|borderRadius|typography|isDark|getTextColor|getPresetColor|getAppColor|getThemeColor)/,
+          /s_(breakpointInfix|breakpointMin|borderRadius|typography|isDark|getTextColor|getPresetColor|getAppColor|getThemeColor|safeAreaInset)/,
         ],
       },
     ],
@@ -88,7 +88,7 @@ export default {
     'scss/at-mixin-argumentless-call-parentheses': 'always',
     'scss/at-mixin-pattern': variablePattern,
     'custom-property-pattern':
-      /^s-((color-(primary|secondary|success|info|warning|important|error)(--text)?)|(app-color-(border|title))|(body-scroll-y|body-scroll-x|row-gap))$/,
+      /^s-((color-(primary|secondary|success|info|warning|important|error)(--text)?)|(app-color-(border|title))|(body-scroll-y|body-scroll-x|row-gap)|(dialog-(width|max-width|height|max-height))|(safe-area-(top|right|bottom|left)))$/,
     'media-query-no-invalid': null,
     'property-no-unknown': [
       true,

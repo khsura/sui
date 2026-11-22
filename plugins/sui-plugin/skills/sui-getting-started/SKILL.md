@@ -27,7 +27,20 @@ Older versions were published to GitHub Packages. If your project still points t
 - `.yarnrc.yml` (Yarn 4): delete the `npmScopes.khsura` block (`npmRegistryServer`, `npmAlwaysAuth`, `npmAuthToken`).
 - CI: the GitHub token secret your install step used for SUI is no longer needed.
 
-`vue`, `vue-i18n` and `dayjs` come in as dependencies of `@khsura/sui`. `@mdi/font` is **not** included — install it yourself (see step 3).
+`vue` is a **peer dependency** (`^3.5.41`): the app provides it. `vue-i18n` and `dayjs` come in as dependencies of `@khsura/sui`. `@mdi/font` is **not** included — install it yourself (see step 3). `vue-router` is **optional**: with it, `to` props render a `router-link`; without it, they render a plain `<a href>`.
+
+### Vue version — 3.5.41 or newer
+
+Use **Vue 3.5.41 or newer** in the app — it is the peer range, so npm reports a peer conflict on an older Vue. If the app pins or locks `vue` at 3.5.40 or older, upgrade it (`npm i vue@^3.5.41`). Don't add a second copy of Vue.
+
+Vue 3.5.40 and older have a template compiler bug (fixed in vuejs/core#11682). It hits an element in a `v-for` over a constant array that has `:key` and `v-show` and no other dynamic binding: its `v-show` never updates. The usual case is a tab panel per section, and the tabs look broken even though `STabs` updates its `v-model`:
+
+```vue
+<!-- With Vue ≤ 3.5.40 and a `const sections = [...]`, the panels never switch -->
+<section v-for="section in sections" v-show="activeTab === section.key" :key="section.key">
+```
+
+Upgrade Vue. If you can't, render the panels with `SWindow` / `SWindowItem` bound to the same model (it sizes itself to the active panel; on `@khsura/sui` 1.19.0 and earlier give `SWindow` a `height` or it renders at 0 height), or move `:key` to a wrapping `<template v-for="section in sections" :key="section.key">` and keep `v-show` on the element inside it.
 
 ---
 
@@ -63,6 +76,16 @@ import { SApp } from '@khsura/sui'
 `createSUI()` also registers the `v-scroll` and `v-resize` directives.
 
 Import components where you use them (Vue): `import { SButton, SCard } from '@khsura/sui'`.
+
+### iPhone notch and home indicator — `viewport-fit=cover`
+
+For a full-screen app on iPhone (a PWA, a Capacitor/Cordova shell, a web view), opt in to the safe areas in `index.html` (Nuxt: `app.head.meta` in `nuxt.config.ts`):
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+```
+
+`SApp` then reads `env(safe-area-inset-*)` into `--s-safe-area-top|right|bottom|left`, and these components pad by them: a fixed `SAppBar` (below the notch, plus the side insets in landscape; `SMain` and a desktop drawer start below it), `SBottomNavigation` (grows above the home indicator), the mobile `SNavigationDrawer` (top, bottom and the side it opens from), a `fullscreen` `SDialog` (all sides) and `SSnackbar` (above the home indicator, or below the notch with `location="top"`). Without `viewport-fit=cover`, on desktop and on Android the insets are `0px` and nothing changes. Don't add your own `env(safe-area-inset-*)` padding to these components: it would double the inset. Content you place at a screen edge yourself can use the same variables, e.g. `padding-bottom: var(--s-safe-area-bottom)`.
 
 ---
 
@@ -139,7 +162,8 @@ app.use(
 ```
 
 - **`presetColors` keys:** `primary`, `secondary`, `success`, `info`, `warning`, `important`, `error` — usable as `color="..."` on components. Extra keys you add become usable too.
-- **`appColors` keys:** `appBar`, `title`, `text`, `secondaryText`, `anchor`, `background`, `card`, `button`, `switch`, `border`, `disabled`, `snackbar`, `inputPlaceholderShown`, `textErrorHover`.
+- **`appColors` keys:** `appBar`, `title`, `text`, `secondaryText`, `anchor`, `background`, `card`, `button`, `switch`, `border`, `disabled`, `snackbar`, `inputPlaceholderShown`, `textErrorHover`, `textError`, `focusRing`.
+- **Contrast:** each preset's text colour (`--s-color-<name>--text`) is the light or dark theme `text` colour with the higher WCAG contrast ratio. Pick preset values that reach 4.5:1 with one of them; `getContrastRatio` is not exported, so check with any contrast tool. `textError` (form error text) must reach 4.5:1 and `focusRing` 3:1 on `background` and `card`.
 - Use **opaque hex** values (`#ffc107`). An alpha hex (`#ffc10799`) looks washed out everywhere; for translucency use `color-mix(in srgb, #{s_getPresetColor('warning')} 60%, transparent)` in SCSS.
 
 ### Dark mode — `useTheme()`
@@ -164,7 +188,7 @@ Set a prop once for every instance instead of repeating it (or overriding classe
 app.use(
   createSUI({
     components: {
-      SSelect: { outlined: true },
+      SSelect: { grow: true },
       SButton: { color: 'primary', size: 'small' },
       SInput: { dense: true },
     },
@@ -265,7 +289,7 @@ Available on most components (check the component's reference when unsure):
 | `disabled` | `boolean` | Disable interaction |
 | `width` / `height` / `maxWidth` / `minWidth` | `string \| number` | Dimensions |
 | `tag` | `string` | Override root element |
-| `href` / `to` | `string` / `RouteLocationRaw` | Render as `<a>` / `router-link` |
+| `href` / `to` | `string` / `LinkLocation` | Render as `<a>` / `router-link` (`to` falls back to `<a href>` without vue-router) |
 
 ---
 
@@ -312,6 +336,7 @@ Directives (`v-scroll`, `v-resize`) and utility classes: **sui-utilities**.
 | ❌ | ✅ |
 |---|---|
 | `npm i @khsura/sui` → 404/401 | A leftover `@khsura` scope override still points at GitHub Packages — remove it from `.npmrc` / `.yarnrc.yml` (step 1, *Migrating from GitHub Packages*) |
+| Tab panels (`v-for` + `:key` + `v-show`) never switch although `STabs` updates its model | Vue 3.5.40 or older: upgrade to Vue 3.5.41 or newer (step 1, *Vue version*) |
 | Icons render as empty boxes | Load `@mdi/font` — `import '@mdi/font/css/materialdesignicons.css'` (Vue) or `css: ['@mdi/font/css/materialdesignicons.css']` (Nuxt) |
 | Only `style.css` (or only `base.css`) imported | Import both in plain Vue; the Nuxt module loads them |
 | No `<SApp>` root → no colors, dialogs/menus never show | Wrap the app in `<SApp>` |
@@ -323,10 +348,10 @@ Directives (`v-scroll`, `v-resize`) and utility classes: **sui-utilities**.
 | `SMenu` without `location` opens on top of its button | `location="bottom"` |
 | Named `SLayout` with un-`for`ed children | `for` on every child, or `name`/`for` on none |
 | Items as `{ title, value }` / `{ label, id }` | `{ text, value }` or plain strings |
-| `SSelect multiple / chips / clearable / placeholder` | `SAutocomplete` |
+| `SSelect multiple / chips / clearable` | `SAutocomplete` |
 | Rule returns `false` | Return a message string |
 | `if (!formRef.value.validate()) return` | `validate()` returns `true` when there **are** errors |
-| `hideDetails` to hide just the error | `hideError` (`hideDetails` hides the label too) |
+| `hideDetails` to hide just the error | `hideError` (`hideDetails` hides the label above a field too; `SCheckbox`/`SRadio` keep their own label) |
 | Unknown props (`SDialog title`, `persistent-hint`, `app`) | Silently ignored — check `@types/definitions/props` |
 | `:deep(.s_*) { … !important }` | A prop, a `createSUI({ components })` default, or theme colors |
 | `alpha` hex in `presetColors` | Opaque hex + `color-mix()` where you need translucency |
@@ -348,7 +373,7 @@ It merges a `sui` entry (`{ "command": "npx", "args": ["-y", "@khsura/sui-mcp"] 
 When the server is connected:
 
 - Call `get_component_api` before using a component you have not checked; it reports the project's version. If it says the component needs a newer `@khsura/sui`, upgrade or pick another component.
-- Start common patterns (app shell, validated form, activator overlays, data table, responsive grid, theme setup) from `get_recipe`.
+- Start common patterns (app shell, validated form, activator overlays, data table, responsive grid, theme setup, filter bar, centered page) from `get_recipe`.
 - Run `validate_sui_template` on every template you write and fix every error before finishing.
 
 Per-client snippets: the package README at https://www.npmjs.com/package/@khsura/sui-mcp and the **AI / MCP** page at https://sui.surakh.com/.

@@ -77,6 +77,9 @@ None (state managed via `v-model`).
 - Without `timeout` the snackbar stays visible until `v-model` is set to `false` — provide a close action in `#action`.
 - Single-line by default: long text is cut with an ellipsis — use `multi-line`.
 - No `color` prop; `outlined`, `underlined` and `borderRadius` are not applied.
+- Give a `variant="text"` (or `variant="icon"`) action no `color`: it takes the snackbar's light text colour, so it is readable on the dark snackbar. A preset `color` (`warning`, `primary`, ...) inside the snackbar uses a variant that reaches 4.5:1 on the snackbar, not the darker page variant. A CSS colour (`color="#1976d2"`) is used as is, so pick a light one.
+- One snackbar per location: two open at the same `location` overlap. Show one at a time; a queue component for stacking is planned.
 - The app must be wrapped in `<SApp>` (the snackbar teleports into its overlay container).
+- On an iPhone with `viewport-fit=cover`, the snackbar sits above the home indicator (and above a bottom navigation), or below the notch with `location="top"`. Without a safe area the inset is `0px`.
 - A `timeout` of `4000`–`6000` ms is recommended for most use cases.
 - For error messages, prefer no auto-dismiss so users can read the full message.

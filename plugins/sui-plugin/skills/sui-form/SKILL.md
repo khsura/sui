@@ -18,17 +18,18 @@ Then generate a complete Vue SFC using these rules:
 **Form rules:**
 
 - Wrap everything in `<SForm ref="formRef" @submit.prevent="submit">` and validate in `submit` (see **SForm.validate()** below — its return value is inverted from what you'd expect)
+- `SForm` renders `<form novalidate>`: the SUI `rules` are the only validation, so `type="email"`, `required` or `pattern` never pop the browser's own bubble over the SUI error. Validate emails with a rule. `:novalidate="false"` turns native validation back on. Before 1.20.0 `SForm` did not add `novalidate`; add it yourself there
+- Every validated field reserves one line under itself for its error message, so the rhythm stays even when errors appear. For an action row (a field next to a button: a search bar, a filter bar), wrap the fields and buttons in `<SFormRow>`: each button lines up with the field box, with or without a label and while an error shows, and the row wraps on a phone. Never use a plain flex `<div>` there (the button lines up with the label); before 1.20.0, without `SFormRow`, put `hide-details` on the field. `SCheckbox` keeps its label with `hide-details` (before 1.20.0 it hid it; use `hide-error` there)
+- Bind an empty `SDatePickerInput` as `''` or `null` — both mean "no date" (before 1.20.0 `''` opened on "Invalid date"; use `null` there)
 - Use `SInput` for text/email/password/number — always include `label` and `v-model`
-- **No `type="email"`, `type="url"` or `type="number"` inside `SForm`** unless the form has `novalidate`: those types make the browser validate on submit, its bubble covers SUI's error text and the submit handler never runs. For email/URL write `type="text" inputmode="email" autocomplete="email"` (or `url`) and check the format with a rule. For a number field keep `type="number"` (SInput writes a `number`) and add `novalidate`: `<SForm ref="formRef" novalidate @submit.prevent="submit">`
-- Start an empty `SDatePickerInput` model as `null` (type it `string | null`), never `''` — `''` opens the picker on "Invalid date" and a grid of NaN
-- Use `STextarea` for multi-line text (add `autogrow` if height should expand — all lowercase, not `auto-grow`)
-- Use `SSelect` for a plain single-value dropdown — `items` must be `SelectItem[]` or `string[]`. Type `SelectItem` from `@khsura/sui` (`text`, `value`, optional `disabled`). **SSelect has no `multiple`, `chips`, `clearable` or `placeholder`** — when you need any of those, use `SAutocomplete`.
+- Use `STextarea` for multi-line text (add `autogrow` if height should expand — all lowercase, not `auto-grow`). For a character count use its `counter` prop (with `maxlength`: `12 / 200`), never a `<p>` after the field — that lands below the reserved error line, far from the field
+- Use `SSelect` for a plain single-value dropdown — `items` must be `SelectItem[]` or `string[]`. Type `SelectItem` from `@khsura/sui` (`text`, `value`, optional `disabled`). It is outlined like `SInput` by default, never repeats its `label` inside the field (use `placeholder` for an empty-state hint) and is as wide as its longest option — add `grow` for full width. **SSelect has no `multiple`, `chips` or `clearable`** — when you need any of those, use `SAutocomplete`.
 - Use `SAutocomplete` for searchable, clearable or multi-select — same `items` shape, add `multiple chips closable-chips` for multi-select. **It has no `rules` and does not register with `SForm`** — check its value yourself in `submit`
-- Use `SCheckbox` for a single boolean — `label` prop, not slot. It has no `value`/`indeterminate`, so build checkbox groups from several boolean models
+- Use `SCheckbox` for a single boolean — `label` prop, not slot. Its error line sits under the box and reserves the same space as under an input, and it keeps an 8px gap above the box (both dropped with `hide-details`). It has no `value`/`indeterminate`, so build checkbox groups from several boolean models
 - Use `SRadioGroup` with `<SRadio value="..." label="...">` children (slot-based); use `column` for vertical layout
 - Use `SSwitch` for on/off toggles — it never runs `rules`, shows no error and is not validated by `SForm`
-- Submit: `<SButton type="submit" color="primary" :loading="submitting">Submit</SButton>`
-- `:loading` on `SButton` implicitly disables it — do not also set `:disabled`
+- Submit: `<SButton type="submit" color="primary" class="s_mt__2" :loading="submitting">Submit</SButton>` — `s_mt__2` keeps the last field's error message off the button
+- `:loading` on `SButton` implicitly disables it — do not also bind `:disabled` to the submitting flag
 
 **Validation rules signature:** `(value: unknown) => true | string`
 
@@ -59,20 +60,24 @@ if (hasErrors) return
 - `v-model:error="hasError"` — `true` while any input has an error
 - `v-model:errors="messages"` — all current error strings
 
-Use them to disable the submit button; `resetValidation()` (exposed) clears every input's errors.
+Use `v-model:error` to disable the submit button **only after a failed submit**: set `submitAttempted = true` in `submit` and bind `:disabled="submitAttempted && hasError"`; it re-enables as soon as every rule passes. Never disable it from page load (a disabled button gives no reason and cannot be focused), and keep the inline errors so users see why. `resetValidation()` (exposed) clears every input's errors.
 
 ---
 
 ## `hideDetails` vs `hideError`
 
-| Prop          | Hides the label | Hides the error message | Red error frame       |
-| ------------- | --------------- | ----------------------- | --------------------- |
-| _(neither)_   | no              | no                      | shown                 |
-| `hideError`   | no              | **yes**                 | shown                 |
-| `hideDetails` | **yes**         | **yes**                 | shown                 |
+| Prop          | Hides the label above the field | Hides the error message | Red error frame       |
+| ------------- | ------------------------------- | ----------------------- | --------------------- |
+| _(neither)_   | no                              | no                      | shown                 |
+| `hideError`   | no                              | **yes**                 | shown                 |
+| `hideDetails` | **yes**                         | **yes**                 | shown                 |
+
+`SCheckbox` and `SRadio` labels are the control's own text, not a label above a field: `hideDetails` keeps them and only removes the error area.
 
 - Use **`hideError`** when you only want to drop the message line (dense tables, inline filters) but keep the label.
 - Use **`hideDetails`** only when the field should have no label either — it is not a "compact" switch. On `SCheckbox` the label is the only text, so `hideDetails` leaves a bare box ("Remember me" disappears); use `hideError` there.
+- With `hideDetails` the hidden label still names the field (it becomes the control's `aria-label`). A field with no `label` at all needs `aria-label` (`ariaLabel` on SInput, STextarea, SSelect, SAutocomplete; on each SRadio without a `label`).
+- Labels, ids and errors are wired for you: an `id` is generated when you don't pass one, and an invalid field gets `aria-invalid` and `aria-describedby` pointing at its error message. Don't add your own `<label for>` or `aria-describedby`.
 - The field frame turns red on error even with either flag set (`SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadioGroup`, `SDatePickerInput`), so users can still see which field is invalid. Don't add your own `:deep()` error border.
 
 ---
@@ -143,8 +148,8 @@ Use this to choose the right component and props for each field.
 | Component         | v-model            | Key props                                                                                                                                                                                                                                                                                | When to use                               |
 | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
 | **SInput**        | `string \| number` | `label`, `type` (`text` \| `email` \| `password` \| `number` \| `tel` \| `url` \| `search`), `placeholder`, `suffix`, `dense`, `readonly`, `max`/`min`, `maxlength`/`minlength`, `inputmode` (`numeric` \| `decimal` \| `email` \| `tel`), `positive` / `allowDecimal` (numbers), `size` | Single-line text, email, password, number |
-| **STextarea**     | `string`           | `label`, `placeholder`, `rows`, `cols`, `autogrow`, `resize`, `dense`, `tile`, `maxlength`/`minlength`, `readonly`                                                                                                                                                                       | Multi-line text                           |
-| **SSelect**       | `string \| number` | `items`: `SelectItem[]` or `string[]` (type from `@khsura/sui`: `text`, `value`, optional `disabled`). Also `label`, `dense`, `grow`, `text`, `divided`, `color`, `outlined`/`underlined`/`borderRadius`. **No** `multiple`/`chips`/`clearable`/`placeholder`                            | Single-value dropdown                     |
+| **STextarea**     | `string`           | `label`, `placeholder`, `rows`, `cols`, `autogrow`, `resize`, `counter`, `dense`, `tile`, `maxlength`/`minlength`, `readonly`                                                                                                                                                                       | Multi-line text                           |
+| **SSelect**       | `string \| number` | `items`: `SelectItem[]` or `string[]` (type from `@khsura/sui`: `text`, `value`, optional `disabled`). Also `label`, `placeholder`, `dense`, `grow`, `text`, `divided`, `color`, `outlined` (default `true`)/`underlined`/`borderRadius`. **No** `multiple`/`chips`/`clearable`                            | Single-value dropdown                     |
 | **SAutocomplete** | `any` or `any[]`   | Same `items` as SSelect; + `multiple`, `chips`, `closableChips`, `clearable`, `placeholder`, `filter`, `filterMode`, `debounce`, `loading`, `allowUnlisted`, `delimiter`. `debounce` defaults to 500 ms. Events: **`@search-item`** (search text, for async options), **`@create-item`** (with `allowUnlisted`). No `rules`; `disabled` does not disable its text field         | Searchable / multi / async select         |
 | **SCheckbox**     | `boolean`          | `label`, `color`, `size` (`'default'` \| `'large'`), `block`, `bordered`, `readonly`                                                                                                                                                                                                                              | Single boolean                            |
 | **SRadioGroup**   | `any`              | Slot content: `<SRadio value="..." label="...">` children (no `items` prop). Props: `column`, `grow`, `color`, `name`                                                                                                                                                                    | Single choice from list                   |

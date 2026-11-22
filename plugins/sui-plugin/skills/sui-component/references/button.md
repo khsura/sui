@@ -36,7 +36,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsButton.d.ts`
 | `tag` | `"a" \| "button" \| null` | `"button"` | no | `a`, `button` |
 | `target` | `"_blank" \| "_self" \| "_parent" \| "_top"` | — | no | `_blank`, `_parent`, `_self`, `_top` |
 | `theme` | `AppThemeType` | — | no | `dark`, `light` |
-| `to` | `string \| it \| et \| null` | — | no | — |
+| `to` | `LinkLocation \| null` | — | no | — |
 | `type` | `ButtonTypeType` | — | no | `button`, `reset`, `submit` |
 | `underlined` | `boolean \| null` | — | no | — |
 | `value` | `string \| number \| boolean` | — | no | — |
@@ -73,7 +73,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsButton.d.ts`
 - `underlined`: Underlined style
 - `borderRadius`: Custom radius (`8`, `'8px'`, `'1rem'`, ...)
 - `href`: Renders an `<a href>`
-- `to`: Renders a `router-link` (needs vue-router)
+- `to`: Renders a `router-link` when the app uses vue-router; without it, a plain `<a href>` (a route given by `name` gets no `href`, so pass a path)
 - `target`: Only applied with `href`
 - `rel`: Only applied with `href`
 - `tag`: Root tag when neither `href` nor `to` is set

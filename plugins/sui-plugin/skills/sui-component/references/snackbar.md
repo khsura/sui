@@ -68,7 +68,7 @@ None — use `v-model`.
 <SSnackbar v-model="offline" location="top">
   Connection lost.
   <template #action>
-    <SButton variant="text" color="warning" @click="retry">Retry</SButton>
+    <SButton variant="text" @click="retry">Retry</SButton>
     <SButton variant="icon" @click="offline = false"><SIcon icon="mdi-close" /></SButton>
   </template>
 </SSnackbar>
@@ -81,8 +81,10 @@ None — use `v-model`.
 ## Gotchas
 
 - No `color` prop — colors come from the theme's `snackbar` color.
-- The snackbar is dark (`#424242`) in both themes. A `variant="text"` action in `primary`, `secondary`, `success`, `info` or `error` is below 4.5:1 on it (`primary` is 2.18:1); use `color="warning"` or a light CSS colour such as `color="#ffffff"`.
+- The snackbar is dark (`#424242`) in both themes. Give a `variant="text"` (or `variant="icon"`) action **no** `color`: it takes the snackbar's light text colour, so the readable action is `<SButton variant="text">Undo</SButton>`. Since 1.20.0 a preset `color` (`warning`, `primary`, ...) inside the snackbar uses a variant that reaches 4.5:1 on it, but adds nothing over the default. A CSS colour (`color="#1976d2"`) is used as is, so pick a light one such as `color="#ffffff"`. Before 1.20.0 an action without `color` kept the page's dark text colour (about 1.3:1) and `primary`, `secondary`, `success`, `info` and `error` were below 4.5:1 (`primary` 2.18:1), so use `color="warning"` or a light CSS colour there.
+- One snackbar per location: two open at the same `location` overlap. Show one at a time (or one `top`, one bottom); a queue component for stacking is planned.
 - `outlined`, `underlined` and `borderRadius` appear in the prop types but are not applied.
 - Without `timeout`, provide a close action in `#action`.
 - Single-line by default: long text is cut with an ellipsis — use `multi-line`.
 - The app must be wrapped in `<SApp>` (the snackbar teleports into its overlay container).
+- On an iPhone with `viewport-fit=cover` the snackbar clears the home indicator (or the notch with `location="top"`) by itself.

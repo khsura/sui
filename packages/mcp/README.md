@@ -81,12 +81,12 @@ The server sends these instructions when a client connects:
 | Tool | What it returns |
 | --- | --- |
 | `list_components` | Every component with its family and a one-line purpose. |
-| `get_component_api` | Props (type, default, required, allowed values), slots and events of one component as markdown. Accepts `SButton`, `s-button` or `button`. Adds the activator-pattern note (SDialog, SMenu, STooltip, SSnackbar) or the layout-child note (SAppBar, SNavigationDrawer, SMain, SFooter, SBottomNavigation). Unknown names return an error with the three closest names. A component that only the bundled (newer) API has returns an error saying the project needs a newer `@khsura/sui`. |
+| `get_component_api` | Props (type, default, required, allowed values), slots and events of one component as markdown. Accepts `SButton`, `s-button` or `button`. Adds the activator-pattern note (SDialog, SMenu, SSnackbar), the STooltip activator note (no slot props to bind), or the layout-child note (SAppBar, SNavigationDrawer, SMain, SFooter, SBottomNavigation). Unknown names return an error with the three closest names; a name from another UI library (`SCol`, `STextField`, `SBtn`, `SDataTable`, `STabsWindow`, `SAvatar`, …) gets its SUI equivalent and a hint first. A component that only the bundled (newer) API has returns an error saying the project needs a newer `@khsura/sui`. |
 | `list_guides` | The setup guide topics with what each covers. |
 | `get_guide` | One setup guide as markdown: `installation` (Vue and Nuxt, styles, `@mdi/font`), `theming` (theme colors, dark mode), `component-defaults`, `display` (`useDisplay` breakpoints), `i18n`, `common-mistakes`. Unknown topics return an error with the topic list. |
 | `validate_sui_template` | Checks a `.vue` SFC or bare template fragment against the API and the composition rules below. Returns a summary line, then `line:col [rule] message — fix: hint — recipe: name` per issue (the recipe part only when one applies). Issues are a normal result, not a tool error. |
 | `list_recipes` | The tested, copy-ready recipes with when to use each. |
-| `get_recipe` | One recipe: its notes, the full Vue SFC in a ```` ```vue ```` block and the link to its live Storybook story. Names: `app-shell`, `validated-form`, `activator-overlays`, `data-table`, `responsive-grid`, `theme-setup`. Unknown names return an error with the name list. |
+| `get_recipe` | One recipe: its notes, the full Vue SFC in a ```` ```vue ```` block and the link to its live Storybook story. Names: `app-shell`, `validated-form`, `activator-overlays`, `data-table`, `responsive-grid`, `theme-setup`, `filter-bar`, `centered-page`. Unknown names return an error with the name list. |
 | `ping` | Health check. |
 
 ## Example prompts
@@ -102,7 +102,7 @@ The server sends these instructions when a client connects:
 | Rule | Severity | What it catches | Recipe |
 | --- | --- | --- | --- |
 | `parse-error` | error | Template syntax errors. | — |
-| `unknown-component` | error | An `S*` / `s-*` tag that does not exist, with the closest names. | — |
+| `unknown-component` | error | An `S*` / `s-*` tag that does not exist, with the closest names. A name from another UI library gets its SUI equivalent first (the alias map in `src/constants/componentAliases.ts`); an alias stops applying once that name is a real component in `sui-api.json`. | — |
 | `unknown-prop` | error | Static attributes, `:prop` / `v-bind:prop`, and `v-model` / `v-model:prop` targets the component does not have (kebab and camel case both accepted). | — |
 | `invalid-enum-value` | error | A static value, or a quoted literal binding, outside an enum prop's values. | — |
 | `unknown-slot` | error | `#name` / `v-slot:name` the component does not have. | — |
@@ -111,14 +111,18 @@ The server sends these instructions when a client connects:
 | `form-rules-outside-form` | warning | An `S*` input with `rules` / `:rules` and no enclosing SForm: rules only run on value change, so untouched fields pass on submit. | `validated-form` |
 | `icon-button-label` | warning | An SButton whose only content is an SIcon and that has no `aria-label`, `aria-labelledby` or `title`. | `app-shell` |
 | `no-raw-replacement` | warning | Raw `<button>`, `<input>` (not `type="hidden"`), `<select>`, `<textarea>` or `<dialog>`, with the SUI component to use (`<input type="checkbox">` → SCheckbox, `radio` → SRadioGroup). | `validated-form`, `activator-overlays` for `<dialog>` |
-| `native-validation-in-form` | warning | `type="email"`, `url` or `number` on an `S*` input inside an SForm without `novalidate`: the browser validates on submit and its bubble covers SUI's error text. The fix hint suggests `type="text" inputmode="email"` (or `novalidate` for numbers). | `validated-form` |
-| `hide-details-hides-label` | warning | `hide-details` on an SCheckbox that has a `label`: it hides the label too, so the checkbox shows no text. Use `hide-error`. | `validated-form` |
-| `snackbar-action-contrast` | warning | A `variant="text"` SButton with `color="primary"` (or `secondary`, `success`, `info`, `error`) in an SSnackbar `#action` slot: below 4.5:1 on the dark `#424242` snackbar. | `activator-overlays` |
+| `native-validation-in-form` | warning | `type="email"`, `url` or `number` on an `S*` input inside an SForm without `novalidate`: the browser validates on submit and its bubble covers SUI's error text. The fix hint suggests `type="text" inputmode="email"` (or `novalidate` for numbers). Only before 1.20.0 (`fixedIn`). | `validated-form` |
+| `hide-details-hides-label` | warning | `hide-details` on an SCheckbox that has a `label`: it hides the label too, so the checkbox shows no text. Use `hide-error`. Only before 1.20.0 (`fixedIn`). | `validated-form` |
+| `snackbar-action-contrast` | warning | A `variant="text"` or `variant="icon"` SButton in an SSnackbar `#action` slot with a hex CSS `color` below 4.5:1 on the dark `#424242` snackbar (a CSS colour is used as is). Before 1.20.0 it also reports a `variant="text"` action with `color="primary"` (or `secondary`, `success`, `info`, `error`) and a text or icon action with no `color`, which kept the page's dark text colour there; from 1.20.0 an action without `color` takes the snackbar text colour and preset colours use a variant tuned to the snackbar. | `activator-overlays` |
 | `block-buttons-in-row` | warning | Two or more `block` SButtons as siblings in a flex row (`s_display__flex` / `s_display--*__flex`, an inline `display: flex`, or SCardActions): `block` does not shrink, so later buttons are pushed off screen. | `responsive-grid` |
-| `card-title-text-align` | warning | An `s_textAlign__*` class on SCardTitle, which is a flex container, so the class has no effect. The fix hint names the matching `s_justify__*` class. | — |
-| `date-picker-empty-string` | warning | An SDatePickerInput whose `v-model` / `:model-value` is `''`, or whose model starts as `''` in the SFC script (`x = ref('')`, `{ x: '' }`): the picker opens on "Invalid date". Start it as `null`. | `validated-form` |
+| `field-button-row` | warning | A text field (`SInput`, `SSelect`, `SDatePickerInput`, `SAutocomplete`, `STextarea`) without `hide-details` and an `SButton` as siblings in a flex row: the button lines up with the field's label, not its box. Use `SFormRow` (1.20.0+); recipe `filter-bar`. |
+| `card-title-text-align` | warning | An `s_textAlign__*` class on SCardTitle, which is a flex container, so the class has no effect. The fix hint names the matching `s_justify__*` class. Only before 1.20.0 (`fixedIn`). | — |
+| `date-picker-empty-string` | warning | An SDatePickerInput whose `v-model` / `:model-value` is `''`, or whose model starts as `''` in the SFC script (`x = ref('')`, `{ x: '' }`): the picker opens on "Invalid date". Start it as `null`. Only before 1.20.0 (`fixedIn`). | `validated-form` |
+| `fill-height-under-app` | warning | `s_height--fill` on a direct child of `SApp`: before 1.20.0 it resolves to the content height (SApp only has a min-height), so a card centred inside it sticks to the top. Points to the `centered-page` recipe. Skipped from `@khsura/sui` 1.20.0, where that child grows to fill SApp. |
 
-Recipe names are stable (`app-shell`, `validated-form`, `activator-overlays`, `data-table`, `responsive-grid`, `theme-setup`); `get_recipe` serves the recipes under these names.
+Rules for behaviours that a component fix removed carry a `fixedIn` version: the engine skips them when the resolved `sui-api.json` version is that version or newer, so a project on an older `@khsura/sui` still gets the warning. A `version` that is not semver keeps every rule on.
+
+Recipe names are stable (`app-shell`, `validated-form`, `activator-overlays`, `data-table`, `responsive-grid`, `theme-setup`, `filter-bar`, `centered-page`); `get_recipe` serves the recipes under these names.
 
 Future work: a `table-structure` rule (STable column keys and `item.<column>` slot names, per `packages/app/docs/components/table.md`) is waiting on complete STable slot data in `sui-api.json`.
 

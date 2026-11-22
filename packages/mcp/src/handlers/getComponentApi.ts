@@ -40,7 +40,7 @@ export const registerGetComponentApiTool = (
     GET_COMPONENT_API_TOOL_NAME,
     {
       description:
-        'Returns the props, slots and events of one @khsura/sui component as markdown, with usage notes for activator and layout-child components. Unknown names return the closest matches; a component that only a newer @khsura/sui has says so.',
+        'Returns the props, slots and events of one @khsura/sui component as markdown, with usage notes for activator and layout-child components. Unknown names return the SUI equivalent of a name from another UI library (SCol, STextField, SBtn, …) and the closest matches; a component that only a newer @khsura/sui has says so.',
       inputSchema: getComponentApiInputSchema,
     },
     ({ name }) =>
@@ -55,7 +55,7 @@ export const registerGetComponentApiTool = (
 
         return newer
           ? textResult(formatComponentNeedsUpgrade(resolved, newer.bundled, newer.component.name), true)
-          : textResult(formatUnknownComponent(resolved, name, lookup.suggestions), true)
+          : textResult(formatUnknownComponent(resolved, name, lookup.suggestions, lookup.alias), true)
       }),
   )
 }

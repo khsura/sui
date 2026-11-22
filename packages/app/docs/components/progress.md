@@ -14,6 +14,7 @@ Horizontal bar progress indicator.
 |------|------|---------|-------------|
 | `value` | `number \| string` | `0` | Progress value (0–100) |
 | `indeterminate` | `boolean` | `false` | Animated indeterminate state (unknown progress) |
+| `ariaLabel` | `string` | `'Loading'` | Accessible name of the progress bar |
 | `color` | `string` | `'info'` | Bar color — preset name or CSS color |
 | `backgroundColor` | `string \| null` | `undefined` | Track background color (falls back to `color`) |
 | `backgroundOpacity` | `string \| number \| null` | `undefined` | Track opacity |
@@ -42,6 +43,7 @@ Circular/spinner progress indicator.
 |------|------|---------|-------------|
 | `value` | `number` | `0` | Progress value (0–100, clamped) |
 | `indeterminate` | `boolean` | `false` | Animated spinning state |
+| `ariaLabel` | `string` | `'Loading'` | Accessible name of the spinner |
 | `color` | `string \| null` | `undefined` | Arc color — preset name or CSS color (text color; inherits `currentColor`) |
 | `size` | `number \| string` | `32` | Diameter in px — must be numeric (`'2rem'` breaks) |
 | `width` | `number` | `4` | Stroke width of the arc in px |
@@ -111,6 +113,7 @@ None.
 
 - `SButton` has a built-in `loading` prop that shows a `SProgressCircular` automatically — prefer that over manually composing.
 - `indeterminate` is for unknown progress durations; use `value` (0–100) for known progress.
+- Both are `role="progressbar"` with `aria-valuenow` (omitted while indeterminate). Pass `aria-label` to say what is loading.
 - For page-level loading bars (like NProgress), use `SProgressLinear` with `position="fixed"` at the top of the viewport.
 - `SProgressLinear` defaults to `color="info"`, not primary.
 - `SProgressCircular` always reports `aria-valuenow="60"`; set your own `aria-valuenow` if accessibility matters.

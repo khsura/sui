@@ -22,16 +22,19 @@
           :placeholder="placeholder ?? inputFormat"
           :disabled="disabled ?? undefined"
           :readonly="readonly ?? undefined"
+          :aria-label="hideDetails ? (label ?? undefined) : undefined"
+          v-bind="ariaAttributesFormInput"
           @input="onInput"
           @focus="onFocus"
           @blur="onBlur"
           @keydown.enter.prevent="commitInput"
+          @keydown.esc="onEscape"
         />
         <span class="s_datePickerInput__suffix" @mousedown.prevent @click="toggleMenu">
           <SIcon icon="mdi-calendar" />
         </span>
       </div>
-      <SFormInputError v-if="!hideDetails && !hideError" :errors="errors" />
+      <SFormInputError v-if="!hideDetails && !hideError" :id="errorId" :errors="errors" />
     </div>
     <SButton
       v-if="carousel"
@@ -53,7 +56,7 @@
         v-bind="attrs"
       >
         <SDatePicker
-          :model-value="model ?? undefined"
+          :model-value="model || undefined"
           :type="type"
           :color="color"
           :min="min"
@@ -73,7 +76,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, nextTick, ref, useId, useTemplateRef, watch } from 'vue'
+import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import SDatePicker from './sDatePicker.vue'
 import SFormInputError from '@/app/components/form/common/sFormInputError.vue'
@@ -82,10 +85,12 @@ import SOverlay from '@/app/components/sOverlay.vue'
 import SButton from '@/app/components/sButton.vue'
 import type { PropsDatePickerInput, PropsMenu } from '@/app/definitions'
 import { datePickerDisplayFormat } from '@/app/configs'
+import { datePickerInputPlaceholderCharWidthEm } from '@/app/constants'
 import { convertDatePickerValue } from '@/app/repositories'
 import {
   useComponentDefaultsService,
   useDatePickerInputService,
+  useFieldLayoutService,
   useFormInputService,
   useMeasurableStylesService,
   useMenuService,
@@ -109,11 +114,15 @@ const props = useComponentDefaultsService('SDatePickerInput', rawProps)
 const emit = defineEmits<EmitFormInput<string | null>>()
 const model = defineModel<string | null>()
 const menuModel = ref(false)
-const uniqueId = useId()
-const inputId = computed(() => props.id ?? uniqueId)
 const activatorElement = useTemplateRef('activatorElement')
 const contentElement = useTemplateRef('contentElement')
-const { errors, updateFormInput } = useFormInputService<string | null>(props, emit, model)
+
+const { errors, updateFormInput, inputId, errorId, ariaAttributesFormInput } = useFormInputService<string | null>(
+  props,
+  emit,
+  model,
+)
+
 /** Sizes the field itself, the picker it opens keeps its own width. */
 const { measurableStyles } = useMeasurableStylesService(props)
 const { inputFormat, canStepPrev, canStepNext, stepPrev, stepNext } = useDatePickerInputService(props, model)
@@ -122,10 +131,23 @@ const { contentClasses, contentStyles, updateLocation } = useMenuService(
   { ...props, location: 'bottom' } as unknown as PropsMenu,
   menuModel,
   { activatorElement, contentElement },
+  // Near the bottom of the viewport the picker flips above the field, and near the right edge it shifts left,
+  // so it stays inside the viewport. The calendar keeps its full height: it is shifted, never clipped.
+  // The popup hugs the fixed-width calendar instead of stretching to the field: the popup box has no
+  // background of its own, so under a wide (`block`) field its right-hand strip was transparent.
+  { keepInViewport: true, noContentMinWidth: true },
 )
 
 const closeMenu = () => {
   menuModel.value = false
+}
+
+// Esc closes an open calendar without leaving the field (and without closing an SDialog around it).
+const onEscape = (event: KeyboardEvent) => {
+  if (menuModel.value) {
+    event.stopPropagation()
+    closeMenu()
+  }
 }
 
 onClickOutside(contentElement, closeMenu, { ignore: [activatorElement] })
@@ -147,7 +169,15 @@ watch(
 
 const inputText = computed(() => (isEditing.value ? localText.value : (formattedValue.value ?? '')))
 
+const { classListField } = useFieldLayoutService(
+  computed(() => ({
+    hasLabel: !!props.label && !props.hideDetails,
+    hasDetails: !props.hideDetails && !props.hideError,
+  })),
+)
+
 const classList = computed(() => ({
+  ...classListField.value,
   's_datePickerInput--disabled': props.disabled,
   's_datePickerInput--dense': props.dense,
   's_datePickerInput--simple': props.simple,
@@ -158,12 +188,20 @@ const classList = computed(() => ({
 
 /** Number of characters the value of the current type needs. */
 const inputSize = computed(() => inputFormat.value.length)
+
+/** Room for the placeholder (the format by default), whose capital letters are wider than digits. */
+const placeholderWidthEm = computed(() =>
+  Math.ceil((props.placeholder ?? inputFormat.value).length * datePickerInputPlaceholderCharWidthEm),
+)
+
 /**
- * The value's own width, in characters of the input's font. The `size`
- * attribute alone is not enough: iOS Safari let the field shrink below it and
- * cut the last digit off.
+ * The value's own width, in characters of the input's font, and at least the placeholder's. The `size`
+ * attribute alone is not enough: iOS Safari sized the field below it and cut the last digit off. It is the
+ * preferred width, not a minimum: in a narrower container the input shrinks and the value ends in an ellipsis.
  */
-const inputStyles = computed(() => ({ minWidth: `${inputSize.value}ch` }))
+const inputStyles = computed(() => ({
+  '--s-date-picker-input-value-width': `max(${inputSize.value}ch, ${placeholderWidthEm.value}em)`,
+}))
 
 /**
  * Keeps the committed value in the format of the current type.
@@ -283,14 +321,16 @@ $s_datePickerInput--fontSizes: (
   flex-wrap: nowrap;
   gap: 4px;
   align-items: center;
+
+  // As wide as the value needs, but never wider than the container: in a narrow
+  // column the field shrinks (like SInput) and the value ends in an ellipsis.
   width: max-content;
-  // The field must never render narrower than the value needs.
-  min-width: min-content;
+  min-width: 0;
+  max-width: 100%;
 
   &__content {
     flex: 1 1 auto;
-    // The field must never shrink below the width the value needs.
-    min-width: min-content;
+    min-width: 0;
   }
 
   &__carouselButton {
@@ -302,6 +342,13 @@ $s_datePickerInput--fontSizes: (
     display: block;
     padding: $s_spacer calc($s_spacer * 4);
     color: s_getAppColor('secondaryText');
+  }
+
+  // The field is as wide as its value. A long label or error message wraps at
+  // that width instead of stretching the field out of its column.
+  &__label,
+  &__content > .s_formInputError {
+    contain: inline-size;
   }
 
   &__field {
@@ -345,21 +392,22 @@ $s_datePickerInput--fontSizes: (
 
   &__input {
     box-sizing: content-box;
-    flex: 1 0 auto;
-    width: auto;
-    // `inputStyles` sets the content's minimum width; the padding sits outside it.
-    min-width: auto;
+    flex: 1 1 auto;
+
+    // `inputStyles` sets the content's width; the padding sits outside it.
+    /* stylelint-disable-next-line custom-property-pattern -- component-local property, set by `inputStyles` */
+    width: var(--s-date-picker-input-value-width, auto);
+    min-width: 0;
     padding: calc($s_spacer * 2) calc($s_spacer * 4);
-    font-size: 1rem;
+    text-overflow: ellipsis;
+
+    // The SInput font size, so both fields are the same height.
+    font-size: 16px;
     line-height: inherit;
     color: s_getAppColor('text');
     outline: none;
     background-color: s_getAppColor('card');
     border: none;
-
-    &:placeholder-shown {
-      background-color: s_getAppColor('inputPlaceholderShown');
-    }
 
     &:disabled {
       cursor: not-allowed;
@@ -369,6 +417,9 @@ $s_datePickerInput--fontSizes: (
 
   &__suffix {
     display: flex;
+
+    // The calendar button keeps its size when the field shrinks.
+    flex: 0 0 auto;
     align-items: center;
 
     // The field's height through the flex line, not `height: stretch`: iOS
@@ -415,10 +466,6 @@ $s_datePickerInput--fontSizes: (
 
     .s_datePickerInput__input {
       background-color: transparent;
-
-      &:placeholder-shown {
-        background-color: transparent;
-      }
     }
 
     .s_datePickerInput__suffix {

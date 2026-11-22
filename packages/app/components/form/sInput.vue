@@ -1,6 +1,6 @@
 <template>
   <section class="s_input" :class="classList">
-    <label v-if="label" v-show="!hideDetails" :for="id" class="s_input__label">{{ label }}</label>
+    <label v-if="label" v-show="!hideDetails" :for="inputId" class="s_input__label">{{ label }}</label>
     <div class="s_input__container">
       <SRow no-gutters class="s_input__main" align="center">
         <div
@@ -12,9 +12,11 @@
           }"
         >
           <input
-            :id="id"
+            :id="inputId"
             v-bind="
               getCleanSetObject({
+                ...ariaAttributesFormInput,
+                'aria-label': ariaLabel ?? (hideDetails ? label : undefined),
                 'aria-labelledby': ariaLabelledby,
                 autocapitalize,
                 autocomplete,
@@ -63,7 +65,12 @@
       <div v-if="$slots.appendOuter" class="s_input__appendOuter"><slot name="appendOuter"></slot></div>
       <div v-else-if="appendOuter" class="s_input__appendOuter">{{ appendOuter }}</div>
     </div>
-    <SFormInputError v-if="!hideDetails && !hideError" :errors="errors" :simple="simple"></SFormInputError>
+    <SFormInputError
+      v-if="!hideDetails && !hideError"
+      :id="errorId"
+      :errors="errors"
+      :simple="simple"
+    ></SFormInputError>
   </section>
 </template>
 <script setup lang="ts" generic="T extends string | number = string | number">
@@ -74,7 +81,13 @@ import { SColumn, SRow } from '@/app/components/grids'
 import { getNumericValue, getCleanSetObject } from '@/app/lib'
 import type { PropsInput } from '@/app/definitions'
 import { useColorRepository } from '@/app/repositories/colorRepository'
-import { useComponentDefaultsService, useDisabledService, useFormInputService, useSizeService } from '@/app/services'
+import {
+  useComponentDefaultsService,
+  useDisabledService,
+  useFieldLayoutService,
+  useFormInputService,
+  useSizeService,
+} from '@/app/services'
 import { type EmitFormTextInput } from '@/app/types'
 
 const rawProps = defineProps<PropsInput>()
@@ -83,7 +96,11 @@ const emit = defineEmits<EmitFormTextInput<string | number | null>>()
 const slots: Slots = useSlots()
 const inputElement = ref<HTMLElement | null>()
 const model = defineModel<T | null>()
-const { updateFormInput, errors, hasError } = useFormInputService<string | number | null>(props, emit, model)
+
+const { updateFormInput, errors, hasError, inputId, errorId, ariaAttributesFormInput } = useFormInputService<
+  string | number | null
+>(props, emit, model)
+
 const { classListDisabled } = useDisabledService(props)
 // TODO: Sura - make able to use all preset colors
 const { getIsPredefinedPresetColor } = useColorRepository()
@@ -92,8 +109,16 @@ const isPresetPlaceholderBackground = computed(() => getIsPredefinedPresetColor(
 const { classListSize } = useSizeService(props, { block: 'input__input' })
 const isFocused = ref(false)
 
+const { classListField } = useFieldLayoutService(
+  computed(() => ({
+    hasLabel: !!props.label && !props.hideDetails,
+    hasDetails: !props.hideDetails && !props.hideError,
+  })),
+)
+
 const classList = computed(() => {
   return {
+    ...classListField.value,
     's_input--simple': props.simple,
     's_input--focus': isFocused.value,
     's_input--disabled': props.disabled,
@@ -428,10 +453,6 @@ $inputPadding: calc($s_spacer * 2);
       &.s_input__input--suffix {
         @include denseRightInput();
       }
-    }
-
-    &:placeholder-shown {
-      background-color: s_getAppColor('inputPlaceholderShown');
     }
 
     @each $name in $s_presetColorNames {

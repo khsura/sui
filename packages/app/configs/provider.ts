@@ -16,6 +16,7 @@ export const ProviderName = {
   stepperUnregisterStepperStep: Symbol() as InjectionKey<(step: number) => void>,
   stepperUpdateValue: Symbol() as InjectionKey<(value: number) => void>,
   group: Symbol() as InjectionKey<GroupProvider>,
+  radioGroupName: Symbol() as InjectionKey<ComputedRef<string>>,
   singleGroup: Symbol() as InjectionKey<SingleGroupProvider>,
   layout: Symbol() as InjectionKey<Ref<typeof defaultLayoutSizes>>,
   expansionPanel: Symbol() as InjectionKey<{

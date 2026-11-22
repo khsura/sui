@@ -1,5 +1,13 @@
 <template>
-  <div :class="classList" @click="goToStep">
+  <!-- An editable step is a button: a Tab stop that Enter or Space activates -->
+  <div
+    :class="classList"
+    v-bind="interactiveAttrs"
+    :aria-current="isCurrent ? 'step' : undefined"
+    @click="goToStep"
+    @keydown.enter.prevent="goToStep"
+    @keydown.space.prevent="goToStep"
+  >
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -59,8 +67,14 @@ const classList = computed(() => {
   }
 })
 
+const isInteractive = computed(() => !!props.editable && !props.disabled)
+
+const interactiveAttrs = computed(() =>
+  isInteractive.value ? { role: 'button', tabindex: 0 } : { 'aria-disabled': props.disabled || undefined },
+)
+
 const goToStep = () => {
-  if (props.editable) {
+  if (isInteractive.value) {
     updateStepperStepsValue(props.step)
   }
 }
@@ -121,6 +135,10 @@ $s_stepperStep__clientSize: calc($s_spacer * 3);
     cursor: pointer;
   }
 
+  &:focus-visible {
+    @include s_focusRing();
+  }
+
   &__content {
     padding-top: calc($s_stepperStep__offsetSize + $s_spacer * 2);
     padding-right: $s_spacer;
@@ -130,12 +148,14 @@ $s_stepperStep__clientSize: calc($s_spacer * 3);
     text-align: center;
   }
 
+  // The circle shows the state in the primary colour; the text stays in the text colour, which reaches
+  // 4.5:1 in both themes (primary text on the app background does not), and the current step is bold.
+  &--current #{$stepperStep}__content {
+    font-weight: 700;
+  }
+
   &--visited,
   &--current {
-    #{$stepperStep}__content {
-      color: s_getPresetColor('primary');
-    }
-
     &#{$stepperStep}--disabled {
       #{$stepperStep}__content {
         color: s_getAppColor('disabled');

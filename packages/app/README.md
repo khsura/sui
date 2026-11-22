@@ -29,6 +29,8 @@ npm i @khsura/sui
 yarn add @khsura/sui
 ```
 
+`vue` is a peer dependency: the app needs **Vue 3.5.41 or newer** (3.5.40 and older have a template compiler bug that breaks `v-show` inside a keyed `v-for`, e.g. tab panels). `vue-router` is optional: with it, `to` props render a `router-link`; without it, they render a plain `<a href>`.
+
 > **Migrating from GitHub Packages:** older versions were published to GitHub Packages. Remove the `@khsura:registry=...` line (and its `:_authToken=...` line) from your `.npmrc`, or the `npmScopes.khsura` block from `.yarnrc.yml`, so the scope resolves from npm again.
 
 ### 2. Install the plugin
@@ -53,6 +55,16 @@ You can also import SCSS sources if you want to extend tokens:
 @use '@khsura/sui/style.scss' as *;
 @use '@khsura/sui/helpers.scss' as *;
 ```
+
+### 3. iPhone notch and home indicator (optional)
+
+For a full-screen app on iPhone, add `viewport-fit=cover` to the viewport meta in `index.html`:
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+```
+
+`SApp` reads `env(safe-area-inset-*)` into `--s-safe-area-top|right|bottom|left`. A fixed `SAppBar`, `SBottomNavigation`, the mobile `SNavigationDrawer`, a fullscreen `SDialog` and `SSnackbar` pad by them. Without the opt-in, and on desktop and Android, the insets are `0px` and nothing changes.
 
 ## Quick start
 

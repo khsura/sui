@@ -9,13 +9,20 @@
         {{ weekdayName }}
       </div>
       <div v-for="(date, i) in dates" :key="i" class="s_datePickerDate__day">
+        <!-- Padding cells after the month's last week stay empty: no nameless, inert buttons -->
         <SButton
+          v-if="date.value"
           v-bind="getItemButtonProps(date.isSelected)"
           rounded
           :outlined="date.isCurrent && !date.isSelected"
+          :disabled="date.isDisabled"
+          :aria-label="date.label"
+          :aria-pressed="date.isSelected"
+          :aria-current="date.isCurrent ? 'date' : undefined"
           :class="{
             s_datePickerDate__button: true,
-            's_datePickerDate__button--disabled': !date.isCurrentMonth || date.isDisabled,
+            's_datePickerDate__button--disabled': date.isDisabled,
+            's_datePickerDate__button--outside': !date.isCurrentMonth && !date.isDisabled,
             's_datePickerDate__button--selected': date.isSelected,
             's_datePickerDate__button--today': date.isCurrent,
           }"
@@ -71,6 +78,12 @@ const { dates, getItemButtonProps } = useDatePickerItemDateService(props, emit)
     &--disabled {
       @include s_typography('caption');
       @include s_disabled(true);
+    }
+
+    // Days of the next or previous month: selectable, so muted but still readable (4.5:1)
+    &--outside {
+      @include s_typography('caption');
+      color: s_getAppColor('secondaryText');
     }
 
     &--today {

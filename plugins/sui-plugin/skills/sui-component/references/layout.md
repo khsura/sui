@@ -18,16 +18,16 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/props<AppBar|Navigatio
 
 ## How layouts are linked (read this first)
 
-- **`SApp`** is the root. It provides the app state and is itself an *app-level* layout. Wrap the whole app in it (after installing the `createSUI()` plugin).
+- **`SApp`** is the root. It provides the app state and is itself an *app-level* layout. Wrap the whole app in it (after installing the `createSUI()` plugin). It is at least the viewport height (`100dvh`), and an `SLayout` directly inside it grows with it, so don't add your own `min-height: 100vh` wrapper. A direct child with `s_height--fill` grows the same way, so a page root with `s_display__flex s_justify__center s_align__center s_height--fill` centres its content in the viewport (see the `centered-page` recipe).
 - **`SLayout`** creates a layout scope. Children find it by name:
   - SLayout without `name` → children **without `for`** join it as the **app-level** layout (inside `SApp`).
   - SLayout with `name="x"` → **every** child needs `for="x"`. A child without `for` joins the app-level layout instead, so offsets silently break.
 - **App-level vs nested.** A layout is app-level when its name equals the plugin name (`'sui'` by default, so: no `name`) or when it has the `app` prop. A named layout (`name="x"` with no `app` prop on it and its children) is a *nested* layout:
   - `SNavigationDrawer` is `position: absolute` inside the layout (not fixed), and `permanent` has **no effect**.
   - `SFooter` ignores `position`. `SBottomNavigation` is not fixed unless you set `position="fixed"`.
-  - `SMain` renders `<section>` with `min-height: 100%` instead of `<main>` with `100vh`.
+  - `SMain` renders `<section>` with `min-height: 100%` instead of `<main>` with `100vh` (minus the app bar and footer heights).
 - Without `SApp`, an unnamed `SLayout` and its children do **not** link up.
-- Below the `md` breakpoint (or with `forceMobile`), a drawer becomes a mobile overlay. It does not push `SMain`, opens by swiping in from the screen edge, and closes on an outside click.
+- Below the `md` breakpoint (or with `forceMobile`), a drawer becomes a mobile overlay. It does not push `SMain`, opens by swiping in from the screen edge, dims what is behind it with a scrim (the page for an app-level drawer, the layout for a nested one), and closes on an outside click or a tap on the scrim.
 
 ```vue
 <!-- Recommended: app-level layout -->
@@ -171,7 +171,7 @@ None.
 - `color`: Background
 - `elevation`, `outlined`, `underlined`, `borderRadius`, `tag`: Shared props (default: `tag: 'header'`)
 
-**Slots:** `default`, `extension`. SAppBar does **not** forward `prepend`/`append`, so put everything in `default` and use `SSpacer`.
+**Slots:** `default`, `extension`. SAppBar does **not** forward `prepend`/`append`, so put everything in `default` and use `SSpacer`. The content keeps an inset from the bar edges (the title and any other first/last item 16px, toolbar buttons 10px); no extra padding is needed.
 
 ## SAppBarTitle
 
@@ -260,7 +260,7 @@ None.
 **SNavigationDrawer notes**
 
 - `for` / `app`: Layout link
-- `v-model`: Open state. On desktop it auto-opens and on mobile it auto-closes (unless `persistent`) (default: closed until first resize check)
+- `v-model`: Open state. At mount and on every resize it opens itself on desktop and closes itself on mobile, whatever the starting value (unless `persistent`)
 - `location`: Side. `bottom` is always mobile-style (default: `'left'`)
 - `permanent`: Always open on desktop (**app-level layout only**)
 - `persistent`: Desktop: ignore outside clicks and resizes
@@ -276,7 +276,7 @@ None.
 - `height`: Height. App-level = the drawer has `app`, or its `for` is the app's name (default: `100vh` when app-level, else `100%`)
 - `position`, `elevation`: Shared props
 - `tag`: Root element (default: `nav` when app-level, else `aside`)
-- `hideOverlay`: Declared. The scrim is not rendered in the current version
+- `hideOverlay`: Don't dim the page (or the nested layout) behind an open mobile drawer
 
 **Slots:** `prepend`, `default` (scope `{ on }`: `click`, `transitionend`, `mouseenter`, `mouseleave` handlers), `append`.
 **Events:** `update:modelValue`, `update:width` (resize end), `update:miniVariant`, `transitionend`.
@@ -610,3 +610,4 @@ None.
 | `<SCol>` | `<SColumn>` |
 | `<SBottomNavigation v-model="tab">` with no `height`/`active-class` | Set `:height` and `active-class` |
 | `<SAppBar elevate-on-scroll>` with no position | Add `position="fixed"` |
+| `padding-top: env(safe-area-inset-top)` on a fixed `SAppBar` / `SBottomNavigation` / mobile drawer | They pad by the iPhone safe areas themselves; only add `viewport-fit=cover` to the viewport meta (getting-started skill). Your own `env()` padding doubles the inset |

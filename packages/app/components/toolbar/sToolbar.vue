@@ -105,6 +105,15 @@ const extensionStyles = computed(() => {
     > .s_toolbarButton:last-of-type {
       margin-inline-end: 10px;
     }
+
+    // other content at either end (a count, a chip, a custom title) keeps the title's 16px inset from the edge
+    > :first-child:not(.s_toolbarButton, .s_toolbarTitle) {
+      margin-inline-start: 16px;
+    }
+
+    > :last-child:not(.s_toolbarButton) {
+      margin-inline-end: 16px;
+    }
   }
 
   &__content,

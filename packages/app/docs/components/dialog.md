@@ -19,7 +19,7 @@ Modal/dialog overlay with a scrim. Centered by default; `location="bottom"` give
 | `elevation` | `0–24` | `undefined` | Box shadow depth of dialog container |
 | `disabled` | `boolean` | `false` | Passed to the activator via `attrs` (disables the trigger element) |
 | `width` / `height` | `string \| number` | `undefined` | Dialog dimensions |
-| `maxWidth` / `maxHeight` | `string \| number` | `undefined` | Max dimensions |
+| `maxWidth` / `maxHeight` | `string \| number` | `undefined` | Max dimensions, capped at the viewport (a 12px gutter stays on phones) |
 | `minWidth` / `minHeight` | `string \| number` | `undefined` | Min dimensions |
 
 ## Model
@@ -106,5 +106,7 @@ None (state managed via `v-model`).
 - `persistent` prevents outside clicks from closing — always provide an explicit close action.
 - The dialog has no background of its own — wrap content in `SCard` or `SSheet`.
 - The app must be wrapped in `<SApp>`: dialogs teleport into the overlay container `SApp` renders.
-- There is no Escape-key handling and no `close` event.
+- Keyboard and screen readers are handled: the content has `role="dialog"` and `aria-modal="true"`, focus moves into the dialog on open, Tab stays inside it, Esc closes it (not when `persistent`), and focus returns to the activator on close. Esc with a menu open inside the dialog closes only the menu. There is no `close` event — watch `v-model`.
+- `width`, `maxWidth` and `maxHeight` are capped at the viewport, so `:max-width="420"` still leaves a 12px gutter on a 375px phone.
 - Dialogs can be nested (a dialog opened from inside another dialog).
+- A `fullscreen` dialog pads by the iPhone safe-area insets on all sides (notch, home indicator, landscape sides) and fills them with the card colour; a `fullscreen` bottom sheet pads only the bottom. This needs `viewport-fit=cover` in the viewport meta; without a safe area the padding is `0px`.

@@ -12,7 +12,8 @@
         :disabled="disabled ?? false"
       />
       <label :for="id ?? innerId" class="s_checkbox__label">
-        <span v-if="label" v-show="!hideDetails" class="s_checkbox__labelText">{{ label }}</span>
+        <!-- The label is the checkbox's own text, so `hideDetails` (which hides the error area) keeps it -->
+        <span v-if="label" class="s_checkbox__labelText">{{ label }}</span>
       </label>
     </div>
     <FormInputError v-if="!hideDetails && !hideError" :errors="errors"></FormInputError>
@@ -78,6 +79,7 @@ const checkboxClasses = computed(() => {
     's_checkbox--disabled': props.disabled,
     's_checkbox--readonly': props.readonly,
     's_checkbox--error': hasError.value,
+    's_checkbox--details': !props.hideDetails && !props.hideError,
     's_checkbox--size__large': props.size === 'large',
     [`s_checkbox--color__${props.color}`]: getIsPredefinedPresetColor(props.color),
   }
@@ -88,8 +90,19 @@ $s_checkbox--size__large: 32px;
 $s_checkbox--size: 24px;
 
 .s_checkbox {
+  // The error line sits under the box, as under every other field, so it no
+  // longer squeezes the label from the side and the checkbox keeps the same
+  // space below it as the inputs above it.
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+
+  // As a form field (with its error line) the box keeps a gap above it, as a
+  // text field's label does: without it the error message of the field above
+  // ran into the box.
+  &--details {
+    padding-top: calc($s_spacer * 2);
+  }
 
   &__container {
     position: relative;
@@ -222,8 +235,7 @@ $s_checkbox--size: 24px;
 
   // Keyboard focus only, so a mouse click does not leave a ring behind
   &__input:focus-visible + &__label::before {
-    outline: 2px solid s_getPresetColor('info');
-    outline-offset: 2px;
+    @include s_focusRing();
   }
 
   &:not(&--disabled, &--readonly):hover &__label::before {

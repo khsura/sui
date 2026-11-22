@@ -61,7 +61,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsDialog.d.ts`
 - `zIndex`: z-index of the overlay layer
 - `disabled`: Passed to the activator via `attrs` (disables the trigger)
 - `width` / `height`: Content dimensions
-- `maxWidth` / `maxHeight` / `minWidth` / `minHeight`: Constraints (max-height defaults to 90% when not fullscreen)
+- `maxWidth` / `maxHeight` / `minWidth` / `minHeight`: Constraints (max-height defaults to 90% when not fullscreen). `width`, `maxWidth` and `maxHeight` are capped at the viewport, so `:max-width="420"` still leaves a 12px gutter on a phone
 - `activator` (slot): Trigger. Bind **both** `v-on="on"` and `v-bind="attrs"`
 - `default` (slot): Dialog content
 
@@ -116,5 +116,6 @@ None — use `v-model`.
 | `persistent` with no close button | Always provide an explicit close action |
 
 - The app must be wrapped in `<SApp>`: dialogs teleport into the overlay container `SApp` renders.
-- There is no Escape-key handling and no `close` event.
+- Keyboard and screen readers are handled: the content has `role="dialog"` and `aria-modal="true"`, focus moves into the dialog on open, Tab stays inside it, Esc closes it (not when `persistent`), and focus returns to the activator on close. Esc with a menu open inside the dialog closes only the menu. There is no `close` event — watch `v-model`.
+- A `fullscreen` dialog pads by the iPhone safe-area insets on all sides and fills them with the card colour (needs `viewport-fit=cover`, see the getting-started skill). Don't add your own `env(safe-area-inset-*)` padding to it.
 - `borderless`, `scrollableBackground` and `closeOnClick` appear in the prop types but currently have no effect — do not rely on them.

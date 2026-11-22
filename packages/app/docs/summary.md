@@ -54,7 +54,7 @@ Quick reference for all components in the `@khsura/sui` package.
 
 | Component(s) | Import | Doc |
 |---|---|---|
-| `SForm`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` | `import { SForm, SInput, STextarea, SSelect, SCheckbox, SRadio, SRadioGroup, SSwitch } from '@khsura/sui'` | [form.md](./components/form.md) |
+| `SForm`, `SFormRow`, `SInput`, `STextarea`, `SSelect`, `SCheckbox`, `SRadio`, `SRadioGroup`, `SSwitch`, `SFormInputError` | `import { SForm, SFormRow, SInput, STextarea, SSelect, SCheckbox, SRadio, SRadioGroup, SSwitch } from '@khsura/sui'` | [form.md](./components/form.md) |
 | `SAutocomplete` | `import { SAutocomplete } from '@khsura/sui'` | [autocomplete.md](./components/autocomplete.md) |
 
 ---
@@ -122,7 +122,7 @@ Quick reference for all components in the `@khsura/sui` package.
 | `minWidth` / `minHeight` | `string \| number` | Min dimensions |
 | `tag` | `string` | Override root HTML element |
 | `href` | `string \| null` | Render as `<a>` tag with href |
-| `to` | `RouteLocationRaw` | Vue Router link destination |
+| `to` | `LinkLocation` | Internal route: a `router-link` with vue-router, else a plain `<a href>` |
 | `colorThreshold` | `number` | Auto text-color contrast threshold against `color` |
 
 ---

@@ -19,10 +19,33 @@ describe('SRadioGroup', () => {
       }),
     )
 
-    await wrapper.find('button').trigger('click')
+    await wrapper.find('input').trigger('click')
     await flushPromises()
 
     expect(wrapper.find('.s_radioGroup').classes()).toContain('s_radioGroup--error')
+    expect(wrapper.find('.s_radioGroup').attributes('aria-invalid')).toBe('true')
+    expect(wrapper.find('.s_formInputError').exists()).toBe(false)
+  })
+
+  test('keeps the option labels with hideDetails, which only removes the error area', () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { SApp, SRadio, SRadioGroup },
+        template: `
+          <SApp>
+            <SRadioGroup hide-details>
+              <SRadio value="free" label="Free" />
+              <SRadio value="pro" label="Pro" />
+            </SRadioGroup>
+          </SApp>
+        `,
+      }),
+    )
+
+    const labels = wrapper.findAll('.s_radio__label')
+
+    expect(labels.map((label) => label.text())).toEqual(['Free', 'Pro'])
+    expect(labels.map((label) => label.attributes('style') ?? '')).not.toContain('display: none;')
     expect(wrapper.find('.s_formInputError').exists()).toBe(false)
   })
 })

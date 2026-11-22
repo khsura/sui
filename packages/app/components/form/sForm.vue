@@ -1,5 +1,6 @@
 <template>
-  <form class="s_form" @submit="$emit('submit', $event)">
+  <!-- novalidate: SUI rules validate the fields, so the browser must not show its own bubbles (type="email", required) on top -->
+  <form class="s_form" novalidate @submit="$emit('submit', $event)">
     <slot></slot>
   </form>
 </template>

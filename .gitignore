@@ -29,3 +29,9 @@ install-state.gz
 
 **/.DS_STORE
 **/debug-storybook.log
+
+# Visual regression report and diff images (packages/app/docs/visual-testing.md)
+**/.visual
+
+# Playwright MCP tool output (written to the repo root)
+.playwright-mcp/

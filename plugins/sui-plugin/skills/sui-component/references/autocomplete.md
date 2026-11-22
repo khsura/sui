@@ -15,8 +15,10 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsAutocomplete.d.ts
 | --- | --- | --- | --- | --- |
 | `activator` | `string \| HTMLElement \| ComponentPublicInstance \| null` | — | no | — |
 | `allowUnlisted` | `boolean` | — | no | — |
+| `ariaLabel` | `string \| null` | — | no | — |
 | `autocomplete` | `string` | `"off"` | no | — |
 | `chips` | `boolean` | — | no | — |
+| `clearAriaLabel` | `string` | `"Clear"` | no | — |
 | `clearable` | `boolean` | — | no | — |
 | `closableChips` | `boolean` | — | no | — |
 | `closeOnClick` | `boolean` | — | no | — |
@@ -37,6 +39,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsAutocomplete.d.ts
 | `items` | `string[] \| SelectItem[]` | — | no | — |
 | `label` | `string \| null` | — | no | — |
 | `loading` | `boolean` | — | no | — |
+| `loadingAriaLabel` | `string` | `"Loading"` | no | — |
 | `location` | `LocationRaw` | `"bottom"` | no | — |
 | `maxHeight` | `string \| number \| null` | — | no | — |
 | `maxWidth` | `string \| number \| null` | — | no | — |
@@ -91,7 +94,7 @@ None.
 - `hideDetails`: Hide the label
 - `placeholder`: Input placeholder
 - `autocomplete`: Native `autocomplete` attribute
-- `size`: Preset size
+- `size`: Input font size, as on `SInput` (`large` 1.25rem, `extra` 1.5rem, never below 16px)
 - `location`: Dropdown position (flips automatically)
 - `offsetX` / `offsetY`: Dropdown offset
 - `update:modelValue` (event): Selection changed
@@ -165,3 +168,5 @@ const searchUsers = async (query: string) => {
 - Single mode, no chips: the selected item's text is shown in the input itself.
 - Selected items keep their labels when `items` is replaced (async results), so chips don't go blank.
 - Toggling `multiple` at runtime drops a single value when switching back to single mode.
+- The list opens on the roomier side of the field and stays 8px inside the viewport (shifted left near the right edge); no placement workaround needed.
+- A long option stays on one line and ends in an ellipsis; its full text is in the option's `title`. No custom item slot needed for long labels.

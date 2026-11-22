@@ -5,3 +5,5 @@ export const store = reactive({
   width: 0,
   height: 0,
 })
+
+export * from './scrollLockStore'

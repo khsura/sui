@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { defineComponent } from 'vue'
-import { createRouter, createMemoryHistory, type Router } from 'vue-router'
-import { SApp, SButton, SCard, SListItem } from '@/app/components'
+import { createRouter, createMemoryHistory, RouterLink, type Router } from 'vue-router'
+import { SApp, SBreadcrumbs, SButton, SCard, SListItem } from '@/app/components'
 
 /**
  * A component given `to` has to render a real link.
@@ -36,20 +36,73 @@ const routerFor = () =>
     ],
   })
 
-const mountInApp = async (component: unknown, props: Record<string, unknown>, router: Router) => {
+const mountInApp = async (component: unknown, props: Record<string, unknown>, router?: Router) => {
   const wrapper = mount(
     defineComponent({
       components: { SApp, comp: component as never },
       template: '<SApp><comp v-bind="$attrs">link</comp></SApp>',
       inheritAttrs: false,
     }),
-    { attrs: props, global: { plugins: [router] } },
+    { attrs: props, global: { plugins: router ? [router] : [] } },
   )
 
-  await router.isReady()
+  await router?.isReady()
 
   return wrapper
 }
+
+const linkComponents = [
+  ['SButton', SButton],
+  ['SCard', SCard],
+  ['SListItem', SListItem],
+] as const
+
+/**
+ * `@khsura/sui` does not depend on vue-router. With a router installed, `to`
+ * is a `RouterLink`; without one it must still be a working `<a href>`, not
+ * an unknown `<router-link>` element that goes nowhere.
+ */
+describe('`to` with and without vue-router', () => {
+  beforeEach(() => {
+    vi.spyOn(console, 'warn').mockImplementation(() => undefined)
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  test.each(linkComponents)('%s renders a RouterLink when the app has a router', async (_name, component) => {
+    const wrapper = await mountInApp(component, { to: route }, routerFor())
+
+    expect(wrapper.findComponent(RouterLink).exists()).toBe(true)
+    expect(console.warn).not.toHaveBeenCalled()
+  })
+
+  test.each(linkComponents)('%s renders a plain anchor without a router', async (_name, component) => {
+    const wrapper = await mountInApp(component, { to: route })
+    const anchor = wrapper.find('a')
+
+    expect(wrapper.find('router-link').exists()).toBe(false)
+    expect(anchor.exists()).toBe(true)
+    expect(anchor.attributes('href')).toBe(route)
+    expect(anchor.attributes('to')).toBeUndefined()
+    expect(console.warn).toHaveBeenCalledTimes(1)
+  })
+
+  test('SBreadcrumbs renders RouterLinks with a router and anchors without one', async () => {
+    const items = [{ text: 'Home', to: '/' }, { text: 'Docs', to: { path: route } }, { text: 'Here' }]
+    const withRouter = await mountInApp(SBreadcrumbs, { items }, routerFor())
+
+    expect(withRouter.findAllComponents(RouterLink)).toHaveLength(2)
+    expect(withRouter.findAll('a').map((anchor) => anchor.attributes('href'))).toEqual(['/', route])
+
+    const withoutRouter = await mountInApp(SBreadcrumbs, { items })
+
+    expect(withoutRouter.find('router-link').exists()).toBe(false)
+    expect(withoutRouter.findAll('a').map((anchor) => anchor.attributes('href'))).toEqual(['/', route])
+    expect(withoutRouter.find('span').attributes('to')).toBeUndefined()
+  })
+})
 
 describe('a component given `to`', () => {
   test.each([

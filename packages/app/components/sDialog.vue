@@ -4,7 +4,15 @@
       <slot name="activator" :on="activatorOn" :attrs="activatorAttrs"></slot>
     </div>
     <SOverlay v-slot="{ attrs }" scrim :value="model" :z-index="zIndex" :transition="transitionName">
-      <div v-bind="attrs" :class="contentClasses" :style="contentStyles" ref="dialogRef">
+      <div
+        v-bind="attrs"
+        ref="dialogRef"
+        role="dialog"
+        aria-modal="true"
+        tabindex="-1"
+        :class="contentClasses"
+        :style="contentStyles"
+      >
         <slot></slot>
       </div>
     </SOverlay>
@@ -15,7 +23,13 @@ import { watch, useTemplateRef, provide } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import SOverlay from '@/app/components/sOverlay.vue'
 import type { PropsDialog } from '@/app/definitions'
-import { useBackgroundScrollService, useComponentDefaultsService, useDialogService } from '@/app/services'
+import {
+  useActivatorElementService,
+  useBackgroundScrollService,
+  useComponentDefaultsService,
+  useDialogService,
+  useOverlayFocusService,
+} from '@/app/services'
 import { ProviderPropsName } from '@/app/configs'
 
 const rawProps = defineProps<PropsDialog>()
@@ -36,22 +50,32 @@ const {
 
 const { enableBackgroundScroll, disableBackgroundScroll } = useBackgroundScrollService()
 const dialogRef = useTemplateRef('dialogRef')
+const { computedActivatorElement } = useActivatorElementService(props, activatorElement)
+
+// Modal: focus moves into the dialog and Tab stays inside; Esc closes it unless persistent; focus returns.
+useOverlayFocusService(
+  model,
+  { activator: computedActivatorElement, content: dialogRef },
+  { canCloseOnEscape: () => !props.persistent, trapFocus: true },
+)
 
 onClickOutside(dialogRef, localOnClickOutside, {
   ignore: ['.s_menu__content', '.s_tooltip__content', '.s_select__list', '.s_snackbar__wrapper'],
 })
 
-watch(model, async (value) => {
+watch(model, (value) => {
   if (value) {
-    await disableBackgroundScroll()
+    disableBackgroundScroll()
   } else {
-    await enableBackgroundScroll()
+    enableBackgroundScroll()
   }
 })
 </script>
 
 <style lang="scss">
 $kDialogMargin: $s_spacer * 6;
+$kDialogViewportWidth: calc(100% - $kDialogMargin);
+$kDialogViewportHeight: 90%;
 
 @keyframes s-animation-dialog-bottom {
   0% {
@@ -80,8 +104,12 @@ $kDialogMargin: $s_spacer * 6;
     position: fixed;
     top: calc(50% - $kDialogMargin);
     left: calc(50% - $kDialogMargin);
-    width: 100%;
-    max-width: calc(100% - $kDialogMargin);
+
+    // The size props arrive as CSS variables and are capped here, so a `max-width` wider than the screen
+    // still leaves a gutter on a phone.
+    width: min(var(--s-dialog-width, 100%), $kDialogViewportWidth);
+    max-width: min(var(--s-dialog-max-width, 100%), $kDialogViewportWidth);
+    height: var(--s-dialog-height, auto);
     margin: $kDialogMargin;
     overflow-y: auto;
     pointer-events: auto;
@@ -90,11 +118,12 @@ $kDialogMargin: $s_spacer * 6;
     &--bottom {
       top: unset;
       bottom: 0;
-      width: 100%;
+      width: var(--s-dialog-width, 100%);
+      max-width: var(--s-dialog-max-width, $kDialogViewportWidth);
       transform: translate(-50%, 0%);
 
       @include s_breakpointUp('sm') {
-        width: max-content;
+        width: var(--s-dialog-width, max-content);
         min-width: 600px;
       }
 
@@ -103,6 +132,9 @@ $kDialogMargin: $s_spacer * 6;
         bottom: 0;
         left: 50%;
         max-height: 90%;
+
+        // a bottom sheet never reaches the notch, only the home indicator
+        padding-top: 0;
         transform: translate(-50%, 0%);
       }
     }
@@ -114,8 +146,13 @@ $kDialogMargin: $s_spacer * 6;
       width: 100%;
       max-width: unset;
       height: 100%;
+
+      // keep the content clear of the notch, home indicator and landscape side insets (0px without a safe
+      // area); the card colour fills the inset strips so they read as part of the dialog
+      padding: s_safeAreaInset('top') s_safeAreaInset('right') s_safeAreaInset('bottom') s_safeAreaInset('left');
       margin: 0;
       overflow-y: auto;
+      background-color: s_getAppColor('card');
       border-radius: 0;
       transform: translate(0, 0);
 
@@ -154,7 +191,7 @@ $kDialogMargin: $s_spacer * 6;
     }
 
     &:not(.s_dialog__content--fullscreen) {
-      max-height: 90%;
+      max-height: min(var(--s-dialog-max-height, 100%), $kDialogViewportHeight);
     }
 
     > * {

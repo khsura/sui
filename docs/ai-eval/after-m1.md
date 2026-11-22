@@ -178,6 +178,9 @@ that some reports left out.
   sections' `v-show` never re-applies. This page's sections also have a `class`, which the baseline
   reported as a workaround, so that workaround doesn't hold. Tracked by the existing STabs
   investigation task (M2-09).
+- **Resolved (M2-09):** a Vue 3.5.39 template compiler bug, fixed in Vue 3.5.41
+  (vuejs/core#11682). See the baseline's matching section for details. With the harness on Vue
+  3.5.46, this page's tabs switch.
 
 ## Limitations
 

@@ -3,9 +3,10 @@
     :class="progressClasses"
     :style="progressStyles"
     role="progressbar"
+    :aria-label="ariaLabel"
     :[`aria-valuemin`]="0"
     :[`aria-valuemax`]="100"
-    :[`aria-valuenow`]="value"
+    :[`aria-valuenow`]="indeterminate ? undefined : value"
   >
     <div :class="backgroundClasses" :style="backgroundStyles"></div>
     <div :class="barClasses" :style="barStyles"></div>
@@ -22,6 +23,7 @@ import { useComponentDefaultsService } from '@/app/services'
 const rawProps = withDefaults(defineProps<PropsProgressLinear>(), {
   color: 'info',
   value: 0,
+  ariaLabel: 'Loading',
 })
 
 const props = useComponentDefaultsService('SProgressLinear', rawProps)

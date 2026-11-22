@@ -1,0 +1,105 @@
+name: Visual regression
+
+# Screenshots every Storybook story tagged `visual` (packages/app/docs/visual-testing.md).
+# Both jobs run in the official Playwright image. Keep its tag equal to the exact `@playwright/test`
+# version in packages/app/package.json: `yarn test:visual` reads that version and uses the same image,
+# so local runs and CI produce comparable screenshots.
+
+on:
+  pull_request:
+    branches:
+      - main
+      - "feature/**"
+  workflow_dispatch:
+    inputs:
+      update:
+        description: Rewrite the baselines that differ or are missing, and commit them to the selected branch
+        type: boolean
+        default: false
+
+concurrency:
+  group: visual-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  HUSKY: 0
+
+jobs:
+  test:
+    if: ${{ github.event_name == 'pull_request' || !inputs.update }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    container:
+      image: mcr.microsoft.com/playwright:v1.61.1-noble # exact tag; a @sha256 digest pin is optional
+      options: --ipc=host
+    env:
+      HOME: /root
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - name: Install dependencies
+        run: node .yarn/releases/yarn-*.cjs install --immutable
+
+      # Task PRs (into feature/** milestone branches) run Chromium only for speed; story play checks and the
+      # axe audit still run. PRs into main (milestone releases) and manual runs use the full Chromium + WebKit
+      # matrix, so WebKit-only regressions are still caught before anything ships.
+      - name: Run visual tests
+        env:
+          PROJECT_FILTER: ${{ startsWith(github.base_ref, 'feature/') && '--project=chromium-light --project=chromium-dark' || '' }}
+        run: node .yarn/releases/yarn-*.cjs workspace @khsura/sui test:visual:container $PROJECT_FILTER
+
+      - name: Upload diff, actual and expected images
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: visual-diff
+          path: packages/app/.visual/
+          include-hidden-files: true
+          retention-days: 14
+
+  update:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.update }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    container:
+      image: mcr.microsoft.com/playwright:v1.61.1-noble
+      options: --ipc=host
+    env:
+      HOME: /root
+    steps:
+      # Keeps the token in the checkout: the last step pushes the new baselines (contents: write only).
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+
+      - name: Trust the checkout
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Install dependencies
+        run: node .yarn/releases/yarn-*.cjs install --immutable
+
+      - name: Regenerate baselines
+        run: node .yarn/releases/yarn-*.cjs workspace @khsura/sui test:visual:container --update-snapshots=changed
+
+      - name: Upload the new baselines
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: visual-baselines
+          path: packages/app/tests/visual/__screenshots__/
+          retention-days: 14
+
+      - name: Commit the new baselines
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add packages/app/tests/visual/__screenshots__
+          if git diff --cached --quiet; then
+            echo "Baselines are already up to date."
+            exit 0
+          fi
+          git commit -m "test(visual): update visual regression baselines"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

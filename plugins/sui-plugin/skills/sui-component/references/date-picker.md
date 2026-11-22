@@ -186,13 +186,14 @@ None.
 - `min` / `max`: Bounds for the popup and carousel buttons (default: ±5 years around `today` (picker))
 - `rules`: Validation rules
 - `hideDetails`: Hide label and error area
+- Model: `''` and `null` both mean no date (before 1.20.0 `''` opened the picker on "Invalid date"; use `null` there). The picker stays 8px inside the viewport: above the field near the bottom, shifted left near the right edge
 - `hideError`: Hide the error message
 - `id`: Input id (default: auto)
 - `disabled` / `readonly`: Native input states; disable carousel buttons
 - `size`: Field size (font never below 16px)
 - `simple`: Borderless field
 - `tile`: Square corners
-- `block`: Stretch to container width (otherwise hugs the value)
+- `block`: Stretch to container width (otherwise hugs the value). Never wider than its container: in a narrow column it shrinks like `SInput`, keeps the calendar button and ends the value in an ellipsis
 - `width` / `maxWidth` / `minWidth`: Field size; the popup stays 280px wide
 - `carousel`: Prev/next buttons stepping one day / month / year
 - `carouselPrevIcon` / `carouselNextIcon`: Button icons (default: `'mdi-chevron-left'` / `'mdi-chevron-right'`)

@@ -32,7 +32,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsCard.d.ts`
 | `tag` | `HtmlTagName \| null` | — | no | `a`, `abbr`, `acronym`, `address`, `applet`, `area`, `article`, `aside`, `audio`, `b`, `base`, `basefont`, `bdi`, `bdo`, `big`, `blockquote`, `body`, `br`, `button`, `canvas`, `caption`, `center`, `cite`, `code`, `col`, `colgroup`, `data`, `datalist`, `dd`, `del`, `details`, `dfn`, `dialog`, `dir`, `div`, `dl`, `dt`, `em`, `embed`, `fieldset`, `figcaption`, `figure`, `font`, `footer`, `form`, `frame`, `frameset`, `h1`, `h1> to <h6`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `header`, `hr`, `html`, `i`, `iframe`, `img`, `input`, `ins`, `kbd`, `label`, `legend`, `li`, `link`, `main`, `map`, `mark`, `meta`, `meter`, `nav`, `noframes`, `noscript`, `object`, `ol`, `optgroup`, `option`, `output`, `p`, `param`, `picture`, `pre`, `progress`, `q`, `rp`, `rt`, `ruby`, `s`, `samp`, `script`, `section`, `select`, `small`, `source`, `span`, `strike`, `strong`, `style`, `sub`, `summary`, `sup`, `svg`, `table`, `tbody`, `td`, `template`, `textarea`, `tfoot`, `th`, `thead`, `time`, `title`, `tr`, `track`, `tt`, `u`, `ul`, `var`, `video`, `wbr` |
 | `target` | `"_blank" \| "_self" \| "_parent" \| "_top"` | — | no | `_blank`, `_parent`, `_self`, `_top` |
 | `theme` | `AppThemeType` | — | no | `dark`, `light` |
-| `to` | `string \| it \| et \| null` | — | no | — |
+| `to` | `LinkLocation \| null` | — | no | — |
 | `underlined` | `boolean \| null` | — | no | — |
 | `width` | `string \| number \| null` | — | no | — |
 
@@ -59,7 +59,7 @@ None.
 - `borderRadius`: Border radius override
 - `tag`: Root element (ignored when `href`/`to` is set) (default: `'div'`)
 - `href`: Render as `<a>`
-- `to`: Render as `router-link` (takes precedence over `href`)
+- `to`: Render as `router-link` (takes precedence over `href`; plain `<a href>` without vue-router)
 - `target`: Link target
 - `rel`: Link rel
 - `width` / `height`: Dimensions
@@ -86,7 +86,7 @@ Each takes only `tag` (default `'div'`) and a `default` slot. No events.
 
 Spacing between adjacent title → subtitle → text is tightened automatically.
 
-`SCardTitle` is a flex row, so `s_textAlign__center` on it has no effect. Centre its content with `s_justify__center` (`s_justify__end` for right).
+`SCardTitle` is a flex row (so it can hold an icon, `SSpacer` and buttons). The `s_textAlign__*` classes, responsive ones included, also set the matching `justify-content` on it, so `class="s_textAlign__center"` centres the title. `s_justify__center` works too. A long title wraps between words; a single word wider than the card is split. (Before 1.20.0 `SCardTitle` ignored `s_textAlign__*`, so use `s_justify__*` there, and split titles at any letter.)
 
 <!-- generated:api:start SCardTitle -->
 <!-- Generated from sui-api.json by `yarn sync:skills` (packages/app). Do not edit by hand. -->

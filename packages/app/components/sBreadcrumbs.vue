@@ -5,8 +5,7 @@
         <li class="s_breadcrumbs__listItem">
           <Component
             :is="getTagOfItem(id, item)"
-            :href="item.href"
-            :to="item.to"
+            v-bind="getLinkAttrsOfItem(id, item)"
             :class="getListItemLinkClasses(id, item)"
             :style="getDisabledOfItem(id, item) ? undefined : styleListTextColor"
             >{{ item.text }}</Component
@@ -20,8 +19,9 @@
   </nav>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useComponentDefaultsService, useTextColorService } from '@/app/services'
+import { computed, watch } from 'vue'
+import { getLinkLocationHref } from '@/app/lib'
+import { useComponentDefaultsService, useRouterLinkService, useTextColorService } from '@/app/services'
 import { type BreadcrumbsItem } from '@/app/types'
 import type { PropsBreadcrumbs } from '@/app/definitions'
 
@@ -31,6 +31,11 @@ const rawProps = withDefaults(defineProps<PropsBreadcrumbs>(), {
 
 const props = useComponentDefaultsService('SBreadcrumbs', rawProps)
 const { classListTextColor, styleListTextColor } = useTextColorService(props)
+const { hasRouterLink, warnIfNoRouter } = useRouterLinkService()
+
+if (!hasRouterLink) {
+  watch(() => props.items?.find((item) => item.to)?.to, warnIfNoRouter, { immediate: true })
+}
 
 const classList = computed(() => {
   return {
@@ -46,15 +51,30 @@ const getTagOfItem = (id: number, item: BreadcrumbsItem) => {
     return 'span'
   }
 
-  if (item.to) {
+  if (item.to && hasRouterLink) {
     return 'router-link'
   }
 
-  if (item.href) {
+  if (item.to || item.href) {
     return 'a'
   }
 
   return 'span'
+}
+
+/** Only the destination that belongs to the chosen tag — see `useLinkService`. */
+const getLinkAttrsOfItem = (id: number, item: BreadcrumbsItem) => {
+  const tag = getTagOfItem(id, item)
+
+  if (tag === 'router-link') {
+    return { to: item.to }
+  }
+
+  if (tag === 'a') {
+    return { href: item.to ? (getLinkLocationHref(item.to) ?? item.href) : item.href }
+  }
+
+  return {}
 }
 
 const getDisabledOfItem = (id: number, item: BreadcrumbsItem) => {
@@ -79,6 +99,10 @@ const getListItemLinkClasses = (id: number, item: BreadcrumbsItem) => {
   }
 
   &__list {
+    // The reset gives every <ol> a 1.5em list indent, which put the first crumb 21px inside the content below.
+    padding-inline-start: 0;
+    list-style: none;
+
     &Item {
       display: inline-flex;
       align-items: center;

@@ -2,7 +2,7 @@
 
 exports[`SInput > renders correctly 1`] = `
 <section
-  class="s_input"
+  class="s_input s_field s_field--details"
 >
   <!--v-if-->
   <div
@@ -34,7 +34,9 @@ exports[`SInput > renders correctly 1`] = `
   
   <!-- eslint-disable vue/no-v-html -->
   <div
+    aria-live="polite"
     class="s_formInputError"
+    id="password-error"
   />
   
 </section>

@@ -1,6 +1,7 @@
 import type { ElementNode } from '@vue/compiler-dom'
-import type { TemplateRule } from '../types'
+import type { TemplateIssue, TemplateRule } from '../types'
 import {
+  APP_COMPONENT,
   BLOCK_ATTRIBUTE,
   BUTTON_COMPONENT,
   CARD_TITLE_COMPONENT,
@@ -14,11 +15,14 @@ import {
   FLEX_DISPLAY_STYLE_PATTERN,
   FLEX_ROW_COMPONENTS,
   FORM_COMPONENT,
+  FORM_ROW_COMPONENT,
+  HEIGHT_FILL_CLASS,
   HIDE_DETAILS_ATTRIBUTE,
   HIDE_DETAILS_LABEL_COMPONENTS,
   INPUT_TYPE_ATTRIBUTE,
   INPUT_TYPE_NUMBER,
   LABEL_ATTRIBUTE,
+  LABELLED_FIELD_COMPONENTS,
   MIN_BLOCK_BUTTONS_IN_ROW,
   MODEL_NAME_PLACEHOLDER,
   MODEL_PATH_PATTERN,
@@ -27,6 +31,8 @@ import {
   NATIVE_VALIDATING_INPUT_TYPES,
   NO_VALIDATE_ATTRIBUTE,
   RECIPE_ACTIVATOR_OVERLAYS,
+  RECIPE_CENTERED_PAGE,
+  RECIPE_FILTER_BAR,
   RECIPE_RESPONSIVE_GRID,
   RECIPE_VALIDATED_FORM,
   REGEX_ESCAPE_REPLACEMENT,
@@ -34,6 +40,8 @@ import {
   RULE_BLOCK_BUTTONS_IN_ROW,
   RULE_CARD_TITLE_TEXT_ALIGN,
   RULE_DATE_PICKER_EMPTY_STRING,
+  RULE_FIELD_BUTTON_ROW,
+  RULE_FILL_HEIGHT_UNDER_APP,
   RULE_HIDE_DETAILS_HIDES_LABEL,
   RULE_NATIVE_VALIDATION_IN_FORM,
   RULE_SNACKBAR_ACTION_CONTRAST,
@@ -41,14 +49,20 @@ import {
   SEVERITY_WARNING,
   SNACKBAR_ACTION_SLOT_NAME,
   SNACKBAR_COMPONENT,
-  SNACKBAR_READABLE_ACTION_COLOR,
+  SNACKBAR_DEFAULT_BACKGROUND,
+  SNACKBAR_LIGHT_ACTION_COLOR_HINT,
+  SNACKBAR_UNCOLOURED_ACTION_VARIANTS,
   SNACKBAR_UNREADABLE_PRESET_COLORS,
+  MINIMUM_TEXT_CONTRAST,
   STYLE_ATTRIBUTE,
+  SUI_M2_FIXES_VERSION,
+  TEXT_COLOR_CLASS_PREFIX,
   TEXT_ALIGN_CLASS_PATTERN,
   TEXT_ALIGN_JUSTIFY_CLASSES,
   TEXT_BUTTON_VARIANT,
   VARIANT_ATTRIBUTE,
 } from '../constants'
+import { getHexContrastRatio, isVersionAtLeast } from '../lib'
 import {
   childElementsOf,
   descendantElementsOf,
@@ -67,6 +81,7 @@ import {
 
 export const nativeValidationInFormRule: TemplateRule = {
   id: RULE_NATIVE_VALIDATION_IN_FORM,
+  fixedIn: SUI_M2_FIXES_VERSION,
   check: ({ element, ancestors }) => {
     const typeAttribute = findAttribute(element, INPUT_TYPE_ATTRIBUTE)
     const inputType = typeAttribute?.staticValue?.toLowerCase()
@@ -98,6 +113,7 @@ export const nativeValidationInFormRule: TemplateRule = {
 
 export const hideDetailsHidesLabelRule: TemplateRule = {
   id: RULE_HIDE_DETAILS_HIDES_LABEL,
+  fixedIn: SUI_M2_FIXES_VERSION,
   check: ({ element }) => {
     const hideDetails = findPropAttribute(element, HIDE_DETAILS_ATTRIBUTE)
 
@@ -123,41 +139,103 @@ export const hideDetailsHidesLabelRule: TemplateRule = {
   },
 }
 
-const isUnreadableSnackbarAction = (button: ElementNode): boolean => {
+const isUnreadablePresetAction = (button: ElementNode): boolean => {
   const color = findAttribute(button, COLOR_ATTRIBUTE)?.staticValue
   const variant = findAttribute(button, VARIANT_ATTRIBUTE)?.staticValue
 
+  return variant === TEXT_BUTTON_VARIANT && color !== undefined && SNACKBAR_UNREADABLE_PRESET_COLORS.includes(color)
+}
+
+/** A text or icon action with a hex CSS colour below 4.5:1 on the default snackbar: used as is, in every version. */
+const lowContrastCssColorOf = (button: ElementNode): { color: string; contrast: number } | undefined => {
+  const color = findAttribute(button, COLOR_ATTRIBUTE)?.staticValue
+  const variant = findAttribute(button, VARIANT_ATTRIBUTE)?.staticValue
+
+  if (color === undefined || variant === undefined || !SNACKBAR_UNCOLOURED_ACTION_VARIANTS.includes(variant)) {
+    return undefined
+  }
+
+  const contrast = getHexContrastRatio(color, SNACKBAR_DEFAULT_BACKGROUND)
+
+  return contrast !== undefined && contrast < MINIMUM_TEXT_CONTRAST ? { color, contrast } : undefined
+}
+
+/** A text or icon action with no colour at all: dark page text on the dark snackbar before the M2 fix. */
+const isUncolouredAction = (button: ElementNode): boolean => {
+  const variant = findAttribute(button, VARIANT_ATTRIBUTE)?.staticValue
+
   return (
-    isComponentTag(button.tag, BUTTON_COMPONENT) &&
-    variant === TEXT_BUTTON_VARIANT &&
-    color !== undefined &&
-    SNACKBAR_UNREADABLE_PRESET_COLORS.includes(color)
+    variant !== undefined &&
+    SNACKBAR_UNCOLOURED_ACTION_VARIANTS.includes(variant) &&
+    !findAttribute(button, COLOR_ATTRIBUTE) &&
+    !staticClassNames(button).some((name) => name.startsWith(TEXT_COLOR_CLASS_PREFIX))
   )
 }
 
+const snackbarActionIssue = (button: ElementNode, hasSnackbarColorFix: boolean): TemplateIssue | undefined => {
+  const base: Omit<TemplateIssue, 'message' | 'fixHint'> = {
+    ...positionOf(button),
+    rule: RULE_SNACKBAR_ACTION_CONTRAST,
+    severity: SEVERITY_WARNING,
+    recipe: RECIPE_ACTIVATOR_OVERLAYS,
+  }
+
+  const lowContrastCssColor = lowContrastCssColorOf(button)
+
+  if (lowContrastCssColor) {
+    return {
+      ...base,
+      message: `A \`color="${lowContrastCssColor.color}"\` action in the \`SSnackbar\` is ${lowContrastCssColor.contrast.toFixed(2)}:1 on the dark snackbar background (below 4.5:1), so the action is hard to read. A CSS colour is used as is.`,
+      fixHint: hasSnackbarColorFix
+        ? 'Remove `color` (an action without a colour uses the snackbar text colour), or use a light CSS colour such as `color="#ffffff"`.'
+        : `Use a light colour: ${SNACKBAR_LIGHT_ACTION_COLOR_HINT}.`,
+    }
+  }
+
+  if (hasSnackbarColorFix) {
+    return undefined
+  }
+
+  if (isUnreadablePresetAction(button)) {
+    const color = findAttribute(button, COLOR_ATTRIBUTE)?.staticValue ?? ''
+
+    return {
+      ...base,
+      message: `Before @khsura/sui ${SUI_M2_FIXES_VERSION}, a \`color="${color}"\` text button in the \`SSnackbar\` action is below 4.5:1 on the dark snackbar background, so the action is hard to read.`,
+      fixHint: `Use a light colour: ${SNACKBAR_LIGHT_ACTION_COLOR_HINT}, or upgrade to ${SUI_M2_FIXES_VERSION} or later and remove \`color\`.`,
+    }
+  }
+
+  if (isUncolouredAction(button)) {
+    return {
+      ...base,
+      message: `Before @khsura/sui ${SUI_M2_FIXES_VERSION}, a text or icon button without \`color\` in the \`SSnackbar\` action keeps the page's dark text colour (about 1.3:1 on the dark snackbar), so the action is hard to read.`,
+      fixHint: `Set a light colour: ${SNACKBAR_LIGHT_ACTION_COLOR_HINT}, or upgrade to ${SUI_M2_FIXES_VERSION} or later.`,
+    }
+  }
+
+  return undefined
+}
+
+/**
+ * A hex CSS colour below 4.5:1 on the snackbar always warns: the snackbar cannot adjust it. Before
+ * `SUI_M2_FIXES_VERSION` a low-contrast preset colour or no colour at all warns too; from that version an action
+ * without a colour takes the snackbar's light text colour and a preset colour uses a variant tuned to the snackbar.
+ */
 export const snackbarActionContrastRule: TemplateRule = {
   id: RULE_SNACKBAR_ACTION_CONTRAST,
-  check: ({ element }) => {
+  check: ({ element, apiVersion }) => {
     if (!isComponentTag(element.tag, SNACKBAR_COMPONENT)) {
       return []
     }
 
+    const hasSnackbarColorFix = isVersionAtLeast(apiVersion, SUI_M2_FIXES_VERSION)
+
     return slotFills(element)
       .filter((fill) => staticArgument(fill.directive.arg) === SNACKBAR_ACTION_SLOT_NAME)
       .flatMap((fill) => descendantElementsOf(fill.owner))
-      .filter(isUnreadableSnackbarAction)
-      .map((button) => {
-        const color = findAttribute(button, COLOR_ATTRIBUTE)?.staticValue ?? ''
-
-        return {
-          ...positionOf(button),
-          rule: RULE_SNACKBAR_ACTION_CONTRAST,
-          severity: SEVERITY_WARNING,
-          message: `A \`color="${color}"\` text button in the \`SSnackbar\` action is below 4.5:1 on the dark snackbar background, so the action is hard to read.`,
-          fixHint: `Use a light colour: \`color="${SNACKBAR_READABLE_ACTION_COLOR}"\` or a CSS colour such as \`color="#ffffff"\`.`,
-          recipe: RECIPE_ACTIVATOR_OVERLAYS,
-        }
-      })
+      .filter((descendant) => isComponentTag(descendant.tag, BUTTON_COMPONENT))
+      .flatMap((button) => snackbarActionIssue(button, hasSnackbarColorFix) ?? [])
   },
 }
 
@@ -195,8 +273,43 @@ export const blockButtonsInRowRule: TemplateRule = {
   },
 }
 
+/** A text field whose label and error line are rendered, so its box sits between them. */
+const isDetailedField = (element: ElementNode): boolean =>
+  isOneOfComponentTags(element.tag, LABELLED_FIELD_COMPONENTS) && !isBooleanPropOn(element, HIDE_DETAILS_ATTRIBUTE)
+
+export const fieldButtonRowRule: TemplateRule = {
+  id: RULE_FIELD_BUTTON_ROW,
+  target: RULE_TARGET_ANY_ELEMENT,
+  check: ({ element }) => {
+    if (isComponentTag(element.tag, FORM_ROW_COMPONENT) || !isFlexRow(element)) {
+      return []
+    }
+
+    const children = childElementsOf(element)
+    const field = children.find(isDetailedField)
+    const button = children.find((child) => isComponentTag(child.tag, BUTTON_COMPONENT))
+
+    if (!field || !button) {
+      return []
+    }
+
+    return [
+      {
+        ...positionOf(button),
+        rule: RULE_FIELD_BUTTON_ROW,
+        severity: SEVERITY_WARNING,
+        message: `\`${field.tag}\` and an \`SButton\` share a flex row: the field is a label, its box and an error line, so the button lines up with the label instead of the field box.`,
+        fixHint:
+          'Use `<SFormRow>` instead of the flex element (@khsura/sui 1.20.0+); it lines each button up with the field box. On an older version put `hide-details` on the field.',
+        recipe: RECIPE_FILTER_BAR,
+      },
+    ]
+  },
+}
+
 export const cardTitleTextAlignRule: TemplateRule = {
   id: RULE_CARD_TITLE_TEXT_ALIGN,
+  fixedIn: SUI_M2_FIXES_VERSION,
   check: ({ element }) => {
     if (!isComponentTag(element.tag, CARD_TITLE_COMPONENT)) {
       return []
@@ -246,6 +359,7 @@ const startsAsEmptyString = (modelPath: string, scriptSource: string): boolean =
 
 export const datePickerEmptyStringRule: TemplateRule = {
   id: RULE_DATE_PICKER_EMPTY_STRING,
+  fixedIn: SUI_M2_FIXES_VERSION,
   check: ({ element, scriptSource }) => {
     const binding = isOneOfComponentTags(element.tag, DATE_PICKER_EMPTY_STRING_COMPONENTS)
       ? modelBinding(element)
@@ -280,11 +394,34 @@ export const datePickerEmptyStringRule: TemplateRule = {
 }
 
 /** Rules about behaviour and styling misuses that the component API alone cannot catch. */
+export const fillHeightUnderAppRule: TemplateRule = {
+  id: RULE_FILL_HEIGHT_UNDER_APP,
+  fixedIn: SUI_M2_FIXES_VERSION,
+  check: ({ element }) => {
+    if (!isComponentTag(element.tag, APP_COMPONENT)) {
+      return []
+    }
+
+    return childElementsOf(element)
+      .filter((child) => staticClassNames(child).includes(HEIGHT_FILL_CLASS))
+      .map((child) => ({
+        ...positionOf(child),
+        rule: RULE_FILL_HEIGHT_UNDER_APP,
+        severity: SEVERITY_WARNING,
+        message: `\`${HEIGHT_FILL_CLASS}\` on a direct child of \`SApp\` resolves to the content height before @khsura/sui 1.20.0 (SApp only has a min-height), so content centred inside it sticks to the top.`,
+        fixHint: 'Upgrade @khsura/sui to 1.20.0 or later, or add `style="min-height: 100dvh"` to this child.',
+        recipe: RECIPE_CENTERED_PAGE,
+      }))
+  },
+}
+
 export const behaviourRules: TemplateRule[] = [
   nativeValidationInFormRule,
   hideDetailsHidesLabelRule,
   snackbarActionContrastRule,
   blockButtonsInRowRule,
+  fieldButtonRowRule,
   cardTitleTextAlignRule,
   datePickerEmptyStringRule,
+  fillHeightUnderAppRule,
 ]
