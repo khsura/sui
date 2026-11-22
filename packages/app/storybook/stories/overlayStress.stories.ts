@@ -47,6 +47,8 @@ const pixelTolerance = 1
 // Text colour actions in the snackbar colour story: a preset text colour, the `primary` preset and no colour.
 const snackbarActionColors = ['warning', 'primary', undefined]
 // `rgb(r, g, b)` / `rgba(r, g, b, a)` from getComputedStyle: the three channels.
+// How long (ms) the snackbar colour play waits for the button colour transition to settle (slower in WebKit).
+const colorSettleTimeout = 3000
 const computedRgbPattern = /rgba?\((\d+),\s*(\d+),\s*(\d+)/
 
 // Each item has a real icon: a dot-shaped icon (mdi-circle-small) reads as a list bullet in the screenshots.
@@ -655,13 +657,10 @@ export const SnackbarActionColors = {
   play: async ({ canvasElement }) => {
     const ownerDocument = canvasElement.ownerDocument
 
-    const wrapper = await waitFor(async () => {
-      const element = ownerDocument.querySelector('.s_snackbar__wrapper')
+    // Colours do not depend on the fade-in, so wait for the snackbar to exist rather than to be visible.
+    await waitFor(() => expect(ownerDocument.querySelectorAll('.s_snackbar__wrapper')).toHaveLength(1))
 
-      await expect(element).toBeVisible()
-
-      return element
-    })
+    const wrapper = ownerDocument.querySelector('.s_snackbar__wrapper')
 
     if (!wrapper) {
       throw new Error('snackbar not found')
@@ -673,14 +672,17 @@ export const SnackbarActionColors = {
     await expect(actions).toHaveLength(snackbarActionColors.length)
 
     // waitFor: the button's colour transition must settle before its colour is final.
-    await waitFor(async () => {
-      for (const action of actions) {
-        const contrast = getContrastRatio(parseComputedRgb(getComputedStyle(action).color), background) ?? 0
+    await waitFor(
+      async () => {
+        for (const action of actions) {
+          const contrast = getContrastRatio(parseComputedRgb(getComputedStyle(action).color), background) ?? 0
 
-        await expect(contrast, `${action.textContent?.trim()} action contrast`).toBeGreaterThanOrEqual(
-          minimumTextContrast,
-        )
-      }
-    })
+          await expect(contrast, `${action.textContent?.trim()} action contrast`).toBeGreaterThanOrEqual(
+            minimumTextContrast,
+          )
+        }
+      },
+      { timeout: colorSettleTimeout },
+    )
   },
 } satisfies StoryObj
