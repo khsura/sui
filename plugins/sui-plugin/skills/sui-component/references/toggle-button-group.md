@@ -35,6 +35,7 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsToggleButtonGroup
 | Slot | Slot props |
 | --- | --- |
 | `default` | `{}` |
+| `overlay` | `{}` |
 
 **SToggleButtonGroup events**
 

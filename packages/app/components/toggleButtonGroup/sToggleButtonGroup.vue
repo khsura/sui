@@ -3,6 +3,7 @@
     <div class="s_toggleButtonGroup__content">
       <slot></slot>
     </div>
+    <slot name="overlay"></slot>
   </section>
 </template>
 <script setup lang="ts" generic="T extends GroupItemValue = GroupItemValue">
