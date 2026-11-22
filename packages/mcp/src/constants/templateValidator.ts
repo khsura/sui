@@ -179,8 +179,13 @@ export const TEXT_BUTTON_VARIANT = 'text'
 export const SNACKBAR_UNCOLOURED_ACTION_VARIANTS = ['text', 'icon']
 /** `s_textColor__*` sets a button's text colour, which also keeps an uncoloured action readable. */
 export const TEXT_COLOR_CLASS_PREFIX = 's_textColor__'
-/** Preset colours below 4.5:1 as text on the default `#424242` snackbar (primary is 2.18:1). */
+/**
+ * Preset colours below 4.5:1 as text on the default `#424242` snackbar before `SUI_M2_FIXES_VERSION` (primary is
+ * 2.18:1). From that version a preset text colour inside the snackbar uses a variant tuned to the snackbar.
+ */
 export const SNACKBAR_UNREADABLE_PRESET_COLORS = ['primary', 'secondary', 'success', 'info', 'error']
+/** The theme's default `snackbar` colour, dark in both themes: CSS-colour actions are measured against it. */
+export const SNACKBAR_DEFAULT_BACKGROUND = '#424242'
 export const SNACKBAR_READABLE_ACTION_COLOR = 'warning'
 export const SNACKBAR_LIGHT_ACTION_COLOR_HINT = `\`color="${SNACKBAR_READABLE_ACTION_COLOR}"\` or a CSS colour such as \`color="#ffffff"\``
 

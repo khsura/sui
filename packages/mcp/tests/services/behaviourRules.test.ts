@@ -94,7 +94,10 @@ describe('behaviour rules', () => {
 
     it.each([
       ['a light preset colour', snackbar('<SButton variant="text" color="warning">Undo</SButton>')],
-      ['a CSS colour', snackbar('<SButton variant="text" color="#ffffff">Undo</SButton>')],
+      ['a light CSS colour', snackbar('<SButton variant="text" color="#ffffff">Undo</SButton>')],
+      ['a light short-hex CSS colour', snackbar('<SButton variant="text" color="#ff0">Undo</SButton>')],
+      ['a named CSS colour (not measured)', snackbar('<SButton variant="text" color="navy">Undo</SButton>')],
+      ['a dark CSS colour on a filled button', snackbar('<SButton color="#1976d2">Undo</SButton>')],
       ['a filled primary button', snackbar('<SButton color="primary">Undo</SButton>')],
       ['a primary text button outside the snackbar', '<SButton variant="text" color="primary">Undo</SButton>'],
       ['a bound colour', snackbar('<SButton variant="text" :color="actionColor">Undo</SButton>')],
@@ -110,6 +113,17 @@ describe('behaviour rules', () => {
 
       expect(issue).toMatchObject({ severity: 'warning', line: 1, column: 50, recipe: 'activator-overlays' })
       expect(issue.fixHint).toContain('color="warning"')
+    })
+
+    it.each([
+      ['a dark hex text action', '<SButton variant="text" color="#1976d2">Undo</SButton>', '#1976d2'],
+      ['a dark short-hex icon action', '<SButton variant="icon" color="#333" aria-label="Close" />', '#333'],
+    ])('reports %s (a CSS colour is used as is)', (_, button, color) => {
+      const [issue] = issuesOf(rule, snackbar(button))
+
+      expect(issue).toMatchObject({ severity: 'warning', recipe: 'activator-overlays' })
+      expect(issue.message).toContain(`color="${color}"`)
+      expect(issue.message).toMatch(/\d\.\d{2}:1/)
     })
 
     it('fires on the eval snackbar page (primary Undo at 2.18:1, success Close)', () => {
@@ -350,8 +364,17 @@ describe('behaviour rules', () => {
         expect(issuesWith(olderApi, rule, snackbar(button))).toEqual([])
       })
 
-      it('keeps warning on an explicit low-contrast colour from the fix on', () => {
-        const [issue] = issuesWith(fixedApi, rule, snackbar('<SButton variant="text" color="primary">Undo</SButton>'))
+      it.each(['primary', 'warning', 'error'])(
+        'passes a %s text action from the fix on (the snackbar tunes preset text colours)',
+        (color) => {
+          expect(
+            issuesWith(fixedApi, rule, snackbar(`<SButton variant="text" color="${color}">Undo</SButton>`)),
+          ).toEqual([])
+        },
+      )
+
+      it('keeps warning on a dark CSS colour from the fix on and suggests removing it', () => {
+        const [issue] = issuesWith(fixedApi, rule, snackbar('<SButton variant="text" color="#1976d2">Undo</SButton>'))
 
         expect(issue).toMatchObject({ severity: 'warning', recipe: 'activator-overlays' })
         expect(issue.fixHint).toContain('Remove `color`')

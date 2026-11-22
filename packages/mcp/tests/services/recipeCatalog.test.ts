@@ -14,7 +14,9 @@ import {
   RECIPE_RESPONSIVE_GRID,
   RECIPE_THEME_SETUP,
   RECIPE_VALIDATED_FORM,
+  SUI_M2_FIXES_VERSION,
 } from '../../src/constants'
+import { isVersionAtLeast } from '../../src/lib'
 import {
   readRecipe,
   resolveRecipeSourceRoot,
@@ -23,7 +25,14 @@ import {
 } from '../../src/services'
 import { makeTempDir } from '../testProject'
 
-const readApi = (path: string): SuiApi => suiApiSchema.parse(JSON.parse(readFileSync(path, 'utf8')))
+// The recipes ship with the release that carries the M2 fixes (an uncoloured snackbar action reads on the snackbar),
+// so they are validated as that version at least; the unreleased package still says the previous one.
+const atLeastRecipeVersion = (api: SuiApi): SuiApi =>
+  isVersionAtLeast(api.version, SUI_M2_FIXES_VERSION) ? api : { ...api, version: SUI_M2_FIXES_VERSION }
+
+const readApi = (path: string): SuiApi =>
+  atLeastRecipeVersion(suiApiSchema.parse(JSON.parse(readFileSync(path, 'utf8'))))
+
 // sui-api.json of every component the recipes use, taken from `yarn build:api` in packages/app.
 const recipeFixtureApi = readApi(fileURLToPath(new URL('../fixtures/suiApiRecipes.json', import.meta.url)))
 // The full API built from the current component code; present after packages/app is built.

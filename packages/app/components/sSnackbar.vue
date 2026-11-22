@@ -26,6 +26,7 @@ import {
   useComponentDefaultsService,
   useLayoutService,
   useScrollableService,
+  useSurfaceTextColorService,
 } from '@/app/services'
 
 const rawProps = defineProps<PropsSnackbar>()
@@ -36,6 +37,9 @@ const activatorElement = useTemplateRef('activatorElement')
 const { activatorAttrs, activatorOn } = useActivatorService(props, model, activatorElement)
 const { currentScroll } = useScrollableService()
 const { app } = useLayoutService({ app: true })
+// The snackbar is dark in both themes: preset text colours inside it (a `color="warning"` text action) use variants
+// that read on the snackbar rather than the light-theme variants tuned for the page background.
+const { styleListSurfaceTextColor } = useSurfaceTextColorService('snackbar')
 
 const wrapperClasses = computed(() => {
   return {
@@ -63,6 +67,7 @@ const offsetTop = computed(() => {
 // inset the same way.
 const wrapperStyles = computed(() => {
   return getCleanSetObject({
+    ...styleListSurfaceTextColor.value,
     top: props.location === 'top' ? getLengthWithSafeArea(getNumericCssAttribute(offsetTop.value), 'top') : undefined,
     bottom:
       props.location !== 'top'
@@ -139,7 +144,8 @@ watch(model, () => {
   }
 
   // A text or icon action without a `color` takes the snackbar's own text colour. Otherwise it kept the
-  // page text colour, dark grey on the dark snackbar (about 1.3:1). An explicit preset colour still wins.
+  // page text colour, dark grey on the dark snackbar (about 1.3:1). An explicit preset colour still wins, in its
+  // snackbar-readable variant (see `useSurfaceTextColorService`).
   &__wrapper &__action .s_button--text:not([class*='s_textColor__']),
   &__wrapper &__action .s_button--icon:not([class*='s_textColor__']) {
     color: inherit;
