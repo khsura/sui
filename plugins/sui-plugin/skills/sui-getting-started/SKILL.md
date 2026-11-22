@@ -205,6 +205,7 @@ Resolution order for every prop: **prop on the element > `defaults.<Component>` 
 - To opt one component out of a global value, set it on that component: `global: { size: 'small' }, SIcon: { size: 'default' }`.
 - Defaults are reactive: changing them at runtime re-renders the affected components.
 - `components: { … }` (the older untyped option) still works as the per-component layer; `defaults` wins when both set the same prop. Prefer `defaults`.
+- **Scoped to a region** (since 1.22.0): wrap a dense toolbar or filter bar in `<SDefaultsProvider :defaults="{ global: { size: 'small' }, SInput: { dense: true } }">` instead of `size="small"` on each component. It takes the same typed object, merges onto the layer above it (outer provider or `createSUI`) per component and per prop (`global` too), renders no element, and an explicit prop still wins. Recipe: `dense-toolbar`.
 
 ---
 
