@@ -22,18 +22,18 @@ const desktopWidth = 1280
 
 const DrawerLayout = defineComponent({
   components: { SApp, SLayout, SMain, SNavigationDrawer },
-  props: { inLayout: { type: Boolean, default: false } },
+  props: { inLayout: { type: Boolean, default: false }, persistent: { type: Boolean, default: false } },
   setup() {
     return { isOpen: ref(false), layoutName }
   },
   template: `
     <SApp>
       <SLayout v-if="inLayout" :name="layoutName">
-        <SNavigationDrawer :for="layoutName" v-model="isOpen" force-mobile />
+        <SNavigationDrawer :for="layoutName" v-model="isOpen" :persistent="persistent" force-mobile />
         <SMain :for="layoutName">content</SMain>
       </SLayout>
       <template v-else>
-        <SNavigationDrawer v-model="isOpen" force-mobile />
+        <SNavigationDrawer v-model="isOpen" :persistent="persistent" force-mobile />
         <SMain>content</SMain>
       </template>
     </SApp>
@@ -57,11 +57,20 @@ describe('SNavigationDrawer - a tap on the scrim closes the mobile drawer', () =
     vi.restoreAllMocks()
   })
 
+  // `persistent` only keeps a desktop drawer open on an outside click; a scrim exists only on mobile, where the
+  // click-outside handler closes a persistent drawer too, so the scrim does the same.
   test.each([
-    { name: 'an app drawer (scrim in the overlay)', inLayout: false, scrim: '.s_overlay__scrim' },
-    { name: 'a layout drawer (scrim in the layout)', inLayout: true, scrim: '.s_navigationDrawer__scrim' },
-  ])('$name', async ({ inLayout, scrim }) => {
-    const wrapper = mount(DrawerLayout, { props: { inLayout }, attachTo: document.body })
+    { name: 'an app drawer (scrim in the overlay)', inLayout: false, persistent: false, scrim: '.s_overlay__scrim' },
+    {
+      name: 'a layout drawer (scrim in the layout)',
+      inLayout: true,
+      persistent: false,
+      scrim: '.s_navigationDrawer__scrim',
+    },
+    { name: 'a persistent app drawer', inLayout: false, persistent: true, scrim: '.s_overlay__scrim' },
+    { name: 'a persistent layout drawer', inLayout: true, persistent: true, scrim: '.s_navigationDrawer__scrim' },
+  ])('$name', async ({ inLayout, persistent, scrim }) => {
+    const wrapper = mount(DrawerLayout, { props: { inLayout, persistent }, attachTo: document.body })
 
     await flushPromises()
     wrapper.vm.isOpen = true
