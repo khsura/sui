@@ -68,4 +68,16 @@ describe('SOverlay', () => {
     await overlayWrapper.setProps({ value: true, disabled: true })
     expect(overlayWrapper.find('.s_overlay').exists()).toBe(false)
   })
+
+  // The scrim listens for its own click: iOS Safari sends a tap's click only to an element that listens for one.
+  it('emits click:scrim when the scrim is clicked', async () => {
+    const overlayWrapper = mount(SOverlay, {
+      props: defaultProps,
+      slots: { default: slotContent },
+    })
+
+    await overlayWrapper.setProps({ value: true, disabled: true, scrim: true })
+    await overlayWrapper.find('.s_overlay__scrim').trigger('click')
+    expect(overlayWrapper.emitted('click:scrim')).toHaveLength(1)
+  })
 })

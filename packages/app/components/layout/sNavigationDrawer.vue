@@ -1,8 +1,14 @@
 <template>
   <Transition name="s_transition--appear">
-    <div v-if="isLayoutScrim" class="s_navigationDrawer__scrim"></div>
+    <div v-if="isLayoutScrim" class="s_navigationDrawer__scrim" @click="closeOnOutsideClick"></div>
   </Transition>
-  <SOverlay :disabled="!isOverlay" :scrim="isOverlay" :value="model" :transition="transitionName">
+  <SOverlay
+    :disabled="!isOverlay"
+    :scrim="isOverlay"
+    :value="model"
+    :transition="transitionName"
+    @click:scrim="closeOnOutsideClick"
+  >
     <component
       :is="elementTag"
       ref="navigationDrawer"
@@ -358,19 +364,19 @@ const transitionName = computed(() => {
   return transitions[computedLocation.value ?? 'left']
 })
 
-onClickOutside(
-  navigationDrawer,
-  () => {
-    if (props.persistent && !isMobile.value) {
-      return
-    }
+const closeOnOutsideClick = () => {
+  if (props.persistent && !isMobile.value) {
+    return
+  }
 
-    model.value = false
-  },
-  {
-    ignore: [computedActivatorElement],
-  },
-)
+  model.value = false
+}
+
+// The scrims also close the drawer through their own click listener: on iOS Safari a tap on them never
+// reaches this window-level handler.
+onClickOutside(navigationDrawer, closeOnOutsideClick, {
+  ignore: [computedActivatorElement],
+})
 
 watch(
   [model, isMobile, isPermanentDesktopApp],

@@ -2,7 +2,9 @@
   <Teleport v-if="isReady" :to="`#${overlaysContainerId}`" :disabled="disabled">
     <div v-if="position === 'fixed' || scrim" class="s_overlay" :style="zIndex ? { zIndex } : undefined">
       <Transition name="s_transition--appear">
-        <div v-if="scrim && value" class="s_overlay__scrim"></div>
+        <!-- Its own click listener: iOS Safari only sends a tap's click to an element (or ancestor) that listens for one,
+             so a window-level click-outside handler alone never hears a tap on the scrim -->
+        <div v-if="scrim && value" class="s_overlay__scrim" @click="emit('click:scrim', $event)"></div>
       </Transition>
       <Transition :name="transition">
         <slot v-if="value" :attrs="{ class: 's_overlay__content' }" :value="value"></slot>
@@ -20,6 +22,11 @@ import { overlaysContainerId } from '@/app/constants'
 import type { PropsOverlay } from '@/app/definitions'
 
 defineProps<PropsOverlay>()
+const emit = defineEmits<{
+  /** The scrim behind the content was clicked or tapped. */
+  'click:scrim': [event: MouseEvent]
+}>()
+
 const isReady = ref(false)
 
 onMounted(() => {
