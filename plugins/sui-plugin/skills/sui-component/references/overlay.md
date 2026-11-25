@@ -28,7 +28,9 @@ Types: `node_modules/@khsura/sui/@types/definitions/props/propsOverlay.d.ts`
 
 **SOverlay events**
 
-None.
+| Event | Payload |
+| --- | --- |
+| `click:scrim` | `[event: MouseEvent]` |
 
 <!-- generated:api:end SOverlay -->
 
