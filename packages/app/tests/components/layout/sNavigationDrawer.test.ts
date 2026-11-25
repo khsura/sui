@@ -494,7 +494,12 @@ describe('SNavigationDrawer - scrim', () => {
   // The app-shell recipe's drawer: a named layout, so the drawer stays inside it and dims only that layout.
   const NamedLayoutDrawer = defineComponent({
     components: { SApp, SLayout, SMain, SNavigationDrawer },
-    props: { forceMobile: { type: Boolean, default: true }, hideOverlay: { type: Boolean, default: false } },
+    // persistent by default, so the drawer keeps its starting open state at mount (a mobile one closes itself otherwise)
+    props: {
+      forceMobile: { type: Boolean, default: true },
+      hideOverlay: { type: Boolean, default: false },
+      persistent: { type: Boolean, default: true },
+    },
     setup() {
       return { isOpen: ref(true), layoutName, navWidth }
     },
@@ -507,7 +512,7 @@ describe('SNavigationDrawer - scrim', () => {
             :width="navWidth"
             :force-mobile="forceMobile"
             :hide-overlay="hideOverlay"
-            persistent
+            :persistent="persistent"
           />
           <SMain :for="layoutName">content</SMain>
         </SLayout>
@@ -524,7 +529,10 @@ describe('SNavigationDrawer - scrim', () => {
   }
 
   test('an open mobile drawer in a named layout dims the layout, and a tap there closes it', async () => {
-    const wrapper = await mountNamedLayoutDrawer()
+    const wrapper = await mountNamedLayoutDrawer({ persistent: false })
+
+    wrapper.vm.isOpen = true
+    await nextTick()
     const scrim = wrapper.find('.s_layout .s_navigationDrawer__scrim')
 
     expect(scrim.exists()).toBe(true)
@@ -535,6 +543,19 @@ describe('SNavigationDrawer - scrim', () => {
 
     expect(wrapper.vm.isOpen).toBe(false)
     expect(wrapper.find('.s_navigationDrawer__scrim').exists()).toBe(false)
+  })
+
+  test('a tap on the scrim leaves a persistent mobile drawer in a named layout open', async () => {
+    const wrapper = await mountNamedLayoutDrawer()
+    const scrim = wrapper.find('.s_layout .s_navigationDrawer__scrim')
+
+    expect(scrim.exists()).toBe(true)
+
+    scrim.element.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }))
+    scrim.element.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await nextTick()
+
+    expect(wrapper.vm.isOpen).toBe(true)
   })
 
   test('hideOverlay keeps a named layout undimmed', async () => {

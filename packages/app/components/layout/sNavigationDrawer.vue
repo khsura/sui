@@ -206,7 +206,7 @@ const isOverlay = computed((): boolean => {
 })
 
 // A mobile drawer in a named layout stays inside that layout (position: absolute), so it dims only the layout,
-// with a scrim beside it. A tap there is an outside click, which closes the drawer.
+// with a scrim beside it. A tap there is an outside click, which closes the drawer unless it is persistent.
 const isLayoutScrim = computed((): boolean => {
   return !isApp.value && !props.hideOverlay && isMobile.value && !isBottom.value && Boolean(model.value)
 })
@@ -364,8 +364,9 @@ const transitionName = computed(() => {
   return transitions[computedLocation.value ?? 'left']
 })
 
+// `persistent`: an outside click (or a tap on the scrim) never closes the drawer, on mobile as on desktop.
 const closeOnOutsideClick = () => {
-  if (props.persistent && !isMobile.value) {
+  if (props.persistent) {
     return
   }
 

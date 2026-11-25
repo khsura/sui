@@ -40,7 +40,7 @@ const DrawerLayout = defineComponent({
   `,
 })
 
-describe('SNavigationDrawer - a tap on the scrim closes the mobile drawer', () => {
+describe('SNavigationDrawer - a tap on the scrim of a mobile drawer', () => {
   beforeEach(() => {
     const overlaysContainer = document.createElement('div')
 
@@ -57,19 +57,37 @@ describe('SNavigationDrawer - a tap on the scrim closes the mobile drawer', () =
     vi.restoreAllMocks()
   })
 
-  // `persistent` only keeps a desktop drawer open on an outside click; a scrim exists only on mobile, where the
-  // click-outside handler closes a persistent drawer too, so the scrim does the same.
+  // `persistent` means an outside click never closes the drawer: a tap on the scrim leaves it open.
   test.each([
-    { name: 'an app drawer (scrim in the overlay)', inLayout: false, persistent: false, scrim: '.s_overlay__scrim' },
+    {
+      name: 'an app drawer (scrim in the overlay)',
+      inLayout: false,
+      persistent: false,
+      scrim: '.s_overlay__scrim',
+      isOpenAfterTap: false,
+    },
     {
       name: 'a layout drawer (scrim in the layout)',
       inLayout: true,
       persistent: false,
       scrim: '.s_navigationDrawer__scrim',
+      isOpenAfterTap: false,
     },
-    { name: 'a persistent app drawer', inLayout: false, persistent: true, scrim: '.s_overlay__scrim' },
-    { name: 'a persistent layout drawer', inLayout: true, persistent: true, scrim: '.s_navigationDrawer__scrim' },
-  ])('$name', async ({ inLayout, persistent, scrim }) => {
+    {
+      name: 'leaves a persistent app drawer open',
+      inLayout: false,
+      persistent: true,
+      scrim: '.s_overlay__scrim',
+      isOpenAfterTap: true,
+    },
+    {
+      name: 'leaves a persistent layout drawer open',
+      inLayout: true,
+      persistent: true,
+      scrim: '.s_navigationDrawer__scrim',
+      isOpenAfterTap: true,
+    },
+  ])('$name', async ({ inLayout, persistent, scrim, isOpenAfterTap }) => {
     const wrapper = mount(DrawerLayout, { props: { inLayout, persistent }, attachTo: document.body })
 
     await flushPromises()
@@ -82,6 +100,6 @@ describe('SNavigationDrawer - a tap on the scrim closes the mobile drawer', () =
     scrimElement?.click()
     await flushPromises()
 
-    expect(wrapper.vm.isOpen).toBe(false)
+    expect(wrapper.vm.isOpen).toBe(isOpenAfterTap)
   })
 })
