@@ -3,14 +3,7 @@
     <div ref="activatorElement">
       <slot name="activator" :on="activatorOn" :attrs="activatorAttrs"></slot>
     </div>
-    <SOverlay
-      v-slot="{ attrs }"
-      scrim
-      :value="model"
-      :z-index="zIndex"
-      :transition="transitionName"
-      @click:scrim="localOnClickOutside"
-    >
+    <SOverlay v-slot="{ attrs }" scrim :value="model" :z-index="zIndex" :transition="transitionName">
       <div
         v-bind="attrs"
         ref="dialogRef"
@@ -66,8 +59,6 @@ useOverlayFocusService(
   { canCloseOnEscape: () => !props.persistent, trapFocus: true },
 )
 
-// The scrim also closes the dialog through its own click listener (@click:scrim): on iOS Safari a tap on it
-// never reaches this window-level handler.
 onClickOutside(dialogRef, localOnClickOutside, {
   ignore: ['.s_menu__content', '.s_tooltip__content', '.s_select__list', '.s_snackbar__wrapper'],
 })
